@@ -1,0 +1,153 @@
+{% comment %}
+  Product Gallery Component
+  Shows product images with zoom and thumbnails
+{% endcomment %}
+
+<div class="product-gallery" data-product-gallery>
+  <div class="gallery-main">
+    {% if product.featured_image %}
+      <img 
+        src="{{ product.featured_image | img_url: '800x800' }}"
+        alt="{{ product.featured_image.alt | escape }}"
+        class="gallery-main-image"
+        data-zoom-src="{{ product.featured_image | img_url: '1200x1200' }}"
+      >
+    {% else %}
+      <div class="placeholder-main">
+        <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+          <rect width="200" height="200" fill="#f0f0f0"/>
+          <text x="100" y="100" font-size="48" text-anchor="middle" fill="#ccc">🍶</text>
+        </svg>
+      </div>
+    {% endif %}
+    
+    <button class="gallery-zoom-btn" aria-label="Zoom image">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="11" cy="11" r="8"></circle>
+        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        <line x1="11" y1="8" x2="11" y2="14"></line>
+        <line x1="8" y1="11" x2="14" y2="11"></line>
+      </svg>
+    </button>
+  </div>
+
+  {% if product.images.size > 1 %}
+    <div class="gallery-thumbnails">
+      {% for image in product.images %}
+        <button 
+          class="gallery-thumbnail {% if forloop.first %}active{% endif %}"
+          data-image-index="{{ forloop.index0 }}"
+          aria-label="View image {{ forloop.index }}"
+        >
+          <img 
+            src="{{ image | img_url: '100x100' }}"
+            alt="{{ image.alt | escape }}"
+          >
+        </button>
+      {% endfor %}
+    </div>
+  {% endif %}
+</div>
+
+<style>
+.product-gallery {
+  position: relative;
+}
+
+.gallery-main {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1;
+  background: #f8f9fa;
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 15px;
+}
+
+.gallery-main-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  cursor: zoom-in;
+}
+
+.placeholder-main {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.placeholder-main svg {
+  width: 100%;
+  height: 100%;
+}
+
+.gallery-zoom-btn {
+  position: absolute;
+  bottom: 15px;
+  right: 15px;
+  width: 40px;
+  height: 40px;
+  background: white;
+  border: none;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  transition: all 0.2s;
+  color: #333;
+}
+
+.gallery-zoom-btn:hover {
+  background: #0066cc;
+  color: white;
+  transform: scale(1.1);
+}
+
+.gallery-thumbnails {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  padding: 5px 0;
+}
+
+.gallery-thumbnail {
+  flex-shrink: 0;
+  width: 80px;
+  height: 80px;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: all 0.2s;
+  background: white;
+  padding: 0;
+}
+
+.gallery-thumbnail:hover {
+  border-color: #0066cc;
+  transform: translateY(-2px);
+}
+
+.gallery-thumbnail.active {
+  border-color: #0066cc;
+  border-width: 3px;
+}
+
+.gallery-thumbnail img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+@media (max-width: 767px) {
+  .gallery-thumbnail {
+    width: 60px;
+    height: 60px;
+  }
+}
+</style>

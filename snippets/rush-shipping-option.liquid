@@ -1,0 +1,208 @@
+{% comment %}
+  Rush Shipping Option Component
+  Increases revenue with expedited shipping option
+{% endcomment %}
+
+<div class="rush-shipping-option">
+  <div class="rush-header">
+    <span class="rush-icon">⚡</span>
+    <h4>Rush Shipping Available</h4>
+  </div>
+  
+  <div class="shipping-options">
+    <label class="shipping-radio">
+      <input 
+        type="radio" 
+        name="properties[Shipping Speed]" 
+        value="Standard (5-7 days)" 
+        checked
+        data-shipping-price="0"
+      >
+      <span class="radio-custom"></span>
+      <div class="shipping-details">
+        <span class="shipping-name">Standard Shipping</span>
+        <span class="shipping-time">5-7 business days</span>
+      </div>
+      <span class="shipping-price">FREE</span>
+    </label>
+
+    <label class="shipping-radio shipping-rush">
+      <input 
+        type="radio" 
+        name="properties[Shipping Speed]" 
+        value="Rush (2-3 days)" 
+        data-shipping-price="9.99"
+      >
+      <span class="radio-custom"></span>
+      <div class="shipping-details">
+        <span class="shipping-name">Rush Shipping ⚡</span>
+        <span class="shipping-time">2-3 business days</span>
+      </div>
+      <span class="shipping-price">+$9.99</span>
+    </label>
+
+    <label class="shipping-radio shipping-express">
+      <input 
+        type="radio" 
+        name="properties[Shipping Speed]" 
+        value="Express (1-2 days)" 
+        data-shipping-price="14.99"
+      >
+      <span class="radio-custom"></span>
+      <div class="shipping-details">
+        <span class="shipping-name">Express Shipping 🚀</span>
+        <span class="shipping-time">1-2 business days</span>
+      </div>
+      <span class="shipping-price">+$14.99</span>
+    </label>
+  </div>
+
+  <div class="rush-note">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+      <circle cx="8" cy="8" r="7" stroke="#0066cc" stroke-width="2"/>
+      <path d="M8 4V9M8 11V12" stroke="#0066cc" stroke-width="2" stroke-linecap="round"/>
+    </svg>
+    <span>Order within <strong class="countdown-timer">2h 34m</strong> for same-day processing</span>
+  </div>
+</div>
+
+<style>
+.rush-shipping-option {
+  margin: 20px 0;
+  padding: 15px;
+  background: white;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+}
+
+.rush-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 15px;
+}
+
+.rush-icon {
+  font-size: 20px;
+}
+
+.rush-header h4 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: #333;
+}
+
+.shipping-options {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.shipping-radio {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 12px;
+  align-items: center;
+  padding: 12px;
+  border: 2px solid #e0e0e0;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.shipping-radio:hover {
+  border-color: #0066cc;
+  background: #f8f9fa;
+}
+
+.shipping-radio input[type="radio"] {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.radio-custom {
+  width: 20px;
+  height: 20px;
+  border: 2px solid #ddd;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  background: white;
+}
+
+.shipping-radio input[type="radio"]:checked + .radio-custom {
+  border-color: #0066cc;
+  border-width: 6px;
+}
+
+.shipping-radio.shipping-rush input[type="radio"]:checked + .radio-custom {
+  border-color: #ff9500;
+}
+
+.shipping-radio.shipping-express input[type="radio"]:checked + .radio-custom {
+  border-color: #cc0000;
+}
+
+.shipping-details {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.shipping-name {
+  font-weight: 600;
+  font-size: 14px;
+  color: #333;
+}
+
+.shipping-time {
+  font-size: 12px;
+  color: #666;
+}
+
+.shipping-price {
+  font-weight: 600;
+  font-size: 15px;
+  color: #0066cc;
+  white-space: nowrap;
+}
+
+.shipping-radio.shipping-rush .shipping-price {
+  color: #ff9500;
+}
+
+.shipping-radio.shipping-express .shipping-price {
+  color: #cc0000;
+}
+
+.rush-note {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 12px;
+  padding: 10px;
+  background: #f0f7ff;
+  border-radius: 6px;
+  font-size: 13px;
+  color: #0066cc;
+}
+
+.countdown-timer {
+  color: #cc0000;
+}
+
+@media (max-width: 767px) {
+  .shipping-radio {
+    grid-template-columns: auto 1fr;
+  }
+  
+  .shipping-price {
+    grid-column: 2;
+    justify-self: end;
+  }
+}
+</style>

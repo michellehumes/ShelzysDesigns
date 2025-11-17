@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Water Bottle Conversion Package - Demo</title>
+    <link rel="stylesheet" href="assets/water-bottle-conversion.css">
+    <style>
+        /* Demo-specific styles */
+        body {
+            margin: 0;
+            padding: 0;
+        }
+        .demo-header {
+            background: #0066cc;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        .demo-header h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+        .demo-note {
+            background: #fff3cd;
+            border: 1px solid #ffc107;
+            padding: 15px;
+            margin: 20px;
+            border-radius: 8px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="demo-header">
+        <h1>🍶 Custom Water Bottle - Conversion Package Demo</h1>
+        <p>All 11 components in action</p>
+    </div>
+
+    <div class="demo-note">
+        <strong>⚠️ Demo Mode:</strong> This is a standalone demo. In production, this integrates with Shopify's Liquid templating system.
+    </div>
+
+    <!-- Main Product Section -->
+    <div class="water-bottle-product" data-section-id="demo" data-product-id="1234">
+        <div class="product-container">
+            <div class="product-grid">
+                
+                <!-- Product Gallery -->
+                <div class="product-gallery" data-product-gallery>
+                    <div class="gallery-main">
+                        <div class="placeholder-main">
+                            <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                                <rect width="200" height="200" fill="#f0f0f0"/>
+                                <text x="100" y="100" font-size="48" text-anchor="middle" fill="#ccc">🍶</text>
+                            </svg>
+                        </div>
+                        <button class="gallery-zoom-btn" aria-label="Zoom image">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="11" cy="11" r="8"></circle>
+                                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                                <line x1="11" y1="8" x2="11" y2="14"></line>
+                                <line x1="8" y1="11" x2="14" y2="11"></line>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Product Info -->
+                <div class="product-info">
+                    <div class="product-header">
+                        <h1 class="product-title">Custom Stainless Steel Water Bottle</h1>
+                        <p class="product-vendor">SHELZY'S DESIGNS</p>
+                        <div class="reviews-summary-compact">
+                            <a href="#reviews" class="reviews-link">
+                                <div class="stars">⭐⭐⭐⭐⭐</div>
+                                <span class="rating-text">4.8 (247 reviews)</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="product-price-container">
+                        <div class="product-price" data-price="2999">
+                            <span class="price">$29.99</span>
+                            <span class="compare-price">$39.99</span>
+                        </div>
+                        
+                        <!-- Bulk Pricing Component -->
+                        <div class="bulk-pricing">
+                            <div class="bulk-pricing-header">
+                                <span class="bulk-icon">📦</span>
+                                <h4>Volume Discounts</h4>
+                            </div>
+                            <div class="pricing-tiers">
+                                <div class="tier" data-min-qty="1" data-discount="0">
+                                    <span class="tier-qty">1 bottle</span>
+                                    <span class="tier-discount">Regular Price</span>
+                                </div>
+                                <div class="tier tier-highlight" data-min-qty="3" data-discount="10">
+                                    <span class="tier-badge">Popular</span>
+                                    <span class="tier-qty">3+ bottles</span>
+                                    <span class="tier-discount">Save 10%</span>
+                                </div>
+                                <div class="tier" data-min-qty="5" data-discount="15">
+                                    <span class="tier-qty">5+ bottles</span>
+                                    <span class="tier-discount">Save 15%</span>
+                                </div>
+                                <div class="tier tier-best" data-min-qty="10" data-discount="20">
+                                    <span class="tier-badge">Best Value</span>
+                                    <span class="tier-qty">10+ bottles</span>
+                                    <span class="tier-discount">Save 20%</span>
+                                </div>
+                            </div>
+                            <div class="bulk-savings" id="bulk-savings" style="display: none;">
+                                <span class="savings-text">You're saving <strong class="savings-amount"></strong>!</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="product-description">
+                        Premium double-wall vacuum insulated water bottle that keeps drinks cold for 24 hours or hot for 12 hours. Made from BPA-free stainless steel with leak-proof design. Perfect for gym, office, travel, or everyday hydration. Personalize it to make it uniquely yours!
+                    </div>
+
+                    <!-- Product Form -->
+                    <form id="product-form" class="product-form">
+                        
+                        <!-- Variant Selector -->
+                        <div class="product-variants">
+                            <div class="product-option">
+                                <label class="option-label">Size</label>
+                                <div class="option-values">
+                                    <input type="radio" id="size-20oz" name="options[Size]" value="20oz" checked data-option-position="1">
+                                    <label for="size-20oz" class="option-value">20oz</label>
+                                    
+                                    <input type="radio" id="size-32oz" name="options[Size]" value="32oz" data-option-position="1">
+                                    <label for="size-32oz" class="option-value">32oz</label>
+                                    
+                                    <input type="radio" id="size-40oz" name="options[Size]" value="40oz" data-option-position="1">
+                                    <label for="size-40oz" class="option-value">40oz</label>
+                                </div>
+                            </div>
+
+                            <div class="product-option">
+                                <label class="option-label">Bottle Color</label>
+                                <div class="option-values">
+                                    <input type="radio" id="bottle-black" name="options[Color]" value="Black" checked data-option-position="2">
+                                    <label for="bottle-black" class="option-value">Black</label>
+                                    
+                                    <input type="radio" id="bottle-white" name="options[Color]" value="White" data-option-position="2">
+                                    <label for="bottle-white" class="option-value">White</label>
+                                    
+                                    <input type="radio" id="bottle-blue" name="options[Color]" value="Blue" data-option-position="2">
+                                    <label for="bottle-blue" class="option-value">Blue</label>
+                                    
+                                    <input type="radio" id="bottle-pink" name="options[Color]" value="Pink" data-option-position="2">
+                                    <label for="bottle-pink" class="option-value">Pink</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Live Personalization Preview -->
+                        <div class="personalization-section">
+                            <h3 class="personalization-title">Personalize Your Bottle</h3>
+                            
+                            <div class="personalization-fields">
+                                <div class="form-field">
+                                    <label for="custom-text">Custom Text (Max 15 characters)</label>
+                                    <input type="text" id="custom-text" name="properties[Custom Text]" maxlength="15" placeholder="Enter your text" data-personalization-input class="personalization-input">
+                                    <span class="char-count">0/15</span>
+                                </div>
+
+                                <div class="form-field">
+                                    <label for="font-style">Font Style</label>
+                                    <select id="font-style" name="properties[Font Style]" data-personalization-font class="personalization-select">
+                                        <option value="Classic">Classic</option>
+                                        <option value="Modern">Modern</option>
+                                        <option value="Script">Script</option>
+                                        <option value="Bold">Bold</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-field">
+                                    <label for="text-color">Text Color</label>
+                                    <div class="color-selector">
+                                        <input type="radio" id="color-black" name="properties[Text Color]" value="Black" checked data-personalization-color>
+                                        <label for="color-black" class="color-option" style="background-color: #000000;" title="Black"></label>
+                                        
+                                        <input type="radio" id="color-white" name="properties[Text Color]" value="White" data-personalization-color>
+                                        <label for="color-white" class="color-option" style="background-color: #ffffff; border: 1px solid #ddd;" title="White"></label>
+                                        
+                                        <input type="radio" id="color-blue" name="properties[Text Color]" value="Blue" data-personalization-color>
+                                        <label for="color-blue" class="color-option" style="background-color: #0066cc;" title="Blue"></label>
+                                        
+                                        <input type="radio" id="color-red" name="properties[Text Color]" value="Red" data-personalization-color>
+                                        <label for="color-red" class="color-option" style="background-color: #cc0000;" title="Red"></label>
+                                        
+                                        <input type="radio" id="color-green" name="properties[Text Color]" value="Green" data-personalization-color>
+                                        <label for="color-green" class="color-option" style="background-color: #00aa00;" title="Green"></label>
+                                        
+                                        <input type="radio" id="color-gold" name="properties[Text Color]" value="Gold" data-personalization-color>
+                                        <label for="color-gold" class="color-option" style="background-color: #ffd700;" title="Gold"></label>
+                                    </div>
+                                </div>
+
+                                <div class="form-field">
+                                    <label for="design-icon">Add Icon (Optional)</label>
+                                    <select id="design-icon" name="properties[Icon]" data-personalization-icon class="personalization-select">
+                                        <option value="">No Icon</option>
+                                        <option value="Heart">❤️ Heart</option>
+                                        <option value="Star">⭐ Star</option>
+                                        <option value="Music">🎵 Music Note</option>
+                                        <option value="Sports">⚽ Sports</option>
+                                        <option value="Nature">🌿 Nature</option>
+                                        <option value="Coffee">☕ Coffee</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="personalization-preview">
+                                <h4>Preview</h4>
+                                <div class="preview-canvas" id="bottle-preview">
+                                    <div class="bottle-outline">
+                                        <svg viewBox="0 0 200 400" xmlns="http://www.w3.org/2000/svg">
+                                            <defs>
+                                                <linearGradient id="bottleGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                                                    <stop offset="0%" style="stop-color:#e0e0e0;stop-opacity:1" />
+                                                    <stop offset="100%" style="stop-color:#f5f5f5;stop-opacity:1" />
+                                                </linearGradient>
+                                            </defs>
+                                            <rect x="60" y="30" width="80" height="20" fill="#d0d0d0" rx="3" />
+                                            <rect x="70" y="50" width="60" height="30" fill="url(#bottleGradient)" rx="5" />
+                                            <rect x="50" y="80" width="100" height="280" fill="url(#bottleGradient)" rx="10" />
+                                            <ellipse cx="100" cy="360" rx="50" ry="10" fill="#d0d0d0" opacity="0.5" />
+                                        </svg>
+                                        <div class="preview-text" id="preview-text" data-font="Classic" data-color="Black">
+                                            <span class="preview-icon" id="preview-icon"></span>
+                                            <span class="preview-name" id="preview-name">Your Text</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <p class="preview-note">This is an approximate preview. Final product may vary slightly.</p>
+                            </div>
+                        </div>
+
+                        <!-- Rush Shipping Option -->
+                        <div class="rush-shipping-option">
+                            <div class="rush-header">
+                                <span class="rush-icon">⚡</span>
+                                <h4>Rush Shipping Available</h4>
+                            </div>
+                            <div class="shipping-options">
+                                <label class="shipping-radio">
+                                    <input type="radio" name="properties[Shipping Speed]" value="Standard (5-7 days)" checked data-shipping-price="0">
+                                    <span class="radio-custom"></span>
+                                    <div class="shipping-details">
+                                        <span class="shipping-name">Standard Shipping</span>
+                                        <span class="shipping-time">5-7 business days</span>
+                                    </div>
+                                    <span class="shipping-price">FREE</span>
+                                </label>
+
+                                <label class="shipping-radio shipping-rush">
+                                    <input type="radio" name="properties[Shipping Speed]" value="Rush (2-3 days)" data-shipping-price="9.99">
+                                    <span class="radio-custom"></span>
+                                    <div class="shipping-details">
+                                        <span class="shipping-name">Rush Shipping ⚡</span>
+                                        <span class="shipping-time">2-3 business days</span>
+                                    </div>
+                                    <span class="shipping-price">+$9.99</span>
+                                </label>
+
+                                <label class="shipping-radio shipping-express">
+                                    <input type="radio" name="properties[Shipping Speed]" value="Express (1-2 days)" data-shipping-price="14.99">
+                                    <span class="radio-custom"></span>
+                                    <div class="shipping-details">
+                                        <span class="shipping-name">Express Shipping 🚀</span>
+                                        <span class="shipping-time">1-2 business days</span>
+                                    </div>
+                                    <span class="shipping-price">+$14.99</span>
+                                </label>
+                            </div>
+                            <div class="rush-note">
+                                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                                    <circle cx="8" cy="8" r="7" stroke="#0066cc" stroke-width="2"/>
+                                    <path d="M8 4V9M8 11V12" stroke="#0066cc" stroke-width="2" stroke-linecap="round"/>
+                                </svg>
+                                <span>Order within <strong class="countdown-timer">2h 34m</strong> for same-day processing</span>
+                            </div>
+                        </div>
+
+                        <!-- Quantity Selector -->
+                        <div class="quantity-selector">
+                            <label for="quantity">Quantity</label>
+                            <div class="quantity-input">
+                                <button type="button" class="qty-btn qty-minus" aria-label="Decrease quantity">−</button>
+                                <input type="number" id="quantity" name="quantity" value="1" min="1" class="qty-input" aria-label="Quantity">
+                                <button type="button" class="qty-btn qty-plus" aria-label="Increase quantity">+</button>
+                            </div>
+                        </div>
+
+                        <input type="hidden" name="id" value="12345" class="variant-id">
+
+                        <!-- Add to Cart Button -->
+                        <button type="submit" name="add" class="btn btn-add-to-cart">
+                            <span class="btn-text">Add to Cart</span>
+                        </button>
+
+                        <!-- Trust Badges -->
+                        <div class="trust-badges">
+                            <div class="badge-item">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M12 2L2 7v7c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7l-10-5z"/>
+                                    <path d="M9 12l2 2 4-4"/>
+                                </svg>
+                                <div class="badge-text">
+                                    <strong>Secure Checkout</strong>
+                                    <span>SSL Encrypted</span>
+                                </div>
+                            </div>
+                            <div class="badge-item">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                                    <circle cx="12" cy="10" r="3"/>
+                                </svg>
+                                <div class="badge-text">
+                                    <strong>Made in USA</strong>
+                                    <span>Premium Quality</span>
+                                </div>
+                            </div>
+                            <div class="badge-item">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+                                    <polyline points="9 22 9 12 15 12 15 22"/>
+                                </svg>
+                                <div class="badge-text">
+                                    <strong>Free Returns</strong>
+                                    <span>30-Day Guarantee</span>
+                                </div>
+                            </div>
+                            <div class="badge-item">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <rect x="1" y="4" width="22" height="16" rx="2" ry="2"/>
+                                    <line x1="1" y1="10" x2="23" y2="10"/>
+                                </svg>
+                                <div class="badge-text">
+                                    <strong>Easy Payments</strong>
+                                    <span>All Cards Accepted</span>
+                                </div>
+                            </div>
+                        </div>
+
+                    </form>
+
+                    <!-- Product Upsells -->
+                    <div class="product-upsells">
+                        <h3 class="upsells-title">Complete Your Order</h3>
+                        <p class="upsells-subtitle">Customers who bought this also loved</p>
+                        
+                        <div class="upsells-grid">
+                            <div class="upsell-item">
+                                <div class="upsell-image">
+                                    <div class="placeholder-image">🧼</div>
+                                </div>
+                                <div class="upsell-info">
+                                    <h4 class="upsell-name">Bottle Cleaning Kit</h4>
+                                    <p class="upsell-description">Keep your bottle fresh & clean</p>
+                                    <div class="upsell-price">$12.99</div>
+                                </div>
+                                <div class="upsell-action">
+                                    <label class="upsell-checkbox">
+                                        <input type="checkbox" name="properties[Add Cleaning Kit]" value="Yes" data-upsell-price="12.99">
+                                        <span class="checkbox-custom"></span>
+                                        <span class="checkbox-label">Add to order</span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="upsell-item">
+                                <div class="upsell-image">
+                                    <div class="placeholder-image">🧤</div>
+                                </div>
+                                <div class="upsell-info">
+                                    <h4 class="upsell-name">Protective Sleeve</h4>
+                                    <p class="upsell-description">Extra protection & grip</p>
+                                    <div class="upsell-price">$8.99</div>
+                                </div>
+                                <div class="upsell-action">
+                                    <label class="upsell-checkbox">
+                                        <input type="checkbox" name="properties[Add Protective Sleeve]" value="Yes" data-upsell-price="8.99">
+                                        <span class="checkbox-custom"></span>
+                                        <span class="checkbox-label">Add to order</span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="upsell-item">
+                                <div class="upsell-image">
+                                    <div class="placeholder-image">🔗</div>
+                                </div>
+                                <div class="upsell-info">
+                                    <h4 class="upsell-name">Carabiner Clip</h4>
+                                    <p class="upsell-description">Easy attachment on-the-go</p>
+                                    <div class="upsell-price">$5.99</div>
+                                </div>
+                                <div class="upsell-action">
+                                    <label class="upsell-checkbox">
+                                        <input type="checkbox" name="properties[Add Carabiner Clip]" value="Yes" data-upsell-price="5.99">
+                                        <span class="checkbox-custom"></span>
+                                        <span class="checkbox-label">Add to order</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="upsells-total" id="upsells-total" style="display: none;">
+                            <span class="total-label">Additional items:</span>
+                            <span class="total-amount"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FAQ Section -->
+            <div class="faq-section">
+                <h2 class="faq-title">Frequently Asked Questions</h2>
+                <div class="faq-list">
+                    <div class="faq-item">
+                        <button class="faq-question" aria-expanded="false">
+                            <span>What materials are the water bottles made from?</span>
+                            <span class="faq-icon">+</span>
+                        </button>
+                        <div class="faq-answer">
+                            <p>Our water bottles are made from premium BPA-free stainless steel with double-wall vacuum insulation. They keep drinks cold for 24 hours and hot for 12 hours. All materials are food-grade and completely safe.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <button class="faq-question" aria-expanded="false">
+                            <span>How long does personalization take?</span>
+                            <span class="faq-icon">+</span>
+                        </button>
+                        <div class="faq-answer">
+                            <p>Standard orders ship within 3-5 business days. Personalized bottles are carefully crafted and typically ship within 5-7 business days. Rush processing is available for an additional fee if you need it sooner!</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <button class="faq-question" aria-expanded="false">
+                            <span>Is the personalization permanent?</span>
+                            <span class="faq-icon">+</span>
+                        </button>
+                        <div class="faq-answer">
+                            <p>Yes! We use professional laser engraving technology that creates a permanent design. It won't fade, peel, or wear off over time. Your personalization is guaranteed to last as long as your bottle.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <button class="faq-question" aria-expanded="false">
+                            <span>What's your return policy?</span>
+                            <span class="faq-icon">+</span>
+                        </button>
+                        <div class="faq-answer">
+                            <p>We want you to love your bottle! Non-personalized items can be returned within 30 days. Due to the custom nature of personalized bottles, they are final sale unless there's a manufacturing defect.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Reviews Section -->
+            <div class="product-reviews" id="reviews">
+                <div class="reviews-header">
+                    <h2 class="reviews-title">Customer Reviews</h2>
+                    <button class="btn-write-review">Write a Review</button>
+                </div>
+
+                <div class="reviews-summary">
+                    <div class="rating-overview">
+                        <div class="rating-score">4.8</div>
+                        <div class="rating-stars">⭐⭐⭐⭐⭐</div>
+                        <div class="rating-count">Based on 247 reviews</div>
+                    </div>
+
+                    <div class="rating-breakdown">
+                        <div class="rating-bar-item">
+                            <span class="stars-label">5 ⭐</span>
+                            <div class="progress-bar"><div class="progress-fill" style="width: 78%"></div></div>
+                            <span class="count">193</span>
+                        </div>
+                        <div class="rating-bar-item">
+                            <span class="stars-label">4 ⭐</span>
+                            <div class="progress-bar"><div class="progress-fill" style="width: 15%"></div></div>
+                            <span class="count">37</span>
+                        </div>
+                        <div class="rating-bar-item">
+                            <span class="stars-label">3 ⭐</span>
+                            <div class="progress-bar"><div class="progress-fill" style="width: 5%"></div></div>
+                            <span class="count">12</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="reviews-list">
+                    <div class="review-item">
+                        <div class="review-header">
+                            <div class="reviewer-info">
+                                <div class="reviewer-avatar">S</div>
+                                <div>
+                                    <div class="reviewer-name">Sarah M.</div>
+                                    <div class="review-date">2 weeks ago</div>
+                                </div>
+                            </div>
+                            <div class="review-rating">⭐⭐⭐⭐⭐</div>
+                        </div>
+                        <div class="review-content">
+                            <h4 class="review-title">Perfect personalized gift!</h4>
+                            <p class="review-text">Ordered 5 bottles for my bridesmaids and they turned out amazing! The personalization is so crisp and professional. Everyone loved them. Highly recommend!</p>
+                        </div>
+                        <div class="review-footer">
+                            <span class="verified-badge">✓ Verified Purchase</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Email Popup -->
+    <div class="email-popup" id="email-popup" data-popup-delay="5000">
+        <div class="popup-overlay"></div>
+        <div class="popup-content">
+            <button class="popup-close" aria-label="Close popup">&times;</button>
+            <div class="popup-body">
+                <div class="popup-icon">💧</div>
+                <h2 class="popup-title">Get 15% Off Your First Order!</h2>
+                <p class="popup-subtitle">Join our hydration community and never miss exclusive deals</p>
+                <form class="popup-form" id="email-signup-form">
+                    <div class="form-group">
+                        <input type="email" name="email" id="popup-email" placeholder="Enter your email" required class="popup-input" aria-label="Email address">
+                        <button type="submit" class="popup-submit">
+                            <span class="submit-text">Get My Discount</span>
+                            <span class="submit-loading">Subscribing...</span>
+                        </button>
+                    </div>
+                    <div class="form-message" id="form-message"></div>
+                </form>
+                <div class="popup-benefits">
+                    <ul>
+                        <li>✓ Exclusive early access to new designs</li>
+                        <li>✓ Special birthday surprises</li>
+                        <li>✓ Hydration tips & wellness content</li>
+                    </ul>
+                </div>
+                <p class="popup-privacy">We respect your privacy. Unsubscribe anytime.</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="assets/water-bottle-conversion.js"></script>
+</body>
+</html>

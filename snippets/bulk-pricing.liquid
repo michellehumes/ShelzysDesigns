@@ -1,0 +1,164 @@
+{% comment %}
+  Bulk Pricing Component
+  Shows tiered pricing to increase AOV
+{% endcomment %}
+
+<div class="bulk-pricing">
+  <div class="bulk-pricing-header">
+    <span class="bulk-icon">📦</span>
+    <h4>Volume Discounts</h4>
+  </div>
+  
+  <div class="pricing-tiers">
+    <div class="tier" data-min-qty="1" data-discount="0">
+      <span class="tier-qty">1 bottle</span>
+      <span class="tier-discount">Regular Price</span>
+    </div>
+    <div class="tier tier-highlight" data-min-qty="3" data-discount="10">
+      <span class="tier-badge">Popular</span>
+      <span class="tier-qty">3+ bottles</span>
+      <span class="tier-discount">Save 10%</span>
+    </div>
+    <div class="tier" data-min-qty="5" data-discount="15">
+      <span class="tier-qty">5+ bottles</span>
+      <span class="tier-discount">Save 15%</span>
+    </div>
+    <div class="tier tier-best" data-min-qty="10" data-discount="20">
+      <span class="tier-badge">Best Value</span>
+      <span class="tier-qty">10+ bottles</span>
+      <span class="tier-discount">Save 20%</span>
+    </div>
+  </div>
+  
+  <div class="bulk-savings" id="bulk-savings" style="display: none;">
+    <span class="savings-text">You're saving <strong class="savings-amount"></strong>!</span>
+  </div>
+</div>
+
+<style>
+.bulk-pricing {
+  background: #f8f9fa;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 15px;
+  margin: 15px 0;
+}
+
+.bulk-pricing-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.bulk-icon {
+  font-size: 20px;
+}
+
+.bulk-pricing-header h4 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: #333;
+}
+
+.pricing-tiers {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 8px;
+}
+
+.tier {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 12px;
+  background: white;
+  border: 2px solid #e0e0e0;
+  border-radius: 6px;
+  transition: all 0.2s;
+}
+
+.tier:hover {
+  border-color: #0066cc;
+  transform: translateX(2px);
+}
+
+.tier.tier-highlight {
+  border-color: #0066cc;
+  background: #f0f7ff;
+}
+
+.tier.tier-best {
+  border-color: #00aa00;
+  background: #f0fff0;
+}
+
+.tier.active {
+  border-width: 3px;
+  box-shadow: 0 2px 8px rgba(0, 102, 204, 0.2);
+}
+
+.tier-badge {
+  position: absolute;
+  top: -8px;
+  left: 10px;
+  background: #0066cc;
+  color: white;
+  font-size: 10px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 10px;
+  text-transform: uppercase;
+}
+
+.tier-best .tier-badge {
+  background: #00aa00;
+}
+
+.tier-qty {
+  font-weight: 600;
+  color: #333;
+  font-size: 14px;
+}
+
+.tier-discount {
+  font-weight: 600;
+  color: #0066cc;
+  font-size: 14px;
+}
+
+.tier-best .tier-discount {
+  color: #00aa00;
+}
+
+.bulk-savings {
+  margin-top: 12px;
+  padding: 10px;
+  background: #e6f7e6;
+  border-left: 3px solid #00aa00;
+  border-radius: 4px;
+}
+
+.savings-text {
+  color: #006600;
+  font-size: 14px;
+}
+
+.savings-amount {
+  font-size: 16px;
+}
+
+@media (min-width: 768px) {
+  .pricing-tiers {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .pricing-tiers {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+</style>

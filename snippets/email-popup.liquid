@@ -1,0 +1,245 @@
+{% comment %}
+  Email Popup Component
+  Captures emails for marketing with incentive
+{% endcomment %}
+
+<div class="email-popup" id="email-popup" data-popup-delay="5000">
+  <div class="popup-overlay"></div>
+  <div class="popup-content">
+    <button class="popup-close" aria-label="Close popup">&times;</button>
+    
+    <div class="popup-body">
+      <div class="popup-icon">
+        💧
+      </div>
+      
+      <h2 class="popup-title">Get 15% Off Your First Order!</h2>
+      <p class="popup-subtitle">Join our hydration community and never miss exclusive deals</p>
+      
+      <form class="popup-form" id="email-signup-form" data-form-type="newsletter">
+        <div class="form-group">
+          <input 
+            type="email" 
+            name="email" 
+            id="popup-email" 
+            placeholder="Enter your email"
+            required
+            class="popup-input"
+            aria-label="Email address"
+          >
+          <button type="submit" class="popup-submit">
+            <span class="submit-text">Get My Discount</span>
+            <span class="submit-loading">Subscribing...</span>
+          </button>
+        </div>
+        <div class="form-message" id="form-message"></div>
+      </form>
+      
+      <div class="popup-benefits">
+        <ul>
+          <li>✓ Exclusive early access to new designs</li>
+          <li>✓ Special birthday surprises</li>
+          <li>✓ Hydration tips & wellness content</li>
+        </ul>
+      </div>
+      
+      <p class="popup-privacy">
+        We respect your privacy. Unsubscribe anytime.
+      </p>
+    </div>
+  </div>
+</div>
+
+<style>
+.email-popup {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 10000;
+}
+
+.email-popup.active {
+  display: block;
+}
+
+.popup-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(3px);
+}
+
+.popup-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  border-radius: 12px;
+  max-width: 480px;
+  width: 90%;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  animation: popupSlideIn 0.3s ease-out;
+}
+
+@keyframes popupSlideIn {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -40%);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }
+}
+
+.popup-close {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: none;
+  border: none;
+  font-size: 28px;
+  cursor: pointer;
+  color: #666;
+  line-height: 1;
+  padding: 5px;
+  z-index: 1;
+}
+
+.popup-close:hover {
+  color: #000;
+}
+
+.popup-body {
+  padding: 40px 30px 30px;
+  text-align: center;
+}
+
+.popup-icon {
+  font-size: 48px;
+  margin-bottom: 15px;
+}
+
+.popup-title {
+  font-size: 24px;
+  font-weight: bold;
+  margin: 0 0 10px;
+  color: #333;
+}
+
+.popup-subtitle {
+  font-size: 16px;
+  color: #666;
+  margin: 0 0 25px;
+}
+
+.popup-form {
+  margin-bottom: 20px;
+}
+
+.form-group {
+  display: flex;
+  gap: 8px;
+  flex-direction: column;
+}
+
+.popup-input {
+  flex: 1;
+  padding: 14px 16px;
+  border: 2px solid #ddd;
+  border-radius: 6px;
+  font-size: 15px;
+  width: 100%;
+}
+
+.popup-input:focus {
+  outline: none;
+  border-color: #0066cc;
+}
+
+.popup-submit {
+  padding: 14px 24px;
+  background: #0066cc;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+  width: 100%;
+}
+
+.popup-submit:hover {
+  background: #0052a3;
+}
+
+.popup-submit.loading .submit-text {
+  display: none;
+}
+
+.popup-submit .submit-loading {
+  display: none;
+}
+
+.popup-submit.loading .submit-loading {
+  display: inline;
+}
+
+.form-message {
+  margin-top: 10px;
+  font-size: 14px;
+  min-height: 20px;
+}
+
+.form-message.success {
+  color: #00aa00;
+}
+
+.form-message.error {
+  color: #cc0000;
+}
+
+.popup-benefits {
+  margin: 20px 0;
+  text-align: left;
+}
+
+.popup-benefits ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.popup-benefits li {
+  padding: 6px 0;
+  font-size: 14px;
+  color: #444;
+}
+
+.popup-privacy {
+  font-size: 12px;
+  color: #999;
+  margin: 15px 0 0;
+}
+
+@media (min-width: 768px) {
+  .form-group {
+    flex-direction: row;
+  }
+  
+  .popup-submit {
+    width: auto;
+    white-space: nowrap;
+  }
+}
+</style>

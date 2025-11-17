@@ -1,0 +1,102 @@
+{% comment %}
+  Live Personalization Preview Component
+  Shows real-time preview of bottle with custom text
+{% endcomment %}
+
+<div class="personalization-section">
+  <h3 class="personalization-title">Personalize Your Bottle</h3>
+  
+  <div class="personalization-fields">
+    
+    {%- comment -%} Custom Text Input {%- endcomment -%}
+    <div class="form-field">
+      <label for="custom-text">Custom Text (Max 15 characters)</label>
+      <input 
+        type="text" 
+        id="custom-text" 
+        name="properties[Custom Text]" 
+        maxlength="15" 
+        placeholder="Enter your text"
+        data-personalization-input
+        class="personalization-input"
+      >
+      <span class="char-count">0/15</span>
+    </div>
+
+    {%- comment -%} Font Style Selection {%- endcomment -%}
+    <div class="form-field">
+      <label for="font-style">Font Style</label>
+      <select id="font-style" name="properties[Font Style]" data-personalization-font class="personalization-select">
+        <option value="Classic">Classic</option>
+        <option value="Modern">Modern</option>
+        <option value="Script">Script</option>
+        <option value="Bold">Bold</option>
+      </select>
+    </div>
+
+    {%- comment -%} Text Color Selection {%- endcomment -%}
+    <div class="form-field">
+      <label for="text-color">Text Color</label>
+      <div class="color-selector">
+        <input type="radio" id="color-black" name="properties[Text Color]" value="Black" checked data-personalization-color>
+        <label for="color-black" class="color-option" style="background-color: #000000;" title="Black"></label>
+        
+        <input type="radio" id="color-white" name="properties[Text Color]" value="White" data-personalization-color>
+        <label for="color-white" class="color-option" style="background-color: #ffffff; border: 1px solid #ddd;" title="White"></label>
+        
+        <input type="radio" id="color-blue" name="properties[Text Color]" value="Blue" data-personalization-color>
+        <label for="color-blue" class="color-option" style="background-color: #0066cc;" title="Blue"></label>
+        
+        <input type="radio" id="color-red" name="properties[Text Color]" value="Red" data-personalization-color>
+        <label for="color-red" class="color-option" style="background-color: #cc0000;" title="Red"></label>
+        
+        <input type="radio" id="color-green" name="properties[Text Color]" value="Green" data-personalization-color>
+        <label for="color-green" class="color-option" style="background-color: #00aa00;" title="Green"></label>
+        
+        <input type="radio" id="color-gold" name="properties[Text Color]" value="Gold" data-personalization-color>
+        <label for="color-gold" class="color-option" style="background-color: #ffd700;" title="Gold"></label>
+      </div>
+    </div>
+
+    {%- comment -%} Icon/Design Selection {%- endcomment -%}
+    <div class="form-field">
+      <label for="design-icon">Add Icon (Optional)</label>
+      <select id="design-icon" name="properties[Icon]" data-personalization-icon class="personalization-select">
+        <option value="">No Icon</option>
+        <option value="Heart">❤️ Heart</option>
+        <option value="Star">⭐ Star</option>
+        <option value="Music">🎵 Music Note</option>
+        <option value="Sports">⚽ Sports</option>
+        <option value="Nature">🌿 Nature</option>
+        <option value="Coffee">☕ Coffee</option>
+      </select>
+    </div>
+  </div>
+
+  {%- comment -%} Live Preview Canvas {%- endcomment -%}
+  <div class="personalization-preview">
+    <h4>Preview</h4>
+    <div class="preview-canvas" id="bottle-preview">
+      <div class="bottle-outline">
+        <svg viewBox="0 0 200 400" xmlns="http://www.w3.org/2000/svg">
+          {%- comment -%} Water Bottle Outline {%- endcomment -%}
+          <defs>
+            <linearGradient id="bottleGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" style="stop-color:#e0e0e0;stop-opacity:1" />
+              <stop offset="100%" style="stop-color:#f5f5f5;stop-opacity:1" />
+            </linearGradient>
+          </defs>
+          <rect x="60" y="30" width="80" height="20" fill="#d0d0d0" rx="3" />
+          <rect x="70" y="50" width="60" height="30" fill="url(#bottleGradient)" rx="5" />
+          <rect x="50" y="80" width="100" height="280" fill="url(#bottleGradient)" rx="10" />
+          <ellipse cx="100" cy="360" rx="50" ry="10" fill="#d0d0d0" opacity="0.5" />
+        </svg>
+        <div class="preview-text" id="preview-text" data-font="Classic" data-color="Black">
+          <span class="preview-icon" id="preview-icon"></span>
+          <span class="preview-name" id="preview-name">Your Text</span>
+        </div>
+      </div>
+    </div>
+    <p class="preview-note">This is an approximate preview. Final product may vary slightly.</p>
+  </div>
+</div>

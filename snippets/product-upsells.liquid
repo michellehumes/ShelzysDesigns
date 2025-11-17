@@ -1,0 +1,237 @@
+{% comment %}
+  Product Upsells Component
+  Increases AOV with related products
+{% endcomment %}
+
+<div class="product-upsells">
+  <h3 class="upsells-title">Complete Your Order</h3>
+  <p class="upsells-subtitle">Customers who bought this also loved</p>
+  
+  <div class="upsells-grid">
+    
+    {%- comment -%} Upsell 1: Bottle Cleaning Kit {%- endcomment -%}
+    <div class="upsell-item" data-upsell-id="cleaning-kit">
+      <div class="upsell-image">
+        <div class="placeholder-image">🧼</div>
+      </div>
+      <div class="upsell-info">
+        <h4 class="upsell-name">Bottle Cleaning Kit</h4>
+        <p class="upsell-description">Keep your bottle fresh & clean</p>
+        <div class="upsell-price">$12.99</div>
+      </div>
+      <div class="upsell-action">
+        <label class="upsell-checkbox">
+          <input type="checkbox" name="properties[Add Cleaning Kit]" value="Yes" data-upsell-price="12.99">
+          <span class="checkbox-custom"></span>
+          <span class="checkbox-label">Add to order</span>
+        </label>
+      </div>
+    </div>
+
+    {%- comment -%} Upsell 2: Protective Sleeve {%- endcomment -%}
+    <div class="upsell-item" data-upsell-id="sleeve">
+      <div class="upsell-image">
+        <div class="placeholder-image">🧤</div>
+      </div>
+      <div class="upsell-info">
+        <h4 class="upsell-name">Protective Sleeve</h4>
+        <p class="upsell-description">Extra protection & grip</p>
+        <div class="upsell-price">$8.99</div>
+      </div>
+      <div class="upsell-action">
+        <label class="upsell-checkbox">
+          <input type="checkbox" name="properties[Add Protective Sleeve]" value="Yes" data-upsell-price="8.99">
+          <span class="checkbox-custom"></span>
+          <span class="checkbox-label">Add to order</span>
+        </label>
+      </div>
+    </div>
+
+    {%- comment -%} Upsell 3: Carabiner Clip {%- endcomment -%}
+    <div class="upsell-item" data-upsell-id="carabiner">
+      <div class="upsell-image">
+        <div class="placeholder-image">🔗</div>
+      </div>
+      <div class="upsell-info">
+        <h4 class="upsell-name">Carabiner Clip</h4>
+        <p class="upsell-description">Easy attachment on-the-go</p>
+        <div class="upsell-price">$5.99</div>
+      </div>
+      <div class="upsell-action">
+        <label class="upsell-checkbox">
+          <input type="checkbox" name="properties[Add Carabiner Clip]" value="Yes" data-upsell-price="5.99">
+          <span class="checkbox-custom"></span>
+          <span class="checkbox-label">Add to order</span>
+        </label>
+      </div>
+    </div>
+
+  </div>
+  
+  <div class="upsells-total" id="upsells-total" style="display: none;">
+    <span class="total-label">Additional items:</span>
+    <span class="total-amount"></span>
+  </div>
+</div>
+
+<style>
+.product-upsells {
+  margin: 30px 0;
+  padding: 20px;
+  background: #fafafa;
+  border-radius: 8px;
+}
+
+.upsells-title {
+  font-size: 20px;
+  font-weight: 600;
+  margin: 0 0 5px;
+  color: #333;
+}
+
+.upsells-subtitle {
+  font-size: 14px;
+  color: #666;
+  margin: 0 0 20px;
+}
+
+.upsells-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 15px;
+}
+
+.upsell-item {
+  display: grid;
+  grid-template-columns: 60px 1fr auto;
+  gap: 12px;
+  align-items: center;
+  padding: 15px;
+  background: white;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  transition: border-color 0.2s;
+}
+
+.upsell-item:hover {
+  border-color: #0066cc;
+}
+
+.upsell-item.selected {
+  border-color: #00aa00;
+  background: #f0fff0;
+}
+
+.upsell-image {
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f0f0f0;
+  border-radius: 6px;
+}
+
+.placeholder-image {
+  font-size: 32px;
+}
+
+.upsell-info {
+  flex: 1;
+}
+
+.upsell-name {
+  font-size: 15px;
+  font-weight: 600;
+  margin: 0 0 4px;
+  color: #333;
+}
+
+.upsell-description {
+  font-size: 13px;
+  color: #666;
+  margin: 0 0 6px;
+}
+
+.upsell-price {
+  font-size: 16px;
+  font-weight: 600;
+  color: #0066cc;
+}
+
+.upsell-action {
+  display: flex;
+  align-items: center;
+}
+
+.upsell-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.upsell-checkbox input[type="checkbox"] {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.checkbox-custom {
+  width: 24px;
+  height: 24px;
+  border: 2px solid #ddd;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  background: white;
+}
+
+.upsell-checkbox input[type="checkbox"]:checked + .checkbox-custom {
+  background: #00aa00;
+  border-color: #00aa00;
+}
+
+.upsell-checkbox input[type="checkbox"]:checked + .checkbox-custom::after {
+  content: "✓";
+  color: white;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.checkbox-label {
+  font-size: 14px;
+  font-weight: 500;
+  color: #333;
+}
+
+.upsells-total {
+  margin-top: 15px;
+  padding: 12px 15px;
+  background: #e6f7e6;
+  border-radius: 6px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.total-label {
+  font-size: 14px;
+  color: #333;
+}
+
+.total-amount {
+  font-size: 18px;
+  font-weight: 600;
+  color: #00aa00;
+}
+
+@media (min-width: 768px) {
+  .upsells-grid {
+    grid-template-columns: 1fr;
+  }
+}
+</style>

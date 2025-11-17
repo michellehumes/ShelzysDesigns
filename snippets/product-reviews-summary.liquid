@@ -1,0 +1,40 @@
+{% comment %}
+  Product Reviews Summary Component
+  Shows star rating at top of product page
+{% endcomment %}
+
+<div class="reviews-summary-compact">
+  <a href="#reviews" class="reviews-link">
+    <div class="stars">⭐⭐⭐⭐⭐</div>
+    <span class="rating-text">4.8 (247 reviews)</span>
+  </a>
+</div>
+
+<style>
+.reviews-summary-compact {
+  margin: 10px 0;
+}
+
+.reviews-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  transition: opacity 0.2s;
+}
+
+.reviews-link:hover {
+  opacity: 0.7;
+}
+
+.stars {
+  font-size: 14px;
+  line-height: 1;
+}
+
+.rating-text {
+  font-size: 14px;
+  color: #666;
+  text-decoration: underline;
+}
+</style>

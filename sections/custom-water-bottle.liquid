@@ -1,0 +1,158 @@
+{% comment %}
+  Custom Water Bottle Product Section
+  Includes: Product form, personalization preview, bulk pricing, upsells, rush shipping
+{% endcomment %}
+
+<div class="water-bottle-product" data-section-id="{{ section.id }}" data-product-id="{{ product.id }}">
+  <div class="product-container">
+    <div class="product-grid">
+      
+      {%- comment -%} Product Gallery {%- endcomment -%}
+      <div class="product-gallery">
+        {% render 'product-gallery', product: product %}
+      </div>
+
+      {%- comment -%} Product Info & Form {%- endcomment -%}
+      <div class="product-info">
+        <div class="product-header">
+          <h1 class="product-title">{{ product.title }}</h1>
+          {% if product.vendor != blank %}
+            <p class="product-vendor">{{ product.vendor }}</p>
+          {% endif %}
+          {% render 'product-reviews-summary', product: product %}
+        </div>
+
+        <div class="product-price-container">
+          <div class="product-price" data-price="{{ product.selected_or_first_available_variant.price }}">
+            <span class="price">{{ product.selected_or_first_available_variant.price | money }}</span>
+            {% if product.compare_at_price_varies %}
+              <span class="compare-price">{{ product.selected_or_first_available_variant.compare_at_price | money }}</span>
+            {% endif %}
+          </div>
+          {% render 'bulk-pricing', product: product %}
+        </div>
+
+        <div class="product-description">
+          {{ product.description }}
+        </div>
+
+        {%- comment -%} Product Form with Properties - CRITICAL: All form properties must be inside {% form 'product' %} {%- endcomment -%}
+        {% form 'product', product, id: 'product-form', class: 'product-form' %}
+          
+          {%- comment -%} Variant Selector {%- endcomment -%}
+          {% unless product.has_only_default_variant %}
+            <div class="product-variants">
+              {% for option in product.options_with_values %}
+                <div class="product-option">
+                  <label class="option-label">{{ option.name }}</label>
+                  <div class="option-values">
+                    {% for value in option.values %}
+                      <input 
+                        type="radio" 
+                        id="option-{{ option.position }}-{{ value | handle }}"
+                        name="options[{{ option.name }}]"
+                        value="{{ value }}"
+                        {% if option.selected_value == value %}checked{% endif %}
+                        data-option-position="{{ option.position }}"
+                      >
+                      <label for="option-{{ option.position }}-{{ value | handle }}" class="option-value">
+                        {{ value }}
+                      </label>
+                    {% endfor %}
+                  </div>
+                </div>
+              {% endfor %}
+            </div>
+          {% endunless %}
+
+          {%- comment -%} Live Personalization Section {%- endcomment -%}
+          {% render 'personalization-preview', product: product %}
+
+          {%- comment -%} Rush Shipping Option {%- endcomment -%}
+          {% render 'rush-shipping-option' %}
+
+          {%- comment -%} Quantity Selector {%- endcomment -%}
+          <div class="quantity-selector">
+            <label for="quantity">Quantity</label>
+            <div class="quantity-input">
+              <button type="button" class="qty-btn qty-minus" aria-label="Decrease quantity">−</button>
+              <input 
+                type="number" 
+                id="quantity" 
+                name="quantity" 
+                value="1" 
+                min="1" 
+                class="qty-input"
+                aria-label="Quantity"
+              >
+              <button type="button" class="qty-btn qty-plus" aria-label="Increase quantity">+</button>
+            </div>
+          </div>
+
+          {%- comment -%} Hidden variant ID input {%- endcomment -%}
+          <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}" class="variant-id">
+
+          {%- comment -%} Add to Cart Button {%- endcomment -%}
+          <button 
+            type="submit" 
+            name="add" 
+            class="btn btn-add-to-cart"
+            {% unless product.selected_or_first_available_variant.available %}disabled{% endunless %}
+          >
+            <span class="btn-text">
+              {% if product.selected_or_first_available_variant.available %}
+                Add to Cart
+              {% else %}
+                Sold Out
+              {% endif %}
+            </span>
+          </button>
+
+          {%- comment -%} Trust Badges {%- endcomment -%}
+          {% render 'trust-badges' %}
+
+        {% endform %}
+
+        {%- comment -%} Upsell Products {%- endcomment -%}
+        {% render 'product-upsells', product: product %}
+      </div>
+    </div>
+
+    {%- comment -%} FAQ Section {%- endcomment -%}
+    {% render 'faq-section' %}
+
+    {%- comment -%} Reviews Section {%- endcomment -%}
+    {% render 'product-reviews', product: product %}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Custom Water Bottle",
+  "settings": [
+    {
+      "type": "text",
+      "id": "section_heading",
+      "label": "Section Heading",
+      "default": "Personalize Your Water Bottle"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_vendor",
+      "label": "Show Vendor",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_description",
+      "label": "Show Description",
+      "default": true
+    }
+  ],
+  "presets": [
+    {
+      "name": "Custom Water Bottle"
+    }
+  ]
+}
+{% endschema %}
