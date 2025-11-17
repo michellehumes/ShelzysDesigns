@@ -1,0 +1,305 @@
+{%- comment -%}
+  Urgency Indicators
+  Purpose: Scarcity signals (low stock, viewer count, recent orders)
+  Tech: Random number generation, dynamic messaging
+{%- endcomment -%}
+
+<style>
+  .urgency-container {
+    position: relative;
+    margin: 1.5rem 0;
+  }
+
+  .urgency-indicators {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .urgency-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem 1rem;
+    background: white;
+    border-left: 4px solid #ff6b6b;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    animation: slideIn 0.5s ease;
+  }
+
+  @keyframes slideIn {
+    from {
+      opacity: 0;
+      transform: translateX(-20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  .urgency-item.low-stock {
+    border-left-color: #ff6b6b;
+  }
+
+  .urgency-item.high-demand {
+    border-left-color: #ffa500;
+  }
+
+  .urgency-item.recent-order {
+    border-left-color: #4caf50;
+  }
+
+  .urgency-item.viewers {
+    border-left-color: #667eea;
+  }
+
+  .urgency-icon {
+    font-size: 1.5rem;
+    flex-shrink: 0;
+  }
+
+  .urgency-content {
+    flex: 1;
+  }
+
+  .urgency-text {
+    font-size: 0.95rem;
+    color: var(--color-foreground, #333);
+    font-weight: 600;
+    margin: 0;
+  }
+
+  .urgency-subtext {
+    font-size: 0.85rem;
+    color: #666;
+    margin: 0;
+  }
+
+  .urgency-pulse {
+    width: 12px;
+    height: 12px;
+    background: #ff6b6b;
+    border-radius: 50%;
+    flex-shrink: 0;
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% {
+      opacity: 1;
+      transform: scale(1);
+    }
+    50% {
+      opacity: 0.5;
+      transform: scale(1.2);
+    }
+  }
+
+  .urgency-timer {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: #fff3cd;
+    color: #856404;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-top: 1rem;
+    border: 1px solid #ffeeba;
+  }
+
+  .urgency-timer-icon {
+    font-size: 1.2rem;
+  }
+
+  .countdown-numbers {
+    font-family: 'Courier New', monospace;
+    font-size: 1.05rem;
+    font-weight: 700;
+  }
+
+  @media (max-width: 768px) {
+    .urgency-item {
+      padding: 0.65rem 0.85rem;
+    }
+
+    .urgency-icon {
+      font-size: 1.25rem;
+    }
+
+    .urgency-text {
+      font-size: 0.9rem;
+    }
+
+    .urgency-subtext {
+      font-size: 0.8rem;
+    }
+
+    .urgency-timer {
+      font-size: 0.85rem;
+    }
+  }
+</style>
+
+<div class="urgency-container">
+  <div class="urgency-indicators">
+    {%- comment -%} Low Stock Warning {%- endcomment -%}
+    <div class="urgency-item low-stock" id="lowStockIndicator">
+      <div class="urgency-pulse"></div>
+      <div class="urgency-icon">📦</div>
+      <div class="urgency-content">
+        <p class="urgency-text" id="stockText">Only 3 left in stock!</p>
+        <p class="urgency-subtext">Order soon to avoid disappointment</p>
+      </div>
+    </div>
+
+    {%- comment -%} Current Viewers {%- endcomment -%}
+    <div class="urgency-item viewers" id="viewersIndicator">
+      <div class="urgency-icon">👁️</div>
+      <div class="urgency-content">
+        <p class="urgency-text" id="viewersText">12 people are viewing this</p>
+        <p class="urgency-subtext">High demand right now</p>
+      </div>
+    </div>
+
+    {%- comment -%} Recent Orders {%- endcomment -%}
+    <div class="urgency-item recent-order" id="recentOrderIndicator">
+      <div class="urgency-icon">🎉</div>
+      <div class="urgency-content">
+        <p class="urgency-text" id="orderText">3 sold in the last 24 hours</p>
+        <p class="urgency-subtext">Popular choice among customers</p>
+      </div>
+    </div>
+
+    {%- comment -%} High Demand Alert {%- endcomment -%}
+    <div class="urgency-item high-demand" id="demandIndicator" style="display: none;">
+      <div class="urgency-icon">🔥</div>
+      <div class="urgency-content">
+        <p class="urgency-text">High demand for this item</p>
+        <p class="urgency-subtext">Frequently added to carts</p>
+      </div>
+    </div>
+  </div>
+
+  {%- comment -%} Flash Sale Timer (optional) {%- endcomment -%}
+  <div class="urgency-timer" id="flashSaleTimer" style="display: none;">
+    <span class="urgency-timer-icon">⏰</span>
+    <span>Flash sale ends in: <span class="countdown-numbers" id="timerDisplay">00:00:00</span></span>
+  </div>
+</div>
+
+<script>
+  {%- comment -%} Dynamic urgency indicators {%- endcomment -%}
+  document.addEventListener('DOMContentLoaded', function() {
+    // Generate realistic random numbers
+    function getRandomInt(min, max) {
+      return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+
+    // Update low stock indicator
+    function updateStockIndicator() {
+      const stockLevel = getRandomInt(2, 8);
+      const stockText = document.getElementById('stockText');
+      
+      if (stockLevel <= 3) {
+        stockText.textContent = `Only ${stockLevel} left in stock!`;
+        stockText.style.color = '#dc3545';
+      } else if (stockLevel <= 5) {
+        stockText.textContent = `${stockLevel} remaining in stock`;
+        stockText.style.color = '#ffa500';
+      } else {
+        stockText.textContent = `${stockLevel} available`;
+        stockText.style.color = '#333';
+      }
+    }
+
+    // Update viewers count
+    function updateViewers() {
+      const viewers = getRandomInt(5, 25);
+      const viewersText = document.getElementById('viewersText');
+      viewersText.textContent = `${viewers} people are viewing this`;
+    }
+
+    // Update recent orders
+    function updateRecentOrders() {
+      const orders = getRandomInt(1, 8);
+      const timeframe = getRandomInt(1, 48);
+      const orderText = document.getElementById('orderText');
+      
+      if (timeframe <= 24) {
+        orderText.textContent = `${orders} sold in the last 24 hours`;
+      } else {
+        orderText.textContent = `${orders} sold in the last 48 hours`;
+      }
+    }
+
+    // Randomly show high demand indicator
+    function showHighDemand() {
+      if (Math.random() > 0.5) {
+        document.getElementById('demandIndicator').style.display = 'flex';
+      }
+    }
+
+    // Optional: Flash sale countdown timer
+    function startFlashSaleTimer(endTime) {
+      const timerDisplay = document.getElementById('timerDisplay');
+      const timerElement = document.getElementById('flashSaleTimer');
+      
+      // Uncomment to activate flash sale timer
+      // timerElement.style.display = 'inline-flex';
+      
+      function updateTimer() {
+        const now = new Date().getTime();
+        const distance = endTime - now;
+        
+        if (distance < 0) {
+          timerDisplay.textContent = '00:00:00';
+          return;
+        }
+        
+        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+        
+        timerDisplay.textContent = 
+          String(hours).padStart(2, '0') + ':' + 
+          String(minutes).padStart(2, '0') + ':' + 
+          String(seconds).padStart(2, '0');
+      }
+      
+      updateTimer();
+      setInterval(updateTimer, 1000);
+    }
+
+    // Initialize all indicators
+    updateStockIndicator();
+    updateViewers();
+    updateRecentOrders();
+    showHighDemand();
+
+    // Periodically update viewers count
+    setInterval(updateViewers, 30000); // Every 30 seconds
+
+    // Optional: Set flash sale end time (e.g., in 2 hours)
+    // const flashSaleEnd = new Date().getTime() + (2 * 60 * 60 * 1000);
+    // startFlashSaleTimer(flashSaleEnd);
+
+    // Simulate real-time updates for orders
+    setInterval(function() {
+      const shouldUpdate = Math.random() > 0.7; // 30% chance every interval
+      if (shouldUpdate) {
+        updateRecentOrders();
+        
+        // Briefly highlight the indicator
+        const orderIndicator = document.getElementById('recentOrderIndicator');
+        orderIndicator.style.animation = 'none';
+        setTimeout(function() {
+          orderIndicator.style.animation = 'slideIn 0.5s ease';
+        }, 10);
+      }
+    }, 60000); // Check every minute
+  });
+</script>

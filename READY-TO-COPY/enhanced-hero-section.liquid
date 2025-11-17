@@ -1,0 +1,442 @@
+{%- comment -%}
+  Enhanced Hero Section
+  Purpose: Homepage hero with animated gradients and social proof
+  Animation: CSS keyframes, floating elements, gradient shifts
+  Responsive: Mobile-first design, grid to single-column on tablet
+{%- endcomment -%}
+
+<style>
+  @keyframes gradientShift {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+
+  @keyframes float {
+    0%, 100% {
+      transform: translateY(0px);
+    }
+    50% {
+      transform: translateY(-20px);
+    }
+  }
+
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .hero-section {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+    background-size: 200% 200%;
+    animation: gradientShift 15s ease infinite;
+    padding: 6rem 2rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="2" fill="rgba(255,255,255,0.1)"/></svg>');
+    opacity: 0.3;
+  }
+
+  .hero-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+  }
+
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+  }
+
+  .hero-content {
+    animation: fadeInUp 1s ease;
+  }
+
+  .hero-badge {
+    display: inline-block;
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    color: white;
+    padding: 0.5rem 1.5rem;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+  }
+
+  .hero-title {
+    font-family: var(--font-primary--family, 'Helvetica Neue', sans-serif);
+    font-size: 3.5rem;
+    font-weight: 700;
+    color: white;
+    line-height: 1.2;
+    margin-bottom: 1.5rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+  }
+
+  .hero-title-highlight {
+    background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hero-description {
+    font-size: 1.25rem;
+    color: rgba(255, 255, 255, 0.95);
+    line-height: 1.6;
+    margin-bottom: 2rem;
+  }
+
+  .hero-stats {
+    display: flex;
+    gap: 2rem;
+    margin-bottom: 2.5rem;
+    flex-wrap: wrap;
+  }
+
+  .hero-stat {
+    text-align: center;
+  }
+
+  .hero-stat-number {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #ffd700;
+    display: block;
+  }
+
+  .hero-stat-label {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.9);
+  }
+
+  .hero-cta-group {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .hero-cta-primary {
+    background: white;
+    color: #667eea;
+    padding: 1.25rem 2.5rem;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  }
+
+  .hero-cta-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+  }
+
+  .hero-cta-secondary {
+    background: transparent;
+    color: white;
+    padding: 1.25rem 2.5rem;
+    border: 2px solid white;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .hero-cta-secondary:hover {
+    background: white;
+    color: #667eea;
+  }
+
+  .hero-visual {
+    position: relative;
+    animation: fadeInUp 1s ease 0.3s both;
+  }
+
+  .hero-bottle-display {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .hero-bottle-main {
+    width: 300px;
+    height: 450px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.7) 100%);
+    border-radius: 30px 30px 60px 60px;
+    position: relative;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    animation: float 4s ease-in-out infinite;
+    backdrop-filter: blur(10px);
+  }
+
+  .hero-bottle-main::before {
+    content: '';
+    position: absolute;
+    top: -40px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 50px;
+    background: linear-gradient(180deg, rgba(200,200,200,0.8) 0%, rgba(255,255,255,0.6) 100%);
+    border-radius: 15px 15px 0 0;
+  }
+
+  .hero-bottle-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 2rem;
+    font-weight: 700;
+    color: #667eea;
+    text-align: center;
+  }
+
+  .hero-floating-element {
+    position: absolute;
+    animation: float 3s ease-in-out infinite;
+  }
+
+  .hero-floating-element:nth-child(1) {
+    top: 10%;
+    left: -10%;
+    animation-delay: 0s;
+    font-size: 3rem;
+  }
+
+  .hero-floating-element:nth-child(2) {
+    bottom: 15%;
+    right: -10%;
+    animation-delay: 1s;
+    font-size: 2.5rem;
+  }
+
+  .hero-floating-element:nth-child(3) {
+    top: 60%;
+    left: -5%;
+    animation-delay: 2s;
+    font-size: 2rem;
+  }
+
+  .hero-trust-bar {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    padding: 1rem 2rem;
+    border-radius: 12px;
+    margin-top: 3rem;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
+  .trust-items {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+  }
+
+  .trust-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    color: white;
+    font-size: 0.95rem;
+  }
+
+  .trust-icon {
+    font-size: 1.5rem;
+  }
+
+  @media (max-width: 1024px) {
+    .hero-grid {
+      grid-template-columns: 1fr;
+      gap: 3rem;
+    }
+
+    .hero-title {
+      font-size: 2.5rem;
+    }
+
+    .hero-bottle-main {
+      width: 250px;
+      height: 375px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .hero-section {
+      padding: 4rem 1.5rem;
+    }
+
+    .hero-title {
+      font-size: 2rem;
+    }
+
+    .hero-description {
+      font-size: 1.1rem;
+    }
+
+    .hero-stats {
+      justify-content: center;
+    }
+
+    .hero-stat-number {
+      font-size: 1.75rem;
+    }
+
+    .hero-cta-group {
+      justify-content: center;
+    }
+
+    .hero-cta-primary,
+    .hero-cta-secondary {
+      padding: 1rem 2rem;
+      font-size: 1rem;
+    }
+
+    .hero-bottle-main {
+      width: 200px;
+      height: 300px;
+    }
+
+    .hero-bottle-text {
+      font-size: 1.5rem;
+    }
+
+    .trust-items {
+      justify-content: center;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .hero-section {
+      padding: 3rem 1rem;
+    }
+
+    .hero-title {
+      font-size: 1.75rem;
+    }
+
+    .hero-cta-group {
+      flex-direction: column;
+      width: 100%;
+    }
+
+    .hero-cta-primary,
+    .hero-cta-secondary {
+      width: 100%;
+    }
+  }
+</style>
+
+<div class="hero-section">
+  <div class="hero-container">
+    <div class="hero-grid">
+      <div class="hero-content">
+        <div class="hero-badge">✨ Trusted by 10,000+ Happy Customers</div>
+        
+        <h1 class="hero-title">
+          Create <span class="hero-title-highlight">Unforgettable</span><br>
+          Personalized Gifts
+        </h1>
+
+        <p class="hero-description">
+          Custom water bottles perfect for bridal parties, corporate events, and special occasions. 
+          Professional quality meets personal touch.
+        </p>
+
+        <div class="hero-stats">
+          <div class="hero-stat">
+            <span class="hero-stat-number">10,000+</span>
+            <span class="hero-stat-label">Happy Customers</span>
+          </div>
+          <div class="hero-stat">
+            <span class="hero-stat-number">5,000+</span>
+            <span class="hero-stat-label">Bridal Parties</span>
+          </div>
+          <div class="hero-stat">
+            <span class="hero-stat-number">15+</span>
+            <span class="hero-stat-label">Years Experience</span>
+          </div>
+        </div>
+
+        <div class="hero-cta-group">
+          <button class="hero-cta-primary" onclick="window.location.href='/collections/all'">
+            Shop Custom Bottles
+          </button>
+          <button class="hero-cta-secondary" onclick="window.location.href='/pages/about'">
+            Learn More
+          </button>
+        </div>
+      </div>
+
+      <div class="hero-visual">
+        <div class="hero-bottle-display">
+          <div class="hero-floating-element">💖</div>
+          <div class="hero-floating-element">✨</div>
+          <div class="hero-floating-element">🎉</div>
+          
+          <div class="hero-bottle-main">
+            <div class="hero-bottle-text">Shelzy's<br>Designs</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-trust-bar">
+      <div class="trust-items">
+        <div class="trust-item">
+          <span class="trust-icon">🎨</span>
+          <span>Custom Designs</span>
+        </div>
+        <div class="trust-item">
+          <span class="trust-icon">⚡</span>
+          <span>Fast Turnaround</span>
+        </div>
+        <div class="trust-item">
+          <span class="trust-icon">💎</span>
+          <span>Premium Quality</span>
+        </div>
+        <div class="trust-item">
+          <span class="trust-icon">🚚</span>
+          <span>Free Shipping</span>
+        </div>
+        <div class="trust-item">
+          <span class="trust-icon">⭐</span>
+          <span>5-Star Reviews</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

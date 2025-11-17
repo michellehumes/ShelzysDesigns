@@ -1,0 +1,487 @@
+{%- comment -%}
+  Conversion-Focused FAQ
+  Purpose: Accordion-style FAQ with search and filtering
+  Tech: Vanilla JavaScript accordion, search filtering
+  SEO: Includes Schema.org FAQPage markup
+{%- endcomment -%}
+
+<style>
+  .faq-section {
+    padding: 4rem 2rem;
+    background: white;
+    margin: 3rem 0;
+  }
+
+  .faq-container {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .faq-header {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+
+  .faq-header h2 {
+    font-family: var(--font-primary--family, 'Helvetica Neue', sans-serif);
+    font-size: 2.5rem;
+    color: var(--color-foreground, #333);
+    margin-bottom: 0.5rem;
+  }
+
+  .faq-header p {
+    font-size: 1.1rem;
+    color: #666;
+  }
+
+  .faq-search {
+    margin-bottom: 2rem;
+    position: relative;
+  }
+
+  .faq-search-input {
+    width: 100%;
+    padding: 1rem 1rem 1rem 3rem;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+  }
+
+  .faq-search-input:focus {
+    outline: none;
+    border-color: #667eea;
+  }
+
+  .faq-search-icon {
+    position: absolute;
+    left: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1.25rem;
+    color: #999;
+  }
+
+  .faq-categories {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-bottom: 2rem;
+  }
+
+  .faq-category-btn {
+    padding: 0.75rem 1.5rem;
+    border: 2px solid #e0e0e0;
+    background: white;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #666;
+  }
+
+  .faq-category-btn:hover {
+    border-color: #667eea;
+    color: #667eea;
+  }
+
+  .faq-category-btn.active {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-color: #667eea;
+    color: white;
+  }
+
+  .faq-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .faq-item {
+    background: #f9f9f9;
+    border-radius: 12px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+  }
+
+  .faq-item.hidden {
+    display: none;
+  }
+
+  .faq-item.active {
+    background: white;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+
+  .faq-question {
+    padding: 1.5rem;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    transition: all 0.3s ease;
+  }
+
+  .faq-question:hover {
+    background: rgba(102, 126, 234, 0.05);
+  }
+
+  .faq-question-text {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--color-foreground, #333);
+    margin: 0;
+  }
+
+  .faq-icon {
+    font-size: 1.5rem;
+    color: #667eea;
+    transition: transform 0.3s ease;
+    flex-shrink: 0;
+  }
+
+  .faq-item.active .faq-icon {
+    transform: rotate(45deg);
+  }
+
+  .faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease, padding 0.3s ease;
+  }
+
+  .faq-item.active .faq-answer {
+    max-height: 500px;
+    padding: 0 1.5rem 1.5rem 1.5rem;
+  }
+
+  .faq-answer-content {
+    color: #666;
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+
+  .faq-answer-content p {
+    margin-bottom: 0.75rem;
+  }
+
+  .faq-answer-content ul {
+    margin-left: 1.5rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .faq-answer-content li {
+    margin-bottom: 0.5rem;
+  }
+
+  .faq-cta {
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    padding: 2rem;
+    border-radius: 12px;
+    text-align: center;
+    margin-top: 3rem;
+  }
+
+  .faq-cta h3 {
+    font-size: 1.5rem;
+    color: var(--color-foreground, #333);
+    margin-bottom: 0.5rem;
+  }
+
+  .faq-cta p {
+    color: #666;
+    margin-bottom: 1.5rem;
+  }
+
+  .faq-cta-button {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 1rem 2rem;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+  }
+
+  .faq-cta-button:hover {
+    transform: translateY(-2px);
+  }
+
+  @media (max-width: 768px) {
+    .faq-section {
+      padding: 3rem 1.5rem;
+    }
+
+    .faq-header h2 {
+      font-size: 2rem;
+    }
+
+    .faq-categories {
+      gap: 0.75rem;
+    }
+
+    .faq-category-btn {
+      padding: 0.65rem 1.25rem;
+      font-size: 0.9rem;
+    }
+
+    .faq-question {
+      padding: 1.25rem;
+    }
+
+    .faq-question-text {
+      font-size: 1rem;
+    }
+  }
+</style>
+
+<div class="faq-section" itemscope itemtype="https://schema.org/FAQPage">
+  <div class="faq-container">
+    <div class="faq-header">
+      <h2>❓ Frequently Asked Questions</h2>
+      <p>Find answers to common questions about our products and services</p>
+    </div>
+
+    {%- comment -%} Search Box {%- endcomment -%}
+    <div class="faq-search">
+      <span class="faq-search-icon">🔍</span>
+      <input 
+        type="text" 
+        class="faq-search-input" 
+        id="faqSearch" 
+        placeholder="Search for answers..."
+      >
+    </div>
+
+    {%- comment -%} Category Filters {%- endcomment -%}
+    <div class="faq-categories">
+      <button class="faq-category-btn active" data-category="all">All Questions</button>
+      <button class="faq-category-btn" data-category="ordering">Ordering</button>
+      <button class="faq-category-btn" data-category="customization">Customization</button>
+      <button class="faq-category-btn" data-category="shipping">Shipping</button>
+      <button class="faq-category-btn" data-category="returns">Returns</button>
+    </div>
+
+    {%- comment -%} FAQ Items {%- endcomment -%}
+    <div class="faq-list">
+      <div class="faq-item" data-category="customization" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+        <div class="faq-question">
+          <h3 class="faq-question-text" itemprop="name">How do I personalize my water bottle?</h3>
+          <span class="faq-icon">+</span>
+        </div>
+        <div class="faq-answer" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+          <div class="faq-answer-content" itemprop="text">
+            <p>Personalizing your bottle is easy! Simply:</p>
+            <ul>
+              <li>Select your product and add it to your cart</li>
+              <li>Use our live preview tool to enter your custom text</li>
+              <li>Choose your preferred font style and color</li>
+              <li>See your design in real-time before ordering</li>
+            </ul>
+            <p>Your customization will be saved automatically when you add to cart.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item" data-category="ordering" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+        <div class="faq-question">
+          <h3 class="faq-question-text" itemprop="name">What's the minimum order quantity?</h3>
+          <span class="faq-icon">+</span>
+        </div>
+        <div class="faq-answer" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+          <div class="faq-answer-content" itemprop="text">
+            <p>There's no minimum! You can order as few as one bottle or take advantage of our bulk pricing:</p>
+            <ul>
+              <li>1 bottle: $24.99 each</li>
+              <li>5 bottles: $19.80 each (save 21%)</li>
+              <li>10+ bottles: $18.90 each (save 24%)</li>
+            </ul>
+            <p>For orders over 10 bottles, contact us for custom enterprise pricing!</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item" data-category="shipping" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+        <div class="faq-question">
+          <h3 class="faq-question-text" itemprop="name">How long does shipping take?</h3>
+          <span class="faq-icon">+</span>
+        </div>
+        <div class="faq-answer" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+          <div class="faq-answer-content" itemprop="text">
+            <p>We offer multiple shipping options:</p>
+            <ul>
+              <li><strong>Standard:</strong> 5-7 business days (FREE on orders $50+)</li>
+              <li><strong>Rush Processing:</strong> 2-3 business days (+$15)</li>
+              <li><strong>Express Overnight:</strong> Next business day (+$35)</li>
+            </ul>
+            <p>Order before 5 PM EST for same-day processing!</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item" data-category="customization" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+        <div class="faq-question">
+          <h3 class="faq-question-text" itemprop="name">Can each bottle in a bulk order have different names?</h3>
+          <span class="faq-icon">+</span>
+        </div>
+        <div class="faq-answer" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+          <div class="faq-answer-content" itemprop="text">
+            <p>Absolutely! Each bottle can be personalized individually. For bulk orders with multiple names:</p>
+            <ul>
+              <li>Add the quantity you need to cart</li>
+              <li>Provide a list of names in the order notes</li>
+              <li>Or contact us for a personalized bulk order form</li>
+            </ul>
+            <p>Perfect for bridal parties, team gifts, and corporate events!</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item" data-category="returns" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+        <div class="faq-question">
+          <h3 class="faq-question-text" itemprop="name">What's your return policy?</h3>
+          <span class="faq-icon">+</span>
+        </div>
+        <div class="faq-answer" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+          <div class="faq-answer-content" itemprop="text">
+            <p>We offer a 30-day satisfaction guarantee! If you're not completely happy with your order:</p>
+            <ul>
+              <li>Non-personalized items can be returned within 30 days</li>
+              <li>Personalized items can be returned if there's a production error</li>
+              <li>We'll provide a full refund or replacement</li>
+            </ul>
+            <p>Contact our support team to initiate a return.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item" data-category="ordering" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+        <div class="faq-question">
+          <h3 class="faq-question-text" itemprop="name">Do you offer rush orders for weddings?</h3>
+          <span class="faq-icon">+</span>
+        </div>
+        <div class="faq-answer" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+          <div class="faq-answer-content" itemprop="text">
+            <p>Yes! We specialize in wedding orders and offer expedited processing:</p>
+            <ul>
+              <li>Use our Wedding Date Calculator to get a recommended shipping option</li>
+              <li>Rush processing available for orders within 2 weeks</li>
+              <li>Express overnight for last-minute needs</li>
+            </ul>
+            <p>We've helped thousands of brides and will make sure you get your bottles on time!</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item" data-category="customization" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+        <div class="faq-question">
+          <h3 class="faq-question-text" itemprop="name">What fonts and colors are available?</h3>
+          <span class="faq-icon">+</span>
+        </div>
+        <div class="faq-answer" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+          <div class="faq-answer-content" itemprop="text">
+            <p>We offer a variety of options to match your style:</p>
+            <p><strong>Fonts:</strong> Classic, Elegant, Modern, Playful, and Script styles</p>
+            <p><strong>Colors:</strong> Black, White, Gold, Rose Gold, Pink, Blue, and custom colors upon request</p>
+            <p>Preview your design in real-time with our customization tool!</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item" data-category="shipping" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+        <div class="faq-question">
+          <h3 class="faq-question-text" itemprop="name">Do you ship internationally?</h3>
+          <span class="faq-icon">+</span>
+        </div>
+        <div class="faq-answer" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+          <div class="faq-answer-content" itemprop="text">
+            <p>Currently, we ship within the United States and Canada. International shipping is available for bulk orders (20+ bottles). Contact us for international shipping quotes and timelines.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {%- comment -%} CTA Section {%- endcomment -%}
+    <div class="faq-cta">
+      <h3>Still have questions?</h3>
+      <p>Our friendly customer support team is here to help!</p>
+      <button class="faq-cta-button" onclick="window.location.href='/pages/contact'">
+        Contact Us
+      </button>
+    </div>
+  </div>
+</div>
+
+<script>
+  {%- comment -%} FAQ accordion and search functionality {%- endcomment -%}
+  document.addEventListener('DOMContentLoaded', function() {
+    const faqItems = document.querySelectorAll('.faq-item');
+    const searchInput = document.getElementById('faqSearch');
+    const categoryButtons = document.querySelectorAll('.faq-category-btn');
+
+    // Accordion functionality
+    faqItems.forEach(function(item) {
+      const question = item.querySelector('.faq-question');
+      
+      question.addEventListener('click', function() {
+        const isActive = item.classList.contains('active');
+        
+        // Close all other items
+        faqItems.forEach(function(otherItem) {
+          otherItem.classList.remove('active');
+        });
+        
+        // Toggle current item
+        if (!isActive) {
+          item.classList.add('active');
+        }
+      });
+    });
+
+    // Search functionality
+    searchInput.addEventListener('input', function() {
+      const searchTerm = this.value.toLowerCase();
+      
+      faqItems.forEach(function(item) {
+        const questionText = item.querySelector('.faq-question-text').textContent.toLowerCase();
+        const answerText = item.querySelector('.faq-answer-content').textContent.toLowerCase();
+        
+        if (questionText.includes(searchTerm) || answerText.includes(searchTerm)) {
+          item.classList.remove('hidden');
+        } else {
+          item.classList.add('hidden');
+        }
+      });
+    });
+
+    // Category filtering
+    categoryButtons.forEach(function(button) {
+      button.addEventListener('click', function() {
+        const category = this.getAttribute('data-category');
+        
+        // Update active button
+        categoryButtons.forEach(btn => btn.classList.remove('active'));
+        this.classList.add('active');
+        
+        // Filter items
+        faqItems.forEach(function(item) {
+          const itemCategory = item.getAttribute('data-category');
+          
+          if (category === 'all' || itemCategory === category) {
+            item.classList.remove('hidden');
+          } else {
+            item.classList.add('hidden');
+          }
+        });
+        
+        // Clear search when changing categories
+        searchInput.value = '';
+      });
+    });
+  });
+</script>

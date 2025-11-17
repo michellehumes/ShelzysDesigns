@@ -1,0 +1,322 @@
+{%- comment -%}
+  Bulk Pricing Comparison
+  Purpose: Pricing table showing bulk discounts (21-24% savings)
+  Layout: CSS Grid, 3-column responsive design
+  Price tiers: Single ($24.99), 5-pack ($99), 10-pack ($189)
+{%- endcomment -%}
+
+<style>
+  .bulk-pricing-section {
+    padding: 4rem 2rem;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    margin: 3rem 0;
+  }
+
+  .bulk-pricing-container {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .bulk-pricing-header {
+    text-align: center;
+    color: white;
+    margin-bottom: 3rem;
+  }
+
+  .bulk-pricing-header h2 {
+    font-size: 2.5rem;
+    font-family: var(--font-primary--family, 'Helvetica Neue', sans-serif);
+    margin-bottom: 0.5rem;
+  }
+
+  .bulk-pricing-header p {
+    font-size: 1.2rem;
+    opacity: 0.9;
+  }
+
+  .pricing-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    margin-bottom: 2rem;
+  }
+
+  .pricing-card {
+    background: white;
+    border-radius: 16px;
+    padding: 2.5rem 2rem;
+    text-align: center;
+    position: relative;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+
+  .pricing-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+  }
+
+  .pricing-card.featured {
+    border: 3px solid #ffd700;
+    transform: scale(1.05);
+  }
+
+  .pricing-card.featured::before {
+    content: '⭐ MOST POPULAR';
+    position: absolute;
+    top: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #ffd700;
+    color: #333;
+    padding: 0.5rem 1.5rem;
+    border-radius: 20px;
+    font-weight: 700;
+    font-size: 0.85rem;
+    white-space: nowrap;
+  }
+
+  .pricing-card.featured:hover {
+    transform: scale(1.05) translateY(-8px);
+  }
+
+  .pricing-quantity {
+    font-size: 3rem;
+    font-weight: 700;
+    color: #667eea;
+    margin-bottom: 0.5rem;
+  }
+
+  .pricing-label {
+    font-size: 1rem;
+    color: #666;
+    margin-bottom: 1.5rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  .pricing-price {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--color-foreground, #333);
+    margin-bottom: 0.5rem;
+  }
+
+  .pricing-unit {
+    font-size: 1rem;
+    color: #999;
+    margin-bottom: 1rem;
+  }
+
+  .pricing-savings {
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-weight: 600;
+    display: inline-block;
+    margin-bottom: 1.5rem;
+    font-size: 0.95rem;
+  }
+
+  .pricing-features {
+    list-style: none;
+    padding: 0;
+    margin: 1.5rem 0;
+    text-align: left;
+  }
+
+  .pricing-features li {
+    padding: 0.75rem 0;
+    border-bottom: 1px solid #f0f0f0;
+    color: #666;
+    font-size: 0.95rem;
+  }
+
+  .pricing-features li:last-child {
+    border-bottom: none;
+  }
+
+  .pricing-features li::before {
+    content: '✓';
+    color: #4caf50;
+    font-weight: 700;
+    margin-right: 0.5rem;
+  }
+
+  .pricing-cta {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 1rem 2rem;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    width: 100%;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .pricing-cta:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+  }
+
+  .pricing-cta:active {
+    transform: translateY(0);
+  }
+
+  .bulk-pricing-note {
+    text-align: center;
+    color: white;
+    font-size: 0.95rem;
+    opacity: 0.9;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  @media (max-width: 1024px) {
+    .pricing-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .pricing-card.featured {
+      transform: scale(1);
+      grid-column: span 2;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .bulk-pricing-section {
+      padding: 3rem 1.5rem;
+    }
+
+    .bulk-pricing-header h2 {
+      font-size: 2rem;
+    }
+
+    .pricing-grid {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+
+    .pricing-card.featured {
+      grid-column: span 1;
+    }
+
+    .pricing-quantity {
+      font-size: 2.5rem;
+    }
+
+    .pricing-price {
+      font-size: 2rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .bulk-pricing-header h2 {
+      font-size: 1.75rem;
+    }
+
+    .pricing-card {
+      padding: 2rem 1.5rem;
+    }
+  }
+</style>
+
+<div class="bulk-pricing-section">
+  <div class="bulk-pricing-container">
+    <div class="bulk-pricing-header">
+      <h2>💰 Save More With Bulk Orders</h2>
+      <p>Perfect for bridal parties, corporate events, and special occasions</p>
+    </div>
+
+    <div class="pricing-grid">
+      {%- comment -%} Single Bottle {%- endcomment -%}
+      <div class="pricing-card">
+        <div class="pricing-quantity">1</div>
+        <div class="pricing-label">Single Bottle</div>
+        <div class="pricing-price">$24.99</div>
+        <div class="pricing-unit">per bottle</div>
+        <div class="pricing-savings" style="opacity: 0.3;">Base Price</div>
+        
+        <ul class="pricing-features">
+          <li>Custom personalization</li>
+          <li>Premium quality bottle</li>
+          <li>Gift-ready packaging</li>
+          <li>Free design preview</li>
+        </ul>
+
+        <button class="pricing-cta">Order Now</button>
+      </div>
+
+      {%- comment -%} 5-Pack (Featured) {%- endcomment -%}
+      <div class="pricing-card featured">
+        <div class="pricing-quantity">5</div>
+        <div class="pricing-label">Bridal Party Pack</div>
+        <div class="pricing-price">$99</div>
+        <div class="pricing-unit">$19.80 per bottle</div>
+        <div class="pricing-savings">💎 Save 21% ($25.95)</div>
+        
+        <ul class="pricing-features">
+          <li>5 personalized bottles</li>
+          <li>Mix & match designs</li>
+          <li>Bulk discount applied</li>
+          <li>Free shipping available</li>
+          <li>Priority processing</li>
+        </ul>
+
+        <button class="pricing-cta">Best Value - Order Now</button>
+      </div>
+
+      {%- comment -%} 10-Pack {%- endcomment -%}
+      <div class="pricing-card">
+        <div class="pricing-quantity">10</div>
+        <div class="pricing-label">Event Package</div>
+        <div class="pricing-price">$189</div>
+        <div class="pricing-unit">$18.90 per bottle</div>
+        <div class="pricing-savings">🎉 Save 24% ($60.90)</div>
+        
+        <ul class="pricing-features">
+          <li>10 personalized bottles</li>
+          <li>Biggest savings</li>
+          <li>Mix & match designs</li>
+          <li>Free expedited shipping</li>
+          <li>Dedicated support</li>
+          <li>Bulk coordinator</li>
+        </ul>
+
+        <button class="pricing-cta">Maximum Savings - Order Now</button>
+      </div>
+    </div>
+
+    <p class="bulk-pricing-note">
+      💡 Need more than 10 bottles? Contact us for custom enterprise pricing!
+    </p>
+  </div>
+</div>
+
+<script>
+  {%- comment -%} Add click tracking for pricing cards {%- endcomment -%}
+  document.addEventListener('DOMContentLoaded', function() {
+    const pricingButtons = document.querySelectorAll('.pricing-cta');
+    
+    pricingButtons.forEach(function(button, index) {
+      button.addEventListener('click', function() {
+        // Add the appropriate quantity to the cart or redirect to product page
+        // This would typically integrate with Shopify's cart API
+        
+        const quantities = [1, 5, 10];
+        const quantity = quantities[index % 3];
+        
+        console.log('Selected quantity:', quantity);
+        
+        // Example: You could redirect to the product page with the quantity
+        // window.location.href = '/products/custom-water-bottle?quantity=' + quantity;
+        
+        // Or add to cart directly (requires Shopify Ajax API integration)
+        // This is a placeholder for actual implementation
+      });
+    });
+  });
+</script>

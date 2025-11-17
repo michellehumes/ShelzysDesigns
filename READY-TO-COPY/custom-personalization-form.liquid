@@ -1,0 +1,325 @@
+{%- comment -%}
+  Custom Personalization Form for Bottle Customization
+  Purpose: Live preview for bottle customization (name, font, color)
+  Tech: Vanilla JavaScript with DOM manipulation
+  CRITICAL: Must be placed INSIDE Shopify product form to save properties to cart
+{%- endcomment -%}
+
+<div class="custom-personalization-section">
+  <style>
+    .custom-personalization-section {
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      padding: 2rem;
+      border-radius: 12px;
+      margin: 2rem 0;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .personalization-header {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .personalization-header h3 {
+      font-family: var(--font-primary--family, 'Helvetica Neue', sans-serif);
+      color: var(--color-foreground, #333);
+      font-size: 1.75rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .personalization-header p {
+      color: var(--color-foreground, #666);
+      font-size: 0.95rem;
+    }
+
+    .personalization-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      align-items: start;
+    }
+
+    .personalization-form {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .form-group label {
+      font-weight: 600;
+      color: var(--color-foreground, #333);
+      font-size: 0.95rem;
+    }
+
+    .form-group input[type="text"],
+    .form-group select {
+      padding: 0.75rem;
+      border: 2px solid #e0e0e0;
+      border-radius: 8px;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+      font-family: inherit;
+    }
+
+    .form-group input[type="text"]:focus,
+    .form-group select:focus {
+      outline: none;
+      border-color: #4a90e2;
+      box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.1);
+    }
+
+    .color-swatches {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .color-option {
+      position: relative;
+    }
+
+    .color-option input[type="radio"] {
+      position: absolute;
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .color-swatch {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      cursor: pointer;
+      border: 3px solid transparent;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .color-option input[type="radio"]:checked + .color-swatch {
+      border-color: #4a90e2;
+      transform: scale(1.1);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .color-swatch:hover {
+      transform: scale(1.05);
+    }
+
+    .bottle-preview {
+      background: white;
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 400px;
+    }
+
+    .preview-bottle {
+      width: 200px;
+      height: 300px;
+      background: linear-gradient(180deg, #e0e0e0 0%, #f5f5f5 100%);
+      border-radius: 20px 20px 40px 40px;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+    }
+
+    .preview-bottle::before {
+      content: '';
+      position: absolute;
+      top: -30px;
+      width: 60px;
+      height: 40px;
+      background: linear-gradient(180deg, #c0c0c0 0%, #e0e0e0 100%);
+      border-radius: 10px 10px 0 0;
+    }
+
+    .preview-text {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: #333;
+      text-align: center;
+      word-wrap: break-word;
+      max-width: 160px;
+      transition: all 0.3s ease;
+    }
+
+    .preview-label {
+      margin-top: 1.5rem;
+      text-align: center;
+      color: #666;
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 768px) {
+      .personalization-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .bottle-preview {
+        min-height: 300px;
+      }
+
+      .preview-bottle {
+        width: 160px;
+        height: 240px;
+      }
+
+      .preview-text {
+        font-size: 1.25rem;
+        max-width: 130px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .custom-personalization-section {
+        padding: 1.5rem;
+      }
+
+      .personalization-header h3 {
+        font-size: 1.5rem;
+      }
+
+      .color-swatch {
+        width: 40px;
+        height: 40px;
+      }
+    }
+  </style>
+
+  <div class="personalization-header">
+    <h3>✨ Personalize Your Bottle ✨</h3>
+    <p>See your design come to life in real-time!</p>
+  </div>
+
+  <div class="personalization-grid">
+    <div class="personalization-form">
+      {%- comment -%} Custom Name Input {%- endcomment -%}
+      <div class="form-group">
+        <label for="custom-name">Custom Name or Text</label>
+        <input 
+          type="text" 
+          name="properties[Custom Name]" 
+          id="custom-name" 
+          placeholder="Enter name here..."
+          maxlength="20"
+          required
+        >
+      </div>
+
+      {%- comment -%} Font Selection {%- endcomment -%}
+      <div class="form-group">
+        <label for="custom-font">Choose Font Style</label>
+        <select name="properties[Font]" id="custom-font">
+          <option value="Arial">Classic (Arial)</option>
+          <option value="Georgia">Elegant (Georgia)</option>
+          <option value="Courier New">Modern (Courier)</option>
+          <option value="Comic Sans MS">Playful (Comic Sans)</option>
+          <option value="Brush Script MT">Script (Brush)</option>
+        </select>
+      </div>
+
+      {%- comment -%} Color Selection {%- endcomment -%}
+      <div class="form-group">
+        <label>Text Color</label>
+        <div class="color-swatches">
+          <div class="color-option">
+            <input type="radio" name="properties[Color]" id="color-black" value="Black" checked>
+            <label for="color-black" class="color-swatch" style="background-color: #000000;" title="Black"></label>
+          </div>
+          <div class="color-option">
+            <input type="radio" name="properties[Color]" id="color-white" value="White">
+            <label for="color-white" class="color-swatch" style="background-color: #ffffff; border: 2px solid #e0e0e0;" title="White"></label>
+          </div>
+          <div class="color-option">
+            <input type="radio" name="properties[Color]" id="color-gold" value="Gold">
+            <label for="color-gold" class="color-swatch" style="background-color: #ffd700;" title="Gold"></label>
+          </div>
+          <div class="color-option">
+            <input type="radio" name="properties[Color]" id="color-rose" value="Rose Gold">
+            <label for="color-rose" class="color-swatch" style="background: linear-gradient(135deg, #f4c2c2 0%, #d4a5a5 100%);" title="Rose Gold"></label>
+          </div>
+          <div class="color-option">
+            <input type="radio" name="properties[Color]" id="color-pink" value="Pink">
+            <label for="color-pink" class="color-swatch" style="background-color: #ff69b4;" title="Pink"></label>
+          </div>
+          <div class="color-option">
+            <input type="radio" name="properties[Color]" id="color-blue" value="Blue">
+            <label for="color-blue" class="color-swatch" style="background-color: #4a90e2;" title="Blue"></label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {%- comment -%} Live Preview {%- endcomment -%}
+    <div class="bottle-preview">
+      <div class="preview-bottle">
+        <div class="preview-text" id="preview-text">Your Name</div>
+      </div>
+      <p class="preview-label">Live Preview</p>
+    </div>
+  </div>
+</div>
+
+<script>
+  {%- comment -%} Real-time preview updates {%- endcomment -%}
+  document.addEventListener('DOMContentLoaded', function() {
+    const nameInput = document.getElementById('custom-name');
+    const fontSelect = document.getElementById('custom-font');
+    const colorRadios = document.querySelectorAll('input[name="properties[Color]"]');
+    const previewText = document.getElementById('preview-text');
+
+    // Update preview text
+    function updatePreview() {
+      const name = nameInput.value.trim() || 'Your Name';
+      const font = fontSelect.value;
+      const selectedColor = document.querySelector('input[name="properties[Color]"]:checked');
+      const color = selectedColor ? selectedColor.value : 'Black';
+
+      previewText.textContent = name;
+      previewText.style.fontFamily = font;
+      
+      // Map color names to CSS values
+      const colorMap = {
+        'Black': '#000000',
+        'White': '#ffffff',
+        'Gold': '#ffd700',
+        'Rose Gold': '#d4a5a5',
+        'Pink': '#ff69b4',
+        'Blue': '#4a90e2'
+      };
+
+      previewText.style.color = colorMap[color] || '#000000';
+      
+      // Add text shadow for white text visibility
+      if (color === 'White') {
+        previewText.style.textShadow = '2px 2px 4px rgba(0,0,0,0.3)';
+      } else {
+        previewText.style.textShadow = 'none';
+      }
+    }
+
+    // Event listeners
+    nameInput.addEventListener('input', updatePreview);
+    fontSelect.addEventListener('change', updatePreview);
+    colorRadios.forEach(radio => {
+      radio.addEventListener('change', updatePreview);
+    });
+
+    // Initial preview update
+    updatePreview();
+  });
+</script>

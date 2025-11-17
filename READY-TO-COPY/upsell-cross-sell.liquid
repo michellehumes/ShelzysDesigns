@@ -1,0 +1,451 @@
+{%- comment -%}
+  Upsell Cross-Sell Component
+  Purpose: Dynamic product bundles with real-time pricing
+  Tech: JavaScript for checkbox selection and price calculation
+  Logic: 5% discount for 2+ items
+{%- endcomment -%}
+
+<style>
+  .upsell-section {
+    background: #f9f9f9;
+    padding: 3rem 2rem;
+    border-radius: 12px;
+    margin: 2rem 0;
+    border: 2px solid #e0e0e0;
+  }
+
+  .upsell-header {
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+
+  .upsell-header h3 {
+    font-family: var(--font-primary--family, 'Helvetica Neue', sans-serif);
+    font-size: 1.75rem;
+    color: var(--color-foreground, #333);
+    margin-bottom: 0.5rem;
+  }
+
+  .upsell-header p {
+    color: #666;
+    font-size: 1rem;
+  }
+
+  .upsell-discount-badge {
+    display: inline-block;
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    color: white;
+    padding: 0.5rem 1.5rem;
+    border-radius: 20px;
+    font-weight: 600;
+    margin-top: 0.5rem;
+    font-size: 0.95rem;
+  }
+
+  .upsell-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+  }
+
+  .upsell-card {
+    background: white;
+    border-radius: 12px;
+    padding: 1.5rem;
+    border: 2px solid #e0e0e0;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    position: relative;
+  }
+
+  .upsell-card:hover {
+    border-color: #667eea;
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.2);
+  }
+
+  .upsell-card.selected {
+    border-color: #667eea;
+    background: #f5f7ff;
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+  }
+
+  .upsell-checkbox-container {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .upsell-checkbox {
+    width: 24px;
+    height: 24px;
+    min-width: 24px;
+    cursor: pointer;
+    accent-color: #667eea;
+  }
+
+  .upsell-card-content {
+    flex: 1;
+  }
+
+  .upsell-product-image {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    background: linear-gradient(135deg, #e0e0e0 0%, #f5f5f5 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3rem;
+  }
+
+  .upsell-product-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--color-foreground, #333);
+    margin-bottom: 0.5rem;
+  }
+
+  .upsell-product-description {
+    font-size: 0.9rem;
+    color: #666;
+    margin-bottom: 1rem;
+    line-height: 1.5;
+  }
+
+  .upsell-product-price {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #667eea;
+  }
+
+  .upsell-badge {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: #ff6b6b;
+    color: white;
+    padding: 0.25rem 0.75rem;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    font-weight: 600;
+  }
+
+  .upsell-summary {
+    background: white;
+    padding: 2rem;
+    border-radius: 12px;
+    border: 2px solid #667eea;
+  }
+
+  .upsell-summary-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid #e0e0e0;
+  }
+
+  .upsell-summary-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--color-foreground, #333);
+  }
+
+  .upsell-summary-count {
+    background: #667eea;
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-weight: 600;
+  }
+
+  .upsell-summary-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem 0;
+    font-size: 1rem;
+  }
+
+  .upsell-summary-row.total {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #667eea;
+    padding-top: 1rem;
+    margin-top: 1rem;
+    border-top: 2px solid #e0e0e0;
+  }
+
+  .upsell-summary-discount {
+    color: #4caf50;
+    font-weight: 600;
+  }
+
+  .upsell-add-button {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 1rem 2rem;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    width: 100%;
+    margin-top: 1.5rem;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .upsell-add-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+  }
+
+  .upsell-add-button:active {
+    transform: translateY(0);
+  }
+
+  .upsell-add-button:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+    transform: none;
+  }
+
+  @media (max-width: 768px) {
+    .upsell-section {
+      padding: 2rem 1.5rem;
+    }
+
+    .upsell-header h3 {
+      font-size: 1.5rem;
+    }
+
+    .upsell-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .upsell-summary {
+      padding: 1.5rem;
+    }
+  }
+</style>
+
+<div class="upsell-section">
+  <div class="upsell-header">
+    <h3>🎁 Complete Your Order</h3>
+    <p>Add these complementary items to your cart</p>
+    <span class="upsell-discount-badge">Save 5% when you bundle 2+ items!</span>
+  </div>
+
+  <div class="upsell-grid" id="upsellGrid">
+    {%- comment -%} Upsell Product 1 {%- endcomment -%}
+    <div class="upsell-card" data-price="19.99" data-product-id="1">
+      <div class="upsell-badge">HOT</div>
+      <div class="upsell-checkbox-container">
+        <input type="checkbox" class="upsell-checkbox" id="upsell-1">
+        <div class="upsell-card-content">
+          <label for="upsell-1" style="cursor: pointer;">
+            <div class="upsell-product-image">🧊</div>
+            <div class="upsell-product-title">Ice Cube Tray Set</div>
+            <div class="upsell-product-description">
+              Keep drinks cold longer with our premium silicone ice cube trays. Perfect companion for your bottle!
+            </div>
+            <div class="upsell-product-price">$19.99</div>
+          </label>
+        </div>
+      </div>
+    </div>
+
+    {%- comment -%} Upsell Product 2 {%- endcomment -%}
+    <div class="upsell-card" data-price="14.99" data-product-id="2">
+      <div class="upsell-checkbox-container">
+        <input type="checkbox" class="upsell-checkbox" id="upsell-2">
+        <div class="upsell-card-content">
+          <label for="upsell-2" style="cursor: pointer;">
+            <div class="upsell-product-image">🧹</div>
+            <div class="upsell-product-title">Cleaning Brush Kit</div>
+            <div class="upsell-product-description">
+              Keep your bottle sparkling clean with our specialized brush set. Reaches every corner!
+            </div>
+            <div class="upsell-product-price">$14.99</div>
+          </label>
+        </div>
+      </div>
+    </div>
+
+    {%- comment -%} Upsell Product 3 {%- endcomment -%}
+    <div class="upsell-card" data-price="9.99" data-product-id="3">
+      <div class="upsell-checkbox-container">
+        <input type="checkbox" class="upsell-checkbox" id="upsell-3">
+        <div class="upsell-card-content">
+          <label for="upsell-3" style="cursor: pointer;">
+            <div class="upsell-product-image">🎀</div>
+            <div class="upsell-product-title">Gift Box Upgrade</div>
+            <div class="upsell-product-description">
+              Elegant gift box presentation with ribbon. Perfect for special occasions and bridal gifts.
+            </div>
+            <div class="upsell-product-price">$9.99</div>
+          </label>
+        </div>
+      </div>
+    </div>
+
+    {%- comment -%} Upsell Product 4 {%- endcomment -%}
+    <div class="upsell-card" data-price="12.99" data-product-id="4">
+      <div class="upsell-badge">NEW</div>
+      <div class="upsell-checkbox-container">
+        <input type="checkbox" class="upsell-checkbox" id="upsell-4">
+        <div class="upsell-card-content">
+          <label for="upsell-4" style="cursor: pointer;">
+            <div class="upsell-product-image">🎨</div>
+            <div class="upsell-product-title">Extra Vinyl Decal Set</div>
+            <div class="upsell-product-description">
+              5 bonus decorative vinyl decals. Change up your bottle's look anytime!
+            </div>
+            <div class="upsell-product-price">$12.99</div>
+          </label>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="upsell-summary" id="upsellSummary">
+    <div class="upsell-summary-header">
+      <span class="upsell-summary-title">Bundle Summary</span>
+      <span class="upsell-summary-count" id="itemCount">0 items selected</span>
+    </div>
+
+    <div class="upsell-summary-row">
+      <span>Subtotal:</span>
+      <span id="subtotal">$0.00</span>
+    </div>
+
+    <div class="upsell-summary-row" id="discountRow" style="display: none;">
+      <span>Bundle Discount (5%):</span>
+      <span class="upsell-summary-discount" id="discount">-$0.00</span>
+    </div>
+
+    <div class="upsell-summary-row total">
+      <span>Total:</span>
+      <span id="total">$0.00</span>
+    </div>
+
+    <button class="upsell-add-button" id="addBundleButton" disabled>
+      Select items to add to cart
+    </button>
+  </div>
+</div>
+
+<script>
+  {%- comment -%} Bundle pricing calculation and selection {%- endcomment -%}
+  document.addEventListener('DOMContentLoaded', function() {
+    const checkboxes = document.querySelectorAll('.upsell-checkbox');
+    const cards = document.querySelectorAll('.upsell-card');
+    const itemCountEl = document.getElementById('itemCount');
+    const subtotalEl = document.getElementById('subtotal');
+    const discountEl = document.getElementById('discount');
+    const discountRow = document.getElementById('discountRow');
+    const totalEl = document.getElementById('total');
+    const addButton = document.getElementById('addBundleButton');
+
+    function updatePricing() {
+      let selectedCount = 0;
+      let subtotal = 0;
+
+      checkboxes.forEach(function(checkbox) {
+        if (checkbox.checked) {
+          selectedCount++;
+          const card = checkbox.closest('.upsell-card');
+          const price = parseFloat(card.dataset.price);
+          subtotal += price;
+        }
+      });
+
+      // Calculate discount (5% for 2+ items)
+      let discount = 0;
+      if (selectedCount >= 2) {
+        discount = subtotal * 0.05;
+        discountRow.style.display = 'flex';
+      } else {
+        discountRow.style.display = 'none';
+      }
+
+      const total = subtotal - discount;
+
+      // Update UI
+      itemCountEl.textContent = selectedCount + (selectedCount === 1 ? ' item selected' : ' items selected');
+      subtotalEl.textContent = '$' + subtotal.toFixed(2);
+      discountEl.textContent = '-$' + discount.toFixed(2);
+      totalEl.textContent = '$' + total.toFixed(2);
+
+      // Update button
+      if (selectedCount > 0) {
+        addButton.disabled = false;
+        addButton.textContent = 'Add ' + selectedCount + (selectedCount === 1 ? ' Item' : ' Items') + ' to Cart - $' + total.toFixed(2);
+      } else {
+        addButton.disabled = true;
+        addButton.textContent = 'Select items to add to cart';
+      }
+    }
+
+    // Add event listeners
+    checkboxes.forEach(function(checkbox) {
+      checkbox.addEventListener('change', function() {
+        const card = checkbox.closest('.upsell-card');
+        if (checkbox.checked) {
+          card.classList.add('selected');
+        } else {
+          card.classList.remove('selected');
+        }
+        updatePricing();
+      });
+    });
+
+    // Card click toggles checkbox
+    cards.forEach(function(card) {
+      card.addEventListener('click', function(e) {
+        if (e.target.type !== 'checkbox' && e.target.tagName !== 'LABEL') {
+          const checkbox = card.querySelector('.upsell-checkbox');
+          checkbox.checked = !checkbox.checked;
+          checkbox.dispatchEvent(new Event('change'));
+        }
+      });
+    });
+
+    // Add to cart button
+    addButton.addEventListener('click', function() {
+      const selectedProducts = [];
+      
+      checkboxes.forEach(function(checkbox) {
+        if (checkbox.checked) {
+          const card = checkbox.closest('.upsell-card');
+          selectedProducts.push({
+            id: card.dataset.productId,
+            price: card.dataset.price,
+            title: card.querySelector('.upsell-product-title').textContent
+          });
+        }
+      });
+
+      console.log('Adding to cart:', selectedProducts);
+      
+      // Here you would integrate with Shopify's Ajax Cart API
+      // Example:
+      // selectedProducts.forEach(product => {
+      //   fetch('/cart/add.js', {
+      //     method: 'POST',
+      //     headers: { 'Content-Type': 'application/json' },
+      //     body: JSON.stringify({ id: product.id, quantity: 1 })
+      //   });
+      // });
+
+      alert('Items added to cart! (Integration pending)');
+    });
+
+    // Initial update
+    updatePricing();
+  });
+</script>

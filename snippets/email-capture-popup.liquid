@@ -1,0 +1,333 @@
+{%- comment -%}
+  Email Capture Popup
+  Purpose: Modal popup for email collection with 10% discount incentive
+  Tech: CSS transforms, JavaScript timing, cookie-based frequency control
+  Timing: Shows after 15 seconds, once per 7 days per user
+{%- endcomment -%}
+
+<style>
+  .email-popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+  }
+
+  .email-popup-overlay.active {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .email-popup-content {
+    background: white;
+    border-radius: 16px;
+    padding: 3rem;
+    max-width: 500px;
+    width: 90%;
+    position: relative;
+    transform: scale(0.7);
+    transition: transform 0.3s ease;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  }
+
+  .email-popup-overlay.active .email-popup-content {
+    transform: scale(1);
+  }
+
+  .email-popup-close {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: transparent;
+    border: none;
+    font-size: 2rem;
+    cursor: pointer;
+    color: #999;
+    line-height: 1;
+    padding: 0.5rem;
+    transition: color 0.3s ease;
+  }
+
+  .email-popup-close:hover {
+    color: #333;
+  }
+
+  .email-popup-header {
+    text-align: center;
+    margin-bottom: 1.5rem;
+  }
+
+  .email-popup-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+  }
+
+  .email-popup-header h2 {
+    font-family: var(--font-primary--family, 'Helvetica Neue', sans-serif);
+    font-size: 2rem;
+    color: var(--color-foreground, #333);
+    margin-bottom: 0.5rem;
+  }
+
+  .email-popup-header p {
+    color: #666;
+    font-size: 1rem;
+    line-height: 1.5;
+  }
+
+  .email-popup-discount {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 1rem;
+    border-radius: 8px;
+    text-align: center;
+    margin-bottom: 1.5rem;
+    font-size: 1.25rem;
+    font-weight: 600;
+  }
+
+  .email-popup-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .email-popup-input {
+    padding: 1rem;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+  }
+
+  .email-popup-input:focus {
+    outline: none;
+    border-color: #667eea;
+  }
+
+  .email-popup-submit {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 1rem 2rem;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .email-popup-submit:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+  }
+
+  .email-popup-submit:active {
+    transform: translateY(0);
+  }
+
+  .email-popup-privacy {
+    text-align: center;
+    font-size: 0.85rem;
+    color: #999;
+    margin-top: 1rem;
+  }
+
+  .email-popup-success {
+    display: none;
+    text-align: center;
+    padding: 2rem;
+  }
+
+  .email-popup-success.active {
+    display: block;
+  }
+
+  .email-popup-success-icon {
+    font-size: 4rem;
+    color: #4caf50;
+    margin-bottom: 1rem;
+  }
+
+  .email-popup-success h3 {
+    font-size: 1.5rem;
+    color: var(--color-foreground, #333);
+    margin-bottom: 0.5rem;
+  }
+
+  .email-popup-success p {
+    color: #666;
+    font-size: 1rem;
+  }
+
+  @media (max-width: 768px) {
+    .email-popup-content {
+      padding: 2rem;
+    }
+
+    .email-popup-header h2 {
+      font-size: 1.5rem;
+    }
+
+    .email-popup-discount {
+      font-size: 1.1rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .email-popup-content {
+      padding: 1.5rem;
+    }
+
+    .email-popup-icon {
+      font-size: 2.5rem;
+    }
+
+    .email-popup-header h2 {
+      font-size: 1.25rem;
+    }
+  }
+</style>
+
+<div class="email-popup-overlay" id="emailPopup">
+  <div class="email-popup-content">
+    <button class="email-popup-close" id="closePopup" aria-label="Close popup">&times;</button>
+    
+    <div id="emailForm">
+      <div class="email-popup-header">
+        <div class="email-popup-icon">💌</div>
+        <h2>Join the Shelzy's Family!</h2>
+        <p>Get exclusive designs, bridal tips, and special offers delivered to your inbox.</p>
+      </div>
+
+      <div class="email-popup-discount">
+        🎉 Get 10% OFF Your First Order! 🎉
+      </div>
+
+      <form class="email-popup-form" id="emailCaptureForm">
+        <input 
+          type="email" 
+          class="email-popup-input" 
+          id="emailInput" 
+          placeholder="Enter your email address"
+          required
+        >
+        <button type="submit" class="email-popup-submit">
+          Get My Discount Code
+        </button>
+      </form>
+
+      <p class="email-popup-privacy">
+        We respect your privacy. Unsubscribe anytime.
+      </p>
+    </div>
+
+    <div class="email-popup-success" id="emailSuccess">
+      <div class="email-popup-success-icon">✓</div>
+      <h3>Welcome to the Family!</h3>
+      <p>Check your email for your 10% discount code.</p>
+    </div>
+  </div>
+</div>
+
+<script>
+  {%- comment -%} Email popup functionality with cookie control {%- endcomment -%}
+  document.addEventListener('DOMContentLoaded', function() {
+    const popup = document.getElementById('emailPopup');
+    const closeBtn = document.getElementById('closePopup');
+    const form = document.getElementById('emailCaptureForm');
+    const emailForm = document.getElementById('emailForm');
+    const emailSuccess = document.getElementById('emailSuccess');
+    const cookieName = 'shelzys_email_popup_shown';
+    const cookieDays = 7;
+
+    // Cookie functions
+    function setCookie(name, value, days) {
+      const date = new Date();
+      date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+      const expires = "expires=" + date.toUTCString();
+      document.cookie = name + "=" + value + ";" + expires + ";path=/";
+    }
+
+    function getCookie(name) {
+      const nameEQ = name + "=";
+      const ca = document.cookie.split(';');
+      for (let i = 0; i < ca.length; i++) {
+        let c = ca[i];
+        while (c.charAt(0) === ' ') c = c.substring(1, c.length);
+        if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
+      }
+      return null;
+    }
+
+    // Show popup after 15 seconds if cookie not set
+    function showPopup() {
+      if (!getCookie(cookieName)) {
+        setTimeout(function() {
+          popup.classList.add('active');
+        }, 15000); // 15 seconds delay
+      }
+    }
+
+    // Close popup
+    function closePopup() {
+      popup.classList.remove('active');
+      setCookie(cookieName, 'true', cookieDays);
+    }
+
+    // Event listeners
+    closeBtn.addEventListener('click', closePopup);
+
+    popup.addEventListener('click', function(e) {
+      if (e.target === popup) {
+        closePopup();
+      }
+    });
+
+    // Form submission
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      const email = document.getElementById('emailInput').value;
+      
+      // Here you would typically send the email to your email service provider
+      // For now, we'll just show the success message
+      
+      // Example: Send to Shopify customer list (requires backend integration)
+      // fetch('/contact', {
+      //   method: 'POST',
+      //   headers: { 'Content-Type': 'application/json' },
+      //   body: JSON.stringify({ email: email })
+      // });
+
+      // Show success message
+      emailForm.style.display = 'none';
+      emailSuccess.classList.add('active');
+      
+      // Set cookie to prevent popup from showing again
+      setCookie(cookieName, 'true', cookieDays);
+      
+      // Close popup after 3 seconds
+      setTimeout(closePopup, 3000);
+    });
+
+    // Initialize popup
+    showPopup();
+
+    // Keyboard accessibility
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape' && popup.classList.contains('active')) {
+        closePopup();
+      }
+    });
+  });
+</script>

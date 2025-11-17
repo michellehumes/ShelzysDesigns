@@ -1,0 +1,437 @@
+{%- comment -%}
+  Rush Order Upgrade
+  Purpose: Premium shipping options and wedding date calculator
+  Features: Live countdown to same-day cutoff (5 PM), date-based recommendations
+  Pricing: Rush (+$15), Express (+$35)
+{%- endcomment -%}
+
+<style>
+  .rush-order-section {
+    background: linear-gradient(135deg, #fff5e1 0%, #ffe4b5 100%);
+    padding: 2rem;
+    border-radius: 12px;
+    margin: 2rem 0;
+    border: 2px solid #ffd700;
+  }
+
+  .rush-header {
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+
+  .rush-header h3 {
+    font-family: var(--font-primary--family, 'Helvetica Neue', sans-serif);
+    font-size: 1.75rem;
+    color: #ff6b6b;
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+  }
+
+  .rush-header p {
+    color: #666;
+    font-size: 1rem;
+  }
+
+  .rush-countdown {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 8px;
+    text-align: center;
+    margin-bottom: 2rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  .countdown-label {
+    font-size: 0.95rem;
+    color: #666;
+    margin-bottom: 0.5rem;
+  }
+
+  .countdown-timer {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #ff6b6b;
+    font-family: 'Courier New', monospace;
+  }
+
+  .countdown-subtext {
+    font-size: 0.85rem;
+    color: #999;
+    margin-top: 0.5rem;
+  }
+
+  .rush-options {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+  }
+
+  .rush-option {
+    background: white;
+    border-radius: 12px;
+    padding: 1.5rem;
+    border: 2px solid #e0e0e0;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+  }
+
+  .rush-option:hover {
+    border-color: #ffd700;
+    box-shadow: 0 4px 12px rgba(255, 215, 0, 0.3);
+  }
+
+  .rush-option input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+
+  .rush-option input[type="radio"]:checked + .rush-option-content {
+    border-color: #ffd700;
+  }
+
+  .rush-option.selected {
+    border-color: #ffd700;
+    background: #fffef0;
+    box-shadow: 0 4px 12px rgba(255, 215, 0, 0.3);
+  }
+
+  .rush-option-badge {
+    position: absolute;
+    top: -10px;
+    right: 1rem;
+    background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%);
+    color: white;
+    padding: 0.25rem 0.75rem;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    font-weight: 600;
+  }
+
+  .rush-option-icon {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .rush-option-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--color-foreground, #333);
+    margin-bottom: 0.5rem;
+  }
+
+  .rush-option-description {
+    font-size: 0.9rem;
+    color: #666;
+    margin-bottom: 1rem;
+    line-height: 1.5;
+  }
+
+  .rush-option-price {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #ff6b6b;
+  }
+
+  .rush-option-delivery {
+    font-size: 0.85rem;
+    color: #4caf50;
+    font-weight: 600;
+    margin-top: 0.5rem;
+  }
+
+  .wedding-calculator {
+    background: white;
+    padding: 2rem;
+    border-radius: 12px;
+    margin-top: 2rem;
+  }
+
+  .calculator-header {
+    text-align: center;
+    margin-bottom: 1.5rem;
+  }
+
+  .calculator-header h4 {
+    font-size: 1.25rem;
+    color: var(--color-foreground, #333);
+    margin-bottom: 0.5rem;
+  }
+
+  .calculator-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    max-width: 400px;
+    margin: 0 auto;
+  }
+
+  .calculator-input {
+    padding: 1rem;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+  }
+
+  .calculator-input:focus {
+    outline: none;
+    border-color: #ffd700;
+  }
+
+  .calculator-button {
+    background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%);
+    color: white;
+    padding: 1rem;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+  }
+
+  .calculator-button:hover {
+    transform: translateY(-2px);
+  }
+
+  .calculator-result {
+    display: none;
+    background: #f0f9ff;
+    padding: 1.5rem;
+    border-radius: 8px;
+    margin-top: 1rem;
+    border-left: 4px solid #4a90e2;
+  }
+
+  .calculator-result.active {
+    display: block;
+  }
+
+  .calculator-result h5 {
+    color: #4a90e2;
+    margin-bottom: 0.5rem;
+    font-size: 1.1rem;
+  }
+
+  .calculator-result p {
+    color: #666;
+    font-size: 0.95rem;
+    line-height: 1.5;
+  }
+
+  @media (max-width: 768px) {
+    .rush-order-section {
+      padding: 1.5rem;
+    }
+
+    .rush-header h3 {
+      font-size: 1.5rem;
+    }
+
+    .countdown-timer {
+      font-size: 1.75rem;
+    }
+
+    .rush-options {
+      grid-template-columns: 1fr;
+    }
+
+    .wedding-calculator {
+      padding: 1.5rem;
+    }
+  }
+</style>
+
+<div class="rush-order-section">
+  <div class="rush-header">
+    <h3>⚡ Need It Fast? Rush Shipping Available</h3>
+    <p>Perfect for last-minute gifts and upcoming events</p>
+  </div>
+
+  {%- comment -%} Same-Day Cutoff Countdown {%- endcomment -%}
+  <div class="rush-countdown">
+    <div class="countdown-label">Order within</div>
+    <div class="countdown-timer" id="rushCountdown">Loading...</div>
+    <div class="countdown-subtext">for same-day processing</div>
+  </div>
+
+  {%- comment -%} Shipping Options {%- endcomment -%}
+  <div class="rush-options">
+    {%- comment -%} Standard Shipping {%- endcomment -%}
+    <div class="rush-option" data-shipping-type="standard" data-price="0">
+      <input type="radio" name="properties[Shipping Upgrade]" id="shipping-standard" value="Standard" checked>
+      <div class="rush-option-content">
+        <div class="rush-option-icon">📦</div>
+        <div class="rush-option-title">Standard Shipping</div>
+        <div class="rush-option-description">
+          Our standard processing time. Perfect for orders placed well in advance.
+        </div>
+        <div class="rush-option-price">FREE</div>
+        <div class="rush-option-delivery">Arrives in 5-7 business days</div>
+      </div>
+    </div>
+
+    {%- comment -%} Rush Processing {%- endcomment -%}
+    <div class="rush-option" data-shipping-type="rush" data-price="15">
+      <div class="rush-option-badge">POPULAR</div>
+      <input type="radio" name="properties[Shipping Upgrade]" id="shipping-rush" value="Rush (+$15)">
+      <div class="rush-option-content">
+        <div class="rush-option-icon">🚀</div>
+        <div class="rush-option-title">Rush Processing</div>
+        <div class="rush-option-description">
+          Priority handling with expedited production. Great for upcoming events.
+        </div>
+        <div class="rush-option-price">+$15.00</div>
+        <div class="rush-option-delivery">Arrives in 2-3 business days</div>
+      </div>
+    </div>
+
+    {%- comment -%} Express Shipping {%- endcomment -%}
+    <div class="rush-option" data-shipping-type="express" data-price="35">
+      <div class="rush-option-badge">FASTEST</div>
+      <input type="radio" name="properties[Shipping Upgrade]" id="shipping-express" value="Express (+$35)">
+      <div class="rush-option-content">
+        <div class="rush-option-icon">⚡</div>
+        <div class="rush-option-title">Express Overnight</div>
+        <div class="rush-option-description">
+          Lightning-fast production and overnight delivery. For urgent orders only.
+        </div>
+        <div class="rush-option-price">+$35.00</div>
+        <div class="rush-option-delivery">Arrives next business day</div>
+      </div>
+    </div>
+  </div>
+
+  {%- comment -%} Wedding Date Calculator {%- endcomment -%}
+  <div class="wedding-calculator">
+    <div class="calculator-header">
+      <h4>💍 Wedding Date Calculator</h4>
+      <p>Let us recommend the best shipping option for your big day</p>
+    </div>
+
+    <form class="calculator-form" id="weddingCalculator">
+      <input 
+        type="date" 
+        class="calculator-input" 
+        id="weddingDate" 
+        placeholder="Select your wedding date"
+        required
+      >
+      <button type="submit" class="calculator-button">
+        Calculate Recommended Shipping
+      </button>
+    </form>
+
+    <div class="calculator-result" id="calculatorResult">
+      <h5 id="resultTitle"></h5>
+      <p id="resultDescription"></p>
+    </div>
+  </div>
+</div>
+
+<script>
+  {%- comment -%} Rush shipping functionality {%- endcomment -%}
+  document.addEventListener('DOMContentLoaded', function() {
+    // Countdown timer to 5 PM same-day cutoff
+    function updateCountdown() {
+      const now = new Date();
+      const cutoff = new Date();
+      cutoff.setHours(17, 0, 0, 0); // 5 PM today
+
+      // If past cutoff, set to next business day
+      if (now >= cutoff) {
+        cutoff.setDate(cutoff.getDate() + 1);
+      }
+
+      const diff = cutoff - now;
+      const hours = Math.floor(diff / (1000 * 60 * 60));
+      const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+      const countdownEl = document.getElementById('rushCountdown');
+      countdownEl.textContent = 
+        String(hours).padStart(2, '0') + ':' + 
+        String(minutes).padStart(2, '0') + ':' + 
+        String(seconds).padStart(2, '0');
+    }
+
+    // Update countdown every second
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+
+    // Shipping option selection
+    const shippingOptions = document.querySelectorAll('.rush-option');
+    
+    shippingOptions.forEach(function(option) {
+      option.addEventListener('click', function() {
+        shippingOptions.forEach(opt => opt.classList.remove('selected'));
+        option.classList.add('selected');
+        
+        const radio = option.querySelector('input[type="radio"]');
+        radio.checked = true;
+      });
+    });
+
+    // Wedding date calculator
+    const calculatorForm = document.getElementById('weddingCalculator');
+    const calculatorResult = document.getElementById('calculatorResult');
+    const resultTitle = document.getElementById('resultTitle');
+    const resultDescription = document.getElementById('resultDescription');
+
+    calculatorForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      const weddingDateInput = document.getElementById('weddingDate').value;
+      const weddingDate = new Date(weddingDateInput);
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      
+      const daysUntilWedding = Math.ceil((weddingDate - today) / (1000 * 60 * 60 * 24));
+
+      let recommendation = '';
+      let description = '';
+
+      if (daysUntilWedding < 0) {
+        recommendation = '❌ Date has passed';
+        description = 'Please select a future date for your wedding.';
+      } else if (daysUntilWedding <= 1) {
+        recommendation = '⚡ Express Overnight Required';
+        description = 'Your wedding is tomorrow! We recommend Express Overnight shipping to ensure delivery on time. Order now!';
+        
+        // Auto-select express shipping
+        document.getElementById('shipping-express').checked = true;
+        shippingOptions.forEach(opt => opt.classList.remove('selected'));
+        shippingOptions[2].classList.add('selected');
+      } else if (daysUntilWedding <= 4) {
+        recommendation = '🚀 Rush Processing Recommended';
+        description = `Your wedding is in ${daysUntilWedding} days. We strongly recommend Rush Processing to ensure your bottles arrive with time to spare.`;
+        
+        // Auto-select rush shipping
+        document.getElementById('shipping-rush').checked = true;
+        shippingOptions.forEach(opt => opt.classList.remove('selected'));
+        shippingOptions[1].classList.add('selected');
+      } else if (daysUntilWedding <= 10) {
+        recommendation = '📦 Standard Shipping Available';
+        description = `Your wedding is in ${daysUntilWedding} days. Standard shipping should work, but consider Rush Processing for peace of mind!`;
+      } else {
+        recommendation = '✅ Plenty of Time!';
+        description = `Your wedding is in ${daysUntilWedding} days. You have plenty of time! Standard shipping will work perfectly.`;
+      }
+
+      resultTitle.textContent = recommendation;
+      resultDescription.textContent = description;
+      calculatorResult.classList.add('active');
+    });
+
+    // Set minimum date to today
+    const today = new Date().toISOString().split('T')[0];
+    document.getElementById('weddingDate').setAttribute('min', today);
+  });
+</script>

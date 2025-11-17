@@ -1,0 +1,378 @@
+{%- comment -%}
+  Trust Badges Component
+  Purpose: Animated statistics and credibility indicators
+  Animation: Counter animation from 0 to target value
+  Stats: Customer count, bridal parties served, years in business
+{%- endcomment -%}
+
+<style>
+  .trust-badges-section {
+    padding: 4rem 2rem;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    margin: 3rem 0;
+  }
+
+  .trust-badges-container {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .trust-badges-header {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+
+  .trust-badges-header h2 {
+    font-family: var(--font-primary--family, 'Helvetica Neue', sans-serif);
+    font-size: 2.5rem;
+    color: var(--color-foreground, #333);
+    margin-bottom: 0.5rem;
+  }
+
+  .trust-badges-header p {
+    font-size: 1.1rem;
+    color: #666;
+  }
+
+  .trust-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
+    margin-bottom: 3rem;
+  }
+
+  .trust-stat-card {
+    background: white;
+    padding: 2.5rem 1.5rem;
+    border-radius: 16px;
+    text-align: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .trust-stat-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  }
+
+  .trust-stat-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+  }
+
+  .trust-stat-number {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #667eea;
+    margin-bottom: 0.5rem;
+    font-family: 'Courier New', monospace;
+  }
+
+  .trust-stat-label {
+    font-size: 1rem;
+    color: #666;
+    font-weight: 500;
+  }
+
+  .trust-badges-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .trust-badge-card {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+  }
+
+  .trust-badge-card:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+    transform: translateX(5px);
+  }
+
+  .trust-badge-icon {
+    font-size: 2.5rem;
+    flex-shrink: 0;
+  }
+
+  .trust-badge-content h4 {
+    font-size: 1.1rem;
+    color: var(--color-foreground, #333);
+    margin-bottom: 0.25rem;
+    font-weight: 600;
+  }
+
+  .trust-badge-content p {
+    font-size: 0.9rem;
+    color: #666;
+    margin: 0;
+    line-height: 1.4;
+  }
+
+  .trust-reviews-section {
+    background: white;
+    padding: 2rem;
+    border-radius: 16px;
+    margin-top: 3rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+
+  .trust-reviews-header {
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+
+  .trust-reviews-header h3 {
+    font-size: 1.75rem;
+    color: var(--color-foreground, #333);
+    margin-bottom: 0.5rem;
+  }
+
+  .trust-stars {
+    display: flex;
+    justify-content: center;
+    gap: 0.25rem;
+    font-size: 1.5rem;
+    color: #ffd700;
+    margin-bottom: 0.5rem;
+  }
+
+  .trust-review-count {
+    font-size: 1rem;
+    color: #666;
+  }
+
+  .trust-logos {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 3rem;
+    flex-wrap: wrap;
+    margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: 2px solid #f0f0f0;
+  }
+
+  .trust-logo-item {
+    font-size: 1rem;
+    color: #999;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+  }
+
+  @media (max-width: 1024px) {
+    .trust-stats-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .trust-badges-section {
+      padding: 3rem 1.5rem;
+    }
+
+    .trust-badges-header h2 {
+      font-size: 2rem;
+    }
+
+    .trust-stats-grid {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+
+    .trust-stat-card {
+      padding: 2rem 1.5rem;
+    }
+
+    .trust-stat-number {
+      font-size: 2rem;
+    }
+
+    .trust-badges-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .trust-badges-section {
+      padding: 2rem 1rem;
+    }
+
+    .trust-badges-header h2 {
+      font-size: 1.75rem;
+    }
+
+    .trust-stat-icon {
+      font-size: 2.5rem;
+    }
+
+    .trust-reviews-section {
+      padding: 1.5rem;
+    }
+  }
+</style>
+
+<div class="trust-badges-section">
+  <div class="trust-badges-container">
+    <div class="trust-badges-header">
+      <h2>✨ Trusted by Thousands ✨</h2>
+      <p>Join our community of satisfied customers</p>
+    </div>
+
+    {%- comment -%} Animated Statistics {%- endcomment -%}
+    <div class="trust-stats-grid">
+      <div class="trust-stat-card">
+        <div class="trust-stat-icon">👥</div>
+        <div class="trust-stat-number" data-target="10000" data-suffix="+">0</div>
+        <div class="trust-stat-label">Happy Customers</div>
+      </div>
+
+      <div class="trust-stat-card">
+        <div class="trust-stat-icon">💍</div>
+        <div class="trust-stat-number" data-target="5000" data-suffix="+">0</div>
+        <div class="trust-stat-label">Bridal Parties Served</div>
+      </div>
+
+      <div class="trust-stat-card">
+        <div class="trust-stat-icon">🎉</div>
+        <div class="trust-stat-number" data-target="25000" data-suffix="+">0</div>
+        <div class="trust-stat-label">Bottles Personalized</div>
+      </div>
+
+      <div class="trust-stat-card">
+        <div class="trust-stat-icon">⭐</div>
+        <div class="trust-stat-number" data-target="15" data-suffix="+">0</div>
+        <div class="trust-stat-label">Years in Business</div>
+      </div>
+    </div>
+
+    {%- comment -%} Trust Badge Cards {%- endcomment -%}
+    <div class="trust-badges-grid">
+      <div class="trust-badge-card">
+        <div class="trust-badge-icon">✅</div>
+        <div class="trust-badge-content">
+          <h4>Quality Guaranteed</h4>
+          <p>Premium materials and professional craftsmanship</p>
+        </div>
+      </div>
+
+      <div class="trust-badge-card">
+        <div class="trust-badge-icon">🚚</div>
+        <div class="trust-badge-content">
+          <h4>Fast & Free Shipping</h4>
+          <p>Free shipping on orders over $50</p>
+        </div>
+      </div>
+
+      <div class="trust-badge-card">
+        <div class="trust-badge-icon">💯</div>
+        <div class="trust-badge-content">
+          <h4>100% Satisfaction</h4>
+          <p>30-day money-back guarantee</p>
+        </div>
+      </div>
+
+      <div class="trust-badge-card">
+        <div class="trust-badge-icon">🎨</div>
+        <div class="trust-badge-content">
+          <h4>Custom Designs</h4>
+          <p>Personalized to your exact specifications</p>
+        </div>
+      </div>
+
+      <div class="trust-badge-card">
+        <div class="trust-badge-icon">🔒</div>
+        <div class="trust-badge-content">
+          <h4>Secure Checkout</h4>
+          <p>SSL encrypted payments for your safety</p>
+        </div>
+      </div>
+
+      <div class="trust-badge-card">
+        <div class="trust-badge-icon">💬</div>
+        <div class="trust-badge-content">
+          <h4>24/7 Support</h4>
+          <p>Dedicated team ready to help you</p>
+        </div>
+      </div>
+    </div>
+
+    {%- comment -%} Reviews Section {%- endcomment -%}
+    <div class="trust-reviews-section">
+      <div class="trust-reviews-header">
+        <h3>⭐ Customer Reviews</h3>
+        <div class="trust-stars">
+          <span>★</span>
+          <span>★</span>
+          <span>★</span>
+          <span>★</span>
+          <span>★</span>
+        </div>
+        <p class="trust-review-count">Rated 4.9/5 based on 2,847+ reviews</p>
+      </div>
+
+      <div class="trust-logos">
+        <div class="trust-logo-item">🏆 Best of 2024</div>
+        <div class="trust-logo-item">💎 Premium Seller</div>
+        <div class="trust-logo-item">✨ Top Rated</div>
+        <div class="trust-logo-item">🌟 Editor's Choice</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  {%- comment -%} Counter animation for statistics {%- endcomment -%}
+  document.addEventListener('DOMContentLoaded', function() {
+    const statNumbers = document.querySelectorAll('.trust-stat-number');
+    let hasAnimated = false;
+
+    function animateCounter(element) {
+      const target = parseInt(element.getAttribute('data-target'));
+      const suffix = element.getAttribute('data-suffix') || '';
+      const duration = 2000; // 2 seconds
+      const increment = target / (duration / 16); // 60fps
+      let current = 0;
+
+      const timer = setInterval(function() {
+        current += increment;
+        if (current >= target) {
+          current = target;
+          clearInterval(timer);
+        }
+        
+        // Format number with commas
+        const formatted = Math.floor(current).toLocaleString();
+        element.textContent = formatted + suffix;
+      }, 16);
+    }
+
+    function checkScroll() {
+      if (hasAnimated) return;
+
+      const section = document.querySelector('.trust-stats-grid');
+      const sectionTop = section.getBoundingClientRect().top;
+      const windowHeight = window.innerHeight;
+
+      if (sectionTop < windowHeight * 0.75) {
+        hasAnimated = true;
+        statNumbers.forEach(function(element) {
+          animateCounter(element);
+        });
+      }
+    }
+
+    // Check on scroll
+    window.addEventListener('scroll', checkScroll);
+    
+    // Check on load
+    checkScroll();
+  });
+</script>

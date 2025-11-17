@@ -1,0 +1,428 @@
+{%- comment -%}
+  Instagram Feed Component
+  Purpose: Social proof gallery
+  Layout: Responsive grid, hover effects
+{%- endcomment -%}
+
+<style>
+  .instagram-section {
+    padding: 4rem 2rem;
+    background: white;
+    margin: 3rem 0;
+  }
+
+  .instagram-container {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .instagram-header {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+
+  .instagram-header h2 {
+    font-family: var(--font-primary--family, 'Helvetica Neue', sans-serif);
+    font-size: 2.5rem;
+    color: var(--color-foreground, #333);
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+  }
+
+  .instagram-icon {
+    font-size: 2.5rem;
+    background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .instagram-header p {
+    font-size: 1.1rem;
+    color: #666;
+    margin-bottom: 1rem;
+  }
+
+  .instagram-handle {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border-radius: 25px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: transform 0.3s ease;
+  }
+
+  .instagram-handle:hover {
+    transform: scale(1.05);
+  }
+
+  .instagram-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .instagram-post {
+    position: relative;
+    aspect-ratio: 1 / 1;
+    border-radius: 12px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+  }
+
+  .instagram-post:hover {
+    transform: scale(1.02);
+  }
+
+  .instagram-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+  }
+
+  .instagram-post:hover .instagram-image {
+    transform: scale(1.1);
+  }
+
+  .instagram-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(45deg, rgba(240, 148, 51, 0.9) 0%, rgba(188, 24, 136, 0.9) 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    color: white;
+  }
+
+  .instagram-post:hover .instagram-overlay {
+    opacity: 1;
+  }
+
+  .instagram-stats {
+    display: flex;
+    gap: 2rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+  }
+
+  .instagram-stat {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .instagram-stat-icon {
+    font-size: 1.5rem;
+  }
+
+  .instagram-caption {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 1rem;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+    color: white;
+    font-size: 0.9rem;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .instagram-post:hover .instagram-caption {
+    opacity: 1;
+  }
+
+  .instagram-cta {
+    text-align: center;
+    margin-top: 3rem;
+  }
+
+  .instagram-cta-text {
+    font-size: 1.1rem;
+    color: #666;
+    margin-bottom: 1rem;
+  }
+
+  .instagram-follow-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+    color: white;
+    padding: 1rem 2rem;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .instagram-follow-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(188, 24, 136, 0.4);
+  }
+
+  @media (max-width: 1024px) {
+    .instagram-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .instagram-section {
+      padding: 3rem 1.5rem;
+    }
+
+    .instagram-header h2 {
+      font-size: 2rem;
+    }
+
+    .instagram-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .instagram-section {
+      padding: 2rem 1rem;
+    }
+
+    .instagram-header h2 {
+      font-size: 1.75rem;
+      flex-direction: column;
+    }
+
+    .instagram-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+
+<div class="instagram-section">
+  <div class="instagram-container">
+    <div class="instagram-header">
+      <h2>
+        <span class="instagram-icon">📸</span>
+        Follow Us on Instagram
+      </h2>
+      <p>See our latest designs and happy customers!</p>
+      <a href="https://instagram.com/shelzysdesigns" class="instagram-handle" target="_blank" rel="noopener">
+        <span>📷</span>
+        <span>@shelzysdesigns</span>
+      </a>
+    </div>
+
+    {%- comment -%} Instagram Grid {%- endcomment -%}
+    <div class="instagram-grid">
+      {%- comment -%} Post 1 {%- endcomment -%}
+      <div class="instagram-post">
+        <img 
+          class="instagram-image" 
+          src="https://via.placeholder.com/400x400/f09433/ffffff?text=Bridal+Party" 
+          alt="Bridal party with custom bottles"
+          loading="lazy"
+        >
+        <div class="instagram-overlay">
+          <div class="instagram-stats">
+            <div class="instagram-stat">
+              <span class="instagram-stat-icon">❤️</span>
+              <span>342</span>
+            </div>
+            <div class="instagram-stat">
+              <span class="instagram-stat-icon">💬</span>
+              <span>24</span>
+            </div>
+          </div>
+        </div>
+        <div class="instagram-caption">
+          Beautiful bridal party bottles for Sarah's big day! 💕 #BridalParty
+        </div>
+      </div>
+
+      {%- comment -%} Post 2 {%- endcomment -%}
+      <div class="instagram-post">
+        <img 
+          class="instagram-image" 
+          src="https://via.placeholder.com/400x400/e6683c/ffffff?text=Custom+Design" 
+          alt="Custom bottle design"
+          loading="lazy"
+        >
+        <div class="instagram-overlay">
+          <div class="instagram-stats">
+            <div class="instagram-stat">
+              <span class="instagram-stat-icon">❤️</span>
+              <span>287</span>
+            </div>
+            <div class="instagram-stat">
+              <span class="instagram-stat-icon">💬</span>
+              <span>18</span>
+            </div>
+          </div>
+        </div>
+        <div class="instagram-caption">
+          Love this rose gold design! ✨ #CustomBottle #PersonalizedGifts
+        </div>
+      </div>
+
+      {%- comment -%} Post 3 {%- endcomment -%}
+      <div class="instagram-post">
+        <img 
+          class="instagram-image" 
+          src="https://via.placeholder.com/400x400/dc2743/ffffff?text=Wedding+Gift" 
+          alt="Wedding gift bottles"
+          loading="lazy"
+        >
+        <div class="instagram-overlay">
+          <div class="instagram-stats">
+            <div class="instagram-stat">
+              <span class="instagram-stat-icon">❤️</span>
+              <span>421</span>
+            </div>
+            <div class="instagram-stat">
+              <span class="instagram-stat-icon">💬</span>
+              <span>31</span>
+            </div>
+          </div>
+        </div>
+        <div class="instagram-caption">
+          Perfect wedding favors! 💍 #WeddingGifts #Personalized
+        </div>
+      </div>
+
+      {%- comment -%} Post 4 {%- endcomment -%}
+      <div class="instagram-post">
+        <img 
+          class="instagram-image" 
+          src="https://via.placeholder.com/400x400/cc2366/ffffff?text=Corporate+Event" 
+          alt="Corporate event bottles"
+          loading="lazy"
+        >
+        <div class="instagram-overlay">
+          <div class="instagram-stats">
+            <div class="instagram-stat">
+              <span class="instagram-stat-icon">❤️</span>
+              <span>198</span>
+            </div>
+            <div class="instagram-stat">
+              <span class="instagram-stat-icon">💬</span>
+              <span>12</span>
+            </div>
+          </div>
+        </div>
+        <div class="instagram-caption">
+          Corporate swag done right! 💼 #CorporateGifts #BulkOrder
+        </div>
+      </div>
+
+      {%- comment -%} Post 5 {%- endcomment -%}
+      <div class="instagram-post">
+        <img 
+          class="instagram-image" 
+          src="https://via.placeholder.com/400x400/bc1888/ffffff?text=Team+Gifts" 
+          alt="Team gift bottles"
+          loading="lazy"
+        >
+        <div class="instagram-overlay">
+          <div class="instagram-stats">
+            <div class="instagram-stat">
+              <span class="instagram-stat-icon">❤️</span>
+              <span>256</span>
+            </div>
+            <div class="instagram-stat">
+              <span class="instagram-stat-icon">💬</span>
+              <span>15</span>
+            </div>
+          </div>
+        </div>
+        <div class="instagram-caption">
+          Team spirit! 🎉 #TeamGifts #CustomBottles
+        </div>
+      </div>
+
+      {%- comment -%} Post 6 {%- endcomment -%}
+      <div class="instagram-post">
+        <img 
+          class="instagram-image" 
+          src="https://via.placeholder.com/400x400/f09433/ffffff?text=Special+Order" 
+          alt="Special order bottle"
+          loading="lazy"
+        >
+        <div class="instagram-overlay">
+          <div class="instagram-stats">
+            <div class="instagram-stat">
+              <span class="instagram-stat-icon">❤️</span>
+              <span>312</span>
+            </div>
+            <div class="instagram-stat">
+              <span class="instagram-stat-icon">💬</span>
+              <span>22</span>
+            </div>
+          </div>
+        </div>
+        <div class="instagram-caption">
+          Custom order perfection! 💖 #MadeToOrder #PersonalTouch
+        </div>
+      </div>
+    </div>
+
+    {%- comment -%} Call to Action {%- endcomment -%}
+    <div class="instagram-cta">
+      <p class="instagram-cta-text">Join our community of 25,000+ followers!</p>
+      <a 
+        href="https://instagram.com/shelzysdesigns" 
+        class="instagram-follow-button" 
+        target="_blank" 
+        rel="noopener"
+      >
+        <span>📷</span>
+        <span>Follow @shelzysdesigns</span>
+      </a>
+    </div>
+  </div>
+</div>
+
+<script>
+  {%- comment -%} Instagram post interactions {%- endcomment -%}
+  document.addEventListener('DOMContentLoaded', function() {
+    const instagramPosts = document.querySelectorAll('.instagram-post');
+    
+    instagramPosts.forEach(function(post) {
+      post.addEventListener('click', function() {
+        // Open Instagram post in new window
+        // In a real implementation, you would use the actual Instagram post URL
+        const instagramUrl = 'https://instagram.com/shelzysdesigns';
+        window.open(instagramUrl, '_blank', 'noopener,noreferrer');
+      });
+      
+      // Add keyboard accessibility
+      post.setAttribute('tabindex', '0');
+      post.setAttribute('role', 'button');
+      post.setAttribute('aria-label', 'View Instagram post');
+      
+      post.addEventListener('keypress', function(e) {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          this.click();
+        }
+      });
+    });
+  });
+</script>
