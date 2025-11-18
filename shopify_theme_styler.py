@@ -344,13 +344,30 @@ select:focus {
 '''
 
 # --- 1. Authenticate with Browserbase ---
-os.environ["BROWSERBASE_API_KEY"] = "Ybb_live_AIisgtCLyS85PRLyY3S_rTmtx1w"
+os.environ["BROWSERBASE_API_KEY"] = "bb_live_AIisgtCLyS85PRLyY3S_rTmtx1w"
+os.environ["BROWSERBASE_PROJECT_ID"] = "c04868ef-9a19-49d2-a391-a7a509da7472"
 
 bb = Browserbase()
 
 # --- 2. Create a browser session ---
+# First, close any existing sessions to avoid rate limits
+print("Checking for existing sessions...")
+try:
+    existing_sessions = bb.sessions.list()
+    for s in existing_sessions:
+        if s.status == "RUNNING":
+            print(f"Closing existing session: {s.id}")
+            bb.sessions.update(
+                s.id,
+                project_id="c04868ef-9a19-49d2-a391-a7a509da7472",
+                status="REQUEST_RELEASE"
+            )
+    time.sleep(5)  # Wait for sessions to close
+except Exception as e:
+    print(f"Note: Could not check existing sessions: {e}")
+
 session = bb.sessions.create(
-    project_id=os.environ.get("BROWSERBASE_PROJECT_ID"),
+    project_id="c04868ef-9a19-49d2-a391-a7a509da7472",
     keep_alive=True
 )
 session_id = session.id
@@ -363,7 +380,9 @@ print("Connecting to browser...")
 
 # --- 3. Connect to the session using Playwright ---
 with sync_playwright() as pw:
-    browser = pw.chromium.connect_over_cdp(bb.connect(session_id))
+    # Construct the CDP connection URL
+    connect_url = f"wss://connect.browserbase.com?apiKey={os.environ['BROWSERBASE_API_KEY']}&sessionId={session_id}"
+    browser = pw.chromium.connect_over_cdp(connect_url)
     context = browser.contexts[0] if browser.contexts else browser.new_context()
     page = context.new_page()
 
