@@ -349,11 +349,11 @@ os.environ["BROWSERBASE_API_KEY"] = "Ybb_live_AIisgtCLyS85PRLyY3S_rTmtx1w"
 bb = Browserbase()
 
 # --- 2. Create a browser session ---
-session = bb.sessions.create({
-    "keepAlive": True,
-    "projectId": None
-})
-session_id = session["id"]
+session = bb.sessions.create(
+    project_id=os.environ.get("BROWSERBASE_PROJECT_ID"),
+    keep_alive=True
+)
+session_id = session.id
 
 print("=" * 50)
 print("SHELZY'S DESIGNS - THEME STYLING AGENT")
