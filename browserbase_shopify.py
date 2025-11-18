@@ -8,7 +8,10 @@ os.environ["BROWSERBASE_API_KEY"] = "Ybb_live_AIisgtCLyS85PRLyY3S_rTmtx1w"
 bb = Browserbase()
 
 # --- 2. Create a browser session ---
-session = bb.sessions.create({"projectId": None})
+session = bb.sessions.create({
+    "keepAlive": True,
+    "projectId": None
+})
 session_id = session["id"]
 
 print("Browserbase session created:", session_id)
