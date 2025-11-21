@@ -107,16 +107,31 @@ Use this when deciding where to pin each product:
 
 ---
 
-## Suggested Additional Boards (Optional Future Expansion)
+## Blog Post to Board Mapping
 
-Consider creating these as your content grows:
+Pin your existing blog posts to these boards:
+
+| Blog Post | Pin To These Boards |
+|-----------|---------------------|
+| **Luxurious Bridesmaid Robes** | Bridal Party Gifts, Bridesmaid Gifts & Ideas, Amazon Wedding Finds |
+| **Travel Jewelry Organizers for Weddings** | Packing & Travel..., Travel & Honeymoon..., Amazon Wedding Finds |
+| **Bridal Party Gifts Under $50** | Gift Guides (Under $50), Bridal Party Gifts, Bridesmaid Gifts & Ideas |
+| **Bachelorette Weekend Essentials** | Bridal Shower Ideas, Amazon Wedding Finds, Self Care |
+| **How to Personalize Gifts Like a Pro** | Personalized Wedding..., Bridal Party Gifts, Wedding Planning Tips... |
+| **What to Put in a Bridesmaid Proposal Box** | Bridesmaid Gifts & Ideas, Bridal Party Gifts, Wedding Planning Tips... |
+| **Water Bottle Posts (6 total)** | Palm Beach Preppy Style, Gift Guides (Under $50) |
+
+---
+
+## Suggested Additional Boards (Optional)
+
+Consider these as your content grows:
 
 | Board Name | Purpose |
 |------------|---------|
 | **Holiday Gift Guide** | Seasonal (October-December) |
-| **Kitchen Organization** | Expand from Home Decor |
-| **Creator Tools & Tech** | Separate from WFH if content grows |
-| **Shelzy's Designs Shop** | Link to your Shopify products |
+| **Kitchen Organization** | If you expand kitchen content |
+| **Shelzy's Designs Shop** | Link directly to your Shopify products |
 
 ---
 
