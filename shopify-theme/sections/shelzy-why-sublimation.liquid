@@ -1,0 +1,138 @@
+{% comment %}
+  Shelzy's Designs - Why Sublimation Section
+  Compatible with Impulse theme
+{% endcomment %}
+
+<style>
+  .shelzy-why-sublimation {
+    padding: 80px 0;
+    background: #FFFFFF;
+  }
+
+  .shelzy-why-sublimation__container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 20px;
+    text-align: center;
+  }
+
+  .shelzy-why-sublimation__title {
+    font-family: 'Poppins', var(--font-heading-family);
+    font-weight: 600;
+    font-size: 36px;
+    color: #111111;
+    margin-bottom: 1.5rem;
+  }
+
+  .shelzy-why-sublimation__text {
+    font-family: 'Inter', var(--font-body-family);
+    font-size: 18px;
+    line-height: 1.8;
+    color: #333;
+    margin-bottom: 2rem;
+  }
+
+  .shelzy-why-sublimation__benefits {
+    list-style: none;
+    padding: 0;
+    margin: 2rem auto;
+    max-width: 500px;
+    text-align: left;
+  }
+
+  .shelzy-why-sublimation__benefits li {
+    font-family: 'Inter', var(--font-body-family);
+    font-size: 18px;
+    color: #111111;
+    margin-bottom: 1rem;
+    padding-left: 30px;
+    position: relative;
+  }
+
+  .shelzy-why-sublimation__benefits li:before {
+    content: "✓";
+    position: absolute;
+    left: 0;
+    color: #9CAE8C;
+    font-weight: bold;
+    font-size: 22px;
+  }
+
+  .shelzy-why-sublimation__tagline {
+    font-family: 'Inter', var(--font-body-family);
+    font-size: 20px;
+    font-weight: 500;
+    color: #9CAE8C;
+    margin-top: 2rem;
+    font-style: italic;
+  }
+
+  @media (max-width: 768px) {
+    .shelzy-why-sublimation {
+      padding: 60px 0;
+    }
+
+    .shelzy-why-sublimation__title {
+      font-size: 28px;
+    }
+
+    .shelzy-why-sublimation__text {
+      font-size: 16px;
+    }
+
+    .shelzy-why-sublimation__benefits {
+      text-align: left;
+    }
+
+    .shelzy-why-sublimation__benefits li {
+      font-size: 16px;
+    }
+  }
+</style>
+
+<div class="shelzy-why-sublimation">
+  <div class="shelzy-why-sublimation__container">
+    <h2 class="shelzy-why-sublimation__title">{{ section.settings.title }}</h2>
+
+    <div class="shelzy-why-sublimation__text">
+      {{ section.settings.content }}
+    </div>
+
+    <ul class="shelzy-why-sublimation__benefits">
+      <li>No raised edges</li>
+      <li>No peeling</li>
+      <li>No cracking</li>
+      <li>No fading</li>
+      <li>A smooth, permanent finish</li>
+    </ul>
+
+    <p class="shelzy-why-sublimation__tagline">
+      Your personalization becomes part of the bottle itself.
+    </p>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Shelzy Why Sublimation",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Why Our Bottles Don't Peel, Crack, or Fade"
+    },
+    {
+      "type": "richtext",
+      "id": "content",
+      "label": "Content",
+      "default": "<p>Most personalized bottles use vinyl decals that eventually peel, crack, or fade. At Shelzy's Designs, every name and design is created with true sublimation printing—the ink is infused directly into the bottle's coating.</p><p>That means:</p>"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Shelzy Why Sublimation"
+    }
+  ]
+}
+{% endschema %}

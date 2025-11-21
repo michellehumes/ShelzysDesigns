@@ -1,0 +1,176 @@
+{% comment %}
+  Shelzy's Designs - Hero Section
+  Compatible with Impulse theme
+
+  To install:
+  1. Go to Online Store > Themes > Actions > Edit code
+  2. In /sections/ folder, click "Add a new section"
+  3. Name it: shelzy-hero
+  4. Paste this entire file
+  5. Save
+  6. Go to Customize theme > Add section > Shelzy Hero
+{% endcomment %}
+
+<style>
+  .shelzy-hero {
+    position: relative;
+    background: {{ section.settings.bg_color }};
+    padding: 100px 0;
+    overflow: hidden;
+  }
+
+  .shelzy-hero__container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+  }
+
+  .shelzy-hero__content {
+    z-index: 2;
+  }
+
+  .shelzy-hero__title {
+    font-family: 'Poppins', var(--font-heading-family);
+    font-weight: 600;
+    font-size: 48px;
+    line-height: 1.2;
+    color: #111111;
+    margin-bottom: 1.5rem;
+  }
+
+  .shelzy-hero__subtitle {
+    font-family: 'Inter', var(--font-body-family);
+    font-size: 18px;
+    line-height: 1.6;
+    color: #111111;
+    margin-bottom: 2rem;
+  }
+
+  .shelzy-hero__btn {
+    display: inline-block;
+    padding: 16px 32px;
+    background: #9CAE8C;
+    color: #FFFFFF;
+    font-family: 'Poppins', var(--font-heading-family);
+    font-weight: 600;
+    font-size: 16px;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
+  }
+
+  .shelzy-hero__btn:hover {
+    background: #7C9F8C;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(156, 174, 140, 0.3);
+  }
+
+  .shelzy-hero__image {
+    position: relative;
+    z-index: 1;
+  }
+
+  .shelzy-hero__image img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+  }
+
+  @media (max-width: 768px) {
+    .shelzy-hero {
+      padding: 60px 0;
+    }
+
+    .shelzy-hero__container {
+      grid-template-columns: 1fr;
+      gap: 30px;
+      text-align: center;
+    }
+
+    .shelzy-hero__title {
+      font-size: 36px;
+    }
+
+    .shelzy-hero__subtitle {
+      font-size: 16px;
+    }
+  }
+</style>
+
+<div class="shelzy-hero">
+  <div class="shelzy-hero__container">
+    <div class="shelzy-hero__content">
+      <h1 class="shelzy-hero__title">{{ section.settings.title }}</h1>
+      <p class="shelzy-hero__subtitle">{{ section.settings.subtitle }}</p>
+      {% if section.settings.cta_text != blank %}
+        <a href="{{ section.settings.cta_link }}" class="shelzy-hero__btn">
+          {{ section.settings.cta_text }}
+        </a>
+      {% endif %}
+    </div>
+
+    <div class="shelzy-hero__image">
+      {% if section.settings.image != blank %}
+        {{ section.settings.image | image_url: width: 800 | image_tag: loading: 'eager', alt: section.settings.title }}
+      {% else %}
+        <div style="background: #F7F4EF; height: 500px; display: flex; align-items: center; justify-content: center; border-radius: 8px; color: #999;">
+          Hero Image Placeholder
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Shelzy Hero",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Premium Personalized Sublimation Water Bottles"
+    },
+    {
+      "type": "textarea",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "Custom-made bottles for bridesmaids, weddings, holidays, and every day in between."
+    },
+    {
+      "type": "text",
+      "id": "cta_text",
+      "label": "Button Text",
+      "default": "Shop Best Sellers"
+    },
+    {
+      "type": "url",
+      "id": "cta_link",
+      "label": "Button Link"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Hero Image"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#FFFFFF"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Shelzy Hero"
+    }
+  ]
+}
+{% endschema %}

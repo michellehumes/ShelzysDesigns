@@ -1,0 +1,202 @@
+{% comment %}
+  Shelzy's Designs - Product Personalization Snippet
+
+  This snippet adds personalization fields to product pages
+
+  To install:
+  1. Go to Online Store > Themes > Actions > Edit code
+  2. Go to Snippets folder
+  3. Click "Add a new snippet"
+  4. Name it: product-personalization
+  5. Paste this entire file
+  6. Save
+
+  To use in your product template:
+  Add this line after the variant selector:
+  {% render 'product-personalization', product: product %}
+{% endcomment %}
+
+{% comment %} Check if product needs personalization {% endcomment %}
+{% assign needs_personalization = false %}
+{% if product.tags contains 'personalized' or product.tags contains 'custom' or product.tags contains 'sublimation' %}
+  {% assign needs_personalization = true %}
+{% endif %}
+
+{% if needs_personalization %}
+<div class="product-personalization">
+  <h3>Personalize Your {{ product.title }}</h3>
+
+  {% comment %} Name Input - Required for all personalized products {% endcomment %}
+  <div class="form-field">
+    <label for="personalization-name">
+      Name for Personalization *
+    </label>
+    <input
+      type="text"
+      id="personalization-name"
+      name="properties[Name]"
+      required
+      maxlength="20"
+      placeholder="Enter name exactly as you'd like it"
+    >
+    <small>Please check spelling and capitalization carefully</small>
+  </div>
+
+  {% comment %} Font Style {% endcomment %}
+  <div class="form-field">
+    <label for="font-style">
+      Font Style *
+    </label>
+    <select id="font-style" name="properties[Font Style]" required>
+      <option value="">Select a font style...</option>
+      <option value="Elegant Script">Elegant Script (flowing, feminine)</option>
+      <option value="Clean Block">Clean Block (modern, uppercase)</option>
+      <option value="Vertical">Vertical (down the bottle)</option>
+    </select>
+  </div>
+
+  {% comment %} Text Color {% endcomment %}
+  <div class="form-field">
+    <label for="text-color">
+      Text Color *
+    </label>
+    <select id="text-color" name="properties[Text Color]" required>
+      <option value="">Select a color...</option>
+      <option value="Black">Black</option>
+      <option value="Sage Green">Sage Green</option>
+      <option value="Blush Pink">Blush Pink</option>
+      <option value="Gold">Gold Effect</option>
+    </select>
+  </div>
+
+  {% comment %} Icon (Optional) - Only show for applicable products {% endcomment %}
+  {% unless product.tags contains 'bridesmaid' or product.tags contains 'bridal' %}
+    <div class="form-field">
+      <label for="icon">
+        Add Icon? (Optional)
+      </label>
+      <select id="icon" name="properties[Icon]">
+        <option value="None">None</option>
+        <option value="Heart">❤️ Heart</option>
+        <option value="Star">⭐ Star</option>
+        <option value="Daisy">🌼 Daisy</option>
+        <option value="Palm Tree">🌴 Palm Tree</option>
+        <option value="Coffee Cup">☕ Coffee Cup</option>
+        <option value="Sun">☀️ Sun</option>
+      </select>
+    </div>
+  {% endunless %}
+
+  {% comment %} Bridesmaid Title - Only show for bridesmaid products {% endcomment %}
+  {% if product.tags contains 'bridesmaid' or product.tags contains 'bridal' %}
+    <div class="form-field">
+      <label for="title">
+        Title *
+      </label>
+      <select id="title" name="properties[Title]" required>
+        <option value="">Select title...</option>
+        <option value="Bridesmaid">Bridesmaid</option>
+        <option value="Maid of Honor">Maid of Honor</option>
+        <option value="Matron of Honor">Matron of Honor</option>
+        <option value="Flower Girl">Flower Girl</option>
+        <option value="Bride">Bride</option>
+      </select>
+    </div>
+  {% endif %}
+
+  {% comment %} Kids Icon - Only show for kids products {% endcomment %}
+  {% if product.tags contains 'kids' %}
+    <div class="form-field">
+      <label for="kids-icon">
+        Choose Icon *
+      </label>
+      <select id="kids-icon" name="properties[Kids Icon]" required>
+        <option value="">Select an icon...</option>
+        <option value="Dinosaur">🦕 Dinosaur</option>
+        <option value="Rainbow">🌈 Rainbow</option>
+        <option value="Butterfly">🦋 Butterfly</option>
+        <option value="Soccer Ball">⚽ Soccer Ball</option>
+        <option value="Basketball">🏀 Basketball</option>
+        <option value="Baseball">⚾ Baseball</option>
+        <option value="Unicorn">🦄 Unicorn</option>
+        <option value="Rocket">🚀 Rocket</option>
+        <option value="Flower">🌸 Flower</option>
+        <option value="Dog">🐶 Dog</option>
+        <option value="Cat">🐱 Cat</option>
+      </select>
+    </div>
+  {% endif %}
+
+  <div class="form-field">
+    <small style="color: #666; font-style: italic;">
+      * Required fields. We'll create a professionally designed layout based on your selections.
+    </small>
+  </div>
+</div>
+
+<style>
+  .product-personalization {
+    margin: 2rem 0;
+    padding: 1.5rem;
+    background: #F7F4EF;
+    border-radius: 8px;
+  }
+
+  .product-personalization h3 {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    color: #111111;
+    margin-bottom: 1.5rem;
+    font-size: 20px;
+  }
+
+  .form-field {
+    margin-bottom: 1.25rem;
+  }
+
+  .form-field label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    color: #111111;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+  }
+
+  .form-field input,
+  .form-field select {
+    width: 100%;
+    padding: 12px 16px;
+    border: 1px solid #D8CFC4;
+    border-radius: 4px;
+    font-size: 16px;
+    font-family: 'Inter', sans-serif;
+    background: #FFFFFF;
+  }
+
+  .form-field input:focus,
+  .form-field select:focus {
+    outline: none;
+    border-color: #9CAE8C;
+    box-shadow: 0 0 0 3px rgba(156, 174, 140, 0.1);
+  }
+
+  .form-field small {
+    display: block;
+    margin-top: 0.5rem;
+    color: #666;
+    font-size: 13px;
+    line-height: 1.4;
+  }
+
+  @media (max-width: 768px) {
+    .product-personalization {
+      padding: 1rem;
+    }
+
+    .product-personalization h3 {
+      font-size: 18px;
+    }
+  }
+</style>
+{% endif %}

@@ -1,0 +1,168 @@
+{% comment %}
+  Shelzy's Designs - Email Signup Section
+  Compatible with Impulse theme
+{% endcomment %}
+
+<style>
+  .shelzy-email-signup {
+    padding: 80px 0;
+    background: #9CAE8C;
+    color: #FFFFFF;
+  }
+
+  .shelzy-email-signup__container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 0 20px;
+    text-align: center;
+  }
+
+  .shelzy-email-signup__title {
+    font-family: 'Poppins', var(--font-heading-family);
+    font-weight: 600;
+    font-size: 36px;
+    margin-bottom: 1rem;
+    color: #FFFFFF;
+  }
+
+  .shelzy-email-signup__text {
+    font-family: 'Inter', var(--font-body-family);
+    font-size: 18px;
+    margin-bottom: 2rem;
+    color: #FFFFFF;
+  }
+
+  .shelzy-email-signup__form {
+    max-width: 500px;
+    margin: 0 auto;
+  }
+
+  .shelzy-email-signup__form-group {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .shelzy-email-signup__input {
+    flex: 1;
+    min-width: 250px;
+    padding: 16px 20px;
+    border: none;
+    border-radius: 4px;
+    font-family: 'Inter', var(--font-body-family);
+    font-size: 16px;
+  }
+
+  .shelzy-email-signup__input:focus {
+    outline: 2px solid #FFFFFF;
+  }
+
+  .shelzy-email-signup__button {
+    padding: 16px 32px;
+    background: #111111;
+    color: #FFFFFF;
+    border: none;
+    border-radius: 4px;
+    font-family: 'Poppins', var(--font-heading-family);
+    font-weight: 600;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .shelzy-email-signup__button:hover {
+    background: #333333;
+    transform: translateY(-2px);
+  }
+
+  .shelzy-email-signup__success {
+    margin-top: 1rem;
+    padding: 15px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 4px;
+    color: #FFFFFF;
+  }
+
+  @media (max-width: 768px) {
+    .shelzy-email-signup {
+      padding: 60px 0;
+    }
+
+    .shelzy-email-signup__title {
+      font-size: 28px;
+    }
+
+    .shelzy-email-signup__text {
+      font-size: 16px;
+    }
+
+    .shelzy-email-signup__form-group {
+      flex-direction: column;
+    }
+
+    .shelzy-email-signup__input {
+      min-width: 100%;
+    }
+  }
+</style>
+
+<div class="shelzy-email-signup">
+  <div class="shelzy-email-signup__container">
+    <h2 class="shelzy-email-signup__title">{{ section.settings.title }}</h2>
+    <p class="shelzy-email-signup__text">{{ section.settings.text }}</p>
+
+    {% form 'customer', class: 'shelzy-email-signup__form' %}
+      {% if form.posted_successfully? %}
+        <div class="shelzy-email-signup__success">
+          Thanks for subscribing! Check your email for your discount code.
+        </div>
+      {% endif %}
+
+      <input type="hidden" name="contact[tags]" value="newsletter">
+
+      <div class="shelzy-email-signup__form-group">
+        <input
+          type="email"
+          name="contact[email]"
+          class="shelzy-email-signup__input"
+          placeholder="Enter your email"
+          required
+        >
+        <button type="submit" class="shelzy-email-signup__button">
+          {{ section.settings.button_text }}
+        </button>
+      </div>
+    {% endform %}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Shelzy Email Signup",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Get 10% Off Your First Order"
+    },
+    {
+      "type": "text",
+      "id": "text",
+      "label": "Text",
+      "default": "Join our email list for exclusive offers, new designs, and hydration inspiration."
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button Text",
+      "default": "Sign Me Up"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Shelzy Email Signup"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,124 @@
+{% comment %}
+  Shelzy's Designs - How It Works Section
+  Compatible with Impulse theme
+{% endcomment %}
+
+<style>
+  .shelzy-how-it-works {
+    padding: 80px 0;
+    background: #F7F4EF;
+  }
+
+  .shelzy-how-it-works__container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+
+  .shelzy-how-it-works__title {
+    font-family: 'Poppins', var(--font-heading-family);
+    font-weight: 600;
+    font-size: 36px;
+    color: #111111;
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+
+  .shelzy-how-it-works__steps {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px;
+  }
+
+  .shelzy-how-it-works__step {
+    text-align: center;
+  }
+
+  .shelzy-how-it-works__step-number {
+    width: 60px;
+    height: 60px;
+    background: #9CAE8C;
+    color: #FFFFFF;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Poppins', var(--font-heading-family);
+    font-weight: 600;
+    font-size: 24px;
+    margin: 0 auto 1.5rem;
+  }
+
+  .shelzy-how-it-works__step-title {
+    font-family: 'Poppins', var(--font-heading-family);
+    font-weight: 600;
+    font-size: 20px;
+    color: #111111;
+    margin-bottom: 0.75rem;
+  }
+
+  .shelzy-how-it-works__step-text {
+    font-family: 'Inter', var(--font-body-family);
+    font-size: 16px;
+    line-height: 1.6;
+    color: #666;
+  }
+
+  @media (max-width: 768px) {
+    .shelzy-how-it-works {
+      padding: 60px 0;
+    }
+
+    .shelzy-how-it-works__title {
+      font-size: 28px;
+    }
+
+    .shelzy-how-it-works__steps {
+      grid-template-columns: 1fr;
+      gap: 30px;
+    }
+  }
+</style>
+
+<div class="shelzy-how-it-works">
+  <div class="shelzy-how-it-works__container">
+    <h2 class="shelzy-how-it-works__title">How Your Custom Bottle Is Made</h2>
+
+    <div class="shelzy-how-it-works__steps">
+      <div class="shelzy-how-it-works__step">
+        <div class="shelzy-how-it-works__step-number">1</div>
+        <h3 class="shelzy-how-it-works__step-title">Choose your bottle</h3>
+        <p class="shelzy-how-it-works__step-text">
+          Pick your favorite color and style from our curated collections.
+        </p>
+      </div>
+
+      <div class="shelzy-how-it-works__step">
+        <div class="shelzy-how-it-works__step-number">2</div>
+        <h3 class="shelzy-how-it-works__step-title">Add your personalization</h3>
+        <p class="shelzy-how-it-works__step-text">
+          Enter the name, choose your font and design, and we'll create a layout that looks perfectly balanced.
+        </p>
+      </div>
+
+      <div class="shelzy-how-it-works__step">
+        <div class="shelzy-how-it-works__step-number">3</div>
+        <h3 class="shelzy-how-it-works__step-title">We sublimate, pack, and ship</h3>
+        <p class="shelzy-how-it-works__step-text">
+          Your bottle is printed using high-quality sublimation inks, carefully checked, and sent in beautiful packaging—ready to gift or enjoy.
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Shelzy How It Works",
+  "presets": [
+    {
+      "name": "Shelzy How It Works"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,306 @@
+/* ================================================
+   SHELZY'S DESIGNS - BRAND CUSTOMIZATIONS
+   Add this to your Impulse theme to apply brand colors
+
+   To install:
+   1. Go to Online Store > Themes > Actions > Edit code
+   2. Go to Assets folder
+   3. Click "Add a new asset"
+   4. Select "Create a blank file"
+   5. Name it: shelzy-custom.css
+   6. Paste this entire file
+   7. Save
+   8. In layout/theme.liquid, add before </head>:
+      {{ 'shelzy-custom.css' | asset_url | stylesheet_tag }}
+================================================ */
+
+:root {
+  /* Shelzy's Brand Colors */
+  --shelzy-black: #111111;
+  --shelzy-white: #FFFFFF;
+  --shelzy-beige: #F7F4EF;
+  --shelzy-sage: #9CAE8C;
+  --shelzy-sandstone: #D8CFC4;
+  --shelzy-blush: #F8D9C5;
+  --shelzy-seagrass: #7C9F8C;
+
+  /* Override Impulse theme colors */
+  --color-body-text: var(--shelzy-black);
+  --color-btn-primary: var(--shelzy-sage);
+  --color-btn-primary-text: var(--shelzy-white);
+}
+
+/* Typography */
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  color: var(--shelzy-black);
+}
+
+h1, h2, h3, h4, h5, h6,
+.h1, .h2, .h3, .h4, .h5, .h6 {
+  font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-weight: 600;
+}
+
+/* Buttons */
+.btn,
+.button,
+button[type="submit"],
+.shopify-payment-button__button--unbranded {
+  background: var(--shelzy-sage) !important;
+  color: var(--shelzy-white) !important;
+  border: none !important;
+  padding: 14px 28px !important;
+  font-family: 'Poppins', sans-serif !important;
+  font-weight: 600 !important;
+  border-radius: 4px !important;
+  transition: all 0.3s ease !important;
+}
+
+.btn:hover,
+.button:hover,
+button[type="submit"]:hover {
+  background: var(--shelzy-seagrass) !important;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(156, 174, 140, 0.3);
+}
+
+/* Secondary Buttons */
+.btn--secondary {
+  background: transparent !important;
+  color: var(--shelzy-black) !important;
+  border: 2px solid var(--shelzy-black) !important;
+}
+
+.btn--secondary:hover {
+  background: var(--shelzy-black) !important;
+  color: var(--shelzy-white) !important;
+}
+
+/* Product Cards */
+.product-card,
+.grid-product {
+  background: var(--shelzy-white);
+  border-radius: 8px;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.product-card:hover,
+.grid-product:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+/* Alternate Section Backgrounds */
+.index-section:nth-child(even) {
+  background: var(--shelzy-beige);
+}
+
+/* Links */
+a {
+  color: var(--shelzy-sage);
+  transition: color 0.3s ease;
+}
+
+a:hover {
+  color: var(--shelzy-seagrass);
+}
+
+/* Header/Navigation */
+.site-header {
+  background: var(--shelzy-white);
+  border-bottom: 1px solid var(--shelzy-beige);
+}
+
+.site-nav__link {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 500;
+  color: var(--shelzy-black);
+}
+
+.site-nav__link:hover {
+  color: var(--shelzy-sage);
+}
+
+/* Product Page */
+.product-single__title {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  color: var(--shelzy-black);
+}
+
+.product-single__price {
+  color: var(--shelzy-black);
+  font-weight: 600;
+}
+
+/* Add to Cart Button */
+.product-form__cart-submit {
+  background: var(--shelzy-sage) !important;
+  color: var(--shelzy-white) !important;
+  font-family: 'Poppins', sans-serif !important;
+  font-weight: 600 !important;
+  border-radius: 4px !important;
+  padding: 16px 32px !important;
+}
+
+.product-form__cart-submit:hover {
+  background: var(--shelzy-seagrass) !important;
+}
+
+/* Forms */
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+input[type="number"],
+textarea,
+select {
+  border: 1px solid var(--shelzy-sandstone);
+  border-radius: 4px;
+  padding: 12px 16px;
+  font-family: 'Inter', sans-serif;
+  transition: border-color 0.3s ease;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="tel"]:focus,
+input[type="number"]:focus,
+textarea:focus,
+select:focus {
+  border-color: var(--shelzy-sage);
+  outline: 2px solid rgba(156, 174, 140, 0.2);
+}
+
+/* Collection Headers */
+.collection-hero__title {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+}
+
+/* Footer */
+.site-footer {
+  background: var(--shelzy-beige);
+  color: var(--shelzy-black);
+}
+
+.site-footer__heading {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  color: var(--shelzy-black);
+}
+
+/* Badges/Tags */
+.product-tag,
+.badge {
+  background: var(--shelzy-sage);
+  color: var(--shelzy-white);
+  border-radius: 4px;
+  padding: 4px 12px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+/* Sale Badge */
+.product-badge--sale {
+  background: var(--shelzy-blush);
+  color: var(--shelzy-black);
+}
+
+/* Cart Drawer */
+.drawer {
+  font-family: 'Inter', sans-serif;
+}
+
+.drawer__header {
+  background: var(--shelzy-beige);
+}
+
+.cart__checkout {
+  background: var(--shelzy-sage) !important;
+  color: var(--shelzy-white) !important;
+}
+
+/* Announcements */
+.announcement-bar {
+  background: var(--shelzy-sage);
+  color: var(--shelzy-white);
+}
+
+/* Loading/Spinner */
+.loading-overlay__spinner {
+  border-color: var(--shelzy-sage);
+}
+
+/* Mobile Menu */
+.mobile-nav {
+  font-family: 'Poppins', sans-serif;
+}
+
+.mobile-nav__link {
+  color: var(--shelzy-black);
+}
+
+/* Breadcrumbs */
+.breadcrumbs a {
+  color: var(--shelzy-sage);
+}
+
+/* Pagination */
+.pagination__item--current {
+  background: var(--shelzy-sage);
+  color: var(--shelzy-white);
+}
+
+/* Custom Personalization Fields */
+.product-personalization {
+  margin: 2rem 0;
+  padding: 1.5rem;
+  background: var(--shelzy-beige);
+  border-radius: 8px;
+}
+
+.product-personalization h3 {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  color: var(--shelzy-black);
+  margin-bottom: 1rem;
+}
+
+.form-field {
+  margin-bottom: 1rem;
+}
+
+.form-field label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  color: var(--shelzy-black);
+  font-family: 'Inter', sans-serif;
+}
+
+.form-field input,
+.form-field select,
+.form-field textarea {
+  width: 100%;
+  padding: 12px 16px;
+  border: 1px solid var(--shelzy-sandstone);
+  border-radius: 4px;
+  font-size: 16px;
+  font-family: 'Inter', sans-serif;
+}
+
+.form-field small {
+  display: block;
+  margin-top: 0.25rem;
+  color: #666;
+  font-size: 14px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  h1 { font-size: 32px; }
+  h2 { font-size: 28px; }
+  h3 { font-size: 24px; }
+}
