@@ -29,57 +29,88 @@
 
 ## Board Architecture
 
-### Tier 1: Primary Boards (Create First)
+### Your Live Boards (@michelleshealthyhabit)
 
-These boards align directly with your content pillars and should have the most pins.
+Your Pinterest boards are set up and ready! Here's how they map to product categories:
 
-| Board Name | Description | Keywords to Include |
-|------------|-------------|---------------------|
-| **Best Bridesmaid Proposal Gifts** | Will you be my bridesmaid ideas, personalized bridal party gifts, bridesmaid proposal boxes, and creative ways to ask your bridesmaids. Perfect for brides planning their wedding party. | bridesmaid gifts, bridesmaid proposal, bridal party |
-| **Wedding Day Essentials** | Everything brides need for the big day: getting ready robes, emergency kits, wedding day survival guides, and picture-perfect bridal accessories. | wedding day, bridal essentials, wedding planning |
-| **Personalized Gift Ideas** | Custom and monogrammed gifts for her, bridesmaids, moms, and everyone special. Name necklaces, monogram bags, engraved keepsakes and more. | personalized gifts, custom gifts, monogram |
-| **Palm Beach Style Home Decor** | Coastal grandmother aesthetic, rattan decor, tropical accents, preppy home style, and Palm Beach inspired interior design finds. | palm beach decor, coastal style, preppy home |
-| **Preppy Water Bottles & Drinkware** | Aesthetic water bottles, insulated tumblers, sorority style drinkware, and the cutest hydration essentials for every preppy girl. | preppy water bottle, aesthetic tumbler, hydration |
+### Tier 1: Primary Boards (Wedding & Bridal Focus)
 
-### Tier 2: Secondary Boards
+| Your Board Name | Product Categories to Pin | Priority |
+|-----------------|---------------------------|----------|
+| **Bridal Party Gifts** | Bridesmaid Proposal Gifts, Personalized Gifts | HIGH |
+| **Amazon Wedding Finds** | Wedding Day Essentials, Bridesmaid Proposal Gifts | HIGH |
+| **Personalized Wedding...** | Personalized Gifts, Wedding Day Essentials | HIGH |
+| **Bridal Shower Ideas** | Bridesmaid Proposal Gifts, Best Gifts Under $50 | HIGH |
+| **Palm Beach Preppy Style** | Palm Beach Aesthetic Home Decor, Preppy Water Bottles | HIGH |
 
-| Board Name | Description |
-|------------|-------------|
-| **Amazon Organization Finds** | Viral organizers, before/after transformations, closet organization, pantry goals, and the best Amazon organization products. |
-| **Amazon Beauty Must-Haves** | Skincare finds, viral beauty products, K-beauty essentials, makeup organization, and the best Amazon beauty under $30. |
-| **Travel Essentials & Packing** | Best packing cubes, travel organizers, vacation must-haves, and everything you need for your next trip. |
-| **Baby Registry & New Mom Essentials** | Hospital bag checklist, nursery organization, baby milestone products, and new parent survival guides. |
-| **Kitchen Organization Under $30** | Pantry goals, drawer organizers, spice storage, and budget-friendly kitchen upgrades from Amazon. |
+### Tier 2: Lifestyle & Home Boards
 
-### Tier 3: Tertiary Boards
+| Your Board Name | Product Categories to Pin | Priority |
+|-----------------|---------------------------|----------|
+| **Coastal Grandma...** | Palm Beach Aesthetic Home Decor | MEDIUM |
+| **Home Decor &...** | Palm Beach Aesthetic Home Decor, Amazon Viral Organizers | MEDIUM |
+| **Bathroom Organization** | Amazon Viral Organizers | MEDIUM |
+| **Work from Home Office...** | Home Office Favorites, Creator Tools | MEDIUM |
 
-| Board Name | Description |
-|------------|-------------|
-| **Home Office & WFH Essentials** | Desk organization, ergonomic setups, work from home must-haves, and productivity boosters. |
-| **Content Creator Tools** | Ring lights, tripods, microphones, and everything content creators need to level up. |
-| **Fitness & Wellness Finds** | Home workout equipment, self-care products, wellness essentials, and recovery tools. |
-| **Dog Mom Essentials** | Personalized pet products, new puppy checklist, dog organization, and gifts for dog lovers. |
-| **Best Gifts Under $50** | Affordable gift guides for every occasion, birthday presents, holiday gifts, and thoughtful thank-you gifts. |
+### Tier 3: Beauty, Wellness & Self-Care Boards
 
-### Tier 4: Seasonal Boards (Create as Needed)
+| Your Board Name | Product Categories to Pin | Priority |
+|-----------------|---------------------------|----------|
+| **Amazon Beauty Favorites** | Amazon Beauty Must-Haves | MEDIUM |
+| **Self-Care & Wellness** | Amazon Beauty Must-Haves, Fitness + Wellness Picks | MEDIUM |
+| **Fitness & Wellness** | Fitness + Wellness Picks | MEDIUM |
 
-| Board Name | Active Months |
-|------------|---------------|
-| **Holiday Gift Guide** | October - December |
-| **Valentine's Day Gifts** | January - February |
-| **Mother's Day Gift Ideas** | March - May |
-| **Back to School Essentials** | July - September |
-| **Fall Home Refresh** | September - November |
-| **Summer Wedding Season** | April - August |
+### Tier 4: Travel, Baby & Pet Boards
 
-### Tier 5: Lifestyle/Brand Boards
+| Your Board Name | Product Categories to Pin | Priority |
+|-----------------|---------------------------|----------|
+| **Packing & Travel...** | Travel Essentials | MEDIUM |
+| **Travel & Honeymoon...** | Travel Essentials (honeymoon angle for brides!) | MEDIUM |
+| **Nursery & Baby Prep** | Baby Prep Must-Haves | MEDIUM |
+| **Dog Mom Essentials** | Dog Essentials | MEDIUM |
+
+### Tier 5: Gift Guides
+
+| Your Board Name | Product Categories to Pin | Priority |
+|-----------------|---------------------------|----------|
+| **Gift Guides (Under $50)** | Best Gifts Under $50, ALL categories | HIGH |
+
+---
+
+## Board-to-Category Mapping (Quick Reference)
+
+Use this when deciding where to pin each product:
+
+| Product Category | Pin To These Boards |
+|------------------|---------------------|
+| Bridesmaid Proposal Gifts | Bridal Party Gifts, Amazon Wedding Finds, Bridal Shower Ideas |
+| Wedding Day Essentials | Amazon Wedding Finds, Personalized Wedding..., Bridal Party Gifts |
+| Personalized Gifts | Personalized Wedding..., Bridal Party Gifts, Gift Guides (Under $50) |
+| Palm Beach Aesthetic Home Decor | Palm Beach Preppy Style, Coastal Grandma..., Home Decor &... |
+| Preppy Water Bottles | Palm Beach Preppy Style, Gift Guides (Under $50) |
+| Amazon Viral Organizers | Bathroom Organization, Home Decor &... |
+| Amazon Beauty Must-Haves | Amazon Beauty Favorites, Self-Care & Wellness |
+| Travel Essentials | Packing & Travel..., Travel & Honeymoon... |
+| Baby Prep Must-Haves | Nursery & Baby Prep |
+| Kitchen Upgrades Under $30 | Home Decor &..., Gift Guides (Under $50) |
+| Home Office Favorites | Work from Home Office... |
+| Creator Tools | Work from Home Office... |
+| Fitness + Wellness Picks | Fitness & Wellness, Self-Care & Wellness |
+| Dog Essentials | Dog Mom Essentials |
+| Best Gifts Under $50 | Gift Guides (Under $50), ALL relevant boards |
+
+---
+
+## Suggested Additional Boards (Optional Future Expansion)
+
+Consider creating these as your content grows:
 
 | Board Name | Purpose |
 |------------|---------|
-| **Shelzy's Designs Shop** | Pins linking directly to your Shopify store products |
-| **Blog Posts & Guides** | All your blog content in one place |
-| **Wedding Inspiration** | Curated repins for engagement (not affiliate) |
-| **Home Aesthetic Inspo** | Curated repins for engagement (not affiliate) |
+| **Holiday Gift Guide** | Seasonal (October-December) |
+| **Kitchen Organization** | Expand from Home Decor |
+| **Creator Tools & Tech** | Separate from WFH if content grows |
+| **Shelzy's Designs Shop** | Link to your Shopify products |
 
 ---
 
@@ -190,26 +221,35 @@ The best bridesmaid proposal gifts and ideas for brides planning their wedding p
 
 ## Board Order (Profile Display)
 
-Arrange boards on your profile strategically:
+Arrange your boards on your profile strategically:
 
-**Top Row (Most Important)**
-1. Best Bridesmaid Proposal Gifts
-2. Wedding Day Essentials
-3. Personalized Gift Ideas
-4. Palm Beach Style Home Decor
-5. Preppy Water Bottles & Drinkware
+**Top Row (Highest Priority - Wedding/Bridal)**
+1. Bridal Party Gifts
+2. Amazon Wedding Finds
+3. Personalized Wedding...
+4. Bridal Shower Ideas
+5. Gift Guides (Under $50)
+6. Palm Beach Preppy Style
 
-**Second Row**
-6. Amazon Organization Finds
-7. Amazon Beauty Must-Haves
-8. Travel Essentials & Packing
-9. Best Gifts Under $50
-10. Shelzy's Designs Shop
+**Second Row (Lifestyle & Home)**
+7. Coastal Grandma...
+8. Home Decor &...
+9. Amazon Beauty Favorites
+10. Self-Care & Wellness
+11. Packing & Travel...
+12. Travel & Honeymoon...
 
-**Lower Rows**
-- Remaining boards by relevance
-- Seasonal boards (move up when in-season)
-- Inspiration boards (engagement/lifestyle)
+**Third Row (Niche Categories)**
+13. Bathroom Organization
+14. Work from Home Office...
+15. Fitness & Wellness
+16. Nursery & Baby Prep
+17. Dog Mom Essentials
+
+**To Reorder on Pinterest:**
+1. Go to your profile
+2. Click "Organize" or drag boards
+3. Place highest-converting boards first
 
 ---
 
