@@ -1,0 +1,144 @@
+===========================================
+SHELZY'S DESIGNS - AI IMAGE PROMPTS
+Copy-paste ready for MidJourney/DALL-E
+===========================================
+
+BATCH 1: SIGNATURE BOTTLE - WHITE (6 shots)
+===========================================
+
+SHOT 1: Front-Facing
+A premium 20oz white stainless steel insulated water bottle with elegant script name "Sarah" permanently printed in black on the front, centered perfectly, facing camera straight-on, isolated on a clean white seamless background, professional product photography, soft natural lighting, no shadows, high-end e-commerce style, sharp focus, minimal aesthetic, commercial photography --ar 4:5 --q 2 --v 6
+
+SHOT 2: ¾ Angle
+A premium 20oz white stainless steel insulated water bottle with elegant script name "Sarah" permanently printed in black, positioned at a 45-degree angle showing dimension and depth, isolated on a brushed beige (#F7F4EF) seamless background, soft natural lighting creating subtle shadow to the right, professional product photography, high-end e-commerce style, sharp focus, editorial aesthetic --ar 4:5 --q 2 --v 6
+
+SHOT 3: Close-Up Personalization
+Extreme close-up macro shot of the name "Sarah" in elegant black script permanently printed on a white stainless steel water bottle surface, showing smooth sublimation finish with no raised edges, no texture, perfectly integrated into the bottle coating, soft natural lighting, shallow depth of field with sharp focus on the text, professional product detail photography, high resolution, editorial style --ar 4:5 --q 2 --v 6
+
+SHOT 4: Lid Detail
+Top-down detail shot of a premium stainless steel water bottle lid and cap, showing quality threading and seal, silver stainless steel finish, positioned at a slight angle on a clean white background, soft natural lighting, professional product photography, sharp focus, minimal aesthetic --ar 4:5 --q 2 --v 6
+
+SHOT 5: In-Hand Scale
+A woman's hand with natural manicure and simple jewelry holding a white 20oz insulated water bottle with elegant script name "Sarah" printed in black, showing scale and size, neutral beige clothing visible in background (blurred), clean and minimal aesthetic, soft natural lighting, lifestyle product photography, editorial style, warm and approachable, professional photography --ar 4:5 --q 2 --v 6
+
+SHOT 6: Lifestyle Desk Scene
+A white 20oz insulated water bottle with elegant script name "Sarah" in black sitting on a clean light wood desk next to an open journal, modern laptop, white coffee cup, and small green plant, bright and airy home office setting, soft natural window light from the left, editorial lifestyle photography, minimal aesthetic, neutral color palette (whites, beiges, sage green accents), overhead ¾ angle view, professional photography --ar 4:5 --q 2 --v 6
+
+===========================================
+BATCH 3: PROPOSAL GIFT BOX (8 shots - PRIORITY!)
+===========================================
+
+SHOT 1: Closed Box
+Top-down view of a white magnetic closure gift box with clean minimal design, sitting on a brushed beige surface, soft natural lighting, editorial product photography, luxury packaging aesthetic, professional e-commerce photography, sharp focus --ar 4:5 --q 2 --v 6
+
+SHOT 2: Partially Open
+A white magnetic gift box slightly open showing a peek of blush pink crinkle paper inside, photographed at a 45-degree angle on a clean white surface, soft natural lighting, editorial product photography, luxury unboxing aesthetic, anticipation and elegance, professional photography --ar 4:5 --q 2 --v 6
+
+SHOT 3: Fully Open (HERO SHOT - Most Important!)
+An open white magnetic gift box containing a personalized white water bottle with elegant script name "Sarah" and "Bridesmaid" subtitle, blush pink crinkle paper fill, a blush satin scrunchie, a small white candle, and a "Will you be my bridesmaid?" card on premium ivory cardstock, all beautifully arranged inside the box, photographed from above at a slight angle, soft natural lighting, editorial luxury gift photography, romantic bridal aesthetic, neutral color palette with blush and sage accents, professional high-end photography --ar 4:5 --q 2 --v 6
+
+SHOT 4: Flat Lay All Contents
+Flat lay top-down view of bridesmaid proposal gift contents beautifully arranged on a white marble surface: a white personalized water bottle with "Sarah - Bridesmaid" in elegant script, a "Will you be my bridesmaid?" card on ivory cardstock, a blush satin scrunchie, a small white soy candle, fresh white roses, and scattered blush rose petals, symmetrical composition, soft natural lighting, editorial bridal photography, luxury gift aesthetic, neutral and romantic color palette, professional photography --ar 4:5 --q 2 --v 6
+
+SHOT 5: Close-Up Bottle in Box
+Close-up detail shot of a white personalized water bottle with elegant script name "Sarah" and "Bridesmaid" text nestled in blush pink crinkle paper inside a white gift box, soft natural lighting, shallow depth of field, editorial luxury photography, romantic and elegant aesthetic, professional photography --ar 4:5 --q 2 --v 6
+
+SHOT 6: Close-Up Card
+Close-up of a "Will you be my bridesmaid?" card in elegant serif font on premium ivory cardstock, positioned on white marble surface next to soft white rose petals, soft natural lighting, editorial stationery photography, romantic and elegant, professional photography --ar 4:5 --q 2 --v 6
+
+SHOT 7: Bottle Next to Box
+A white personalized water bottle with "Sarah - Bridesmaid" in elegant script standing next to an open white magnetic gift box filled with blush pink crinkle paper, photographed on a clean white surface, soft natural lighting, editorial product photography, luxury gift aesthetic, professional photography --ar 4:5 --q 2 --v 6
+
+SHOT 8: Unboxing Hands
+A pair of elegant feminine hands with natural manicure gently opening a white magnetic gift box revealing blush pink crinkle paper and a personalized white water bottle inside, photographed from above at a slight angle, soft natural lighting, editorial lifestyle photography, moment of surprise and joy, warm and intimate aesthetic, professional photography, shallow depth of field --ar 4:5 --q 2 --v 6
+
+===========================================
+BATCH 4: BRIDESMAID PROPOSAL BOTTLE (6 shots)
+===========================================
+
+SHOT 1: Front-Facing
+A premium 20oz white stainless steel insulated water bottle with elegant script name "Sarah" and subtitle "Bridesmaid" permanently printed in black, centered perfectly, facing camera straight-on, isolated on a clean white seamless background, professional product photography, soft natural lighting, no shadows, high-end e-commerce style, sharp focus, bridal aesthetic --ar 4:5 --q 2 --v 6
+
+SHOT 2: ¾ Angle
+A premium 20oz white stainless steel insulated water bottle with elegant script name "Sarah" and subtitle "Bridesmaid" permanently printed in black, positioned at a 45-degree angle showing dimension and depth, isolated on a brushed beige (#F7F4EF) seamless background, soft natural lighting creating subtle shadow to the right, professional product photography, high-end e-commerce style, sharp focus, bridal editorial aesthetic --ar 4:5 --q 2 --v 6
+
+SHOT 3: Close-Up Text
+Extreme close-up macro shot of the text "Sarah" and "Bridesmaid" in elegant black script permanently printed on a white stainless steel water bottle surface, showing smooth sublimation finish with no raised edges, soft natural lighting, shallow depth of field with sharp focus on the text, professional product detail photography, bridal aesthetic --ar 4:5 --q 2 --v 6
+
+SHOT 4: Lid Detail
+Top-down detail shot of a premium stainless steel water bottle lid and cap, showing quality threading and seal, silver stainless steel finish, positioned at a slight angle on a clean white background, soft natural lighting, professional product photography, sharp focus, minimal aesthetic --ar 4:5 --q 2 --v 6
+
+SHOT 5: In-Hand with Ring
+A woman's hand with an engagement ring and natural manicure holding a white personalized water bottle with "Sarah - Bridesmaid" text, soft focus on the ring and bottle, bright and airy bridal aesthetic, soft natural lighting, romantic and elegant, editorial style, professional photography --ar 4:5 --q 2 --v 6
+
+SHOT 6: Bridal Suite Scene
+A white 20oz insulated water bottle with elegant script name "Sarah" and subtitle "Bridesmaid" permanently printed in black, sitting on a white marble vanity in a bright bridal suite, surrounded by soft white roses, a champagne flute with bubbles, white satin robe draped in background, natural window light creating soft bright atmosphere, editorial bridal photography, romantic and elegant aesthetic, neutral color palette, professional photography --ar 4:5 --q 2 --v 6
+
+===========================================
+BATCH 5: BRIDAL PARTY SET (6 shots)
+===========================================
+
+SHOT 1: Full Lineup (16:9 format!)
+A professional product lineup of 8 personalized 20oz stainless steel water bottles in white, sage green, and blush pink, evenly spaced in a row facing forward, each with elegant script names visible: "Bride", "Bridesmaid", "Maid of Honor", "Bridesmaid", "Bridesmaid", "Mother of the Bride", "Flower Girl", "Bridesmaid", isolated on a clean white seamless background, soft natural lighting with subtle shadows for depth, editorial bridal product photography, high-end e-commerce style, professional photography --ar 16:9 --q 2 --v 6
+
+SHOT 2: Grouped Cluster
+A casual artful arrangement of 6 personalized water bottles in white, sage green, and blush colors, clustered together at various angles on a light beige surface, each with elegant script names for bridal party (Bride, Bridesmaid, Maid of Honor visible), surrounded by soft white peonies and eucalyptus greenery, overhead view, soft natural lighting, editorial bridal photography, romantic and elegant aesthetic, professional photography --ar 4:5 --q 2 --v 6
+
+SHOT 3: Close-Up Multiple Bottles
+Close-up detail shot of 3 personalized water bottles showing different names "Bride", "Maid of Honor", and "Bridesmaid" in elegant script on white, sage, and blush bottles, photographed at artistic angles, soft natural lighting, editorial bridal product photography, romantic aesthetic, professional photography --ar 4:5 --q 2 --v 6
+
+SHOT 4: Flat Lay with Accessories
+Overhead flat lay of 5 personalized bridal party water bottles arranged in a circle on white marble surface, surrounded by bridal accessories: white veil, pearl necklace, fresh white roses, wedding rings, and elegant invitation, soft natural lighting, editorial bridal photography, romantic and luxurious aesthetic, professional photography --ar 4:5 --q 2 --v 6
+
+SHOT 5: Lifestyle Group Shot (16:9!)
+Five happy women in white and neutral linen dresses standing together in a bright outdoor garden setting, each holding their personalized water bottle with visible names (Bride, Bridesmaid, etc.), natural relaxed poses, laughing and celebrating, soft natural sunlight, bright and airy atmosphere, editorial bridal lifestyle photography, joyful and elegant, professional photography, shallow depth of field focusing on the bottles and smiling faces --ar 16:9 --q 2 --v 6
+
+SHOT 6: Single Bottle Detail
+Single white personalized water bottle with elegant script name "Bride" in black, photographed at ¾ angle on clean white background, soft natural lighting, professional product photography representing the bridal party set, sharp focus, minimal aesthetic --ar 4:5 --q 2 --v 6
+
+===========================================
+BATCH 9: HOMEPAGE HERO IMAGES (16:9 format!)
+===========================================
+
+HERO OPTION 1: Single Bottle with Negative Space
+A stunning white 20oz stainless steel insulated water bottle with elegant flowing script name "Shelzy" in black, positioned slightly off-center to the left on a seamless brushed beige (#F7F4EF) background, plenty of negative space on the right side for text overlay, soft dramatic natural lighting creating a gentle shadow to the right, editorial luxury product photography, minimal and sophisticated aesthetic, high-end commercial photography, professional e-commerce hero image --ar 16:9 --q 2 --v 6
+
+HERO OPTION 2: Proposal Gift Box
+A luxurious open white magnetic gift box containing a personalized white water bottle, blush crinkle paper, satin scrunchie, candle, and "Will you be my bridesmaid?" card, photographed at an artistic angle on a clean white surface with soft white roses and silk ribbon, dramatic soft natural lighting from the side, editorial luxury bridal photography, romantic and elegant aesthetic, plenty of negative space for text overlay, high-end hero image, professional photography --ar 16:9 --q 2 --v 6
+
+HERO OPTION 3: Bridal Suite Lifestyle
+A bright airy bridal suite scene with a white personalized water bottle featuring elegant script name sitting on a white vanity, surrounded by soft florals, champagne glasses, white satin robe, and bridal accessories, large window with natural sunlight creating bright and dreamy atmosphere, editorial bridal lifestyle photography, romantic and elegant aesthetic, soft focus in background with sharp focus on the bottle, luxury wedding photography, professional high-end image --ar 16:9 --q 2 --v 6
+
+===========================================
+BATCH 10: SOCIAL MEDIA
+===========================================
+
+INSTAGRAM FLAT LAY (1:1 square format)
+Top-down flat lay of a white personalized water bottle with elegant script name "Shelzy" as the focal point, surrounded by aesthetic lifestyle props: fresh white peonies, a marble notebook, gold pen, iPhone with white case, small green succulent, and a white coffee cup, all arranged on a white marble surface, symmetrical composition, soft natural lighting, editorial lifestyle photography, minimal and aesthetic, Instagram-worthy, professional photography --ar 1:1 --q 2 --v 6
+
+INSTAGRAM STORY (9:16 vertical format)
+A sage green 20oz insulated water bottle with elegant script name "Emma" in black held by a woman in a cozy neutral sweater, photographed in bright natural light against a clean white wall, vertical composition perfect for Instagram stories, lifestyle product photography, minimal and aesthetic, warm and approachable, professional photography --ar 9:16 --q 2 --v 6
+
+===========================================
+QUICK COLOR VARIATIONS
+===========================================
+
+For SAGE GREEN bottles, replace in any prompt:
+"white stainless steel" → "sage green (#9CAE8C) stainless steel"
+
+For BLUSH PINK bottles:
+"white stainless steel" → "blush pink (#F8D9C5) stainless steel"
+
+For MATTE BLACK bottles:
+"white stainless steel" → "matte black stainless steel"
+"black script" → "white script"
+
+===========================================
+DALL-E 3 USERS: Remove these parameters
+--ar 4:5
+--ar 16:9
+--q 2
+--v 6
+
+Keep everything else the same!
+===========================================
