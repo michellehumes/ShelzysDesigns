@@ -1,0 +1,148 @@
+╔══════════════════════════════════════════════════════════════╗
+║          SHELZY'S DESIGNS - MASTER IMPLEMENTATION            ║
+║                   DO THESE IN ORDER                          ║
+╚══════════════════════════════════════════════════════════════╝
+
+Total time: ~90 minutes
+Impact: +100-200% revenue potential
+
+Open each numbered file in this folder and follow the instructions.
+
+══════════════════════════════════════════════════════════════
+PHASE 1: FIX BROKEN PAGES (30 minutes)
+══════════════════════════════════════════════════════════════
+
+□ Task 1: Create Corporate Collection (10 min)
+  File: 01-corporate-collection.txt
+  URL: admin.shopify.com/store/shelzys-designs/collections
+  Action: Create new collection, paste content
+
+□ Task 2: Create Everyday Collection (10 min)
+  File: 02-everyday-collection.txt
+  URL: admin.shopify.com/store/shelzys-designs/collections
+  Action: Create new collection, paste content
+
+□ Task 3: Add Shipping Policy (5 min)
+  File: 03-shipping-policy.txt
+  URL: admin.shopify.com/store/shelzys-designs/settings/policies
+  Action: Paste into Shipping Policy section
+
+□ Task 4: Fix Contact Page (5 min)
+  File: 05-contact-page.txt
+  URL: admin.shopify.com/store/shelzys-designs/pages
+  Action: Edit or create Contact page
+
+══════════════════════════════════════════════════════════════
+PHASE 2: FIX TRUST ISSUES (15 minutes)
+══════════════════════════════════════════════════════════════
+
+□ Task 5: Remove False Reviews Claim (5 min)
+  File: 06-remove-fake-reviews-claim.txt
+  URL: admin.shopify.com/store/shelzys-designs/themes/current/editor
+  Action: Change announcement bar text
+
+□ Task 6: Install Judge.me Reviews (10 min)
+  Go to: apps.shopify.com/judgeme
+  Action: Install free plan, complete setup wizard
+
+══════════════════════════════════════════════════════════════
+PHASE 3: ADD HOMEPAGE SECTION (10 minutes)
+══════════════════════════════════════════════════════════════
+
+□ Task 7: Add "Why Sublimation" Section (10 min)
+  File: 04-why-sublimation-homepage.txt
+  URL: admin.shopify.com/store/shelzys-designs/themes/current/editor
+  Action: Add Rich Text section, paste content
+
+══════════════════════════════════════════════════════════════
+PHASE 4: UPDATE PRODUCT DESCRIPTIONS (35 minutes)
+══════════════════════════════════════════════════════════════
+
+□ Task 8: Update All Product Descriptions
+  File: 07-product-descriptions.txt
+  URL: admin.shopify.com/store/shelzys-designs/products
+  Action: Edit each product, paste new description
+
+  Products to update:
+  □ Personalized Stainless Steel Water Bottle (5 min)
+  □ Premium Bottle with Gift Box (5 min)
+  □ Bridal Party Set of 3 (5 min)
+  □ Bridal Party Set of 5 (5 min)
+  □ Bachelorette Party Set of 6 (5 min)
+  □ Event Set of 10 (5 min)
+  □ Wedding Party Deluxe Set of 10 (5 min)
+  □ Corporate Bulk Set of 25 (5 min)
+
+□ Task 9: Remove Off-Brand Products (2 min)
+  Action: Archive these products (dilute your brand):
+  □ Baby Shower Canva Template Bundle
+  □ Canva Wedding Template Bundle
+
+══════════════════════════════════════════════════════════════
+PHASE 5: VERIFY EVERYTHING WORKS
+══════════════════════════════════════════════════════════════
+
+Test these URLs (should NOT show 404 errors):
+
+□ shelzysdesigns.com/collections/corporate
+□ shelzysdesigns.com/collections/everyday
+□ shelzysdesigns.com/policies/shipping-policy
+□ shelzysdesigns.com/pages/contact
+□ shelzysdesigns.com/pages/faq
+□ shelzysdesigns.com/pages/how-it-works
+□ shelzysdesigns.com/pages/about-us
+
+══════════════════════════════════════════════════════════════
+DONE! NEXT STEPS (THIS WEEK)
+══════════════════════════════════════════════════════════════
+
+After completing above, work on these:
+
+□ Set up professional email (hello@shelzysdesigns.com)
+  - Use Google Workspace ($6/mo) or Zoho (free)
+
+□ Install email popup for lead capture
+  - Use Privy or Klaviyo (free tiers)
+  - Offer 10% off first order
+
+□ Request reviews from past customers
+  - Export customer emails from Shopify
+  - Send personal email asking for review
+  - Judge.me has templates for this
+
+□ Set up email automation
+  - Welcome series (3 emails)
+  - Abandoned cart (3 emails)
+  - Post-purchase (3 emails)
+
+══════════════════════════════════════════════════════════════
+QUICK LINKS
+══════════════════════════════════════════════════════════════
+
+Shopify Admin:
+https://admin.shopify.com/store/shelzys-designs
+
+Products:
+https://admin.shopify.com/store/shelzys-designs/products
+
+Collections:
+https://admin.shopify.com/store/shelzys-designs/collections
+
+Pages:
+https://admin.shopify.com/store/shelzys-designs/pages
+
+Theme Editor:
+https://admin.shopify.com/store/shelzys-designs/themes/current/editor
+
+Settings:
+https://admin.shopify.com/store/shelzys-designs/settings
+
+══════════════════════════════════════════════════════════════
+QUESTIONS?
+══════════════════════════════════════════════════════════════
+
+If you get stuck, check:
+- COMPREHENSIVE_SITE_REVIEW.md (full details on everything)
+- Each numbered file has step-by-step instructions
+
+Good luck! This will make a HUGE difference in your store.

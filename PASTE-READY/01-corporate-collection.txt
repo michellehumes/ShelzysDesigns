@@ -1,0 +1,58 @@
+============================================================
+CORPORATE COLLECTION - PASTE INTO SHOPIFY
+============================================================
+
+WHERE TO PASTE:
+1. Go to: https://admin.shopify.com/store/shelzys-designs/collections
+2. Click "Create collection"
+3. Paste the content below into the appropriate fields
+
+------------------------------------------------------------
+COLLECTION TITLE:
+------------------------------------------------------------
+Corporate & Bulk Orders
+
+------------------------------------------------------------
+COLLECTION DESCRIPTION (paste in the description box):
+------------------------------------------------------------
+Custom sublimation water bottles for teams, events, and corporate gifting. Unlike cheap vinyl that peels and fades, our permanent sublimation printing infuses your logo and names directly into each bottle.
+
+Perfect for:
+• Employee appreciation gifts
+• Client thank-you gifts
+• Team building events
+• Trade shows & conferences
+• Company wellness programs
+• New hire welcome kits
+
+Volume discounts available:
+• 10-24 bottles: 10% off
+• 25-49 bottles: 15% off
+• 50+ bottles: 20% off
+
+Need a custom quote? Contact us at hello@shelzysdesigns.com
+
+------------------------------------------------------------
+SEO SETTINGS (scroll down to "Search engine listing"):
+------------------------------------------------------------
+Page title:
+Corporate Water Bottles & Bulk Orders | Custom Logo Bottles | Shelzy's Designs
+
+Meta description:
+Custom sublimation water bottles for corporate gifting & events. Add your logo + individual names. Permanent printing that won't peel. Volume discounts available. Free quote.
+
+URL handle:
+corporate
+
+------------------------------------------------------------
+COLLECTION TYPE:
+------------------------------------------------------------
+Select "Manual" and add these products:
+- Corporate Bulk Set of 25
+- Event Set of 10
+- Wedding Party Deluxe Set of 10 (also works for corporate)
+
+------------------------------------------------------------
+AFTER SAVING:
+------------------------------------------------------------
+The collection will be live at: shelzysdesigns.com/collections/corporate

@@ -1,0 +1,48 @@
+============================================================
+"WHY SUBLIMATION" HOMEPAGE SECTION - ADD TO YOUR HOMEPAGE
+============================================================
+
+WHERE TO ADD:
+1. Go to: https://admin.shopify.com/store/shelzys-designs/themes/current/editor
+2. You're now in the Theme Customizer
+3. Make sure you're on the "Home page" template
+4. Click "Add section" (left sidebar)
+5. Choose "Rich text"
+6. Drag it to position AFTER your "Best Sellers" section
+7. Paste the content below
+
+------------------------------------------------------------
+HEADING (paste in "Heading" field):
+------------------------------------------------------------
+Why Our Bottles Don't Peel, Crack, or Fade
+
+------------------------------------------------------------
+TEXT (paste in "Text" field):
+------------------------------------------------------------
+Most personalized bottles use vinyl decals that eventually peel, crack, or fade. At Shelzy's Designs, we use TRUE SUBLIMATION PRINTING—the ink is infused directly into the bottle's coating.
+
+✓ No raised edges
+✓ No peeling or cracking
+✓ No fading over time
+✓ Dishwasher friendly
+✓ Smooth, permanent finish
+
+Your personalization becomes PART of the bottle itself. That's why our customers say their bottles look just as beautiful a year later as the day they arrived.
+
+------------------------------------------------------------
+SECTION SETTINGS (in the right sidebar):
+------------------------------------------------------------
+- Text alignment: Center
+- Background color: #F7F4EF (your beige) OR leave white
+- Text size: Medium or Large
+- Add top/bottom padding if needed
+
+------------------------------------------------------------
+OPTIONAL: ADD A BUTTON
+------------------------------------------------------------
+Button label: Learn How It Works
+Button link: /pages/how-it-works
+
+------------------------------------------------------------
+CLICK "SAVE" IN TOP RIGHT WHEN DONE
+------------------------------------------------------------

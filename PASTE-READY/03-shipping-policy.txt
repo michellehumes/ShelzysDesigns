@@ -1,0 +1,52 @@
+============================================================
+SHIPPING POLICY - PASTE INTO SHOPIFY
+============================================================
+
+WHERE TO PASTE:
+1. Go to: https://admin.shopify.com/store/shelzys-designs/settings/policies
+2. Scroll to "Shipping policy"
+3. Paste the content below
+
+------------------------------------------------------------
+SHIPPING POLICY CONTENT:
+------------------------------------------------------------
+PROCESSING TIME
+
+Every bottle is custom-made just for you. Please allow 3-5 business days for us to create your personalized order.
+
+SHIPPING TIME
+
+Once your order ships, delivery typically takes 3-7 business days depending on your location. You'll receive a tracking number via email as soon as your order is on its way.
+
+FREE SHIPPING
+
+Orders of $50 or more ship FREE within the continental United States.
+
+RUSH ORDERS
+
+Need it faster? We offer 48-hour rush processing for time-sensitive orders. Please contact us BEFORE placing your order to confirm availability and get a quote.
+
+Email: hello@shelzysdesigns.com
+
+TRACKING YOUR ORDER
+
+Once your order ships, you'll receive an email with tracking information. You can also log into your account to view order status.
+
+SHIPPING CARRIERS
+
+We ship via USPS and UPS. Carrier selection is based on package size and destination for optimal delivery time.
+
+INTERNATIONAL SHIPPING
+
+We currently ship within the United States only. For international inquiries, please contact us and we'll do our best to accommodate your request.
+
+ORDER ISSUES
+
+If your package is lost, damaged, or significantly delayed, please contact us within 14 days of the expected delivery date. We'll work with you to resolve the issue promptly.
+
+Email: hello@shelzysdesigns.com
+
+------------------------------------------------------------
+AFTER SAVING:
+------------------------------------------------------------
+The policy will be live at: shelzysdesigns.com/policies/shipping-policy

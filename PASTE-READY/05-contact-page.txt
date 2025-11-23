@@ -1,0 +1,57 @@
+============================================================
+CONTACT PAGE - CREATE OR FIX IN SHOPIFY
+============================================================
+
+WHERE TO DO THIS:
+1. Go to: https://admin.shopify.com/store/shelzys-designs/pages
+2. Look for existing "Contact" page - edit it
+   OR click "Add page" to create new one
+
+------------------------------------------------------------
+PAGE TITLE:
+------------------------------------------------------------
+Contact Us
+
+------------------------------------------------------------
+PAGE CONTENT (paste in content area):
+------------------------------------------------------------
+<h2>We'd Love to Hear From You</h2>
+
+<p>Have a question about personalization, bulk orders, or rush shipping? We're here to help!</p>
+
+<h3>Quick Answers</h3>
+<p>Check our <a href="/pages/faq">FAQ page</a> for immediate answers to common questions about ordering, shipping, and customization.</p>
+
+<h3>Get in Touch</h3>
+<p><strong>Email:</strong> hello@shelzysdesigns.com<br>
+<strong>Response Time:</strong> Within 24 hours (usually much faster!)</p>
+
+<h3>Bulk & Corporate Orders</h3>
+<p>Planning an event or need 10+ bottles? We offer volume discounts! Email us with:</p>
+<ul>
+<li>Number of bottles needed</li>
+<li>Event date (if applicable)</li>
+<li>Any logo or special design requirements</li>
+</ul>
+
+<h3>Rush Orders</h3>
+<p>Need it fast? Contact us BEFORE ordering to confirm rush availability. We offer 48-hour processing for time-sensitive orders.</p>
+
+------------------------------------------------------------
+TEMPLATE (in right sidebar):
+------------------------------------------------------------
+Select: "page.contact"
+(This adds a contact form automatically)
+
+If "page.contact" doesn't exist, use "Default page" and the content above is enough.
+
+------------------------------------------------------------
+SEO SETTINGS:
+------------------------------------------------------------
+Page title: Contact Us | Shelzy's Designs
+Meta description: Questions about your personalized water bottle order? Contact Shelzy's Designs. We respond within 24 hours. Bulk orders & rush shipping available.
+URL handle: contact
+
+------------------------------------------------------------
+CLICK "SAVE" WHEN DONE
+------------------------------------------------------------

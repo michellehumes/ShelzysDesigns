@@ -1,0 +1,53 @@
+============================================================
+EVERYDAY COLLECTION - PASTE INTO SHOPIFY
+============================================================
+
+WHERE TO PASTE:
+1. Go to: https://admin.shopify.com/store/shelzys-designs/collections
+2. Click "Create collection"
+3. Paste the content below into the appropriate fields
+
+------------------------------------------------------------
+COLLECTION TITLE:
+------------------------------------------------------------
+Everyday Bottles
+
+------------------------------------------------------------
+COLLECTION DESCRIPTION (paste in the description box):
+------------------------------------------------------------
+Premium personalized water bottles for daily hydration. Whether you're heading to the gym, the office, or running errands—make it personal.
+
+Every bottle features permanent sublimation printing (not vinyl!) so your name won't peel, crack, or fade. Ever.
+
+Why customers love our everyday bottles:
+✓ 20oz double-wall insulated stainless steel
+✓ Keeps drinks cold 24 hours / hot 12 hours
+✓ BPA-free and dishwasher friendly
+✓ Permanent sublimation printing
+✓ Ships in 5-7 business days
+
+Treat yourself to something special. You deserve a bottle that's truly yours.
+
+------------------------------------------------------------
+SEO SETTINGS (scroll down to "Search engine listing"):
+------------------------------------------------------------
+Page title:
+Personalized Water Bottles for Everyday Use | Sublimation Bottles | Shelzy's Designs
+
+Meta description:
+Premium personalized water bottles with permanent sublimation printing. 20oz insulated stainless steel. Won't peel or fade. Perfect for gym, office, or daily use. Free shipping $50+.
+
+URL handle:
+everyday
+
+------------------------------------------------------------
+COLLECTION TYPE:
+------------------------------------------------------------
+Select "Manual" and add these products:
+- Personalized Stainless Steel Water Bottle
+- Premium Personalized SUBLIMATION Water Bottle with Gift Box
+
+------------------------------------------------------------
+AFTER SAVING:
+------------------------------------------------------------
+The collection will be live at: shelzysdesigns.com/collections/everyday

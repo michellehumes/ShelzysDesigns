@@ -1,0 +1,69 @@
+============================================================
+FIX THE "500+ REVIEWS" CLAIM - IMPORTANT!
+============================================================
+
+PROBLEM:
+Your header says "4.9★ • 500+ 5-Star Reviews" but there are
+NO actual reviews displayed anywhere on your site. This is:
+1. A trust killer when customers look for reviews and find none
+2. Potentially an FTC violation (false advertising)
+
+------------------------------------------------------------
+OPTION A: REMOVE THE CLAIM (5 minutes) - DO THIS FIRST
+------------------------------------------------------------
+
+1. Go to: https://admin.shopify.com/store/shelzys-designs/themes/current/editor
+2. Look for the announcement bar at the top of the page
+3. Click on it to edit
+4. Find the text "4.9★ • 500+ 5-Star Reviews"
+5. CHANGE IT TO ONE OF THESE:
+
+   "Free Shipping on Orders $50+ • Free Personalization"
+
+   OR
+
+   "Premium Sublimation Printing • Ships in 5-7 Days"
+
+   OR
+
+   "Handcrafted With Care • Permanent Sublimation Printing"
+
+6. Click SAVE
+
+------------------------------------------------------------
+OPTION B: GET REAL REVIEWS (30 minutes setup, ongoing)
+------------------------------------------------------------
+
+STEP 1: Install Judge.me (FREE)
+1. Go to: https://apps.shopify.com/judgeme
+2. Click "Add app"
+3. Click "Install app"
+4. Complete the setup wizard (takes 5 min)
+
+STEP 2: Configure Judge.me
+1. In Judge.me dashboard, go to: Display → Widgets
+2. Enable "Review Widget" for product pages
+3. Enable "All Reviews Page"
+4. Enable "Star Rating" in collection pages
+
+STEP 3: Import Existing Reviews (if you have any)
+- If you have reviews on Etsy, Google, etc.
+- Go to: Judge.me → Reviews → Import
+- Follow the import wizard
+
+STEP 4: Request Reviews from Past Customers
+- Go to: Judge.me → Emails → Review Request
+- Enable automatic review request emails
+- They'll go out 14 days after delivery
+- OR manually request from past customers
+
+STEP 5: Update Header After Getting Real Reviews
+Once you have 50+ real reviews:
+1. Go back to theme customizer
+2. Update announcement bar to show REAL count
+3. Judge.me can auto-display this
+
+------------------------------------------------------------
+DO OPTION A RIGHT NOW (remove false claim)
+THEN work on Option B this week
+------------------------------------------------------------
