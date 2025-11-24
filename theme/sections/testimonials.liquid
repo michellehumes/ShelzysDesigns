@@ -1,0 +1,205 @@
+{%- comment -%}
+  Testimonials / Why Customers Love Us Section
+  Features:
+  - Review cards with star ratings
+  - Customer name and role/occasion
+  - Clean card design
+{%- endcomment -%}
+
+<section class="testimonials-section section-padding" style="background: {{ section.settings.bg_color }};">
+  <div class="container">
+    <div class="section-header">
+      <h2>{{ section.settings.section_title }}</h2>
+      {%- if section.settings.section_subtitle != blank -%}
+        <p class="section-subtitle">{{ section.settings.section_subtitle }}</p>
+      {%- endif -%}
+    </div>
+
+    <div class="testimonials-grid">
+      {%- for block in section.blocks -%}
+        <div class="testimonial-card" {{ block.shopify_attributes }}>
+          <div class="testimonial-card__stars">
+            {%- for i in (1..5) -%}
+              {%- if i <= block.settings.stars -%}
+                <span class="star filled">★</span>
+              {%- else -%}
+                <span class="star empty">☆</span>
+              {%- endif -%}
+            {%- endfor -%}
+          </div>
+          <p class="testimonial-card__quote">"{{ block.settings.quote }}"</p>
+          <div class="testimonial-card__attribution">
+            <span class="testimonial-card__author">— {{ block.settings.author }}</span>
+            {%- if block.settings.role != blank -%}
+              <span class="testimonial-card__role">, {{ block.settings.role }}</span>
+            {%- endif -%}
+          </div>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+<style>
+.testimonials-section {
+  background: #FFFFFF;
+}
+
+.testimonials-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+}
+
+.testimonial-card {
+  background: #FFFFFF;
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+  border: 1px solid #F7F4EF;
+}
+
+.testimonial-card__stars {
+  margin-bottom: 1rem;
+  font-size: 20px;
+}
+
+.testimonial-card__stars .star.filled {
+  color: #FFB800;
+}
+
+.testimonial-card__stars .star.empty {
+  color: #D8CFC4;
+}
+
+.testimonial-card__quote {
+  font-family: 'Inter', sans-serif;
+  font-size: 16px;
+  line-height: 1.7;
+  color: #111111;
+  margin-bottom: 1.5rem;
+  font-style: italic;
+}
+
+.testimonial-card__attribution {
+  font-size: 14px;
+}
+
+.testimonial-card__author {
+  font-weight: 600;
+  color: #111111;
+}
+
+.testimonial-card__role {
+  color: #9CAE8C;
+}
+
+@media (max-width: 968px) {
+  .testimonials-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .testimonials-grid {
+    grid-template-columns: 1fr;
+  }
+}
+</style>
+
+{% schema %}
+{
+  "name": "Testimonials",
+  "tag": "section",
+  "class": "section-testimonials",
+  "settings": [
+    {
+      "type": "text",
+      "id": "section_title",
+      "label": "Section Title",
+      "default": "Why Customers Love Us"
+    },
+    {
+      "type": "text",
+      "id": "section_subtitle",
+      "label": "Section Subtitle",
+      "default": "Real reviews from real customers"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#FFFFFF"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "testimonial",
+      "name": "Testimonial",
+      "settings": [
+        {
+          "type": "range",
+          "id": "stars",
+          "label": "Star Rating",
+          "min": 1,
+          "max": 5,
+          "step": 1,
+          "default": 5
+        },
+        {
+          "type": "textarea",
+          "id": "quote",
+          "label": "Quote",
+          "default": "Perfect for our wedding party! The bottles were beautiful and the personalization was exactly what we wanted."
+        },
+        {
+          "type": "text",
+          "id": "author",
+          "label": "Author Name",
+          "default": "Sarah M."
+        },
+        {
+          "type": "text",
+          "id": "role",
+          "label": "Role/Occasion",
+          "default": "Bride"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Testimonials",
+      "blocks": [
+        {
+          "type": "testimonial",
+          "settings": {
+            "stars": 5,
+            "quote": "Perfect for our wedding party! The bottles were beautiful and the personalization was exactly what we wanted.",
+            "author": "Sarah M.",
+            "role": "Bride"
+          }
+        },
+        {
+          "type": "testimonial",
+          "settings": {
+            "stars": 5,
+            "quote": "Ordered 50 bottles for our company retreat. Great quality and everyone loved them!",
+            "author": "James T.",
+            "role": "Corporate Events Manager"
+          }
+        },
+        {
+          "type": "testimonial",
+          "settings": {
+            "stars": 5,
+            "quote": "Our soccer team uses these at every game. Durable, stylish, and keeps drinks cold for hours.",
+            "author": "Coach Rodriguez",
+            "role": "Youth Sports Coach"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

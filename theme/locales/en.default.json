@@ -1,0 +1,95 @@
+{
+  "general": {
+    "password_page": {
+      "login_form_heading": "Enter store using password",
+      "login_form_password_label": "Password",
+      "login_form_password_placeholder": "Your password",
+      "login_form_submit": "Enter"
+    },
+    "social": {
+      "alt_text": {
+        "share_on_facebook": "Share on Facebook",
+        "share_on_twitter": "Tweet on Twitter",
+        "share_on_pinterest": "Pin on Pinterest"
+      }
+    }
+  },
+  "accessibility": {
+    "skip_to_content": "Skip to content",
+    "close": "Close",
+    "loading": "Loading...",
+    "refresh_page": "Choosing a selection results in a full page refresh.",
+    "cart_drawer": "Cart drawer"
+  },
+  "products": {
+    "product": {
+      "add_to_cart": "Add to cart",
+      "added_to_cart": "Added!",
+      "adding": "Adding...",
+      "sold_out": "Sold out",
+      "unavailable": "Unavailable",
+      "quantity": "Quantity",
+      "price": {
+        "regular_price": "Regular price",
+        "sale_price": "Sale price",
+        "unit_price": "Unit price",
+        "from": "From"
+      }
+    }
+  },
+  "cart": {
+    "general": {
+      "title": "Your Cart",
+      "empty": "Your cart is empty",
+      "continue_shopping": "Continue shopping",
+      "update": "Update",
+      "checkout": "Checkout",
+      "remove": "Remove",
+      "subtotal": "Subtotal",
+      "shipping_note": "Shipping & taxes calculated at checkout"
+    },
+    "free_shipping": {
+      "below_threshold": "Add {{ amount }} more to unlock FREE SHIPPING!",
+      "achieved": "You've unlocked FREE SHIPPING!"
+    }
+  },
+  "collections": {
+    "general": {
+      "items": "{{ count }} products",
+      "no_matches": "No products found",
+      "sort_by": "Sort by"
+    },
+    "sorting": {
+      "title": "Alphabetically, A-Z",
+      "title_descending": "Alphabetically, Z-A",
+      "price": "Price, low to high",
+      "price_descending": "Price, high to low",
+      "date": "Date, old to new",
+      "date_descending": "Date, new to old",
+      "best_selling": "Best selling"
+    }
+  },
+  "blogs": {
+    "article": {
+      "read_more": "Read more",
+      "by_author": "By {{ author }}",
+      "posted_in": "Posted in"
+    }
+  },
+  "newsletter": {
+    "heading": "Get 10% Off Your First Custom Bottle",
+    "subtext": "Join the Shelzy's list for early access to new drops, sales, and wedding inspiration.",
+    "placeholder": "Enter your email",
+    "submit": "Sign Me Up",
+    "success": "Thanks for subscribing!"
+  },
+  "contact": {
+    "form": {
+      "name": "Name",
+      "email": "Email",
+      "message": "Message",
+      "submit": "Send Message",
+      "success": "Thanks for your message! We'll get back to you within 1 business day."
+    }
+  }
+}

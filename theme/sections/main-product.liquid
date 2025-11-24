@@ -1,0 +1,301 @@
+{%- comment -%}
+  Main Product Section
+  Full product page with image gallery, info, and add to cart
+{%- endcomment -%}
+
+<section class="product-section section-padding">
+  <div class="container">
+    <div class="product-layout">
+      {%- comment -%} Product Images {%- endcomment -%}
+      <div class="product-gallery">
+        <div class="product-gallery__main">
+          {%- if product.featured_image -%}
+            <img
+              src="{{ product.featured_image | image_url: width: 800 }}"
+              alt="{{ product.featured_image.alt | default: product.title | escape }}"
+              class="product-gallery__image"
+            >
+          {%- else -%}
+            {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+          {%- endif -%}
+        </div>
+
+        {%- if product.images.size > 1 -%}
+          <div class="product-gallery__thumbnails">
+            {%- for image in product.images -%}
+              <button class="product-gallery__thumb{% if forloop.first %} active{% endif %}" data-index="{{ forloop.index0 }}">
+                <img
+                  src="{{ image | image_url: width: 100 }}"
+                  alt="{{ image.alt | default: product.title | escape }}"
+                >
+              </button>
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+      </div>
+
+      {%- comment -%} Product Info {%- endcomment -%}
+      <div class="product-info{% if section.settings.enable_sticky_info %} product-info--sticky{% endif %}">
+        <h1 class="product-info__title">{{ product.title }}</h1>
+
+        <div class="product-info__price">
+          <span class="product-info__price-current">{{ product.price | money }}</span>
+          {%- if product.compare_at_price > product.price -%}
+            <span class="product-info__price-compare">{{ product.compare_at_price | money }}</span>
+            {%- assign savings = product.compare_at_price | minus: product.price | times: 100.0 | divided_by: product.compare_at_price | round -%}
+            <span class="product-info__savings">Save {{ savings }}%</span>
+          {%- endif -%}
+        </div>
+
+        {%- comment -%} Product Form {%- endcomment -%}
+        {%- form 'product', product, class: 'product-form' -%}
+          <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+
+          {%- comment -%} Variant Selector {%- endcomment -%}
+          {%- unless product.has_only_default_variant -%}
+            {%- for option in product.options_with_values -%}
+              <div class="product-form__option">
+                <label class="form-label">{{ option.name }}</label>
+                <select name="options[{{ option.name }}]" class="form-input form-select">
+                  {%- for value in option.values -%}
+                    <option value="{{ value }}" {% if option.selected_value == value %}selected{% endif %}>
+                      {{ value }}
+                    </option>
+                  {%- endfor -%}
+                </select>
+              </div>
+            {%- endfor -%}
+          {%- endunless -%}
+
+          {%- comment -%} Quantity {%- endcomment -%}
+          <div class="product-form__quantity">
+            <label class="form-label">Quantity</label>
+            <div class="quantity-selector">
+              <button type="button" class="quantity-btn" data-action="decrease">-</button>
+              <input type="number" name="quantity" value="1" min="1" class="quantity-input">
+              <button type="button" class="quantity-btn" data-action="increase">+</button>
+            </div>
+          </div>
+
+          {%- comment -%} Add to Cart {%- endcomment -%}
+          <button type="submit" class="btn btn-primary btn-lg product-form__submit" {% unless product.available %}disabled{% endunless %}>
+            {%- if product.available -%}
+              Add to Cart
+            {%- else -%}
+              Sold Out
+            {%- endif -%}
+          </button>
+        {%- endform -%}
+
+        {%- comment -%} Trust Badges {%- endcomment -%}
+        <div class="product-trust">
+          <div class="product-trust__item">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#9CAE8C" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            <span>Permanent Sublimation</span>
+          </div>
+          <div class="product-trust__item">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#9CAE8C" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            <span>Ships in 5-7 Days</span>
+          </div>
+          <div class="product-trust__item">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#9CAE8C" stroke-width="2"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+            <span>Free Shipping $50+</span>
+          </div>
+        </div>
+
+        {%- comment -%} Description {%- endcomment -%}
+        <div class="product-description">
+          {{ product.description }}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+.product-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  align-items: start;
+}
+
+.product-gallery__main {
+  border-radius: 12px;
+  overflow: hidden;
+  background: #F7F4EF;
+}
+
+.product-gallery__image {
+  width: 100%;
+  height: auto;
+}
+
+.product-gallery__thumbnails {
+  display: flex;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.product-gallery__thumb {
+  width: 80px;
+  height: 80px;
+  border: 2px solid transparent;
+  border-radius: 8px;
+  overflow: hidden;
+  cursor: pointer;
+  background: none;
+  padding: 0;
+}
+
+.product-gallery__thumb.active {
+  border-color: #9CAE8C;
+}
+
+.product-gallery__thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.product-info--sticky {
+  position: sticky;
+  top: 100px;
+}
+
+.product-info__title {
+  font-size: 32px;
+  margin-bottom: 1rem;
+}
+
+.product-info__price {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 2rem;
+}
+
+.product-info__price-current {
+  font-family: 'Poppins', sans-serif;
+  font-size: 28px;
+  font-weight: 600;
+}
+
+.product-info__price-compare {
+  font-size: 18px;
+  color: #888888;
+  text-decoration: line-through;
+}
+
+.product-info__savings {
+  background: #C74B4B;
+  color: #FFFFFF;
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.product-form__option,
+.product-form__quantity {
+  margin-bottom: 1.5rem;
+}
+
+.quantity-selector {
+  display: flex;
+  align-items: center;
+  width: fit-content;
+  border: 1px solid #D8CFC4;
+  border-radius: 4px;
+}
+
+.quantity-btn {
+  width: 44px;
+  height: 44px;
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  color: #111111;
+}
+
+.quantity-btn:hover {
+  background: #F7F4EF;
+}
+
+.quantity-input {
+  width: 60px;
+  height: 44px;
+  text-align: center;
+  border: none;
+  border-left: 1px solid #D8CFC4;
+  border-right: 1px solid #D8CFC4;
+  font-size: 16px;
+}
+
+.product-form__submit {
+  width: 100%;
+  margin-bottom: 1.5rem;
+}
+
+.product-trust {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 1.5rem 0;
+  border-top: 1px solid #F7F4EF;
+  border-bottom: 1px solid #F7F4EF;
+  margin-bottom: 1.5rem;
+}
+
+.product-trust__item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  color: #666666;
+}
+
+.product-description {
+  font-size: 15px;
+  line-height: 1.7;
+  color: #666666;
+}
+
+.product-description p {
+  margin-bottom: 1rem;
+}
+
+@media (max-width: 968px) {
+  .product-layout {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  .product-info--sticky {
+    position: static;
+  }
+}
+</style>
+
+{% schema %}
+{
+  "name": "Main Product",
+  "tag": "section",
+  "class": "section-main-product",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "enable_sticky_info",
+      "label": "Enable sticky product info",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_vendor",
+      "label": "Show vendor",
+      "default": false
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,124 @@
+{%- comment -%}
+  Announcement Bar Section
+  Features:
+  - Customizable message
+  - Optional link
+  - Dismissible
+{%- endcomment -%}
+
+{%- if section.settings.show_announcement -%}
+  <div class="announcement-bar" style="background: {{ section.settings.bg_color }}; color: {{ section.settings.text_color }};">
+    <div class="announcement-bar__content">
+      {%- if section.settings.link != blank -%}
+        <a href="{{ section.settings.link }}" class="announcement-bar__link">
+          {{ section.settings.message }}
+        </a>
+      {%- else -%}
+        <p class="announcement-bar__message">{{ section.settings.message }}</p>
+      {%- endif -%}
+    </div>
+
+    {%- if section.settings.dismissible -%}
+      <button class="announcement-bar__dismiss" aria-label="Dismiss announcement">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="1" y1="1" x2="13" y2="13"></line>
+          <line x1="13" y1="1" x2="1" y2="13"></line>
+        </svg>
+      </button>
+    {%- endif -%}
+  </div>
+{%- endif -%}
+
+<style>
+.announcement-bar {
+  padding: 10px 20px;
+  text-align: center;
+  position: relative;
+}
+
+.announcement-bar__content {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.announcement-bar__message,
+.announcement-bar__link {
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  margin: 0;
+  line-height: 1.4;
+}
+
+.announcement-bar__link {
+  text-decoration: none;
+  color: inherit;
+}
+
+.announcement-bar__link:hover {
+  text-decoration: underline;
+}
+
+.announcement-bar__dismiss {
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: inherit;
+  opacity: 0.7;
+  padding: 4px;
+  transition: opacity 0.2s ease;
+}
+
+.announcement-bar__dismiss:hover {
+  opacity: 1;
+}
+</style>
+
+{% schema %}
+{
+  "name": "Announcement Bar",
+  "tag": "section",
+  "class": "section-announcement",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_announcement",
+      "label": "Show Announcement Bar",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "message",
+      "label": "Message",
+      "default": "Free Shipping on Orders $50+ | Ships in 5-7 Days"
+    },
+    {
+      "type": "url",
+      "id": "link",
+      "label": "Link (optional)"
+    },
+    {
+      "type": "checkbox",
+      "id": "dismissible",
+      "label": "Allow dismissal",
+      "default": false
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#9CAE8C"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text Color",
+      "default": "#FFFFFF"
+    }
+  ]
+}
+{% endschema %}

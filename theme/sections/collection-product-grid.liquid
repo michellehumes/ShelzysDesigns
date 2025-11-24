@@ -1,0 +1,183 @@
+{%- comment -%}
+  Collection Product Grid Section
+  Displays products with filtering and sorting
+{%- endcomment -%}
+
+<section class="collection-grid-section section-padding">
+  <div class="container">
+    {%- comment -%} Toolbar {%- endcomment -%}
+    <div class="collection-toolbar">
+      {%- if section.settings.show_filters -%}
+        <div class="collection-filters">
+          {%- comment -%} Basic filter UI - can be expanded {%- endcomment -%}
+        </div>
+      {%- endif -%}
+
+      {%- if section.settings.show_sort -%}
+        <div class="collection-sort">
+          <label for="sort-by" class="visually-hidden">Sort by</label>
+          <select id="sort-by" class="form-input form-select" onchange="window.location.href = this.value;">
+            {%- for option in collection.sort_options -%}
+              <option value="{{ option.url }}" {% if option.value == collection.sort_by %}selected{% endif %}>
+                {{ option.name }}
+              </option>
+            {%- endfor -%}
+          </select>
+        </div>
+      {%- endif -%}
+    </div>
+
+    {%- comment -%} Product Grid {%- endcomment -%}
+    <div class="product-grid">
+      {%- paginate collection.products by section.settings.products_per_page -%}
+        {%- for product in collection.products -%}
+          {%- render 'product-card', product: product, show_badges: true -%}
+        {%- else -%}
+          <div class="collection-empty">
+            <p>No products found in this collection.</p>
+            <a href="/collections/all" class="btn btn-primary">Shop All Products</a>
+          </div>
+        {%- endfor -%}
+      {%- endpaginate -%}
+    </div>
+
+    {%- comment -%} Pagination {%- endcomment -%}
+    {%- paginate collection.products by section.settings.products_per_page -%}
+      {%- if paginate.pages > 1 -%}
+        <nav class="pagination" aria-label="Pagination">
+          <ul class="pagination__list">
+            {%- if paginate.previous -%}
+              <li>
+                <a href="{{ paginate.previous.url }}" class="pagination__link pagination__link--prev">
+                  &larr; Previous
+                </a>
+              </li>
+            {%- endif -%}
+
+            {%- for part in paginate.parts -%}
+              <li>
+                {%- if part.is_link -%}
+                  <a href="{{ part.url }}" class="pagination__link">{{ part.title }}</a>
+                {%- else -%}
+                  {%- if part.title == paginate.current_page -%}
+                    <span class="pagination__link pagination__link--current">{{ part.title }}</span>
+                  {%- else -%}
+                    <span class="pagination__link">{{ part.title }}</span>
+                  {%- endif -%}
+                {%- endif -%}
+              </li>
+            {%- endfor -%}
+
+            {%- if paginate.next -%}
+              <li>
+                <a href="{{ paginate.next.url }}" class="pagination__link pagination__link--next">
+                  Next &rarr;
+                </a>
+              </li>
+            {%- endif -%}
+          </ul>
+        </nav>
+      {%- endif -%}
+    {%- endpaginate -%}
+  </div>
+</section>
+
+<style>
+.collection-grid-section {
+  background: #FFFFFF;
+}
+
+.collection-toolbar {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-bottom: 2rem;
+  gap: 1rem;
+}
+
+.collection-sort select {
+  min-width: 200px;
+}
+
+.collection-empty {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 60px 20px;
+}
+
+.collection-empty p {
+  color: #666666;
+  margin-bottom: 1.5rem;
+}
+
+.pagination {
+  margin-top: 3rem;
+}
+
+.pagination__list {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.pagination__link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 40px;
+  height: 40px;
+  padding: 0 12px;
+  font-size: 14px;
+  color: #111111;
+  text-decoration: none;
+  border: 1px solid #D8CFC4;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+}
+
+.pagination__link:hover {
+  border-color: #9CAE8C;
+  color: #9CAE8C;
+}
+
+.pagination__link--current {
+  background: #9CAE8C;
+  border-color: #9CAE8C;
+  color: #FFFFFF;
+}
+</style>
+
+{% schema %}
+{
+  "name": "Collection Product Grid",
+  "tag": "section",
+  "class": "section-collection-grid",
+  "settings": [
+    {
+      "type": "range",
+      "id": "products_per_page",
+      "label": "Products per page",
+      "min": 8,
+      "max": 24,
+      "step": 4,
+      "default": 12
+    },
+    {
+      "type": "checkbox",
+      "id": "show_filters",
+      "label": "Show filters",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_sort",
+      "label": "Show sort",
+      "default": true
+    }
+  ]
+}
+{% endschema %}

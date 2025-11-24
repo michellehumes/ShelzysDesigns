@@ -1,0 +1,111 @@
+{%- comment -%}
+  Main Page Section
+  For generic pages (About, Contact, FAQ, etc.)
+{%- endcomment -%}
+
+<section class="page-section" style="padding-top: {{ section.settings.padding_top }}px; padding-bottom: {{ section.settings.padding_bottom }}px;">
+  <div class="container">
+    <div class="page-layout">
+      <h1 class="page-title">{{ page.title }}</h1>
+
+      <div class="page-content rte">
+        {{ page.content }}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+.page-layout {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.page-title {
+  font-size: 40px;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.page-content {
+  font-size: 17px;
+  line-height: 1.8;
+  color: #333333;
+}
+
+.page-content h2 {
+  font-size: 28px;
+  margin-top: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.page-content h3 {
+  font-size: 22px;
+  margin-top: 2rem;
+  margin-bottom: 0.75rem;
+}
+
+.page-content p {
+  margin-bottom: 1.5rem;
+}
+
+.page-content ul,
+.page-content ol {
+  margin-bottom: 1.5rem;
+  padding-left: 1.5rem;
+}
+
+.page-content li {
+  margin-bottom: 0.5rem;
+}
+
+.page-content a {
+  color: #9CAE8C;
+  text-decoration: underline;
+}
+
+.page-content img {
+  border-radius: 8px;
+  margin: 2rem 0;
+}
+
+@media (max-width: 768px) {
+  .page-title {
+    font-size: 32px;
+  }
+
+  .page-content {
+    font-size: 16px;
+  }
+}
+</style>
+
+{% schema %}
+{
+  "name": "Main Page",
+  "tag": "section",
+  "class": "section-main-page",
+  "settings": [
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding top",
+      "min": 20,
+      "max": 100,
+      "step": 10,
+      "default": 60,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding bottom",
+      "min": 20,
+      "max": 100,
+      "step": 10,
+      "default": 60,
+      "unit": "px"
+    }
+  ]
+}
+{% endschema %}

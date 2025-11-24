@@ -1,0 +1,139 @@
+{%- comment -%}
+  Best Sellers Section
+  Features:
+  - Dynamic product grid from selected collection
+  - Product badges (Best Seller, Wedding Popular, Sale)
+  - Bundle savings display
+  - Compare-at pricing
+{%- endcomment -%}
+
+<section class="best-sellers-section section-padding" style="background: {{ section.settings.bg_color }};">
+  <div class="container">
+    <div class="section-header">
+      <h2>{{ section.settings.section_title }}</h2>
+      {%- if section.settings.section_subtitle != blank -%}
+        <p class="section-subtitle">{{ section.settings.section_subtitle }}</p>
+      {%- endif -%}
+    </div>
+
+    <div class="product-grid">
+      {%- assign collection = collections[section.settings.collection] -%}
+      {%- for product in collection.products limit: section.settings.products_to_show -%}
+        {%- render 'product-card', product: product, show_badges: true -%}
+      {%- else -%}
+        {%- comment -%} Placeholder products if no collection selected {%- endcomment -%}
+        {%- for i in (1..4) -%}
+          <div class="product-card">
+            <div class="product-card__link">
+              <div class="product-card__image">
+                {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+              </div>
+              <div class="product-card__info">
+                <h3 class="product-card__title">Sample Product {{ i }}</h3>
+                <div class="product-card__price">
+                  <span class="product-card__price-current">$32.00</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        {%- endfor -%}
+      {%- endfor -%}
+    </div>
+
+    {%- if section.settings.show_cta -%}
+      <div class="section-cta">
+        <a href="{{ section.settings.cta_link | default: '/collections/all' }}" class="btn btn-secondary">
+          {{ section.settings.cta_text | default: 'View All Products' }}
+        </a>
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+<style>
+.best-sellers-section .section-cta {
+  text-align: center;
+  margin-top: 3rem;
+}
+</style>
+
+{% schema %}
+{
+  "name": "Best Sellers",
+  "tag": "section",
+  "class": "section-best-sellers",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "text",
+      "id": "section_title",
+      "label": "Section Title",
+      "default": "Best Sellers"
+    },
+    {
+      "type": "text",
+      "id": "section_subtitle",
+      "label": "Section Subtitle",
+      "default": "Our most-loved personalized bottles"
+    },
+    {
+      "type": "header",
+      "content": "Products"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection"
+    },
+    {
+      "type": "range",
+      "id": "products_to_show",
+      "label": "Products to Show",
+      "min": 4,
+      "max": 12,
+      "step": 2,
+      "default": 8
+    },
+    {
+      "type": "header",
+      "content": "Call to Action"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_cta",
+      "label": "Show View All Button",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "cta_text",
+      "label": "Button Text",
+      "default": "View All Products"
+    },
+    {
+      "type": "url",
+      "id": "cta_link",
+      "label": "Button Link",
+      "default": "/collections/all"
+    },
+    {
+      "type": "header",
+      "content": "Styling"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#F7F4EF"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Best Sellers"
+    }
+  ]
+}
+{% endschema %}

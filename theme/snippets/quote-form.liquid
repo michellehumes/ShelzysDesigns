@@ -1,0 +1,178 @@
+{%- comment -%}
+  Quote Request Form Snippet
+
+  Usage: {% render 'quote-form', form_title: 'Request a Quote' %}
+
+  Features:
+  - Name, Email, Event Date, Quantity, Notes fields
+  - Used on Corporate and Bridal pages
+  - Submissions go to store notification email
+{%- endcomment -%}
+
+{%- liquid
+  assign form_title = form_title | default: 'Request a Quote'
+  assign form_subtitle = form_subtitle | default: 'Fill out the form below and we\'ll get back to you within 1 business day.'
+  assign event_type = event_type | default: 'General'
+-%}
+
+<div class="quote-form">
+  <h3 class="quote-form__title">{{ form_title }}</h3>
+  <p class="quote-form__subtitle">{{ form_subtitle }}</p>
+
+  {%- form 'contact', class: 'quote-form__form' -%}
+    {%- if form.posted_successfully? -%}
+      <div class="quote-form__success">
+        <p><strong>Thank you for your inquiry!</strong></p>
+        <p>We'll review your request and get back to you within 1 business day.</p>
+      </div>
+    {%- else -%}
+      <input type="hidden" name="contact[tags]" value="quote-request,{{ event_type | handleize }}">
+
+      <div class="quote-form__row">
+        <div class="form-group">
+          <label for="quote-name" class="form-label">Name *</label>
+          <input
+            type="text"
+            id="quote-name"
+            name="contact[name]"
+            class="form-input"
+            required
+            autocomplete="name"
+          >
+        </div>
+
+        <div class="form-group">
+          <label for="quote-email" class="form-label">Email *</label>
+          <input
+            type="email"
+            id="quote-email"
+            name="contact[email]"
+            class="form-input"
+            required
+            autocomplete="email"
+          >
+        </div>
+      </div>
+
+      <div class="quote-form__row">
+        <div class="form-group">
+          <label for="quote-date" class="form-label">Event Date</label>
+          <input
+            type="date"
+            id="quote-date"
+            name="contact[note][event_date]"
+            class="form-input"
+          >
+        </div>
+
+        <div class="form-group">
+          <label for="quote-quantity" class="form-label">Estimated Quantity *</label>
+          <select id="quote-quantity" name="contact[note][quantity]" class="form-input form-select" required>
+            <option value="">Select quantity</option>
+            <option value="5-10">5-10 bottles</option>
+            <option value="11-25">11-25 bottles</option>
+            <option value="26-50">26-50 bottles</option>
+            <option value="51-100">51-100 bottles</option>
+            <option value="100+">100+ bottles</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="quote-notes" class="form-label">Notes / Requirements</label>
+        <textarea
+          id="quote-notes"
+          name="contact[body]"
+          class="form-input form-textarea"
+          rows="4"
+          placeholder="Tell us about your event, any specific design requirements, or questions you have..."
+        ></textarea>
+      </div>
+
+      {%- if form.errors -%}
+        <div class="quote-form__errors">
+          <p>Please correct the following:</p>
+          <ul>
+            {%- for field in form.errors -%}
+              <li>{{ field | capitalize }} {{ form.errors.messages[field] }}</li>
+            {%- endfor -%}
+          </ul>
+        </div>
+      {%- endif -%}
+
+      <button type="submit" class="btn btn-primary quote-form__submit">Submit Request</button>
+    {%- endif -%}
+  {%- endform -%}
+</div>
+
+<style>
+.quote-form {
+  background: #F7F4EF;
+  border-radius: 16px;
+  padding: 2.5rem;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.quote-form__title {
+  font-family: 'Poppins', sans-serif;
+  font-size: 24px;
+  font-weight: 600;
+  text-align: center;
+  margin-bottom: 0.5rem;
+}
+
+.quote-form__subtitle {
+  font-size: 15px;
+  color: #666666;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.quote-form__row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.quote-form__submit {
+  width: 100%;
+  margin-top: 0.5rem;
+}
+
+.quote-form__success {
+  text-align: center;
+  padding: 2rem;
+  background: rgba(156, 174, 140, 0.1);
+  border-radius: 8px;
+}
+
+.quote-form__success p {
+  margin: 0 0 0.5rem;
+  color: #111111;
+}
+
+.quote-form__errors {
+  background: rgba(199, 75, 75, 0.1);
+  padding: 1rem;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  font-size: 14px;
+  color: #C74B4B;
+}
+
+.quote-form__errors ul {
+  margin: 0.5rem 0 0;
+  padding-left: 1.5rem;
+}
+
+@media (max-width: 600px) {
+  .quote-form {
+    padding: 1.5rem;
+  }
+
+  .quote-form__row {
+    grid-template-columns: 1fr;
+  }
+}
+</style>

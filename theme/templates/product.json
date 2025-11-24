@@ -1,0 +1,26 @@
+{
+  "sections": {
+    "main-product": {
+      "type": "main-product",
+      "settings": {
+        "enable_sticky_info": true,
+        "show_vendor": false
+      }
+    },
+    "product-upsell": {
+      "type": "product-upsell-banner",
+      "settings": {
+        "banner_text": "Need multiple bottles? Upgrade to a set of 3/5/10 and save up to 25%.",
+        "bundle_link": "/collections/bridal-party-sets"
+      }
+    },
+    "related-products": {
+      "type": "related-products",
+      "settings": {
+        "heading": "You May Also Like",
+        "products_to_show": 4
+      }
+    }
+  },
+  "order": ["main-product", "product-upsell", "related-products"]
+}

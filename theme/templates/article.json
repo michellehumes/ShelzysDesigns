@@ -1,0 +1,22 @@
+{
+  "sections": {
+    "main-article": {
+      "type": "main-article",
+      "settings": {
+        "show_featured_image": true,
+        "show_date": true,
+        "show_author": true,
+        "show_cta_top": true,
+        "show_cta_bottom": true
+      }
+    },
+    "related-articles": {
+      "type": "related-articles",
+      "settings": {
+        "heading": "More Articles",
+        "posts_to_show": 3
+      }
+    }
+  },
+  "order": ["main-article", "related-articles"]
+}

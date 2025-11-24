@@ -1,0 +1,323 @@
+{%- comment -%}
+  Hero Section - Homepage
+  Features:
+  - Main headline and subtext with USPs
+  - Two CTAs: Shop Bridal Gifts & Order for Corporate Events
+  - Trust line with star rating and reviews count
+  - Responsive design with image
+{%- endcomment -%}
+
+<section class="hero-section" style="background: {{ section.settings.bg_color }};">
+  <div class="hero-container">
+    <div class="hero-content">
+      <h1 class="hero-title">{{ section.settings.hero_title }}</h1>
+
+      <p class="hero-subtitle">{{ section.settings.hero_subtitle }}</p>
+
+      {%- comment -%} USP Line {%- endcomment -%}
+      <p class="hero-usps">
+        {{ section.settings.usp_text }}
+      </p>
+
+      {%- comment -%} CTA Buttons {%- endcomment -%}
+      <div class="hero-buttons">
+        {%- if section.settings.primary_cta_text != blank -%}
+          <a href="{{ section.settings.primary_cta_link }}" class="btn btn-primary">
+            {{ section.settings.primary_cta_text }}
+          </a>
+        {%- endif -%}
+
+        {%- if section.settings.secondary_cta_text != blank -%}
+          <a href="{{ section.settings.secondary_cta_link }}" class="btn btn-secondary">
+            {{ section.settings.secondary_cta_text }}
+          </a>
+        {%- endif -%}
+      </div>
+
+      {%- comment -%} Trust Line {%- endcomment -%}
+      {%- if section.settings.show_trust_line -%}
+        <div class="hero-trust-line">
+          <span class="trust-item">
+            <span class="trust-stars">{{ section.settings.star_rating }}</span>
+          </span>
+          <span class="trust-separator">|</span>
+          <span class="trust-item">{{ section.settings.reviews_count }}</span>
+          <span class="trust-separator">|</span>
+          <span class="trust-item">{{ section.settings.trust_badge }}</span>
+        </div>
+      {%- endif -%}
+    </div>
+
+    <div class="hero-image">
+      {%- if section.settings.hero_image != blank -%}
+        <img
+          src="{{ section.settings.hero_image | image_url: width: 1200 }}"
+          alt="{{ section.settings.hero_image_alt | default: section.settings.hero_title | escape }}"
+          width="{{ section.settings.hero_image.width }}"
+          height="{{ section.settings.hero_image.height }}"
+          loading="eager"
+        >
+      {%- else -%}
+        <div class="hero-image-placeholder">
+          {{ 'lifestyle-2' | placeholder_svg_tag: 'placeholder-svg' }}
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+<style>
+.hero-section {
+  padding: 80px 20px;
+}
+
+.hero-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  align-items: center;
+}
+
+.hero-content {
+  text-align: left;
+}
+
+.hero-title {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  font-size: 48px;
+  line-height: 1.15;
+  color: #111111;
+  margin-bottom: 1rem;
+}
+
+.hero-subtitle {
+  font-family: 'Inter', sans-serif;
+  font-size: 20px;
+  line-height: 1.6;
+  color: #111111;
+  margin-bottom: 0.75rem;
+}
+
+.hero-usps {
+  font-family: 'Inter', sans-serif;
+  font-size: 15px;
+  line-height: 1.8;
+  color: #666666;
+  margin-bottom: 2rem;
+}
+
+.hero-buttons {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 1.5rem;
+}
+
+.hero-trust-line {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 14px;
+  color: #666666;
+  flex-wrap: wrap;
+}
+
+.trust-item {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.trust-stars {
+  color: #FFB800;
+}
+
+.trust-separator {
+  color: #D8CFC4;
+}
+
+.hero-image img {
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+}
+
+.hero-image-placeholder {
+  width: 100%;
+  height: 500px;
+  background: #F7F4EF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+}
+
+.hero-image-placeholder svg {
+  width: 50%;
+  opacity: 0.5;
+}
+
+@media (max-width: 968px) {
+  .hero-container {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  .hero-title {
+    font-size: 36px;
+  }
+
+  .hero-content {
+    text-align: center;
+  }
+
+  .hero-buttons {
+    justify-content: center;
+  }
+
+  .hero-trust-line {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-title {
+    font-size: 32px;
+  }
+
+  .hero-buttons {
+    flex-direction: column;
+  }
+
+  .hero-buttons .btn {
+    width: 100%;
+    text-align: center;
+  }
+}
+</style>
+
+{% schema %}
+{
+  "name": "Hero Section",
+  "tag": "section",
+  "class": "section-hero",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "text",
+      "id": "hero_title",
+      "label": "Hero Title",
+      "default": "Premium Personalized Sublimation Water Bottles"
+    },
+    {
+      "type": "textarea",
+      "id": "hero_subtitle",
+      "label": "Hero Subtitle",
+      "default": "Custom-made bottles for weddings, weekends, corporate events, and everyday hydration."
+    },
+    {
+      "type": "textarea",
+      "id": "usp_text",
+      "label": "USP Text",
+      "default": "Free personalization | Free shipping $50+ | Ships in 5-7 days | Rush 48-hour turnaround available"
+    },
+    {
+      "type": "header",
+      "content": "Primary CTA"
+    },
+    {
+      "type": "text",
+      "id": "primary_cta_text",
+      "label": "Primary Button Text",
+      "default": "Shop Bridal Gifts"
+    },
+    {
+      "type": "url",
+      "id": "primary_cta_link",
+      "label": "Primary Button Link",
+      "default": "/collections/bridal-weddings"
+    },
+    {
+      "type": "header",
+      "content": "Secondary CTA"
+    },
+    {
+      "type": "text",
+      "id": "secondary_cta_text",
+      "label": "Secondary Button Text",
+      "default": "Order for Corporate Events"
+    },
+    {
+      "type": "url",
+      "id": "secondary_cta_link",
+      "label": "Secondary Button Link",
+      "default": "/collections/corporate-events"
+    },
+    {
+      "type": "header",
+      "content": "Trust Line"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_trust_line",
+      "label": "Show Trust Line",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "star_rating",
+      "label": "Star Rating Display",
+      "default": "4.9 ★★★★★"
+    },
+    {
+      "type": "text",
+      "id": "reviews_count",
+      "label": "Reviews Count",
+      "default": "500+ 5-Star Reviews"
+    },
+    {
+      "type": "text",
+      "id": "trust_badge",
+      "label": "Trust Badge",
+      "default": "Fast Turnaround"
+    },
+    {
+      "type": "header",
+      "content": "Image"
+    },
+    {
+      "type": "image_picker",
+      "id": "hero_image",
+      "label": "Hero Image"
+    },
+    {
+      "type": "text",
+      "id": "hero_image_alt",
+      "label": "Hero Image Alt Text",
+      "default": "Premium personalized water bottles for weddings and events"
+    },
+    {
+      "type": "header",
+      "content": "Styling"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#FFFFFF"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Hero Section"
+    }
+  ]
+}
+{% endschema %}

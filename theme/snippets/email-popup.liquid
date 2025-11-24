@@ -1,0 +1,63 @@
+{%- comment -%}
+  Email Popup Snippet
+
+  Features:
+  - Configurable heading and subtext
+  - Email input
+  - Optional "What are you shopping for?" dropdown
+  - Timer-based and exit-intent triggers
+{%- endcomment -%}
+
+<div class="email-popup-overlay"></div>
+
+<div class="email-popup"
+  data-delay="{{ settings.popup_delay | default: 12 }}"
+  data-exit-intent="{{ settings.popup_exit_intent | default: true }}"
+>
+  <button class="email-popup__close" aria-label="Close popup">&times;</button>
+
+  <div class="email-popup__content">
+    <h2 class="email-popup__title">{{ settings.popup_heading | default: 'Get 10% Off Your First Custom Bottle' }}</h2>
+    <p class="email-popup__text">{{ settings.popup_subtext | default: "Join the Shelzy's list for early access to new drops, sales, and wedding inspiration." }}</p>
+
+    <form action="/contact#newsletter-popup" method="post" class="email-popup__form">
+      <input type="hidden" name="form_type" value="customer">
+      <input type="hidden" name="utf8" value="">
+      <input type="hidden" name="contact[tags]" value="newsletter,popup">
+
+      <input
+        type="email"
+        name="contact[email]"
+        class="email-popup__input"
+        placeholder="Enter your email"
+        required
+        autocomplete="email"
+      >
+
+      <select name="contact[note][shopping_for]" class="email-popup__select">
+        <option value="">What are you shopping for? (Optional)</option>
+        <option value="weddings">Weddings</option>
+        <option value="corporate">Corporate Events</option>
+        <option value="personal">Personal Gift</option>
+        <option value="other">Other</option>
+      </select>
+
+      <button type="submit" class="btn btn-primary email-popup__submit">Get 10% Off</button>
+    </form>
+
+    <p class="email-popup__disclaimer">By signing up, you agree to receive marketing emails. Unsubscribe anytime.</p>
+  </div>
+</div>
+
+<style>
+.email-popup__disclaimer {
+  font-size: 11px;
+  color: #888888;
+  margin-top: 1rem;
+  margin-bottom: 0;
+}
+
+.email-popup__submit {
+  width: 100%;
+}
+</style>

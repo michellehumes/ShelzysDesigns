@@ -1,0 +1,53 @@
+{%- comment -%}
+  Page Quote Form Section
+  Adds quote request form to collection/pages
+{%- endcomment -%}
+
+<section class="quote-form-section section-padding">
+  <div class="container">
+    {%- render 'quote-form',
+      form_title: section.settings.form_title,
+      form_subtitle: section.settings.form_subtitle,
+      event_type: section.settings.event_type
+    -%}
+  </div>
+</section>
+
+<style>
+.quote-form-section {
+  background: #FFFFFF;
+}
+</style>
+
+{% schema %}
+{
+  "name": "Quote Form",
+  "tag": "section",
+  "class": "section-quote-form",
+  "settings": [
+    {
+      "type": "text",
+      "id": "form_title",
+      "label": "Form Title",
+      "default": "Request a Quote"
+    },
+    {
+      "type": "textarea",
+      "id": "form_subtitle",
+      "label": "Form Subtitle",
+      "default": "Fill out the form below and we'll get back to you within 1 business day."
+    },
+    {
+      "type": "text",
+      "id": "event_type",
+      "label": "Event Type (for tagging)",
+      "default": "general"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Quote Form"
+    }
+  ]
+}
+{% endschema %}

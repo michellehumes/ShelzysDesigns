@@ -1,0 +1,205 @@
+{%- comment -%}
+  How It Works Section
+  Features:
+  - Three-step process
+  - Icons (bottle, pencil, truck)
+  - Updated descriptions per requirements
+{%- endcomment -%}
+
+<section class="how-it-works-section section-padding" style="background: {{ section.settings.bg_color }};">
+  <div class="container">
+    <div class="section-header">
+      <h2>{{ section.settings.section_title }}</h2>
+      {%- if section.settings.section_subtitle != blank -%}
+        <p class="section-subtitle">{{ section.settings.section_subtitle }}</p>
+      {%- endif -%}
+    </div>
+
+    <div class="steps-grid">
+      {%- for block in section.blocks -%}
+        <div class="step" {{ block.shopify_attributes }}>
+          <div class="step-icon">
+            {%- case block.settings.icon -%}
+              {%- when 'bottle' -%}
+                <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M8 2h8v4H8z"/>
+                  <path d="M6 6h12v16a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V6z"/>
+                  <path d="M12 10v6"/>
+                  <path d="M9 13h6"/>
+                </svg>
+              {%- when 'pencil' -%}
+                <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"/>
+                </svg>
+              {%- when 'truck' -%}
+                <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M1 3h15v13H1z"/>
+                  <path d="M16 8h4l3 3v5h-7V8z"/>
+                  <circle cx="5.5" cy="18.5" r="2.5"/>
+                  <circle cx="18.5" cy="18.5" r="2.5"/>
+                </svg>
+              {%- else -%}
+                <div class="step-number">{{ forloop.index }}</div>
+              {%- endcase -%}
+          </div>
+          <h3 class="step-title">{{ block.settings.title }}</h3>
+          <p class="step-description">{{ block.settings.description }}</p>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+<style>
+.how-it-works-section {
+  background: #F7F4EF;
+}
+
+.steps-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 50px;
+}
+
+.step {
+  text-align: center;
+}
+
+.step-icon {
+  width: 80px;
+  height: 80px;
+  background: #9CAE8C;
+  color: #FFFFFF;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1.5rem;
+}
+
+.step-icon svg {
+  width: 36px;
+  height: 36px;
+}
+
+.step-number {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 700;
+  font-size: 28px;
+}
+
+.step-title {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  font-size: 22px;
+  color: #111111;
+  margin-bottom: 0.75rem;
+}
+
+.step-description {
+  font-family: 'Inter', sans-serif;
+  font-size: 16px;
+  line-height: 1.7;
+  color: #666666;
+  max-width: 300px;
+  margin: 0 auto;
+}
+
+@media (max-width: 768px) {
+  .steps-grid {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+}
+</style>
+
+{% schema %}
+{
+  "name": "How It Works",
+  "tag": "section",
+  "class": "section-how-it-works",
+  "settings": [
+    {
+      "type": "text",
+      "id": "section_title",
+      "label": "Section Title",
+      "default": "How It Works"
+    },
+    {
+      "type": "text",
+      "id": "section_subtitle",
+      "label": "Section Subtitle",
+      "default": "Getting your personalized bottle is easy"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#F7F4EF"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "step",
+      "name": "Step",
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icon",
+          "options": [
+            { "value": "bottle", "label": "Bottle" },
+            { "value": "pencil", "label": "Pencil" },
+            { "value": "truck", "label": "Truck" },
+            { "value": "number", "label": "Number" }
+          ],
+          "default": "bottle"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Step Title",
+          "default": "Choose Your Style"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Step Description",
+          "default": "Select from our premium water bottle styles and colors. Browse our collection or contact us for custom options."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "How It Works",
+      "blocks": [
+        {
+          "type": "step",
+          "settings": {
+            "icon": "bottle",
+            "title": "Choose Your Style",
+            "description": "Select from our premium water bottle styles and colors. Browse our collection or contact us for custom options."
+          }
+        },
+        {
+          "type": "step",
+          "settings": {
+            "icon": "pencil",
+            "title": "Personalize It",
+            "description": "Add names, dates, logos, or custom text. Our design team ensures every detail is perfect."
+          }
+        },
+        {
+          "type": "step",
+          "settings": {
+            "icon": "truck",
+            "title": "Fast Delivery",
+            "description": "Ships in 5-7 business days. Free shipping on orders $50+. Rush options available."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

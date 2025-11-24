@@ -1,0 +1,116 @@
+{%- comment -%}
+  Product Card Snippet
+
+  Usage: {% render 'product-card', product: product, show_badges: true %}
+
+  Features:
+  - Best Seller badge (via tag)
+  - Wedding Popular badge (via tag)
+  - Sale badge (compare-at price)
+  - Bundle savings display
+  - Compare-at pricing
+{%- endcomment -%}
+
+{%- liquid
+  assign show_badges = show_badges | default: true
+  assign is_bestseller = false
+  assign is_wedding_popular = false
+  assign is_bundle = false
+  assign bundle_quantity = 1
+
+  for tag in product.tags
+    assign tag_lower = tag | downcase
+    if tag_lower contains 'best-seller' or tag_lower contains 'bestseller'
+      assign is_bestseller = true
+    endif
+    if tag_lower contains 'wedding' or tag_lower contains 'bridal'
+      assign is_wedding_popular = true
+    endif
+    if tag_lower contains 'bundle' or tag_lower contains 'set'
+      assign is_bundle = true
+    endif
+    if tag_lower contains 'set-of-3'
+      assign bundle_quantity = 3
+    elsif tag_lower contains 'set-of-5'
+      assign bundle_quantity = 5
+    elsif tag_lower contains 'set-of-6'
+      assign bundle_quantity = 6
+    elsif tag_lower contains 'set-of-10'
+      assign bundle_quantity = 10
+    endif
+  endfor
+
+  assign on_sale = false
+  if product.compare_at_price > product.price
+    assign on_sale = true
+    assign savings_percent = product.compare_at_price | minus: product.price | times: 100.0 | divided_by: product.compare_at_price | round
+  endif
+
+  if is_bundle and bundle_quantity > 1
+    assign per_unit_price = product.price | divided_by: bundle_quantity
+  endif
+-%}
+
+<div class="product-card"
+  {%- if is_bundle -%}
+    data-bundle-savings
+    data-price="{{ product.price }}"
+    data-compare-price="{{ product.compare_at_price }}"
+    data-quantity="{{ bundle_quantity }}"
+  {%- endif -%}
+>
+  <a href="{{ product.url }}" class="product-card__link">
+    <div class="product-card__image">
+      {%- if product.featured_image -%}
+        <img
+          src="{{ product.featured_image | image_url: width: 600 }}"
+          alt="{{ product.featured_image.alt | default: product.title | escape }}"
+          loading="lazy"
+          width="600"
+          height="600"
+        >
+      {%- else -%}
+        <div class="product-card__placeholder">
+          {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+        </div>
+      {%- endif -%}
+
+      {%- if show_badges -%}
+        <div class="product-card__badges">
+          {%- if is_bestseller -%}
+            <span class="product-card__badge product-card__badge--bestseller">Best Seller</span>
+          {%- endif -%}
+
+          {%- if is_wedding_popular and is_bestseller == false -%}
+            <span class="product-card__badge product-card__badge--wedding">Popular for Weddings</span>
+          {%- endif -%}
+
+          {%- if on_sale -%}
+            <span class="product-card__badge product-card__badge--sale">Save {{ savings_percent }}%</span>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+    </div>
+
+    <div class="product-card__info">
+      <h3 class="product-card__title">{{ product.title }}</h3>
+
+      {%- if is_bundle and bundle_quantity > 1 -%}
+        <p class="product-card__subtitle">
+          {%- if on_sale -%}
+            Save {{ savings_percent }}% vs singles
+          {%- else -%}
+            From {{ per_unit_price | money }} per bottle
+          {%- endif -%}
+        </p>
+      {%- endif -%}
+
+      <div class="product-card__price">
+        <span class="product-card__price-current">{{ product.price | money }}</span>
+        {%- if on_sale -%}
+          <span class="product-card__price-compare">{{ product.compare_at_price | money }}</span>
+        {%- endif -%}
+      </div>
+    </div>
+  </a>
+</div>

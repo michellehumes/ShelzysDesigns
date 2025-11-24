@@ -1,0 +1,25 @@
+{
+  "sections": {
+    "collection-header": {
+      "type": "collection-header",
+      "settings": {}
+    },
+    "quote-form-section": {
+      "type": "page-quote-form",
+      "settings": {
+        "form_title": "Planning a Wedding?",
+        "form_subtitle": "Request a quote for your bridal party. We'll get back to you within 1 business day.",
+        "event_type": "wedding"
+      }
+    },
+    "product-grid": {
+      "type": "collection-product-grid",
+      "settings": {
+        "products_per_page": 12,
+        "show_filters": true,
+        "show_sort": true
+      }
+    }
+  },
+  "order": ["collection-header", "product-grid", "quote-form-section"]
+}

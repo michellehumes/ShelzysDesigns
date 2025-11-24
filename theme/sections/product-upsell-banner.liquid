@@ -1,0 +1,79 @@
+{%- comment -%}
+  Product Page Upsell Banner Section
+
+  Features:
+  - Shows on single-bottle product pages
+  - Encourages upgrade to bundle sets
+  - Links to bundle product based on tags
+{%- endcomment -%}
+
+{%- liquid
+  assign show_banner = false
+  assign bundle_url = '/collections/all'
+  assign bundle_text = 'Need multiple bottles? Upgrade to a set of 3/5/10 and save up to 25%.'
+
+  # Check if product is a single bottle (not already a bundle)
+  assign is_bundle = false
+  for tag in product.tags
+    assign tag_lower = tag | downcase
+    if tag_lower contains 'bundle' or tag_lower contains 'set-of'
+      assign is_bundle = true
+      break
+    endif
+  endfor
+
+  # Only show on single items
+  if is_bundle == false and product.type contains 'Bottle'
+    assign show_banner = true
+  endif
+
+  # Try to find related bundle
+  if product.metafields.custom.bundle_url
+    assign bundle_url = product.metafields.custom.bundle_url
+  elsif collections['bridal-party-sets'].products.size > 0
+    assign bundle_url = '/collections/bridal-party-sets'
+  endif
+-%}
+
+{%- if show_banner or section.settings.force_show -%}
+  <div class="upsell-banner">
+    <p class="upsell-banner__text">
+      {{ section.settings.banner_text | default: bundle_text }}
+    </p>
+    <a href="{{ section.settings.bundle_link | default: bundle_url }}" class="upsell-banner__link">
+      Shop Bundle Sets
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M3 7H11M11 7L7.5 3.5M11 7L7.5 10.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </a>
+  </div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Product Upsell Banner",
+  "tag": "section",
+  "class": "section-product-upsell",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "force_show",
+      "label": "Always show banner",
+      "default": false,
+      "info": "Show regardless of product type"
+    },
+    {
+      "type": "textarea",
+      "id": "banner_text",
+      "label": "Banner Text",
+      "default": "Need multiple bottles? Upgrade to a set of 3/5/10 and save up to 25%."
+    },
+    {
+      "type": "url",
+      "id": "bundle_link",
+      "label": "Bundle Link",
+      "default": "/collections/bridal-party-sets"
+    }
+  ]
+}
+{% endschema %}

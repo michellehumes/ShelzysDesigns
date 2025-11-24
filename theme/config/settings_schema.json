@@ -1,0 +1,271 @@
+[
+  {
+    "name": "theme_info",
+    "theme_name": "Shelzy's Designs Theme",
+    "theme_version": "1.0.0",
+    "theme_author": "Shelzy's Designs",
+    "theme_documentation_url": "https://shelzysdesigns.com/pages/how-it-works",
+    "theme_support_url": "mailto:hello@shelzysdesigns.com"
+  },
+  {
+    "name": "Colors",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Primary Colors"
+      },
+      {
+        "type": "color",
+        "id": "color_primary_text",
+        "label": "Primary Text",
+        "default": "#111111"
+      },
+      {
+        "type": "color",
+        "id": "color_secondary_text",
+        "label": "Secondary Text",
+        "default": "#666666"
+      },
+      {
+        "type": "color",
+        "id": "color_background",
+        "label": "Background",
+        "default": "#FFFFFF"
+      },
+      {
+        "type": "color",
+        "id": "color_background_secondary",
+        "label": "Secondary Background",
+        "default": "#F7F4EF"
+      },
+      {
+        "type": "color",
+        "id": "color_accent",
+        "label": "Accent (Sage Green)",
+        "default": "#9CAE8C"
+      },
+      {
+        "type": "color",
+        "id": "color_accent_dark",
+        "label": "Accent Dark (Seagrass)",
+        "default": "#7C9F8C"
+      },
+      {
+        "type": "header",
+        "content": "Secondary Colors"
+      },
+      {
+        "type": "color",
+        "id": "color_sandstone",
+        "label": "Sandstone",
+        "default": "#D8CFC4"
+      },
+      {
+        "type": "color",
+        "id": "color_blush",
+        "label": "Blush Apricot",
+        "default": "#F8D9C5"
+      }
+    ]
+  },
+  {
+    "name": "Typography",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Headings"
+      },
+      {
+        "type": "font_picker",
+        "id": "font_heading",
+        "label": "Heading Font",
+        "default": "poppins_n6"
+      },
+      {
+        "type": "header",
+        "content": "Body"
+      },
+      {
+        "type": "font_picker",
+        "id": "font_body",
+        "label": "Body Font",
+        "default": "inter_n4"
+      },
+      {
+        "type": "range",
+        "id": "font_body_size",
+        "label": "Base Font Size",
+        "min": 14,
+        "max": 20,
+        "step": 1,
+        "default": 16,
+        "unit": "px"
+      }
+    ]
+  },
+  {
+    "name": "Social Media",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Social Links"
+      },
+      {
+        "type": "text",
+        "id": "social_instagram",
+        "label": "Instagram URL",
+        "default": "https://instagram.com/shelzysdesigns"
+      },
+      {
+        "type": "text",
+        "id": "social_pinterest",
+        "label": "Pinterest URL",
+        "default": "https://pinterest.com/shelzysdesigns"
+      },
+      {
+        "type": "text",
+        "id": "social_facebook",
+        "label": "Facebook URL",
+        "default": "https://facebook.com/shelzysdesigns"
+      },
+      {
+        "type": "text",
+        "id": "social_tiktok",
+        "label": "TikTok URL"
+      }
+    ]
+  },
+  {
+    "name": "Cart & Checkout",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Free Shipping"
+      },
+      {
+        "type": "checkbox",
+        "id": "enable_free_shipping_bar",
+        "label": "Enable free shipping progress bar",
+        "default": true
+      },
+      {
+        "type": "text",
+        "id": "free_shipping_threshold",
+        "label": "Free shipping threshold",
+        "default": "50",
+        "info": "Enter amount in dollars without currency symbol"
+      },
+      {
+        "type": "text",
+        "id": "free_shipping_message_below",
+        "label": "Message when below threshold",
+        "default": "Add {{ amount }} more to unlock FREE SHIPPING!"
+      },
+      {
+        "type": "text",
+        "id": "free_shipping_message_achieved",
+        "label": "Message when threshold achieved",
+        "default": "You've unlocked FREE SHIPPING!"
+      },
+      {
+        "type": "header",
+        "content": "Upsells"
+      },
+      {
+        "type": "checkbox",
+        "id": "enable_cart_upsell",
+        "label": "Enable cart upsells",
+        "default": true
+      },
+      {
+        "type": "text",
+        "id": "upsell_message",
+        "label": "Upsell message",
+        "default": "Ordering for your bridal party? Check out our multi-packs for bulk savings."
+      }
+    ]
+  },
+  {
+    "name": "Email Popup",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "enable_email_popup",
+        "label": "Enable email popup",
+        "default": true
+      },
+      {
+        "type": "text",
+        "id": "popup_heading",
+        "label": "Popup heading",
+        "default": "Get 10% Off Your First Custom Bottle"
+      },
+      {
+        "type": "textarea",
+        "id": "popup_subtext",
+        "label": "Popup subtext",
+        "default": "Join the Shelzy's list for early access to new drops, sales, and wedding inspiration."
+      },
+      {
+        "type": "range",
+        "id": "popup_delay",
+        "label": "Delay before showing (seconds)",
+        "min": 5,
+        "max": 30,
+        "step": 1,
+        "default": 12
+      },
+      {
+        "type": "checkbox",
+        "id": "popup_exit_intent",
+        "label": "Show on exit intent (desktop)",
+        "default": true
+      }
+    ]
+  },
+  {
+    "name": "Analytics",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Google Analytics 4"
+      },
+      {
+        "type": "text",
+        "id": "ga4_measurement_id",
+        "label": "GA4 Measurement ID",
+        "info": "Format: G-XXXXXXXXXX"
+      },
+      {
+        "type": "header",
+        "content": "Facebook Pixel"
+      },
+      {
+        "type": "text",
+        "id": "facebook_pixel_id",
+        "label": "Facebook Pixel ID"
+      }
+    ]
+  },
+  {
+    "name": "SEO",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Default Meta Tags"
+      },
+      {
+        "type": "text",
+        "id": "seo_title_suffix",
+        "label": "Title suffix",
+        "default": "| Shelzy's Designs"
+      },
+      {
+        "type": "textarea",
+        "id": "seo_default_description",
+        "label": "Default meta description",
+        "default": "Premium personalized sublimation water bottles for weddings, bridal parties, corporate events, and everyday hydration. Free personalization, ships in 5-7 days."
+      }
+    ]
+  }
+]

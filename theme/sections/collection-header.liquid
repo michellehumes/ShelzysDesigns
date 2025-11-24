@@ -1,0 +1,66 @@
+{%- comment -%}
+  Collection Header Section
+  Displays collection title, description, and image
+{%- endcomment -%}
+
+<div class="collection-header">
+  <div class="container">
+    <h1 class="collection-header__title">{{ collection.title }}</h1>
+
+    {%- if collection.description != blank -%}
+      <div class="collection-header__description">
+        {{ collection.description }}
+      </div>
+    {%- endif -%}
+
+    <p class="collection-header__count">{{ collection.products_count }} products</p>
+  </div>
+</div>
+
+<style>
+.collection-header {
+  padding: 60px 20px 40px;
+  text-align: center;
+  background: #F7F4EF;
+}
+
+.collection-header__title {
+  font-family: 'Poppins', sans-serif;
+  font-size: 42px;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: #111111;
+}
+
+.collection-header__description {
+  font-size: 17px;
+  line-height: 1.7;
+  color: #666666;
+  max-width: 700px;
+  margin: 0 auto 1rem;
+}
+
+.collection-header__count {
+  font-size: 14px;
+  color: #888888;
+  margin: 0;
+}
+
+@media (max-width: 768px) {
+  .collection-header {
+    padding: 40px 20px 30px;
+  }
+
+  .collection-header__title {
+    font-size: 32px;
+  }
+}
+</style>
+
+{% schema %}
+{
+  "name": "Collection Header",
+  "tag": "section",
+  "class": "section-collection-header"
+}
+{% endschema %}

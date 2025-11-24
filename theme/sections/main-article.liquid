@@ -1,0 +1,261 @@
+{%- comment -%}
+  Main Article Section
+  Includes blog CTAs at top and bottom
+{%- endcomment -%}
+
+<article class="article-section section-padding">
+  <div class="container">
+    <div class="article-layout">
+      {%- comment -%} Article Header {%- endcomment -%}
+      <header class="article-header">
+        <a href="{{ blog.url }}" class="article-breadcrumb">&larr; Back to {{ blog.title }}</a>
+
+        <h1 class="article-title">{{ article.title }}</h1>
+
+        <div class="article-meta">
+          {%- if section.settings.show_date -%}
+            <time datetime="{{ article.published_at | date: '%Y-%m-%d' }}">
+              {{ article.published_at | date: '%B %d, %Y' }}
+            </time>
+          {%- endif -%}
+          {%- if section.settings.show_author and article.author -%}
+            <span class="article-meta__separator">|</span>
+            <span>By {{ article.author }}</span>
+          {%- endif -%}
+        </div>
+      </header>
+
+      {%- comment -%} Featured Image {%- endcomment -%}
+      {%- if section.settings.show_featured_image and article.image -%}
+        <div class="article-image">
+          <img
+            src="{{ article.image | image_url: width: 1200 }}"
+            alt="{{ article.image.alt | default: article.title | escape }}"
+            loading="eager"
+          >
+        </div>
+      {%- endif -%}
+
+      {%- comment -%} Top CTA {%- endcomment -%}
+      {%- if section.settings.show_cta_top -%}
+        {%- render 'blog-cta', position: 'top' -%}
+      {%- endif -%}
+
+      {%- comment -%} Article Content {%- endcomment -%}
+      <div class="article-content rte">
+        {{ article.content }}
+      </div>
+
+      {%- comment -%} Bottom CTA - Shop Products {%- endcomment -%}
+      {%- if section.settings.show_cta_bottom -%}
+        {%- render 'blog-cta', position: 'bottom' -%}
+      {%- endif -%}
+
+      {%- comment -%} Tags {%- endcomment -%}
+      {%- if article.tags.size > 0 -%}
+        <div class="article-tags">
+          <span>Tags:</span>
+          {%- for tag in article.tags -%}
+            <a href="{{ blog.url }}/tagged/{{ tag | handleize }}">{{ tag }}</a>
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+
+      {%- comment -%} Share {%- endcomment -%}
+      <div class="article-share">
+        <span>Share:</span>
+        <a href="https://www.facebook.com/sharer/sharer.php?u={{ article.url | absolute_url }}" target="_blank" rel="noopener">Facebook</a>
+        <a href="https://twitter.com/intent/tweet?url={{ article.url | absolute_url }}&text={{ article.title | url_encode }}" target="_blank" rel="noopener">Twitter</a>
+        <a href="https://pinterest.com/pin/create/button/?url={{ article.url | absolute_url }}&media={{ article.image | image_url: width: 600 }}&description={{ article.title | url_encode }}" target="_blank" rel="noopener">Pinterest</a>
+      </div>
+    </div>
+  </div>
+</article>
+
+<style>
+.article-layout {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.article-breadcrumb {
+  display: inline-block;
+  font-size: 14px;
+  color: #9CAE8C;
+  margin-bottom: 1.5rem;
+  text-decoration: none;
+}
+
+.article-breadcrumb:hover {
+  text-decoration: underline;
+}
+
+.article-title {
+  font-size: 40px;
+  line-height: 1.2;
+  margin-bottom: 1rem;
+}
+
+.article-meta {
+  font-size: 14px;
+  color: #666666;
+  margin-bottom: 2rem;
+}
+
+.article-meta__separator {
+  margin: 0 8px;
+  color: #D8CFC4;
+}
+
+.article-image {
+  margin-bottom: 2rem;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.article-image img {
+  width: 100%;
+  height: auto;
+}
+
+.article-content {
+  font-size: 17px;
+  line-height: 1.8;
+  color: #333333;
+}
+
+.article-content h2 {
+  font-size: 28px;
+  margin-top: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.article-content h3 {
+  font-size: 22px;
+  margin-top: 2rem;
+  margin-bottom: 0.75rem;
+}
+
+.article-content p {
+  margin-bottom: 1.5rem;
+}
+
+.article-content img {
+  border-radius: 8px;
+  margin: 2rem 0;
+}
+
+.article-content ul,
+.article-content ol {
+  margin-bottom: 1.5rem;
+  padding-left: 1.5rem;
+}
+
+.article-content li {
+  margin-bottom: 0.5rem;
+}
+
+.article-content a {
+  color: #9CAE8C;
+  text-decoration: underline;
+}
+
+.article-tags {
+  margin-top: 3rem;
+  padding-top: 2rem;
+  border-top: 1px solid #F7F4EF;
+  font-size: 14px;
+}
+
+.article-tags span {
+  font-weight: 600;
+  margin-right: 8px;
+}
+
+.article-tags a {
+  display: inline-block;
+  padding: 4px 12px;
+  background: #F7F4EF;
+  border-radius: 4px;
+  margin-right: 8px;
+  margin-bottom: 8px;
+  color: #666666;
+  text-decoration: none;
+  font-size: 13px;
+}
+
+.article-tags a:hover {
+  background: #9CAE8C;
+  color: #FFFFFF;
+}
+
+.article-share {
+  margin-top: 1.5rem;
+  font-size: 14px;
+}
+
+.article-share span {
+  font-weight: 600;
+  margin-right: 8px;
+}
+
+.article-share a {
+  margin-right: 16px;
+  color: #9CAE8C;
+  text-decoration: none;
+}
+
+.article-share a:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+  .article-title {
+    font-size: 32px;
+  }
+
+  .article-content {
+    font-size: 16px;
+  }
+}
+</style>
+
+{% schema %}
+{
+  "name": "Main Article",
+  "tag": "section",
+  "class": "section-main-article",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_featured_image",
+      "label": "Show featured image",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_date",
+      "label": "Show date",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_author",
+      "label": "Show author",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_cta_top",
+      "label": "Show CTA at top",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_cta_bottom",
+      "label": "Show Shop section at bottom",
+      "default": true
+    }
+  ]
+}
+{% endschema %}

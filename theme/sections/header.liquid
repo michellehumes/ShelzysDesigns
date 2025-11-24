@@ -1,0 +1,337 @@
+{%- comment -%}
+  Header Section
+  Features:
+  - Logo
+  - Main navigation with required links
+  - Mobile menu toggle
+  - Cart icon with count
+{%- endcomment -%}
+
+<header class="site-header">
+  <div class="header-container">
+    {%- comment -%} Mobile Menu Toggle {%- endcomment -%}
+    <button class="mobile-nav-toggle" aria-expanded="false" aria-controls="mobile-nav" aria-label="Toggle menu">
+      <span class="hamburger-line"></span>
+      <span class="hamburger-line"></span>
+      <span class="hamburger-line"></span>
+    </button>
+
+    {%- comment -%} Logo {%- endcomment -%}
+    <div class="header-logo">
+      <a href="/" class="logo-link">
+        {%- if section.settings.logo != blank -%}
+          <img
+            src="{{ section.settings.logo | image_url: width: 300 }}"
+            alt="{{ shop.name }}"
+            class="logo-image"
+            width="{{ section.settings.logo_width }}"
+          >
+        {%- else -%}
+          <span class="logo-text">{{ shop.name }}</span>
+        {%- endif -%}
+      </a>
+    </div>
+
+    {%- comment -%} Desktop Navigation {%- endcomment -%}
+    <nav class="desktop-nav" aria-label="Main navigation">
+      <ul class="nav-list">
+        <li class="nav-item">
+          <a href="/" class="nav-link{% if template.name == 'index' %} active{% endif %}">Home</a>
+        </li>
+        <li class="nav-item">
+          <a href="/collections/bridal-weddings" class="nav-link{% if collection.handle == 'bridal-weddings' %} active{% endif %}">Bridal & Weddings</a>
+        </li>
+        <li class="nav-item">
+          <a href="/collections/corporate-events" class="nav-link{% if collection.handle == 'corporate-events' %} active{% endif %}">Corporate Events</a>
+        </li>
+        <li class="nav-item">
+          <a href="/collections/everyday-bottles" class="nav-link{% if collection.handle == 'everyday-bottles' %} active{% endif %}">Everyday Bottles</a>
+        </li>
+        <li class="nav-item">
+          <a href="/collections/best-sellers" class="nav-link{% if collection.handle == 'best-sellers' %} active{% endif %}">Best Sellers</a>
+        </li>
+        <li class="nav-item">
+          <a href="/pages/about" class="nav-link{% if page.handle == 'about' %} active{% endif %}">About</a>
+        </li>
+        <li class="nav-item">
+          <a href="/pages/contact" class="nav-link{% if page.handle == 'contact' %} active{% endif %}">Contact</a>
+        </li>
+      </ul>
+    </nav>
+
+    {%- comment -%} Header Actions {%- endcomment -%}
+    <div class="header-actions">
+      <a href="/search" class="header-action search-toggle" aria-label="Search">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="8"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+      </a>
+
+      <a href="/account" class="header-action" aria-label="Account">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+          <circle cx="12" cy="7" r="4"></circle>
+        </svg>
+      </a>
+
+      <button class="header-action cart-toggle" data-cart-toggle aria-label="Cart">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M6 6h15l-1.5 9h-12z"></path>
+          <circle cx="9" cy="20" r="1"></circle>
+          <circle cx="18" cy="20" r="1"></circle>
+          <path d="M6 6L5 2H2"></path>
+        </svg>
+        <span class="cart-count">{{ cart.item_count }}</span>
+      </button>
+    </div>
+  </div>
+
+  {%- comment -%} Mobile Navigation {%- endcomment -%}
+  <nav class="mobile-nav" id="mobile-nav" aria-label="Mobile navigation">
+    <ul class="mobile-nav-list">
+      <li><a href="/">Home</a></li>
+      <li><a href="/collections/bridal-weddings">Bridal & Weddings</a></li>
+      <li><a href="/collections/corporate-events">Corporate Events</a></li>
+      <li><a href="/collections/everyday-bottles">Everyday Bottles</a></li>
+      <li><a href="/collections/best-sellers">Best Sellers</a></li>
+      <li><a href="/pages/about">About</a></li>
+      <li><a href="/pages/contact">Contact</a></li>
+    </ul>
+  </nav>
+</header>
+
+<style>
+.site-header {
+  background: #FFFFFF;
+  border-bottom: 1px solid #F7F4EF;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.header-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 72px;
+}
+
+.header-logo {
+  flex-shrink: 0;
+}
+
+.logo-link {
+  display: block;
+  text-decoration: none;
+}
+
+.logo-image {
+  height: auto;
+  max-height: 40px;
+}
+
+.logo-text {
+  font-family: 'Poppins', sans-serif;
+  font-size: 24px;
+  font-weight: 600;
+  color: #111111;
+}
+
+.desktop-nav {
+  display: flex;
+  align-items: center;
+}
+
+.nav-list {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-link {
+  font-family: 'Inter', sans-serif;
+  font-size: 15px;
+  font-weight: 500;
+  color: #111111;
+  text-decoration: none;
+  transition: color 0.2s ease;
+  position: relative;
+}
+
+.nav-link:hover,
+.nav-link.active {
+  color: #9CAE8C;
+}
+
+.nav-link.active::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: #9CAE8C;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.header-action {
+  background: none;
+  border: none;
+  padding: 8px;
+  cursor: pointer;
+  color: #111111;
+  transition: color 0.2s ease;
+  position: relative;
+}
+
+.header-action:hover {
+  color: #9CAE8C;
+}
+
+.cart-count {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: #9CAE8C;
+  color: #FFFFFF;
+  font-size: 11px;
+  font-weight: 600;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cart-count:empty,
+.cart-count[data-count="0"] {
+  display: none;
+}
+
+.mobile-nav-toggle {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 28px;
+  height: 28px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+.hamburger-line {
+  display: block;
+  width: 100%;
+  height: 2px;
+  background: #111111;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.mobile-nav {
+  display: none;
+  background: #FFFFFF;
+  border-top: 1px solid #F7F4EF;
+  padding: 20px;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.mobile-nav.active {
+  display: block;
+}
+
+.mobile-nav-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.mobile-nav-list li {
+  border-bottom: 1px solid #F7F4EF;
+}
+
+.mobile-nav-list li:last-child {
+  border-bottom: none;
+}
+
+.mobile-nav-list a {
+  display: block;
+  padding: 14px 0;
+  font-family: 'Inter', sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  color: #111111;
+  text-decoration: none;
+}
+
+.mobile-nav-list a:hover {
+  color: #9CAE8C;
+}
+
+@media (max-width: 1024px) {
+  .nav-list {
+    gap: 24px;
+  }
+
+  .nav-link {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 768px) {
+  .desktop-nav {
+    display: none;
+  }
+
+  .mobile-nav-toggle {
+    display: flex;
+  }
+
+  .header-container {
+    height: 64px;
+  }
+}
+</style>
+
+{% schema %}
+{
+  "name": "Header",
+  "tag": "section",
+  "class": "section-header",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Logo Image"
+    },
+    {
+      "type": "range",
+      "id": "logo_width",
+      "label": "Logo Width",
+      "min": 80,
+      "max": 300,
+      "step": 10,
+      "default": 150,
+      "unit": "px"
+    }
+  ]
+}
+{% endschema %}
