@@ -20,7 +20,7 @@
     <h2 class="email-popup__title">{{ settings.popup_heading | default: 'Get 10% Off Your First Custom Bottle' }}</h2>
     <p class="email-popup__text">{{ settings.popup_subtext | default: "Join the Shelzy's list for early access to new drops, sales, and wedding inspiration." }}</p>
 
-    <form action="/contact#newsletter-popup" method="post" class="email-popup__form">
+    <form action="/contact#newsletter-popup" method="post" class="email-popup__form" data-shelzys="email-signup" data-location="popup">
       <input type="hidden" name="form_type" value="customer">
       <input type="hidden" name="utf8" value="">
       <input type="hidden" name="contact[tags]" value="newsletter,popup">

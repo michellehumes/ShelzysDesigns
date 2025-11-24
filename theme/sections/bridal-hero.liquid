@@ -1,0 +1,317 @@
+{%- comment -%}
+<!-- SHELZYS_DESIGNS: START bridal-hero -->
+  Bridal Landing Page Hero Section
+  - Wedding-focused messaging
+  - Dual CTAs (Shop / Get Quote)
+  - Trust indicators
+<!-- SHELZYS_DESIGNS: END bridal-hero -->
+{%- endcomment -%}
+
+<section class="bridal-hero" style="background: {{ section.settings.bg_color }};">
+  <div class="bridal-hero__container">
+    <div class="bridal-hero__content">
+      <span class="bridal-hero__badge">{{ section.settings.badge_text }}</span>
+
+      <h1 class="bridal-hero__title">{{ section.settings.title }}</h1>
+      <p class="bridal-hero__subtitle">{{ section.settings.subtitle }}</p>
+
+      <p class="bridal-hero__trust">{{ section.settings.trust_text }}</p>
+
+      <div class="bridal-hero__ctas">
+        <a href="{{ section.settings.cta_link }}" class="bridal-hero__cta bridal-hero__cta--primary" data-shelzys="cta" data-cta-type="bridal-shop">
+          {{ section.settings.cta_text }}
+        </a>
+        <a href="{{ section.settings.secondary_cta_link }}" class="bridal-hero__cta bridal-hero__cta--secondary" data-shelzys="cta" data-cta-type="bridal-quote">
+          {{ section.settings.secondary_cta_text }}
+        </a>
+      </div>
+
+      <div class="bridal-hero__features">
+        <div class="feature-item">
+          <span class="feature-icon">💒</span>
+          <span>Wedding-Ready Designs</span>
+        </div>
+        <div class="feature-item">
+          <span class="feature-icon">✨</span>
+          <span>Permanent Sublimation Print</span>
+        </div>
+        <div class="feature-item">
+          <span class="feature-icon">📦</span>
+          <span>Bulk Discounts Available</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="bridal-hero__media">
+      {%- if section.settings.image != blank -%}
+        <img
+          src="{{ section.settings.image | image_url: width: 700 }}"
+          alt="{{ section.settings.image_alt | default: 'Personalized bridal party water bottles' }}"
+          class="bridal-hero__image"
+          loading="eager"
+        >
+      {%- else -%}
+        <div class="bridal-hero__placeholder">
+          {{ 'collection-1' | placeholder_svg_tag: 'placeholder-svg' }}
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+<style>
+/* SHELZYS_DESIGNS: START bridal-hero-styles */
+.bridal-hero {
+  padding: 60px 20px 80px;
+  background: linear-gradient(135deg, #FFFBF7 0%, #FFF5EE 100%);
+}
+
+.bridal-hero__container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  align-items: center;
+}
+
+.bridal-hero__badge {
+  display: inline-block;
+  background: linear-gradient(135deg, #F8D9C5 0%, #E8C4B0 100%);
+  color: #8B5A3C;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  padding: 6px 14px;
+  border-radius: 20px;
+  margin-bottom: 16px;
+}
+
+.bridal-hero__title {
+  font-family: 'Poppins', sans-serif;
+  font-size: clamp(32px, 5vw, 48px);
+  font-weight: 700;
+  line-height: 1.15;
+  color: #111111;
+  margin: 0 0 16px;
+}
+
+.bridal-hero__subtitle {
+  font-size: clamp(16px, 2vw, 18px);
+  line-height: 1.6;
+  color: #555555;
+  margin: 0 0 16px;
+  max-width: 480px;
+}
+
+.bridal-hero__trust {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #9CAE8C;
+  margin-bottom: 28px;
+}
+
+.bridal-hero__ctas {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-bottom: 32px;
+}
+
+.bridal-hero__cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px 28px;
+  border-radius: 10px;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  font-size: 15px;
+  text-decoration: none;
+  transition: all 0.25s;
+}
+
+.bridal-hero__cta--primary {
+  background: #9CAE8C;
+  color: #FFFFFF;
+}
+
+.bridal-hero__cta--primary:hover {
+  background: #7C9F8C;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(156, 174, 140, 0.3);
+}
+
+.bridal-hero__cta--secondary {
+  background: #FFFFFF;
+  color: #111111;
+  border: 2px solid #D8CFC4;
+}
+
+.bridal-hero__cta--secondary:hover {
+  border-color: #9CAE8C;
+  transform: translateY(-2px);
+}
+
+.bridal-hero__features {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.feature-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: #666;
+}
+
+.feature-icon {
+  font-size: 16px;
+}
+
+.bridal-hero__media {
+  position: relative;
+}
+
+.bridal-hero__image {
+  width: 100%;
+  height: auto;
+  border-radius: 20px;
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.1);
+}
+
+.bridal-hero__placeholder {
+  width: 100%;
+  aspect-ratio: 4/3;
+  background: #F7F4EF;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.bridal-hero__placeholder svg {
+  width: 50%;
+  opacity: 0.3;
+}
+
+@media (max-width: 900px) {
+  .bridal-hero__container {
+    grid-template-columns: 1fr;
+    gap: 40px;
+    text-align: center;
+  }
+
+  .bridal-hero__media {
+    order: -1;
+  }
+
+  .bridal-hero__subtitle {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .bridal-hero__ctas {
+    justify-content: center;
+  }
+
+  .bridal-hero__features {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .bridal-hero {
+    padding: 40px 16px 60px;
+  }
+
+  .bridal-hero__cta {
+    width: 100%;
+  }
+}
+/* SHELZYS_DESIGNS: END bridal-hero-styles */
+</style>
+
+{% schema %}
+{
+  "name": "Bridal Hero",
+  "tag": "section",
+  "class": "section-bridal-hero",
+  "settings": [
+    {
+      "type": "text",
+      "id": "badge_text",
+      "label": "Badge text",
+      "default": "Bridal Collection"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Personalized Bottles for Your Bridal Party"
+    },
+    {
+      "type": "textarea",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "Beautiful, lasting gifts your bridesmaids will actually use. Perfect for proposals, bachelorettes, and wedding day prep."
+    },
+    {
+      "type": "text",
+      "id": "trust_text",
+      "label": "Trust text",
+      "default": "★★★★★ Loved by 500+ Brides"
+    },
+    {
+      "type": "text",
+      "id": "cta_text",
+      "label": "Primary CTA text",
+      "default": "Shop Bridal Collection"
+    },
+    {
+      "type": "url",
+      "id": "cta_link",
+      "label": "Primary CTA link"
+    },
+    {
+      "type": "text",
+      "id": "secondary_cta_text",
+      "label": "Secondary CTA text",
+      "default": "Get a Quote for 10+"
+    },
+    {
+      "type": "url",
+      "id": "secondary_cta_link",
+      "label": "Secondary CTA link"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Hero image"
+    },
+    {
+      "type": "text",
+      "id": "image_alt",
+      "label": "Image alt text",
+      "default": "Personalized bridal party water bottles"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background color",
+      "default": "#FFFBF7"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Bridal Hero"
+    }
+  ]
+}
+{% endschema %}

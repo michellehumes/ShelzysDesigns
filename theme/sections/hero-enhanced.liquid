@@ -26,24 +26,24 @@
       </p>
 
       {%- comment -%} 3 CTA Buttons for visitor segmentation {%- endcomment -%}
-      <div class="hero-enhanced__ctas">
+      <div class="hero-enhanced__ctas" role="group" aria-label="Shop by category">
         {%- if section.settings.cta1_text != blank -%}
-          <a href="{{ section.settings.cta1_link }}" class="hero-enhanced__cta hero-enhanced__cta--primary" data-shelzys="hero-cta-bridal">
-            <span class="cta-icon">💒</span>
+          <a href="{{ section.settings.cta1_link }}" class="hero-enhanced__cta hero-enhanced__cta--primary" data-shelzys="hero-cta-bridal" aria-label="{{ section.settings.cta1_text }} - Shop bridal collection">
+            <span class="cta-icon" aria-hidden="true">💒</span>
             <span class="cta-text">{{ section.settings.cta1_text }}</span>
           </a>
         {%- endif -%}
 
         {%- if section.settings.cta2_text != blank -%}
-          <a href="{{ section.settings.cta2_link }}" class="hero-enhanced__cta hero-enhanced__cta--secondary" data-shelzys="hero-cta-corporate">
-            <span class="cta-icon">🏢</span>
+          <a href="{{ section.settings.cta2_link }}" class="hero-enhanced__cta hero-enhanced__cta--secondary" data-shelzys="hero-cta-corporate" aria-label="{{ section.settings.cta2_text }} - Shop corporate collection">
+            <span class="cta-icon" aria-hidden="true">🏢</span>
             <span class="cta-text">{{ section.settings.cta2_text }}</span>
           </a>
         {%- endif -%}
 
         {%- if section.settings.cta3_text != blank -%}
-          <a href="{{ section.settings.cta3_link }}" class="hero-enhanced__cta hero-enhanced__cta--tertiary" data-shelzys="hero-cta-everyday">
-            <span class="cta-icon">💧</span>
+          <a href="{{ section.settings.cta3_link }}" class="hero-enhanced__cta hero-enhanced__cta--tertiary" data-shelzys="hero-cta-everyday" aria-label="{{ section.settings.cta3_text }} - Shop everyday collection">
+            <span class="cta-icon" aria-hidden="true">💧</span>
             <span class="cta-text">{{ section.settings.cta3_text }}</span>
           </a>
         {%- endif -%}

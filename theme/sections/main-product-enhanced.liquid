@@ -105,14 +105,15 @@
 
             {%- comment -%} Font Selection {%- endcomment -%}
             <div class="form-field">
-              <label class="form-field__label">Font Style</label>
-              <select name="properties[Font Style]" class="form-field__select" id="font-select">
+              <label class="form-field__label" for="font-select">Font Style</label>
+              <select name="properties[Font Style]" class="form-field__select" id="font-select" data-shelzys="personalization-field" aria-describedby="font-help">
                 <option value="Elegant Script">Elegant Script</option>
                 <option value="Clean Block">Clean Block</option>
                 <option value="Modern Sans">Modern Sans</option>
                 <option value="Classic Serif">Classic Serif</option>
                 <option value="Playful">Playful</option>
               </select>
+              <span id="font-help" class="visually-hidden">Choose a font style for your personalized text</span>
             </div>
 
             {%- comment -%} Text Color {%- endcomment -%}
@@ -209,7 +210,8 @@
             type="submit"
             class="btn-add-to-cart"
             data-shelzys="add-to-cart"
-            {% unless product.available %}disabled{% endunless %}
+            aria-label="Add {{ product.title }} to cart"
+            {% unless product.available %}disabled aria-disabled="true"{% endunless %}
           >
             {%- if product.available -%}
               <span class="btn-text">Add to Cart</span>
@@ -714,6 +716,85 @@
 <script>
 /* SHELZYS_DESIGNS: START main-product-enhanced-js */
 document.addEventListener('DOMContentLoaded', function() {
+  // === Product Variant Data ===
+  const productVariants = {{ product.variants | json }};
+  const variantIdInput = document.getElementById('variant-id');
+  const priceDisplay = document.querySelector('.product__price');
+  const comparePriceDisplay = document.querySelector('.product__compare-price');
+  const savingsBadge = document.querySelector('.product__savings-badge');
+  const addToCartBtn = document.querySelector('.btn-add-to-cart');
+
+  // === Variant Switching ===
+  function getSelectedOptions() {
+    const options = {};
+    document.querySelectorAll('[data-option-position]').forEach(select => {
+      const optionName = select.name.replace('options[', '').replace(']', '');
+      options[optionName] = select.value;
+    });
+    return options;
+  }
+
+  function findVariant(selectedOptions) {
+    return productVariants.find(variant => {
+      return variant.options.every((option, index) => {
+        const optionName = {{ product.options | json }}[index];
+        return selectedOptions[optionName] === option;
+      });
+    });
+  }
+
+  function updateVariant() {
+    const selectedOptions = getSelectedOptions();
+    const variant = findVariant(selectedOptions);
+
+    if (variant) {
+      // Update hidden variant ID
+      if (variantIdInput) variantIdInput.value = variant.id;
+
+      // Update price display
+      if (priceDisplay) {
+        priceDisplay.textContent = Shopify.formatMoney ? Shopify.formatMoney(variant.price) : '$' + (variant.price / 100).toFixed(2);
+      }
+
+      // Update compare price
+      if (variant.compare_at_price && variant.compare_at_price > variant.price) {
+        if (comparePriceDisplay) {
+          comparePriceDisplay.textContent = Shopify.formatMoney ? Shopify.formatMoney(variant.compare_at_price) : '$' + (variant.compare_at_price / 100).toFixed(2);
+          comparePriceDisplay.style.display = '';
+        }
+        if (savingsBadge) {
+          const savings = Math.round((1 - variant.price / variant.compare_at_price) * 100);
+          savingsBadge.textContent = 'Save ' + savings + '%';
+          savingsBadge.style.display = '';
+        }
+      } else {
+        if (comparePriceDisplay) comparePriceDisplay.style.display = 'none';
+        if (savingsBadge) savingsBadge.style.display = 'none';
+      }
+
+      // Update button state
+      if (addToCartBtn) {
+        if (variant.available) {
+          addToCartBtn.disabled = false;
+          addToCartBtn.querySelector('.btn-text').textContent = 'Add to Cart';
+        } else {
+          addToCartBtn.disabled = true;
+          addToCartBtn.querySelector('.btn-text').textContent = 'Sold Out';
+        }
+      }
+
+      // Update URL without reload
+      const url = new URL(window.location);
+      url.searchParams.set('variant', variant.id);
+      window.history.replaceState({}, '', url);
+    }
+  }
+
+  // Attach variant change listeners
+  document.querySelectorAll('[data-option-position]').forEach(select => {
+    select.addEventListener('change', updateVariant);
+  });
+
   // === Live Preview ===
   const nameInput = document.getElementById('name-input') || document.getElementById('names-input');
   const fontSelect = document.getElementById('font-select');

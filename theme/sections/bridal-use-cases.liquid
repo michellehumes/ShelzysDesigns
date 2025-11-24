@@ -1,0 +1,129 @@
+{%- comment -%}
+<!-- SHELZYS_DESIGNS: START bridal-use-cases -->
+  Bridal Use Cases Section
+  - Shows different bridal occasions
+  - Bridesmaid proposals, bachelorette, wedding day, gifts
+<!-- SHELZYS_DESIGNS: END bridal-use-cases -->
+{%- endcomment -%}
+
+<section class="bridal-uses section-padding" style="background: {{ section.settings.bg_color }};">
+  <div class="container">
+    <h2 class="bridal-uses__title">{{ section.settings.title }}</h2>
+
+    <div class="bridal-uses__grid">
+      <div class="bridal-use-card">
+        <div class="bridal-use-card__icon">💍</div>
+        <h3 class="bridal-use-card__title">Bridesmaid Proposals</h3>
+        <p class="bridal-use-card__desc">Pop the question in style with a personalized bottle they'll treasure.</p>
+      </div>
+
+      <div class="bridal-use-card">
+        <div class="bridal-use-card__icon">🥂</div>
+        <h3 class="bridal-use-card__title">Bachelorette Parties</h3>
+        <p class="bridal-use-card__desc">Keep the squad hydrated from the pool to the party.</p>
+      </div>
+
+      <div class="bridal-use-card">
+        <div class="bridal-use-card__icon">👰</div>
+        <h3 class="bridal-use-card__title">Wedding Day</h3>
+        <p class="bridal-use-card__desc">Stay refreshed during getting-ready photos and beyond.</p>
+      </div>
+
+      <div class="bridal-use-card">
+        <div class="bridal-use-card__icon">🎁</div>
+        <h3 class="bridal-use-card__title">Thank You Gifts</h3>
+        <p class="bridal-use-card__desc">A practical keepsake that reminds them of your special day.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+/* SHELZYS_DESIGNS: START bridal-uses-styles */
+.bridal-uses__title {
+  text-align: center;
+  font-size: clamp(26px, 4vw, 36px);
+  margin-bottom: 40px;
+}
+
+.bridal-uses__grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+}
+
+.bridal-use-card {
+  background: #FFFFFF;
+  padding: 30px 24px;
+  border-radius: 16px;
+  text-align: center;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.bridal-use-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+}
+
+.bridal-use-card__icon {
+  font-size: 40px;
+  margin-bottom: 16px;
+}
+
+.bridal-use-card__title {
+  font-size: 17px;
+  font-weight: 700;
+  margin: 0 0 10px;
+  color: #111;
+}
+
+.bridal-use-card__desc {
+  font-size: 14px;
+  color: #666;
+  line-height: 1.5;
+  margin: 0;
+}
+
+@media (max-width: 900px) {
+  .bridal-uses__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 500px) {
+  .bridal-uses__grid {
+    grid-template-columns: 1fr;
+    max-width: 320px;
+    margin: 0 auto;
+  }
+}
+/* SHELZYS_DESIGNS: END bridal-uses-styles */
+</style>
+
+{% schema %}
+{
+  "name": "Bridal Use Cases",
+  "tag": "section",
+  "class": "section-bridal-uses",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Section title",
+      "default": "Perfect for Every Wedding Moment"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background color",
+      "default": "#FFFFFF"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Bridal Use Cases"
+    }
+  ]
+}
+{% endschema %}

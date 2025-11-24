@@ -25,7 +25,7 @@
       {{ settings.exit_popup_text | default: "Join 2,000+ happy customers. Get exclusive offers, new designs, and wedding inspiration." }}
     </p>
 
-    {%- form 'customer', class: 'exit-popup__form', id: 'exit-popup-form' -%}
+    {%- form 'customer', class: 'exit-popup__form', id: 'exit-popup-form', data-shelzys: 'email-signup', data-location: 'exit-popup' -%}
       <input type="hidden" name="contact[tags]" value="newsletter,exit-popup,{{ 'now' | date: '%Y-%m' }}">
 
       {%- if form.posted_successfully? -%}
@@ -340,9 +340,33 @@
         showPopup();
       }
     });
+  } else {
+    // Mobile: scroll-up detection (user scrolling back to top = exit intent signal)
+    let lastScrollY = window.scrollY;
+    let scrollUpDistance = 0;
+    const SCROLL_UP_THRESHOLD = 200; // pixels scrolled up to trigger
+
+    window.addEventListener('scroll', function() {
+      const currentScrollY = window.scrollY;
+
+      // User is scrolling up
+      if (currentScrollY < lastScrollY) {
+        scrollUpDistance += (lastScrollY - currentScrollY);
+
+        // If user has scrolled up enough and scrolled down at least 30% of page
+        if (scrollUpDistance > SCROLL_UP_THRESHOLD && lastScrollY > window.innerHeight * 0.3 && !hasShown) {
+          showPopup();
+        }
+      } else {
+        // Reset on scroll down
+        scrollUpDistance = 0;
+      }
+
+      lastScrollY = currentScrollY;
+    }, { passive: true });
   }
 
-  // Delayed trigger (mobile/desktop fallback)
+  // Delayed trigger (fallback for both mobile/desktop)
   setTimeout(function() {
     if (!hasShown) {
       showPopup();

@@ -104,10 +104,16 @@
 
   {%- if cart.item_count > 0 -%}
     <div class="cart-drawer__footer">
-      {%- comment -%} Upsell Message {%- endcomment -%}
+      {%- comment -%} Upsell Section {%- endcomment -%}
       {%- if settings.enable_cart_upsell -%}
         <div class="cart-drawer__upsell">
-          <p>{{ settings.upsell_message | default: "Ordering for your bridal party? Check out our multi-packs for bulk savings." }}</p>
+          <p class="upsell-msg">🎁 {{ settings.upsell_message | default: "Ordering for your bridal party? Check out our multi-packs for bulk savings." }}</p>
+          {%- assign upsell_collection = collections[settings.upsell_collection] -%}
+          {%- if upsell_collection.products.size > 0 -%}
+            <a href="{{ upsell_collection.products.first.url }}" class="upsell-link" data-shelzys="upsell-click" data-product-title="{{ upsell_collection.products.first.title }}" data-location="cart-drawer">
+              View Bundle Sets →
+            </a>
+          {%- endif -%}
         </div>
       {%- endif -%}
 
@@ -117,7 +123,7 @@
       </div>
 
       <form action="/cart" method="post">
-        <button type="submit" name="checkout" class="btn btn-primary cart-drawer__checkout">
+        <button type="submit" name="checkout" class="btn btn-primary cart-drawer__checkout" data-shelzys="begin-checkout" data-location="cart-drawer">
           Checkout
         </button>
       </form>
@@ -263,5 +269,63 @@
   text-align: center;
   margin-top: 12px;
   margin-bottom: 0;
+}
+
+.cart-drawer__upsell {
+  background: #FFFCF5;
+  border: 1px dashed #D4AF37;
+  border-radius: 8px;
+  padding: 12px;
+  margin-bottom: 12px;
+  text-align: center;
+}
+
+.upsell-msg {
+  font-size: 13px;
+  color: #555;
+  margin: 0 0 8px;
+}
+
+.upsell-link {
+  font-size: 13px;
+  font-weight: 600;
+  color: #9CAE8C;
+  text-decoration: none;
+}
+
+.upsell-link:hover {
+  color: #7C9F8C;
+}
+
+.free-shipping-bar {
+  background: #F7F4EF;
+  padding: 12px;
+  border-radius: 8px;
+  margin-bottom: 16px;
+}
+
+.free-shipping-bar--achieved {
+  background: linear-gradient(135deg, #E8F5E9 0%, #C8E6C9 100%);
+}
+
+.free-shipping-bar__message {
+  font-size: 13px;
+  text-align: center;
+  margin: 0 0 8px;
+  font-weight: 500;
+}
+
+.free-shipping-bar__progress {
+  height: 6px;
+  background: #E0E0E0;
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.free-shipping-bar__progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #9CAE8C 0%, #7C9F8C 100%);
+  border-radius: 3px;
+  transition: width 0.4s ease;
 }
 </style>

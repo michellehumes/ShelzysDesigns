@@ -182,6 +182,12 @@
         "id": "upsell_message",
         "label": "Upsell message",
         "default": "Ordering for your bridal party? Check out our multi-packs for bulk savings."
+      },
+      {
+        "type": "collection",
+        "id": "upsell_collection",
+        "label": "Upsell collection",
+        "info": "Products from this collection will appear as upsells in cart"
       }
     ]
   },

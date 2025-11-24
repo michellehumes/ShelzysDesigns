@@ -19,7 +19,7 @@
   <h3 class="quote-form__title">{{ form_title }}</h3>
   <p class="quote-form__subtitle">{{ form_subtitle }}</p>
 
-  {%- form 'contact', class: 'quote-form__form' -%}
+  {%- form 'contact', class: 'quote-form__form', data-shelzys: 'quote-form', data-form-type: event_type -%}
     {%- if form.posted_successfully? -%}
       <div class="quote-form__success">
         <p><strong>Thank you for your inquiry!</strong></p>

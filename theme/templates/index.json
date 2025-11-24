@@ -1,19 +1,23 @@
 {
   "sections": {
-    "hero": {
-      "type": "hero",
+    "hero-enhanced": {
+      "type": "hero-enhanced",
       "settings": {
-        "hero_title": "Premium Personalized Sublimation Water Bottles",
-        "hero_subtitle": "Custom-made bottles for weddings, weekends, corporate events, and everyday hydration.",
-        "usp_text": "Free personalization | Free shipping $50+ | Ships in 5-7 days | Rush 48-hour turnaround available",
-        "primary_cta_text": "Shop Bridal Gifts",
-        "primary_cta_link": "/collections/bridal-weddings",
-        "secondary_cta_text": "Order for Corporate Events",
-        "secondary_cta_link": "/collections/corporate-events",
-        "show_trust_line": true,
-        "star_rating": "4.9 ★★★★★",
-        "reviews_count": "500+ 5-Star Reviews",
-        "trust_badge": "Fast Turnaround",
+        "show_badge": true,
+        "badge_text": "Premium Quality • Made in USA",
+        "hero_title": "Personalized Water Bottles That Actually Last",
+        "hero_subtitle": "Premium sublimation printing that never peels, cracks, or fades. Perfect for weddings, teams, and everyday use.",
+        "trust_tagline": "Custom Name · Any Font · Any Color · Ships in 5–7 Days (Rush Available)",
+        "cta1_text": "Bridal & Wedding Gifts",
+        "cta1_link": "/collections/bridal-weddings",
+        "cta2_text": "Corporate & Team Orders",
+        "cta2_link": "/pages/corporate-teams",
+        "cta3_text": "Everyday Personalized Bottles",
+        "cta3_link": "/collections/everyday-bottles",
+        "show_social_proof": true,
+        "rating_text": "4.9 Rating",
+        "reviews_text": "500+ Reviews",
+        "orders_text": "2,000+ Happy Customers",
         "bg_color": "#FFFFFF"
       }
     },
@@ -65,12 +69,20 @@
       },
       "block_order": ["step-1", "step-2", "step-3"]
     },
+    "use-cases": {
+      "type": "use-cases",
+      "settings": {
+        "section_title": "How Will You Use Yours?",
+        "section_subtitle": "Find the perfect personalized bottle for your occasion",
+        "bg_color": "#F7F4EF"
+      }
+    },
     "testimonials": {
       "type": "testimonials",
       "settings": {
         "section_title": "Why Customers Love Us",
         "section_subtitle": "Real reviews from real customers",
-        "bg_color": "#F7F4EF"
+        "bg_color": "#FFFFFF"
       },
       "blocks": {
         "review-1": {
@@ -103,12 +115,21 @@
       },
       "block_order": ["review-1", "review-2", "review-3"]
     },
+    "social-proof": {
+      "type": "social-proof",
+      "settings": {
+        "section_title": "Real Customers, Real Bottles",
+        "section_subtitle": "Join thousands of happy customers showing off their personalized bottles",
+        "instagram_handle": "@shelzysdesigns",
+        "bg_color": "#FFFFFF"
+      }
+    },
     "shop-by-occasion": {
       "type": "shop-by-occasion",
       "settings": {
         "section_title": "Shop by Occasion",
         "section_subtitle": "Find the perfect bottle for every event",
-        "bg_color": "#FFFFFF"
+        "bg_color": "#F7F4EF"
       },
       "blocks": {
         "weddings": {
@@ -141,15 +162,17 @@
         "posts_to_show": 3,
         "show_excerpt": true,
         "show_view_all": true,
-        "bg_color": "#F7F4EF"
+        "bg_color": "#FFFFFF"
       }
     }
   },
   "order": [
-    "hero",
+    "hero-enhanced",
     "best-sellers",
     "how-it-works",
+    "use-cases",
     "testimonials",
+    "social-proof",
     "shop-by-occasion",
     "blog-posts"
   ]

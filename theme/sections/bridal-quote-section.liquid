@@ -1,0 +1,130 @@
+{%- comment -%}
+<!-- SHELZYS_DESIGNS: START bridal-quote-section -->
+  Bridal Quote Section
+  - Quote form for bulk bridal orders
+  - Renders the quote-form snippet
+<!-- SHELZYS_DESIGNS: END bridal-quote-section -->
+{%- endcomment -%}
+
+<section class="bridal-quote-section section-padding" id="bridal-quote" style="background: {{ section.settings.bg_color }};">
+  <div class="container">
+    <div class="bridal-quote__header">
+      <h2 class="bridal-quote__title">{{ section.settings.title }}</h2>
+      <p class="bridal-quote__subtitle">{{ section.settings.subtitle }}</p>
+    </div>
+
+    <div class="bridal-quote__form-wrapper">
+      {% render 'quote-form',
+        form_title: 'Request a Bridal Quote',
+        form_subtitle: 'Tell us about your wedding and we\'ll send you a custom quote within 1 business day.',
+        event_type: 'Bridal'
+      %}
+    </div>
+
+    <div class="bridal-quote__features">
+      <div class="quote-feature">
+        <span class="quote-feature__icon">💰</span>
+        <span>Bulk discounts for 10+ bottles</span>
+      </div>
+      <div class="quote-feature">
+        <span class="quote-feature__icon">🎨</span>
+        <span>Custom color matching available</span>
+      </div>
+      <div class="quote-feature">
+        <span class="quote-feature__icon">⚡</span>
+        <span>Rush options for tight timelines</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+/* SHELZYS_DESIGNS: START bridal-quote-styles */
+.bridal-quote-section {
+  background: linear-gradient(180deg, #F7F4EF 0%, #FFFFFF 100%);
+}
+
+.bridal-quote__header {
+  text-align: center;
+  max-width: 600px;
+  margin: 0 auto 40px;
+}
+
+.bridal-quote__title {
+  font-size: clamp(26px, 4vw, 36px);
+  margin: 0 0 12px;
+}
+
+.bridal-quote__subtitle {
+  font-size: 17px;
+  color: #666;
+  margin: 0;
+}
+
+.bridal-quote__form-wrapper {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.bridal-quote__features {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  margin-top: 40px;
+  flex-wrap: wrap;
+}
+
+.quote-feature {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  color: #555;
+}
+
+.quote-feature__icon {
+  font-size: 20px;
+}
+
+@media (max-width: 600px) {
+  .bridal-quote__features {
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+  }
+}
+/* SHELZYS_DESIGNS: END bridal-quote-styles */
+</style>
+
+{% schema %}
+{
+  "name": "Bridal Quote Section",
+  "tag": "section",
+  "class": "section-bridal-quote",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Section title",
+      "default": "Planning a Large Bridal Party?"
+    },
+    {
+      "type": "textarea",
+      "id": "subtitle",
+      "label": "Section subtitle",
+      "default": "Get a custom quote for orders of 10+ bottles. Bulk discounts available."
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background color",
+      "default": "#F7F4EF"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Bridal Quote Section"
+    }
+  ]
+}
+{% endschema %}

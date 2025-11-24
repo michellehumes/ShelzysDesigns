@@ -1,0 +1,267 @@
+{%- comment -%}
+<!-- SHELZYS_DESIGNS: START social-proof -->
+  Social Proof / Customer Gallery Section
+  - Shows customer photos with their personalized bottles
+  - Instagram-style grid layout
+  - Optional CTA to follow on Instagram
+<!-- SHELZYS_DESIGNS: END social-proof -->
+{%- endcomment -%}
+
+<section class="social-proof section-padding" style="background: {{ section.settings.bg_color }};">
+  <div class="container">
+    <div class="social-proof__header">
+      <h2 class="social-proof__title">{{ section.settings.section_title }}</h2>
+      <p class="social-proof__subtitle">{{ section.settings.section_subtitle }}</p>
+    </div>
+
+    <div class="social-proof__grid">
+      {%- for block in section.blocks -%}
+        <div class="social-proof__item" {{ block.shopify_attributes }}>
+          {%- if block.settings.image != blank -%}
+            <img
+              src="{{ block.settings.image | image_url: width: 400 }}"
+              alt="{{ block.settings.alt_text | default: 'Customer with personalized water bottle' | escape }}"
+              loading="lazy"
+              class="social-proof__image"
+            >
+          {%- else -%}
+            <div class="social-proof__placeholder">
+              {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+            </div>
+          {%- endif -%}
+
+          {%- if block.settings.caption != blank -%}
+            <div class="social-proof__caption">
+              <p class="caption-text">{{ block.settings.caption }}</p>
+              {%- if block.settings.customer_name != blank -%}
+                <p class="caption-author">— {{ block.settings.customer_name }}</p>
+              {%- endif -%}
+            </div>
+          {%- endif -%}
+        </div>
+      {%- endfor -%}
+    </div>
+
+    {%- if section.settings.show_cta and section.settings.instagram_handle != blank -%}
+      <div class="social-proof__cta">
+        <a href="https://instagram.com/{{ section.settings.instagram_handle | remove: '@' }}" target="_blank" rel="noopener" class="social-proof__link" data-shelzys="cta" data-cta-type="instagram">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+          Follow {{ section.settings.instagram_handle }} for more
+        </a>
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+<style>
+/* SHELZYS_DESIGNS: START social-proof-styles */
+.social-proof__header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.social-proof__title {
+  font-size: clamp(26px, 4vw, 36px);
+  margin: 0 0 10px;
+}
+
+.social-proof__subtitle {
+  font-size: 17px;
+  color: #666;
+  margin: 0;
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.social-proof__grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+
+.social-proof__item {
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  aspect-ratio: 1;
+  background: #F7F4EF;
+}
+
+.social-proof__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s;
+}
+
+.social-proof__item:hover .social-proof__image {
+  transform: scale(1.05);
+}
+
+.social-proof__placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.social-proof__placeholder svg {
+  width: 40%;
+  opacity: 0.3;
+}
+
+.social-proof__caption {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 16px;
+  background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 100%);
+  color: #FFFFFF;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.3s, transform 0.3s;
+}
+
+.social-proof__item:hover .social-proof__caption {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.caption-text {
+  font-size: 13px;
+  line-height: 1.4;
+  margin: 0 0 4px;
+}
+
+.caption-author {
+  font-size: 11px;
+  opacity: 0.8;
+  margin: 0;
+}
+
+.social-proof__cta {
+  text-align: center;
+  margin-top: 36px;
+}
+
+.social-proof__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 28px;
+  background: linear-gradient(135deg, #833AB4 0%, #E1306C 50%, #F77737 100%);
+  color: #FFFFFF;
+  text-decoration: none;
+  border-radius: 30px;
+  font-size: 14px;
+  font-weight: 600;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.social-proof__link:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(225, 48, 108, 0.3);
+}
+
+@media (max-width: 900px) {
+  .social-proof__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .social-proof__grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+
+  .social-proof__item {
+    border-radius: 8px;
+  }
+}
+/* SHELZYS_DESIGNS: END social-proof-styles */
+</style>
+
+{% schema %}
+{
+  "name": "Social Proof Gallery",
+  "tag": "section",
+  "class": "section-social-proof",
+  "max_blocks": 8,
+  "settings": [
+    {
+      "type": "text",
+      "id": "section_title",
+      "label": "Section title",
+      "default": "Real Customers, Real Bottles"
+    },
+    {
+      "type": "textarea",
+      "id": "section_subtitle",
+      "label": "Section subtitle",
+      "default": "Join thousands of happy customers showing off their personalized bottles"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_cta",
+      "label": "Show Instagram CTA",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "instagram_handle",
+      "label": "Instagram handle",
+      "default": "@shelzysdesigns"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background color",
+      "default": "#FFFFFF"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "photo",
+      "name": "Customer Photo",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Photo"
+        },
+        {
+          "type": "text",
+          "id": "alt_text",
+          "label": "Alt text",
+          "default": "Customer with personalized water bottle"
+        },
+        {
+          "type": "text",
+          "id": "caption",
+          "label": "Caption (optional)"
+        },
+        {
+          "type": "text",
+          "id": "customer_name",
+          "label": "Customer name (optional)"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Social Proof Gallery",
+      "blocks": [
+        { "type": "photo" },
+        { "type": "photo" },
+        { "type": "photo" },
+        { "type": "photo" }
+      ]
+    }
+  ]
+}
+{% endschema %}
