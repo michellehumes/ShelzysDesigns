@@ -1,0 +1,152 @@
+{
+  "_comment": "SHELZYS DESIGNS: Recommended Navigation Structure",
+  "_instructions": "Use this as a guide when setting up navigation in Shopify Admin → Online Store → Navigation",
+
+  "main_menu": {
+    "name": "Main menu",
+    "items": [
+      {
+        "title": "Shop",
+        "link": "/collections/all",
+        "children": [
+          {
+            "title": "Best Sellers",
+            "link": "/collections/best-sellers"
+          },
+          {
+            "title": "Everyday Bottles",
+            "link": "/collections/everyday-bottles"
+          },
+          {
+            "title": "Weddings & Bridal Parties",
+            "link": "/collections/weddings"
+          },
+          {
+            "title": "Corporate & Bulk",
+            "link": "/pages/corporate-bulk-orders"
+          },
+          {
+            "title": "Sets & Bundles",
+            "link": "/collections/sets"
+          },
+          {
+            "title": "View All",
+            "link": "/collections/all"
+          }
+        ]
+      },
+      {
+        "title": "Weddings",
+        "link": "/collections/weddings",
+        "children": [
+          {
+            "title": "Bridesmaid Bottles",
+            "link": "/collections/bridesmaid-bottles"
+          },
+          {
+            "title": "Bridal Party Sets",
+            "link": "/collections/bridal-sets"
+          },
+          {
+            "title": "Bachelorette",
+            "link": "/collections/bachelorette"
+          },
+          {
+            "title": "Groomsmen",
+            "link": "/collections/groomsmen"
+          }
+        ]
+      },
+      {
+        "title": "Corporate",
+        "link": "/pages/corporate-bulk-orders"
+      },
+      {
+        "title": "About",
+        "link": "/pages/about-us"
+      },
+      {
+        "title": "Contact",
+        "link": "/pages/contact"
+      }
+    ]
+  },
+
+  "footer_menu": {
+    "name": "Footer menu",
+    "items": [
+      {
+        "title": "Shop",
+        "children": [
+          { "title": "Best Sellers", "link": "/collections/best-sellers" },
+          { "title": "Weddings", "link": "/collections/weddings" },
+          { "title": "Everyday", "link": "/collections/everyday-bottles" },
+          { "title": "Corporate", "link": "/pages/corporate-bulk-orders" }
+        ]
+      },
+      {
+        "title": "Help",
+        "children": [
+          { "title": "FAQ", "link": "/pages/faq" },
+          { "title": "Shipping & Returns", "link": "/policies/shipping-policy" },
+          { "title": "Contact Us", "link": "/pages/contact" },
+          { "title": "Track Order", "link": "/apps/track-order" }
+        ]
+      },
+      {
+        "title": "Company",
+        "children": [
+          { "title": "About Us", "link": "/pages/about-us" },
+          { "title": "Reviews", "link": "/pages/reviews" },
+          { "title": "Privacy Policy", "link": "/policies/privacy-policy" },
+          { "title": "Terms of Service", "link": "/policies/terms-of-service" }
+        ]
+      }
+    ]
+  },
+
+  "collections_to_create": [
+    {
+      "title": "Best Sellers",
+      "handle": "best-sellers",
+      "description": "Our most popular personalized water bottles. See why customers love these best-selling designs.",
+      "seo_title": "Best Selling Custom Water Bottles | Shelzy's Designs",
+      "seo_description": "Shop our best-selling personalized stainless steel water bottles. Free customization with names, fonts, and colors. No vinyl, sublimation printed."
+    },
+    {
+      "title": "Weddings & Bridal Parties",
+      "handle": "weddings",
+      "description": "Personalized stainless-steel water bottles for bridesmaids, groomsmen, and your entire bridal party. Free customization with name, font, and color – made with sublimation ink so the design never peels.",
+      "seo_title": "Bridesmaid Water Bottles & Bridal Party Gifts | Shelzy's Designs",
+      "seo_description": "Custom bridesmaid water bottles and bridal party gifts. Personalized with names in your choice of fonts and colors. Premium stainless steel, sublimation printed."
+    },
+    {
+      "title": "Corporate & Bulk",
+      "handle": "corporate",
+      "description": "Custom branded bottles for teams, events, and corporate gifts. Volume discounts available for orders of 25+.",
+      "seo_title": "Corporate Water Bottles & Bulk Custom Bottles | Shelzy's Designs",
+      "seo_description": "Custom corporate water bottles with your logo. Perfect for team retreats, client gifts, and company events. Volume discounts starting at 25 bottles."
+    },
+    {
+      "title": "Everyday Bottles",
+      "handle": "everyday-bottles",
+      "description": "Premium personalized water bottles for daily use. Perfect for the gym, office, or on-the-go.",
+      "seo_title": "Personalized Water Bottles for Daily Use | Shelzy's Designs",
+      "seo_description": "Custom personalized water bottles for everyday use. Stainless steel, insulated, and personalized with your name. Free customization."
+    },
+    {
+      "title": "Gifts & Occasions",
+      "handle": "gifts",
+      "description": "Thoughtful personalized bottle gifts for birthdays, holidays, and special occasions.",
+      "seo_title": "Personalized Water Bottle Gifts | Shelzy's Designs",
+      "seo_description": "Give the gift of a personalized water bottle. Perfect for birthdays, holidays, and special occasions. Custom names and designs."
+    },
+    {
+      "title": "Bridal Party Sets",
+      "handle": "bridal-sets",
+      "description": "Save when you order sets for your entire bridal party. Sets of 3, 5, and 10+ available.",
+      "seo_title": "Bridal Party Bottle Sets | Save 15% | Shelzy's Designs",
+      "seo_description": "Bridesmaid bottle sets at bundle pricing. Save 15% on sets of 5+. Personalized with each bridesmaid's name."
+    }
+  ]
+}

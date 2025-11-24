@@ -1,0 +1,298 @@
+{%- comment -%}
+  SHELZYS DESIGNS: Live Preview Feature for Product Personalization
+  Location: Copy to theme/snippets/shelzys-live-preview.liquid
+  Include in product form: {% render 'shelzys-live-preview' %}
+
+  This shows a live preview of the customer's name in the selected font/color
+{%- endcomment -%}
+
+<div class="shelzys-live-preview" id="shelzys-preview" style="display: none;">
+  <div class="preview-label">Your bottle will look like:</div>
+  <div class="preview-container">
+    <div class="preview-bottle">
+      <div class="preview-bottle__body" id="preview-bottle-body">
+        <div class="preview-name" id="preview-name-display">Your Name</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+.shelzys-live-preview {
+  margin: 24px 0;
+  padding: 24px;
+  background: #f8f9fa;
+  border-radius: 12px;
+  text-align: center;
+}
+
+.preview-label {
+  font-size: 13px;
+  color: #666;
+  margin-bottom: 16px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.preview-container {
+  display: flex;
+  justify-content: center;
+}
+
+.preview-bottle {
+  position: relative;
+  width: 120px;
+  height: 200px;
+}
+
+.preview-bottle__body {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #fff 0%, #f0f0f0 100%);
+  border-radius: 12px 12px 20px 20px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  transition: background 0.3s ease;
+}
+
+.preview-bottle__body::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 30px;
+  background: #ddd;
+  border-radius: 12px 12px 0 0;
+}
+
+.preview-name {
+  font-size: 16px;
+  font-weight: 600;
+  padding: 8px 12px;
+  text-align: center;
+  word-break: break-word;
+  max-width: 100px;
+  transition: font-family 0.3s ease, color 0.3s ease;
+}
+
+/* Font Family Options */
+.preview-name[data-font="script"] {
+  font-family: 'Brush Script MT', 'Segoe Script', cursive;
+  font-size: 18px;
+}
+
+.preview-name[data-font="serif"] {
+  font-family: 'Times New Roman', Georgia, serif;
+  font-style: italic;
+}
+
+.preview-name[data-font="sans"] {
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 14px;
+  letter-spacing: 0.05em;
+}
+
+.preview-name[data-font="modern"] {
+  font-family: 'Trebuchet MS', 'Lucida Sans', sans-serif;
+  font-weight: 600;
+}
+
+.preview-name[data-font="elegant"] {
+  font-family: 'Palatino Linotype', 'Book Antiqua', serif;
+  font-style: italic;
+  font-weight: 400;
+}
+
+/* Color Options - Bottle body colors */
+.preview-bottle__body[data-color="white"] {
+  background: linear-gradient(135deg, #fff 0%, #f5f5f5 100%);
+}
+
+.preview-bottle__body[data-color="black"] {
+  background: linear-gradient(135deg, #333 0%, #1a1a1a 100%);
+}
+
+.preview-bottle__body[data-color="pink"] {
+  background: linear-gradient(135deg, #FFB6C1 0%, #FF69B4 100%);
+}
+
+.preview-bottle__body[data-color="blue"] {
+  background: linear-gradient(135deg, #87CEEB 0%, #00B4D8 100%);
+}
+
+.preview-bottle__body[data-color="green"] {
+  background: linear-gradient(135deg, #90EE90 0%, #3CB371 100%);
+}
+
+.preview-bottle__body[data-color="coral"] {
+  background: linear-gradient(135deg, #FFB088 0%, #FF6B6B 100%);
+}
+
+.preview-bottle__body[data-color="gold"] {
+  background: linear-gradient(135deg, #FFD700 0%, #DAA520 100%);
+}
+
+.preview-bottle__body[data-color="rose-gold"] {
+  background: linear-gradient(135deg, #E8B4B8 0%, #D4A5A5 100%);
+}
+
+/* Text colors based on bottle color */
+.preview-bottle__body[data-color="white"] .preview-name,
+.preview-bottle__body[data-color="gold"] .preview-name {
+  color: #333;
+}
+
+.preview-bottle__body[data-color="black"] .preview-name {
+  color: #fff;
+}
+
+.preview-bottle__body[data-color="pink"] .preview-name,
+.preview-bottle__body[data-color="coral"] .preview-name {
+  color: #fff;
+}
+
+.preview-bottle__body[data-color="blue"] .preview-name {
+  color: #fff;
+}
+
+.preview-bottle__body[data-color="green"] .preview-name {
+  color: #fff;
+}
+
+.preview-bottle__body[data-color="rose-gold"] .preview-name {
+  color: #5a3e3e;
+}
+</style>
+
+<script>
+(function() {
+  var previewContainer = document.getElementById('shelzys-preview');
+  var previewName = document.getElementById('preview-name-display');
+  var previewBottle = document.getElementById('preview-bottle-body');
+
+  if (!previewContainer || !previewName || !previewBottle) return;
+
+  // Find form inputs - adjust selectors based on your actual form field names
+  var nameInputSelectors = [
+    'input[name*="name" i]',
+    'input[name*="personalization" i]',
+    'textarea[name*="name" i]',
+    'input[data-personalization]',
+    '#personalization-input'
+  ];
+
+  var fontSelectSelectors = [
+    'select[name*="font" i]',
+    '[data-option="font"]',
+    '#font-select'
+  ];
+
+  var colorSelectSelectors = [
+    'select[name*="color" i]',
+    '[data-option="color"]',
+    '[data-option="Color"]',
+    '#color-select'
+  ];
+
+  var nameInput = null;
+  var fontSelect = null;
+  var colorSelect = null;
+
+  // Find the inputs
+  nameInputSelectors.forEach(function(selector) {
+    if (!nameInput) {
+      nameInput = document.querySelector(selector);
+    }
+  });
+
+  fontSelectSelectors.forEach(function(selector) {
+    if (!fontSelect) {
+      fontSelect = document.querySelector(selector);
+    }
+  });
+
+  colorSelectSelectors.forEach(function(selector) {
+    if (!colorSelect) {
+      colorSelect = document.querySelector(selector);
+    }
+  });
+
+  // Show preview if we found at least the name input
+  if (nameInput) {
+    previewContainer.style.display = 'block';
+
+    // Name input handler
+    nameInput.addEventListener('input', function() {
+      var value = this.value.trim();
+      previewName.textContent = value || 'Your Name';
+    });
+
+    // Initial value
+    if (nameInput.value) {
+      previewName.textContent = nameInput.value;
+    }
+  }
+
+  // Font handler
+  if (fontSelect) {
+    fontSelect.addEventListener('change', function() {
+      var value = this.value.toLowerCase();
+      var fontKey = mapFontOption(value);
+      previewName.setAttribute('data-font', fontKey);
+    });
+
+    // Initial font
+    if (fontSelect.value) {
+      previewName.setAttribute('data-font', mapFontOption(fontSelect.value.toLowerCase()));
+    }
+  }
+
+  // Color handler
+  if (colorSelect) {
+    colorSelect.addEventListener('change', function() {
+      var value = this.value.toLowerCase();
+      var colorKey = mapColorOption(value);
+      previewBottle.setAttribute('data-color', colorKey);
+    });
+
+    // Initial color
+    if (colorSelect.value) {
+      previewBottle.setAttribute('data-color', mapColorOption(colorSelect.value.toLowerCase()));
+    }
+  }
+
+  // Map font option values to CSS data attributes
+  function mapFontOption(value) {
+    if (value.includes('script') || value.includes('cursive') || value.includes('brush')) {
+      return 'script';
+    } else if (value.includes('serif') || value.includes('classic') || value.includes('traditional')) {
+      return 'serif';
+    } else if (value.includes('sans') || value.includes('modern') || value.includes('block') || value.includes('bold')) {
+      return 'sans';
+    } else if (value.includes('elegant') || value.includes('fancy')) {
+      return 'elegant';
+    }
+    return 'modern';
+  }
+
+  // Map color option values to CSS data attributes
+  function mapColorOption(value) {
+    if (value.includes('white') || value.includes('pearl')) return 'white';
+    if (value.includes('black') || value.includes('matte black')) return 'black';
+    if (value.includes('pink') || value.includes('blush')) return 'pink';
+    if (value.includes('blue') || value.includes('ocean') || value.includes('pool')) return 'blue';
+    if (value.includes('green') || value.includes('sage') || value.includes('mint')) return 'green';
+    if (value.includes('coral') || value.includes('peach') || value.includes('orange')) return 'coral';
+    if (value.includes('rose gold') || value.includes('rosegold')) return 'rose-gold';
+    if (value.includes('gold') || value.includes('champagne')) return 'gold';
+    return 'white';
+  }
+})();
+</script>

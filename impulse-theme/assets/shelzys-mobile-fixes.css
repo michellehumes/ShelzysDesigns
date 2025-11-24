@@ -1,0 +1,457 @@
+/**
+ * SHELZYS DESIGNS: Mobile Optimization CSS
+ * Location: Copy to theme/assets/shelzys-mobile-fixes.css
+ * Include in theme.liquid: {{ 'shelzys-mobile-fixes.css' | asset_url | stylesheet_tag }}
+ *
+ * These fixes address common mobile UX issues for Impulse theme
+ */
+
+/* ============================================
+   GLOBAL MOBILE IMPROVEMENTS
+============================================ */
+
+/* Ensure tap targets are at least 44x44px (Apple HIG) */
+@media (max-width: 749px) {
+  button,
+  .btn,
+  a.btn,
+  input[type="submit"],
+  input[type="button"],
+  .product-form__submit,
+  .cart__checkout {
+    min-height: 48px;
+    padding: 14px 24px;
+  }
+
+  /* Increase form input heights */
+  input[type="text"],
+  input[type="email"],
+  input[type="tel"],
+  input[type="password"],
+  input[type="number"],
+  input[type="date"],
+  select,
+  textarea {
+    min-height: 48px;
+    padding: 12px 14px;
+    font-size: 16px; /* Prevents iOS zoom on focus */
+  }
+
+  /* Prevent horizontal scroll */
+  body,
+  html {
+    overflow-x: hidden;
+  }
+}
+
+/* ============================================
+   HEADER & NAVIGATION MOBILE
+============================================ */
+
+@media (max-width: 749px) {
+  /* Mobile menu button */
+  .mobile-nav__link {
+    padding: 16px;
+    font-size: 16px;
+  }
+
+  /* Search input */
+  .site-header__search-input {
+    font-size: 16px;
+    min-height: 48px;
+  }
+
+  /* Cart icon tap area */
+  .site-header__cart {
+    padding: 12px;
+    min-width: 44px;
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+/* ============================================
+   PRODUCT PAGE MOBILE
+============================================ */
+
+@media (max-width: 749px) {
+  /* Product images */
+  .product-single__photos {
+    margin-bottom: 24px;
+  }
+
+  /* Product title */
+  .product-single__title {
+    font-size: 24px;
+    line-height: 1.2;
+    margin-bottom: 12px;
+  }
+
+  /* Price */
+  .product__price {
+    font-size: 20px;
+    margin-bottom: 16px;
+  }
+
+  /* Variant selectors - make swatches bigger */
+  .variant-input-wrap label {
+    min-width: 44px;
+    min-height: 44px;
+    padding: 10px;
+  }
+
+  /* Color swatches */
+  .color-swatch {
+    width: 44px;
+    height: 44px;
+  }
+
+  /* Quantity selector */
+  .quantity-selector {
+    height: 48px;
+  }
+
+  .quantity-selector__button {
+    width: 48px;
+    font-size: 20px;
+  }
+
+  .quantity-selector__value {
+    font-size: 16px;
+  }
+
+  /* Add to cart button - full width and prominent */
+  .product-form__submit {
+    width: 100%;
+    min-height: 54px;
+    font-size: 16px;
+    font-weight: 600;
+  }
+
+  /* Product description */
+  .product-single__description {
+    font-size: 15px;
+    line-height: 1.6;
+  }
+
+  /* Personalization input spacing */
+  .product-form__item {
+    margin-bottom: 16px;
+  }
+
+  .product-form__item label {
+    font-size: 14px;
+    margin-bottom: 8px;
+    display: block;
+  }
+}
+
+/* ============================================
+   COLLECTION PAGE MOBILE
+============================================ */
+
+@media (max-width: 749px) {
+  /* Product grid - 2 columns on mobile */
+  .grid-product {
+    padding-bottom: 16px;
+    margin-bottom: 16px;
+  }
+
+  /* Product card titles */
+  .grid-product__title {
+    font-size: 14px;
+    line-height: 1.3;
+  }
+
+  /* Product card prices */
+  .grid-product__price {
+    font-size: 14px;
+  }
+
+  /* Quick add button */
+  .grid-product__btn {
+    padding: 12px;
+    font-size: 14px;
+  }
+
+  /* Filter button */
+  .collection-sidebar-toggle {
+    min-height: 48px;
+    font-size: 14px;
+  }
+
+  /* Sort dropdown */
+  .collection-sort {
+    min-height: 44px;
+  }
+}
+
+/* ============================================
+   CART PAGE/DRAWER MOBILE
+============================================ */
+
+@media (max-width: 749px) {
+  /* Cart items */
+  .cart__row {
+    padding: 16px 0;
+  }
+
+  /* Cart item image */
+  .cart__image-wrapper {
+    width: 80px;
+    flex-shrink: 0;
+  }
+
+  /* Cart item title */
+  .cart__product-title {
+    font-size: 14px;
+    line-height: 1.3;
+  }
+
+  /* Quantity controls */
+  .cart__qty-button {
+    width: 36px;
+    height: 36px;
+  }
+
+  /* Remove button */
+  .cart__remove {
+    padding: 8px;
+    font-size: 13px;
+  }
+
+  /* Checkout button */
+  .cart__checkout {
+    width: 100%;
+    min-height: 54px;
+    font-size: 16px;
+  }
+
+  /* Subtotal */
+  .cart__subtotal-title,
+  .cart__subtotal {
+    font-size: 16px;
+  }
+}
+
+/* ============================================
+   HOMEPAGE SECTIONS MOBILE
+============================================ */
+
+@media (max-width: 749px) {
+  /* Hero section */
+  .hero {
+    min-height: 400px;
+  }
+
+  .hero__title {
+    font-size: 28px;
+    line-height: 1.2;
+  }
+
+  .hero__subtitle {
+    font-size: 16px;
+  }
+
+  /* Section headings */
+  .section-header__title {
+    font-size: 24px;
+  }
+
+  /* Featured collection */
+  .featured-collection {
+    padding: 40px 0;
+  }
+
+  /* Testimonials */
+  .testimonial-slide {
+    padding: 24px 16px;
+  }
+
+  .testimonial__text {
+    font-size: 16px;
+    line-height: 1.5;
+  }
+}
+
+/* ============================================
+   SHELZYS CUSTOM SECTIONS MOBILE
+============================================ */
+
+@media (max-width: 749px) {
+  /* Trust strip */
+  .shelzys-trust-strip {
+    padding: 12px 0;
+  }
+
+  .trust-strip__grid {
+    gap: 8px 16px;
+    justify-content: flex-start;
+    overflow-x: auto;
+    padding: 0 16px;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x mandatory;
+  }
+
+  .trust-strip__item {
+    flex-shrink: 0;
+    scroll-snap-align: start;
+    font-size: 12px;
+  }
+
+  /* Shop by occasion */
+  .occasion-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .occasion-card__content {
+    padding: 16px;
+  }
+
+  .occasion-card__title {
+    font-size: 16px;
+  }
+
+  /* Live preview */
+  .shelzys-live-preview {
+    padding: 20px 16px;
+  }
+
+  .preview-bottle {
+    width: 100px;
+    height: 160px;
+  }
+
+  .preview-name {
+    font-size: 14px;
+  }
+
+  /* Email popup */
+  .email-popup__modal {
+    width: 95%;
+    max-height: 85vh;
+  }
+
+  .email-popup__text {
+    padding: 24px 20px;
+  }
+
+  .email-popup__title {
+    font-size: 22px;
+  }
+
+  .email-popup__field {
+    flex-direction: column;
+  }
+
+  .email-popup__submit {
+    width: 100%;
+  }
+}
+
+/* ============================================
+   TOUCH DEVICE ENHANCEMENTS
+============================================ */
+
+@media (pointer: coarse) {
+  /* Larger hit areas for touch */
+  .site-nav__link,
+  .mobile-nav__link {
+    padding: 14px 16px;
+  }
+
+  /* Disable hover effects on touch */
+  .grid-product:hover,
+  .occasion-card:hover {
+    transform: none;
+  }
+
+  /* Add active state instead */
+  .grid-product:active,
+  .occasion-card:active {
+    opacity: 0.9;
+    transform: scale(0.98);
+  }
+}
+
+/* ============================================
+   STICKY ADD TO CART (MOBILE)
+============================================ */
+
+@media (max-width: 749px) {
+  .sticky-add-to-cart {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: #fff;
+    padding: 12px 16px;
+    box-shadow: 0 -4px 16px rgba(0,0,0,0.1);
+    z-index: 100;
+    display: none; /* Show via JS when scrolled past main ATC */
+  }
+
+  .sticky-add-to-cart.is-visible {
+    display: block;
+  }
+
+  .sticky-add-to-cart__inner {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .sticky-add-to-cart__price {
+    font-size: 18px;
+    font-weight: 600;
+  }
+
+  .sticky-add-to-cart__btn {
+    flex: 1;
+    min-height: 48px;
+    background: #00B4D8;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 600;
+  }
+
+  /* Add bottom padding to body to account for sticky bar */
+  body.has-sticky-atc {
+    padding-bottom: 80px;
+  }
+}
+
+/* ============================================
+   PERFORMANCE: REDUCE MOTION
+============================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ============================================
+   DARK MODE SUPPORT (OPTIONAL)
+============================================ */
+
+@media (prefers-color-scheme: dark) {
+  /* Only apply if you want to support dark mode
+  .shelzys-email-popup,
+  .shelzys-cart-upsell {
+    background: #1a1a1a;
+    color: #fff;
+  }
+  */
+}

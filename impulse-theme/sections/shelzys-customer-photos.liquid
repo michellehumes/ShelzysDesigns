@@ -1,0 +1,216 @@
+{%- comment -%}
+  SHELZYS DESIGNS: Customer Photos / Social Proof Section for Impulse Theme
+  Location: Copy to theme/sections/shelzys-customer-photos.liquid
+  Then add to homepage via Theme Customizer
+{%- endcomment -%}
+
+<div class="shelzys-customer-photos" style="background-color: {{ section.settings.bg_color }};">
+  <div class="page-width">
+    <div class="section-header text-center">
+      <h2 class="section-header__title h2">{{ section.settings.title }}</h2>
+      {%- if section.settings.subtitle != blank -%}
+        <p class="section-header__subtitle">{{ section.settings.subtitle }}</p>
+      {%- endif -%}
+    </div>
+
+    <div class="customer-photos__grid">
+      {%- for block in section.blocks -%}
+        <div class="customer-photo" {{ block.shopify_attributes }}>
+          {%- if block.settings.image != blank -%}
+            <img
+              src="{{ block.settings.image | image_url: width: 400 }}"
+              alt="{{ block.settings.alt | default: 'Customer photo' }}"
+              class="customer-photo__image"
+              loading="lazy"
+              width="400"
+              height="400"
+            >
+          {%- else -%}
+            <div class="customer-photo__placeholder">
+              <span>📸</span>
+            </div>
+          {%- endif -%}
+          {%- if block.settings.caption != blank -%}
+            <div class="customer-photo__caption">{{ block.settings.caption }}</div>
+          {%- endif -%}
+        </div>
+      {%- endfor -%}
+    </div>
+
+    {%- if section.settings.instagram_handle != blank -%}
+      <div class="customer-photos__cta text-center">
+        <p>Tag <strong>@{{ section.settings.instagram_handle }}</strong> to be featured!</p>
+      </div>
+    {%- endif -%}
+  </div>
+</div>
+
+<style>
+.shelzys-customer-photos {
+  padding: 60px 0;
+}
+
+.shelzys-customer-photos .section-header {
+  margin-bottom: 40px;
+}
+
+.shelzys-customer-photos .section-header__title {
+  margin: 0 0 10px;
+  font-size: 32px;
+  font-weight: 700;
+}
+
+.shelzys-customer-photos .section-header__subtitle {
+  margin: 0;
+  font-size: 16px;
+  color: #666;
+}
+
+.customer-photos__grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 12px;
+}
+
+.customer-photo {
+  position: relative;
+  aspect-ratio: 1;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.customer-photo__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.customer-photo:hover .customer-photo__image {
+  transform: scale(1.05);
+}
+
+.customer-photo__placeholder {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #f0f0f0 0%, #e0e0e0 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32px;
+}
+
+.customer-photo__caption {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 8px;
+  background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
+  color: #fff;
+  font-size: 12px;
+  text-align: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.customer-photo:hover .customer-photo__caption {
+  opacity: 1;
+}
+
+.customer-photos__cta {
+  margin-top: 30px;
+  font-size: 16px;
+  color: #666;
+}
+
+.customer-photos__cta strong {
+  color: #00B4D8;
+}
+
+@media (max-width: 989px) {
+  .customer-photos__grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media (max-width: 549px) {
+  .shelzys-customer-photos {
+    padding: 40px 0;
+  }
+  .customer-photos__grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+  }
+}
+</style>
+
+{% schema %}
+{
+  "name": "Shelzys Customer Photos",
+  "tag": "section",
+  "class": "section-customer-photos",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "Customer Favorites in the Wild"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "Real customers, real bottles, real love"
+    },
+    {
+      "type": "text",
+      "id": "instagram_handle",
+      "label": "Instagram handle",
+      "default": "shelzysdesigns"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background color",
+      "default": "#FFFFFF"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "photo",
+      "name": "Customer Photo",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Photo"
+        },
+        {
+          "type": "text",
+          "id": "alt",
+          "label": "Alt text"
+        },
+        {
+          "type": "text",
+          "id": "caption",
+          "label": "Caption (optional)"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Shelzys Customer Photos",
+      "blocks": [
+        { "type": "photo" },
+        { "type": "photo" },
+        { "type": "photo" },
+        { "type": "photo" },
+        { "type": "photo" },
+        { "type": "photo" }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,276 @@
+{%- comment -%}
+  SHELZYS DESIGNS: Shop by Occasion Section for Impulse Theme
+  Location: Copy to theme/sections/shelzys-shop-by-occasion.liquid
+  Then add to homepage via Theme Customizer
+{%- endcomment -%}
+
+<div class="shelzys-shop-occasion" style="background-color: {{ section.settings.bg_color }};">
+  <div class="page-width">
+    {%- if section.settings.title != blank -%}
+      <div class="section-header text-center">
+        <h2 class="section-header__title h2">{{ section.settings.title }}</h2>
+        {%- if section.settings.subtitle != blank -%}
+          <p class="section-header__subtitle">{{ section.settings.subtitle }}</p>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+    <div class="occasion-grid">
+      {%- for block in section.blocks -%}
+        <a href="{{ block.settings.link }}" class="occasion-card" {{ block.shopify_attributes }}>
+          <div class="occasion-card__image-wrapper">
+            {%- if block.settings.image != blank -%}
+              <img
+                src="{{ block.settings.image | image_url: width: 600 }}"
+                alt="{{ block.settings.title }}"
+                class="occasion-card__image"
+                loading="lazy"
+                width="600"
+                height="400"
+              >
+            {%- else -%}
+              <div class="occasion-card__placeholder">
+                <span>{{ block.settings.icon | default: '📦' }}</span>
+              </div>
+            {%- endif -%}
+            <div class="occasion-card__overlay"></div>
+          </div>
+          <div class="occasion-card__content">
+            <h3 class="occasion-card__title">{{ block.settings.title }}</h3>
+            {%- if block.settings.description != blank -%}
+              <p class="occasion-card__description">{{ block.settings.description }}</p>
+            {%- endif -%}
+            <span class="occasion-card__cta">Shop Now →</span>
+          </div>
+        </a>
+      {%- endfor -%}
+    </div>
+  </div>
+</div>
+
+<style>
+.shelzys-shop-occasion {
+  padding: 60px 0;
+}
+
+.shelzys-shop-occasion .section-header {
+  margin-bottom: 40px;
+}
+
+.shelzys-shop-occasion .section-header__title {
+  margin: 0 0 10px;
+  font-size: 32px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.shelzys-shop-occasion .section-header__subtitle {
+  margin: 0;
+  font-size: 16px;
+  color: #666;
+}
+
+.occasion-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+}
+
+.occasion-card {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #fff;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.occasion-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+}
+
+.occasion-card__image-wrapper {
+  position: relative;
+  aspect-ratio: 4/3;
+  overflow: hidden;
+}
+
+.occasion-card__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.occasion-card:hover .occasion-card__image {
+  transform: scale(1.05);
+}
+
+.occasion-card__overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.4) 0%, transparent 50%);
+}
+
+.occasion-card__placeholder {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #00B4D8 0%, #0096B4 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 48px;
+}
+
+.occasion-card__content {
+  padding: 20px;
+}
+
+.occasion-card__title {
+  margin: 0 0 8px;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.occasion-card__description {
+  margin: 0 0 12px;
+  font-size: 14px;
+  color: #666;
+  line-height: 1.5;
+}
+
+.occasion-card__cta {
+  font-size: 14px;
+  font-weight: 600;
+  color: #00B4D8;
+}
+
+@media (max-width: 989px) {
+  .occasion-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 549px) {
+  .shelzys-shop-occasion {
+    padding: 40px 0;
+  }
+  .occasion-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  .occasion-card__image-wrapper {
+    aspect-ratio: 16/9;
+  }
+}
+</style>
+
+{% schema %}
+{
+  "name": "Shelzys Shop by Occasion",
+  "tag": "section",
+  "class": "section-shop-occasion",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "Shop by Occasion"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "Find the perfect custom bottle for your event"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background color",
+      "default": "#F8F8F8"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "occasion",
+      "name": "Occasion",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "icon",
+          "label": "Icon (if no image)",
+          "default": "💍"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Weddings & Bridal Parties"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Description",
+          "default": "Beautiful personalized bottles for your bridal party"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Shelzys Shop by Occasion",
+      "blocks": [
+        {
+          "type": "occasion",
+          "settings": {
+            "icon": "💍",
+            "title": "Weddings & Bridal Parties",
+            "description": "Beautiful personalized bottles for bridesmaids, groomsmen, and your entire bridal party.",
+            "link": "/collections/weddings"
+          }
+        },
+        {
+          "type": "occasion",
+          "settings": {
+            "icon": "🏢",
+            "title": "Corporate & Bulk Orders",
+            "description": "Custom branded bottles for retreats, offsites, and client gifting.",
+            "link": "/pages/corporate-bulk-orders"
+          }
+        },
+        {
+          "type": "occasion",
+          "settings": {
+            "icon": "💧",
+            "title": "Everyday Bottles",
+            "description": "Premium personalized bottles for daily use at home, gym, or office.",
+            "link": "/collections/everyday-bottles"
+          }
+        },
+        {
+          "type": "occasion",
+          "settings": {
+            "icon": "🎁",
+            "title": "Gifts & Occasions",
+            "description": "Perfect personalized gifts for birthdays, holidays, and special moments.",
+            "link": "/collections/gifts"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

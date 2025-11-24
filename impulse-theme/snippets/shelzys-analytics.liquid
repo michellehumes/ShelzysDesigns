@@ -1,0 +1,216 @@
+{%- comment -%}
+  SHELZYS DESIGNS: Analytics & Tracking Code
+  Location: Copy to theme/snippets/shelzys-analytics.liquid
+  Include in theme.liquid before </head>: {% render 'shelzys-analytics' %}
+
+  This includes:
+  - GA4 Enhanced E-commerce tracking
+  - Hotjar heatmap tracking
+  - Custom event tracking for conversions
+{%- endcomment -%}
+
+{%- comment -%} ============================================
+    GA4 (Google Analytics 4) Configuration
+    Replace GA4_MEASUREMENT_ID with your actual GA4 ID
+============================================ {%- endcomment -%}
+<!-- Google Analytics 4 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=GA4_MEASUREMENT_ID"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'GA4_MEASUREMENT_ID', {
+    'send_page_view': true,
+    'currency': '{{ shop.currency }}'
+  });
+</script>
+
+{%- comment -%} ============================================
+    Hotjar Heatmap Tracking
+    Replace HOTJAR_ID with your actual Hotjar Site ID
+============================================ {%- endcomment -%}
+<!-- Hotjar Tracking Code -->
+<script>
+  (function(h,o,t,j,a,r){
+    h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
+    h._hjSettings={hjid:HOTJAR_ID,hjsv:6};
+    a=o.getElementsByTagName('head')[0];
+    r=o.createElement('script');r.async=1;
+    r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
+    a.appendChild(r);
+  })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
+</script>
+
+{%- comment -%} ============================================
+    Enhanced E-commerce Event Tracking
+============================================ {%- endcomment -%}
+<script>
+(function() {
+  // Track product views
+  {% if template contains 'product' %}
+  gtag('event', 'view_item', {
+    currency: '{{ shop.currency }}',
+    value: {{ product.price | divided_by: 100.0 }},
+    items: [{
+      item_id: '{{ product.id }}',
+      item_name: '{{ product.title | escape }}',
+      item_brand: '{{ product.vendor | escape }}',
+      item_category: '{{ product.type | escape }}',
+      price: {{ product.price | divided_by: 100.0 }},
+      quantity: 1
+    }]
+  });
+  {% endif %}
+
+  // Track collection views
+  {% if template contains 'collection' %}
+  gtag('event', 'view_item_list', {
+    item_list_id: '{{ collection.handle }}',
+    item_list_name: '{{ collection.title | escape }}',
+    items: [
+      {% for product in collection.products limit: 12 %}
+      {
+        item_id: '{{ product.id }}',
+        item_name: '{{ product.title | escape }}',
+        item_brand: '{{ product.vendor | escape }}',
+        index: {{ forloop.index }},
+        price: {{ product.price | divided_by: 100.0 }}
+      }{% unless forloop.last %},{% endunless %}
+      {% endfor %}
+    ]
+  });
+  {% endif %}
+
+  // Track add to cart events
+  document.addEventListener('click', function(e) {
+    var btn = e.target.closest('[type="submit"][name="add"], .add-to-cart, [data-add-to-cart]');
+    if (btn) {
+      var form = btn.closest('form[action*="/cart/add"]');
+      if (form) {
+        var productData = form.querySelector('[data-product-json]');
+        if (productData) {
+          try {
+            var product = JSON.parse(productData.textContent);
+            gtag('event', 'add_to_cart', {
+              currency: '{{ shop.currency }}',
+              value: product.price / 100,
+              items: [{
+                item_id: product.id,
+                item_name: product.title,
+                price: product.price / 100,
+                quantity: 1
+              }]
+            });
+          } catch(e) {}
+        }
+      }
+    }
+  });
+
+  // Track checkout initiation
+  {% if template contains 'cart' %}
+  document.querySelectorAll('[name="checkout"], .cart__checkout, [href*="/checkout"]').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      gtag('event', 'begin_checkout', {
+        currency: '{{ shop.currency }}',
+        value: {{ cart.total_price | divided_by: 100.0 }},
+        items: [
+          {% for item in cart.items %}
+          {
+            item_id: '{{ item.product.id }}',
+            item_name: '{{ item.product.title | escape }}',
+            price: {{ item.price | divided_by: 100.0 }},
+            quantity: {{ item.quantity }}
+          }{% unless forloop.last %},{% endunless %}
+          {% endfor %}
+        ]
+      });
+    });
+  });
+  {% endif %}
+})();
+</script>
+
+{%- comment -%} ============================================
+    Custom Shelzys Event Tracking
+============================================ {%- endcomment -%}
+<script>
+(function() {
+  // Track personalization input interactions
+  var personalizationInputs = document.querySelectorAll('input[name*="name" i], input[name*="personalization" i]');
+  personalizationInputs.forEach(function(input) {
+    var tracked = false;
+    input.addEventListener('input', function() {
+      if (!tracked && this.value.length > 0) {
+        tracked = true;
+        gtag('event', 'personalization_started', {
+          event_category: 'engagement',
+          event_label: 'Name entered'
+        });
+        if (window.hj) {
+          hj('event', 'personalization_started');
+        }
+      }
+    });
+  });
+
+  // Track font/color selection
+  var optionSelects = document.querySelectorAll('select[name*="font" i], select[name*="color" i]');
+  optionSelects.forEach(function(select) {
+    select.addEventListener('change', function() {
+      gtag('event', 'option_selected', {
+        event_category: 'engagement',
+        event_label: this.name,
+        value: this.value
+      });
+    });
+  });
+
+  // Track corporate form submissions
+  var corporateForm = document.querySelector('.corporate-form');
+  if (corporateForm) {
+    corporateForm.addEventListener('submit', function() {
+      gtag('event', 'generate_lead', {
+        event_category: 'conversion',
+        event_label: 'Corporate quote request'
+      });
+      if (window.hj) {
+        hj('event', 'corporate_lead');
+      }
+    });
+  }
+
+  // Track email popup submissions
+  var emailPopupForm = document.querySelector('.email-popup__form');
+  if (emailPopupForm) {
+    emailPopupForm.addEventListener('submit', function() {
+      gtag('event', 'sign_up', {
+        event_category: 'conversion',
+        event_label: 'Email popup'
+      });
+      if (window.hj) {
+        hj('event', 'email_signup');
+      }
+    });
+  }
+
+  // Track scroll depth for homepage
+  {% if template == 'index' %}
+  var scrollDepths = [25, 50, 75, 100];
+  var trackedDepths = [];
+
+  window.addEventListener('scroll', function() {
+    var scrollPercent = Math.round((window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100);
+    scrollDepths.forEach(function(depth) {
+      if (scrollPercent >= depth && trackedDepths.indexOf(depth) === -1) {
+        trackedDepths.push(depth);
+        gtag('event', 'scroll', {
+          event_category: 'engagement',
+          event_label: depth + '% scrolled'
+        });
+      }
+    });
+  });
+  {% endif %}
+})();
+</script>

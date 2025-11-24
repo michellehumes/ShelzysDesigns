@@ -1,0 +1,131 @@
+{%- comment -%}
+  SHELZYS DESIGNS: Trust Strip Section for Impulse Theme
+  Location: Copy to theme/sections/shelzys-trust-strip.liquid
+  Then add to homepage via Theme Customizer
+{%- endcomment -%}
+
+<div class="shelzys-trust-strip" style="background-color: {{ section.settings.bg_color }};">
+  <div class="page-width">
+    <div class="trust-strip__grid">
+      {%- for block in section.blocks -%}
+        <div class="trust-strip__item" {{ block.shopify_attributes }}>
+          {%- if block.settings.icon != blank -%}
+            <span class="trust-strip__icon">{{ block.settings.icon }}</span>
+          {%- endif -%}
+          <span class="trust-strip__text">{{ block.settings.text }}</span>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</div>
+
+<style>
+.shelzys-trust-strip {
+  padding: 16px 0;
+  border-bottom: 1px solid rgba(0,0,0,0.08);
+}
+
+.trust-strip__grid {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 24px 40px;
+}
+
+.trust-strip__item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: #333;
+}
+
+.trust-strip__icon {
+  font-size: 18px;
+}
+
+.trust-strip__text {
+  font-weight: 500;
+}
+
+@media (max-width: 749px) {
+  .trust-strip__grid {
+    gap: 12px 24px;
+  }
+  .trust-strip__item {
+    font-size: 12px;
+  }
+}
+</style>
+
+{% schema %}
+{
+  "name": "Shelzys Trust Strip",
+  "tag": "section",
+  "class": "section-trust-strip",
+  "settings": [
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background color",
+      "default": "#FFFFFF"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "trust_item",
+      "name": "Trust Item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "icon",
+          "label": "Icon (emoji)",
+          "default": "✓"
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text",
+          "default": "Free shipping $50+"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Shelzys Trust Strip",
+      "blocks": [
+        {
+          "type": "trust_item",
+          "settings": {
+            "icon": "🚚",
+            "text": "Free U.S. shipping on orders $50+"
+          }
+        },
+        {
+          "type": "trust_item",
+          "settings": {
+            "icon": "💧",
+            "text": "Made with sublimation ink (no vinyl)"
+          }
+        },
+        {
+          "type": "trust_item",
+          "settings": {
+            "icon": "📦",
+            "text": "Ships in 5-7 business days"
+          }
+        },
+        {
+          "type": "trust_item",
+          "settings": {
+            "icon": "⭐",
+            "text": "500+ 5-star reviews"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,551 @@
+{%- comment -%}
+  SHELZYS DESIGNS: Corporate & Bulk Orders Landing Page
+  Location: Copy to theme/templates/page.corporate-bulk-orders.liquid
+  Then create a page with handle "corporate-bulk-orders" and assign this template
+{%- endcomment -%}
+
+<div class="page-corporate">
+  {%- comment -%} Hero Section {%- endcomment -%}
+  <section class="corporate-hero">
+    <div class="page-width">
+      <div class="corporate-hero__content">
+        <h1 class="corporate-hero__title">Custom Branded Bottles for Teams, Events & Corporate Gifts</h1>
+        <p class="corporate-hero__subtitle">Perfect for retreats, offsites, client gifting, and employee welcome kits.</p>
+        <div class="corporate-hero__features">
+          <div class="corporate-feature">
+            <span class="corporate-feature__icon">✓</span>
+            <span>Free personalization with names</span>
+          </div>
+          <div class="corporate-feature">
+            <span class="corporate-feature__icon">✓</span>
+            <span>Your logo available on request</span>
+          </div>
+          <div class="corporate-feature">
+            <span class="corporate-feature__icon">✓</span>
+            <span>Volume discounts starting at 25+ bottles</span>
+          </div>
+          <div class="corporate-feature">
+            <span class="corporate-feature__icon">✓</span>
+            <span>Digital proofs included</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {%- comment -%} Use Cases {%- endcomment -%}
+  <section class="corporate-use-cases">
+    <div class="page-width">
+      <h2 class="section-title text-center">Perfect For</h2>
+      <div class="use-cases-grid">
+        <div class="use-case">
+          <span class="use-case__icon">🏢</span>
+          <h3>Company Retreats</h3>
+          <p>Make your offsite memorable with personalized bottles for every team member.</p>
+        </div>
+        <div class="use-case">
+          <span class="use-case__icon">🎁</span>
+          <h3>Client Gifts</h3>
+          <p>Impress clients with premium, branded gifts they'll actually use daily.</p>
+        </div>
+        <div class="use-case">
+          <span class="use-case__icon">👋</span>
+          <h3>Welcome Kits</h3>
+          <p>Start new hires off right with a personalized bottle in their onboarding kit.</p>
+        </div>
+        <div class="use-case">
+          <span class="use-case__icon">🎉</span>
+          <h3>Events & Conferences</h3>
+          <p>Stand out at trade shows and conferences with custom branded bottles.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {%- comment -%} Pricing Tiers {%- endcomment -%}
+  <section class="corporate-pricing">
+    <div class="page-width">
+      <h2 class="section-title text-center">Volume Pricing</h2>
+      <p class="section-subtitle text-center">The more you order, the more you save</p>
+      <div class="pricing-grid">
+        <div class="pricing-tier">
+          <div class="pricing-tier__qty">25-49</div>
+          <div class="pricing-tier__label">bottles</div>
+          <div class="pricing-tier__discount">10% off</div>
+        </div>
+        <div class="pricing-tier">
+          <div class="pricing-tier__qty">50-99</div>
+          <div class="pricing-tier__label">bottles</div>
+          <div class="pricing-tier__discount">15% off</div>
+        </div>
+        <div class="pricing-tier pricing-tier--featured">
+          <div class="pricing-tier__badge">Most Popular</div>
+          <div class="pricing-tier__qty">100-249</div>
+          <div class="pricing-tier__label">bottles</div>
+          <div class="pricing-tier__discount">20% off</div>
+        </div>
+        <div class="pricing-tier">
+          <div class="pricing-tier__qty">250+</div>
+          <div class="pricing-tier__label">bottles</div>
+          <div class="pricing-tier__discount">Custom Quote</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {%- comment -%} Quote Request Form {%- endcomment -%}
+  <section class="corporate-form-section" id="quote-form">
+    <div class="page-width">
+      <div class="corporate-form-wrapper">
+        <div class="corporate-form-intro">
+          <h2>Request a Quote</h2>
+          <p>Fill out the form below and we'll get back to you within 1 business day with pricing and options.</p>
+        </div>
+
+        {% form 'contact', class: 'corporate-form' %}
+          {%- if form.posted_successfully? -%}
+            <div class="form-success">
+              <h3>Thank you!</h3>
+              <p>We've received your request and will be in touch within 1 business day.</p>
+            </div>
+          {%- else -%}
+            {%- if form.errors -%}
+              <div class="form-errors">
+                {{ form.errors | default_errors }}
+              </div>
+            {%- endif -%}
+
+            <input type="hidden" name="contact[tags]" value="corporate, bulk-order, quote-request">
+
+            <div class="form-row form-row--2col">
+              <div class="form-field">
+                <label for="contact-name">Your Name *</label>
+                <input type="text" id="contact-name" name="contact[name]" required>
+              </div>
+              <div class="form-field">
+                <label for="contact-company">Company Name *</label>
+                <input type="text" id="contact-company" name="contact[company]" required>
+              </div>
+            </div>
+
+            <div class="form-row form-row--2col">
+              <div class="form-field">
+                <label for="contact-email">Email *</label>
+                <input type="email" id="contact-email" name="contact[email]" required>
+              </div>
+              <div class="form-field">
+                <label for="contact-phone">Phone (optional)</label>
+                <input type="tel" id="contact-phone" name="contact[phone]">
+              </div>
+            </div>
+
+            <div class="form-row form-row--2col">
+              <div class="form-field">
+                <label for="contact-quantity">Estimated Quantity *</label>
+                <select id="contact-quantity" name="contact[quantity]" required>
+                  <option value="">Select quantity range</option>
+                  <option value="25-49">25-49 bottles</option>
+                  <option value="50-99">50-99 bottles</option>
+                  <option value="100-249">100-249 bottles</option>
+                  <option value="250-499">250-499 bottles</option>
+                  <option value="500+">500+ bottles</option>
+                </select>
+              </div>
+              <div class="form-field">
+                <label for="contact-date">Event Date (optional)</label>
+                <input type="date" id="contact-date" name="contact[event_date]">
+              </div>
+            </div>
+
+            <div class="form-field">
+              <label for="contact-use-case">What's this for?</label>
+              <select id="contact-use-case" name="contact[use_case]">
+                <option value="">Select use case</option>
+                <option value="Company retreat/offsite">Company retreat/offsite</option>
+                <option value="Client gifts">Client gifts</option>
+                <option value="Employee welcome kits">Employee welcome kits</option>
+                <option value="Conference/trade show">Conference/trade show</option>
+                <option value="Team building event">Team building event</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
+
+            <div class="form-field">
+              <label for="contact-logo">Do you need logo printing?</label>
+              <select id="contact-logo" name="contact[logo_needed]">
+                <option value="No, names only">No, just names</option>
+                <option value="Yes, logo only">Yes, logo only</option>
+                <option value="Yes, logo and names">Yes, logo and names</option>
+                <option value="Not sure yet">Not sure yet</option>
+              </select>
+            </div>
+
+            <div class="form-field">
+              <label for="contact-notes">Additional Notes</label>
+              <textarea id="contact-notes" name="contact[body]" rows="4" placeholder="Tell us about your event, color preferences, or any questions..."></textarea>
+            </div>
+
+            <button type="submit" class="btn btn--primary btn--full">
+              Submit Quote Request
+            </button>
+          {%- endif -%}
+        {% endform %}
+      </div>
+    </div>
+  </section>
+
+  {%- comment -%} Trust/FAQ {%- endcomment -%}
+  <section class="corporate-faq">
+    <div class="page-width">
+      <h2 class="section-title text-center">Frequently Asked Questions</h2>
+      <div class="faq-grid">
+        <details class="faq-item">
+          <summary>What's the turnaround time for bulk orders?</summary>
+          <p>Standard bulk orders ship in 10-14 business days. Rush options are available for an additional fee.</p>
+        </details>
+        <details class="faq-item">
+          <summary>Can you match our brand colors?</summary>
+          <p>Yes! We can match Pantone colors for logo printing. Share your brand guidelines and we'll provide a digital proof.</p>
+        </details>
+        <details class="faq-item">
+          <summary>Do you offer samples?</summary>
+          <p>Yes, we offer sample bottles at cost. Contact us to arrange samples before placing a large order.</p>
+        </details>
+        <details class="faq-item">
+          <summary>How do I provide the names for personalization?</summary>
+          <p>We'll send you a simple spreadsheet template. Just fill in the names and any customizations, and we handle the rest.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+</div>
+
+<style>
+.page-corporate {
+  --corporate-blue: #00B4D8;
+  --corporate-dark: #1a1a1a;
+}
+
+/* Hero */
+.corporate-hero {
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  padding: 80px 0;
+}
+
+.corporate-hero__title {
+  font-size: 42px;
+  font-weight: 700;
+  margin: 0 0 16px;
+  line-height: 1.2;
+  max-width: 700px;
+}
+
+.corporate-hero__subtitle {
+  font-size: 20px;
+  color: #666;
+  margin: 0 0 32px;
+}
+
+.corporate-hero__features {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px 32px;
+}
+
+.corporate-feature {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 16px;
+}
+
+.corporate-feature__icon {
+  color: var(--corporate-blue);
+  font-weight: bold;
+}
+
+/* Use Cases */
+.corporate-use-cases {
+  padding: 80px 0;
+}
+
+.section-title {
+  font-size: 32px;
+  font-weight: 700;
+  margin: 0 0 12px;
+}
+
+.section-subtitle {
+  font-size: 16px;
+  color: #666;
+  margin: 0 0 40px;
+}
+
+.use-cases-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+  margin-top: 40px;
+}
+
+.use-case {
+  text-align: center;
+  padding: 32px 24px;
+  background: #f8f9fa;
+  border-radius: 12px;
+}
+
+.use-case__icon {
+  font-size: 40px;
+  display: block;
+  margin-bottom: 16px;
+}
+
+.use-case h3 {
+  font-size: 18px;
+  margin: 0 0 8px;
+}
+
+.use-case p {
+  font-size: 14px;
+  color: #666;
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* Pricing */
+.corporate-pricing {
+  padding: 80px 0;
+  background: #f8f9fa;
+}
+
+.pricing-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+  margin-top: 40px;
+}
+
+.pricing-tier {
+  background: #fff;
+  border-radius: 12px;
+  padding: 32px;
+  text-align: center;
+  border: 2px solid transparent;
+  position: relative;
+}
+
+.pricing-tier--featured {
+  border-color: var(--corporate-blue);
+  transform: scale(1.05);
+}
+
+.pricing-tier__badge {
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--corporate-blue);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 4px 12px;
+  border-radius: 20px;
+  white-space: nowrap;
+}
+
+.pricing-tier__qty {
+  font-size: 36px;
+  font-weight: 700;
+  color: var(--corporate-dark);
+}
+
+.pricing-tier__label {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 16px;
+}
+
+.pricing-tier__discount {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--corporate-blue);
+}
+
+/* Form */
+.corporate-form-section {
+  padding: 80px 0;
+}
+
+.corporate-form-wrapper {
+  max-width: 700px;
+  margin: 0 auto;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+  padding: 48px;
+}
+
+.corporate-form-intro {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.corporate-form-intro h2 {
+  font-size: 28px;
+  margin: 0 0 8px;
+}
+
+.corporate-form-intro p {
+  font-size: 16px;
+  color: #666;
+  margin: 0;
+}
+
+.form-row--2col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.form-field {
+  margin-bottom: 20px;
+}
+
+.form-field label {
+  display: block;
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 6px;
+}
+
+.form-field input,
+.form-field select,
+.form-field textarea {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 15px;
+  transition: border-color 0.2s;
+}
+
+.form-field input:focus,
+.form-field select:focus,
+.form-field textarea:focus {
+  outline: none;
+  border-color: var(--corporate-blue);
+}
+
+.btn--primary {
+  background: var(--corporate-blue);
+  color: #fff;
+  border: none;
+  padding: 16px 32px;
+  font-size: 16px;
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.btn--primary:hover {
+  background: #0096B4;
+}
+
+.btn--full {
+  width: 100%;
+}
+
+.form-success {
+  text-align: center;
+  padding: 40px;
+}
+
+.form-success h3 {
+  color: #28a745;
+  margin: 0 0 8px;
+}
+
+.form-errors {
+  background: #fff0f0;
+  border: 1px solid #ffcdd2;
+  padding: 16px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  color: #c62828;
+}
+
+/* FAQ */
+.corporate-faq {
+  padding: 80px 0;
+  background: #f8f9fa;
+}
+
+.faq-grid {
+  max-width: 700px;
+  margin: 40px auto 0;
+}
+
+.faq-item {
+  background: #fff;
+  border-radius: 8px;
+  margin-bottom: 12px;
+  overflow: hidden;
+}
+
+.faq-item summary {
+  padding: 20px 24px;
+  font-weight: 500;
+  cursor: pointer;
+  list-style: none;
+}
+
+.faq-item summary::-webkit-details-marker {
+  display: none;
+}
+
+.faq-item p {
+  padding: 0 24px 20px;
+  margin: 0;
+  color: #666;
+  line-height: 1.6;
+}
+
+/* Responsive */
+@media (max-width: 989px) {
+  .corporate-hero__title {
+    font-size: 32px;
+  }
+  .use-cases-grid,
+  .pricing-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .pricing-tier--featured {
+    transform: none;
+  }
+}
+
+@media (max-width: 749px) {
+  .corporate-hero {
+    padding: 60px 0;
+  }
+  .corporate-hero__title {
+    font-size: 28px;
+  }
+  .corporate-hero__features {
+    flex-direction: column;
+    gap: 12px;
+  }
+  .use-cases-grid,
+  .pricing-grid {
+    grid-template-columns: 1fr;
+  }
+  .form-row--2col {
+    grid-template-columns: 1fr;
+  }
+  .corporate-form-wrapper {
+    padding: 32px 24px;
+  }
+}
+</style>

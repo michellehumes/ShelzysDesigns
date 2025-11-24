@@ -1,0 +1,83 @@
+{%- comment -%}
+  SHELZYS DESIGNS: Upsell Banner for Product Page
+  Location: Copy to theme/snippets/shelzys-upsell-banner.liquid
+  Include above Add to Cart button: {% render 'shelzys-upsell-banner', product: product %}
+{%- endcomment -%}
+
+{%- comment -%} Only show for single bottle products, not sets {%- endcomment -%}
+{%- assign is_single = true -%}
+{%- assign product_title_lower = product.title | downcase -%}
+{%- if product_title_lower contains 'set' or product_title_lower contains 'pack' or product_title_lower contains 'bundle' -%}
+  {%- assign is_single = false -%}
+{%- endif -%}
+
+{%- if is_single -%}
+  {%- comment -%} Find a related set product {%- endcomment -%}
+  {%- assign set_product = nil -%}
+  {%- assign set_collection = collections['bridal-sets'] | default: collections['sets'] | default: collections['bundles'] -%}
+
+  {%- if set_collection -%}
+    {%- for p in set_collection.products limit: 1 -%}
+      {%- assign set_product = p -%}
+    {%- endfor -%}
+  {%- endif -%}
+
+  <div class="shelzys-upsell-banner">
+    <div class="upsell-banner__icon">💡</div>
+    <div class="upsell-banner__content">
+      <p class="upsell-banner__text">
+        <strong>Need a full bridal party set?</strong>
+        Save 15% when you upgrade to a set of 5.
+      </p>
+      {%- if set_product -%}
+        <a href="{{ set_product.url }}" class="upsell-banner__link">
+          View Bridal Party Set →
+        </a>
+      {%- else -%}
+        <a href="/collections/bridal-weddings" class="upsell-banner__link">
+          View All Sets →
+        </a>
+      {%- endif -%}
+    </div>
+  </div>
+
+  <style>
+  .shelzys-upsell-banner {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 16px;
+    background: linear-gradient(135deg, #E0F7FA 0%, #B2EBF2 100%);
+    border-radius: 10px;
+    margin-bottom: 20px;
+    border: 1px solid rgba(0, 180, 216, 0.2);
+  }
+
+  .upsell-banner__icon {
+    font-size: 20px;
+    flex-shrink: 0;
+  }
+
+  .upsell-banner__content {
+    flex: 1;
+  }
+
+  .upsell-banner__text {
+    margin: 0 0 8px;
+    font-size: 14px;
+    line-height: 1.4;
+    color: #333;
+  }
+
+  .upsell-banner__link {
+    font-size: 14px;
+    font-weight: 600;
+    color: #00B4D8;
+    text-decoration: none;
+  }
+
+  .upsell-banner__link:hover {
+    text-decoration: underline;
+  }
+  </style>
+{%- endif -%}

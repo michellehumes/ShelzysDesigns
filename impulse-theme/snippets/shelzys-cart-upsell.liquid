@@ -1,0 +1,268 @@
+{%- comment -%}
+  SHELZYS DESIGNS: Cart Page/Drawer Upsell
+  Location: Copy to theme/snippets/shelzys-cart-upsell.liquid
+  Include in cart template or drawer: {% render 'shelzys-cart-upsell' %}
+{%- endcomment -%}
+
+{%- comment -%} Calculate cart total for free shipping progress {%- endcomment -%}
+{%- assign free_shipping_threshold = 5000 -%} {%- comment -%} $50 in cents {%- endcomment -%}
+{%- assign cart_total = cart.total_price -%}
+{%- assign remaining = free_shipping_threshold | minus: cart_total -%}
+{%- assign progress_percent = cart_total | times: 100 | divided_by: free_shipping_threshold -%}
+{%- if progress_percent > 100 -%}
+  {%- assign progress_percent = 100 -%}
+{%- endif -%}
+
+<div class="shelzys-cart-upsell">
+  {%- comment -%} Free Shipping Progress {%- endcomment -%}
+  <div class="cart-upsell__shipping">
+    {%- if remaining > 0 -%}
+      <p class="shipping-message">
+        🚚 Add <strong>{{ remaining | money }}</strong> more for FREE shipping!
+      </p>
+      <div class="shipping-progress">
+        <div class="shipping-progress__bar" style="width: {{ progress_percent }}%;"></div>
+      </div>
+    {%- else -%}
+      <p class="shipping-message shipping-message--success">
+        ✓ You've unlocked FREE shipping!
+      </p>
+      <div class="shipping-progress shipping-progress--complete">
+        <div class="shipping-progress__bar" style="width: 100%;"></div>
+      </div>
+    {%- endif -%}
+  </div>
+
+  {%- comment -%} Add-on Suggestions {%- endcomment -%}
+  {%- assign addon_collection = collections['add-ons'] | default: collections['accessories'] -%}
+  {%- if addon_collection and addon_collection.products.size > 0 -%}
+    <div class="cart-upsell__addons">
+      <p class="addons-title">Complete your order:</p>
+      <div class="addons-grid">
+        {%- for product in addon_collection.products limit: 2 -%}
+          <div class="addon-item">
+            {%- if product.featured_image -%}
+              <img
+                src="{{ product.featured_image | image_url: width: 80 }}"
+                alt="{{ product.title }}"
+                class="addon-item__image"
+                width="80"
+                height="80"
+              >
+            {%- endif -%}
+            <div class="addon-item__info">
+              <p class="addon-item__title">{{ product.title }}</p>
+              <p class="addon-item__price">{{ product.price | money }}</p>
+            </div>
+            <button
+              type="button"
+              class="addon-item__add btn btn--small"
+              data-product-id="{{ product.variants.first.id }}"
+              onclick="addToCart({{ product.variants.first.id }})"
+            >
+              Add
+            </button>
+          </div>
+        {%- endfor -%}
+      </div>
+    </div>
+  {%- endif -%}
+
+  {%- comment -%} Gift Packaging Upsell {%- endcomment -%}
+  <div class="cart-upsell__gift">
+    <label class="gift-option">
+      <input type="checkbox" name="attributes[gift_packaging]" value="yes" class="gift-option__checkbox">
+      <span class="gift-option__content">
+        <span class="gift-option__icon">🎁</span>
+        <span class="gift-option__text">
+          <strong>Add gift packaging</strong>
+          <span>Premium gift box + ribbon (+$4.99)</span>
+        </span>
+      </span>
+    </label>
+  </div>
+</div>
+
+<style>
+.shelzys-cart-upsell {
+  padding: 20px;
+  background: #f8f9fa;
+  border-radius: 12px;
+  margin-top: 20px;
+}
+
+/* Free Shipping Progress */
+.cart-upsell__shipping {
+  margin-bottom: 20px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.shipping-message {
+  font-size: 14px;
+  margin: 0 0 10px;
+  text-align: center;
+}
+
+.shipping-message--success {
+  color: #28a745;
+}
+
+.shipping-progress {
+  height: 8px;
+  background: #e5e5e5;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.shipping-progress__bar {
+  height: 100%;
+  background: linear-gradient(90deg, #00B4D8, #0096B4);
+  border-radius: 4px;
+  transition: width 0.3s ease;
+}
+
+.shipping-progress--complete .shipping-progress__bar {
+  background: #28a745;
+}
+
+/* Add-ons */
+.cart-upsell__addons {
+  margin-bottom: 20px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.addons-title {
+  font-size: 14px;
+  font-weight: 600;
+  margin: 0 0 12px;
+}
+
+.addons-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.addon-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: #fff;
+  padding: 12px;
+  border-radius: 8px;
+}
+
+.addon-item__image {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+
+.addon-item__info {
+  flex: 1;
+  min-width: 0;
+}
+
+.addon-item__title {
+  font-size: 13px;
+  font-weight: 500;
+  margin: 0 0 4px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.addon-item__price {
+  font-size: 13px;
+  color: #666;
+  margin: 0;
+}
+
+.addon-item__add {
+  padding: 8px 16px;
+  font-size: 13px;
+  background: #00B4D8;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.addon-item__add:hover {
+  background: #0096B4;
+}
+
+/* Gift Option */
+.gift-option {
+  display: flex;
+  cursor: pointer;
+}
+
+.gift-option__checkbox {
+  display: none;
+}
+
+.gift-option__content {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 16px;
+  background: #fff;
+  border: 2px solid #e5e5e5;
+  border-radius: 10px;
+  transition: border-color 0.2s, background 0.2s;
+}
+
+.gift-option__checkbox:checked + .gift-option__content {
+  border-color: #00B4D8;
+  background: #E0F7FA;
+}
+
+.gift-option__icon {
+  font-size: 24px;
+}
+
+.gift-option__text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.gift-option__text strong {
+  font-size: 14px;
+}
+
+.gift-option__text span:last-child {
+  font-size: 12px;
+  color: #666;
+}
+</style>
+
+<script>
+function addToCart(variantId) {
+  fetch('/cart/add.js', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      id: variantId,
+      quantity: 1
+    })
+  })
+  .then(response => response.json())
+  .then(data => {
+    // Refresh cart or show notification
+    window.location.reload();
+  })
+  .catch(error => {
+    console.error('Error adding to cart:', error);
+  });
+}
+</script>
