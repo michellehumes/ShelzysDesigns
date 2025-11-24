@@ -14,9 +14,7 @@ const https = require('https');
 const fs = require('fs');
 const path = require('path');
 
-// Load environment variables
-require('dotenv').config?.() || loadEnvManually();
-
+// Load environment variables manually (no external dependencies)
 function loadEnvManually() {
   try {
     const envPath = path.join(__dirname, '.env');
@@ -31,6 +29,9 @@ function loadEnvManually() {
     // .env file doesn't exist
   }
 }
+
+// Load environment variables
+loadEnvManually();
 
 const STORE_URL = process.env.SHOPIFY_STORE_URL;
 const ACCESS_TOKEN = process.env.SHOPIFY_ACCESS_TOKEN;
