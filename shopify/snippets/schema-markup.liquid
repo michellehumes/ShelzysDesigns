@@ -1,0 +1,337 @@
+{% comment %}
+==================================================
+SEO SCHEMA MARKUP
+Structured data for better Google search results
+Include in theme.liquid in the <head> section
+==================================================
+{% endcomment %}
+
+{% comment %} Organization Schema {% endcomment %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "Shelzy's Designs",
+  "alternateName": "Shelzys Designs",
+  "url": "{{ shop.url }}",
+  "logo": "{{ 'logo.png' | asset_url }}",
+  "description": "Premium personalized sublimation water bottles for bridesmaids, weddings, and everyday hydration. Permanent printing that never peels or fades.",
+  "foundingDate": "2024",
+  "contactPoint": {
+    "@type": "ContactPoint",
+    "contactType": "customer service",
+    "email": "hello@shelzysdesigns.com",
+    "availableLanguage": "English"
+  },
+  "sameAs": [
+    "https://www.instagram.com/shelzysdesigns",
+    "https://www.pinterest.com/shelzysdesigns",
+    "https://www.facebook.com/shelzysdesigns"
+  ]
+}
+</script>
+
+{% comment %} Website Schema {% endcomment %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "Shelzy's Designs",
+  "url": "{{ shop.url }}",
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": "{{ shop.url }}/search?q={search_term_string}",
+    "query-input": "required name=search_term_string"
+  }
+}
+</script>
+
+{% comment %} Local Business Schema {% endcomment %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Store",
+  "name": "Shelzy's Designs",
+  "description": "Premium personalized sublimation water bottles",
+  "url": "{{ shop.url }}",
+  "priceRange": "$$",
+  "image": "{{ 'logo.png' | asset_url }}",
+  "address": {
+    "@type": "PostalAddress",
+    "addressCountry": "US"
+  },
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "4.9",
+    "reviewCount": "500",
+    "bestRating": "5",
+    "worstRating": "1"
+  }
+}
+</script>
+
+{% comment %} Product Schema - Include on product pages {% endcomment %}
+{% if template contains 'product' %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Product",
+  "name": "{{ product.title | escape }}",
+  "description": "{{ product.description | strip_html | truncate: 500 | escape }}",
+  "image": [
+    {% for image in product.images limit: 5 %}
+      "{{ image | img_url: '1200x' }}"{% unless forloop.last %},{% endunless %}
+    {% endfor %}
+  ],
+  "brand": {
+    "@type": "Brand",
+    "name": "Shelzy's Designs"
+  },
+  "sku": "{{ product.selected_or_first_available_variant.sku | escape }}",
+  "mpn": "{{ product.selected_or_first_available_variant.barcode | escape }}",
+  "offers": {
+    "@type": "Offer",
+    "url": "{{ shop.url }}{{ product.url }}",
+    "priceCurrency": "{{ shop.currency }}",
+    "price": "{{ product.price | money_without_currency | remove: ',' }}",
+    "priceValidUntil": "{{ 'now' | date: '%Y' | plus: 1 }}-12-31",
+    "availability": "{% if product.available %}https://schema.org/InStock{% else %}https://schema.org/OutOfStock{% endif %}",
+    "seller": {
+      "@type": "Organization",
+      "name": "Shelzy's Designs"
+    },
+    "shippingDetails": {
+      "@type": "OfferShippingDetails",
+      "shippingRate": {
+        "@type": "MonetaryAmount",
+        "value": "0",
+        "currency": "{{ shop.currency }}"
+      },
+      "shippingDestination": {
+        "@type": "DefinedRegion",
+        "addressCountry": "US"
+      },
+      "deliveryTime": {
+        "@type": "ShippingDeliveryTime",
+        "handlingTime": {
+          "@type": "QuantitativeValue",
+          "minValue": 3,
+          "maxValue": 5,
+          "unitCode": "DAY"
+        },
+        "transitTime": {
+          "@type": "QuantitativeValue",
+          "minValue": 3,
+          "maxValue": 7,
+          "unitCode": "DAY"
+        }
+      }
+    }
+  }
+  {% if product.metafields.reviews.rating %}
+  ,"aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "{{ product.metafields.reviews.rating.value | divided_by: product.metafields.reviews.rating_count }}",
+    "reviewCount": "{{ product.metafields.reviews.rating_count }}"
+  }
+  {% endif %}
+}
+</script>
+{% endif %}
+
+{% comment %} Collection Schema - Include on collection pages {% endcomment %}
+{% if template contains 'collection' %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  "name": "{{ collection.title | escape }}",
+  "description": "{{ collection.description | strip_html | truncate: 500 | escape }}",
+  "url": "{{ shop.url }}{{ collection.url }}",
+  "mainEntity": {
+    "@type": "ItemList",
+    "itemListElement": [
+      {% for product in collection.products limit: 10 %}
+      {
+        "@type": "ListItem",
+        "position": {{ forloop.index }},
+        "item": {
+          "@type": "Product",
+          "name": "{{ product.title | escape }}",
+          "url": "{{ shop.url }}{{ product.url }}",
+          "image": "{{ product.featured_image | img_url: '800x' }}",
+          "offers": {
+            "@type": "Offer",
+            "price": "{{ product.price | money_without_currency | remove: ',' }}",
+            "priceCurrency": "{{ shop.currency }}"
+          }
+        }
+      }{% unless forloop.last %},{% endunless %}
+      {% endfor %}
+    ]
+  }
+}
+</script>
+{% endif %}
+
+{% comment %} Article/Blog Schema - Include on blog posts {% endcomment %}
+{% if template contains 'article' %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "{{ article.title | escape }}",
+  "description": "{{ article.excerpt | strip_html | truncate: 200 | escape }}",
+  "image": "{% if article.image %}{{ article.image | img_url: '1200x' }}{% endif %}",
+  "author": {
+    "@type": "Organization",
+    "name": "Shelzy's Designs"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Shelzy's Designs",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "{{ 'logo.png' | asset_url }}"
+    }
+  },
+  "datePublished": "{{ article.published_at | date: '%Y-%m-%d' }}",
+  "dateModified": "{{ article.updated_at | date: '%Y-%m-%d' }}",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "{{ shop.url }}{{ article.url }}"
+  }
+}
+</script>
+{% endif %}
+
+{% comment %} FAQ Schema - Include on FAQ page {% endcomment %}
+{% if template contains 'faq' or page.handle == 'faq' %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Is the personalization vinyl?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. All designs are created with true sublimation printing, which is permanent and won't peel or crack. The ink is infused directly into the bottle's coating, so your personalization becomes part of the bottle itself."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Will the design peel or fade?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. Unlike vinyl decals, sublimation printing is permanent. The ink is heat-pressed into the bottle's coating, so it won't peel, crack, or fade over time."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Are the bottles dishwasher safe?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "We recommend hand washing to keep the finish looking its best for years. However, sublimation is far more durable than vinyl and won't peel in normal use."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How long do the bottles keep drinks cold or hot?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Our 20oz double-wall insulated bottles keep drinks cold for up to 24 hours and hot for up to 12 hours."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How long will it take to receive my order?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Processing time is typically 3-5 business days (each bottle is made to order). Shipping time is usually 3-7 business days depending on your location. Total time: 6-12 business days from order to delivery."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I order in bulk for a bridal party or company?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes! We offer bulk pricing for bridal party sets (5, 8, or 10-pack) and corporate orders (minimum 10 bottles). Contact us for a custom quote."
+      }
+    }
+  ]
+}
+</script>
+{% endif %}
+
+{% comment %} Breadcrumb Schema {% endcomment %}
+{% if template != 'index' %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "{{ shop.url }}"
+    }
+    {% if template contains 'collection' %}
+    ,{
+      "@type": "ListItem",
+      "position": 2,
+      "name": "{{ collection.title | escape }}",
+      "item": "{{ shop.url }}{{ collection.url }}"
+    }
+    {% endif %}
+    {% if template contains 'product' %}
+    {% if collection %}
+    ,{
+      "@type": "ListItem",
+      "position": 2,
+      "name": "{{ collection.title | escape }}",
+      "item": "{{ shop.url }}{{ collection.url }}"
+    }
+    ,{
+      "@type": "ListItem",
+      "position": 3,
+      "name": "{{ product.title | escape }}",
+      "item": "{{ shop.url }}{{ product.url }}"
+    }
+    {% else %}
+    ,{
+      "@type": "ListItem",
+      "position": 2,
+      "name": "{{ product.title | escape }}",
+      "item": "{{ shop.url }}{{ product.url }}"
+    }
+    {% endif %}
+    {% endif %}
+    {% if template contains 'article' %}
+    ,{
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Blog",
+      "item": "{{ shop.url }}/blogs/{{ blog.handle }}"
+    }
+    ,{
+      "@type": "ListItem",
+      "position": 3,
+      "name": "{{ article.title | escape }}",
+      "item": "{{ shop.url }}{{ article.url }}"
+    }
+    {% endif %}
+    {% if template contains 'page' %}
+    ,{
+      "@type": "ListItem",
+      "position": 2,
+      "name": "{{ page.title | escape }}",
+      "item": "{{ shop.url }}{{ page.url }}"
+    }
+    {% endif %}
+  ]
+}
+</script>
+{% endif %}
