@@ -1,0 +1,256 @@
+{%- comment -%}
+  SHELZY'S DESIGNS: Social Proof Bar Section for Impulse Theme
+  Location: sections/shelzys-social-proof-bar.liquid
+{%- endcomment -%}
+
+<section class="shelzys-social-proof-bar" data-section-id="{{ section.id }}" style="background-color: {{ section.settings.bg_color }};">
+  <div class="page-width">
+    <div class="social-proof-bar__content">
+      {%- if section.settings.main_text != blank -%}
+        <p class="social-proof-bar__text">{{ section.settings.main_text }}</p>
+      {%- endif -%}
+
+      {%- if section.blocks.size > 0 -%}
+        <div class="social-proof-bar__logos">
+          {%- for block in section.blocks -%}
+            <div class="social-proof-bar__logo" {{ block.shopify_attributes }}>
+              {%- if block.settings.logo != blank -%}
+                <img
+                  src="{{ block.settings.logo | image_url: width: 200 }}"
+                  alt="{{ block.settings.alt }}"
+                  loading="lazy"
+                  height="32"
+                >
+              {%- elsif block.settings.text != blank -%}
+                <span class="social-proof-bar__logo-text">{{ block.settings.text }}</span>
+              {%- endif -%}
+            </div>
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+
+      {%- if section.settings.show_stats -%}
+        <div class="social-proof-bar__stats">
+          {%- if section.settings.stat_1_number != blank -%}
+            <div class="social-proof-stat">
+              <span class="social-proof-stat__number">{{ section.settings.stat_1_number }}</span>
+              <span class="social-proof-stat__label">{{ section.settings.stat_1_label }}</span>
+            </div>
+          {%- endif -%}
+
+          {%- if section.settings.stat_2_number != blank -%}
+            <div class="social-proof-stat">
+              <span class="social-proof-stat__number">{{ section.settings.stat_2_number }}</span>
+              <span class="social-proof-stat__label">{{ section.settings.stat_2_label }}</span>
+            </div>
+          {%- endif -%}
+
+          {%- if section.settings.stat_3_number != blank -%}
+            <div class="social-proof-stat">
+              <span class="social-proof-stat__number">{{ section.settings.stat_3_number }}</span>
+              <span class="social-proof-stat__label">{{ section.settings.stat_3_label }}</span>
+            </div>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+<style>
+.shelzys-social-proof-bar {
+  padding: 40px 0;
+  border-top: 1px solid rgba(0,0,0,0.06);
+  border-bottom: 1px solid rgba(0,0,0,0.06);
+}
+
+.social-proof-bar__content {
+  text-align: center;
+}
+
+.social-proof-bar__text {
+  font-size: 17px;
+  color: #555;
+  margin: 0 0 24px;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.social-proof-bar__logos {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 32px;
+  margin-bottom: 24px;
+}
+
+.social-proof-bar__logo img {
+  max-height: 32px;
+  width: auto;
+  opacity: 0.6;
+  filter: grayscale(100%);
+  transition: all 0.3s ease;
+}
+
+.social-proof-bar__logo:hover img {
+  opacity: 1;
+  filter: grayscale(0%);
+}
+
+.social-proof-bar__logo-text {
+  font-size: 14px;
+  font-weight: 600;
+  color: #888;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.social-proof-bar__stats {
+  display: flex;
+  justify-content: center;
+  gap: 48px;
+  flex-wrap: wrap;
+  margin-top: 24px;
+  padding-top: 24px;
+  border-top: 1px solid rgba(0,0,0,0.06);
+}
+
+.social-proof-stat {
+  text-align: center;
+}
+
+.social-proof-stat__number {
+  display: block;
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--color-sage, #8B9D77);
+  line-height: 1;
+}
+
+.social-proof-stat__label {
+  display: block;
+  font-size: 13px;
+  color: #666;
+  margin-top: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+@media (max-width: 749px) {
+  .shelzys-social-proof-bar {
+    padding: 32px 0;
+  }
+
+  .social-proof-bar__logos {
+    gap: 20px;
+  }
+
+  .social-proof-bar__stats {
+    gap: 32px;
+  }
+
+  .social-proof-stat__number {
+    font-size: 28px;
+  }
+}
+</style>
+
+{% schema %}
+{
+  "name": "Shelzys Social Proof Bar",
+  "tag": "section",
+  "class": "section-social-proof-bar",
+  "settings": [
+    {
+      "type": "textarea",
+      "id": "main_text",
+      "label": "Main text",
+      "default": "Trusted for over 40,000 personalized bottles — weddings, teams & events nationwide."
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Statistics"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_stats",
+      "label": "Show statistics",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "stat_1_number",
+      "label": "Stat 1 number",
+      "default": "40,000+"
+    },
+    {
+      "type": "text",
+      "id": "stat_1_label",
+      "label": "Stat 1 label",
+      "default": "Bottles Made"
+    },
+    {
+      "type": "text",
+      "id": "stat_2_number",
+      "label": "Stat 2 number",
+      "default": "5,000+"
+    },
+    {
+      "type": "text",
+      "id": "stat_2_label",
+      "label": "Stat 2 label",
+      "default": "Happy Customers"
+    },
+    {
+      "type": "text",
+      "id": "stat_3_number",
+      "label": "Stat 3 number",
+      "default": "4.9★"
+    },
+    {
+      "type": "text",
+      "id": "stat_3_label",
+      "label": "Stat 3 label",
+      "default": "Average Rating"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "logo",
+      "name": "Logo/Badge",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "logo",
+          "label": "Logo image"
+        },
+        {
+          "type": "text",
+          "id": "alt",
+          "label": "Alt text",
+          "default": "Featured in"
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text (if no logo)",
+          "default": "As Seen On"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Shelzys Social Proof Bar"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,419 @@
+{%- comment -%}
+  SHELZY'S DESIGNS: Best Sellers Carousel Section for Impulse Theme
+  Location: sections/shelzys-best-sellers.liquid
+{%- endcomment -%}
+
+{%- assign collection = collections[section.settings.collection] -%}
+
+<section class="shelzys-best-sellers" data-section-id="{{ section.id }}" style="background-color: {{ section.settings.bg_color }};">
+  <div class="page-width">
+    <div class="best-sellers__header">
+      <div class="best-sellers__header-text">
+        <h2 class="best-sellers__title h2">{{ section.settings.title }}</h2>
+        {%- if section.settings.subtitle != blank -%}
+          <p class="best-sellers__subtitle">{{ section.settings.subtitle }}</p>
+        {%- endif -%}
+      </div>
+      {%- if section.settings.show_view_all and collection != blank -%}
+        <a href="{{ collection.url }}" class="best-sellers__view-all btn btn--secondary-outline">
+          View All
+        </a>
+      {%- endif -%}
+    </div>
+
+    <div class="best-sellers__carousel" data-carousel>
+      <div class="best-sellers__track">
+        {%- if collection != blank -%}
+          {%- for product in collection.products limit: section.settings.products_to_show -%}
+            <div class="best-sellers__item">
+              <a href="{{ product.url }}" class="product-card">
+                <div class="product-card__image-wrapper">
+                  {%- if product.featured_image != blank -%}
+                    <img
+                      src="{{ product.featured_image | image_url: width: 500 }}"
+                      srcset="{{ product.featured_image | image_url: width: 300 }} 300w,
+                              {{ product.featured_image | image_url: width: 400 }} 400w,
+                              {{ product.featured_image | image_url: width: 500 }} 500w"
+                      sizes="(max-width: 549px) 50vw, (max-width: 989px) 33vw, 25vw"
+                      alt="{{ product.title }}"
+                      class="product-card__image"
+                      loading="lazy"
+                    >
+                    {%- if product.images.size > 1 -%}
+                      <img
+                        src="{{ product.images[1] | image_url: width: 500 }}"
+                        alt="{{ product.title }}"
+                        class="product-card__image product-card__image--hover"
+                        loading="lazy"
+                      >
+                    {%- endif -%}
+                  {%- else -%}
+                    <div class="product-card__placeholder"></div>
+                  {%- endif -%}
+
+                  {%- if product.compare_at_price > product.price -%}
+                    <span class="product-card__badge product-card__badge--sale">Sale</span>
+                  {%- elsif product.tags contains 'bestseller' or product.tags contains 'best-seller' -%}
+                    <span class="product-card__badge">Best Seller</span>
+                  {%- endif -%}
+                </div>
+
+                <div class="product-card__info">
+                  <h3 class="product-card__title">{{ product.title }}</h3>
+                  <div class="product-card__price">
+                    {%- if product.compare_at_price > product.price -%}
+                      <span class="product-card__price--sale">{{ product.price | money }}</span>
+                      <span class="product-card__price--compare">{{ product.compare_at_price | money }}</span>
+                    {%- else -%}
+                      <span>{{ product.price | money }}</span>
+                    {%- endif -%}
+                    {%- if product.price_varies -%}
+                      <span class="product-card__price--from">from</span>
+                    {%- endif -%}
+                  </div>
+
+                  {%- if section.settings.show_rating -%}
+                    <div class="product-card__rating">
+                      <span class="product-card__stars">★★★★★</span>
+                    </div>
+                  {%- endif -%}
+                </div>
+              </a>
+            </div>
+          {%- endfor -%}
+        {%- else -%}
+          {%- for i in (1..section.settings.products_to_show) -%}
+            <div class="best-sellers__item">
+              <div class="product-card product-card--placeholder">
+                <div class="product-card__image-wrapper">
+                  <div class="product-card__placeholder"></div>
+                </div>
+                <div class="product-card__info">
+                  <h3 class="product-card__title">Product Title</h3>
+                  <div class="product-card__price">$XX.XX</div>
+                </div>
+              </div>
+            </div>
+          {%- endfor -%}
+        {%- endif -%}
+      </div>
+
+      {%- if section.settings.show_arrows -%}
+        <button class="carousel__arrow carousel__arrow--prev" data-prev aria-label="Previous">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="15,18 9,12 15,6"></polyline>
+          </svg>
+        </button>
+        <button class="carousel__arrow carousel__arrow--next" data-next aria-label="Next">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="9,18 15,12 9,6"></polyline>
+          </svg>
+        </button>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+<style>
+.shelzys-best-sellers {
+  padding: 64px 0;
+}
+
+.best-sellers__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 40px;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.best-sellers__title {
+  font-size: clamp(28px, 4vw, 36px);
+  font-weight: 700;
+  margin: 0 0 8px;
+  color: #1a1a1a;
+}
+
+.best-sellers__subtitle {
+  font-size: 16px;
+  color: #666;
+  margin: 0;
+}
+
+.best-sellers__view-all {
+  padding: 12px 24px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-sage, #8B9D77);
+  border: 2px solid var(--color-sage, #8B9D77);
+  border-radius: 4px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+.best-sellers__view-all:hover {
+  background: var(--color-sage, #8B9D77);
+  color: #fff;
+}
+
+.best-sellers__carousel {
+  position: relative;
+}
+
+.best-sellers__track {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+}
+
+.best-sellers__item {
+  min-width: 0;
+}
+
+.product-card {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+}
+
+.product-card__image-wrapper {
+  position: relative;
+  aspect-ratio: 1;
+  overflow: hidden;
+  border-radius: 8px;
+  background: #f5f5f5;
+  margin-bottom: 16px;
+}
+
+.product-card__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: opacity 0.3s ease, transform 0.4s ease;
+}
+
+.product-card__image--hover {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+}
+
+.product-card:hover .product-card__image:not(.product-card__image--hover) {
+  opacity: 0;
+}
+
+.product-card:hover .product-card__image--hover {
+  opacity: 1;
+}
+
+.product-card:hover .product-card__image {
+  transform: scale(1.02);
+}
+
+.product-card__placeholder {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #f0f0f0 0%, #e0e0e0 100%);
+}
+
+.product-card__badge {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  padding: 6px 12px;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  background: var(--color-sage, #8B9D77);
+  color: #fff;
+  border-radius: 4px;
+}
+
+.product-card__badge--sale {
+  background: #E85555;
+}
+
+.product-card__info {
+  text-align: center;
+}
+
+.product-card__title {
+  font-size: 15px;
+  font-weight: 500;
+  margin: 0 0 8px;
+  color: #1a1a1a;
+  line-height: 1.4;
+}
+
+.product-card__price {
+  font-size: 15px;
+  color: #1a1a1a;
+}
+
+.product-card__price--sale {
+  color: #E85555;
+  font-weight: 600;
+}
+
+.product-card__price--compare {
+  text-decoration: line-through;
+  color: #999;
+  margin-left: 8px;
+}
+
+.product-card__price--from {
+  font-size: 12px;
+  color: #999;
+}
+
+.product-card__rating {
+  margin-top: 8px;
+}
+
+.product-card__stars {
+  color: #FFB800;
+  font-size: 13px;
+  letter-spacing: 1px;
+}
+
+.carousel__arrow {
+  position: absolute;
+  top: 35%;
+  transform: translateY(-50%);
+  width: 44px;
+  height: 44px;
+  background: #fff;
+  border: 1px solid #e5e5e5;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  z-index: 2;
+}
+
+.carousel__arrow:hover {
+  background: var(--color-sage, #8B9D77);
+  border-color: var(--color-sage, #8B9D77);
+  color: #fff;
+}
+
+.carousel__arrow--prev {
+  left: -22px;
+}
+
+.carousel__arrow--next {
+  right: -22px;
+}
+
+@media (max-width: 1200px) {
+  .carousel__arrow--prev { left: 8px; }
+  .carousel__arrow--next { right: 8px; }
+}
+
+@media (max-width: 989px) {
+  .best-sellers__track {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+}
+
+@media (max-width: 749px) {
+  .shelzys-best-sellers {
+    padding: 48px 0;
+  }
+
+  .best-sellers__header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .best-sellers__track {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+
+  .carousel__arrow {
+    display: none;
+  }
+}
+
+@media (max-width: 374px) {
+  .product-card__title {
+    font-size: 13px;
+  }
+
+  .product-card__price {
+    font-size: 13px;
+  }
+}
+</style>
+
+{% schema %}
+{
+  "name": "Shelzys Best Sellers",
+  "tag": "section",
+  "class": "section-best-sellers",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Best Sellers"
+    },
+    {
+      "type": "textarea",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "Customer favorites that sell out fast."
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection"
+    },
+    {
+      "type": "range",
+      "id": "products_to_show",
+      "label": "Products to show",
+      "min": 4,
+      "max": 12,
+      "step": 1,
+      "default": 8
+    },
+    {
+      "type": "checkbox",
+      "id": "show_view_all",
+      "label": "Show 'View All' button",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_rating",
+      "label": "Show star rating",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_arrows",
+      "label": "Show navigation arrows",
+      "default": true
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background color",
+      "default": "#ffffff"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Shelzys Best Sellers"
+    }
+  ]
+}
+{% endschema %}

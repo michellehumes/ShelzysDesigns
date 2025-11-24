@@ -1,0 +1,339 @@
+/**
+ * SHELZY'S DESIGNS: Sage Green Branding CSS for Impulse Theme
+ * Location: assets/shelzys-branding.css
+ * Include in theme.liquid: {{ 'shelzys-branding.css' | asset_url | stylesheet_tag }}
+ */
+
+/* ============================================
+   CSS CUSTOM PROPERTIES (Variables)
+============================================ */
+
+:root {
+  /* Primary brand colors - Sage Green */
+  --color-sage: #8B9D77;
+  --color-sage-dark: #7A8C68;
+  --color-sage-light: #E8EDE4;
+  --color-sage-muted: #A8B89A;
+
+  /* Secondary accent - Soft Blush */
+  --color-blush: #F5E6E0;
+  --color-blush-dark: #E8D5CC;
+
+  /* Neutrals */
+  --color-white: #ffffff;
+  --color-off-white: #FAFAF8;
+  --color-cream: #F9F7F4;
+  --color-text: #1a1a1a;
+  --color-text-muted: #666666;
+  --color-border: #e5e5e5;
+
+  /* Typography */
+  --font-heading: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-body: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
+  /* Spacing */
+  --section-padding: 64px;
+  --section-padding-mobile: 48px;
+
+  /* Border radius */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+
+  /* Shadows */
+  --shadow-sm: 0 2px 8px rgba(0,0,0,0.06);
+  --shadow-md: 0 4px 16px rgba(0,0,0,0.08);
+  --shadow-lg: 0 8px 32px rgba(0,0,0,0.1);
+}
+
+/* ============================================
+   GLOBAL BUTTON STYLES
+============================================ */
+
+.btn,
+.shopify-challenge__button,
+button[type="submit"],
+input[type="submit"] {
+  font-family: var(--font-body);
+  font-weight: 600;
+  border-radius: var(--radius-sm);
+  transition: all 0.3s ease;
+}
+
+/* Primary button - Sage green solid */
+.btn--primary,
+.btn--full,
+button.btn--add-to-cart,
+.product-form__submit {
+  background-color: var(--color-sage);
+  color: var(--color-white);
+  border: 2px solid var(--color-sage);
+}
+
+.btn--primary:hover,
+.btn--full:hover,
+button.btn--add-to-cart:hover,
+.product-form__submit:hover {
+  background-color: var(--color-sage-dark);
+  border-color: var(--color-sage-dark);
+}
+
+/* Secondary button - Sage outline */
+.btn--secondary,
+.btn--secondary-outline {
+  background-color: transparent;
+  color: var(--color-sage);
+  border: 2px solid var(--color-sage);
+}
+
+.btn--secondary:hover,
+.btn--secondary-outline:hover {
+  background-color: var(--color-sage);
+  color: var(--color-white);
+}
+
+/* ============================================
+   LINK COLORS
+============================================ */
+
+a {
+  color: var(--color-sage);
+  transition: color 0.2s ease;
+}
+
+a:hover {
+  color: var(--color-sage-dark);
+}
+
+/* Navigation links */
+.site-nav__link,
+.mobile-nav__link {
+  color: var(--color-text);
+}
+
+.site-nav__link:hover,
+.site-nav__link--active,
+.mobile-nav__link:hover {
+  color: var(--color-sage);
+}
+
+/* ============================================
+   FORM INPUTS
+============================================ */
+
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+input[type="password"],
+input[type="number"],
+input[type="search"],
+select,
+textarea {
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-md);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="tel"]:focus,
+input[type="password"]:focus,
+input[type="number"]:focus,
+input[type="search"]:focus,
+select:focus,
+textarea:focus {
+  outline: none;
+  border-color: var(--color-sage);
+  box-shadow: 0 0 0 3px rgba(139, 157, 119, 0.15);
+}
+
+/* ============================================
+   PRODUCT CARDS
+============================================ */
+
+.grid-product__link:hover .grid-product__title {
+  color: var(--color-sage);
+}
+
+.grid-product__tag--sale {
+  background: #E85555;
+}
+
+.grid-product__tag--new {
+  background: var(--color-sage);
+}
+
+/* ============================================
+   BADGES & TAGS
+============================================ */
+
+.badge,
+.tag,
+.label {
+  background-color: var(--color-sage);
+  color: var(--color-white);
+  border-radius: var(--radius-sm);
+}
+
+.badge--sale {
+  background-color: #E85555;
+}
+
+/* ============================================
+   PRODUCT PAGE ENHANCEMENTS
+============================================ */
+
+.product__price {
+  color: var(--color-text);
+}
+
+.product__price--sale {
+  color: #E85555;
+}
+
+.product-single__variants .variant-input:checked + label,
+.swatch-element input:checked + label {
+  border-color: var(--color-sage);
+  box-shadow: 0 0 0 2px var(--color-sage);
+}
+
+/* Star ratings */
+.spr-badge-starrating .spr-icon,
+.stamped-starrating .stamped-fa-star {
+  color: #FFB800;
+}
+
+/* ============================================
+   HEADER ADJUSTMENTS
+============================================ */
+
+.site-header {
+  border-bottom: 1px solid rgba(0,0,0,0.06);
+}
+
+.site-header__cart-count {
+  background-color: var(--color-sage);
+  color: var(--color-white);
+}
+
+/* ============================================
+   FOOTER STYLING
+============================================ */
+
+.site-footer {
+  background-color: var(--color-off-white);
+  border-top: 1px solid var(--color-border);
+}
+
+.site-footer__item-inner h4,
+.site-footer__title {
+  color: var(--color-text);
+}
+
+.site-footer__linklist a:hover {
+  color: var(--color-sage);
+}
+
+/* Footer social icons */
+.social-icons__link:hover {
+  color: var(--color-sage);
+}
+
+/* ============================================
+   ANNOUNCEMENT BAR
+============================================ */
+
+.announcement-bar {
+  background-color: var(--color-sage);
+  color: var(--color-white);
+}
+
+.announcement-bar a {
+  color: var(--color-white);
+  text-decoration: underline;
+}
+
+.announcement-bar a:hover {
+  opacity: 0.9;
+}
+
+/* ============================================
+   CART DRAWER / CART PAGE
+============================================ */
+
+.cart__checkout,
+.cart__submit {
+  background-color: var(--color-sage);
+  border-color: var(--color-sage);
+}
+
+.cart__checkout:hover,
+.cart__submit:hover {
+  background-color: var(--color-sage-dark);
+  border-color: var(--color-sage-dark);
+}
+
+/* ============================================
+   COLLECTION PAGE FILTERS
+============================================ */
+
+.tag-list a.tag--active,
+.filter-item--active {
+  background: var(--color-sage-light);
+  color: var(--color-sage-dark);
+  border-color: var(--color-sage);
+}
+
+/* ============================================
+   SELECTION / HIGHLIGHT
+============================================ */
+
+::selection {
+  background: var(--color-sage-light);
+  color: var(--color-text);
+}
+
+::-moz-selection {
+  background: var(--color-sage-light);
+  color: var(--color-text);
+}
+
+/* ============================================
+   LOADING / SPINNER
+============================================ */
+
+.spinner circle,
+.loading-overlay__spinner circle {
+  stroke: var(--color-sage);
+}
+
+/* ============================================
+   RESPONSIVE ADJUSTMENTS
+============================================ */
+
+@media (max-width: 749px) {
+  :root {
+    --section-padding: var(--section-padding-mobile);
+  }
+
+  .btn,
+  button[type="submit"],
+  input[type="submit"] {
+    min-height: 48px;
+    padding: 14px 24px;
+  }
+}
+
+/* ============================================
+   PRINT STYLES
+============================================ */
+
+@media print {
+  .btn--primary,
+  .btn--secondary {
+    border: 1px solid #000;
+    color: #000 !important;
+    background: transparent !important;
+  }
+}

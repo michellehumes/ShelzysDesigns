@@ -1,0 +1,196 @@
+{%- comment -%}
+  SHELZY'S DESIGNS: Brand Promise Badges Section for Impulse Theme
+  Location: sections/shelzys-brand-promise.liquid
+{%- endcomment -%}
+
+<section class="shelzys-brand-promise" data-section-id="{{ section.id }}">
+  <div class="page-width">
+    <div class="brand-promise__grid">
+      {%- for block in section.blocks -%}
+        <div class="brand-promise__item" {{ block.shopify_attributes }}>
+          {%- if block.settings.icon != blank -%}
+            <div class="brand-promise__icon">{{ block.settings.icon }}</div>
+          {%- elsif block.settings.custom_icon != blank -%}
+            <div class="brand-promise__icon">
+              <img src="{{ block.settings.custom_icon | image_url: width: 60 }}" alt="" width="30" height="30" loading="lazy">
+            </div>
+          {%- else -%}
+            <div class="brand-promise__icon">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                <polyline points="22,4 12,14.01 9,11.01"></polyline>
+              </svg>
+            </div>
+          {%- endif -%}
+          <div class="brand-promise__content">
+            <h3 class="brand-promise__title">{{ block.settings.title }}</h3>
+            <p class="brand-promise__text">{{ block.settings.text }}</p>
+          </div>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+<style>
+.shelzys-brand-promise {
+  background-color: {{ section.settings.bg_color }};
+  padding: 32px 0;
+  border-top: 1px solid rgba(0,0,0,0.06);
+  border-bottom: 1px solid rgba(0,0,0,0.06);
+}
+
+.brand-promise__grid {
+  display: grid;
+  grid-template-columns: repeat({{ section.blocks.size }}, 1fr);
+  gap: 32px;
+}
+
+.brand-promise__item {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  text-align: left;
+}
+
+.brand-promise__icon {
+  flex-shrink: 0;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-sage-light, #E8EDE4);
+  border-radius: 50%;
+  color: var(--color-sage, #8B9D77);
+  font-size: 24px;
+}
+
+.brand-promise__icon svg {
+  color: var(--color-sage, #8B9D77);
+}
+
+.brand-promise__content {
+  flex: 1;
+}
+
+.brand-promise__title {
+  font-size: 15px;
+  font-weight: 600;
+  margin: 0 0 4px;
+  color: #1a1a1a;
+}
+
+.brand-promise__text {
+  font-size: 14px;
+  line-height: 1.5;
+  color: #666;
+  margin: 0;
+}
+
+@media (max-width: 989px) {
+  .brand-promise__grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+  }
+}
+
+@media (max-width: 549px) {
+  .shelzys-brand-promise {
+    padding: 24px 0;
+  }
+
+  .brand-promise__grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .brand-promise__item {
+    text-align: center;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .brand-promise__icon {
+    margin-bottom: 8px;
+  }
+}
+</style>
+
+{% schema %}
+{
+  "name": "Shelzys Brand Promise",
+  "tag": "section",
+  "class": "section-brand-promise",
+  "settings": [
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background color",
+      "default": "#ffffff"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "promise",
+      "name": "Promise",
+      "settings": [
+        {
+          "type": "text",
+          "id": "icon",
+          "label": "Icon (emoji)",
+          "default": "✨"
+        },
+        {
+          "type": "image_picker",
+          "id": "custom_icon",
+          "label": "Custom icon image (optional)"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Quality Promise"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Description",
+          "default": "Every bottle is made with care and precision."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Shelzys Brand Promise",
+      "blocks": [
+        {
+          "type": "promise",
+          "settings": {
+            "icon": "🎨",
+            "title": "Sublimation — Not Vinyl",
+            "text": "Your design is infused into the bottle, so it never peels."
+          }
+        },
+        {
+          "type": "promise",
+          "settings": {
+            "icon": "✓",
+            "title": "Hand-Checked Quality",
+            "text": "Every bottle is evaluated by hand before it ships."
+          }
+        },
+        {
+          "type": "promise",
+          "settings": {
+            "icon": "💍",
+            "title": "Wedding-Ready & Gift-Ready",
+            "text": "Perfect for bridal parties, events, teams, and everyday gifting."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

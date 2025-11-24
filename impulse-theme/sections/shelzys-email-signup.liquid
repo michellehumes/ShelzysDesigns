@@ -1,0 +1,247 @@
+{%- comment -%}
+  SHELZY'S DESIGNS: Email Signup Section for Impulse Theme
+  Location: sections/shelzys-email-signup.liquid
+{%- endcomment -%}
+
+<section class="shelzys-email-signup" data-section-id="{{ section.id }}" style="background-color: {{ section.settings.bg_color }};">
+  <div class="page-width">
+    <div class="email-signup__wrapper">
+      {%- if section.settings.icon != blank -%}
+        <div class="email-signup__icon">{{ section.settings.icon }}</div>
+      {%- endif -%}
+
+      <h2 class="email-signup__title">{{ section.settings.title }}</h2>
+
+      {%- if section.settings.text != blank -%}
+        <p class="email-signup__text">{{ section.settings.text }}</p>
+      {%- endif -%}
+
+      {% form 'customer', class: 'email-signup__form' %}
+        <input type="hidden" name="contact[tags]" value="newsletter">
+
+        {%- if form.errors -%}
+          <div class="email-signup__errors">
+            {{ form.errors | default_errors }}
+          </div>
+        {%- endif -%}
+
+        {%- if form.posted_successfully? -%}
+          <div class="email-signup__success">
+            <span class="email-signup__success-icon">✓</span>
+            {{ section.settings.success_message }}
+          </div>
+        {%- else -%}
+          <div class="email-signup__field">
+            <input
+              type="email"
+              name="contact[email]"
+              placeholder="{{ section.settings.placeholder }}"
+              required
+              autocomplete="email"
+              class="email-signup__input"
+            >
+            <button type="submit" class="email-signup__submit btn btn--primary">
+              {{ section.settings.button_text }}
+            </button>
+          </div>
+
+          {%- if section.settings.privacy_text != blank -%}
+            <p class="email-signup__privacy">{{ section.settings.privacy_text }}</p>
+          {%- endif -%}
+        {%- endif -%}
+      {% endform %}
+    </div>
+  </div>
+</section>
+
+<style>
+.shelzys-email-signup {
+  padding: 64px 0;
+}
+
+.email-signup__wrapper {
+  max-width: 600px;
+  margin: 0 auto;
+  text-align: center;
+  padding: 48px;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+  border: 1px solid rgba(139, 157, 119, 0.15);
+}
+
+.email-signup__icon {
+  font-size: 40px;
+  margin-bottom: 16px;
+}
+
+.email-signup__title {
+  font-size: clamp(24px, 4vw, 32px);
+  font-weight: 700;
+  margin: 0 0 12px;
+  color: #1a1a1a;
+}
+
+.email-signup__text {
+  font-size: 16px;
+  line-height: 1.6;
+  color: #666;
+  margin: 0 0 28px;
+}
+
+.email-signup__form {
+  width: 100%;
+}
+
+.email-signup__field {
+  display: flex;
+  gap: 12px;
+  max-width: 460px;
+  margin: 0 auto;
+}
+
+.email-signup__input {
+  flex: 1;
+  padding: 16px 20px;
+  font-size: 15px;
+  border: 2px solid #e5e5e5;
+  border-radius: 8px;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.email-signup__input:focus {
+  outline: none;
+  border-color: var(--color-sage, #8B9D77);
+  box-shadow: 0 0 0 3px rgba(139, 157, 119, 0.15);
+}
+
+.email-signup__submit {
+  padding: 16px 28px;
+  font-size: 15px;
+  font-weight: 600;
+  background: var(--color-sage, #8B9D77);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  white-space: nowrap;
+}
+
+.email-signup__submit:hover {
+  background: var(--color-sage-dark, #7A8C68);
+}
+
+.email-signup__privacy {
+  font-size: 12px;
+  color: #888;
+  margin: 16px 0 0;
+}
+
+.email-signup__success {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 20px;
+  background: #E8EDE4;
+  border-radius: 8px;
+  color: var(--color-sage-dark, #7A8C68);
+  font-weight: 500;
+}
+
+.email-signup__success-icon {
+  font-size: 20px;
+}
+
+.email-signup__errors {
+  padding: 16px;
+  background: #FFF0F0;
+  border: 1px solid #FFCDD2;
+  border-radius: 8px;
+  color: #C62828;
+  margin-bottom: 16px;
+  font-size: 14px;
+}
+
+@media (max-width: 649px) {
+  .shelzys-email-signup {
+    padding: 48px 0;
+  }
+
+  .email-signup__wrapper {
+    padding: 32px 24px;
+  }
+
+  .email-signup__field {
+    flex-direction: column;
+  }
+
+  .email-signup__submit {
+    width: 100%;
+  }
+}
+</style>
+
+{% schema %}
+{
+  "name": "Shelzys Email Signup",
+  "tag": "section",
+  "class": "section-email-signup",
+  "settings": [
+    {
+      "type": "text",
+      "id": "icon",
+      "label": "Icon (emoji)",
+      "default": "✉️"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Get 10% Off Your First Order"
+    },
+    {
+      "type": "textarea",
+      "id": "text",
+      "label": "Description",
+      "default": "Exclusive discounts, new styles & personalized gift inspiration — straight to your inbox."
+    },
+    {
+      "type": "text",
+      "id": "placeholder",
+      "label": "Email placeholder",
+      "default": "Enter your email"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button text",
+      "default": "Get My Discount"
+    },
+    {
+      "type": "text",
+      "id": "privacy_text",
+      "label": "Privacy text",
+      "default": "We respect your privacy. Unsubscribe anytime."
+    },
+    {
+      "type": "text",
+      "id": "success_message",
+      "label": "Success message",
+      "default": "Thanks for subscribing! Check your inbox for your discount code."
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background color",
+      "default": "#F5F7F2"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Shelzys Email Signup"
+    }
+  ]
+}
+{% endschema %}

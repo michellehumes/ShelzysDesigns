@@ -1,0 +1,296 @@
+{%- comment -%}
+  SHELZY'S DESIGNS: Shop by Occasion Section for Impulse Theme
+  Location: sections/shelzys-shop-occasion.liquid
+{%- endcomment -%}
+
+<section class="shelzys-shop-occasion" data-section-id="{{ section.id }}" style="background-color: {{ section.settings.bg_color }};">
+  <div class="page-width">
+    {%- if section.settings.title != blank -%}
+      <div class="shop-occasion__header text-center">
+        <h2 class="shop-occasion__title h2">{{ section.settings.title }}</h2>
+        {%- if section.settings.subtitle != blank -%}
+          <p class="shop-occasion__subtitle">{{ section.settings.subtitle }}</p>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+    <div class="shop-occasion__grid">
+      {%- for block in section.blocks -%}
+        <a href="{{ block.settings.link }}" class="occasion-tile" {{ block.shopify_attributes }}>
+          <div class="occasion-tile__image-wrapper">
+            {%- if block.settings.image != blank -%}
+              <img
+                src="{{ block.settings.image | image_url: width: 800 }}"
+                srcset="{{ block.settings.image | image_url: width: 400 }} 400w,
+                        {{ block.settings.image | image_url: width: 600 }} 600w,
+                        {{ block.settings.image | image_url: width: 800 }} 800w"
+                sizes="(max-width: 549px) 100vw, (max-width: 989px) 50vw, 33vw"
+                alt="{{ block.settings.title }}"
+                class="occasion-tile__image"
+                loading="lazy"
+              >
+            {%- else -%}
+              <div class="occasion-tile__placeholder" style="background-color: {{ block.settings.placeholder_color }};"></div>
+            {%- endif -%}
+            <div class="occasion-tile__overlay"></div>
+          </div>
+          <div class="occasion-tile__content">
+            <h3 class="occasion-tile__title">{{ block.settings.title }}</h3>
+            {%- if block.settings.subtitle != blank -%}
+              <p class="occasion-tile__subtitle">{{ block.settings.subtitle }}</p>
+            {%- endif -%}
+            {%- if block.settings.cta_text != blank -%}
+              <span class="occasion-tile__cta">{{ block.settings.cta_text }} →</span>
+            {%- endif -%}
+          </div>
+        </a>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+<style>
+.shelzys-shop-occasion {
+  padding: 64px 0;
+}
+
+.shop-occasion__header {
+  margin-bottom: 40px;
+}
+
+.shop-occasion__title {
+  font-size: clamp(28px, 4vw, 36px);
+  font-weight: 700;
+  margin: 0 0 12px;
+  color: #1a1a1a;
+}
+
+.shop-occasion__subtitle {
+  font-size: 16px;
+  color: #666;
+  margin: 0;
+}
+
+.shop-occasion__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.occasion-tile {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #fff;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.occasion-tile:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 32px rgba(0,0,0,0.12);
+}
+
+.occasion-tile__image-wrapper {
+  position: relative;
+  aspect-ratio: 4/3;
+  overflow: hidden;
+}
+
+.occasion-tile__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.occasion-tile:hover .occasion-tile__image {
+  transform: scale(1.05);
+}
+
+.occasion-tile__placeholder {
+  width: 100%;
+  height: 100%;
+}
+
+.occasion-tile__overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.1) 40%, transparent 100%);
+  transition: opacity 0.3s ease;
+}
+
+.occasion-tile:hover .occasion-tile__overlay {
+  opacity: 0.8;
+}
+
+.occasion-tile__content {
+  padding: 24px;
+  text-align: center;
+}
+
+.occasion-tile__title {
+  font-size: 20px;
+  font-weight: 600;
+  margin: 0 0 8px;
+  color: #1a1a1a;
+}
+
+.occasion-tile__subtitle {
+  font-size: 14px;
+  color: #666;
+  margin: 0 0 16px;
+  line-height: 1.5;
+}
+
+.occasion-tile__cta {
+  display: inline-block;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-sage, #8B9D77);
+  transition: color 0.2s ease;
+}
+
+.occasion-tile:hover .occasion-tile__cta {
+  color: var(--color-sage-dark, #7A8C68);
+}
+
+@media (max-width: 989px) {
+  .shop-occasion__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .shop-occasion__grid .occasion-tile:last-child:nth-child(odd) {
+    grid-column: 1 / -1;
+    max-width: 50%;
+    margin: 0 auto;
+  }
+}
+
+@media (max-width: 549px) {
+  .shelzys-shop-occasion {
+    padding: 48px 0;
+  }
+
+  .shop-occasion__grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .shop-occasion__grid .occasion-tile:last-child:nth-child(odd) {
+    max-width: 100%;
+  }
+
+  .occasion-tile__content {
+    padding: 20px;
+  }
+}
+</style>
+
+{% schema %}
+{
+  "name": "Shelzys Shop by Occasion",
+  "tag": "section",
+  "class": "section-shop-occasion",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Section title",
+      "default": "Shop by Occasion"
+    },
+    {
+      "type": "textarea",
+      "id": "subtitle",
+      "label": "Section subtitle"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background color",
+      "default": "#F8F8F8"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "occasion",
+      "name": "Occasion Tile",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image",
+          "info": "Recommended: 800x600px"
+        },
+        {
+          "type": "color",
+          "id": "placeholder_color",
+          "label": "Placeholder color (if no image)",
+          "default": "#E8EDE4"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Occasion Title"
+        },
+        {
+          "type": "textarea",
+          "id": "subtitle",
+          "label": "Subtitle"
+        },
+        {
+          "type": "text",
+          "id": "cta_text",
+          "label": "CTA text",
+          "default": "Shop Now"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Shelzys Shop by Occasion",
+      "blocks": [
+        {
+          "type": "occasion",
+          "settings": {
+            "placeholder_color": "#E8EDE4",
+            "title": "Weddings & Bridal Party",
+            "subtitle": "Perfect for bridesmaids, bachelorettes & the full wedding weekend.",
+            "cta_text": "Shop Wedding Sets",
+            "link": "/collections/weddings"
+          }
+        },
+        {
+          "type": "occasion",
+          "settings": {
+            "placeholder_color": "#E4E8ED",
+            "title": "Corporate & Events",
+            "subtitle": "Branded bottles for teams, clients & events.",
+            "cta_text": "Request Bulk Quote",
+            "link": "/pages/corporate-bulk-orders"
+          }
+        },
+        {
+          "type": "occasion",
+          "settings": {
+            "placeholder_color": "#EDE8E4",
+            "title": "Everyday Personalized Gifts",
+            "subtitle": "Daily bottles personalized for them — or for you.",
+            "cta_text": "Shop Everyday",
+            "link": "/collections/everyday-bottles"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

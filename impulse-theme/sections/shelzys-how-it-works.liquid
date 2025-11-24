@@ -1,0 +1,301 @@
+{%- comment -%}
+  SHELZY'S DESIGNS: How It Works Section for Impulse Theme
+  Location: sections/shelzys-how-it-works.liquid
+{%- endcomment -%}
+
+<section class="shelzys-how-it-works" data-section-id="{{ section.id }}" style="background-color: {{ section.settings.bg_color }};">
+  <div class="page-width">
+    <div class="how-it-works__header text-center">
+      <h2 class="how-it-works__title h2">{{ section.settings.title }}</h2>
+      {%- if section.settings.subtitle != blank -%}
+        <p class="how-it-works__subtitle">{{ section.settings.subtitle }}</p>
+      {%- endif -%}
+    </div>
+
+    <div class="how-it-works__grid">
+      {%- for block in section.blocks -%}
+        <div class="how-it-works__step" {{ block.shopify_attributes }}>
+          <div class="step__number">{{ forloop.index }}</div>
+          {%- if block.settings.icon != blank -%}
+            <div class="step__icon">{{ block.settings.icon }}</div>
+          {%- elsif block.settings.image != blank -%}
+            <div class="step__image">
+              <img src="{{ block.settings.image | image_url: width: 200 }}" alt="{{ block.settings.title }}" loading="lazy">
+            </div>
+          {%- endif -%}
+          <h3 class="step__title">{{ block.settings.title }}</h3>
+          <p class="step__text">{{ block.settings.text }}</p>
+        </div>
+
+        {%- unless forloop.last -%}
+          <div class="how-it-works__connector" aria-hidden="true">
+            <svg width="40" height="16" viewBox="0 0 40 16" fill="none">
+              <path d="M0 8H36M36 8L29 1M36 8L29 15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+        {%- endunless -%}
+      {%- endfor -%}
+    </div>
+
+    {%- if section.settings.cta_text != blank -%}
+      <div class="how-it-works__cta text-center">
+        <a href="{{ section.settings.cta_link }}" class="btn btn--primary">
+          {{ section.settings.cta_text }}
+        </a>
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+<style>
+.shelzys-how-it-works {
+  padding: 80px 0;
+}
+
+.how-it-works__header {
+  margin-bottom: 56px;
+}
+
+.how-it-works__title {
+  font-size: clamp(28px, 4vw, 36px);
+  font-weight: 700;
+  margin: 0 0 12px;
+  color: #1a1a1a;
+}
+
+.how-it-works__subtitle {
+  font-size: 16px;
+  color: #666;
+  margin: 0;
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.how-it-works__grid {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 24px;
+}
+
+.how-it-works__step {
+  flex: 1;
+  max-width: 280px;
+  text-align: center;
+  position: relative;
+}
+
+.step__number {
+  width: 56px;
+  height: 56px;
+  margin: 0 auto 20px;
+  background: var(--color-sage, #8B9D77);
+  color: #fff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.step__icon {
+  font-size: 40px;
+  margin-bottom: 16px;
+}
+
+.step__image {
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 16px;
+}
+
+.step__image img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.step__title {
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0 0 12px;
+  color: #1a1a1a;
+}
+
+.step__text {
+  font-size: 15px;
+  line-height: 1.6;
+  color: #666;
+  margin: 0;
+}
+
+.how-it-works__connector {
+  display: flex;
+  align-items: center;
+  padding-top: 18px;
+  color: #ccc;
+}
+
+.how-it-works__cta {
+  margin-top: 48px;
+}
+
+.how-it-works__cta .btn {
+  padding: 16px 40px;
+  font-size: 15px;
+  font-weight: 600;
+  background: var(--color-sage, #8B9D77);
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  text-decoration: none;
+  transition: background 0.3s ease;
+}
+
+.how-it-works__cta .btn:hover {
+  background: var(--color-sage-dark, #7A8C68);
+}
+
+@media (max-width: 989px) {
+  .how-it-works__connector {
+    display: none;
+  }
+
+  .how-it-works__grid {
+    flex-wrap: wrap;
+  }
+
+  .how-it-works__step {
+    flex: 0 0 calc(33.333% - 16px);
+    max-width: none;
+  }
+}
+
+@media (max-width: 749px) {
+  .shelzys-how-it-works {
+    padding: 56px 0;
+  }
+
+  .how-it-works__grid {
+    flex-direction: column;
+    align-items: center;
+    gap: 40px;
+  }
+
+  .how-it-works__step {
+    flex: none;
+    width: 100%;
+    max-width: 320px;
+  }
+
+  .step__number {
+    width: 48px;
+    height: 48px;
+    font-size: 20px;
+  }
+}
+</style>
+
+{% schema %}
+{
+  "name": "Shelzys How It Works",
+  "tag": "section",
+  "class": "section-how-it-works",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "How It Works"
+    },
+    {
+      "type": "textarea",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "Simple, fast, and fully personalized."
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background color",
+      "default": "#F8F8F8"
+    },
+    {
+      "type": "header",
+      "content": "Call to Action"
+    },
+    {
+      "type": "text",
+      "id": "cta_text",
+      "label": "Button text",
+      "default": "Start Customizing"
+    },
+    {
+      "type": "url",
+      "id": "cta_link",
+      "label": "Button link"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "step",
+      "name": "Step",
+      "settings": [
+        {
+          "type": "text",
+          "id": "icon",
+          "label": "Icon (emoji)",
+          "info": "Optional - leave blank to show number only"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Custom image (optional)"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Step Title"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Description",
+          "default": "Step description goes here."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Shelzys How It Works",
+      "blocks": [
+        {
+          "type": "step",
+          "settings": {
+            "title": "1. Choose Your Bottle",
+            "text": "Pick your style, color and size."
+          }
+        },
+        {
+          "type": "step",
+          "settings": {
+            "title": "2. Personalize It",
+            "text": "Add names, font styles and colors — we bring your vision to life."
+          }
+        },
+        {
+          "type": "step",
+          "settings": {
+            "title": "3. Delivered Fast",
+            "text": "Standard 5–7 days or 48-hour rush shipping available."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

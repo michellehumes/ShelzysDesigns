@@ -1,0 +1,320 @@
+{%- comment -%}
+  SHELZY'S DESIGNS: Blog Preview Section for Impulse Theme
+  Location: sections/shelzys-blog-preview.liquid
+{%- endcomment -%}
+
+{%- assign blog = blogs[section.settings.blog] -%}
+
+<section class="shelzys-blog-preview" data-section-id="{{ section.id }}" style="background-color: {{ section.settings.bg_color }};">
+  <div class="page-width">
+    <div class="blog-preview__header">
+      <div class="blog-preview__header-text">
+        <h2 class="blog-preview__title h2">{{ section.settings.title }}</h2>
+        {%- if section.settings.subtitle != blank -%}
+          <p class="blog-preview__subtitle">{{ section.settings.subtitle }}</p>
+        {%- endif -%}
+      </div>
+      {%- if section.settings.show_view_all and blog != blank -%}
+        <a href="{{ blog.url }}" class="blog-preview__view-all btn btn--secondary-outline">
+          {{ section.settings.view_all_text }}
+        </a>
+      {%- endif -%}
+    </div>
+
+    <div class="blog-preview__grid">
+      {%- if blog != blank -%}
+        {%- for article in blog.articles limit: section.settings.posts_to_show -%}
+          <article class="blog-card">
+            <a href="{{ article.url }}" class="blog-card__link">
+              <div class="blog-card__image-wrapper">
+                {%- if article.image != blank -%}
+                  <img
+                    src="{{ article.image | image_url: width: 600 }}"
+                    srcset="{{ article.image | image_url: width: 400 }} 400w,
+                            {{ article.image | image_url: width: 600 }} 600w"
+                    sizes="(max-width: 549px) 100vw, (max-width: 989px) 50vw, 33vw"
+                    alt="{{ article.title }}"
+                    class="blog-card__image"
+                    loading="lazy"
+                  >
+                {%- else -%}
+                  <div class="blog-card__placeholder"></div>
+                {%- endif -%}
+              </div>
+
+              <div class="blog-card__content">
+                {%- if section.settings.show_date -%}
+                  <time class="blog-card__date" datetime="{{ article.published_at | date: '%Y-%m-%d' }}">
+                    {{ article.published_at | date: '%B %d, %Y' }}
+                  </time>
+                {%- endif -%}
+
+                <h3 class="blog-card__title">{{ article.title }}</h3>
+
+                {%- if section.settings.show_excerpt and article.excerpt != blank -%}
+                  <p class="blog-card__excerpt">{{ article.excerpt | strip_html | truncate: 100 }}</p>
+                {%- endif -%}
+
+                <span class="blog-card__read-more">Read More →</span>
+              </div>
+            </a>
+          </article>
+        {%- endfor -%}
+      {%- else -%}
+        {%- for i in (1..section.settings.posts_to_show) -%}
+          <article class="blog-card blog-card--placeholder">
+            <div class="blog-card__link">
+              <div class="blog-card__image-wrapper">
+                <div class="blog-card__placeholder"></div>
+              </div>
+              <div class="blog-card__content">
+                <span class="blog-card__date">January 1, 2025</span>
+                <h3 class="blog-card__title">Blog Post Title Here</h3>
+                <p class="blog-card__excerpt">Blog post excerpt will appear here once you select a blog.</p>
+                <span class="blog-card__read-more">Read More →</span>
+              </div>
+            </div>
+          </article>
+        {%- endfor -%}
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+<style>
+.shelzys-blog-preview {
+  padding: 80px 0;
+}
+
+.blog-preview__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 40px;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.blog-preview__title {
+  font-size: clamp(28px, 4vw, 36px);
+  font-weight: 700;
+  margin: 0 0 8px;
+  color: #1a1a1a;
+}
+
+.blog-preview__subtitle {
+  font-size: 16px;
+  color: #666;
+  margin: 0;
+}
+
+.blog-preview__view-all {
+  padding: 12px 24px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-sage, #8B9D77);
+  border: 2px solid var(--color-sage, #8B9D77);
+  border-radius: 4px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+.blog-preview__view-all:hover {
+  background: var(--color-sage, #8B9D77);
+  color: #fff;
+}
+
+.blog-preview__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+}
+
+.blog-card {
+  background: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.blog-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+}
+
+.blog-card__link {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+}
+
+.blog-card__image-wrapper {
+  aspect-ratio: 16/10;
+  overflow: hidden;
+}
+
+.blog-card__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.blog-card:hover .blog-card__image {
+  transform: scale(1.05);
+}
+
+.blog-card__placeholder {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #f0f0f0 0%, #e8e8e8 100%);
+}
+
+.blog-card__content {
+  padding: 24px;
+}
+
+.blog-card__date {
+  font-size: 12px;
+  color: #888;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  display: block;
+  margin-bottom: 10px;
+}
+
+.blog-card__title {
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0 0 12px;
+  color: #1a1a1a;
+  line-height: 1.35;
+}
+
+.blog-card__excerpt {
+  font-size: 14px;
+  line-height: 1.6;
+  color: #666;
+  margin: 0 0 16px;
+}
+
+.blog-card__read-more {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-sage, #8B9D77);
+  transition: color 0.2s ease;
+}
+
+.blog-card:hover .blog-card__read-more {
+  color: var(--color-sage-dark, #7A8C68);
+}
+
+@media (max-width: 989px) {
+  .blog-preview__grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+  }
+
+  .blog-preview__grid .blog-card:last-child:nth-child(odd) {
+    grid-column: 1 / -1;
+    max-width: 50%;
+    margin: 0 auto;
+  }
+}
+
+@media (max-width: 649px) {
+  .shelzys-blog-preview {
+    padding: 56px 0;
+  }
+
+  .blog-preview__header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .blog-preview__grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .blog-preview__grid .blog-card:last-child:nth-child(odd) {
+    max-width: 100%;
+  }
+
+  .blog-card__content {
+    padding: 20px;
+  }
+}
+</style>
+
+{% schema %}
+{
+  "name": "Shelzys Blog Preview",
+  "tag": "section",
+  "class": "section-blog-preview",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Tips, Ideas & Inspiration"
+    },
+    {
+      "type": "textarea",
+      "id": "subtitle",
+      "label": "Subtitle"
+    },
+    {
+      "type": "blog",
+      "id": "blog",
+      "label": "Blog"
+    },
+    {
+      "type": "range",
+      "id": "posts_to_show",
+      "label": "Posts to show",
+      "min": 2,
+      "max": 6,
+      "step": 1,
+      "default": 3
+    },
+    {
+      "type": "checkbox",
+      "id": "show_date",
+      "label": "Show date",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_excerpt",
+      "label": "Show excerpt",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_view_all",
+      "label": "Show 'View All' button",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "view_all_text",
+      "label": "'View All' button text",
+      "default": "Visit the Blog"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background color",
+      "default": "#F8F8F8"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Shelzys Blog Preview"
+    }
+  ]
+}
+{% endschema %}

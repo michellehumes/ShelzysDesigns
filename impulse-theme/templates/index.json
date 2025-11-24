@@ -1,0 +1,243 @@
+{
+  "sections": {
+    "shelzys-hero": {
+      "type": "shelzys-hero",
+      "settings": {
+        "hero_height": 75,
+        "overlay_opacity": 30,
+        "heading": "Personalized Bottles for Every Moment",
+        "subheading": "Custom stainless-steel bottles that elevate weddings, events & everyday life.",
+        "text_alignment": "left",
+        "text_color": "#ffffff",
+        "button_text": "Shop Custom Bottles",
+        "button_link": "/collections/all",
+        "button_text_2": "Bridal Party Sets",
+        "button_link_2": "/collections/weddings"
+      }
+    },
+    "shelzys-brand-promise": {
+      "type": "shelzys-brand-promise",
+      "settings": {
+        "bg_color": "#ffffff"
+      },
+      "blocks": {
+        "promise-1": {
+          "type": "promise",
+          "settings": {
+            "icon": "🎨",
+            "title": "Sublimation — Not Vinyl",
+            "text": "Your design is infused into the bottle, so it never peels."
+          }
+        },
+        "promise-2": {
+          "type": "promise",
+          "settings": {
+            "icon": "✓",
+            "title": "Hand-Checked Quality",
+            "text": "Every bottle is evaluated by hand before it ships."
+          }
+        },
+        "promise-3": {
+          "type": "promise",
+          "settings": {
+            "icon": "💍",
+            "title": "Wedding-Ready & Gift-Ready",
+            "text": "Perfect for bridal parties, events, teams, and everyday gifting."
+          }
+        }
+      },
+      "block_order": ["promise-1", "promise-2", "promise-3"]
+    },
+    "shelzys-shop-occasion": {
+      "type": "shelzys-shop-occasion",
+      "settings": {
+        "title": "Shop by Occasion",
+        "subtitle": "",
+        "bg_color": "#F8F8F8"
+      },
+      "blocks": {
+        "occasion-1": {
+          "type": "occasion",
+          "settings": {
+            "placeholder_color": "#E8EDE4",
+            "title": "Weddings & Bridal Party",
+            "subtitle": "Perfect for bridesmaids, bachelorettes & the full wedding weekend.",
+            "cta_text": "Shop Wedding Sets",
+            "link": "/collections/weddings"
+          }
+        },
+        "occasion-2": {
+          "type": "occasion",
+          "settings": {
+            "placeholder_color": "#E4E8ED",
+            "title": "Corporate & Events",
+            "subtitle": "Branded bottles for teams, clients & events.",
+            "cta_text": "Request Bulk Quote",
+            "link": "/pages/corporate-bulk-orders"
+          }
+        },
+        "occasion-3": {
+          "type": "occasion",
+          "settings": {
+            "placeholder_color": "#EDE8E4",
+            "title": "Everyday Personalized Gifts",
+            "subtitle": "Daily bottles personalized for them — or for you.",
+            "cta_text": "Shop Everyday",
+            "link": "/collections/everyday-bottles"
+          }
+        }
+      },
+      "block_order": ["occasion-1", "occasion-2", "occasion-3"]
+    },
+    "shelzys-best-sellers": {
+      "type": "shelzys-best-sellers",
+      "settings": {
+        "title": "Best Sellers",
+        "subtitle": "Customer favorites that sell out fast.",
+        "collection": "best-sellers",
+        "products_to_show": 8,
+        "show_view_all": true,
+        "show_rating": true,
+        "show_arrows": true,
+        "bg_color": "#ffffff"
+      }
+    },
+    "shelzys-how-it-works": {
+      "type": "shelzys-how-it-works",
+      "settings": {
+        "title": "How It Works",
+        "subtitle": "Simple, fast, and fully personalized.",
+        "bg_color": "#F8F8F8",
+        "cta_text": "Start Customizing",
+        "cta_link": "/collections/all"
+      },
+      "blocks": {
+        "step-1": {
+          "type": "step",
+          "settings": {
+            "title": "1. Choose Your Bottle",
+            "text": "Pick your style, color and size."
+          }
+        },
+        "step-2": {
+          "type": "step",
+          "settings": {
+            "title": "2. Personalize It",
+            "text": "Add names, font styles and colors — we bring your vision to life."
+          }
+        },
+        "step-3": {
+          "type": "step",
+          "settings": {
+            "title": "3. Delivered Fast",
+            "text": "Standard 5–7 days or 48-hour rush shipping available."
+          }
+        }
+      },
+      "block_order": ["step-1", "step-2", "step-3"]
+    },
+    "shelzys-featured-wedding": {
+      "type": "shelzys-featured-wedding",
+      "settings": {
+        "badge": "Wedding Season 2025",
+        "title": "The #1 Bridal Party Gift of 2025",
+        "text": "Custom bottles designed to match your wedding colors, fonts & vibe.",
+        "cta_text": "Shop Bridal Party Bottles",
+        "cta_link": "/collections/weddings",
+        "show_featured_products": true,
+        "collection": "weddings"
+      }
+    },
+    "shelzys-testimonials": {
+      "type": "shelzys-testimonials",
+      "settings": {
+        "title": "Loved by Brides, Teams & Gift-Givers",
+        "subtitle": "",
+        "show_stars": true,
+        "bg_color": "#ffffff"
+      },
+      "blocks": {
+        "testimonial-1": {
+          "type": "testimonial",
+          "settings": {
+            "stars": 5,
+            "quote": "Exactly like the photos — the quality is insane. My girls screamed when they saw them!",
+            "name": "Kayla M.",
+            "meta": "Bride, 2024 Wedding"
+          }
+        },
+        "testimonial-2": {
+          "type": "testimonial",
+          "settings": {
+            "stars": 5,
+            "quote": "We ordered 40 bottles with our logo for a company retreat. Everyone still uses them daily.",
+            "name": "David R.",
+            "meta": "Corporate Event Client"
+          }
+        },
+        "testimonial-3": {
+          "type": "testimonial",
+          "settings": {
+            "stars": 5,
+            "quote": "These are my go-to gift now. So much more thoughtful than a generic bottle.",
+            "name": "Melissa T.",
+            "meta": "Repeat Customer"
+          }
+        }
+      },
+      "block_order": ["testimonial-1", "testimonial-2", "testimonial-3"]
+    },
+    "shelzys-social-proof-bar": {
+      "type": "shelzys-social-proof-bar",
+      "settings": {
+        "main_text": "Trusted for over 40,000 personalized bottles — weddings, teams & events nationwide.",
+        "bg_color": "#F8F8F8",
+        "show_stats": true,
+        "stat_1_number": "40,000+",
+        "stat_1_label": "Bottles Made",
+        "stat_2_number": "5,000+",
+        "stat_2_label": "Happy Customers",
+        "stat_3_number": "4.9★",
+        "stat_3_label": "Average Rating"
+      }
+    },
+    "shelzys-blog-preview": {
+      "type": "shelzys-blog-preview",
+      "settings": {
+        "title": "Tips, Ideas & Inspiration",
+        "subtitle": "",
+        "posts_to_show": 3,
+        "show_date": true,
+        "show_excerpt": true,
+        "show_view_all": true,
+        "view_all_text": "Visit the Blog",
+        "bg_color": "#ffffff"
+      }
+    },
+    "shelzys-email-signup": {
+      "type": "shelzys-email-signup",
+      "settings": {
+        "icon": "✉️",
+        "title": "Get 10% Off Your First Order",
+        "text": "Exclusive discounts, new styles & personalized gift inspiration — straight to your inbox.",
+        "placeholder": "Enter your email",
+        "button_text": "Get My Discount",
+        "privacy_text": "We respect your privacy. Unsubscribe anytime.",
+        "success_message": "Thanks for subscribing! Check your inbox for your discount code.",
+        "bg_color": "#F5F7F2"
+      }
+    }
+  },
+  "order": [
+    "shelzys-hero",
+    "shelzys-brand-promise",
+    "shelzys-shop-occasion",
+    "shelzys-best-sellers",
+    "shelzys-how-it-works",
+    "shelzys-featured-wedding",
+    "shelzys-testimonials",
+    "shelzys-social-proof-bar",
+    "shelzys-blog-preview",
+    "shelzys-email-signup"
+  ]
+}
