@@ -25,7 +25,28 @@
         >
       {%- else -%}
         <div class="hero-bridal__placeholder">
-          {{ 'collection-1' | placeholder_svg_tag: 'placeholder-svg' }}
+          {%- comment -%} Custom water bottle placeholder illustration {%- endcomment -%}
+          <div class="hero-placeholder__bottles">
+            <svg class="bottle-svg bottle-1" viewBox="0 0 60 180" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="15" y="30" width="30" height="140" rx="8" fill="#E8E8E8"/>
+              <rect x="18" y="0" width="24" height="30" rx="4" fill="#D0D0D0"/>
+              <rect x="20" y="50" width="20" height="40" rx="2" fill="#00B4D8" opacity="0.3"/>
+              <text x="30" y="75" text-anchor="middle" fill="#00B4D8" font-size="8" font-weight="600">Sarah</text>
+            </svg>
+            <svg class="bottle-svg bottle-2" viewBox="0 0 60 180" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="15" y="30" width="30" height="140" rx="8" fill="#F0F0F0"/>
+              <rect x="18" y="0" width="24" height="30" rx="4" fill="#E0E0E0"/>
+              <rect x="20" y="50" width="20" height="40" rx="2" fill="#FF6B6B" opacity="0.3"/>
+              <text x="30" y="75" text-anchor="middle" fill="#FF6B6B" font-size="8" font-weight="600">Emily</text>
+            </svg>
+            <svg class="bottle-svg bottle-3" viewBox="0 0 60 180" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="15" y="30" width="30" height="140" rx="8" fill="#E8E8E8"/>
+              <rect x="18" y="0" width="24" height="30" rx="4" fill="#D0D0D0"/>
+              <rect x="20" y="50" width="20" height="40" rx="2" fill="#00B4D8" opacity="0.3"/>
+              <text x="30" y="75" text-anchor="middle" fill="#00B4D8" font-size="8" font-weight="600">Bride</text>
+            </svg>
+          </div>
+          <p class="hero-placeholder__hint">Upload your hero image in theme settings</p>
         </div>
       {%- endif -%}
     </div>
@@ -106,15 +127,64 @@
 .hero-bridal__placeholder {
   width: 100%;
   height: 100%;
-  background: var(--color-sandstone);
+  background: linear-gradient(135deg, #E0F7FA 0%, #B2EBF2 30%, #80DEEA 60%, #4DD0E1 100%);
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
+  position: relative;
+  overflow: hidden;
 }
 
-.hero-bridal__placeholder svg {
-  width: 40%;
-  opacity: 0.3;
+.hero-bridal__placeholder::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, transparent 70%);
+  animation: shimmer 8s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(20%, 20%); }
+}
+
+.hero-placeholder__bottles {
+  display: flex;
+  gap: 20px;
+  align-items: flex-end;
+  position: relative;
+  z-index: 1;
+}
+
+.bottle-svg {
+  height: 200px;
+  width: auto;
+  filter: drop-shadow(0 10px 30px rgba(0,0,0,0.15));
+  transition: transform 0.3s ease;
+}
+
+.bottle-svg.bottle-1 { transform: rotate(-8deg); }
+.bottle-svg.bottle-2 { height: 220px; }
+.bottle-svg.bottle-3 { transform: rotate(8deg); }
+
+.hero-bridal__placeholder:hover .bottle-1 { transform: rotate(-5deg) translateY(-10px); }
+.hero-bridal__placeholder:hover .bottle-2 { transform: translateY(-15px); }
+.hero-bridal__placeholder:hover .bottle-3 { transform: rotate(5deg) translateY(-10px); }
+
+.hero-placeholder__hint {
+  position: relative;
+  z-index: 1;
+  margin-top: 30px;
+  font-size: 13px;
+  color: rgba(0,0,0,0.5);
+  background: rgba(255,255,255,0.7);
+  padding: 8px 16px;
+  border-radius: 20px;
+  backdrop-filter: blur(4px);
 }
 
 .hero-bridal__content {
@@ -234,7 +304,7 @@
       "type": "image_picker",
       "id": "image",
       "label": "Hero image",
-      "info": "Recommended: bridal party scene or styled flat lay with bottles"
+      "info": "Best options: 1) Bridal party holding personalized bottles 2) Styled flat lay of bottles with names 3) Getting-ready scene with bottles. Recommended size: 1400x900px"
     },
     {
       "type": "text",
