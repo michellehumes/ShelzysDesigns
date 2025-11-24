@@ -1,0 +1,45 @@
+{% comment %}
+  Cart Timeline Messaging Snippet
+  Add this to your cart page to display production and shipping timeline
+
+  Usage: {% render 'cart-timeline-messaging' %}
+{% endcomment %}
+
+<div class="cart-shipping-reminder" style="background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); padding: 20px; margin: 20px 0; border-radius: 12px; border-left: 4px solid #d4a574;">
+  <div style="display: flex; align-items: center; gap: 15px; flex-wrap: wrap;">
+    <div style="font-size: 32px;">⏱️</div>
+    <div style="flex: 1; min-width: 250px;">
+      <h3 style="margin: 0 0 8px 0; font-size: 18px; font-weight: 600; color: #1a1a1a;">
+        Your Order Timeline
+      </h3>
+      <p style="margin: 0; font-size: 14px; color: #666; line-height: 1.6;">
+        <strong style="color: #d4a574;">Production:</strong> 5-7 business days (custom personalization)<br>
+        <strong style="color: #d4a574;">Shipping:</strong> 2-4 business days (free on $50+)<br>
+        <strong style="color: #1a1a1a;">Total:</strong> Your bottles arrive in 7-11 business days
+      </p>
+    </div>
+    <div style="text-align: center; padding: 15px; background: white; border-radius: 8px; min-width: 180px;">
+      <div style="font-size: 28px; font-weight: 700; color: #28a745; margin-bottom: 5px;">
+        {{ 'now' | date: '%s' | plus: 950400 | date: '%b %d' }}
+      </div>
+      <div style="font-size: 12px; color: #666; text-transform: uppercase; letter-spacing: 0.5px;">
+        Estimated Delivery
+      </div>
+    </div>
+  </div>
+
+  {% if cart.total_price < 5000 %}
+  <div style="margin-top: 15px; padding-top: 15px; border-top: 1px solid #dee2e6;">
+    <p style="margin: 0; font-size: 13px; color: #666;">
+      💡 <strong>Need it faster?</strong> Rush production available at checkout (3-day production for +$15)
+    </p>
+  </div>
+  {% endif %}
+</div>
+
+{% comment %}
+  Alternative: Minimal version for sidebar cart
+{% endcomment %}
+<div class="cart-timeline-mini" style="background: #fffbf7; padding: 12px; border-radius: 8px; font-size: 13px; color: #666; text-align: center; margin: 15px 0; border: 1px solid #f0e5d8;">
+  ⏱️ <strong style="color: #1a1a1a;">Ships in 5-7 days</strong> • Arrives by <strong style="color: #28a745;">{{ 'now' | date: '%s' | plus: 950400 | date: '%b %d' }}</strong>
+</div>

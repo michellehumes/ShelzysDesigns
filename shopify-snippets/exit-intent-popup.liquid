@@ -1,0 +1,313 @@
+{% comment %}
+  Exit Intent Popup with Discount
+
+  Captures abandoning visitors with a last-chance offer
+  Shows when mouse moves toward closing the tab/browser
+
+  Expected Impact: +3-5% overall conversion rate
+
+  A/B Test Setup:
+  - Variant A: No popup (control)
+  - Variant B: Exit intent with 10% off
+
+  Test for 2 weeks with 1,000+ cart visitors per variant
+
+  Installation:
+  Add to theme.liquid just before </body> tag
+  {% render 'exit-intent-popup' %}
+{% endcomment %}
+
+{% comment %} Only show on cart page or product pages {% endcomment %}
+{% if template contains 'cart' or template contains 'product' %}
+
+<!-- Exit Intent Popup -->
+<div id="exit-intent-popup" class="exit-popup-overlay" style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background-color: rgba(0, 0, 0, 0.7); z-index: 9999; opacity: 0; transition: opacity 0.3s ease;">
+  <div class="exit-popup-content" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; border-radius: 16px; padding: 0; max-width: 600px; width: 90%; box-shadow: 0 10px 40px rgba(0,0,0,0.3); overflow: hidden;">
+
+    <!-- Close Button -->
+    <button id="exit-popup-close" style="position: absolute; top: 15px; right: 15px; background: white; border: none; width: 36px; height: 36px; border-radius: 50%; cursor: pointer; font-size: 24px; line-height: 1; color: #999; box-shadow: 0 2px 8px rgba(0,0,0,0.1); z-index: 10; transition: all 0.2s;">
+      ×
+    </button>
+
+    <!-- Header Section -->
+    <div style="background: linear-gradient(135deg, #d4a574 0%, #c49464 100%); padding: 40px 30px; text-align: center; color: white;">
+      <div style="font-size: 56px; margin-bottom: 15px;">🎁</div>
+      <h2 style="margin: 0 0 10px; font-size: 32px; font-weight: 700; line-height: 1.2;">
+        Wait! Don't Leave Empty-Handed
+      </h2>
+      <p style="margin: 0; font-size: 18px; opacity: 0.95;">
+        Take 10% off your order right now
+      </p>
+    </div>
+
+    <!-- Content Section -->
+    <div style="padding: 40px 30px; text-align: center;">
+      <p style="margin: 0 0 25px; font-size: 16px; color: #666; line-height: 1.6;">
+        We know you'll love your personalized bottles.<br>
+        Here's a special discount just for you!
+      </p>
+
+      <!-- Discount Code Box -->
+      <div style="background: #f8f9fa; border: 2px dashed #d4a574; border-radius: 8px; padding: 20px; margin-bottom: 30px;">
+        <p style="margin: 0 0 10px; font-size: 14px; color: #999; text-transform: uppercase; letter-spacing: 1px;">
+          Your Exclusive Code
+        </p>
+        <div id="discount-code" style="font-size: 32px; font-weight: 700; color: #d4a574; font-family: monospace; letter-spacing: 2px; margin-bottom: 10px;">
+          STAY10
+        </div>
+        <button id="copy-code-btn" style="background: white; border: 2px solid #d4a574; color: #d4a574; padding: 8px 20px; border-radius: 6px; font-weight: 600; cursor: pointer; font-size: 14px; transition: all 0.2s;">
+          📋 Copy Code
+        </button>
+      </div>
+
+      <!-- Benefits List -->
+      <div style="text-align: left; margin-bottom: 30px;">
+        <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
+          <span style="font-size: 24px;">✓</span>
+          <span style="font-size: 14px; color: #333;">Free shipping on orders $50+</span>
+        </div>
+        <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
+          <span style="font-size: 24px;">✓</span>
+          <span style="font-size: 14px; color: #333;">Ships in 5-7 business days</span>
+        </div>
+        <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
+          <span style="font-size: 24px;">✓</span>
+          <span style="font-size: 14px; color: #333;">Premium quality, BPA-free stainless steel</span>
+        </div>
+        <div style="display: flex; align-items: center; gap: 12px;">
+          <span style="font-size: 24px;">✓</span>
+          <span style="font-size: 14px; color: #333;">500+ five-star reviews</span>
+        </div>
+      </div>
+
+      <!-- CTA Button -->
+      <a href="/checkout" id="exit-popup-cta" style="display: block; background: #d4a574; color: white; padding: 18px 40px; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 18px; transition: background 0.3s; text-align: center;">
+        Apply Discount & Checkout →
+      </a>
+
+      <p style="margin: 20px 0 0; font-size: 13px; color: #999;">
+        This offer expires in <span id="countdown-timer" style="font-weight: 600; color: #d4a574;">10:00</span>
+      </p>
+    </div>
+
+  </div>
+</div>
+
+<style>
+#exit-popup-close:hover {
+  background: #f8f9fa;
+  color: #333;
+}
+
+#exit-popup-cta:hover {
+  background: #c49464;
+}
+
+#copy-code-btn:hover {
+  background: #d4a574;
+  color: white;
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+  .exit-popup-content {
+    width: 95% !important;
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+
+  .exit-popup-content h2 {
+    font-size: 24px !important;
+  }
+
+  #discount-code {
+    font-size: 24px !important;
+  }
+}
+</style>
+
+<script>
+(function() {
+  const popup = document.getElementById('exit-intent-popup');
+  const closeBtn = document.getElementById('exit-popup-close');
+  const copyBtn = document.getElementById('copy-code-btn');
+  const ctaBtn = document.getElementById('exit-popup-cta');
+
+  let popupShown = false;
+  let exitIntentShown = sessionStorage.getItem('exitIntentShown');
+
+  // Don't show if already shown in this session
+  if (exitIntentShown) {
+    return;
+  }
+
+  // Exit intent detection
+  document.addEventListener('mouseleave', function(e) {
+    // Only trigger if mouse leaves through top of viewport (closing tab/window)
+    if (e.clientY < 0 && !popupShown && !exitIntentShown) {
+      showPopup();
+    }
+  });
+
+  // Mobile: Show on back button (more complex, requires additional library)
+  // For now, show after 30 seconds on mobile as fallback
+  if (window.innerWidth <= 768) {
+    setTimeout(function() {
+      if (!popupShown && !exitIntentShown) {
+        showPopup();
+      }
+    }, 30000); // 30 seconds
+  }
+
+  function showPopup() {
+    popup.style.display = 'block';
+    setTimeout(function() {
+      popup.style.opacity = '1';
+    }, 10);
+    popupShown = true;
+    sessionStorage.setItem('exitIntentShown', 'true');
+
+    // Track popup shown
+    if (typeof gtag !== 'undefined') {
+      gtag('event', 'exit_intent_shown', {
+        'event_category': 'Exit_Intent',
+        'event_label': 'popup_shown'
+      });
+    }
+
+    // Start countdown timer
+    startCountdown(10); // 10 minutes
+  }
+
+  function hidePopup() {
+    popup.style.opacity = '0';
+    setTimeout(function() {
+      popup.style.display = 'none';
+    }, 300);
+  }
+
+  // Close popup
+  closeBtn.addEventListener('click', function() {
+    hidePopup();
+
+    // Track close
+    if (typeof gtag !== 'undefined') {
+      gtag('event', 'exit_intent_closed', {
+        'event_category': 'Exit_Intent',
+        'event_label': 'popup_closed'
+      });
+    }
+  });
+
+  // Click outside to close
+  popup.addEventListener('click', function(e) {
+    if (e.target === popup) {
+      hidePopup();
+    }
+  });
+
+  // Copy code functionality
+  copyBtn.addEventListener('click', function() {
+    const code = document.getElementById('discount-code').textContent;
+
+    // Copy to clipboard
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(code).then(function() {
+        copyBtn.textContent = '✓ Copied!';
+        copyBtn.style.background = '#28a745';
+        copyBtn.style.borderColor = '#28a745';
+        copyBtn.style.color = 'white';
+
+        setTimeout(function() {
+          copyBtn.textContent = '📋 Copy Code';
+          copyBtn.style.background = 'white';
+          copyBtn.style.borderColor = '#d4a574';
+          copyBtn.style.color = '#d4a574';
+        }, 2000);
+      });
+    }
+
+    // Track copy
+    if (typeof gtag !== 'undefined') {
+      gtag('event', 'exit_intent_code_copied', {
+        'event_category': 'Exit_Intent',
+        'event_label': 'discount_code_copied',
+        'value': code
+      });
+    }
+  });
+
+  // Track CTA click
+  ctaBtn.addEventListener('click', function() {
+    // Apply discount code to cart
+    const code = 'STAY10';
+    const checkoutUrl = '/checkout?discount=' + code;
+    window.location.href = checkoutUrl;
+
+    // Track click
+    if (typeof gtag !== 'undefined') {
+      gtag('event', 'exit_intent_cta_click', {
+        'event_category': 'Exit_Intent',
+        'event_label': 'apply_discount_clicked'
+      });
+    }
+  });
+
+  // Countdown timer
+  function startCountdown(minutes) {
+    let totalSeconds = minutes * 60;
+    const timerEl = document.getElementById('countdown-timer');
+
+    const interval = setInterval(function() {
+      totalSeconds--;
+
+      if (totalSeconds <= 0) {
+        clearInterval(interval);
+        timerEl.textContent = '0:00';
+        return;
+      }
+
+      const mins = Math.floor(totalSeconds / 60);
+      const secs = totalSeconds % 60;
+      timerEl.textContent = mins + ':' + (secs < 10 ? '0' : '') + secs;
+    }, 1000);
+  }
+
+})();
+</script>
+
+{% endif %}
+
+{% comment %}
+  SETUP INSTRUCTIONS:
+
+  1. Create Shopify discount code "STAY10" with 10% off
+  2. Add this snippet to theme.liquid before </body>
+  3. Test by moving mouse to close browser tab
+
+  A/B TESTING:
+
+  Variant A (Control): No popup
+  Variant B (Test): This exit intent popup
+
+  Hypothesis: Exit intent with discount recovers abandoning visitors
+
+  Expected Impact:
+  - +3-5% overall conversion rate
+  - Discount redemption: 20-30% of popup viewers
+  - Net positive even with 10% discount cost
+
+  How to Calculate ROI:
+  - Popup shows to 100 visitors
+  - 25 use code (25% conversion)
+  - Average order: $100
+  - Revenue without popup: 0
+  - Revenue with popup: 25 × $90 (after discount) = $2,250
+  - Cost of discount: $250
+  - Net gain: $2,000 from 100 abandoning visitors
+
+  IMPORTANT: Monitor discount code usage
+  - If redemption rate too high (>40%), reduce visibility
+  - If too low (<15%), increase urgency or offer
+  - Test 10% vs 15% discount to find sweet spot
+{% endcomment %}

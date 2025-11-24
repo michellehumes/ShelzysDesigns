@@ -1,0 +1,154 @@
+{
+  "flows": [
+    {
+      "name": "Tag Bridal Customers",
+      "description": "Automatically tag customers who purchase from bridal collections",
+      "trigger": "Order created",
+      "conditions": [
+        {
+          "type": "Order line item collection",
+          "operator": "contains",
+          "value": "Bridal & Bachelorette"
+        }
+      ],
+      "actions": [
+        {
+          "type": "Add customer tag",
+          "tag": "bridal"
+        }
+      ]
+    },
+    {
+      "name": "Tag Corporate Customers",
+      "description": "Tag customers with large quantity orders (corporate/bulk)",
+      "trigger": "Order created",
+      "conditions": [
+        {
+          "type": "Order line item quantity",
+          "operator": "greater than or equal to",
+          "value": "10"
+        }
+      ],
+      "actions": [
+        {
+          "type": "Add customer tag",
+          "tag": "corporate"
+        }
+      ]
+    },
+    {
+      "name": "Tag VIP High-Value Customers",
+      "description": "Tag customers who spend $200+ in a single order",
+      "trigger": "Order created",
+      "conditions": [
+        {
+          "type": "Order total",
+          "operator": "greater than or equal to",
+          "value": "200"
+        }
+      ],
+      "actions": [
+        {
+          "type": "Add customer tag",
+          "tag": "vip"
+        },
+        {
+          "type": "Add customer tag",
+          "tag": "high-value"
+        }
+      ]
+    },
+    {
+      "name": "Tag Repeat Customers",
+      "description": "Tag customers on their second+ purchase",
+      "trigger": "Order created",
+      "conditions": [
+        {
+          "type": "Customer order count",
+          "operator": "greater than",
+          "value": "1"
+        }
+      ],
+      "actions": [
+        {
+          "type": "Add customer tag",
+          "tag": "repeat-customer"
+        }
+      ]
+    },
+    {
+      "name": "Tag First-Time Customers",
+      "description": "Tag new customers for welcome sequence",
+      "trigger": "Order created",
+      "conditions": [
+        {
+          "type": "Customer order count",
+          "operator": "equals",
+          "value": "1"
+        }
+      ],
+      "actions": [
+        {
+          "type": "Add customer tag",
+          "tag": "first-time"
+        }
+      ]
+    }
+  ],
+  "implementation_notes": {
+    "shopify_flow": "These flows can be implemented via Shopify Flow app (free with Shopify Plus or $15/mo for Basic/Shopify plans)",
+    "manual_alternative": "For stores without Shopify Flow, use Klaviyo's built-in segmentation or tag customers manually based on order reports",
+    "klaviyo_segments": [
+      {
+        "name": "Bridal Segment",
+        "conditions": "Placed Order where Product Collection = Bridal & Bachelorette at least once"
+      },
+      {
+        "name": "Corporate Segment",
+        "conditions": "Placed Order where Items Purchased >= 10 at least once"
+      },
+      {
+        "name": "VIP Segment",
+        "conditions": "Placed Order where Total Price >= $200 at least once"
+      },
+      {
+        "name": "Repeat Customers",
+        "conditions": "Placed Order at least 2 times"
+      }
+    ]
+  },
+  "campaign_ideas": [
+    {
+      "segment": "bridal",
+      "campaign": "Bridal Reorder Campaign",
+      "timing": "6 months after purchase",
+      "subject": "Your Bridesmaids Are Asking... 👰",
+      "preview_text": "Where did you get those beautiful bottles?",
+      "offer": "15% off for friends and family"
+    },
+    {
+      "segment": "corporate",
+      "campaign": "Annual Corporate Reorder",
+      "timing": "11 months after purchase",
+      "subject": "Time to Reorder for [Current Year] Events?",
+      "preview_text": "Same great bottles, same easy ordering",
+      "offer": "10% off repeat orders + saved designs"
+    },
+    {
+      "segment": "vip",
+      "campaign": "VIP Exclusive Early Access",
+      "timing": "When launching new products",
+      "subject": "VIP Early Access: New Collection 🌟",
+      "preview_text": "Shop 24 hours before everyone else",
+      "offer": "Exclusive first look + free upgrade"
+    },
+    {
+      "segment": "first-time",
+      "campaign": "Second Purchase Win-Back",
+      "timing": "30 days after first purchase",
+      "subject": "Thank You! Here's 20% Off Your Next Order",
+      "preview_text": "We appreciate your business",
+      "offer": "20% off second purchase"
+    }
+  ]
+}
