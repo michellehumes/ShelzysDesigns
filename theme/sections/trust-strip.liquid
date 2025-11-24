@@ -1,0 +1,143 @@
+{%- comment -%}
+<!-- SHELZYS_DESIGNS: START trust-strip -->
+  Trust Strip Section
+  - Social proof bar below hero
+  - Ratings, reviews, and quality badges
+<!-- SHELZYS_DESIGNS: END trust-strip -->
+{%- endcomment -%}
+
+<section class="trust-strip" style="background: {{ section.settings.bg_color }};">
+  <div class="trust-strip__container">
+    {%- for block in section.blocks -%}
+      <div class="trust-strip__item" {{ block.shopify_attributes }}>
+        {%- if block.settings.icon != blank -%}
+          <span class="trust-strip__icon" aria-hidden="true">{{ block.settings.icon }}</span>
+        {%- endif -%}
+        <span class="trust-strip__text">{{ block.settings.text }}</span>
+      </div>
+    {%- endfor -%}
+  </div>
+</section>
+
+<style>
+/* SHELZYS_DESIGNS: START trust-strip-styles */
+.trust-strip {
+  padding: 16px 20px;
+  border-top: 1px solid rgba(0,0,0,0.06);
+  border-bottom: 1px solid rgba(0,0,0,0.06);
+}
+
+.trust-strip__container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 40px;
+  flex-wrap: wrap;
+}
+
+.trust-strip__item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--color-text-secondary);
+}
+
+.trust-strip__icon {
+  font-size: 18px;
+}
+
+.trust-strip__text {
+  white-space: nowrap;
+}
+
+@media (max-width: 768px) {
+  .trust-strip__container {
+    gap: 20px 30px;
+    justify-content: center;
+  }
+
+  .trust-strip__item {
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 500px) {
+  .trust-strip {
+    padding: 14px 16px;
+  }
+
+  .trust-strip__container {
+    gap: 12px 24px;
+  }
+}
+/* SHELZYS_DESIGNS: END trust-strip-styles */
+</style>
+
+{% schema %}
+{
+  "name": "Trust Strip",
+  "tag": "section",
+  "class": "section-trust-strip",
+  "max_blocks": 4,
+  "settings": [
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background color",
+      "default": "#FFFFFF"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "trust_item",
+      "name": "Trust Item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "icon",
+          "label": "Icon (emoji)",
+          "default": "⭐"
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text",
+          "default": "500+ 5-Star Reviews"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Trust Strip",
+      "blocks": [
+        {
+          "type": "trust_item",
+          "settings": {
+            "icon": "⭐",
+            "text": "500+ 5-Star Reviews"
+          }
+        },
+        {
+          "type": "trust_item",
+          "settings": {
+            "icon": "💍",
+            "text": "4.9★ Rated by Brides & Event Planners"
+          }
+        },
+        {
+          "type": "trust_item",
+          "settings": {
+            "icon": "✓",
+            "text": "Hand-Inspected Before Shipping"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,88 +1,151 @@
 {
   "sections": {
-    "hero-enhanced": {
-      "type": "hero-enhanced",
+    "hero-bridal": {
+      "type": "hero-bridal",
       "settings": {
-        "show_badge": true,
-        "badge_text": "Premium Quality • Made in USA",
-        "hero_title": "Personalized Water Bottles That Actually Last",
-        "hero_subtitle": "Premium sublimation printing that never peels, cracks, or fades. Perfect for weddings, teams, and everyday use.",
-        "trust_tagline": "Custom Name · Any Font · Any Color · Ships in 5–7 Days (Rush Available)",
-        "cta1_text": "Bridal & Wedding Gifts",
-        "cta1_link": "/collections/bridal-weddings",
-        "cta2_text": "Corporate & Team Orders",
-        "cta2_link": "/pages/corporate-teams",
-        "cta3_text": "Everyday Personalized Bottles",
-        "cta3_link": "/collections/everyday-bottles",
-        "show_social_proof": true,
-        "rating_text": "4.9 Rating",
-        "reviews_text": "500+ Reviews",
-        "orders_text": "2,000+ Happy Customers",
+        "kicker": "Weddings • Corporate • Everyday",
+        "title": "Custom Name Bottles Your Crew Actually Keeps",
+        "description": "Premium stainless-steel bottles personalized with names, fonts, and colors to match your wedding, weekend, or event. No vinyl, just permanent sublimation printing.",
+        "primary_cta_text": "Shop Bridal Sets",
+        "primary_cta_link": "/collections/bridal-weddings",
+        "secondary_cta_text": "Shop All Bottles",
+        "secondary_cta_link": "/collections/best-sellers"
+      },
+      "blocks": {
+        "benefit-1": {
+          "type": "benefit",
+          "settings": {
+            "text": "Free personalization on every order"
+          }
+        },
+        "benefit-2": {
+          "type": "benefit",
+          "settings": {
+            "text": "Free shipping $50+"
+          }
+        },
+        "benefit-3": {
+          "type": "benefit",
+          "settings": {
+            "text": "Ships in 5–7 days • Rush options available"
+          }
+        }
+      },
+      "block_order": ["benefit-1", "benefit-2", "benefit-3"]
+    },
+    "trust-strip": {
+      "type": "trust-strip",
+      "settings": {
         "bg_color": "#FFFFFF"
-      }
+      },
+      "blocks": {
+        "trust-1": {
+          "type": "trust_item",
+          "settings": {
+            "icon": "⭐",
+            "text": "500+ 5-Star Reviews"
+          }
+        },
+        "trust-2": {
+          "type": "trust_item",
+          "settings": {
+            "icon": "💍",
+            "text": "4.9★ Rated by Brides & Event Planners"
+          }
+        },
+        "trust-3": {
+          "type": "trust_item",
+          "settings": {
+            "icon": "✓",
+            "text": "Hand-Inspected Before Shipping"
+          }
+        }
+      },
+      "block_order": ["trust-1", "trust-2", "trust-3"]
+    },
+    "why-shelzys": {
+      "type": "why-shelzys",
+      "settings": {
+        "title": "Why Shelzy's Designs?",
+        "subtitle": "We make personalized bottles that feel as special as your event—no cheap vinyl, no generic swag.",
+        "bg_color": "#FFFFFF"
+      },
+      "blocks": {
+        "feature-1": {
+          "type": "feature",
+          "settings": {
+            "icon": "🎨",
+            "title": "Permanent Sublimation Printing",
+            "text": "Names and designs are baked into the bottle—no peeling vinyl, ever."
+          }
+        },
+        "feature-2": {
+          "type": "feature",
+          "settings": {
+            "icon": "💎",
+            "title": "Premium Stainless Steel",
+            "text": "20oz insulated bottles that keep drinks cold for hours, made to last beyond the event."
+          }
+        },
+        "feature-3": {
+          "type": "feature",
+          "settings": {
+            "icon": "✨",
+            "title": "Done-For-You Personalization",
+            "text": "You tell us the names and colors; we handle the layout, fonts, and final details."
+          }
+        }
+      },
+      "block_order": ["feature-1", "feature-2", "feature-3"]
     },
     "best-sellers": {
       "type": "best-sellers",
       "settings": {
-        "section_title": "Best Sellers",
-        "section_subtitle": "Our most-loved personalized bottles",
+        "section_title": "Bestselling Custom Bottle Sets",
+        "section_subtitle": "Most-loved sets for bachelorettes, wedding parties, and events.",
         "collection": "best-sellers",
         "products_to_show": 8,
         "show_cta": true,
         "cta_text": "View All Products",
         "cta_link": "/collections/all",
-        "bg_color": "#F7F4EF"
+        "bg_color": "#F5F0E8"
       }
     },
-    "how-it-works": {
-      "type": "how-it-works",
+    "shop-by-occasion": {
+      "type": "shop-by-occasion",
       "settings": {
-        "section_title": "How It Works",
-        "section_subtitle": "Getting your personalized bottle is easy",
+        "section_title": "Shop by Occasion",
+        "section_subtitle": "Find the perfect custom bottle for your event",
         "bg_color": "#FFFFFF"
       },
       "blocks": {
-        "step-1": {
-          "type": "step",
+        "weddings": {
+          "type": "occasion",
           "settings": {
-            "icon": "bottle",
-            "title": "Choose Your Style",
-            "description": "Select from our premium water bottle styles and colors. Browse our collection or contact us for custom options."
+            "title": "Bridal & Weddings",
+            "description": "Beautiful personalized bottles for your bridal party, bachelorette, and wedding day",
+            "collection": "bridal-weddings",
+            "hide_if_empty": false
           }
         },
-        "step-2": {
-          "type": "step",
+        "corporate": {
+          "type": "occasion",
           "settings": {
-            "icon": "pencil",
-            "title": "Personalize It",
-            "description": "Add names, dates, logos, or custom text. Our design team ensures every detail is perfect."
-          }
-        },
-        "step-3": {
-          "type": "step",
-          "settings": {
-            "icon": "truck",
-            "title": "Fast Delivery",
-            "description": "Ships in 5-7 business days. Free shipping on orders $50+. Rush options available."
+            "title": "Corporate & Events",
+            "description": "Custom branded bottles for team retreats, conferences, and client gifts",
+            "collection": "corporate-events",
+            "hide_if_empty": false
           }
         }
       },
-      "block_order": ["step-1", "step-2", "step-3"]
-    },
-    "use-cases": {
-      "type": "use-cases",
-      "settings": {
-        "section_title": "How Will You Use Yours?",
-        "section_subtitle": "Find the perfect personalized bottle for your occasion",
-        "bg_color": "#F7F4EF"
-      }
+      "block_order": ["weddings", "corporate"]
     },
     "testimonials": {
       "type": "testimonials",
       "settings": {
-        "section_title": "Why Customers Love Us",
+        "section_title": "What Our Customers Say",
         "section_subtitle": "Real reviews from real customers",
-        "bg_color": "#FFFFFF"
+        "bg_color": "#F5F0E8"
       },
       "blocks": {
         "review-1": {
@@ -114,66 +177,14 @@
         }
       },
       "block_order": ["review-1", "review-2", "review-3"]
-    },
-    "social-proof": {
-      "type": "social-proof",
-      "settings": {
-        "section_title": "Real Customers, Real Bottles",
-        "section_subtitle": "Join thousands of happy customers showing off their personalized bottles",
-        "instagram_handle": "@shelzysdesigns",
-        "bg_color": "#FFFFFF"
-      }
-    },
-    "shop-by-occasion": {
-      "type": "shop-by-occasion",
-      "settings": {
-        "section_title": "Shop by Occasion",
-        "section_subtitle": "Find the perfect bottle for every event",
-        "bg_color": "#F7F4EF"
-      },
-      "blocks": {
-        "weddings": {
-          "type": "occasion",
-          "settings": {
-            "title": "Weddings",
-            "description": "Beautiful personalized bottles for your bridal party and wedding guests",
-            "collection": "bridal-weddings",
-            "hide_if_empty": false
-          }
-        },
-        "corporate": {
-          "type": "occasion",
-          "settings": {
-            "title": "Corporate Events",
-            "description": "Custom branded bottles for team retreats, conferences, and client gifts",
-            "collection": "corporate-events",
-            "hide_if_empty": false
-          }
-        }
-      },
-      "block_order": ["weddings", "corporate"]
-    },
-    "blog-posts": {
-      "type": "blog-posts",
-      "settings": {
-        "section_title": "From Our Blog",
-        "section_subtitle": "Helpful guides, gift ideas, and Amazon favorites — plus how to style them with your custom bottles.",
-        "blog": "news",
-        "posts_to_show": 3,
-        "show_excerpt": true,
-        "show_view_all": true,
-        "bg_color": "#FFFFFF"
-      }
     }
   },
   "order": [
-    "hero-enhanced",
+    "hero-bridal",
+    "trust-strip",
+    "why-shelzys",
     "best-sellers",
-    "how-it-works",
-    "use-cases",
-    "testimonials",
-    "social-proof",
     "shop-by-occasion",
-    "blog-posts"
+    "testimonials"
   ]
 }

@@ -7,27 +7,28 @@
    CSS Variables / Design Tokens
    -------------------------------------------------------------------------- */
 :root {
-  /* Primary Colors */
+  /* Primary Colors - Pool Blue Design System */
   --color-black: #111111;
   --color-white: #FFFFFF;
-  --color-beige: #F7F4EF;
-  --color-sage: #9CAE8C;
+  --color-sand: #F5F0E8;
+  --color-pool-blue: #00B4D8;
+  --color-pool-blue-dark: #0096B4;
 
   /* Secondary Colors */
-  --color-sandstone: #D8CFC4;
-  --color-blush: #F8D9C5;
-  --color-seagrass: #7C9F8C;
+  --color-sandstone: #E8DFD0;
+  --color-coral: #FF6B6B;
+  --color-coral-light: #FFE5E5;
 
   /* Semantic Colors */
   --color-text-primary: var(--color-black);
-  --color-text-secondary: #666666;
-  --color-text-light: #888888;
+  --color-text-secondary: #555555;
+  --color-text-light: #777777;
   --color-bg-primary: var(--color-white);
-  --color-bg-secondary: var(--color-beige);
-  --color-accent: var(--color-sage);
-  --color-accent-hover: var(--color-seagrass);
-  --color-sale: #C74B4B;
-  --color-success: #4CAF50;
+  --color-bg-secondary: var(--color-sand);
+  --color-accent: var(--color-pool-blue);
+  --color-accent-hover: var(--color-pool-blue-dark);
+  --color-sale: var(--color-coral);
+  --color-success: #22C55E;
 
   /* Typography */
   --font-heading: 'Poppins', sans-serif;
@@ -178,46 +179,52 @@ img {
 .text-right { text-align: right; }
 
 /* --------------------------------------------------------------------------
-   Buttons
+   Buttons - Pool Blue Design System
    -------------------------------------------------------------------------- */
 .btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: var(--spacing-sm);
-  padding: 14px 28px;
+  padding: 16px 32px;
   font-family: var(--font-heading);
-  font-weight: 600;
+  font-weight: 700;
   font-size: var(--font-size-base);
   line-height: 1;
   text-decoration: none;
   border: 2px solid transparent;
-  border-radius: var(--border-radius-sm);
+  border-radius: 50px;
   cursor: pointer;
   transition: all var(--transition-base);
+  text-transform: none;
+  letter-spacing: 0.02em;
 }
 
 .btn-primary {
-  background-color: var(--color-accent);
+  background-color: var(--color-pool-blue);
   color: var(--color-white);
-  border-color: var(--color-accent);
+  border-color: var(--color-pool-blue);
+  box-shadow: 0 4px 14px rgba(0, 180, 216, 0.25);
 }
 
 .btn-primary:hover {
-  background-color: var(--color-accent-hover);
-  border-color: var(--color-accent-hover);
+  background-color: var(--color-pool-blue-dark);
+  border-color: var(--color-pool-blue-dark);
   color: var(--color-white);
+  box-shadow: 0 6px 20px rgba(0, 180, 216, 0.35);
+  transform: translateY(-2px);
 }
 
 .btn-secondary {
   background-color: transparent;
-  color: var(--color-text-primary);
-  border-color: var(--color-text-primary);
+  color: var(--color-pool-blue);
+  border-color: var(--color-pool-blue);
 }
 
 .btn-secondary:hover {
-  background-color: var(--color-text-primary);
+  background-color: var(--color-pool-blue);
   color: var(--color-white);
+  transform: translateY(-2px);
 }
 
 .btn-outline-white {
@@ -228,12 +235,17 @@ img {
 
 .btn-outline-white:hover {
   background-color: var(--color-white);
-  color: var(--color-accent);
+  color: var(--color-pool-blue);
 }
 
 .btn-sm {
-  padding: 10px 20px;
+  padding: 12px 24px;
   font-size: var(--font-size-sm);
+}
+
+.btn-lg {
+  padding: 18px 40px;
+  font-size: var(--font-size-lg);
 }
 
 .btn-lg {

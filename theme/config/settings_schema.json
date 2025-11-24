@@ -35,20 +35,20 @@
       {
         "type": "color",
         "id": "color_background_secondary",
-        "label": "Secondary Background",
-        "default": "#F7F4EF"
+        "label": "Secondary Background (Sand)",
+        "default": "#F5F0E8"
       },
       {
         "type": "color",
         "id": "color_accent",
-        "label": "Accent (Sage Green)",
-        "default": "#9CAE8C"
+        "label": "Primary Accent (Pool Blue)",
+        "default": "#00B4D8"
       },
       {
         "type": "color",
         "id": "color_accent_dark",
-        "label": "Accent Dark (Seagrass)",
-        "default": "#7C9F8C"
+        "label": "Primary Accent Hover",
+        "default": "#0096B4"
       },
       {
         "type": "header",
@@ -57,14 +57,15 @@
       {
         "type": "color",
         "id": "color_sandstone",
-        "label": "Sandstone",
-        "default": "#D8CFC4"
+        "label": "Warm Sand",
+        "default": "#E8DFD0"
       },
       {
         "type": "color",
-        "id": "color_blush",
-        "label": "Blush Apricot",
-        "default": "#F8D9C5"
+        "id": "color_coral",
+        "label": "Coral Accent",
+        "default": "#FF6B6B",
+        "info": "Used for badges, tags, and small highlights"
       }
     ]
   },

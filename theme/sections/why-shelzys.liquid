@@ -1,0 +1,186 @@
+{%- comment -%}
+<!-- SHELZYS_DESIGNS: START why-shelzys -->
+  "Why Shelzy's Designs?" 3-Column Feature Section
+  - Permanent sublimation printing
+  - Premium stainless steel
+  - Done-for-you personalization
+<!-- SHELZYS_DESIGNS: END why-shelzys -->
+{%- endcomment -%}
+
+<section class="why-shelzys section-padding" style="background: {{ section.settings.bg_color }};">
+  <div class="container">
+    <div class="why-shelzys__header">
+      <h2 class="why-shelzys__title">{{ section.settings.title }}</h2>
+      <p class="why-shelzys__subtitle">{{ section.settings.subtitle }}</p>
+    </div>
+
+    <div class="why-shelzys__grid">
+      {%- for block in section.blocks -%}
+        <div class="why-shelzys__card" {{ block.shopify_attributes }}>
+          {%- if block.settings.icon != blank -%}
+            <div class="why-shelzys__icon">{{ block.settings.icon }}</div>
+          {%- endif -%}
+          <h3 class="why-shelzys__card-title">{{ block.settings.title }}</h3>
+          <p class="why-shelzys__card-text">{{ block.settings.text }}</p>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+<style>
+/* SHELZYS_DESIGNS: START why-shelzys-styles */
+.why-shelzys__header {
+  text-align: center;
+  max-width: 700px;
+  margin: 0 auto 50px;
+}
+
+.why-shelzys__title {
+  font-family: var(--font-heading);
+  font-size: clamp(28px, 4vw, 40px);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin: 0 0 14px;
+  color: var(--color-text-primary);
+}
+
+.why-shelzys__subtitle {
+  font-size: 17px;
+  line-height: 1.6;
+  color: var(--color-text-secondary);
+  margin: 0;
+}
+
+.why-shelzys__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 40px;
+}
+
+.why-shelzys__card {
+  text-align: center;
+  padding: 30px 24px;
+}
+
+.why-shelzys__icon {
+  font-size: 48px;
+  margin-bottom: 20px;
+  line-height: 1;
+}
+
+.why-shelzys__card-title {
+  font-family: var(--font-heading);
+  font-size: 20px;
+  font-weight: 700;
+  margin: 0 0 12px;
+  color: var(--color-text-primary);
+}
+
+.why-shelzys__card-text {
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--color-text-secondary);
+  margin: 0;
+}
+
+@media (max-width: 900px) {
+  .why-shelzys__grid {
+    grid-template-columns: 1fr;
+    max-width: 450px;
+    margin: 0 auto;
+    gap: 30px;
+  }
+
+  .why-shelzys__card {
+    padding: 20px 16px;
+  }
+}
+/* SHELZYS_DESIGNS: END why-shelzys-styles */
+</style>
+
+{% schema %}
+{
+  "name": "Why Shelzy's",
+  "tag": "section",
+  "class": "section-why-shelzys",
+  "max_blocks": 4,
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Section title",
+      "default": "Why Shelzy's Designs?"
+    },
+    {
+      "type": "textarea",
+      "id": "subtitle",
+      "label": "Section subtitle",
+      "default": "We make personalized bottles that feel as special as your event—no cheap vinyl, no generic swag."
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background color",
+      "default": "#FFFFFF"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "feature",
+      "name": "Feature",
+      "settings": [
+        {
+          "type": "text",
+          "id": "icon",
+          "label": "Icon (emoji)",
+          "default": "🎨"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Permanent Sublimation Printing"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Description",
+          "default": "Names and designs are baked into the bottle—no peeling vinyl, ever."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Why Shelzy's",
+      "blocks": [
+        {
+          "type": "feature",
+          "settings": {
+            "icon": "🎨",
+            "title": "Permanent Sublimation Printing",
+            "text": "Names and designs are baked into the bottle—no peeling vinyl, ever."
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "icon": "💎",
+            "title": "Premium Stainless Steel",
+            "text": "20oz insulated bottles that keep drinks cold for hours, made to last beyond the event."
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "icon": "✨",
+            "title": "Done-For-You Personalization",
+            "text": "You tell us the names and colors; we handle the layout, fonts, and final details."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
