@@ -1,0 +1,874 @@
+{% comment %}
+==================================================
+SHELZY'S DESIGNS - PRODUCT PAGE ENHANCEMENTS
+Liquid templates for improved product pages
+
+Components included:
+1. Enhanced Product Description Template
+2. FAQ Accordion (Product-specific)
+3. Delivery Date Calculator
+4. Bulk Order CTA
+5. Recently Viewed Products
+6. Related Products Section
+7. Size/Color Swatches
+8. Personalization Preview Placeholder
+
+INSTALLATION:
+Add these as snippets or directly into product template
+==================================================
+{% endcomment %}
+
+
+{% comment %}
+==================================================
+COMPONENT 1: ENHANCED PRODUCT DESCRIPTION
+Use: Replace default product description
+==================================================
+{% endcomment %}
+
+<div class="enhanced-description">
+  <!-- Emotional Hook -->
+  <div class="description-intro">
+    <p>{{ product.metafields.custom.emotional_hook | default: "Create something uniquely yours. Every bottle is personalized with care and made to last." }}</p>
+  </div>
+
+  <!-- Key Benefits -->
+  <div class="benefits-section">
+    <h3>Why You'll Love It</h3>
+    <ul class="benefits-list">
+      <li>
+        <span class="benefit-icon">&#10003;</span>
+        <span>Keeps drinks cold for 24 hours (perfect for all-day events)</span>
+      </li>
+      <li>
+        <span class="benefit-icon">&#10003;</span>
+        <span>Smooth, permanent personalization (no peeling ever)</span>
+      </li>
+      <li>
+        <span class="benefit-icon">&#10003;</span>
+        <span>BPA-free stainless steel construction</span>
+      </li>
+      <li>
+        <span class="benefit-icon">&#10003;</span>
+        <span>Beautifully packaged, ready to gift</span>
+      </li>
+    </ul>
+  </div>
+
+  <!-- Use Cases -->
+  <div class="use-cases-section">
+    <h3>Perfect For</h3>
+    <div class="use-cases-grid">
+      {% assign use_cases = "Bridesmaid Proposals,Wedding Parties,Birthday Gifts,Teacher Appreciation,Gym & Fitness,Corporate Events" | split: "," %}
+      {% for use_case in use_cases %}
+        <span class="use-case-tag">{{ use_case }}</span>
+      {% endfor %}
+    </div>
+  </div>
+
+  <!-- Specs (Collapsible) -->
+  <details class="specs-section">
+    <summary>Product Specifications</summary>
+    <table class="specs-table">
+      <tr>
+        <td>Capacity</td>
+        <td>20oz (590ml)</td>
+      </tr>
+      <tr>
+        <td>Material</td>
+        <td>304 Stainless Steel</td>
+      </tr>
+      <tr>
+        <td>Insulation</td>
+        <td>Double-wall vacuum</td>
+      </tr>
+      <tr>
+        <td>Finish</td>
+        <td>Powder-coated with sublimation</td>
+      </tr>
+      <tr>
+        <td>Height</td>
+        <td>10 inches</td>
+      </tr>
+      <tr>
+        <td>Diameter</td>
+        <td>2.87 inches</td>
+      </tr>
+      <tr>
+        <td>Weight</td>
+        <td>~12 oz empty</td>
+      </tr>
+    </table>
+  </details>
+</div>
+
+<style>
+.enhanced-description {
+  margin-top: 20px;
+}
+
+.description-intro p {
+  font-family: 'Inter', sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  color: #333;
+  margin-bottom: 25px;
+}
+
+.benefits-section,
+.use-cases-section {
+  margin-bottom: 25px;
+}
+
+.benefits-section h3,
+.use-cases-section h3 {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  font-size: 16px;
+  color: #111111;
+  margin-bottom: 15px;
+}
+
+.benefits-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.benefits-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  color: #666;
+  padding: 8px 0;
+}
+
+.benefit-icon {
+  color: #9CAE8C;
+  font-weight: bold;
+  flex-shrink: 0;
+}
+
+.use-cases-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.use-case-tag {
+  display: inline-block;
+  padding: 6px 12px;
+  background: #F7F4EF;
+  border-radius: 20px;
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  color: #666;
+}
+
+.specs-section {
+  border: 1px solid #E5E5E5;
+  border-radius: 4px;
+  margin-top: 20px;
+}
+
+.specs-section summary {
+  padding: 15px;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  color: #111111;
+  cursor: pointer;
+  background: #F7F4EF;
+}
+
+.specs-section summary:hover {
+  background: #EDE9E3;
+}
+
+.specs-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.specs-table td {
+  padding: 12px 15px;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  border-top: 1px solid #E5E5E5;
+}
+
+.specs-table td:first-child {
+  color: #999;
+  width: 40%;
+}
+
+.specs-table td:last-child {
+  color: #333;
+}
+</style>
+
+
+{% comment %}
+==================================================
+COMPONENT 2: FAQ ACCORDION (Product-specific)
+Use: Below product description or in tabs
+==================================================
+{% endcomment %}
+
+<div class="product-faq">
+  <h3>Frequently Asked Questions</h3>
+
+  <div class="faq-accordion">
+    <details class="faq-item">
+      <summary>Is the personalization vinyl or permanent?</summary>
+      <div class="faq-answer">
+        <p>Our personalization is <strong>permanent sublimation printing</strong> - not vinyl. The ink is heat-pressed directly into the bottle's coating, becoming part of the bottle itself. No peeling, cracking, or fading!</p>
+      </div>
+    </details>
+
+    <details class="faq-item">
+      <summary>How long does processing take?</summary>
+      <div class="faq-answer">
+        <p>Each bottle is made to order. Processing typically takes <strong>3-5 business days</strong>, then shipping takes 3-7 business days depending on your location.</p>
+      </div>
+    </details>
+
+    <details class="faq-item">
+      <summary>Can I see a proof before production?</summary>
+      <div class="faq-answer">
+        <p>We create each design using your exact specifications. If you have specific concerns, contact us at hello@shelzysdesigns.com before ordering and we can discuss options.</p>
+      </div>
+    </details>
+
+    <details class="faq-item">
+      <summary>Is it dishwasher safe?</summary>
+      <div class="faq-answer">
+        <p>We recommend <strong>hand washing</strong> to keep your bottle looking its best for years. While sublimation is more durable than vinyl, hand washing extends the life of the finish.</p>
+      </div>
+    </details>
+
+    <details class="faq-item">
+      <summary>What if there's a spelling error?</summary>
+      <div class="faq-answer">
+        <p>Please double-check your personalization before submitting! We print exactly what you enter. If you notice a mistake after ordering, contact us immediately - we may be able to help if production hasn't started.</p>
+      </div>
+    </details>
+  </div>
+</div>
+
+<style>
+.product-faq {
+  margin-top: 40px;
+  padding-top: 30px;
+  border-top: 1px solid #E5E5E5;
+}
+
+.product-faq h3 {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  font-size: 20px;
+  color: #111111;
+  margin-bottom: 20px;
+}
+
+.faq-accordion {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.faq-item {
+  border: 1px solid #E5E5E5;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.faq-item summary {
+  padding: 15px 20px;
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  color: #111111;
+  cursor: pointer;
+  background: #FFFFFF;
+  transition: background 0.2s ease;
+}
+
+.faq-item summary:hover {
+  background: #F7F4EF;
+}
+
+.faq-item[open] summary {
+  border-bottom: 1px solid #E5E5E5;
+  background: #F7F4EF;
+}
+
+.faq-answer {
+  padding: 15px 20px;
+  background: #FFFFFF;
+}
+
+.faq-answer p {
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  color: #666;
+  margin: 0;
+}
+</style>
+
+
+{% comment %}
+==================================================
+COMPONENT 3: DELIVERY DATE CALCULATOR
+Use: Near Add to Cart button
+==================================================
+{% endcomment %}
+
+<div class="delivery-calculator">
+  <div class="delivery-icon">&#128666;</div>
+  <div class="delivery-info">
+    <p class="delivery-label">Estimated Delivery</p>
+    <p class="delivery-date" id="estimated-delivery">
+      <!-- Calculated by JS -->
+      Calculating...
+    </p>
+    <p class="delivery-note">Order within <span id="order-within-time">--</span> to ship by <span id="ship-by-date">--</span></p>
+  </div>
+</div>
+
+<style>
+.delivery-calculator {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 15px;
+  background: #F7F4EF;
+  border-radius: 8px;
+  margin: 15px 0;
+}
+
+.delivery-icon {
+  font-size: 28px;
+}
+
+.delivery-info {
+  flex: 1;
+}
+
+.delivery-label {
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  color: #999;
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.delivery-date {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  font-size: 16px;
+  color: #111111;
+  margin: 4px 0;
+}
+
+.delivery-note {
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  color: #9CAE8C;
+  margin: 0;
+}
+</style>
+
+<script>
+(function() {
+  function addBusinessDays(date, days) {
+    var result = new Date(date);
+    var added = 0;
+    while (added < days) {
+      result.setDate(result.getDate() + 1);
+      if (result.getDay() !== 0 && result.getDay() !== 6) {
+        added++;
+      }
+    }
+    return result;
+  }
+
+  function formatDate(date) {
+    var options = { weekday: 'short', month: 'short', day: 'numeric' };
+    return date.toLocaleDateString('en-US', options);
+  }
+
+  var now = new Date();
+  var cutoffHour = 14; // 2 PM cutoff
+
+  // Processing: 3-5 business days
+  // Shipping: 3-7 business days
+  var processingDays = 5;
+  var shippingDaysMin = 3;
+  var shippingDaysMax = 7;
+
+  var processEndDate = addBusinessDays(now, processingDays);
+  var deliveryMin = addBusinessDays(processEndDate, shippingDaysMin);
+  var deliveryMax = addBusinessDays(processEndDate, shippingDaysMax);
+
+  var deliveryEl = document.getElementById('estimated-delivery');
+  var orderWithinEl = document.getElementById('order-within-time');
+  var shipByEl = document.getElementById('ship-by-date');
+
+  if (deliveryEl) {
+    deliveryEl.textContent = formatDate(deliveryMin) + ' - ' + formatDate(deliveryMax);
+  }
+
+  if (shipByEl) {
+    shipByEl.textContent = formatDate(processEndDate);
+  }
+
+  // Calculate time until cutoff
+  if (orderWithinEl) {
+    var cutoff = new Date(now);
+    cutoff.setHours(cutoffHour, 0, 0, 0);
+
+    if (now > cutoff) {
+      cutoff.setDate(cutoff.getDate() + 1);
+    }
+
+    var diff = cutoff - now;
+    var hours = Math.floor(diff / (1000 * 60 * 60));
+    var minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+
+    orderWithinEl.textContent = hours + 'h ' + minutes + 'm';
+  }
+})();
+</script>
+
+
+{% comment %}
+==================================================
+COMPONENT 4: BULK ORDER CTA
+Use: Below Add to Cart for relevant products
+==================================================
+{% endcomment %}
+
+<div class="bulk-order-cta">
+  <div class="bulk-icon">&#127873;</div>
+  <div class="bulk-content">
+    <h4>Ordering for a Group?</h4>
+    <p>Get volume discounts on 5+ bottles for weddings, teams, or corporate events.</p>
+    <a href="/pages/bulk-corporate" class="bulk-link">Get Bulk Pricing &rarr;</a>
+  </div>
+</div>
+
+<style>
+.bulk-order-cta {
+  display: flex;
+  gap: 15px;
+  padding: 20px;
+  background: linear-gradient(135deg, #F7F4EF 0%, #EDE9E3 100%);
+  border-radius: 8px;
+  margin: 20px 0;
+  border: 1px solid #E5E5E5;
+}
+
+.bulk-icon {
+  font-size: 32px;
+}
+
+.bulk-content {
+  flex: 1;
+}
+
+.bulk-content h4 {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  font-size: 16px;
+  color: #111111;
+  margin: 0 0 5px;
+}
+
+.bulk-content p {
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  color: #666;
+  margin: 0 0 10px;
+}
+
+.bulk-link {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  color: #9CAE8C;
+  text-decoration: none;
+}
+
+.bulk-link:hover {
+  text-decoration: underline;
+}
+</style>
+
+
+{% comment %}
+==================================================
+COMPONENT 5: RECENTLY VIEWED PRODUCTS
+Use: Bottom of product page
+==================================================
+{% endcomment %}
+
+<section class="recently-viewed" id="recently-viewed">
+  <h3>Recently Viewed</h3>
+  <div class="recently-viewed-grid" id="recently-viewed-products">
+    <!-- Populated by JavaScript -->
+  </div>
+</section>
+
+<style>
+.recently-viewed {
+  margin-top: 60px;
+  padding-top: 40px;
+  border-top: 1px solid #E5E5E5;
+}
+
+.recently-viewed h3 {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  font-size: 24px;
+  color: #111111;
+  margin-bottom: 25px;
+  text-align: center;
+}
+
+.recently-viewed-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+.recently-viewed-item {
+  text-align: center;
+}
+
+.recently-viewed-item img {
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+
+.recently-viewed-item h4 {
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  color: #111111;
+  margin: 0 0 5px;
+}
+
+.recently-viewed-item p {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  color: #9CAE8C;
+  margin: 0;
+}
+
+@media (max-width: 768px) {
+  .recently-viewed-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+</style>
+
+<script>
+// Recently Viewed Products
+(function() {
+  var STORAGE_KEY = 'shelzy_recently_viewed';
+  var MAX_ITEMS = 8;
+
+  function getRecentlyViewed() {
+    try {
+      return JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+    } catch (e) {
+      return [];
+    }
+  }
+
+  function saveRecentlyViewed(items) {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
+    } catch (e) {}
+  }
+
+  function addToRecentlyViewed(product) {
+    var items = getRecentlyViewed();
+    items = items.filter(function(item) {
+      return item.id !== product.id;
+    });
+    items.unshift(product);
+    items = items.slice(0, MAX_ITEMS);
+    saveRecentlyViewed(items);
+  }
+
+  function renderRecentlyViewed() {
+    var container = document.getElementById('recently-viewed-products');
+    var section = document.getElementById('recently-viewed');
+    if (!container || !section) return;
+
+    var items = getRecentlyViewed();
+    // Remove current product
+    var currentProductId = {{ product.id | json }};
+    items = items.filter(function(item) {
+      return item.id !== currentProductId;
+    });
+
+    if (items.length === 0) {
+      section.style.display = 'none';
+      return;
+    }
+
+    items = items.slice(0, 4);
+    container.innerHTML = items.map(function(item) {
+      return '<a href="' + item.url + '" class="recently-viewed-item">' +
+        '<img src="' + item.image + '" alt="' + item.title + '">' +
+        '<h4>' + item.title + '</h4>' +
+        '<p>' + item.price + '</p>' +
+        '</a>';
+    }).join('');
+  }
+
+  // Add current product to recently viewed
+  addToRecentlyViewed({
+    id: {{ product.id | json }},
+    title: {{ product.title | json }},
+    url: {{ product.url | json }},
+    image: {{ product.featured_image | img_url: '300x' | json }},
+    price: {{ product.price | money | json }}
+  });
+
+  // Render on page load
+  renderRecentlyViewed();
+})();
+</script>
+
+
+{% comment %}
+==================================================
+COMPONENT 6: RELATED PRODUCTS SECTION
+Use: Bottom of product page
+==================================================
+{% endcomment %}
+
+<section class="related-products">
+  <h3>You Might Also Like</h3>
+  <div class="related-products-grid">
+    {% assign related = collections.all.products | where: 'available', true %}
+    {% for product in related limit: 4 %}
+      {% unless product.id == current_product.id %}
+        <div class="related-product-card">
+          <a href="{{ product.url }}">
+            <div class="related-product-image">
+              {% if product.featured_image %}
+                <img
+                  src="{{ product.featured_image | img_url: '400x' }}"
+                  alt="{{ product.title }}"
+                  loading="lazy"
+                >
+              {% endif %}
+            </div>
+            <div class="related-product-info">
+              <h4>{{ product.title }}</h4>
+              <p class="related-product-price">{{ product.price | money }}</p>
+            </div>
+          </a>
+        </div>
+      {% endunless %}
+    {% endfor %}
+  </div>
+</section>
+
+<style>
+.related-products {
+  margin-top: 60px;
+  padding-top: 40px;
+  border-top: 1px solid #E5E5E5;
+}
+
+.related-products h3 {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  font-size: 24px;
+  color: #111111;
+  margin-bottom: 25px;
+  text-align: center;
+}
+
+.related-products-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+.related-product-card {
+  background: #FFFFFF;
+  border-radius: 8px;
+  overflow: hidden;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.related-product-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+}
+
+.related-product-card a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.related-product-image {
+  position: relative;
+  padding-bottom: 100%;
+  background: #F7F4EF;
+}
+
+.related-product-image img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.related-product-info {
+  padding: 15px;
+}
+
+.related-product-info h4 {
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  color: #111111;
+  margin: 0 0 5px;
+  line-height: 1.3;
+}
+
+.related-product-price {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  font-size: 16px;
+  color: #9CAE8C;
+  margin: 0;
+}
+
+@media (max-width: 768px) {
+  .related-products-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+</style>
+
+
+{% comment %}
+==================================================
+COMPONENT 7: COLOR SWATCHES
+Use: Replace dropdown color selector
+==================================================
+{% endcomment %}
+
+{% if product.options_with_values.size > 0 %}
+  {% for option in product.options_with_values %}
+    {% if option.name == 'Color' %}
+      <div class="color-swatches" data-option-index="{{ forloop.index0 }}">
+        <label class="swatches-label">{{ option.name }}</label>
+        <div class="swatches-container">
+          {% for value in option.values %}
+            {% assign color_handle = value | handleize %}
+            {% assign color_map = "white:#FFFFFF,black:#111111,sage:#9CAE8C,blush:#F8D9C5,sandstone:#D8CFC4,rose-gold:#E8C4B8,navy:#1B365D" | split: "," %}
+            {% assign hex_color = "#CCCCCC" %}
+
+            {% for color in color_map %}
+              {% assign color_parts = color | split: ":" %}
+              {% if color_parts[0] == color_handle %}
+                {% assign hex_color = color_parts[1] %}
+              {% endif %}
+            {% endfor %}
+
+            <label class="swatch-option">
+              <input
+                type="radio"
+                name="Color"
+                value="{{ value }}"
+                {% if option.selected_value == value %}checked{% endif %}
+              >
+              <span
+                class="swatch-color"
+                style="background-color: {{ hex_color }};"
+                title="{{ value }}"
+              ></span>
+              <span class="swatch-name">{{ value }}</span>
+            </label>
+          {% endfor %}
+        </div>
+      </div>
+    {% endif %}
+  {% endfor %}
+{% endif %}
+
+<style>
+.color-swatches {
+  margin-bottom: 20px;
+}
+
+.swatches-label {
+  display: block;
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  color: #111111;
+  margin-bottom: 10px;
+}
+
+.swatches-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.swatch-option {
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+}
+
+.swatch-option input {
+  display: none;
+}
+
+.swatch-color {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 2px solid #E5E5E5;
+  transition: all 0.2s ease;
+}
+
+.swatch-option input:checked + .swatch-color {
+  border-color: #9CAE8C;
+  box-shadow: 0 0 0 2px #9CAE8C;
+}
+
+.swatch-option:hover .swatch-color {
+  transform: scale(1.1);
+}
+
+.swatch-name {
+  font-family: 'Inter', sans-serif;
+  font-size: 11px;
+  color: #666;
+  text-align: center;
+}
+</style>

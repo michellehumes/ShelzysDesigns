@@ -1,0 +1,573 @@
+<!--
+==================================================
+SHELZY'S DESIGNS - POST-PURCHASE EMAIL SERIES
+For use with Klaviyo or similar email marketing platform
+
+Series Overview:
+- Email 1: Thank You + What to Expect (Immediate)
+- Email 2: Request Review (7 days after delivery)
+- Email 3: Cross-Sell + Loyalty (14 days after delivery)
+
+Klaviyo Setup:
+1. Create Flow > Post-Purchase
+2. Trigger: When someone places an order / When order is fulfilled
+3. Add emails with delays as specified
+==================================================
+-->
+
+
+<!--
+==================================================
+EMAIL 1: THANK YOU + WHAT TO EXPECT
+Timing: Immediately after order
+Subject: Thank you for your order, {{ first_name }}!
+==================================================
+-->
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Thank you for your order!</title>
+</head>
+<body style="margin: 0; padding: 0; background-color: #F7F4EF; font-family: Arial, sans-serif;">
+
+  <div style="display: none; max-height: 0; overflow: hidden;">
+    Your personalized bottle is being made with care. Here's what to expect...
+  </div>
+
+  <table width="100%" cellpadding="0" cellspacing="0" style="background-color: #F7F4EF; padding: 40px 20px;">
+    <tr>
+      <td align="center">
+        <table width="600" cellpadding="0" cellspacing="0" style="background-color: #ffffff; border-radius: 8px; overflow: hidden;">
+
+          <!-- Header with Celebration -->
+          <tr>
+            <td style="background-color: #9CAE8C; padding: 40px; text-align: center;">
+              <p style="color: #ffffff; font-size: 40px; margin: 0 0 10px;">&#127881;</p>
+              <h1 style="color: #ffffff; font-size: 28px; margin: 0; font-family: Georgia, serif;">
+                Thank You!
+              </h1>
+            </td>
+          </tr>
+
+          <!-- Main Content -->
+          <tr>
+            <td style="padding: 40px; text-align: center;">
+              <h2 style="color: #111111; font-size: 24px; margin: 0 0 15px; font-family: Georgia, serif;">
+                Your Order Is Confirmed
+              </h2>
+              <p style="color: #666666; font-size: 16px; line-height: 1.6; margin: 0;">
+                Hi {{ first_name|default:'there' }}!<br><br>
+                We're so excited to make your personalized bottle! Your order is now in our queue and we'll start working on it right away.
+              </p>
+            </td>
+          </tr>
+
+          <!-- Order Summary -->
+          <tr>
+            <td style="padding: 0 40px 30px;">
+              <table width="100%" cellpadding="0" cellspacing="0" style="background-color: #F7F4EF; border-radius: 8px;">
+                <tr>
+                  <td style="padding: 25px;">
+                    <table width="100%" cellpadding="0" cellspacing="0">
+                      <tr>
+                        <td style="color: #999999; font-size: 12px; text-transform: uppercase; letter-spacing: 1px;">Order #{{ order_number }}</td>
+                        <td style="text-align: right; color: #999999; font-size: 12px;">{{ order_date }}</td>
+                      </tr>
+                    </table>
+
+                    <hr style="border: none; border-top: 1px solid #E5E5E5; margin: 15px 0;">
+
+                    {% for item in items %}
+                    <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom: 15px;">
+                      <tr>
+                        <td width="70" style="padding-right: 15px; vertical-align: top;">
+                          <div style="width: 70px; height: 70px; background: #E5E5E5; border-radius: 4px;">
+                            <img src="{{ item.image }}" alt="{{ item.title }}" width="70" style="border-radius: 4px;">
+                          </div>
+                        </td>
+                        <td style="vertical-align: top;">
+                          <p style="color: #111111; font-size: 14px; font-weight: bold; margin: 0 0 5px;">{{ item.title }}</p>
+                          <p style="color: #666666; font-size: 12px; margin: 0 0 5px;">{{ item.variant }}</p>
+                          <p style="color: #9CAE8C; font-size: 14px; margin: 0;">Personalization: {{ item.personalization }}</p>
+                        </td>
+                        <td style="text-align: right; vertical-align: top;">
+                          <p style="color: #111111; font-size: 14px; font-weight: bold; margin: 0;">{{ item.price }}</p>
+                        </td>
+                      </tr>
+                    </table>
+                    {% endfor %}
+
+                    <hr style="border: none; border-top: 1px solid #E5E5E5; margin: 15px 0;">
+
+                    <table width="100%" cellpadding="0" cellspacing="0">
+                      <tr>
+                        <td style="color: #666666; font-size: 14px; padding: 5px 0;">Subtotal:</td>
+                        <td style="text-align: right; color: #666666; font-size: 14px;">{{ subtotal }}</td>
+                      </tr>
+                      <tr>
+                        <td style="color: #666666; font-size: 14px; padding: 5px 0;">Shipping:</td>
+                        <td style="text-align: right; color: #666666; font-size: 14px;">{{ shipping }}</td>
+                      </tr>
+                      <tr>
+                        <td style="color: #111111; font-size: 16px; font-weight: bold; padding-top: 10px;">Total:</td>
+                        <td style="text-align: right; color: #111111; font-size: 16px; font-weight: bold;">{{ order_total }}</td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- What's Next Timeline -->
+          <tr>
+            <td style="padding: 30px 40px; background-color: #F7F4EF;">
+              <h3 style="color: #111111; font-size: 18px; margin: 0 0 20px; text-align: center; font-family: Georgia, serif;">
+                What Happens Next?
+              </h3>
+
+              <table width="100%" cellpadding="0" cellspacing="0">
+                <tr>
+                  <td style="padding: 10px 0;">
+                    <table cellpadding="0" cellspacing="0">
+                      <tr>
+                        <td width="40" style="vertical-align: top;">
+                          <div style="width: 30px; height: 30px; background: #9CAE8C; border-radius: 50%; text-align: center; line-height: 30px; color: white; font-weight: bold;">1</div>
+                        </td>
+                        <td style="padding-left: 10px;">
+                          <p style="color: #111111; font-size: 14px; font-weight: bold; margin: 0 0 5px;">Design & Production (1-3 days)</p>
+                          <p style="color: #666666; font-size: 13px; margin: 0;">We'll create your custom design and sublimate it onto your bottle.</p>
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+                <tr>
+                  <td style="padding: 10px 0;">
+                    <table cellpadding="0" cellspacing="0">
+                      <tr>
+                        <td width="40" style="vertical-align: top;">
+                          <div style="width: 30px; height: 30px; background: #9CAE8C; border-radius: 50%; text-align: center; line-height: 30px; color: white; font-weight: bold;">2</div>
+                        </td>
+                        <td style="padding-left: 10px;">
+                          <p style="color: #111111; font-size: 14px; font-weight: bold; margin: 0 0 5px;">Quality Check (1 day)</p>
+                          <p style="color: #666666; font-size: 13px; margin: 0;">Every bottle is inspected to make sure it's perfect.</p>
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+                <tr>
+                  <td style="padding: 10px 0;">
+                    <table cellpadding="0" cellspacing="0">
+                      <tr>
+                        <td width="40" style="vertical-align: top;">
+                          <div style="width: 30px; height: 30px; background: #9CAE8C; border-radius: 50%; text-align: center; line-height: 30px; color: white; font-weight: bold;">3</div>
+                        </td>
+                        <td style="padding-left: 10px;">
+                          <p style="color: #111111; font-size: 14px; font-weight: bold; margin: 0 0 5px;">Ships to You (3-7 days)</p>
+                          <p style="color: #666666; font-size: 13px; margin: 0;">You'll receive tracking info once it's on its way!</p>
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+              </table>
+
+              <p style="color: #9CAE8C; font-size: 14px; text-align: center; margin: 20px 0 0; font-weight: bold;">
+                Estimated arrival: {{ estimated_delivery }}
+              </p>
+            </td>
+          </tr>
+
+          <!-- Care Tip -->
+          <tr>
+            <td style="padding: 30px 40px;">
+              <table width="100%" cellpadding="0" cellspacing="0" style="background-color: #F7F4EF; border-radius: 8px; border-left: 4px solid #9CAE8C;">
+                <tr>
+                  <td style="padding: 20px;">
+                    <p style="color: #111111; font-size: 14px; font-weight: bold; margin: 0 0 10px;">
+                      &#128161; Pro Tip: Care for Your Bottle
+                    </p>
+                    <p style="color: #666666; font-size: 13px; line-height: 1.6; margin: 0;">
+                      For best results, hand wash your bottle with warm soapy water. While our sublimation printing is more durable than vinyl, hand washing helps keep colors vibrant for years!
+                    </p>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- Footer -->
+          <tr>
+            <td style="padding: 30px 40px; text-align: center; border-top: 1px solid #E5E5E5;">
+              <p style="color: #666666; font-size: 14px; margin: 0 0 10px;">
+                Questions about your order?
+              </p>
+              <a href="mailto:hello@shelzysdesigns.com" style="color: #9CAE8C; text-decoration: none; font-weight: bold;">hello@shelzysdesigns.com</a>
+
+              <p style="color: #999999; font-size: 12px; margin: 20px 0 0;">
+                Shelzy's Designs | Premium Personalized Bottles
+              </p>
+            </td>
+          </tr>
+
+        </table>
+      </td>
+    </tr>
+  </table>
+
+</body>
+</html>
+
+
+<!--
+==================================================
+EMAIL 2: REQUEST REVIEW
+Timing: 7 days after delivery (or 14 days after order)
+Subject: How's your new bottle? We'd love to hear from you!
+==================================================
+-->
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>How's your new bottle?</title>
+</head>
+<body style="margin: 0; padding: 0; background-color: #F7F4EF; font-family: Arial, sans-serif;">
+
+  <div style="display: none; max-height: 0; overflow: hidden;">
+    We'd love to hear what you think! Share your experience and help others.
+  </div>
+
+  <table width="100%" cellpadding="0" cellspacing="0" style="background-color: #F7F4EF; padding: 40px 20px;">
+    <tr>
+      <td align="center">
+        <table width="600" cellpadding="0" cellspacing="0" style="background-color: #ffffff; border-radius: 8px; overflow: hidden;">
+
+          <!-- Header -->
+          <tr>
+            <td style="background-color: #9CAE8C; padding: 25px; text-align: center;">
+              <h1 style="color: #ffffff; font-size: 24px; margin: 0; font-family: Georgia, serif;">
+                Shelzy's Designs
+              </h1>
+            </td>
+          </tr>
+
+          <!-- Main Content -->
+          <tr>
+            <td style="padding: 40px; text-align: center;">
+              <p style="color: #9CAE8C; font-size: 40px; margin: 0 0 15px;">&#10084;</p>
+              <h2 style="color: #111111; font-size: 28px; margin: 0 0 15px; font-family: Georgia, serif;">
+                How's Your New Bottle?
+              </h2>
+              <p style="color: #666666; font-size: 16px; line-height: 1.6; margin: 0 0 30px;">
+                Hi {{ first_name|default:'there' }}!<br><br>
+                You should have received your personalized bottle by now. We'd love to know what you think!
+              </p>
+            </td>
+          </tr>
+
+          <!-- Product Reminder -->
+          <tr>
+            <td style="padding: 0 40px 30px;">
+              <table width="100%" cellpadding="0" cellspacing="0" style="background-color: #F7F4EF; border-radius: 8px;">
+                <tr>
+                  <td width="100" style="padding: 20px;">
+                    <div style="width: 80px; height: 80px; background: #E5E5E5; border-radius: 4px;">
+                      <img src="{{ item.image }}" alt="{{ item.title }}" width="80" style="border-radius: 4px;">
+                    </div>
+                  </td>
+                  <td style="padding: 20px; vertical-align: middle;">
+                    <p style="color: #111111; font-size: 16px; font-weight: bold; margin: 0 0 5px;">{{ item.title }}</p>
+                    <p style="color: #666666; font-size: 14px; margin: 0;">Order #{{ order_number }}</p>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- Star Rating -->
+          <tr>
+            <td style="padding: 0 40px 20px; text-align: center;">
+              <p style="color: #666666; font-size: 16px; margin: 0 0 20px;">
+                How would you rate your experience?
+              </p>
+              <table cellpadding="0" cellspacing="0" align="center">
+                <tr>
+                  <td style="padding: 0 5px;">
+                    <a href="{{ review_url }}?rating=1" style="text-decoration: none; font-size: 36px;">&#9733;</a>
+                  </td>
+                  <td style="padding: 0 5px;">
+                    <a href="{{ review_url }}?rating=2" style="text-decoration: none; font-size: 36px;">&#9733;</a>
+                  </td>
+                  <td style="padding: 0 5px;">
+                    <a href="{{ review_url }}?rating=3" style="text-decoration: none; font-size: 36px;">&#9733;</a>
+                  </td>
+                  <td style="padding: 0 5px;">
+                    <a href="{{ review_url }}?rating=4" style="text-decoration: none; font-size: 36px;">&#9733;</a>
+                  </td>
+                  <td style="padding: 0 5px;">
+                    <a href="{{ review_url }}?rating=5" style="text-decoration: none; font-size: 36px;">&#9733;</a>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- CTA -->
+          <tr>
+            <td style="padding: 20px 40px 40px; text-align: center;">
+              <a href="{{ review_url }}" style="display: inline-block; background-color: #9CAE8C; color: #ffffff; text-decoration: none; font-size: 16px; font-weight: bold; padding: 16px 40px; border-radius: 4px;">
+                Write a Review
+              </a>
+              <p style="color: #999999; font-size: 12px; margin: 15px 0 0;">
+                Takes less than 2 minutes!
+              </p>
+            </td>
+          </tr>
+
+          <!-- Photo Request -->
+          <tr>
+            <td style="padding: 30px 40px; background-color: #F7F4EF;">
+              <table width="100%" cellpadding="0" cellspacing="0">
+                <tr>
+                  <td width="60" style="vertical-align: top;">
+                    <p style="font-size: 36px; margin: 0;">&#128247;</p>
+                  </td>
+                  <td style="padding-left: 15px;">
+                    <p style="color: #111111; font-size: 16px; font-weight: bold; margin: 0 0 5px;">
+                      Got a photo? We'd love to see it!
+                    </p>
+                    <p style="color: #666666; font-size: 14px; line-height: 1.6; margin: 0;">
+                      Share a photo with your review or tag us @shelzysdesigns on Instagram for a chance to be featured!
+                    </p>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- Why Reviews Matter -->
+          <tr>
+            <td style="padding: 30px 40px; text-align: center;">
+              <p style="color: #666666; font-size: 14px; line-height: 1.6; margin: 0;">
+                <strong>Why your review matters:</strong><br>
+                As a small business, your honest feedback helps other customers discover us and helps us keep creating products you'll love.
+              </p>
+            </td>
+          </tr>
+
+          <!-- Footer -->
+          <tr>
+            <td style="padding: 25px 40px; text-align: center; border-top: 1px solid #E5E5E5;">
+              <p style="color: #999999; font-size: 12px; margin: 0;">
+                Shelzy's Designs | Premium Personalized Bottles<br>
+                <a href="{{ unsubscribe_url }}" style="color: #999999;">Unsubscribe</a>
+              </p>
+            </td>
+          </tr>
+
+        </table>
+      </td>
+    </tr>
+  </table>
+
+</body>
+</html>
+
+
+<!--
+==================================================
+EMAIL 3: CROSS-SELL + LOYALTY
+Timing: 14 days after delivery
+Subject: {{ first_name }}, you might also love these...
+==================================================
+-->
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>You might also love these...</title>
+</head>
+<body style="margin: 0; padding: 0; background-color: #F7F4EF; font-family: Arial, sans-serif;">
+
+  <div style="display: none; max-height: 0; overflow: hidden;">
+    Based on your purchase, we think you'll love these personalized picks!
+  </div>
+
+  <table width="100%" cellpadding="0" cellspacing="0" style="background-color: #F7F4EF; padding: 40px 20px;">
+    <tr>
+      <td align="center">
+        <table width="600" cellpadding="0" cellspacing="0" style="background-color: #ffffff; border-radius: 8px; overflow: hidden;">
+
+          <!-- Header -->
+          <tr>
+            <td style="background-color: #9CAE8C; padding: 25px; text-align: center;">
+              <h1 style="color: #ffffff; font-size: 24px; margin: 0; font-family: Georgia, serif;">
+                Shelzy's Designs
+              </h1>
+            </td>
+          </tr>
+
+          <!-- Main Content -->
+          <tr>
+            <td style="padding: 40px; text-align: center;">
+              <h2 style="color: #111111; font-size: 28px; margin: 0 0 15px; font-family: Georgia, serif;">
+                You Might Also Love...
+              </h2>
+              <p style="color: #666666; font-size: 16px; line-height: 1.6; margin: 0;">
+                Hi {{ first_name|default:'there' }}!<br><br>
+                Based on your recent purchase, we thought you might like these:
+              </p>
+            </td>
+          </tr>
+
+          <!-- Recommended Products -->
+          <tr>
+            <td style="padding: 0 40px 30px;">
+              <table width="100%" cellpadding="0" cellspacing="0">
+                <tr>
+                  <!-- Product 1 -->
+                  <td width="48%" style="text-align: center; vertical-align: top;">
+                    <table width="100%" cellpadding="0" cellspacing="0" style="background-color: #F7F4EF; border-radius: 8px;">
+                      <tr>
+                        <td style="padding: 20px;">
+                          <div style="height: 150px; background: #E5E5E5; border-radius: 4px; margin-bottom: 15px;">
+                            <img src="{{ product1.image }}" alt="{{ product1.title }}" style="max-width: 100%; border-radius: 4px;">
+                          </div>
+                          <p style="color: #111111; font-size: 14px; font-weight: bold; margin: 0 0 5px;">{{ product1.title }}</p>
+                          <p style="color: #9CAE8C; font-size: 16px; font-weight: bold; margin: 0 0 15px;">{{ product1.price }}</p>
+                          <a href="{{ product1.url }}" style="display: inline-block; background-color: #9CAE8C; color: #ffffff; text-decoration: none; font-size: 12px; font-weight: bold; padding: 10px 20px; border-radius: 4px;">
+                            Shop Now
+                          </a>
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                  <td width="4%"></td>
+                  <!-- Product 2 -->
+                  <td width="48%" style="text-align: center; vertical-align: top;">
+                    <table width="100%" cellpadding="0" cellspacing="0" style="background-color: #F7F4EF; border-radius: 8px;">
+                      <tr>
+                        <td style="padding: 20px;">
+                          <div style="height: 150px; background: #E5E5E5; border-radius: 4px; margin-bottom: 15px;">
+                            <img src="{{ product2.image }}" alt="{{ product2.title }}" style="max-width: 100%; border-radius: 4px;">
+                          </div>
+                          <p style="color: #111111; font-size: 14px; font-weight: bold; margin: 0 0 5px;">{{ product2.title }}</p>
+                          <p style="color: #9CAE8C; font-size: 16px; font-weight: bold; margin: 0 0 15px;">{{ product2.price }}</p>
+                          <a href="{{ product2.url }}" style="display: inline-block; background-color: #9CAE8C; color: #ffffff; text-decoration: none; font-size: 12px; font-weight: bold; padding: 10px 20px; border-radius: 4px;">
+                            Shop Now
+                          </a>
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- Loyalty Reward -->
+          <tr>
+            <td style="padding: 0 40px 30px;">
+              <table width="100%" cellpadding="0" cellspacing="0" style="background: linear-gradient(135deg, #9CAE8C 0%, #7C9F8C 100%); border-radius: 8px;">
+                <tr>
+                  <td style="padding: 30px; text-align: center;">
+                    <p style="color: rgba(255,255,255,0.9); font-size: 12px; text-transform: uppercase; letter-spacing: 1px; margin: 0 0 10px;">
+                      Thanks for Being a Customer
+                    </p>
+                    <h3 style="color: #ffffff; font-size: 28px; margin: 0 0 10px; font-family: Georgia, serif;">
+                      Enjoy 15% Off
+                    </h3>
+                    <p style="color: #ffffff; font-size: 14px; margin: 0 0 15px;">
+                      On your next order with code:
+                    </p>
+                    <div style="background-color: #ffffff; color: #111111; font-size: 20px; font-weight: bold; padding: 12px 25px; display: inline-block; border-radius: 4px; letter-spacing: 2px;">
+                      THANKS15
+                    </div>
+                    <p style="color: rgba(255,255,255,0.7); font-size: 11px; margin: 15px 0 0;">
+                      Valid for 30 days. One use per customer.
+                    </p>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- Gift Ideas -->
+          <tr>
+            <td style="padding: 30px 40px; background-color: #F7F4EF;">
+              <h3 style="color: #111111; font-size: 18px; margin: 0 0 15px; text-align: center;">
+                &#127873; Gift Ideas Coming Up
+              </h3>
+              <table width="100%" cellpadding="0" cellspacing="0">
+                <tr>
+                  <td style="padding: 8px 0;">
+                    <span style="color: #9CAE8C; font-weight: bold;">&#8226;</span>
+                    <span style="color: #666666; font-size: 14px; margin-left: 10px;">Bridesmaid proposals - personalized bottles they'll actually use!</span>
+                  </td>
+                </tr>
+                <tr>
+                  <td style="padding: 8px 0;">
+                    <span style="color: #9CAE8C; font-weight: bold;">&#8226;</span>
+                    <span style="color: #666666; font-size: 14px; margin-left: 10px;">Teacher appreciation - show your gratitude with their name</span>
+                  </td>
+                </tr>
+                <tr>
+                  <td style="padding: 8px 0;">
+                    <span style="color: #9CAE8C; font-weight: bold;">&#8226;</span>
+                    <span style="color: #666666; font-size: 14px; margin-left: 10px;">Birthday gifts - unique and thoughtful</span>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- Referral -->
+          <tr>
+            <td style="padding: 30px 40px; text-align: center;">
+              <p style="color: #666666; font-size: 14px; line-height: 1.6; margin: 0 0 15px;">
+                <strong>Know someone who'd love a personalized bottle?</strong><br>
+                Share the love and tell a friend about Shelzy's Designs!
+              </p>
+              <table cellpadding="0" cellspacing="0" align="center">
+                <tr>
+                  <td style="padding: 0 10px;">
+                    <a href="{{ share_url_facebook }}" style="color: #9CAE8C; text-decoration: none;">Facebook</a>
+                  </td>
+                  <td style="padding: 0 10px;">
+                    <a href="{{ share_url_twitter }}" style="color: #9CAE8C; text-decoration: none;">Twitter</a>
+                  </td>
+                  <td style="padding: 0 10px;">
+                    <a href="{{ share_url_pinterest }}" style="color: #9CAE8C; text-decoration: none;">Pinterest</a>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- Footer -->
+          <tr>
+            <td style="padding: 25px 40px; text-align: center; border-top: 1px solid #E5E5E5;">
+              <p style="color: #999999; font-size: 12px; margin: 0;">
+                Shelzy's Designs | Premium Personalized Bottles<br>
+                <a href="{{ unsubscribe_url }}" style="color: #999999;">Unsubscribe</a>
+              </p>
+            </td>
+          </tr>
+
+        </table>
+      </td>
+    </tr>
+  </table>
+
+</body>
+</html>

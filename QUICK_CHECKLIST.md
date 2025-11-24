@@ -1,8 +1,37 @@
 # Quick Implementation Checklist
 
-## 🚀 Shopify Conversion Optimization - Progress Tracker
+## 🚀 Shelzy's Designs - Complete Implementation Tracker
 
 Use this checklist to track implementation progress for ShelzysDesigns.com
+
+**New:** See `/shopify/AUDIT_IMPLEMENTATION.md` for detailed audit recommendations
+
+---
+
+## 🔴 CRITICAL FIXES (Week 1 Priority)
+
+### Fix 404 Errors
+- [ ] Fix About page 404 - deploy from `/shopify/static-pages.html`
+- [ ] Verify all product page URLs are resolving correctly
+- [ ] Check product handles in Shopify Admin
+
+### Update Placeholder Content
+- [ ] Remove placeholder text from Contact page
+- [ ] Replace generic social media links with actual URLs:
+  - [ ] Instagram: `https://instagram.com/shelzysdesigns`
+  - [ ] Facebook: `https://facebook.com/shelzysdesigns`
+  - [ ] Pinterest: `https://pinterest.com/shelzysdesigns`
+- [ ] Fix free shipping threshold inconsistency ($50 vs $75)
+
+### Deploy Static Pages
+- [ ] Deploy About page (`/shopify/static-pages.html`)
+- [ ] Deploy FAQ page (`/shopify/static-pages.html`)
+- [ ] Deploy How It Works page (`/shopify/static-pages.html`)
+- [ ] Deploy Contact page (`/shopify/static-pages.html`)
+- [ ] Deploy Size Guide page (`/shopify/additional-pages.html`)
+- [ ] Deploy Care Instructions page (`/shopify/additional-pages.html`)
+- [ ] Deploy Bulk & Corporate page (`/shopify/additional-pages.html`)
+- [ ] Deploy enhanced Shipping page (`/shopify/additional-pages.html`)
 
 ---
 
@@ -221,6 +250,83 @@ Use this checklist to track implementation progress for ShelzysDesigns.com
 
 ---
 
+## 🎨 Frontend Enhancements (from Audit)
+
+### Trust & Conversion Elements
+- [ ] Add trust badges strip to homepage (`/shopify/trust-badges.liquid`)
+- [ ] Add product page trust section below Add to Cart
+- [ ] Add free shipping progress bar to cart
+- [ ] Add stock/urgency indicators to product pages
+- [ ] Add exit intent popup
+- [ ] Add announcement bar with free shipping message
+- [ ] Add countdown timer for promotions
+
+### Product Page Improvements
+- [ ] Update product descriptions with emotional copy (`/shopify/product-page-enhancements.liquid`)
+- [ ] Add product-specific FAQ accordion
+- [ ] Add delivery date calculator
+- [ ] Add bulk order CTA for relevant products
+- [ ] Add recently viewed products section
+- [ ] Add related products section
+- [ ] Implement color swatches (replace dropdowns)
+
+### Cart & Checkout Enhancements
+- [ ] Add cart upsells (gift wrapping, rush processing)
+- [ ] Add cross-sell recommendations
+- [ ] Add gift message option
+- [ ] Highlight express checkout options
+- [ ] Fix free shipping threshold messaging
+
+### Mobile Optimization
+- [ ] Add sticky Add to Cart button (`/shopify/mobile-cart-optimizations.liquid`)
+- [ ] Add tap-to-call phone button
+- [ ] Optimize product image gallery for swipe
+- [ ] Ensure all buttons are 44px+ tap targets
+- [ ] Test mobile checkout flow
+
+---
+
+## ⚙️ Backend/Technical (from Audit)
+
+### SEO & Schema Markup
+- [ ] Add Organization schema (`/shopify/schema-markup.liquid`)
+- [ ] Add Website search schema
+- [ ] Add Product schema to product pages
+- [ ] Add Breadcrumb schema
+- [ ] Add FAQ schema to FAQ page
+- [ ] Optimize meta titles for all pages
+- [ ] Add alt text to all product images
+
+### Analytics & Tracking
+- [ ] Set up Google Analytics 4 (GA4)
+- [ ] Set up Facebook Pixel with Conversions API
+- [ ] Verify Google Search Console
+- [ ] Add enhanced ecommerce tracking
+- [ ] Set up event tracking (add to cart, checkout, email capture)
+
+### Email Marketing (Klaviyo)
+- [ ] Import welcome series templates (`/shopify/email-templates/welcome-series.html`)
+- [ ] Import abandoned cart templates (`/shopify/email-templates/abandoned-cart.html`)
+- [ ] Import post-purchase templates (`/shopify/email-templates/post-purchase.html`)
+- [ ] Set up automation triggers
+- [ ] Test all email flows
+
+---
+
+## 📱 Recommended Shopify Apps
+
+### Must Install
+- [ ] Klaviyo (Email marketing) - Free tier
+- [ ] Judge.me (Product reviews) - Free tier
+- [ ] Bold Product Options (Customization) - $20/mo
+
+### Recommended
+- [ ] ReConvert (Post-purchase upsells) - $7.99/mo
+- [ ] Tidio or Shopify Inbox (Live chat) - Free tier
+- [ ] Lucky Orange (Heatmaps) - Free tier
+
+---
+
 ## 📝 Notes & Custom Changes
 
 **Implementation Date:**  
@@ -237,6 +343,25 @@ Use this checklist to track implementation progress for ShelzysDesigns.com
 
 ---
 
-**Version:** 1.0  
-**Last Updated:** November 24, 2025  
+## 📁 New Implementation Files
+
+All audit recommendation files are located in `/shopify/`:
+
+| File | Description |
+|------|-------------|
+| `AUDIT_IMPLEMENTATION.md` | Complete audit action plan with weekly priorities |
+| `additional-pages.html` | Size Guide, Care Instructions, Bulk Orders pages |
+| `trust-badges.liquid` | Trust badges, shipping progress bar, exit popup |
+| `schema-markup.liquid` | SEO structured data templates |
+| `product-page-enhancements.liquid` | Enhanced product page components |
+| `mobile-cart-optimizations.liquid` | Mobile optimization and cart upsells |
+| `email-templates/welcome-series.html` | 3-email welcome series |
+| `email-templates/abandoned-cart.html` | 3-email abandoned cart flow |
+| `email-templates/post-purchase.html` | 3-email post-purchase flow |
+
+---
+
+**Version:** 2.0
+**Last Updated:** November 24, 2025
 **Repository:** https://github.com/michellehumes/ShelzysDesigns
+**Based On:** Comprehensive Site Audit (November 2025)

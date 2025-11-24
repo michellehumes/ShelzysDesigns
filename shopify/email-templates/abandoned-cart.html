@@ -1,0 +1,475 @@
+<!--
+==================================================
+SHELZY'S DESIGNS - ABANDONED CART EMAIL SERIES
+For use with Klaviyo or similar email marketing platform
+
+Series Overview:
+- Email 1: Reminder (1 hour after abandonment)
+- Email 2: Urgency (24 hours after abandonment)
+- Email 3: Final + Discount (72 hours after abandonment)
+
+Klaviyo Setup:
+1. Create Flow > Abandoned Cart
+2. Trigger: When someone abandons checkout
+3. Add emails with delays as specified
+4. Use dynamic cart content blocks
+==================================================
+-->
+
+
+<!--
+==================================================
+EMAIL 1: GENTLE REMINDER
+Timing: 1 hour after cart abandonment
+Subject: Did you forget something?
+==================================================
+-->
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Did you forget something?</title>
+</head>
+<body style="margin: 0; padding: 0; background-color: #F7F4EF; font-family: Arial, sans-serif;">
+
+  <div style="display: none; max-height: 0; overflow: hidden;">
+    Your personalized bottle is waiting for you...
+  </div>
+
+  <table width="100%" cellpadding="0" cellspacing="0" style="background-color: #F7F4EF; padding: 40px 20px;">
+    <tr>
+      <td align="center">
+        <table width="600" cellpadding="0" cellspacing="0" style="background-color: #ffffff; border-radius: 8px; overflow: hidden;">
+
+          <!-- Header -->
+          <tr>
+            <td style="background-color: #9CAE8C; padding: 25px; text-align: center;">
+              <h1 style="color: #ffffff; font-size: 24px; margin: 0; font-family: Georgia, serif;">
+                Shelzy's Designs
+              </h1>
+            </td>
+          </tr>
+
+          <!-- Main Content -->
+          <tr>
+            <td style="padding: 40px; text-align: center;">
+              <h2 style="color: #111111; font-size: 28px; margin: 0 0 15px; font-family: Georgia, serif;">
+                Did You Forget Something?
+              </h2>
+              <p style="color: #666666; font-size: 16px; line-height: 1.6; margin: 0 0 30px;">
+                Hi {{ first_name|default:'there' }},<br><br>
+                We noticed you left without completing your order. Your personalized bottle is still waiting in your cart!
+              </p>
+            </td>
+          </tr>
+
+          <!-- Cart Items -->
+          <tr>
+            <td style="padding: 0 40px 30px;">
+              <table width="100%" cellpadding="0" cellspacing="0" style="background-color: #F7F4EF; border-radius: 8px;">
+                <tr>
+                  <td style="padding: 20px;">
+                    <p style="color: #999999; font-size: 12px; text-transform: uppercase; letter-spacing: 1px; margin: 0 0 15px;">
+                      Your Cart
+                    </p>
+
+                    <!-- Dynamic Cart Item - Replace with Klaviyo block -->
+                    {% for item in items %}
+                    <table width="100%" cellpadding="0" cellspacing="0" style="border-bottom: 1px solid #E5E5E5; padding-bottom: 15px; margin-bottom: 15px;">
+                      <tr>
+                        <td width="80" style="padding-right: 15px;">
+                          <div style="width: 80px; height: 80px; background: #E5E5E5; border-radius: 4px;">
+                            <img src="{{ item.image }}" alt="{{ item.title }}" width="80" style="border-radius: 4px;">
+                          </div>
+                        </td>
+                        <td style="vertical-align: middle;">
+                          <p style="color: #111111; font-size: 16px; font-weight: bold; margin: 0 0 5px;">{{ item.title }}</p>
+                          <p style="color: #666666; font-size: 14px; margin: 0 0 5px;">{{ item.variant }}</p>
+                          <p style="color: #9CAE8C; font-size: 16px; font-weight: bold; margin: 0;">{{ item.price }}</p>
+                        </td>
+                      </tr>
+                    </table>
+                    {% endfor %}
+
+                    <table width="100%" cellpadding="0" cellspacing="0">
+                      <tr>
+                        <td style="color: #111111; font-size: 16px; font-weight: bold;">Subtotal:</td>
+                        <td style="text-align: right; color: #111111; font-size: 16px; font-weight: bold;">{{ cart_total }}</td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- CTA Button -->
+          <tr>
+            <td style="padding: 0 40px 40px; text-align: center;">
+              <a href="{{ checkout_url }}" style="display: inline-block; background-color: #9CAE8C; color: #ffffff; text-decoration: none; font-size: 18px; font-weight: bold; padding: 18px 50px; border-radius: 4px;">
+                Complete Your Order
+              </a>
+            </td>
+          </tr>
+
+          <!-- Trust Badges -->
+          <tr>
+            <td style="padding: 20px 40px; background-color: #F7F4EF;">
+              <table width="100%" cellpadding="0" cellspacing="0">
+                <tr>
+                  <td width="33%" style="text-align: center; padding: 10px;">
+                    <p style="color: #9CAE8C; font-size: 20px; margin: 0;">&#128274;</p>
+                    <p style="color: #666666; font-size: 12px; margin: 5px 0 0;">Secure Checkout</p>
+                  </td>
+                  <td width="33%" style="text-align: center; padding: 10px;">
+                    <p style="color: #9CAE8C; font-size: 20px; margin: 0;">&#128666;</p>
+                    <p style="color: #666666; font-size: 12px; margin: 5px 0 0;">Free Shipping $50+</p>
+                  </td>
+                  <td width="33%" style="text-align: center; padding: 10px;">
+                    <p style="color: #9CAE8C; font-size: 20px; margin: 0;">&#10003;</p>
+                    <p style="color: #666666; font-size: 12px; margin: 5px 0 0;">Quality Guarantee</p>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- Footer -->
+          <tr>
+            <td style="padding: 25px 40px; text-align: center;">
+              <p style="color: #666666; font-size: 14px; margin: 0 0 10px;">
+                Questions? We're here to help!
+              </p>
+              <a href="mailto:hello@shelzysdesigns.com" style="color: #9CAE8C; text-decoration: none;">hello@shelzysdesigns.com</a>
+
+              <p style="color: #999999; font-size: 12px; margin: 20px 0 0;">
+                <a href="{{ unsubscribe_url }}" style="color: #999999;">Unsubscribe</a>
+              </p>
+            </td>
+          </tr>
+
+        </table>
+      </td>
+    </tr>
+  </table>
+
+</body>
+</html>
+
+
+<!--
+==================================================
+EMAIL 2: URGENCY + SCARCITY
+Timing: 24 hours after cart abandonment
+Subject: Your cart is about to expire!
+==================================================
+-->
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Your cart is about to expire!</title>
+</head>
+<body style="margin: 0; padding: 0; background-color: #F7F4EF; font-family: Arial, sans-serif;">
+
+  <div style="display: none; max-height: 0; overflow: hidden;">
+    Don't miss out on your personalized bottle - limited stock available!
+  </div>
+
+  <table width="100%" cellpadding="0" cellspacing="0" style="background-color: #F7F4EF; padding: 40px 20px;">
+    <tr>
+      <td align="center">
+        <table width="600" cellpadding="0" cellspacing="0" style="background-color: #ffffff; border-radius: 8px; overflow: hidden;">
+
+          <!-- Urgency Header -->
+          <tr>
+            <td style="background-color: #111111; padding: 15px; text-align: center;">
+              <p style="color: #ffffff; font-size: 14px; margin: 0;">
+                &#9888; Your cart items may sell out - complete your order soon!
+              </p>
+            </td>
+          </tr>
+
+          <!-- Logo -->
+          <tr>
+            <td style="background-color: #9CAE8C; padding: 20px; text-align: center;">
+              <h1 style="color: #ffffff; font-size: 24px; margin: 0; font-family: Georgia, serif;">
+                Shelzy's Designs
+              </h1>
+            </td>
+          </tr>
+
+          <!-- Main Content -->
+          <tr>
+            <td style="padding: 40px; text-align: center;">
+              <h2 style="color: #111111; font-size: 28px; margin: 0 0 15px; font-family: Georgia, serif;">
+                Your Cart Is Waiting!
+              </h2>
+              <p style="color: #666666; font-size: 16px; line-height: 1.6; margin: 0 0 30px;">
+                Hey {{ first_name|default:'there' }},<br><br>
+                You're so close to getting your personalized bottle! We're holding your items, but we can't guarantee they'll be available much longer.
+              </p>
+            </td>
+          </tr>
+
+          <!-- Cart Items with Urgency -->
+          <tr>
+            <td style="padding: 0 40px 30px;">
+              <table width="100%" cellpadding="0" cellspacing="0" style="background-color: #FFF3CD; border-radius: 8px; border: 2px solid #FFC107;">
+                <tr>
+                  <td style="padding: 20px;">
+                    <p style="color: #856404; font-size: 14px; font-weight: bold; margin: 0 0 15px; text-align: center;">
+                      &#9888; Limited Stock Alert
+                    </p>
+
+                    <!-- Dynamic Cart Item -->
+                    {% for item in items %}
+                    <table width="100%" cellpadding="0" cellspacing="0" style="background: #ffffff; border-radius: 4px; margin-bottom: 10px;">
+                      <tr>
+                        <td width="80" style="padding: 10px;">
+                          <div style="width: 70px; height: 70px; background: #E5E5E5; border-radius: 4px;">
+                            <img src="{{ item.image }}" alt="{{ item.title }}" width="70" style="border-radius: 4px;">
+                          </div>
+                        </td>
+                        <td style="padding: 10px; vertical-align: middle;">
+                          <p style="color: #111111; font-size: 14px; font-weight: bold; margin: 0 0 5px;">{{ item.title }}</p>
+                          <p style="color: #9CAE8C; font-size: 14px; font-weight: bold; margin: 0;">{{ item.price }}</p>
+                        </td>
+                      </tr>
+                    </table>
+                    {% endfor %}
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- CTA -->
+          <tr>
+            <td style="padding: 0 40px 40px; text-align: center;">
+              <a href="{{ checkout_url }}" style="display: inline-block; background-color: #9CAE8C; color: #ffffff; text-decoration: none; font-size: 18px; font-weight: bold; padding: 18px 50px; border-radius: 4px;">
+                Complete My Order Now
+              </a>
+              <p style="color: #999999; font-size: 12px; margin: 15px 0 0;">
+                Click above to return directly to your cart
+              </p>
+            </td>
+          </tr>
+
+          <!-- Why Buy From Us -->
+          <tr>
+            <td style="padding: 30px 40px; background-color: #F7F4EF;">
+              <h3 style="color: #111111; font-size: 18px; margin: 0 0 20px; text-align: center;">
+                Why Customers Choose Us
+              </h3>
+              <table width="100%" cellpadding="0" cellspacing="0">
+                <tr>
+                  <td style="padding: 8px 0;">
+                    <span style="color: #9CAE8C; font-weight: bold;">&#10003;</span>
+                    <span style="color: #666666; font-size: 14px; margin-left: 10px;">Permanent sublimation printing (no vinyl that peels)</span>
+                  </td>
+                </tr>
+                <tr>
+                  <td style="padding: 8px 0;">
+                    <span style="color: #9CAE8C; font-weight: bold;">&#10003;</span>
+                    <span style="color: #666666; font-size: 14px; margin-left: 10px;">Keeps drinks cold 24 hours / hot 12 hours</span>
+                  </td>
+                </tr>
+                <tr>
+                  <td style="padding: 8px 0;">
+                    <span style="color: #9CAE8C; font-weight: bold;">&#10003;</span>
+                    <span style="color: #666666; font-size: 14px; margin-left: 10px;">Ships within 3-5 business days</span>
+                  </td>
+                </tr>
+                <tr>
+                  <td style="padding: 8px 0;">
+                    <span style="color: #9CAE8C; font-weight: bold;">&#10003;</span>
+                    <span style="color: #666666; font-size: 14px; margin-left: 10px;">Free shipping on orders over $50</span>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- Footer -->
+          <tr>
+            <td style="padding: 25px 40px; text-align: center;">
+              <p style="color: #999999; font-size: 12px; margin: 0;">
+                Shelzy's Designs | Premium Personalized Bottles<br>
+                <a href="{{ unsubscribe_url }}" style="color: #999999;">Unsubscribe</a>
+              </p>
+            </td>
+          </tr>
+
+        </table>
+      </td>
+    </tr>
+  </table>
+
+</body>
+</html>
+
+
+<!--
+==================================================
+EMAIL 3: FINAL CHANCE + DISCOUNT
+Timing: 72 hours after cart abandonment
+Subject: Last chance: 10% off to complete your order
+==================================================
+-->
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Last chance: 10% off your order!</title>
+</head>
+<body style="margin: 0; padding: 0; background-color: #F7F4EF; font-family: Arial, sans-serif;">
+
+  <div style="display: none; max-height: 0; overflow: hidden;">
+    We're giving you 10% off to complete your order - expires in 24 hours!
+  </div>
+
+  <table width="100%" cellpadding="0" cellspacing="0" style="background-color: #F7F4EF; padding: 40px 20px;">
+    <tr>
+      <td align="center">
+        <table width="600" cellpadding="0" cellspacing="0" style="background-color: #ffffff; border-radius: 8px; overflow: hidden;">
+
+          <!-- Header -->
+          <tr>
+            <td style="background-color: #9CAE8C; padding: 25px; text-align: center;">
+              <h1 style="color: #ffffff; font-size: 24px; margin: 0; font-family: Georgia, serif;">
+                Shelzy's Designs
+              </h1>
+            </td>
+          </tr>
+
+          <!-- Main Content -->
+          <tr>
+            <td style="padding: 40px; text-align: center;">
+              <h2 style="color: #111111; font-size: 28px; margin: 0 0 15px; font-family: Georgia, serif;">
+                We Want to Make This Easy
+              </h2>
+              <p style="color: #666666; font-size: 16px; line-height: 1.6; margin: 0 0 30px;">
+                Hi {{ first_name|default:'there' }},<br><br>
+                We noticed you haven't completed your order yet. We get it - life gets busy! To make your decision a little easier, here's a special discount just for you:
+              </p>
+            </td>
+          </tr>
+
+          <!-- Discount Box -->
+          <tr>
+            <td style="padding: 0 40px 30px;">
+              <table width="100%" cellpadding="0" cellspacing="0" style="background: linear-gradient(135deg, #9CAE8C 0%, #7C9F8C 100%); border-radius: 8px;">
+                <tr>
+                  <td style="padding: 30px; text-align: center;">
+                    <p style="color: #ffffff; font-size: 14px; text-transform: uppercase; letter-spacing: 1px; margin: 0 0 10px;">
+                      Your Exclusive Discount
+                    </p>
+                    <h3 style="color: #ffffff; font-size: 48px; margin: 0 0 10px; font-family: Georgia, serif;">
+                      10% OFF
+                    </h3>
+                    <p style="color: #ffffff; font-size: 16px; margin: 0 0 15px;">
+                      Use code at checkout:
+                    </p>
+                    <div style="background-color: #ffffff; color: #111111; font-size: 24px; font-weight: bold; padding: 15px 30px; display: inline-block; border-radius: 4px; letter-spacing: 2px;">
+                      COMEBACK10
+                    </div>
+                    <p style="color: rgba(255,255,255,0.8); font-size: 12px; margin: 15px 0 0;">
+                      &#9200; Expires in 24 hours
+                    </p>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- Cart Summary -->
+          <tr>
+            <td style="padding: 0 40px 20px;">
+              <p style="color: #999999; font-size: 12px; text-transform: uppercase; letter-spacing: 1px; margin: 0 0 15px;">
+                Your Cart
+              </p>
+
+              {% for item in items %}
+              <table width="100%" cellpadding="0" cellspacing="0" style="background-color: #F7F4EF; border-radius: 8px; margin-bottom: 10px;">
+                <tr>
+                  <td width="80" style="padding: 15px;">
+                    <div style="width: 70px; height: 70px; background: #E5E5E5; border-radius: 4px;">
+                      <img src="{{ item.image }}" alt="{{ item.title }}" width="70" style="border-radius: 4px;">
+                    </div>
+                  </td>
+                  <td style="padding: 15px; vertical-align: middle;">
+                    <p style="color: #111111; font-size: 14px; font-weight: bold; margin: 0 0 5px;">{{ item.title }}</p>
+                    <p style="color: #666666; font-size: 12px; margin: 0 0 5px;">{{ item.variant }}</p>
+                    <p style="color: #9CAE8C; font-size: 14px; font-weight: bold; margin: 0;">{{ item.price }}</p>
+                  </td>
+                </tr>
+              </table>
+              {% endfor %}
+
+              <table width="100%" cellpadding="0" cellspacing="0" style="margin-top: 15px;">
+                <tr>
+                  <td style="color: #666666; font-size: 14px;">Subtotal:</td>
+                  <td style="text-align: right; color: #666666; font-size: 14px;">{{ cart_total }}</td>
+                </tr>
+                <tr>
+                  <td style="color: #9CAE8C; font-size: 14px;">Your Discount (10%):</td>
+                  <td style="text-align: right; color: #9CAE8C; font-size: 14px;">-{{ discount_amount }}</td>
+                </tr>
+                <tr>
+                  <td style="color: #111111; font-size: 18px; font-weight: bold; padding-top: 10px;">New Total:</td>
+                  <td style="text-align: right; color: #111111; font-size: 18px; font-weight: bold; padding-top: 10px;">{{ new_total }}</td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- CTA -->
+          <tr>
+            <td style="padding: 20px 40px 40px; text-align: center;">
+              <a href="{{ checkout_url }}?discount=COMEBACK10" style="display: inline-block; background-color: #9CAE8C; color: #ffffff; text-decoration: none; font-size: 18px; font-weight: bold; padding: 18px 50px; border-radius: 4px;">
+                Complete Order + Save 10%
+              </a>
+              <p style="color: #999999; font-size: 12px; margin: 15px 0 0;">
+                Discount automatically applied at checkout
+              </p>
+            </td>
+          </tr>
+
+          <!-- P.S. Note -->
+          <tr>
+            <td style="padding: 30px 40px; background-color: #F7F4EF;">
+              <p style="color: #666666; font-size: 14px; line-height: 1.6; margin: 0; font-style: italic;">
+                <strong>P.S.</strong> This is the last time we'll email you about your cart. If you have any questions about personalization, shipping, or anything else, just reply to this email - we're happy to help!
+              </p>
+            </td>
+          </tr>
+
+          <!-- Footer -->
+          <tr>
+            <td style="padding: 25px 40px; text-align: center;">
+              <p style="color: #666666; font-size: 14px; margin: 0 0 10px;">
+                Need help? We're here for you.
+              </p>
+              <a href="mailto:hello@shelzysdesigns.com" style="color: #9CAE8C; text-decoration: none;">hello@shelzysdesigns.com</a>
+
+              <p style="color: #999999; font-size: 12px; margin: 20px 0 0;">
+                Shelzy's Designs | Premium Personalized Bottles<br>
+                <a href="{{ unsubscribe_url }}" style="color: #999999;">Unsubscribe</a>
+              </p>
+            </td>
+          </tr>
+
+        </table>
+      </td>
+    </tr>
+  </table>
+
+</body>
+</html>

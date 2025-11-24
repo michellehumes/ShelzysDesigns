@@ -1,0 +1,922 @@
+{% comment %}
+==================================================
+SHELZY'S DESIGNS - MOBILE & CART OPTIMIZATIONS
+CSS and Liquid templates for mobile experience and cart
+
+Components included:
+1. Mobile-Optimized Base Styles
+2. Sticky Add to Cart (Mobile)
+3. Cart Upsell Section
+4. Cart Cross-Sell Recommendations
+5. Gift Message Option
+6. Express Checkout Highlight
+7. Mobile Touch-Friendly Elements
+
+INSTALLATION:
+Add CSS to theme.css or as a separate mobile.css
+Add Liquid snippets to cart template
+==================================================
+{% endcomment %}
+
+
+{% comment %}
+==================================================
+COMPONENT 1: MOBILE-OPTIMIZED BASE STYLES
+Add to theme.css or assets/mobile.css
+==================================================
+{% endcomment %}
+
+<style>
+/*
+==================================================
+SHELZY'S DESIGNS - MOBILE OPTIMIZATION CSS
+==================================================
+*/
+
+/* ===== Base Mobile Improvements ===== */
+@media (max-width: 768px) {
+
+  /* Ensure readable text */
+  body {
+    font-size: 16px;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  /* Improve tap targets - minimum 44px */
+  a, button, input, select, textarea {
+    min-height: 44px;
+    min-width: 44px;
+  }
+
+  /* Full-width buttons on mobile */
+  .btn,
+  .button,
+  button[type="submit"],
+  .product-form__submit {
+    width: 100%;
+    padding: 16px 24px;
+    font-size: 16px;
+  }
+
+  /* Improve form inputs */
+  input[type="text"],
+  input[type="email"],
+  input[type="tel"],
+  input[type="number"],
+  select,
+  textarea {
+    font-size: 16px; /* Prevents zoom on iOS */
+    padding: 14px 16px;
+    border-radius: 8px;
+  }
+
+  /* Product images - full width */
+  .product__media-item {
+    width: 100%;
+  }
+
+  /* Product info - proper spacing */
+  .product__info-container {
+    padding: 20px;
+  }
+
+  /* Product title */
+  .product__title {
+    font-size: 24px;
+    line-height: 1.3;
+  }
+
+  /* Product price */
+  .product__price {
+    font-size: 22px;
+  }
+
+  /* Hide desktop-only elements */
+  .desktop-only {
+    display: none !important;
+  }
+
+  /* Navigation - full screen mobile menu */
+  .mobile-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: white;
+    z-index: 1000;
+    padding: 20px;
+  }
+
+  /* Search - prominent on mobile */
+  .header__search {
+    width: 100%;
+    margin: 10px 0;
+  }
+
+  /* Grid layouts */
+  .collection-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+  }
+
+  /* Announcement bar - readable */
+  .announcement-bar {
+    font-size: 13px;
+    padding: 10px 15px;
+  }
+}
+
+/* ===== Extra Small Devices ===== */
+@media (max-width: 375px) {
+  .collection-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .product__title {
+    font-size: 20px;
+  }
+}
+
+
+/* ===== Sticky Add to Cart (Mobile) ===== */
+.sticky-atc {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .sticky-atc {
+    display: block;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: white;
+    padding: 15px 20px;
+    box-shadow: 0 -4px 20px rgba(0,0,0,0.1);
+    z-index: 999;
+    transform: translateY(100%);
+    transition: transform 0.3s ease;
+  }
+
+  .sticky-atc.visible {
+    transform: translateY(0);
+  }
+
+  .sticky-atc-inner {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    max-width: 100%;
+  }
+
+  .sticky-atc-info {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .sticky-atc-title {
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    color: #111111;
+    margin: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .sticky-atc-price {
+    font-family: 'Poppins', sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    color: #9CAE8C;
+    margin: 0;
+  }
+
+  .sticky-atc-button {
+    flex-shrink: 0;
+    padding: 14px 24px;
+    background: #9CAE8C;
+    color: white;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    font-size: 14px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+
+  /* Add padding to body to account for sticky bar */
+  body.has-sticky-atc {
+    padding-bottom: 80px;
+  }
+}
+
+
+/* ===== Tap to Call Phone Number ===== */
+.tap-to-call {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .tap-to-call {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 12px 20px;
+    background: #9CAE8C;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    font-size: 14px;
+    margin: 15px 0;
+  }
+
+  .tap-to-call:hover {
+    background: #7C9F8C;
+  }
+
+  .tap-to-call-icon {
+    font-size: 18px;
+  }
+}
+
+
+/* ===== Mobile Product Image Gallery ===== */
+@media (max-width: 768px) {
+  .product-gallery {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    gap: 10px;
+    padding-bottom: 15px;
+  }
+
+  .product-gallery-item {
+    flex: 0 0 85%;
+    scroll-snap-align: center;
+  }
+
+  .product-gallery-item img {
+    width: 100%;
+    border-radius: 8px;
+  }
+
+  /* Scroll indicators */
+  .gallery-dots {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 10px;
+  }
+
+  .gallery-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #E5E5E5;
+  }
+
+  .gallery-dot.active {
+    background: #9CAE8C;
+  }
+}
+
+
+/* ===== Mobile-Friendly Cart ===== */
+@media (max-width: 768px) {
+  .cart-items {
+    padding: 0;
+  }
+
+  .cart-item {
+    display: grid;
+    grid-template-columns: 80px 1fr;
+    gap: 15px;
+    padding: 20px 0;
+    border-bottom: 1px solid #E5E5E5;
+  }
+
+  .cart-item-image {
+    width: 80px;
+    height: 80px;
+    border-radius: 8px;
+    object-fit: cover;
+  }
+
+  .cart-item-details {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .cart-item-title {
+    font-size: 14px;
+    font-weight: 500;
+  }
+
+  .cart-item-variant {
+    font-size: 12px;
+    color: #666;
+  }
+
+  .cart-item-price {
+    font-size: 16px;
+    font-weight: 600;
+    color: #9CAE8C;
+  }
+
+  .cart-item-quantity {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 10px;
+  }
+
+  .quantity-btn {
+    width: 36px;
+    height: 36px;
+    border: 1px solid #E5E5E5;
+    background: white;
+    border-radius: 4px;
+    font-size: 18px;
+    cursor: pointer;
+  }
+
+  .quantity-input {
+    width: 50px;
+    text-align: center;
+    border: 1px solid #E5E5E5;
+    border-radius: 4px;
+    padding: 8px;
+  }
+}
+</style>
+
+
+{% comment %}
+==================================================
+COMPONENT 2: STICKY ADD TO CART (Mobile)
+Add to product template, outside main product form
+==================================================
+{% endcomment %}
+
+<div class="sticky-atc" id="sticky-atc">
+  <div class="sticky-atc-inner">
+    <div class="sticky-atc-info">
+      <p class="sticky-atc-title">{{ product.title }}</p>
+      <p class="sticky-atc-price">{{ product.selected_or_first_available_variant.price | money }}</p>
+    </div>
+    <button type="button" class="sticky-atc-button" id="sticky-atc-btn">
+      Add to Cart
+    </button>
+  </div>
+</div>
+
+<script>
+(function() {
+  var stickyATC = document.getElementById('sticky-atc');
+  var stickyBtn = document.getElementById('sticky-atc-btn');
+  var mainATC = document.querySelector('.product-form__submit, [name="add"]');
+
+  if (!stickyATC || !mainATC) return;
+
+  // Add class to body for padding
+  document.body.classList.add('has-sticky-atc');
+
+  // Show/hide sticky bar based on scroll
+  function checkStickyVisibility() {
+    var mainATCRect = mainATC.getBoundingClientRect();
+    var isMainATCVisible = mainATCRect.top < window.innerHeight && mainATCRect.bottom > 0;
+
+    if (isMainATCVisible) {
+      stickyATC.classList.remove('visible');
+    } else {
+      stickyATC.classList.add('visible');
+    }
+  }
+
+  // Click handler - scroll to main ATC or submit form
+  stickyBtn.addEventListener('click', function() {
+    var mainATCRect = mainATC.getBoundingClientRect();
+
+    if (mainATCRect.top < 0 || mainATCRect.bottom > window.innerHeight) {
+      mainATC.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    } else {
+      mainATC.click();
+    }
+  });
+
+  // Throttled scroll listener
+  var scrollTimeout;
+  window.addEventListener('scroll', function() {
+    if (scrollTimeout) return;
+    scrollTimeout = setTimeout(function() {
+      scrollTimeout = null;
+      checkStickyVisibility();
+    }, 100);
+  });
+
+  // Initial check
+  checkStickyVisibility();
+})();
+</script>
+
+
+{% comment %}
+==================================================
+COMPONENT 3: CART UPSELL SECTION
+Add to cart template/drawer
+==================================================
+{% endcomment %}
+
+<div class="cart-upsell">
+  <h3 class="cart-upsell-title">Complete Your Order</h3>
+
+  <div class="cart-upsell-item" data-variant-id="GIFT_WRAP_VARIANT_ID">
+    <div class="upsell-checkbox">
+      <input type="checkbox" id="add-gift-wrap" name="gift-wrap">
+      <label for="add-gift-wrap"></label>
+    </div>
+    <div class="upsell-icon">&#127873;</div>
+    <div class="upsell-content">
+      <p class="upsell-name">Add Gift Wrapping</p>
+      <p class="upsell-desc">Includes ribbon & gift tag</p>
+    </div>
+    <div class="upsell-price">+$5.00</div>
+  </div>
+
+  <div class="cart-upsell-item" data-variant-id="RUSH_ORDER_VARIANT_ID">
+    <div class="upsell-checkbox">
+      <input type="checkbox" id="add-rush" name="rush-order">
+      <label for="add-rush"></label>
+    </div>
+    <div class="upsell-icon">&#9889;</div>
+    <div class="upsell-content">
+      <p class="upsell-name">Rush Processing</p>
+      <p class="upsell-desc">Ships within 1-2 business days</p>
+    </div>
+    <div class="upsell-price">+$10.00</div>
+  </div>
+</div>
+
+<style>
+.cart-upsell {
+  background: #F7F4EF;
+  border-radius: 8px;
+  padding: 20px;
+  margin: 20px 0;
+}
+
+.cart-upsell-title {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  font-size: 16px;
+  color: #111111;
+  margin: 0 0 15px;
+}
+
+.cart-upsell-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 0;
+  border-bottom: 1px solid #E5E5E5;
+}
+
+.cart-upsell-item:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.upsell-checkbox input {
+  display: none;
+}
+
+.upsell-checkbox label {
+  display: block;
+  width: 22px;
+  height: 22px;
+  border: 2px solid #D8CFC4;
+  border-radius: 4px;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.2s ease;
+}
+
+.upsell-checkbox input:checked + label {
+  background: #9CAE8C;
+  border-color: #9CAE8C;
+}
+
+.upsell-checkbox input:checked + label::after {
+  content: "✓";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.upsell-icon {
+  font-size: 20px;
+}
+
+.upsell-content {
+  flex: 1;
+}
+
+.upsell-name {
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  color: #111111;
+  margin: 0;
+}
+
+.upsell-desc {
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  color: #666;
+  margin: 2px 0 0;
+}
+
+.upsell-price {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  color: #9CAE8C;
+}
+</style>
+
+
+{% comment %}
+==================================================
+COMPONENT 4: CART CROSS-SELL RECOMMENDATIONS
+Add to cart template/drawer
+==================================================
+{% endcomment %}
+
+<div class="cart-cross-sell">
+  <h3>Customers Also Bought</h3>
+
+  <div class="cross-sell-grid">
+    {% comment %} Replace with actual product recommendations {% endcomment %}
+    {% assign recommended_products = collections['best-sellers'].products | slice: 0, 3 %}
+
+    {% for product in recommended_products %}
+      <div class="cross-sell-item">
+        <a href="{{ product.url }}">
+          {% if product.featured_image %}
+            <img src="{{ product.featured_image | img_url: '200x' }}" alt="{{ product.title }}">
+          {% endif %}
+        </a>
+        <div class="cross-sell-info">
+          <p class="cross-sell-title">{{ product.title | truncate: 30 }}</p>
+          <p class="cross-sell-price">{{ product.price | money }}</p>
+        </div>
+        <button class="cross-sell-add" data-variant-id="{{ product.selected_or_first_available_variant.id }}">
+          + Add
+        </button>
+      </div>
+    {% endfor %}
+  </div>
+</div>
+
+<style>
+.cart-cross-sell {
+  margin: 30px 0;
+  padding-top: 20px;
+  border-top: 1px solid #E5E5E5;
+}
+
+.cart-cross-sell h3 {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  font-size: 16px;
+  color: #111111;
+  margin: 0 0 15px;
+}
+
+.cross-sell-grid {
+  display: flex;
+  gap: 15px;
+  overflow-x: auto;
+  padding-bottom: 10px;
+  -webkit-overflow-scrolling: touch;
+}
+
+.cross-sell-item {
+  flex: 0 0 140px;
+  background: #F7F4EF;
+  border-radius: 8px;
+  padding: 10px;
+  text-align: center;
+}
+
+.cross-sell-item img {
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+  border-radius: 4px;
+  margin-bottom: 8px;
+}
+
+.cross-sell-title {
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  color: #111111;
+  margin: 0 0 4px;
+  line-height: 1.3;
+}
+
+.cross-sell-price {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  color: #9CAE8C;
+  margin: 0 0 8px;
+}
+
+.cross-sell-add {
+  width: 100%;
+  padding: 8px;
+  background: #9CAE8C;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.cross-sell-add:hover {
+  background: #7C9F8C;
+}
+</style>
+
+
+{% comment %}
+==================================================
+COMPONENT 5: GIFT MESSAGE OPTION
+Add to cart template
+==================================================
+{% endcomment %}
+
+<div class="gift-message-section">
+  <div class="gift-message-toggle">
+    <input type="checkbox" id="add-gift-message" name="gift-message-toggle">
+    <label for="add-gift-message">
+      <span class="gift-icon">&#127873;</span>
+      Add a gift message (Free)
+    </label>
+  </div>
+
+  <div class="gift-message-form" id="gift-message-form" style="display: none;">
+    <div class="form-group">
+      <label for="gift-recipient">Recipient's Name</label>
+      <input type="text" id="gift-recipient" name="attributes[gift_recipient]" placeholder="Who is this for?">
+    </div>
+    <div class="form-group">
+      <label for="gift-message-text">Your Message</label>
+      <textarea id="gift-message-text" name="attributes[gift_message]" rows="3" placeholder="Write a personal message..." maxlength="200"></textarea>
+      <span class="char-count"><span id="message-length">0</span>/200</span>
+    </div>
+  </div>
+</div>
+
+<style>
+.gift-message-section {
+  margin: 20px 0;
+  padding: 20px;
+  background: #F7F4EF;
+  border-radius: 8px;
+}
+
+.gift-message-toggle {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.gift-message-toggle input {
+  display: none;
+}
+
+.gift-message-toggle label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  color: #111111;
+  cursor: pointer;
+}
+
+.gift-icon {
+  font-size: 20px;
+}
+
+.gift-message-toggle input:checked + label::before {
+  content: "✓";
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  background: #9CAE8C;
+  color: white;
+  border-radius: 4px;
+  font-size: 12px;
+  margin-right: 5px;
+}
+
+.gift-message-toggle input:not(:checked) + label::before {
+  content: "";
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 2px solid #D8CFC4;
+  border-radius: 4px;
+  margin-right: 5px;
+}
+
+.gift-message-form {
+  margin-top: 15px;
+  padding-top: 15px;
+  border-top: 1px solid #E5E5E5;
+}
+
+.gift-message-form .form-group {
+  margin-bottom: 15px;
+}
+
+.gift-message-form label {
+  display: block;
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  color: #666;
+  margin-bottom: 5px;
+}
+
+.gift-message-form input,
+.gift-message-form textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #E5E5E5;
+  border-radius: 4px;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+}
+
+.gift-message-form textarea {
+  resize: none;
+}
+
+.char-count {
+  display: block;
+  text-align: right;
+  font-family: 'Inter', sans-serif;
+  font-size: 11px;
+  color: #999;
+  margin-top: 5px;
+}
+</style>
+
+<script>
+(function() {
+  var toggle = document.getElementById('add-gift-message');
+  var form = document.getElementById('gift-message-form');
+  var textarea = document.getElementById('gift-message-text');
+  var charCount = document.getElementById('message-length');
+
+  if (toggle && form) {
+    toggle.addEventListener('change', function() {
+      form.style.display = this.checked ? 'block' : 'none';
+    });
+  }
+
+  if (textarea && charCount) {
+    textarea.addEventListener('input', function() {
+      charCount.textContent = this.value.length;
+    });
+  }
+})();
+</script>
+
+
+{% comment %}
+==================================================
+COMPONENT 6: EXPRESS CHECKOUT HIGHLIGHT
+Add above checkout button
+==================================================
+{% endcomment %}
+
+<div class="express-checkout-section">
+  <p class="express-label">Express Checkout</p>
+  <div class="express-buttons">
+    {{ content_for_additional_checkout_buttons }}
+  </div>
+  <div class="express-divider">
+    <span>or continue below</span>
+  </div>
+</div>
+
+<style>
+.express-checkout-section {
+  margin-bottom: 20px;
+}
+
+.express-label {
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  color: #666;
+  text-align: center;
+  margin: 0 0 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.express-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Style dynamic checkout buttons consistently */
+.express-buttons .shopify-payment-button {
+  margin: 0;
+}
+
+.express-buttons .shopify-payment-button__button {
+  border-radius: 6px;
+  min-height: 48px;
+}
+
+.express-divider {
+  display: flex;
+  align-items: center;
+  margin: 20px 0;
+}
+
+.express-divider::before,
+.express-divider::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: #E5E5E5;
+}
+
+.express-divider span {
+  padding: 0 15px;
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  color: #999;
+}
+</style>
+
+
+{% comment %}
+==================================================
+COMPONENT 7: TAP-TO-CALL BUTTON
+Add to header or contact section
+==================================================
+{% endcomment %}
+
+<a href="tel:+15551234567" class="tap-to-call">
+  <span class="tap-to-call-icon">&#128222;</span>
+  <span>Call Us</span>
+</a>
+
+
+{% comment %}
+==================================================
+HELPER: MOBILE DETECTION SCRIPT
+Add to theme.liquid
+==================================================
+{% endcomment %}
+
+<script>
+// Add mobile class to body for CSS targeting
+(function() {
+  function isMobile() {
+    return window.innerWidth <= 768;
+  }
+
+  function updateMobileClass() {
+    document.body.classList.toggle('is-mobile', isMobile());
+    document.body.classList.toggle('is-desktop', !isMobile());
+  }
+
+  updateMobileClass();
+  window.addEventListener('resize', updateMobileClass);
+})();
+</script>

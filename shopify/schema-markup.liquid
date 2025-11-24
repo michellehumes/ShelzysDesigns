@@ -1,0 +1,509 @@
+{% comment %}
+==================================================
+SHELZY'S DESIGNS - STRUCTURED DATA / SCHEMA MARKUP
+JSON-LD templates for improved SEO and rich results
+
+INSTALLATION:
+Add these scripts to your theme.liquid file before </head>
+Or create a snippet and include where needed
+
+Schema Types Included:
+1. Organization (site-wide)
+2. Website with SearchAction (site-wide)
+3. Product (product pages)
+4. BreadcrumbList (all pages)
+5. FAQPage (FAQ page)
+6. LocalBusiness (optional)
+7. CollectionPage (collection pages)
+
+Test with: https://search.google.com/test/rich-results
+==================================================
+{% endcomment %}
+
+
+{% comment %}
+==================================================
+SCHEMA 1: ORGANIZATION
+Add to theme.liquid - site-wide
+==================================================
+{% endcomment %}
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "Shelzy's Designs",
+  "url": "{{ shop.url }}",
+  "logo": "{{ 'logo.png' | asset_url }}",
+  "description": "Premium personalized sublimation water bottles for weddings, corporate events, and everyday use. Custom bottles that don't peel, crack, or fade.",
+  "email": "hello@shelzysdesigns.com",
+  "sameAs": [
+    "https://instagram.com/shelzysdesigns",
+    "https://facebook.com/shelzysdesigns",
+    "https://pinterest.com/shelzysdesigns",
+    "https://tiktok.com/@shelzysdesigns"
+  ],
+  "contactPoint": {
+    "@type": "ContactPoint",
+    "contactType": "customer service",
+    "email": "hello@shelzysdesigns.com",
+    "availableLanguage": "English"
+  },
+  "address": {
+    "@type": "PostalAddress",
+    "addressCountry": "US"
+  }
+}
+</script>
+
+
+{% comment %}
+==================================================
+SCHEMA 2: WEBSITE WITH SEARCH
+Add to theme.liquid - site-wide
+==================================================
+{% endcomment %}
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "Shelzy's Designs",
+  "url": "{{ shop.url }}",
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": {
+      "@type": "EntryPoint",
+      "urlTemplate": "{{ shop.url }}/search?q={search_term_string}"
+    },
+    "query-input": "required name=search_term_string"
+  }
+}
+</script>
+
+
+{% comment %}
+==================================================
+SCHEMA 3: PRODUCT
+Add to product.liquid or product template
+==================================================
+{% endcomment %}
+
+{% if template contains 'product' %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Product",
+  "name": "{{ product.title | escape }}",
+  "description": "{{ product.description | strip_html | truncate: 500 | escape }}",
+  "image": [
+    {% for image in product.images limit: 5 %}
+      "{{ image | img_url: '1200x' }}"{% unless forloop.last %},{% endunless %}
+    {% endfor %}
+  ],
+  "sku": "{{ product.selected_or_first_available_variant.sku | default: product.id }}",
+  "mpn": "{{ product.selected_or_first_available_variant.sku | default: product.id }}",
+  "brand": {
+    "@type": "Brand",
+    "name": "Shelzy's Designs"
+  },
+  "offers": {
+    "@type": "Offer",
+    "url": "{{ shop.url }}{{ product.url }}",
+    "priceCurrency": "{{ shop.currency }}",
+    "price": "{{ product.selected_or_first_available_variant.price | money_without_currency | remove: ',' }}",
+    {% if product.compare_at_price_max > product.price %}
+    "priceValidUntil": "{{ 'now' | date: '%Y-12-31' }}",
+    {% endif %}
+    "availability": "{% if product.available %}https://schema.org/InStock{% else %}https://schema.org/OutOfStock{% endif %}",
+    "seller": {
+      "@type": "Organization",
+      "name": "Shelzy's Designs"
+    },
+    "shippingDetails": {
+      "@type": "OfferShippingDetails",
+      "shippingRate": {
+        "@type": "MonetaryAmount",
+        "value": "0",
+        "currency": "USD"
+      },
+      "shippingDestination": {
+        "@type": "DefinedRegion",
+        "addressCountry": "US"
+      },
+      "deliveryTime": {
+        "@type": "ShippingDeliveryTime",
+        "handlingTime": {
+          "@type": "QuantitativeValue",
+          "minValue": "3",
+          "maxValue": "5",
+          "unitCode": "DAY"
+        },
+        "transitTime": {
+          "@type": "QuantitativeValue",
+          "minValue": "3",
+          "maxValue": "7",
+          "unitCode": "DAY"
+        }
+      }
+    },
+    "hasMerchantReturnPolicy": {
+      "@type": "MerchantReturnPolicy",
+      "applicableCountry": "US",
+      "returnPolicyCategory": "https://schema.org/MerchantReturnFiniteReturnWindow",
+      "merchantReturnDays": 7,
+      "returnMethod": "https://schema.org/ReturnByMail"
+    }
+  }
+  {% if product.metafields.reviews.rating %}
+  ,"aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "{{ product.metafields.reviews.rating.value.rating }}",
+    "reviewCount": "{{ product.metafields.reviews.rating_count.value }}"
+  }
+  {% endif %}
+}
+</script>
+{% endif %}
+
+
+{% comment %}
+==================================================
+SCHEMA 4: BREADCRUMBS
+Add to theme.liquid or specific templates
+==================================================
+{% endcomment %}
+
+{% if template != 'index' %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "{{ shop.url }}"
+    }
+    {% if template contains 'collection' %}
+    ,{
+      "@type": "ListItem",
+      "position": 2,
+      "name": "{{ collection.title | escape }}",
+      "item": "{{ shop.url }}{{ collection.url }}"
+    }
+    {% elsif template contains 'product' %}
+    {% if product.collections.size > 0 %}
+    ,{
+      "@type": "ListItem",
+      "position": 2,
+      "name": "{{ product.collections.first.title | escape }}",
+      "item": "{{ shop.url }}{{ product.collections.first.url }}"
+    }
+    {% endif %}
+    ,{
+      "@type": "ListItem",
+      "position": {% if product.collections.size > 0 %}3{% else %}2{% endif %},
+      "name": "{{ product.title | escape }}",
+      "item": "{{ shop.url }}{{ product.url }}"
+    }
+    {% elsif template contains 'page' %}
+    ,{
+      "@type": "ListItem",
+      "position": 2,
+      "name": "{{ page.title | escape }}",
+      "item": "{{ shop.url }}{{ page.url }}"
+    }
+    {% elsif template contains 'blog' %}
+    ,{
+      "@type": "ListItem",
+      "position": 2,
+      "name": "{{ blog.title | escape }}",
+      "item": "{{ shop.url }}{{ blog.url }}"
+    }
+    {% elsif template contains 'article' %}
+    ,{
+      "@type": "ListItem",
+      "position": 2,
+      "name": "{{ blog.title | escape }}",
+      "item": "{{ shop.url }}{{ blog.url }}"
+    }
+    ,{
+      "@type": "ListItem",
+      "position": 3,
+      "name": "{{ article.title | escape }}",
+      "item": "{{ shop.url }}{{ article.url }}"
+    }
+    {% endif %}
+  ]
+}
+</script>
+{% endif %}
+
+
+{% comment %}
+==================================================
+SCHEMA 5: FAQ PAGE
+Add to FAQ page template only
+==================================================
+{% endcomment %}
+
+{% if page.handle == 'faq' %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Is the personalization vinyl?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. All designs are created with true sublimation printing, which is permanent and won't peel or crack. The ink is infused directly into the bottle's coating, so your personalization becomes part of the bottle itself."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Will the design peel or fade?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. Unlike vinyl decals, sublimation printing is permanent. The ink is heat-pressed into the bottle's coating, so it won't peel, crack, or fade over time."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Are the bottles dishwasher safe?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "We recommend hand washing to keep the finish looking its best for years. However, sublimation is far more durable than vinyl and won't peel in normal use. Many customers do put them in the dishwasher without issues, but hand washing ensures longevity."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How long do the bottles keep drinks cold or hot?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Our 20oz double-wall insulated bottles keep drinks cold for up to 24 hours and hot for up to 12 hours."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Are the bottles BPA-free?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes! All bottles are made from BPA-free stainless steel."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How long will it take to receive my order?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Processing time is typically 3-5 business days (each bottle is made to order). Shipping time is usually 3-7 business days depending on your location. Total time: 6-12 business days from order to delivery."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Do you offer rush shipping?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes! If you need your order sooner, please contact us before placing your order. We'll let you know if rush production and shipping are available for your timeline."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I order in bulk for a bridal party or company?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes! We offer bulk pricing for bridal party sets (5, 8, or 10-pack) and corporate orders (minimum 10 bottles). Visit our Bulk & Corporate page or contact us for a custom quote."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I return or exchange a personalized bottle?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Because each bottle is custom-made to order, we do not accept returns or exchanges unless there is a defect or error on our part. If there's an issue with your order, please contact us within 7 days of delivery and we'll make it right."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What if my bottle arrives damaged?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "We pack every order with care, but if your bottle arrives damaged, please contact us immediately with photos. We'll send a replacement right away."
+      }
+    }
+  ]
+}
+</script>
+{% endif %}
+
+
+{% comment %}
+==================================================
+SCHEMA 6: COLLECTION PAGE
+Add to collection template
+==================================================
+{% endcomment %}
+
+{% if template contains 'collection' %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  "name": "{{ collection.title | escape }}",
+  "description": "{{ collection.description | strip_html | truncate: 300 | escape }}",
+  "url": "{{ shop.url }}{{ collection.url }}",
+  {% if collection.image %}
+  "image": "{{ collection.image | img_url: '1200x' }}",
+  {% endif %}
+  "mainEntity": {
+    "@type": "ItemList",
+    "numberOfItems": {{ collection.products_count }},
+    "itemListElement": [
+      {% for product in collection.products limit: 10 %}
+      {
+        "@type": "ListItem",
+        "position": {{ forloop.index }},
+        "url": "{{ shop.url }}{{ product.url }}"
+      }{% unless forloop.last %},{% endunless %}
+      {% endfor %}
+    ]
+  }
+}
+</script>
+{% endif %}
+
+
+{% comment %}
+==================================================
+SCHEMA 7: ARTICLE/BLOG POST
+Add to article template
+==================================================
+{% endcomment %}
+
+{% if template contains 'article' %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "{{ article.title | escape }}",
+  "description": "{{ article.excerpt | strip_html | truncate: 300 | escape }}",
+  "image": {% if article.image %}"{{ article.image | img_url: '1200x' }}"{% else %}"{{ 'logo.png' | asset_url }}"{% endif %},
+  "datePublished": "{{ article.published_at | date: '%Y-%m-%dT%H:%M:%S%z' }}",
+  "dateModified": "{{ article.updated_at | default: article.published_at | date: '%Y-%m-%dT%H:%M:%S%z' }}",
+  "author": {
+    "@type": "Person",
+    "name": "{{ article.author }}"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Shelzy's Designs",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "{{ 'logo.png' | asset_url }}"
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "{{ shop.url }}{{ article.url }}"
+  }
+}
+</script>
+{% endif %}
+
+
+{% comment %}
+==================================================
+COMBINED THEME.LIQUID INSTALLATION
+Copy everything below into your theme.liquid before </head>
+==================================================
+{% endcomment %}
+
+{% comment %}
+<!-- COMBINED SCHEMA MARKUP FOR SHELZY'S DESIGNS -->
+<!-- Add this before </head> in theme.liquid -->
+
+<!-- Organization Schema -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "Shelzy's Designs",
+  "url": "{{ shop.url }}",
+  "logo": "{{ 'logo.png' | asset_url }}",
+  "description": "Premium personalized sublimation water bottles for weddings, corporate events, and everyday use.",
+  "email": "hello@shelzysdesigns.com",
+  "sameAs": [
+    "https://instagram.com/shelzysdesigns",
+    "https://facebook.com/shelzysdesigns",
+    "https://pinterest.com/shelzysdesigns"
+  ]
+}
+</script>
+
+<!-- Website Search Schema -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "Shelzy's Designs",
+  "url": "{{ shop.url }}",
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": "{{ shop.url }}/search?q={search_term_string}",
+    "query-input": "required name=search_term_string"
+  }
+}
+</script>
+
+{% if template contains 'product' %}
+<!-- Product Schema - see product template section above -->
+{% endif %}
+
+{% if page.handle == 'faq' %}
+<!-- FAQ Schema - see FAQ section above -->
+{% endif %}
+{% endcomment %}
+
+
+{% comment %}
+==================================================
+META TAGS TEMPLATE
+Add to theme.liquid <head> section
+==================================================
+{% endcomment %}
+
+{% comment %}
+<!-- Open Graph / Facebook -->
+<meta property="og:type" content="{% if template contains 'product' %}product{% elsif template contains 'article' %}article{% else %}website{% endif %}">
+<meta property="og:url" content="{{ canonical_url }}">
+<meta property="og:title" content="{{ page_title }}">
+<meta property="og:description" content="{{ page_description | escape }}">
+{% if template contains 'product' and product.featured_image %}
+<meta property="og:image" content="{{ product.featured_image | img_url: '1200x' }}">
+{% elsif template contains 'article' and article.image %}
+<meta property="og:image" content="{{ article.image | img_url: '1200x' }}">
+{% else %}
+<meta property="og:image" content="{{ 'og-image.jpg' | asset_url }}">
+{% endif %}
+<meta property="og:site_name" content="{{ shop.name }}">
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:url" content="{{ canonical_url }}">
+<meta name="twitter:title" content="{{ page_title }}">
+<meta name="twitter:description" content="{{ page_description | escape }}">
+{% if template contains 'product' and product.featured_image %}
+<meta name="twitter:image" content="{{ product.featured_image | img_url: '1200x' }}">
+{% endif %}
+
+<!-- Product-specific Open Graph -->
+{% if template contains 'product' %}
+<meta property="og:price:amount" content="{{ product.selected_or_first_available_variant.price | money_without_currency }}">
+<meta property="og:price:currency" content="{{ shop.currency }}">
+<meta property="product:availability" content="{% if product.available %}instock{% else %}oos{% endif %}">
+{% endif %}
+{% endcomment %}

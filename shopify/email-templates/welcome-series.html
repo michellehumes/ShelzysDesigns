@@ -1,0 +1,474 @@
+<!--
+==================================================
+SHELZY'S DESIGNS - WELCOME EMAIL SERIES
+For use with Klaviyo or similar email marketing platform
+
+Series Overview:
+- Email 1: Welcome + 10% Off (Immediate)
+- Email 2: Brand Story + Bestsellers (Day 3)
+- Email 3: Social Proof + Urgency (Day 7)
+
+Klaviyo Setup:
+1. Create Flow > Welcome Series
+2. Trigger: When someone joins a list
+3. Add emails with delays as specified
+4. Customize merge tags as needed
+==================================================
+-->
+
+
+<!--
+==================================================
+EMAIL 1: WELCOME + 10% OFF
+Timing: Immediate upon signup
+==================================================
+-->
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Welcome to Shelzy's Designs!</title>
+</head>
+<body style="margin: 0; padding: 0; background-color: #F7F4EF; font-family: Arial, sans-serif;">
+
+  <!-- Preheader -->
+  <div style="display: none; max-height: 0; overflow: hidden;">
+    Here's your exclusive 10% off code inside...
+  </div>
+
+  <table width="100%" cellpadding="0" cellspacing="0" style="background-color: #F7F4EF; padding: 40px 20px;">
+    <tr>
+      <td align="center">
+        <table width="600" cellpadding="0" cellspacing="0" style="background-color: #ffffff; border-radius: 8px; overflow: hidden;">
+
+          <!-- Header -->
+          <tr>
+            <td style="background-color: #9CAE8C; padding: 30px; text-align: center;">
+              <h1 style="color: #ffffff; font-size: 28px; margin: 0; font-family: Georgia, serif;">
+                Shelzy's Designs
+              </h1>
+            </td>
+          </tr>
+
+          <!-- Hero -->
+          <tr>
+            <td style="padding: 40px 40px 20px; text-align: center;">
+              <h2 style="color: #111111; font-size: 32px; margin: 0 0 15px; font-family: Georgia, serif;">
+                Welcome to the Family!
+              </h2>
+              <p style="color: #666666; font-size: 16px; line-height: 1.6; margin: 0;">
+                Hi {{ first_name|default:'there' }},<br><br>
+                Thank you for joining us! We're so excited to have you.
+              </p>
+            </td>
+          </tr>
+
+          <!-- Discount Box -->
+          <tr>
+            <td style="padding: 20px 40px;">
+              <table width="100%" cellpadding="0" cellspacing="0" style="background-color: #F7F4EF; border-radius: 8px; border: 2px dashed #9CAE8C;">
+                <tr>
+                  <td style="padding: 30px; text-align: center;">
+                    <p style="color: #666666; font-size: 14px; margin: 0 0 10px; text-transform: uppercase; letter-spacing: 1px;">
+                      Your Exclusive Welcome Gift
+                    </p>
+                    <h3 style="color: #9CAE8C; font-size: 42px; margin: 0 0 10px; font-family: Georgia, serif;">
+                      10% OFF
+                    </h3>
+                    <p style="color: #111111; font-size: 16px; margin: 0 0 15px;">
+                      Use code at checkout:
+                    </p>
+                    <div style="background-color: #111111; color: #ffffff; font-size: 24px; font-weight: bold; padding: 15px 30px; display: inline-block; border-radius: 4px; letter-spacing: 2px;">
+                      WELCOME10
+                    </div>
+                    <p style="color: #999999; font-size: 12px; margin: 15px 0 0;">
+                      *Valid for 30 days. One use per customer.
+                    </p>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- CTA Button -->
+          <tr>
+            <td style="padding: 20px 40px 30px; text-align: center;">
+              <a href="{{ shop_url }}/collections/all" style="display: inline-block; background-color: #9CAE8C; color: #ffffff; text-decoration: none; font-size: 16px; font-weight: bold; padding: 16px 40px; border-radius: 4px;">
+                Shop Now & Save 10%
+              </a>
+            </td>
+          </tr>
+
+          <!-- What to Expect -->
+          <tr>
+            <td style="padding: 30px 40px; background-color: #F7F4EF;">
+              <h3 style="color: #111111; font-size: 18px; margin: 0 0 15px; text-align: center;">
+                What You Can Expect From Us:
+              </h3>
+              <table width="100%" cellpadding="0" cellspacing="0">
+                <tr>
+                  <td style="padding: 10px 0;">
+                    <span style="color: #9CAE8C; font-weight: bold;">&#10003;</span>
+                    <span style="color: #666666; font-size: 14px; margin-left: 10px;">Exclusive discounts & early access to new designs</span>
+                  </td>
+                </tr>
+                <tr>
+                  <td style="padding: 10px 0;">
+                    <span style="color: #9CAE8C; font-weight: bold;">&#10003;</span>
+                    <span style="color: #666666; font-size: 14px; margin-left: 10px;">Gift ideas & personalization inspiration</span>
+                  </td>
+                </tr>
+                <tr>
+                  <td style="padding: 10px 0;">
+                    <span style="color: #9CAE8C; font-weight: bold;">&#10003;</span>
+                    <span style="color: #666666; font-size: 14px; margin-left: 10px;">Behind-the-scenes looks at our process</span>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- Footer -->
+          <tr>
+            <td style="padding: 30px 40px; text-align: center; border-top: 1px solid #E5E5E5;">
+              <p style="color: #666666; font-size: 14px; margin: 0 0 15px;">
+                Follow us for daily inspiration:
+              </p>
+              <a href="https://instagram.com/shelzysdesigns" style="color: #9CAE8C; text-decoration: none; margin: 0 10px;">Instagram</a>
+              <a href="https://pinterest.com/shelzysdesigns" style="color: #9CAE8C; text-decoration: none; margin: 0 10px;">Pinterest</a>
+              <a href="https://facebook.com/shelzysdesigns" style="color: #9CAE8C; text-decoration: none; margin: 0 10px;">Facebook</a>
+
+              <p style="color: #999999; font-size: 12px; margin: 20px 0 0;">
+                Shelzy's Designs | Premium Personalized Bottles<br>
+                <a href="{{ unsubscribe_url }}" style="color: #999999;">Unsubscribe</a> |
+                <a href="{{ shop_url }}" style="color: #999999;">View in browser</a>
+              </p>
+            </td>
+          </tr>
+
+        </table>
+      </td>
+    </tr>
+  </table>
+
+</body>
+</html>
+
+
+<!--
+==================================================
+EMAIL 2: BRAND STORY + BESTSELLERS
+Timing: Day 3 after signup
+==================================================
+-->
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Story Behind Every Bottle</title>
+</head>
+<body style="margin: 0; padding: 0; background-color: #F7F4EF; font-family: Arial, sans-serif;">
+
+  <div style="display: none; max-height: 0; overflow: hidden;">
+    Discover why our bottles are different (and see our bestsellers!)
+  </div>
+
+  <table width="100%" cellpadding="0" cellspacing="0" style="background-color: #F7F4EF; padding: 40px 20px;">
+    <tr>
+      <td align="center">
+        <table width="600" cellpadding="0" cellspacing="0" style="background-color: #ffffff; border-radius: 8px; overflow: hidden;">
+
+          <!-- Header -->
+          <tr>
+            <td style="background-color: #9CAE8C; padding: 25px; text-align: center;">
+              <h1 style="color: #ffffff; font-size: 24px; margin: 0; font-family: Georgia, serif;">
+                Shelzy's Designs
+              </h1>
+            </td>
+          </tr>
+
+          <!-- Story Section -->
+          <tr>
+            <td style="padding: 40px;">
+              <h2 style="color: #111111; font-size: 28px; margin: 0 0 20px; font-family: Georgia, serif; text-align: center;">
+                Made With Care, One Bottle at a Time
+              </h2>
+
+              <p style="color: #666666; font-size: 16px; line-height: 1.8; margin: 0 0 20px;">
+                Hi {{ first_name|default:'there' }},
+              </p>
+
+              <p style="color: #666666; font-size: 16px; line-height: 1.8; margin: 0 0 20px;">
+                I started Shelzy's Designs with one simple belief: <strong>personalized gifts should feel special, not cheap.</strong>
+              </p>
+
+              <p style="color: #666666; font-size: 16px; line-height: 1.8; margin: 0 0 20px;">
+                Every bottle we create uses <strong>sublimation printing</strong> - not vinyl stickers. That means your name is permanently infused into the bottle. No peeling. No cracking. No fading.
+              </p>
+
+              <p style="color: #9CAE8C; font-size: 18px; line-height: 1.6; margin: 0 0 20px; font-style: italic; text-align: center;">
+                "Your personalization becomes part of the bottle itself."
+              </p>
+            </td>
+          </tr>
+
+          <!-- Why Sublimation Box -->
+          <tr>
+            <td style="padding: 0 40px 30px;">
+              <table width="100%" cellpadding="0" cellspacing="0" style="background-color: #F7F4EF; border-radius: 8px;">
+                <tr>
+                  <td style="padding: 25px;">
+                    <h3 style="color: #111111; font-size: 18px; margin: 0 0 15px; text-align: center;">
+                      The Sublimation Difference
+                    </h3>
+                    <table width="100%" cellpadding="0" cellspacing="0">
+                      <tr>
+                        <td width="50%" style="padding: 5px 10px; color: #666666; font-size: 14px;">&#10003; Smooth finish (no raised edges)</td>
+                        <td width="50%" style="padding: 5px 10px; color: #666666; font-size: 14px;">&#10003; Won't peel or crack</td>
+                      </tr>
+                      <tr>
+                        <td width="50%" style="padding: 5px 10px; color: #666666; font-size: 14px;">&#10003; Vibrant, lasting colors</td>
+                        <td width="50%" style="padding: 5px 10px; color: #666666; font-size: 14px;">&#10003; Dishwasher-safe design</td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- Bestsellers Section -->
+          <tr>
+            <td style="padding: 20px 40px 10px; text-align: center;">
+              <h3 style="color: #111111; font-size: 22px; margin: 0; font-family: Georgia, serif;">
+                Customer Favorites
+              </h3>
+              <p style="color: #666666; font-size: 14px; margin: 10px 0 20px;">
+                Our most-loved bottles (and yours to personalize!)
+              </p>
+            </td>
+          </tr>
+
+          <!-- Product Grid -->
+          <tr>
+            <td style="padding: 0 40px 30px;">
+              <table width="100%" cellpadding="0" cellspacing="0">
+                <tr>
+                  <td width="48%" style="text-align: center; padding: 10px; background: #F7F4EF; border-radius: 8px;">
+                    <div style="height: 150px; background: #E5E5E5; border-radius: 4px; margin-bottom: 10px; display: flex; align-items: center; justify-content: center;">
+                      [Product Image]
+                    </div>
+                    <p style="color: #111111; font-size: 14px; font-weight: bold; margin: 0 0 5px;">Signature Bottle</p>
+                    <p style="color: #9CAE8C; font-size: 14px; margin: 0;">$24.99</p>
+                  </td>
+                  <td width="4%"></td>
+                  <td width="48%" style="text-align: center; padding: 10px; background: #F7F4EF; border-radius: 8px;">
+                    <div style="height: 150px; background: #E5E5E5; border-radius: 4px; margin-bottom: 10px; display: flex; align-items: center; justify-content: center;">
+                      [Product Image]
+                    </div>
+                    <p style="color: #111111; font-size: 14px; font-weight: bold; margin: 0 0 5px;">Bridesmaid Set</p>
+                    <p style="color: #9CAE8C; font-size: 14px; margin: 0;">$99.99</p>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- CTA -->
+          <tr>
+            <td style="padding: 10px 40px 40px; text-align: center;">
+              <a href="{{ shop_url }}/collections/best-sellers" style="display: inline-block; background-color: #9CAE8C; color: #ffffff; text-decoration: none; font-size: 16px; font-weight: bold; padding: 16px 40px; border-radius: 4px;">
+                Shop Best Sellers
+              </a>
+              <p style="color: #666666; font-size: 14px; margin: 15px 0 0;">
+                Remember: Use code <strong>WELCOME10</strong> for 10% off!
+              </p>
+            </td>
+          </tr>
+
+          <!-- Footer -->
+          <tr>
+            <td style="padding: 25px 40px; text-align: center; background-color: #F7F4EF;">
+              <p style="color: #999999; font-size: 12px; margin: 0;">
+                Shelzy's Designs | Premium Personalized Bottles<br>
+                <a href="{{ unsubscribe_url }}" style="color: #999999;">Unsubscribe</a>
+              </p>
+            </td>
+          </tr>
+
+        </table>
+      </td>
+    </tr>
+  </table>
+
+</body>
+</html>
+
+
+<!--
+==================================================
+EMAIL 3: SOCIAL PROOF + URGENCY
+Timing: Day 7 after signup
+==================================================
+-->
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>See Why Customers Love Us</title>
+</head>
+<body style="margin: 0; padding: 0; background-color: #F7F4EF; font-family: Arial, sans-serif;">
+
+  <div style="display: none; max-height: 0; overflow: hidden;">
+    Real reviews from real customers + your 10% off expires soon!
+  </div>
+
+  <table width="100%" cellpadding="0" cellspacing="0" style="background-color: #F7F4EF; padding: 40px 20px;">
+    <tr>
+      <td align="center">
+        <table width="600" cellpadding="0" cellspacing="0" style="background-color: #ffffff; border-radius: 8px; overflow: hidden;">
+
+          <!-- Header -->
+          <tr>
+            <td style="background-color: #9CAE8C; padding: 25px; text-align: center;">
+              <h1 style="color: #ffffff; font-size: 24px; margin: 0; font-family: Georgia, serif;">
+                Shelzy's Designs
+              </h1>
+            </td>
+          </tr>
+
+          <!-- Urgency Banner -->
+          <tr>
+            <td style="background-color: #111111; padding: 15px; text-align: center;">
+              <p style="color: #ffffff; font-size: 14px; margin: 0;">
+                &#9200; Your <strong>10% OFF</strong> code expires in 23 days! Use code: <strong>WELCOME10</strong>
+              </p>
+            </td>
+          </tr>
+
+          <!-- Main Content -->
+          <tr>
+            <td style="padding: 40px;">
+              <h2 style="color: #111111; font-size: 28px; margin: 0 0 10px; font-family: Georgia, serif; text-align: center;">
+                Don't Just Take Our Word For It
+              </h2>
+              <p style="color: #666666; font-size: 16px; text-align: center; margin: 0 0 30px;">
+                See what real customers are saying:
+              </p>
+            </td>
+          </tr>
+
+          <!-- Reviews -->
+          <tr>
+            <td style="padding: 0 40px 20px;">
+              <!-- Review 1 -->
+              <table width="100%" cellpadding="0" cellspacing="0" style="background-color: #F7F4EF; border-radius: 8px; margin-bottom: 15px;">
+                <tr>
+                  <td style="padding: 20px;">
+                    <p style="color: #9CAE8C; font-size: 18px; margin: 0 0 10px;">&#9733;&#9733;&#9733;&#9733;&#9733;</p>
+                    <p style="color: #333333; font-size: 14px; line-height: 1.6; margin: 0 0 10px; font-style: italic;">
+                      "The quality is AMAZING! I ordered these for my bridesmaids and they were all obsessed. The personalization looks so professional - not like vinyl at all!"
+                    </p>
+                    <p style="color: #999999; font-size: 12px; margin: 0;">
+                      <strong>Sarah M.</strong> - Verified Buyer
+                    </p>
+                  </td>
+                </tr>
+              </table>
+
+              <!-- Review 2 -->
+              <table width="100%" cellpadding="0" cellspacing="0" style="background-color: #F7F4EF; border-radius: 8px; margin-bottom: 15px;">
+                <tr>
+                  <td style="padding: 20px;">
+                    <p style="color: #9CAE8C; font-size: 18px; margin: 0 0 10px;">&#9733;&#9733;&#9733;&#9733;&#9733;</p>
+                    <p style="color: #333333; font-size: 14px; line-height: 1.6; margin: 0 0 10px; font-style: italic;">
+                      "I've been using my bottle for 6 months now - gym, work, everywhere. Still looks perfect! The personalization hasn't faded one bit."
+                    </p>
+                    <p style="color: #999999; font-size: 12px; margin: 0;">
+                      <strong>Jessica R.</strong> - Verified Buyer
+                    </p>
+                  </td>
+                </tr>
+              </table>
+
+              <!-- Review 3 -->
+              <table width="100%" cellpadding="0" cellspacing="0" style="background-color: #F7F4EF; border-radius: 8px;">
+                <tr>
+                  <td style="padding: 20px;">
+                    <p style="color: #9CAE8C; font-size: 18px; margin: 0 0 10px;">&#9733;&#9733;&#9733;&#9733;&#9733;</p>
+                    <p style="color: #333333; font-size: 14px; line-height: 1.6; margin: 0 0 10px; font-style: italic;">
+                      "Ordered 20 bottles for our company retreat. The turnaround was fast and every single bottle was perfect. Already planning to order more!"
+                    </p>
+                    <p style="color: #999999; font-size: 12px; margin: 0;">
+                      <strong>Mike T.</strong> - Corporate Order
+                    </p>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- Stats -->
+          <tr>
+            <td style="padding: 30px 40px; text-align: center; background-color: #9CAE8C;">
+              <table width="100%" cellpadding="0" cellspacing="0">
+                <tr>
+                  <td width="33%" style="text-align: center;">
+                    <p style="color: #ffffff; font-size: 28px; font-weight: bold; margin: 0;">5,000+</p>
+                    <p style="color: #ffffff; font-size: 12px; margin: 5px 0 0;">Happy Customers</p>
+                  </td>
+                  <td width="33%" style="text-align: center;">
+                    <p style="color: #ffffff; font-size: 28px; font-weight: bold; margin: 0;">4.9/5</p>
+                    <p style="color: #ffffff; font-size: 12px; margin: 5px 0 0;">Average Rating</p>
+                  </td>
+                  <td width="33%" style="text-align: center;">
+                    <p style="color: #ffffff; font-size: 28px; font-weight: bold; margin: 0;">99%</p>
+                    <p style="color: #ffffff; font-size: 12px; margin: 5px 0 0;">Would Recommend</p>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- Final CTA -->
+          <tr>
+            <td style="padding: 40px; text-align: center;">
+              <h3 style="color: #111111; font-size: 22px; margin: 0 0 15px; font-family: Georgia, serif;">
+                Ready to Join the Family?
+              </h3>
+              <p style="color: #666666; font-size: 14px; margin: 0 0 20px;">
+                Use your welcome code before it expires:
+              </p>
+              <div style="background-color: #F7F4EF; border: 2px dashed #9CAE8C; padding: 15px; display: inline-block; border-radius: 4px; margin-bottom: 20px;">
+                <span style="color: #111111; font-size: 24px; font-weight: bold; letter-spacing: 2px;">WELCOME10</span>
+              </div>
+              <br>
+              <a href="{{ shop_url }}/collections/all" style="display: inline-block; background-color: #9CAE8C; color: #ffffff; text-decoration: none; font-size: 16px; font-weight: bold; padding: 16px 40px; border-radius: 4px;">
+                Shop Now & Save 10%
+              </a>
+            </td>
+          </tr>
+
+          <!-- Footer -->
+          <tr>
+            <td style="padding: 25px 40px; text-align: center; background-color: #F7F4EF;">
+              <p style="color: #999999; font-size: 12px; margin: 0;">
+                Shelzy's Designs | Premium Personalized Bottles<br>
+                <a href="{{ unsubscribe_url }}" style="color: #999999;">Unsubscribe</a>
+              </p>
+            </td>
+          </tr>
+
+        </table>
+      </td>
+    </tr>
+  </table>
+
+</body>
+</html>
