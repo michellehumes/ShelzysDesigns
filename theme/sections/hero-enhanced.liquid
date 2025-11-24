@@ -1,0 +1,538 @@
+{%- comment -%}
+<!-- SHELZYS_DESIGNS: START hero-enhanced -->
+  Enhanced Hero Section - Homepage
+  CRO Improvements:
+  - 3 clear CTAs for visitor segmentation (Bridal, Corporate, Everyday)
+  - Trust tagline with personalization details
+  - Better mobile responsiveness
+  - Improved visual hierarchy
+<!-- SHELZYS_DESIGNS: END hero-enhanced -->
+{%- endcomment -%}
+
+<section class="hero-enhanced" style="background: {{ section.settings.bg_color }};">
+  <div class="hero-enhanced__container">
+    <div class="hero-enhanced__content">
+      {%- comment -%} Badge/label above headline {%- endcomment -%}
+      {%- if section.settings.show_badge -%}
+        <span class="hero-enhanced__badge">{{ section.settings.badge_text }}</span>
+      {%- endif -%}
+
+      <h1 class="hero-enhanced__title">{{ section.settings.hero_title }}</h1>
+      <p class="hero-enhanced__subtitle">{{ section.settings.hero_subtitle }}</p>
+
+      {%- comment -%} Trust Tagline - Key differentiator {%- endcomment -%}
+      <p class="hero-enhanced__trust-tagline">
+        <span class="trust-icon">✓</span> {{ section.settings.trust_tagline }}
+      </p>
+
+      {%- comment -%} 3 CTA Buttons for visitor segmentation {%- endcomment -%}
+      <div class="hero-enhanced__ctas">
+        {%- if section.settings.cta1_text != blank -%}
+          <a href="{{ section.settings.cta1_link }}" class="hero-enhanced__cta hero-enhanced__cta--primary" data-shelzys="hero-cta-bridal">
+            <span class="cta-icon">💒</span>
+            <span class="cta-text">{{ section.settings.cta1_text }}</span>
+          </a>
+        {%- endif -%}
+
+        {%- if section.settings.cta2_text != blank -%}
+          <a href="{{ section.settings.cta2_link }}" class="hero-enhanced__cta hero-enhanced__cta--secondary" data-shelzys="hero-cta-corporate">
+            <span class="cta-icon">🏢</span>
+            <span class="cta-text">{{ section.settings.cta2_text }}</span>
+          </a>
+        {%- endif -%}
+
+        {%- if section.settings.cta3_text != blank -%}
+          <a href="{{ section.settings.cta3_link }}" class="hero-enhanced__cta hero-enhanced__cta--tertiary" data-shelzys="hero-cta-everyday">
+            <span class="cta-icon">💧</span>
+            <span class="cta-text">{{ section.settings.cta3_text }}</span>
+          </a>
+        {%- endif -%}
+      </div>
+
+      {%- comment -%} Social proof bar {%- endcomment -%}
+      {%- if section.settings.show_social_proof -%}
+        <div class="hero-enhanced__social-proof">
+          <div class="social-proof__rating">
+            <span class="stars">★★★★★</span>
+            <span class="rating-text">{{ section.settings.rating_text }}</span>
+          </div>
+          <div class="social-proof__separator">|</div>
+          <div class="social-proof__stat">{{ section.settings.reviews_text }}</div>
+          <div class="social-proof__separator">|</div>
+          <div class="social-proof__stat">{{ section.settings.orders_text }}</div>
+        </div>
+      {%- endif -%}
+    </div>
+
+    <div class="hero-enhanced__media">
+      {%- if section.settings.hero_image != blank -%}
+        <img
+          src="{{ section.settings.hero_image | image_url: width: 800 }}"
+          srcset="{{ section.settings.hero_image | image_url: width: 400 }} 400w,
+                  {{ section.settings.hero_image | image_url: width: 600 }} 600w,
+                  {{ section.settings.hero_image | image_url: width: 800 }} 800w"
+          sizes="(max-width: 768px) 100vw, 50vw"
+          alt="{{ section.settings.hero_image_alt | escape }}"
+          class="hero-enhanced__image"
+          loading="eager"
+          fetchpriority="high"
+        >
+      {%- else -%}
+        <div class="hero-enhanced__placeholder">
+          {{ 'lifestyle-2' | placeholder_svg_tag: 'placeholder-svg' }}
+        </div>
+      {%- endif -%}
+
+      {%- comment -%} Floating trust badges {%- endcomment -%}
+      <div class="hero-enhanced__floating-badges">
+        <div class="floating-badge">
+          <span class="badge-icon">🎨</span>
+          <span class="badge-text">Any Name</span>
+        </div>
+        <div class="floating-badge">
+          <span class="badge-icon">✨</span>
+          <span class="badge-text">Any Font</span>
+        </div>
+        <div class="floating-badge">
+          <span class="badge-icon">🚀</span>
+          <span class="badge-text">Rush Available</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+/* SHELZYS_DESIGNS: START hero-enhanced-styles */
+.hero-enhanced {
+  padding: 60px 20px 80px;
+  overflow: hidden;
+}
+
+.hero-enhanced__container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  align-items: center;
+}
+
+.hero-enhanced__content {
+  text-align: left;
+}
+
+.hero-enhanced__badge {
+  display: inline-block;
+  background: linear-gradient(135deg, #9CAE8C 0%, #7C9F8C 100%);
+  color: #FFFFFF;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  padding: 6px 14px;
+  border-radius: 20px;
+  margin-bottom: 16px;
+}
+
+.hero-enhanced__title {
+  font-family: 'Poppins', sans-serif;
+  font-size: clamp(32px, 5vw, 52px);
+  font-weight: 700;
+  line-height: 1.1;
+  color: #111111;
+  margin: 0 0 16px;
+}
+
+.hero-enhanced__subtitle {
+  font-family: 'Inter', sans-serif;
+  font-size: clamp(16px, 2vw, 20px);
+  line-height: 1.6;
+  color: #444444;
+  margin: 0 0 12px;
+  max-width: 500px;
+}
+
+.hero-enhanced__trust-tagline {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #F7F4EF;
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #111111;
+  margin-bottom: 28px;
+}
+
+.hero-enhanced__trust-tagline .trust-icon {
+  color: #9CAE8C;
+  font-weight: 700;
+}
+
+/* 3 CTA Buttons */
+.hero-enhanced__ctas {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 28px;
+}
+
+.hero-enhanced__cta {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 24px;
+  border-radius: 10px;
+  text-decoration: none;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  font-size: 15px;
+  transition: all 0.25s ease;
+  border: 2px solid transparent;
+}
+
+.hero-enhanced__cta--primary {
+  background: #9CAE8C;
+  color: #FFFFFF;
+}
+
+.hero-enhanced__cta--primary:hover {
+  background: #7C9F8C;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(156, 174, 140, 0.3);
+}
+
+.hero-enhanced__cta--secondary {
+  background: #FFFFFF;
+  color: #111111;
+  border-color: #111111;
+}
+
+.hero-enhanced__cta--secondary:hover {
+  background: #111111;
+  color: #FFFFFF;
+  transform: translateY(-2px);
+}
+
+.hero-enhanced__cta--tertiary {
+  background: #F7F4EF;
+  color: #111111;
+  border-color: #D8CFC4;
+}
+
+.hero-enhanced__cta--tertiary:hover {
+  background: #FFFFFF;
+  border-color: #9CAE8C;
+  transform: translateY(-2px);
+}
+
+.hero-enhanced__cta .cta-icon {
+  font-size: 18px;
+}
+
+/* Social Proof Bar */
+.hero-enhanced__social-proof {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  font-size: 13px;
+  color: #666666;
+}
+
+.social-proof__rating {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.social-proof__rating .stars {
+  color: #FFB800;
+  font-size: 14px;
+}
+
+.social-proof__separator {
+  color: #D8CFC4;
+}
+
+/* Media/Image Side */
+.hero-enhanced__media {
+  position: relative;
+}
+
+.hero-enhanced__image {
+  width: 100%;
+  height: auto;
+  border-radius: 16px;
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.12);
+}
+
+.hero-enhanced__placeholder {
+  width: 100%;
+  aspect-ratio: 1;
+  background: #F7F4EF;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hero-enhanced__placeholder svg {
+  width: 60%;
+  opacity: 0.4;
+}
+
+/* Floating Badges */
+.hero-enhanced__floating-badges {
+  position: absolute;
+  bottom: -20px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 8px;
+}
+
+.floating-badge {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: #FFFFFF;
+  padding: 8px 14px;
+  border-radius: 20px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.floating-badge .badge-icon {
+  font-size: 14px;
+}
+
+/* Responsive */
+@media (max-width: 968px) {
+  .hero-enhanced__container {
+    grid-template-columns: 1fr;
+    gap: 40px;
+    text-align: center;
+  }
+
+  .hero-enhanced__content {
+    text-align: center;
+    order: 1;
+  }
+
+  .hero-enhanced__media {
+    order: 0;
+  }
+
+  .hero-enhanced__subtitle {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .hero-enhanced__trust-tagline {
+    justify-content: center;
+  }
+
+  .hero-enhanced__ctas {
+    align-items: center;
+  }
+
+  .hero-enhanced__cta {
+    width: 100%;
+    max-width: 320px;
+    justify-content: center;
+  }
+
+  .hero-enhanced__social-proof {
+    justify-content: center;
+  }
+
+  .hero-enhanced__floating-badges {
+    position: static;
+    transform: none;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-enhanced {
+    padding: 40px 16px 60px;
+  }
+
+  .hero-enhanced__cta {
+    padding: 14px 20px;
+    font-size: 14px;
+  }
+
+  .floating-badge {
+    padding: 6px 10px;
+    font-size: 11px;
+  }
+
+  .hero-enhanced__social-proof {
+    font-size: 12px;
+    gap: 10px;
+  }
+}
+/* SHELZYS_DESIGNS: END hero-enhanced-styles */
+</style>
+
+{% schema %}
+{
+  "name": "Hero Enhanced",
+  "tag": "section",
+  "class": "section-hero-enhanced",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Badge"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_badge",
+      "label": "Show badge",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "badge_text",
+      "label": "Badge text",
+      "default": "Premium Quality • Made in USA"
+    },
+    {
+      "type": "header",
+      "content": "Headlines"
+    },
+    {
+      "type": "text",
+      "id": "hero_title",
+      "label": "Title",
+      "default": "Personalized Water Bottles That Actually Last"
+    },
+    {
+      "type": "textarea",
+      "id": "hero_subtitle",
+      "label": "Subtitle",
+      "default": "Premium sublimation printing that never peels, cracks, or fades. Perfect for weddings, teams, and everyday use."
+    },
+    {
+      "type": "text",
+      "id": "trust_tagline",
+      "label": "Trust tagline",
+      "default": "Custom Name · Any Font · Any Color · Ships in 5–7 Days (Rush Available)"
+    },
+    {
+      "type": "header",
+      "content": "CTA 1 - Bridal"
+    },
+    {
+      "type": "text",
+      "id": "cta1_text",
+      "label": "Button text",
+      "default": "Bridal & Wedding Gifts"
+    },
+    {
+      "type": "url",
+      "id": "cta1_link",
+      "label": "Button link",
+      "default": "/collections/bridal-weddings"
+    },
+    {
+      "type": "header",
+      "content": "CTA 2 - Corporate"
+    },
+    {
+      "type": "text",
+      "id": "cta2_text",
+      "label": "Button text",
+      "default": "Corporate & Team Orders"
+    },
+    {
+      "type": "url",
+      "id": "cta2_link",
+      "label": "Button link",
+      "default": "/pages/corporate-teams"
+    },
+    {
+      "type": "header",
+      "content": "CTA 3 - Everyday"
+    },
+    {
+      "type": "text",
+      "id": "cta3_text",
+      "label": "Button text",
+      "default": "Everyday Personalized Bottles"
+    },
+    {
+      "type": "url",
+      "id": "cta3_link",
+      "label": "Button link",
+      "default": "/collections/everyday-bottles"
+    },
+    {
+      "type": "header",
+      "content": "Social Proof"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_social_proof",
+      "label": "Show social proof bar",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "rating_text",
+      "label": "Rating text",
+      "default": "4.9 Rating"
+    },
+    {
+      "type": "text",
+      "id": "reviews_text",
+      "label": "Reviews text",
+      "default": "500+ Reviews"
+    },
+    {
+      "type": "text",
+      "id": "orders_text",
+      "label": "Orders text",
+      "default": "2,000+ Happy Customers"
+    },
+    {
+      "type": "header",
+      "content": "Image"
+    },
+    {
+      "type": "image_picker",
+      "id": "hero_image",
+      "label": "Hero image"
+    },
+    {
+      "type": "text",
+      "id": "hero_image_alt",
+      "label": "Image alt text",
+      "default": "Premium personalized water bottles"
+    },
+    {
+      "type": "header",
+      "content": "Styling"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background color",
+      "default": "#FFFFFF"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Hero Enhanced"
+    }
+  ]
+}
+{% endschema %}

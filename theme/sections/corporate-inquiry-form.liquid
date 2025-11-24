@@ -1,0 +1,269 @@
+{%- comment -%}
+<!-- SHELZYS_DESIGNS: START corporate-inquiry-form -->
+  Corporate inquiry form for bulk orders (20+ bottles)
+<!-- SHELZYS_DESIGNS: END corporate-inquiry-form -->
+{%- endcomment -%}
+
+<section class="corp-inquiry section-padding" id="corporate-inquiry">
+  <div class="container">
+    <div class="corp-inquiry__layout">
+      <div class="corp-inquiry__info">
+        <h2>Get a Custom Quote</h2>
+        <p>Planning an order of 10+ bottles? Let us help you create the perfect custom bottles for your team or event.</p>
+
+        <div class="corp-inquiry__features">
+          <div class="feature-item">
+            <span class="feature-icon">💰</span>
+            <div>
+              <strong>Bulk Discounts</strong>
+              <p>Up to 25% off for large orders</p>
+            </div>
+          </div>
+          <div class="feature-item">
+            <span class="feature-icon">🎨</span>
+            <div>
+              <strong>Custom Designs</strong>
+              <p>Logos, names, and custom artwork</p>
+            </div>
+          </div>
+          <div class="feature-item">
+            <span class="feature-icon">⚡</span>
+            <div>
+              <strong>Rush Available</strong>
+              <p>48-hour production for urgent orders</p>
+            </div>
+          </div>
+          <div class="feature-item">
+            <span class="feature-icon">👤</span>
+            <div>
+              <strong>Dedicated Support</strong>
+              <p>Personal account manager</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="corp-inquiry__form-wrap">
+        {%- form 'contact', class: 'corp-inquiry__form' -%}
+          <input type="hidden" name="contact[tags]" value="corporate-inquiry,bulk-order">
+
+          {%- if form.posted_successfully? -%}
+            <div class="form-success">
+              <span class="success-icon">✓</span>
+              <h3>Thanks for your inquiry!</h3>
+              <p>We'll get back to you within 1 business day with a custom quote.</p>
+            </div>
+          {%- else -%}
+            <div class="form-row">
+              <div class="form-field">
+                <label>Your Name *</label>
+                <input type="text" name="contact[name]" required>
+              </div>
+              <div class="form-field">
+                <label>Company Name</label>
+                <input type="text" name="contact[note][company]">
+              </div>
+            </div>
+
+            <div class="form-field">
+              <label>Email Address *</label>
+              <input type="email" name="contact[email]" required>
+            </div>
+
+            <div class="form-row">
+              <div class="form-field">
+                <label>Approximate Quantity *</label>
+                <select name="contact[note][quantity]" required>
+                  <option value="">Select...</option>
+                  <option value="10-25">10-25 bottles</option>
+                  <option value="26-50">26-50 bottles</option>
+                  <option value="51-100">51-100 bottles</option>
+                  <option value="100+">100+ bottles</option>
+                </select>
+              </div>
+              <div class="form-field">
+                <label>Event Date (if applicable)</label>
+                <input type="date" name="contact[note][event_date]">
+              </div>
+            </div>
+
+            <div class="form-field">
+              <label>Tell us about your project</label>
+              <textarea name="contact[body]" rows="4" placeholder="What's the occasion? Any specific design requirements? Need rush production?"></textarea>
+            </div>
+
+            {%- if form.errors -%}
+              <div class="form-errors">
+                {{ form.errors | default_errors }}
+              </div>
+            {%- endif -%}
+
+            <button type="submit" class="btn btn-primary btn-lg">Request Quote</button>
+            <p class="form-note">We respond within 1 business day</p>
+          {%- endif -%}
+        {%- endform -%}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+.corp-inquiry {
+  background: #F7F4EF;
+}
+
+.corp-inquiry__layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  align-items: start;
+}
+
+.corp-inquiry__info h2 {
+  font-size: 32px;
+  margin: 0 0 12px;
+}
+
+.corp-inquiry__info > p {
+  font-size: 16px;
+  color: #555;
+  margin-bottom: 28px;
+}
+
+.corp-inquiry__features {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.feature-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+}
+
+.feature-icon {
+  font-size: 24px;
+  flex-shrink: 0;
+}
+
+.feature-item strong {
+  display: block;
+  font-size: 15px;
+  margin-bottom: 2px;
+}
+
+.feature-item p {
+  font-size: 13px;
+  color: #666;
+  margin: 0;
+}
+
+.corp-inquiry__form-wrap {
+  background: #FFF;
+  padding: 32px;
+  border-radius: 16px;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.06);
+}
+
+.corp-inquiry__form .form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.corp-inquiry__form .form-field {
+  margin-bottom: 18px;
+}
+
+.corp-inquiry__form label {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.corp-inquiry__form input,
+.corp-inquiry__form select,
+.corp-inquiry__form textarea {
+  width: 100%;
+  padding: 12px 14px;
+  font-size: 15px;
+  border: 1px solid #D8CFC4;
+  border-radius: 8px;
+}
+
+.corp-inquiry__form input:focus,
+.corp-inquiry__form select:focus,
+.corp-inquiry__form textarea:focus {
+  outline: none;
+  border-color: #9CAE8C;
+  box-shadow: 0 0 0 3px rgba(156,174,140,0.15);
+}
+
+.corp-inquiry__form button {
+  width: 100%;
+  margin-top: 8px;
+}
+
+.form-note {
+  text-align: center;
+  font-size: 13px;
+  color: #888;
+  margin-top: 12px;
+}
+
+.form-success {
+  text-align: center;
+  padding: 40px 20px;
+}
+
+.success-icon {
+  display: inline-flex;
+  width: 60px;
+  height: 60px;
+  background: #9CAE8C;
+  color: #FFF;
+  font-size: 28px;
+  border-radius: 50%;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 16px;
+}
+
+.form-success h3 {
+  margin: 0 0 8px;
+}
+
+.form-success p {
+  color: #666;
+  margin: 0;
+}
+
+.form-errors {
+  background: #FEE;
+  color: #C44;
+  padding: 12px;
+  border-radius: 8px;
+  margin-bottom: 16px;
+  font-size: 14px;
+}
+
+@media (max-width: 900px) {
+  .corp-inquiry__layout {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  .corp-inquiry__form .form-row {
+    grid-template-columns: 1fr;
+  }
+}
+</style>
+
+{% schema %}
+{
+  "name": "Corporate Inquiry Form",
+  "tag": "section"
+}
+{% endschema %}

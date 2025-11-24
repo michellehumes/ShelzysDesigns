@@ -1,0 +1,117 @@
+{%- comment -%}
+<!-- SHELZYS_DESIGNS: START corporate-use-cases -->
+  Corporate use cases grid
+<!-- SHELZYS_DESIGNS: END corporate-use-cases -->
+{%- endcomment -%}
+
+<section class="corp-uses section-padding">
+  <div class="container">
+    <h2 class="corp-uses__title">Perfect For</h2>
+
+    <div class="corp-uses__grid">
+      <div class="corp-use-item">
+        <span class="corp-use-item__icon">🏖️</span>
+        <h3>Company Offsites & Retreats</h3>
+        <p>Team-building events deserve memorable swag. Each bottle personalized with names.</p>
+      </div>
+
+      <div class="corp-use-item">
+        <span class="corp-use-item__icon">⚽</span>
+        <h3>Sports Teams & Leagues</h3>
+        <p>Durable bottles for practice, games, and tournaments. Player names + team logo.</p>
+      </div>
+
+      <div class="corp-use-item">
+        <span class="corp-use-item__icon">🎁</span>
+        <h3>Employee Appreciation</h3>
+        <p>Recognize your team with personalized gifts they'll use every day.</p>
+      </div>
+
+      <div class="corp-use-item">
+        <span class="corp-use-item__icon">🤝</span>
+        <h3>Client Gifts & Swag</h3>
+        <p>Premium branded bottles that make a lasting impression.</p>
+      </div>
+
+      <div class="corp-use-item">
+        <span class="corp-use-item__icon">🎓</span>
+        <h3>Schools & Universities</h3>
+        <p>Graduation gifts, club merch, faculty appreciation.</p>
+      </div>
+
+      <div class="corp-use-item">
+        <span class="corp-use-item__icon">🏥</span>
+        <h3>Healthcare & Nonprofits</h3>
+        <p>Staff recognition, volunteer appreciation, fundraiser items.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+.corp-uses {
+  background: #FFF;
+}
+
+.corp-uses__title {
+  text-align: center;
+  font-size: 32px;
+  margin-bottom: 40px;
+}
+
+.corp-uses__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.corp-use-item {
+  background: #F7F4EF;
+  padding: 28px;
+  border-radius: 12px;
+  text-align: center;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.corp-use-item:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+}
+
+.corp-use-item__icon {
+  font-size: 36px;
+  display: block;
+  margin-bottom: 12px;
+}
+
+.corp-use-item h3 {
+  font-size: 17px;
+  margin: 0 0 8px;
+}
+
+.corp-use-item p {
+  font-size: 14px;
+  color: #666;
+  margin: 0;
+  line-height: 1.5;
+}
+
+@media (max-width: 900px) {
+  .corp-uses__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .corp-uses__grid {
+    grid-template-columns: 1fr;
+  }
+}
+</style>
+
+{% schema %}
+{
+  "name": "Corporate Use Cases",
+  "tag": "section"
+}
+{% endschema %}

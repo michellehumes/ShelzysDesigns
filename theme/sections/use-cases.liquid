@@ -1,0 +1,281 @@
+{%- comment -%}
+<!-- SHELZYS_DESIGNS: START use-cases -->
+  "How Will You Use Yours?" Section
+  3 cards guiding visitors to Bridal, Corporate, Everyday use cases
+<!-- SHELZYS_DESIGNS: END use-cases -->
+{%- endcomment -%}
+
+<section class="use-cases-section section-padding" style="background: {{ section.settings.bg_color }};">
+  <div class="container">
+    <div class="section-header">
+      <h2 class="use-cases__title">{{ section.settings.title }}</h2>
+      <p class="use-cases__subtitle">{{ section.settings.subtitle }}</p>
+    </div>
+
+    <div class="use-cases__grid">
+      {%- for block in section.blocks -%}
+        <div class="use-case-card" {{ block.shopify_attributes }}>
+          <div class="use-case-card__image">
+            {%- if block.settings.image != blank -%}
+              <img
+                src="{{ block.settings.image | image_url: width: 600 }}"
+                alt="{{ block.settings.title | escape }}"
+                loading="lazy"
+              >
+            {%- else -%}
+              <div class="use-case-card__placeholder">
+                {{ 'collection-1' | placeholder_svg_tag: 'placeholder-svg' }}
+              </div>
+            {%- endif -%}
+            <div class="use-case-card__overlay"></div>
+          </div>
+
+          <div class="use-case-card__content">
+            <span class="use-case-card__icon">{{ block.settings.icon }}</span>
+            <h3 class="use-case-card__title">{{ block.settings.title }}</h3>
+            <p class="use-case-card__desc">{{ block.settings.description }}</p>
+            <a href="{{ block.settings.link }}" class="use-case-card__btn" data-shelzys="use-case-{{ block.settings.title | handleize }}">
+              {{ block.settings.button_text }}
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7h8m0 0L7.5 3.5M11 7l-3.5 3.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
+          </div>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+<style>
+/* SHELZYS_DESIGNS: START use-cases-styles */
+.use-cases__title {
+  text-align: center;
+  font-size: clamp(28px, 4vw, 38px);
+  margin-bottom: 8px;
+}
+
+.use-cases__subtitle {
+  text-align: center;
+  font-size: 17px;
+  color: #666;
+  margin-bottom: 40px;
+}
+
+.use-cases__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+}
+
+.use-case-card {
+  background: #FFF;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.use-case-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
+}
+
+.use-case-card__image {
+  position: relative;
+  padding-bottom: 65%;
+  overflow: hidden;
+}
+
+.use-case-card__image img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s;
+}
+
+.use-case-card:hover .use-case-card__image img {
+  transform: scale(1.05);
+}
+
+.use-case-card__overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 50%;
+  background: linear-gradient(to top, rgba(0,0,0,0.3), transparent);
+}
+
+.use-case-card__placeholder {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #F7F4EF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.use-case-card__placeholder svg {
+  width: 40%;
+  opacity: 0.3;
+}
+
+.use-case-card__content {
+  padding: 24px;
+  text-align: center;
+}
+
+.use-case-card__icon {
+  font-size: 32px;
+  display: block;
+  margin-bottom: 12px;
+}
+
+.use-case-card__title {
+  font-size: 20px;
+  font-weight: 700;
+  margin: 0 0 10px;
+  color: #111;
+}
+
+.use-case-card__desc {
+  font-size: 14px;
+  color: #666;
+  line-height: 1.6;
+  margin-bottom: 18px;
+}
+
+.use-case-card__btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #9CAE8C;
+  text-decoration: none;
+  transition: gap 0.2s;
+}
+
+.use-case-card__btn:hover {
+  gap: 10px;
+  color: #7C9F8C;
+}
+
+@media (max-width: 900px) {
+  .use-cases__grid {
+    grid-template-columns: 1fr;
+    max-width: 400px;
+    margin: 0 auto;
+  }
+}
+/* SHELZYS_DESIGNS: END use-cases-styles */
+</style>
+
+{% schema %}
+{
+  "name": "Use Cases",
+  "tag": "section",
+  "class": "section-use-cases",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Section title",
+      "default": "How Will You Use Yours?"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Section subtitle",
+      "default": "Choose your perfect personalized bottle"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background color",
+      "default": "#FFFFFF"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "use_case",
+      "name": "Use Case",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "icon",
+          "label": "Icon (emoji)",
+          "default": "💒"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Bridal & Wedding Parties"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Description",
+          "default": "Perfect bridesmaid proposals, bridal party gifts, and wedding favors that your crew will actually use."
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Button link"
+        },
+        {
+          "type": "text",
+          "id": "button_text",
+          "label": "Button text",
+          "default": "Shop Bridal"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Use Cases",
+      "blocks": [
+        {
+          "type": "use_case",
+          "settings": {
+            "icon": "💒",
+            "title": "Bridal & Wedding Parties",
+            "description": "Perfect bridesmaid proposals, bridal party gifts, and wedding favors that your crew will actually use.",
+            "button_text": "Shop Bridal"
+          }
+        },
+        {
+          "type": "use_case",
+          "settings": {
+            "icon": "🏢",
+            "title": "Corporate & Team Gifts",
+            "description": "Branded bottles for offsites, employee gifts, sports teams, and company events. Bulk pricing available.",
+            "button_text": "Get a Quote"
+          }
+        },
+        {
+          "type": "use_case",
+          "settings": {
+            "icon": "💧",
+            "title": "Everyday Gifts & Personal Use",
+            "description": "Treat yourself or someone special. Great for gym, office, kids, teachers, and any occasion.",
+            "button_text": "Shop Everyday"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

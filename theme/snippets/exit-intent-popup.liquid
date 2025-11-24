@@ -1,0 +1,378 @@
+{%- comment -%}
+<!-- SHELZYS_DESIGNS: START exit-intent-popup -->
+  Enhanced Exit-Intent Popup
+  - Triggers on mouse leaving viewport (desktop)
+  - Triggers on scroll up / time delay (mobile)
+  - 10% off first order offer
+  - Email capture with mailing list integration
+<!-- SHELZYS_DESIGNS: END exit-intent-popup -->
+{%- endcomment -%}
+
+{%- if settings.enable_exit_popup -%}
+<div class="exit-popup-overlay" id="exit-popup-overlay"></div>
+
+<div class="exit-popup" id="exit-popup" role="dialog" aria-modal="true" aria-labelledby="exit-popup-title">
+  <button class="exit-popup__close" id="exit-popup-close" aria-label="Close popup">&times;</button>
+
+  <div class="exit-popup__content">
+    <div class="exit-popup__icon">🎁</div>
+
+    <h2 class="exit-popup__title" id="exit-popup-title">
+      {{ settings.exit_popup_title | default: 'Wait! Get 10% Off Your First Order' }}
+    </h2>
+
+    <p class="exit-popup__text">
+      {{ settings.exit_popup_text | default: "Join 2,000+ happy customers. Get exclusive offers, new designs, and wedding inspiration." }}
+    </p>
+
+    {%- form 'customer', class: 'exit-popup__form', id: 'exit-popup-form' -%}
+      <input type="hidden" name="contact[tags]" value="newsletter,exit-popup,{{ 'now' | date: '%Y-%m' }}">
+
+      {%- if form.posted_successfully? -%}
+        <div class="exit-popup__success">
+          <span class="success-check">✓</span>
+          <p><strong>You're in!</strong> Check your email for your 10% off code.</p>
+        </div>
+      {%- else -%}
+        <div class="exit-popup__fields">
+          <input
+            type="email"
+            name="contact[email]"
+            class="exit-popup__input"
+            placeholder="Enter your email"
+            required
+            autocomplete="email"
+          >
+          <button type="submit" class="exit-popup__submit">Get 10% Off</button>
+        </div>
+
+        <p class="exit-popup__privacy">
+          No spam, ever. Unsubscribe anytime.
+        </p>
+      {%- endif -%}
+    {%- endform -%}
+
+    <div class="exit-popup__trust">
+      <span>★★★★★</span>
+      <span>500+ 5-Star Reviews</span>
+    </div>
+  </div>
+
+  <div class="exit-popup__image">
+    {%- if settings.exit_popup_image != blank -%}
+      <img src="{{ settings.exit_popup_image | image_url: width: 400 }}" alt="Personalized water bottles">
+    {%- else -%}
+      <div class="exit-popup__placeholder">
+        {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+      </div>
+    {%- endif -%}
+  </div>
+</div>
+
+<style>
+/* SHELZYS_DESIGNS: START exit-popup-styles */
+.exit-popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 10000;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s, visibility 0.3s;
+  backdrop-filter: blur(4px);
+}
+
+.exit-popup-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.exit-popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.9);
+  background: #FFFFFF;
+  border-radius: 20px;
+  max-width: 700px;
+  width: 95%;
+  z-index: 10001;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.35s ease;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  overflow: hidden;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.2);
+}
+
+.exit-popup.active {
+  opacity: 1;
+  visibility: visible;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.exit-popup__close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 36px;
+  height: 36px;
+  background: #F0F0F0;
+  border: none;
+  border-radius: 50%;
+  font-size: 22px;
+  line-height: 1;
+  cursor: pointer;
+  color: #666;
+  transition: background 0.2s, color 0.2s;
+  z-index: 2;
+}
+
+.exit-popup__close:hover {
+  background: #111;
+  color: #FFF;
+}
+
+.exit-popup__content {
+  padding: 40px 30px;
+  text-align: center;
+}
+
+.exit-popup__icon {
+  font-size: 48px;
+  margin-bottom: 16px;
+}
+
+.exit-popup__title {
+  font-size: 26px;
+  font-weight: 700;
+  line-height: 1.2;
+  margin: 0 0 12px;
+  color: #111;
+}
+
+.exit-popup__text {
+  font-size: 15px;
+  color: #666;
+  line-height: 1.5;
+  margin-bottom: 24px;
+}
+
+.exit-popup__fields {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.exit-popup__input {
+  padding: 14px 16px;
+  font-size: 16px;
+  border: 2px solid #E5E5E5;
+  border-radius: 10px;
+  text-align: center;
+  transition: border-color 0.2s;
+}
+
+.exit-popup__input:focus {
+  outline: none;
+  border-color: #9CAE8C;
+}
+
+.exit-popup__submit {
+  padding: 14px 24px;
+  background: #9CAE8C;
+  color: #FFF;
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.2s;
+}
+
+.exit-popup__submit:hover {
+  background: #7C9F8C;
+  transform: translateY(-2px);
+}
+
+.exit-popup__privacy {
+  font-size: 12px;
+  color: #999;
+  margin-top: 12px;
+}
+
+.exit-popup__trust {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 20px;
+  font-size: 13px;
+  color: #666;
+}
+
+.exit-popup__trust span:first-child {
+  color: #FFB800;
+}
+
+.exit-popup__success {
+  padding: 20px;
+  background: #F0FAF0;
+  border-radius: 10px;
+}
+
+.exit-popup__success .success-check {
+  display: inline-flex;
+  width: 40px;
+  height: 40px;
+  background: #9CAE8C;
+  color: #FFF;
+  border-radius: 50%;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  margin-bottom: 8px;
+}
+
+.exit-popup__success p {
+  margin: 0;
+  font-size: 15px;
+}
+
+.exit-popup__image {
+  background: #F7F4EF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.exit-popup__image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+.exit-popup__placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.exit-popup__placeholder svg {
+  width: 60%;
+  opacity: 0.4;
+}
+
+@media (max-width: 700px) {
+  .exit-popup {
+    grid-template-columns: 1fr;
+    max-width: 400px;
+  }
+
+  .exit-popup__image {
+    display: none;
+  }
+
+  .exit-popup__content {
+    padding: 30px 24px;
+  }
+
+  .exit-popup__title {
+    font-size: 22px;
+  }
+}
+/* SHELZYS_DESIGNS: END exit-popup-styles */
+</style>
+
+<script>
+/* SHELZYS_DESIGNS: START exit-popup-js */
+(function() {
+  const overlay = document.getElementById('exit-popup-overlay');
+  const popup = document.getElementById('exit-popup');
+  const closeBtn = document.getElementById('exit-popup-close');
+
+  if (!popup || !overlay) return;
+
+  const STORAGE_KEY = 'shelzys_exit_popup_shown';
+  const DELAY_MS = {{ settings.exit_popup_delay | default: 15 }}000;
+
+  // Check if already shown
+  if (localStorage.getItem(STORAGE_KEY)) return;
+
+  let hasShown = false;
+
+  function showPopup() {
+    if (hasShown) return;
+    hasShown = true;
+
+    overlay.classList.add('active');
+    popup.classList.add('active');
+    document.body.style.overflow = 'hidden';
+
+    // Track impression
+    if (window.dataLayer) {
+      window.dataLayer.push({
+        event: 'exit_popup_shown',
+        popup_type: 'exit_intent'
+      });
+    }
+  }
+
+  function hidePopup() {
+    overlay.classList.remove('active');
+    popup.classList.remove('active');
+    document.body.style.overflow = '';
+    localStorage.setItem(STORAGE_KEY, 'true');
+  }
+
+  // Exit intent (desktop) - mouse leaves viewport
+  if (window.innerWidth > 768) {
+    document.addEventListener('mouseout', function(e) {
+      if (e.clientY < 10 && !hasShown) {
+        showPopup();
+      }
+    });
+  }
+
+  // Delayed trigger (mobile/desktop fallback)
+  setTimeout(function() {
+    if (!hasShown) {
+      showPopup();
+    }
+  }, DELAY_MS);
+
+  // Close handlers
+  closeBtn.addEventListener('click', hidePopup);
+  overlay.addEventListener('click', hidePopup);
+
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' && hasShown) {
+      hidePopup();
+    }
+  });
+
+  // Track form submission
+  const form = document.getElementById('exit-popup-form');
+  if (form) {
+    form.addEventListener('submit', function() {
+      localStorage.setItem(STORAGE_KEY, 'submitted');
+      if (window.dataLayer) {
+        window.dataLayer.push({
+          event: 'exit_popup_submit',
+          popup_type: 'exit_intent'
+        });
+      }
+    });
+  }
+})();
+/* SHELZYS_DESIGNS: END exit-popup-js */
+</script>
+{%- endif -%}

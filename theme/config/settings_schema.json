@@ -224,6 +224,44 @@
     ]
   },
   {
+    "name": "Exit Intent Popup",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "enable_exit_popup",
+        "label": "Enable exit-intent popup",
+        "default": true
+      },
+      {
+        "type": "text",
+        "id": "exit_popup_title",
+        "label": "Popup title",
+        "default": "Wait! Get 10% Off Your First Order"
+      },
+      {
+        "type": "textarea",
+        "id": "exit_popup_text",
+        "label": "Popup text",
+        "default": "Join 2,000+ happy customers. Get exclusive offers, new designs, and wedding inspiration."
+      },
+      {
+        "type": "image_picker",
+        "id": "exit_popup_image",
+        "label": "Popup image"
+      },
+      {
+        "type": "range",
+        "id": "exit_popup_delay",
+        "label": "Fallback delay (seconds)",
+        "info": "Time before popup shows if exit intent not triggered",
+        "min": 5,
+        "max": 60,
+        "step": 5,
+        "default": 15
+      }
+    ]
+  },
+  {
     "name": "Analytics",
     "settings": [
       {
@@ -244,6 +282,17 @@
         "type": "text",
         "id": "facebook_pixel_id",
         "label": "Facebook Pixel ID"
+      },
+      {
+        "type": "header",
+        "content": "Debug Mode"
+      },
+      {
+        "type": "checkbox",
+        "id": "analytics_debug",
+        "label": "Enable analytics debug logging",
+        "default": false,
+        "info": "Logs all analytics events to browser console"
       }
     ]
   },

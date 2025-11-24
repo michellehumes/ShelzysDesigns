@@ -1,0 +1,157 @@
+{%- comment -%}
+<!-- SHELZYS_DESIGNS: START corporate-hero -->
+  Corporate & Teams Landing Page Hero
+<!-- SHELZYS_DESIGNS: END corporate-hero -->
+{%- endcomment -%}
+
+<section class="corporate-hero">
+  <div class="corporate-hero__container">
+    <div class="corporate-hero__content">
+      <span class="corporate-hero__badge">🏢 For Teams & Companies</span>
+      <h1 class="corporate-hero__title">{{ section.settings.title }}</h1>
+      <p class="corporate-hero__subtitle">{{ section.settings.subtitle }}</p>
+
+      <ul class="corporate-hero__benefits">
+        <li>✓ Custom logos & branding</li>
+        <li>✓ Individual name personalization</li>
+        <li>✓ Bulk pricing (10+ bottles)</li>
+        <li>✓ Dedicated account support</li>
+        <li>✓ Rush production available</li>
+      </ul>
+
+      <div class="corporate-hero__ctas">
+        <a href="#corporate-inquiry" class="btn btn-primary btn-lg">Get a Quote</a>
+        <a href="/collections/corporate-events" class="btn btn-secondary">View Products</a>
+      </div>
+    </div>
+
+    <div class="corporate-hero__media">
+      {%- if section.settings.image != blank -%}
+        <img src="{{ section.settings.image | image_url: width: 600 }}" alt="Corporate water bottles">
+      {%- else -%}
+        <div class="corporate-hero__placeholder">{{ 'product-1' | placeholder_svg_tag }}</div>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+<style>
+.corporate-hero {
+  background: linear-gradient(135deg, #F7F4EF 0%, #FFFFFF 100%);
+  padding: 80px 20px;
+}
+
+.corporate-hero__container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  align-items: center;
+}
+
+.corporate-hero__badge {
+  display: inline-block;
+  background: #111;
+  color: #FFF;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 8px 16px;
+  border-radius: 20px;
+  margin-bottom: 20px;
+}
+
+.corporate-hero__title {
+  font-size: clamp(32px, 5vw, 48px);
+  font-weight: 700;
+  margin: 0 0 16px;
+  line-height: 1.1;
+}
+
+.corporate-hero__subtitle {
+  font-size: 18px;
+  color: #555;
+  margin-bottom: 24px;
+  line-height: 1.6;
+}
+
+.corporate-hero__benefits {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 28px;
+}
+
+.corporate-hero__benefits li {
+  font-size: 15px;
+  color: #333;
+  padding: 8px 0;
+  border-bottom: 1px solid #E8E5E0;
+}
+
+.corporate-hero__benefits li:last-child {
+  border-bottom: none;
+}
+
+.corporate-hero__ctas {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.corporate-hero__media img {
+  width: 100%;
+  border-radius: 16px;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.1);
+}
+
+.corporate-hero__placeholder {
+  width: 100%;
+  aspect-ratio: 1;
+  background: #E8E5E0;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (max-width: 900px) {
+  .corporate-hero__container {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+
+  .corporate-hero__ctas {
+    justify-content: center;
+  }
+
+  .corporate-hero__media {
+    order: -1;
+  }
+}
+</style>
+
+{% schema %}
+{
+  "name": "Corporate Hero",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Personalized Bottles for Your Team"
+    },
+    {
+      "type": "textarea",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "From company retreats to sports teams, employee gifts to client appreciation—we create custom branded bottles that people actually use."
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Hero image"
+    }
+  ]
+}
+{% endschema %}

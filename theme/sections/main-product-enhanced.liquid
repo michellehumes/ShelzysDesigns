@@ -1,0 +1,826 @@
+{%- comment -%}
+<!-- SHELZYS_DESIGNS: START main-product-enhanced -->
+  Enhanced Product Section with:
+  - Live preview (color + font visualization)
+  - Personalization fields as line item properties
+  - Collapsible info tabs (Details, Personalization, Shipping, Care)
+  - Better variant dropdowns
+<!-- SHELZYS_DESIGNS: END main-product-enhanced -->
+{%- endcomment -%}
+
+<section class="product-enhanced section-padding" data-product-id="{{ product.id }}">
+  <div class="container">
+    <div class="product-enhanced__layout">
+
+      {%- comment -%} === LEFT: Gallery + Preview === {%- endcomment -%}
+      <div class="product-enhanced__gallery">
+        <div class="gallery__main" id="gallery-main">
+          {%- if product.featured_image -%}
+            <img
+              src="{{ product.featured_image | image_url: width: 800 }}"
+              alt="{{ product.featured_image.alt | default: product.title | escape }}"
+              class="gallery__image"
+              id="main-product-image"
+            >
+          {%- else -%}
+            {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+          {%- endif -%}
+        </div>
+
+        {%- if product.images.size > 1 -%}
+          <div class="gallery__thumbs">
+            {%- for image in product.images -%}
+              <button
+                class="gallery__thumb{% if forloop.first %} active{% endif %}"
+                data-image-src="{{ image | image_url: width: 800 }}"
+                data-index="{{ forloop.index0 }}"
+              >
+                <img src="{{ image | image_url: width: 100 }}" alt="{{ image.alt | default: product.title }}">
+              </button>
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+
+        {%- comment -%} Live Preview Box {%- endcomment -%}
+        <div class="preview-box" id="shelzys-preview">
+          <div class="preview-box__header">
+            <span class="preview-icon">👁️</span>
+            <span>Live Preview</span>
+          </div>
+          <div class="preview-box__canvas">
+            <div class="preview-bottle">
+              <div class="preview-name" id="preview-name-display">Your Name</div>
+            </div>
+          </div>
+          <p class="preview-box__note">*Actual product may vary slightly</p>
+        </div>
+      </div>
+
+      {%- comment -%} === RIGHT: Product Info === {%- endcomment -%}
+      <div class="product-enhanced__info">
+        <h1 class="product__title">{{ product.title }}</h1>
+
+        <div class="product__price-row">
+          <span class="product__price">{{ product.price | money }}</span>
+          {%- if product.compare_at_price > product.price -%}
+            <span class="product__compare-price">{{ product.compare_at_price | money }}</span>
+            {%- assign savings = product.compare_at_price | minus: product.price | times: 100.0 | divided_by: product.compare_at_price | round -%}
+            <span class="product__savings-badge">Save {{ savings }}%</span>
+          {%- endif -%}
+        </div>
+
+        {%- comment -%} Short Description {%- endcomment -%}
+        <p class="product__short-desc">{{ product.metafields.custom.short_description | default: '20oz insulated stainless steel bottle with your personalized name. Keeps drinks cold 24hrs, hot 12hrs.' }}</p>
+
+        {%- comment -%} === PRODUCT FORM === {%- endcomment -%}
+        {%- form 'product', product, class: 'product-form-enhanced', id: 'product-form-enhanced', data-product-form: '' -%}
+          <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}" id="variant-id">
+
+          {%- comment -%} Variant Options (Color, Size) {%- endcomment -%}
+          {%- unless product.has_only_default_variant -%}
+            {%- for option in product.options_with_values -%}
+              <div class="form-field">
+                <label class="form-field__label">{{ option.name }}</label>
+                <select
+                  name="options[{{ option.name }}]"
+                  class="form-field__select"
+                  data-option-position="{{ option.position }}"
+                  id="option-{{ option.name | handleize }}"
+                >
+                  {%- for value in option.values -%}
+                    <option value="{{ value }}" {% if option.selected_value == value %}selected{% endif %}>
+                      {{ value }}
+                    </option>
+                  {%- endfor -%}
+                </select>
+              </div>
+            {%- endfor -%}
+          {%- endunless -%}
+
+          {%- comment -%} === PERSONALIZATION FIELDS === {%- endcomment -%}
+          <div class="personalization-section">
+            <h3 class="personalization-section__title">
+              <span class="icon">✏️</span> Personalization
+            </h3>
+
+            {%- comment -%} Font Selection {%- endcomment -%}
+            <div class="form-field">
+              <label class="form-field__label">Font Style</label>
+              <select name="properties[Font Style]" class="form-field__select" id="font-select">
+                <option value="Elegant Script">Elegant Script</option>
+                <option value="Clean Block">Clean Block</option>
+                <option value="Modern Sans">Modern Sans</option>
+                <option value="Classic Serif">Classic Serif</option>
+                <option value="Playful">Playful</option>
+              </select>
+            </div>
+
+            {%- comment -%} Text Color {%- endcomment -%}
+            <div class="form-field">
+              <label class="form-field__label">Text Color</label>
+              <select name="properties[Text Color]" class="form-field__select" id="color-select">
+                <option value="Black" data-hex="#111111">Black</option>
+                <option value="White" data-hex="#FFFFFF">White</option>
+                <option value="Sage Green" data-hex="#9CAE8C">Sage Green</option>
+                <option value="Gold" data-hex="#D4AF37">Gold</option>
+                <option value="Rose Gold" data-hex="#B76E79">Rose Gold</option>
+                <option value="Navy" data-hex="#1B365D">Navy</option>
+              </select>
+            </div>
+
+            {%- comment -%} Name Input(s) - Check for set products {%- endcomment -%}
+            {%- assign is_set = false -%}
+            {%- assign set_count = 1 -%}
+            {%- for tag in product.tags -%}
+              {%- if tag contains 'set-of-' -%}
+                {%- assign is_set = true -%}
+                {%- assign set_count = tag | remove: 'set-of-' | plus: 0 -%}
+              {%- endif -%}
+            {%- endfor -%}
+
+            {%- if is_set and set_count > 1 -%}
+              <div class="form-field">
+                <label class="form-field__label">Names (one per line, {{ set_count }} total)</label>
+                <textarea
+                  name="properties[Names]"
+                  class="form-field__textarea"
+                  id="names-input"
+                  rows="{{ set_count }}"
+                  placeholder="Enter {{ set_count }} names, one per line:&#10;Sarah&#10;Emily&#10;Jessica..."
+                  required
+                ></textarea>
+                <p class="form-field__help">Enter exactly {{ set_count }} names in the order you'd like them printed.</p>
+              </div>
+            {%- else -%}
+              <div class="form-field">
+                <label class="form-field__label">Name to Print</label>
+                <input
+                  type="text"
+                  name="properties[Name]"
+                  class="form-field__input"
+                  id="name-input"
+                  placeholder="e.g., Sarah"
+                  maxlength="20"
+                  required
+                >
+                <p class="form-field__help">Max 20 characters. Exactly as you want it printed.</p>
+              </div>
+            {%- endif -%}
+
+            {%- comment -%} Optional Icon {%- endcomment -%}
+            <div class="form-field">
+              <label class="form-field__label">Optional Icon</label>
+              <select name="properties[Icon]" class="form-field__select">
+                <option value="None">None</option>
+                <option value="Heart">Heart ❤️</option>
+                <option value="Star">Star ⭐</option>
+                <option value="Daisy">Daisy 🌼</option>
+                <option value="Palm Tree">Palm Tree 🌴</option>
+                <option value="Coffee Cup">Coffee Cup ☕</option>
+                <option value="Sun">Sun ☀️</option>
+              </select>
+            </div>
+          </div>
+
+          {%- comment -%} Rush Order Option {%- endcomment -%}
+          <div class="form-field form-field--checkbox">
+            <label class="checkbox-label">
+              <input type="checkbox" name="properties[Rush Order]" value="Yes - 48hr (+$15)">
+              <span class="checkbox-custom"></span>
+              <span class="checkbox-text">
+                <strong>Rush Order - 48hr Processing</strong>
+                <span class="rush-price">+$15.00</span>
+              </span>
+            </label>
+          </div>
+
+          {%- comment -%} Quantity {%- endcomment -%}
+          <div class="form-field">
+            <label class="form-field__label">Quantity</label>
+            <div class="quantity-selector-enhanced">
+              <button type="button" class="qty-btn" data-action="decrease" aria-label="Decrease">−</button>
+              <input type="number" name="quantity" value="1" min="1" class="qty-input" id="quantity-input">
+              <button type="button" class="qty-btn" data-action="increase" aria-label="Increase">+</button>
+            </div>
+          </div>
+
+          {%- comment -%} Add to Cart Button {%- endcomment -%}
+          <button
+            type="submit"
+            class="btn-add-to-cart"
+            data-shelzys="add-to-cart"
+            {% unless product.available %}disabled{% endunless %}
+          >
+            {%- if product.available -%}
+              <span class="btn-text">Add to Cart</span>
+              <span class="btn-price">{{ product.price | money }}</span>
+            {%- else -%}
+              Sold Out
+            {%- endif -%}
+          </button>
+
+          {%- comment -%} Trust Icons Below Button {%- endcomment -%}
+          <div class="trust-icons-row">
+            <div class="trust-icon-item">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#9CAE8C" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+              <span>Permanent Print</span>
+            </div>
+            <div class="trust-icon-item">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#9CAE8C" stroke-width="2"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+              <span>Free Ship $50+</span>
+            </div>
+            <div class="trust-icon-item">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#9CAE8C" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              <span>5-7 Day Ship</span>
+            </div>
+          </div>
+        {%- endform -%}
+
+        {%- comment -%} === COLLAPSIBLE INFO TABS === {%- endcomment -%}
+        <div class="info-accordion">
+          <div class="accordion-item">
+            <button class="accordion-trigger" aria-expanded="true">
+              <span>Product Details</span>
+              <svg class="accordion-icon" width="16" height="16" viewBox="0 0 16 16"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="2" fill="none"/></svg>
+            </button>
+            <div class="accordion-content" style="display: block;">
+              <ul class="details-list">
+                <li><strong>Material:</strong> 18/8 Stainless Steel, BPA-Free</li>
+                <li><strong>Size:</strong> 20oz / 590ml</li>
+                <li><strong>Insulation:</strong> Double-wall vacuum (Cold 24hr, Hot 12hr)</li>
+                <li><strong>Lid:</strong> Leak-proof screw cap</li>
+                <li><strong>Print:</strong> Sublimation (permanent, won't peel)</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="accordion-item">
+            <button class="accordion-trigger" aria-expanded="false">
+              <span>How Personalization Works</span>
+              <svg class="accordion-icon" width="16" height="16" viewBox="0 0 16 16"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="2" fill="none"/></svg>
+            </button>
+            <div class="accordion-content">
+              <p>Our sublimation printing infuses ink directly into the bottle's coating—no stickers, no vinyl. This means:</p>
+              <ul>
+                <li>✓ Won't peel, crack, or fade</li>
+                <li>✓ Smooth finish you can feel</li>
+                <li>✓ Dishwasher safe (top rack)</li>
+              </ul>
+              <p><strong>What you enter is what we print.</strong> Double-check spelling!</p>
+            </div>
+          </div>
+
+          <div class="accordion-item">
+            <button class="accordion-trigger" aria-expanded="false">
+              <span>Shipping & Rush Orders</span>
+              <svg class="accordion-icon" width="16" height="16" viewBox="0 0 16 16"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="2" fill="none"/></svg>
+            </button>
+            <div class="accordion-content">
+              <p><strong>Standard:</strong> Ships in 5–7 business days. Free shipping on orders $50+.</p>
+              <p><strong>Rush (48hr):</strong> +$15. Select at checkout. Ships within 2 business days.</p>
+              <p>Contact us for orders of 20+ bottles or special deadlines.</p>
+            </div>
+          </div>
+
+          <div class="accordion-item">
+            <button class="accordion-trigger" aria-expanded="false">
+              <span>Care Instructions</span>
+              <svg class="accordion-icon" width="16" height="16" viewBox="0 0 16 16"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="2" fill="none"/></svg>
+            </button>
+            <div class="accordion-content">
+              <ul>
+                <li>Hand wash recommended for longest life</li>
+                <li>Dishwasher safe (top rack only)</li>
+                <li>Do not microwave</li>
+                <li>Avoid dropping on hard surfaces</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+/* SHELZYS_DESIGNS: START main-product-enhanced-styles */
+.product-enhanced__layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  align-items: start;
+}
+
+/* Gallery */
+.gallery__main {
+  border-radius: 12px;
+  overflow: hidden;
+  background: #F7F4EF;
+  margin-bottom: 12px;
+}
+
+.gallery__image {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.gallery__thumbs {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.gallery__thumb {
+  width: 70px;
+  height: 70px;
+  border: 2px solid #E5E5E5;
+  border-radius: 8px;
+  overflow: hidden;
+  cursor: pointer;
+  background: none;
+  padding: 0;
+  transition: border-color 0.2s;
+}
+
+.gallery__thumb.active,
+.gallery__thumb:hover {
+  border-color: #9CAE8C;
+}
+
+.gallery__thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Preview Box */
+.preview-box {
+  margin-top: 20px;
+  background: #F7F4EF;
+  border-radius: 12px;
+  padding: 16px;
+}
+
+.preview-box__header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 12px;
+  color: #666;
+}
+
+.preview-box__canvas {
+  background: linear-gradient(135deg, #e8e8e8 0%, #f5f5f5 100%);
+  border-radius: 8px;
+  padding: 30px;
+  text-align: center;
+}
+
+.preview-bottle {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 120px;
+  height: 180px;
+  background: linear-gradient(180deg, #CCCCCC 0%, #AAAAAA 100%);
+  border-radius: 10px 10px 20px 20px;
+  position: relative;
+}
+
+.preview-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: #111111;
+  transition: all 0.3s ease;
+}
+
+.preview-box__note {
+  font-size: 11px;
+  color: #888;
+  margin: 10px 0 0;
+  text-align: center;
+}
+
+/* Product Info */
+.product__title {
+  font-size: 28px;
+  font-weight: 700;
+  margin: 0 0 12px;
+  line-height: 1.2;
+}
+
+.product__price-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.product__price {
+  font-size: 26px;
+  font-weight: 700;
+  color: #111;
+}
+
+.product__compare-price {
+  font-size: 18px;
+  color: #888;
+  text-decoration: line-through;
+}
+
+.product__savings-badge {
+  background: #C74B4B;
+  color: #FFF;
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.product__short-desc {
+  font-size: 15px;
+  color: #666;
+  line-height: 1.6;
+  margin-bottom: 24px;
+}
+
+/* Form Fields */
+.form-field {
+  margin-bottom: 18px;
+}
+
+.form-field__label {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: #111;
+}
+
+.form-field__select,
+.form-field__input,
+.form-field__textarea {
+  width: 100%;
+  padding: 12px 14px;
+  font-size: 15px;
+  border: 1px solid #D8CFC4;
+  border-radius: 8px;
+  background: #FFF;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.form-field__select:focus,
+.form-field__input:focus,
+.form-field__textarea:focus {
+  outline: none;
+  border-color: #9CAE8C;
+  box-shadow: 0 0 0 3px rgba(156, 174, 140, 0.15);
+}
+
+.form-field__help {
+  font-size: 12px;
+  color: #888;
+  margin-top: 4px;
+}
+
+/* Personalization Section */
+.personalization-section {
+  background: #F7F4EF;
+  padding: 20px;
+  border-radius: 12px;
+  margin-bottom: 20px;
+}
+
+.personalization-section__title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0 0 16px;
+}
+
+/* Checkbox */
+.form-field--checkbox {
+  background: #FFFDF5;
+  border: 1px dashed #D4AF37;
+  padding: 14px;
+  border-radius: 8px;
+}
+
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+}
+
+.checkbox-label input {
+  width: 20px;
+  height: 20px;
+  accent-color: #9CAE8C;
+}
+
+.checkbox-text {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.rush-price {
+  color: #D4AF37;
+  font-weight: 600;
+}
+
+/* Quantity */
+.quantity-selector-enhanced {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid #D8CFC4;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.qty-btn {
+  width: 44px;
+  height: 44px;
+  background: #F7F4EF;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.qty-btn:hover {
+  background: #E8E5E0;
+}
+
+.qty-input {
+  width: 60px;
+  height: 44px;
+  border: none;
+  border-left: 1px solid #D8CFC4;
+  border-right: 1px solid #D8CFC4;
+  text-align: center;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+/* Add to Cart Button */
+.btn-add-to-cart {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 18px 24px;
+  background: #9CAE8C;
+  color: #FFF;
+  border: none;
+  border-radius: 10px;
+  font-size: 17px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.25s;
+  margin-bottom: 16px;
+}
+
+.btn-add-to-cart:hover:not(:disabled) {
+  background: #7C9F8C;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(156, 174, 140, 0.35);
+}
+
+.btn-add-to-cart:disabled {
+  background: #CCCCCC;
+  cursor: not-allowed;
+}
+
+/* Trust Icons Row */
+.trust-icons-row {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  padding: 16px 0;
+  border-bottom: 1px solid #F0F0F0;
+  margin-bottom: 24px;
+}
+
+.trust-icon-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: #666;
+}
+
+/* Accordion */
+.info-accordion {
+  border-top: 1px solid #E8E5E0;
+}
+
+.accordion-item {
+  border-bottom: 1px solid #E8E5E0;
+}
+
+.accordion-trigger {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 0;
+  background: none;
+  border: none;
+  font-size: 15px;
+  font-weight: 600;
+  color: #111;
+  cursor: pointer;
+  text-align: left;
+}
+
+.accordion-trigger:hover {
+  color: #9CAE8C;
+}
+
+.accordion-icon {
+  transition: transform 0.25s;
+}
+
+.accordion-trigger[aria-expanded="true"] .accordion-icon {
+  transform: rotate(180deg);
+}
+
+.accordion-content {
+  display: none;
+  padding-bottom: 16px;
+  font-size: 14px;
+  line-height: 1.7;
+  color: #555;
+}
+
+.accordion-content ul {
+  margin: 10px 0;
+  padding-left: 20px;
+}
+
+.accordion-content li {
+  margin-bottom: 6px;
+}
+
+.details-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.details-list li {
+  padding: 6px 0;
+  border-bottom: 1px solid #F5F5F5;
+}
+
+.details-list li:last-child {
+  border-bottom: none;
+}
+
+/* Responsive */
+@media (max-width: 968px) {
+  .product-enhanced__layout {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+
+  .trust-icons-row {
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .product__title {
+    font-size: 24px;
+  }
+
+  .product__price {
+    font-size: 22px;
+  }
+}
+/* SHELZYS_DESIGNS: END main-product-enhanced-styles */
+</style>
+
+<script>
+/* SHELZYS_DESIGNS: START main-product-enhanced-js */
+document.addEventListener('DOMContentLoaded', function() {
+  // === Live Preview ===
+  const nameInput = document.getElementById('name-input') || document.getElementById('names-input');
+  const fontSelect = document.getElementById('font-select');
+  const colorSelect = document.getElementById('color-select');
+  const previewName = document.getElementById('preview-name-display');
+
+  const fontMap = {
+    'Elegant Script': "'Great Vibes', cursive, serif",
+    'Clean Block': "'Poppins', sans-serif",
+    'Modern Sans': "'Inter', sans-serif",
+    'Classic Serif': "'Playfair Display', serif",
+    'Playful': "'Comic Sans MS', cursive"
+  };
+
+  function updatePreview() {
+    if (!previewName) return;
+
+    // Update name text
+    if (nameInput) {
+      const val = nameInput.value.trim();
+      previewName.textContent = val || 'Your Name';
+    }
+
+    // Update font
+    if (fontSelect) {
+      const font = fontMap[fontSelect.value] || "'Poppins', sans-serif";
+      previewName.style.fontFamily = font;
+    }
+
+    // Update color
+    if (colorSelect) {
+      const selectedOption = colorSelect.options[colorSelect.selectedIndex];
+      const hex = selectedOption.dataset.hex || '#111111';
+      previewName.style.color = hex;
+    }
+  }
+
+  if (nameInput) nameInput.addEventListener('input', updatePreview);
+  if (fontSelect) fontSelect.addEventListener('change', updatePreview);
+  if (colorSelect) colorSelect.addEventListener('change', updatePreview);
+
+  // Initial preview
+  updatePreview();
+
+  // === Image Gallery ===
+  const thumbs = document.querySelectorAll('.gallery__thumb');
+  const mainImage = document.getElementById('main-product-image');
+
+  thumbs.forEach(thumb => {
+    thumb.addEventListener('click', function() {
+      thumbs.forEach(t => t.classList.remove('active'));
+      this.classList.add('active');
+      if (mainImage && this.dataset.imageSrc) {
+        mainImage.src = this.dataset.imageSrc;
+      }
+    });
+  });
+
+  // === Quantity Buttons ===
+  const qtyInput = document.getElementById('quantity-input');
+  document.querySelectorAll('.qty-btn').forEach(btn => {
+    btn.addEventListener('click', function() {
+      if (!qtyInput) return;
+      let val = parseInt(qtyInput.value) || 1;
+      if (this.dataset.action === 'increase') {
+        qtyInput.value = val + 1;
+      } else if (this.dataset.action === 'decrease' && val > 1) {
+        qtyInput.value = val - 1;
+      }
+    });
+  });
+
+  // === Accordion ===
+  document.querySelectorAll('.accordion-trigger').forEach(trigger => {
+    trigger.addEventListener('click', function() {
+      const expanded = this.getAttribute('aria-expanded') === 'true';
+      const content = this.nextElementSibling;
+
+      // Close all
+      document.querySelectorAll('.accordion-trigger').forEach(t => {
+        t.setAttribute('aria-expanded', 'false');
+        t.nextElementSibling.style.display = 'none';
+      });
+
+      // Toggle current
+      if (!expanded) {
+        this.setAttribute('aria-expanded', 'true');
+        content.style.display = 'block';
+      }
+    });
+  });
+});
+/* SHELZYS_DESIGNS: END main-product-enhanced-js */
+</script>
+
+{% schema %}
+{
+  "name": "Product Enhanced",
+  "tag": "section",
+  "class": "section-product-enhanced",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "enable_preview",
+      "label": "Enable live preview",
+      "default": true
+    }
+  ]
+}
+{% endschema %}

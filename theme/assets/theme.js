@@ -411,6 +411,202 @@
   };
 
   // ==========================================================================
+  // Shelzy's Analytics Tracking
+  // Pushes events to dataLayer for GTM/GA4 and handles Facebook Pixel
+  // ==========================================================================
+
+  const ShelzysAnalytics = {
+    init() {
+      // Initialize dataLayer if not present
+      window.dataLayer = window.dataLayer || [];
+
+      // Bind all data-shelzys attribute handlers
+      this.bindTrackingAttributes();
+
+      // Listen for cart events
+      this.bindCartEvents();
+
+      // Track page view
+      this.trackPageView();
+    },
+
+    // Push event to dataLayer (GTM/GA4)
+    push(eventName, eventData = {}) {
+      window.dataLayer.push({
+        event: eventName,
+        shelzys_event: true,
+        timestamp: new Date().toISOString(),
+        ...eventData
+      });
+
+      // Also fire to console in dev mode
+      if (window.ShelzysConfig?.debug) {
+        console.log('[Shelzys Analytics]', eventName, eventData);
+      }
+    },
+
+    // Track Facebook Pixel events if available
+    trackFB(eventName, data = {}) {
+      if (typeof fbq === 'function') {
+        fbq('track', eventName, data);
+      }
+    },
+
+    // Bind click handlers for data-shelzys attributes
+    bindTrackingAttributes() {
+      // Add to Cart buttons
+      document.querySelectorAll('[data-shelzys="add-to-cart"]').forEach(el => {
+        el.addEventListener('click', () => {
+          this.push('shelzys_add_to_cart_click', {
+            button_location: el.dataset.location || 'unknown'
+          });
+        });
+      });
+
+      // Checkout buttons
+      document.querySelectorAll('[data-shelzys="begin-checkout"]').forEach(el => {
+        el.addEventListener('click', () => {
+          this.push('shelzys_begin_checkout_click');
+        });
+      });
+
+      // CTA buttons (hero, use-cases, etc.)
+      document.querySelectorAll('[data-shelzys="cta"]').forEach(el => {
+        el.addEventListener('click', () => {
+          this.push('shelzys_cta_click', {
+            cta_text: el.textContent.trim(),
+            cta_href: el.href || '',
+            cta_type: el.dataset.ctaType || 'general'
+          });
+        });
+      });
+
+      // Quote form submissions
+      document.querySelectorAll('[data-shelzys="quote-form"]').forEach(form => {
+        form.addEventListener('submit', () => {
+          this.push('shelzys_quote_form_submit', {
+            form_type: form.dataset.formType || 'general'
+          });
+          this.trackFB('Lead', { content_name: form.dataset.formType || 'quote' });
+        });
+      });
+
+      // Email signup forms
+      document.querySelectorAll('[data-shelzys="email-signup"]').forEach(form => {
+        form.addEventListener('submit', () => {
+          this.push('shelzys_email_signup', {
+            form_location: form.dataset.location || 'unknown'
+          });
+          this.trackFB('CompleteRegistration', { content_name: 'email_signup' });
+        });
+      });
+
+      // Product personalization interactions
+      document.querySelectorAll('[data-shelzys="personalization-field"]').forEach(field => {
+        field.addEventListener('change', debounce(() => {
+          this.push('shelzys_personalization_updated', {
+            field_name: field.name || field.id,
+            field_type: field.type || field.tagName.toLowerCase()
+          });
+        }, 500));
+      });
+
+      // Upsell clicks
+      document.querySelectorAll('[data-shelzys="upsell-click"]').forEach(el => {
+        el.addEventListener('click', () => {
+          this.push('shelzys_upsell_click', {
+            upsell_product: el.dataset.productTitle || '',
+            upsell_location: el.dataset.location || 'cart'
+          });
+        });
+      });
+    },
+
+    // Bind to custom cart events
+    bindCartEvents() {
+      // Item added to cart
+      document.addEventListener('cart:item-added', (e) => {
+        const item = e.detail;
+        this.push('shelzys_add_to_cart', {
+          currency: 'USD',
+          value: item.price / 100,
+          items: [{
+            item_id: item.variant_id,
+            item_name: item.title,
+            price: item.price / 100,
+            quantity: item.quantity
+          }]
+        });
+
+        this.trackFB('AddToCart', {
+          content_ids: [item.variant_id],
+          content_name: item.title,
+          content_type: 'product',
+          value: item.price / 100,
+          currency: 'USD'
+        });
+      });
+
+      // Checkout started
+      document.addEventListener('cart:checkout-started', (e) => {
+        const cart = e.detail;
+        this.push('shelzys_begin_checkout', {
+          currency: 'USD',
+          value: cart.total_price / 100,
+          items: cart.items.map(item => ({
+            item_id: item.variant_id,
+            item_name: item.title,
+            price: item.price / 100,
+            quantity: item.quantity
+          }))
+        });
+
+        this.trackFB('InitiateCheckout', {
+          content_ids: cart.items.map(i => i.variant_id),
+          content_type: 'product',
+          num_items: cart.item_count,
+          value: cart.total_price / 100,
+          currency: 'USD'
+        });
+      });
+    },
+
+    // Track page view
+    trackPageView() {
+      const pageType = document.body.dataset.pageType || 'unknown';
+      const pageTitle = document.title;
+
+      this.push('shelzys_page_view', {
+        page_type: pageType,
+        page_title: pageTitle,
+        page_path: window.location.pathname
+      });
+
+      // Track product view specifically
+      if (pageType === 'product' && window.ShelzysConfig?.product) {
+        const product = window.ShelzysConfig.product;
+        this.push('shelzys_view_item', {
+          currency: 'USD',
+          value: product.price / 100,
+          items: [{
+            item_id: product.id,
+            item_name: product.title,
+            price: product.price / 100
+          }]
+        });
+
+        this.trackFB('ViewContent', {
+          content_ids: [product.id],
+          content_name: product.title,
+          content_type: 'product',
+          value: product.price / 100,
+          currency: 'USD'
+        });
+      }
+    }
+  };
+
+  // ==========================================================================
   // Initialize Everything
   // ==========================================================================
 
@@ -424,6 +620,7 @@
     AnnouncementBar.init();
     ProductSavings.init();
     SmoothScroll.init();
+    ShelzysAnalytics.init();
   });
 
 })();

@@ -1,0 +1,55 @@
+{
+  "sections": {
+    "corporate-hero": {
+      "type": "corporate-hero",
+      "settings": {}
+    },
+    "corporate-use-cases": {
+      "type": "corporate-use-cases",
+      "settings": {}
+    },
+    "corporate-inquiry": {
+      "type": "corporate-inquiry-form",
+      "settings": {}
+    },
+    "testimonials": {
+      "type": "testimonials",
+      "settings": {
+        "section_title": "Trusted by Teams Everywhere",
+        "section_subtitle": "See what our corporate clients say",
+        "bg_color": "#FFFFFF"
+      },
+      "blocks": {
+        "corp-1": {
+          "type": "testimonial",
+          "settings": {
+            "stars": 5,
+            "quote": "Ordered 50 bottles for our company retreat. Great quality and everyone loved them!",
+            "author": "James T.",
+            "role": "Corporate Events Manager"
+          }
+        },
+        "corp-2": {
+          "type": "testimonial",
+          "settings": {
+            "stars": 5,
+            "quote": "Our soccer team uses these at every game. Durable, stylish, and keeps drinks cold for hours.",
+            "author": "Coach Rodriguez",
+            "role": "Youth Sports Coach"
+          }
+        },
+        "corp-3": {
+          "type": "testimonial",
+          "settings": {
+            "stars": 5,
+            "quote": "Perfect employee appreciation gifts. The logo printing was crisp and everyone felt recognized.",
+            "author": "Amanda K.",
+            "role": "HR Director"
+          }
+        }
+      },
+      "block_order": ["corp-1", "corp-2", "corp-3"]
+    }
+  },
+  "order": ["corporate-hero", "corporate-use-cases", "corporate-inquiry", "testimonials"]
+}
