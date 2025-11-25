@@ -1,0 +1,278 @@
+{%- comment -%}
+  Shelzy's Designs - Customer Testimonials Section
+
+  Displays rotating customer reviews with star ratings
+  Add to homepage: {% render 'shelzys-testimonials' %}
+{%- endcomment -%}
+
+<style>
+  .sz-testimonials {
+    padding: 60px 20px;
+    background: linear-gradient(135deg, #FAF9F6 0%, #ffffff 100%);
+  }
+
+  .sz-testimonials-container {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .sz-testimonials-header {
+    text-align: center;
+    margin-bottom: 40px;
+  }
+
+  .sz-testimonials-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: #8BAA88;
+    color: #fff;
+    padding: 8px 16px;
+    border-radius: 999px;
+    font-family: "Montserrat", sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 16px;
+  }
+
+  .sz-testimonials-title {
+    font-family: "Playfair Display", serif;
+    font-size: 36px;
+    font-weight: 600;
+    color: #4E5F4A;
+    margin: 0 0 8px 0;
+  }
+
+  .sz-testimonials-subtitle {
+    font-family: "Inter", sans-serif;
+    font-size: 16px;
+    color: #666;
+  }
+
+  .sz-testimonials-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+
+  @media (max-width: 900px) {
+    .sz-testimonials-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 600px) {
+    .sz-testimonials-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .sz-testimonials-title {
+      font-size: 28px;
+    }
+  }
+
+  .sz-testimonial-card {
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 28px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .sz-testimonial-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+  }
+
+  .sz-testimonial-stars {
+    color: #D1C7A1;
+    font-size: 18px;
+    margin-bottom: 12px;
+    letter-spacing: 2px;
+  }
+
+  .sz-testimonial-text {
+    font-family: "Inter", sans-serif;
+    font-size: 15px;
+    line-height: 1.7;
+    color: #2B2B2B;
+    margin-bottom: 16px;
+  }
+
+  .sz-testimonial-author {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding-top: 16px;
+    border-top: 1px solid #E0E3DF;
+  }
+
+  .sz-testimonial-avatar {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #8BAA88 0%, #4E5F4A 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-family: "Playfair Display", serif;
+    font-weight: 600;
+    font-size: 16px;
+  }
+
+  .sz-testimonial-info {
+    flex: 1;
+  }
+
+  .sz-testimonial-name {
+    font-family: "Inter", sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    color: #2B2B2B;
+    margin: 0;
+  }
+
+  .sz-testimonial-detail {
+    font-family: "Inter", sans-serif;
+    font-size: 12px;
+    color: #888;
+    margin: 2px 0 0 0;
+  }
+
+  .sz-testimonial-verified {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 11px;
+    color: #8BAA88;
+    font-weight: 500;
+  }
+
+  .sz-testimonials-cta {
+    text-align: center;
+    margin-top: 40px;
+  }
+
+  .sz-testimonials-button {
+    display: inline-block;
+    padding: 14px 32px;
+    background: transparent;
+    color: #4E5F4A;
+    border: 2px solid #4E5F4A;
+    border-radius: 999px;
+    font-family: "Inter", sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.2s ease;
+  }
+
+  .sz-testimonials-button:hover {
+    background: #4E5F4A;
+    color: #fff;
+  }
+</style>
+
+<section class="sz-testimonials">
+  <div class="sz-testimonials-container">
+    <div class="sz-testimonials-header">
+      <div class="sz-testimonials-badge">
+        <span>★</span>
+        <span>4.9 Rating • 500+ Reviews</span>
+      </div>
+      <h2 class="sz-testimonials-title">Loved by Customers Nationwide</h2>
+      <p class="sz-testimonials-subtitle">See why brides, event planners, and gift-givers choose Shelzy's</p>
+    </div>
+
+    <div class="sz-testimonials-grid">
+      <!-- Testimonial 1 -->
+      <div class="sz-testimonial-card">
+        <div class="sz-testimonial-stars">★★★★★</div>
+        <p class="sz-testimonial-text">"My bridesmaids were SO excited when they opened these! The quality is amazing and the personalization looks so elegant. Way better than vinyl stickers that peel off."</p>
+        <div class="sz-testimonial-author">
+          <div class="sz-testimonial-avatar">S</div>
+          <div class="sz-testimonial-info">
+            <p class="sz-testimonial-name">Sarah M.</p>
+            <p class="sz-testimonial-detail">Bridal Party Set of 8</p>
+            <span class="sz-testimonial-verified">✓ Verified Buyer</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Testimonial 2 -->
+      <div class="sz-testimonial-card">
+        <div class="sz-testimonial-stars">★★★★★</div>
+        <p class="sz-testimonial-text">"Ordered 50 bottles for our company retreat and they came out perfect! The logo looks professional and everyone loved having their name on it. Will definitely order again."</p>
+        <div class="sz-testimonial-author">
+          <div class="sz-testimonial-avatar">J</div>
+          <div class="sz-testimonial-info">
+            <p class="sz-testimonial-name">Jennifer K.</p>
+            <p class="sz-testimonial-detail">Corporate Bulk Order</p>
+            <span class="sz-testimonial-verified">✓ Verified Buyer</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Testimonial 3 -->
+      <div class="sz-testimonial-card">
+        <div class="sz-testimonial-stars">★★★★★</div>
+        <p class="sz-testimonial-text">"I've had my bottle for 6 months and it still looks brand new! No peeling, no fading. I use it every day at the gym. Already ordered one for my sister's birthday."</p>
+        <div class="sz-testimonial-author">
+          <div class="sz-testimonial-avatar">A</div>
+          <div class="sz-testimonial-info">
+            <p class="sz-testimonial-name">Ashley T.</p>
+            <p class="sz-testimonial-detail">Everyday Collection</p>
+            <span class="sz-testimonial-verified">✓ Verified Buyer</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Testimonial 4 -->
+      <div class="sz-testimonial-card">
+        <div class="sz-testimonial-stars">★★★★★</div>
+        <p class="sz-testimonial-text">"The proposal gift box was absolutely stunning! My MOH cried when she opened it. Worth every penny for that reaction. The presentation is just *chef's kiss*."</p>
+        <div class="sz-testimonial-author">
+          <div class="sz-testimonial-avatar">M</div>
+          <div class="sz-testimonial-info">
+            <p class="sz-testimonial-name">Madison R.</p>
+            <p class="sz-testimonial-detail">Proposal Gift Box</p>
+            <span class="sz-testimonial-verified">✓ Verified Buyer</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Testimonial 5 -->
+      <div class="sz-testimonial-card">
+        <div class="sz-testimonial-stars">★★★★★</div>
+        <p class="sz-testimonial-text">"Fast shipping and great communication! I needed a rush order for a bachelorette party and they made it happen. The bottles were a huge hit at the party!"</p>
+        <div class="sz-testimonial-author">
+          <div class="sz-testimonial-avatar">E</div>
+          <div class="sz-testimonial-info">
+            <p class="sz-testimonial-name">Emily W.</p>
+            <p class="sz-testimonial-detail">Bachelorette Set of 6</p>
+            <span class="sz-testimonial-verified">✓ Verified Buyer</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Testimonial 6 -->
+      <div class="sz-testimonial-card">
+        <div class="sz-testimonial-stars">★★★★★</div>
+        <p class="sz-testimonial-text">"Got bottles for my daughter's soccer team. The kids LOVE them and so do the parents. No more mix-ups at practice! The durability is incredible for kids."</p>
+        <div class="sz-testimonial-author">
+          <div class="sz-testimonial-avatar">L</div>
+          <div class="sz-testimonial-info">
+            <p class="sz-testimonial-name">Lisa P.</p>
+            <p class="sz-testimonial-detail">Sports Team Order</p>
+            <span class="sz-testimonial-verified">✓ Verified Buyer</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sz-testimonials-cta">
+      <a href="/collections/best-sellers" class="sz-testimonials-button">Shop Best Sellers</a>
+    </div>
+  </div>
+</section>
