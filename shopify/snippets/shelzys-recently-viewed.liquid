@@ -1,0 +1,226 @@
+{%- comment -%}
+  Shelzy's Designs - Recently Viewed Products
+
+  Tracks and displays recently viewed products using localStorage
+  Add to product pages or homepage: {% render 'shelzys-recently-viewed' %}
+{%- endcomment -%}
+
+<style>
+  .sz-recently-viewed {
+    padding: 50px 20px;
+    background: #ffffff;
+  }
+
+  .sz-recently-viewed.empty {
+    display: none;
+  }
+
+  .sz-recently-container {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .sz-recently-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+  }
+
+  .sz-recently-title {
+    font-family: "Playfair Display", serif;
+    font-size: 24px;
+    font-weight: 600;
+    color: #4E5F4A;
+    margin: 0;
+  }
+
+  .sz-recently-clear {
+    font-family: "Inter", sans-serif;
+    font-size: 13px;
+    color: #888;
+    background: none;
+    border: none;
+    cursor: pointer;
+    text-decoration: underline;
+  }
+
+  .sz-recently-clear:hover {
+    color: #4E5F4A;
+  }
+
+  .sz-recently-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+  }
+
+  @media (max-width: 900px) {
+    .sz-recently-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  @media (max-width: 600px) {
+    .sz-recently-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+
+    .sz-recently-title {
+      font-size: 20px;
+    }
+  }
+
+  .sz-recently-item {
+    position: relative;
+  }
+
+  .sz-recently-item a {
+    text-decoration: none;
+    display: block;
+  }
+
+  .sz-recently-image-wrap {
+    position: relative;
+    aspect-ratio: 1;
+    border-radius: 12px;
+    overflow: hidden;
+    background: #FAF9F6;
+    margin-bottom: 12px;
+  }
+
+  .sz-recently-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+  }
+
+  .sz-recently-item:hover .sz-recently-image {
+    transform: scale(1.05);
+  }
+
+  .sz-recently-item-title {
+    font-family: "Inter", sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    color: #2B2B2B;
+    margin: 0 0 4px 0;
+    line-height: 1.3;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .sz-recently-item-price {
+    font-family: "Inter", sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    color: #4E5F4A;
+    margin: 0;
+  }
+</style>
+
+<section class="sz-recently-viewed empty" id="szRecentlyViewed">
+  <div class="sz-recently-container">
+    <div class="sz-recently-header">
+      <h2 class="sz-recently-title">Recently Viewed</h2>
+      <button class="sz-recently-clear" onclick="szClearRecentlyViewed()">Clear</button>
+    </div>
+    <div class="sz-recently-grid" id="szRecentlyGrid">
+      <!-- Products inserted via JS -->
+    </div>
+  </div>
+</section>
+
+<script>
+(function() {
+  var STORAGE_KEY = 'sz_recently_viewed';
+  var MAX_ITEMS = 8;
+  var currentHandle = '{{ product.handle | default: "" }}';
+
+  // Get recently viewed from localStorage
+  function getRecentlyViewed() {
+    try {
+      return JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+    } catch (e) {
+      return [];
+    }
+  }
+
+  // Save product to recently viewed
+  function saveProduct(product) {
+    var items = getRecentlyViewed();
+
+    // Remove if already exists
+    items = items.filter(function(item) {
+      return item.handle !== product.handle;
+    });
+
+    // Add to beginning
+    items.unshift(product);
+
+    // Limit to max items
+    items = items.slice(0, MAX_ITEMS);
+
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
+  }
+
+  // Clear recently viewed
+  window.szClearRecentlyViewed = function() {
+    localStorage.removeItem(STORAGE_KEY);
+    document.getElementById('szRecentlyViewed').classList.add('empty');
+  };
+
+  // Render recently viewed products
+  function renderRecentlyViewed() {
+    var container = document.getElementById('szRecentlyViewed');
+    var grid = document.getElementById('szRecentlyGrid');
+    if (!container || !grid) return;
+
+    var items = getRecentlyViewed();
+
+    // Filter out current product
+    items = items.filter(function(item) {
+      return item.handle !== currentHandle;
+    });
+
+    if (items.length === 0) {
+      container.classList.add('empty');
+      return;
+    }
+
+    container.classList.remove('empty');
+
+    // Render items (max 4)
+    var html = items.slice(0, 4).map(function(item) {
+      return '<div class="sz-recently-item">' +
+        '<a href="/products/' + item.handle + '">' +
+          '<div class="sz-recently-image-wrap">' +
+            '<img src="' + item.image + '" alt="' + item.title + '" class="sz-recently-image" loading="lazy">' +
+          '</div>' +
+          '<h3 class="sz-recently-item-title">' + item.title + '</h3>' +
+          '<p class="sz-recently-item-price">' + item.price + '</p>' +
+        '</a>' +
+      '</div>';
+    }).join('');
+
+    grid.innerHTML = html;
+  }
+
+  // Save current product if on product page
+  {% if product %}
+  saveProduct({
+    handle: '{{ product.handle }}',
+    title: '{{ product.title | escape }}',
+    image: '{{ product.featured_image | img_url: "400x400", crop: "center" }}',
+    price: '{{ product.price | money }}'
+  });
+  {% endif %}
+
+  // Render on page load
+  renderRecentlyViewed();
+})();
+</script>
