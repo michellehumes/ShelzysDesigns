@@ -257,20 +257,26 @@ If you want pixel-perfect control:
 2. Click **Theme settings** (bottom left)
 3. Go to **Colors**
 4. Set:
-   - Primary text: `#111111`
+   - Primary text: `#2B2B2B` (Charcoal)
+   - Headings: `#4E5F4A` (Dark Sage)
    - Background: `#FFFFFF`
-   - Secondary background: `#F7F4EF`
-   - Accent: `#9CAE8C`
-   - Button background: `#9CAE8C`
-   - Button hover: `#7C9F8C`
+   - Secondary background: `#FAF9F6` (Warm White)
+   - Accent: `#8BAA88` (Sage Green)
+   - Button background: `#8BAA88` (Sage Green)
+   - Button hover: `#4E5F4A` (Dark Sage)
+   - Footer background: `#4E5F4A` (Dark Sage)
+   - Footer text: `#FAF9F6` (Warm White)
+   - Borders: `#E0E3DF` (Light Border)
+   - Badges: `#D1C7A1` (Champagne Gold)
 
 ### Step 6.2: Typography
 1. Still in **Theme settings**
 2. Go to **Typography**
 3. Set:
-   - Headings: Poppins (if available) or similar sans-serif
-   - Body: Inter or similar sans-serif
+   - Headings: Playfair Display (600 weight) - elegant serif
+   - Body: Inter (400 weight) - clean sans-serif
    - Base size: 16px
+   - Heading letter-spacing: 0.02em
 
 ### Step 6.3: Navigation
 1. Go to **Online Store > Navigation**
@@ -429,61 +435,130 @@ If you want pixel-perfect control:
 **Add Custom CSS:**
 1. Go to **Online Store > Themes > Actions > Edit code**
 2. Find `assets/theme.css` or `assets/custom.css`
-3. Add this CSS:
+3. **Option A:** Copy the entire contents of `/brand/shelzys-brand.css` into this file
+4. **Option B:** Add this CSS manually:
 
 ```css
-/* Shelzy's Designs Custom Styles */
+/* Shelzy's Designs Brand Styles */
+
+/* Font imports */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@500;600;700&family=Playfair+Display:wght@500;600;700&display=swap');
 
 :root {
-  --color-black: #111111;
-  --color-white: #FFFFFF;
-  --color-beige: #F7F4EF;
-  --color-sage: #9CAE8C;
-  --color-sandstone: #D8CFC4;
-  --color-blush: #F8D9C5;
-  --color-seagrass: #7C9F8C;
+  /* Colors */
+  --sz-primary: #8BAA88;        /* Sage Green */
+  --sz-primary-dark: #4E5F4A;   /* Dark Sage / Evergreen */
+  --sz-neutral-light: #FAF9F6;  /* Warm White */
+  --sz-neutral-dark: #2B2B2B;   /* Charcoal */
+  --sz-accent-gold: #D1C7A1;    /* Champagne Gold */
+  --sz-border-soft: #C7D3C5;
+  --sz-border-light: #E0E3DF;
+
+  /* Fonts */
+  --sz-font-heading: "Playfair Display", "Times New Roman", serif;
+  --sz-font-body: "Inter", system-ui, sans-serif;
+  --sz-font-accent: "Montserrat", "Inter", sans-serif;
 }
 
 body {
-  font-family: 'Inter', -apple-system, sans-serif;
-  color: var(--color-black);
+  font-family: var(--sz-font-body);
+  color: var(--sz-neutral-dark);
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: 'Poppins', -apple-system, sans-serif;
-  font-weight: 600;
+  font-family: var(--sz-font-heading);
+  color: var(--sz-primary-dark);
+  letter-spacing: 0.02em;
 }
 
+/* Pill-shaped buttons */
 .btn,
 .button,
 button[type="submit"] {
-  background: var(--color-sage);
-  color: var(--color-white);
-  border: none;
-  padding: 14px 28px;
-  font-family: 'Poppins', sans-serif;
+  background: var(--sz-primary);
+  color: #ffffff;
+  border: 1px solid var(--sz-primary);
+  padding: 0.9rem 1.8rem;
+  font-family: var(--sz-font-body);
   font-weight: 600;
-  border-radius: 4px;
-  transition: background 0.3s ease;
+  border-radius: 999px;
+  letter-spacing: 0.06em;
+  transition: all 0.3s ease;
 }
 
 .btn:hover,
 .button:hover,
 button[type="submit"]:hover {
-  background: var(--color-seagrass);
+  background: var(--sz-primary-dark);
+  border-color: var(--sz-primary-dark);
 }
 
-.product-card {
-  background: var(--color-white);
-  border-radius: 8px;
+/* Product cards with hover effects */
+.product-card,
+.grid-product,
+.card {
+  background: #ffffff;
+  border: 1px solid transparent;
+  border-radius: 18px;
+  transition: box-shadow 0.15s ease, border-color 0.15s ease, transform 0.15s ease;
 }
 
-.section-background-alt {
-  background: var(--color-beige);
+.product-card:hover,
+.grid-product:hover,
+.card:hover {
+  border-color: var(--sz-border-soft);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.04);
+  transform: translateY(-2px);
+}
+
+/* Badges with champagne gold */
+.badge,
+.product-tag {
+  font-family: var(--sz-font-accent);
+  background-color: var(--sz-accent-gold);
+  color: #ffffff;
+  border-radius: 999px;
+  padding: 0.2rem 0.7rem;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+
+/* Footer with dark sage */
+.site-footer,
+.footer {
+  background-color: var(--sz-primary-dark);
+  color: var(--sz-neutral-light);
+}
+
+.site-footer a:hover,
+.footer a:hover {
+  color: var(--sz-accent-gold);
+}
+
+/* Alternate section backgrounds */
+.section-background-alt,
+.section--alt {
+  background: var(--sz-neutral-light);
+}
+
+/* Form inputs */
+input, textarea, select {
+  border-radius: 999px;
+  border: 1px solid var(--sz-border-light);
+  padding: 0.7rem 1rem;
+}
+
+input:focus, textarea:focus, select:focus {
+  outline: none;
+  border-color: var(--sz-primary);
+  box-shadow: 0 0 0 1px rgba(139, 170, 136, 0.25);
 }
 ```
 
-4. Save
+5. Save
+
+**Full CSS file available at:** `/brand/shelzys-brand.css`
 
 ---
 
@@ -551,8 +626,8 @@ Before going live:
 - [ ] Footer links set up
 
 **Settings:**
-- [ ] Theme colors match brand (#9CAE8C sage, #111111 black, etc.)
-- [ ] Typography set (Poppins headings, Inter body)
+- [ ] Theme colors match brand (#8BAA88 sage, #4E5F4A dark sage, #2B2B2B charcoal, #D1C7A1 gold)
+- [ ] Typography set (Playfair Display headings, Inter body, Montserrat accents)
 - [ ] Shipping zones and rates configured
 - [ ] Payment gateway enabled
 - [ ] Policies written (refund, privacy, terms, shipping)

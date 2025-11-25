@@ -1,0 +1,22 @@
+{%- comment -%}
+  Shelzy's Designs - Font Preloading Snippet
+
+  HOW TO USE:
+  1. Go to Online Store > Themes > Actions > Edit code
+  2. In the Snippets folder, click "Add a new snippet"
+  3. Name it "shelzys-fonts"
+  4. Paste this entire file contents
+  5. Save
+  6. Then add this line to your theme.liquid <head> section (before </head>):
+     {% render 'shelzys-fonts' %}
+{%- endcomment -%}
+
+{%- comment -%} Preconnect to Google Fonts for faster loading {%- endcomment -%}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+{%- comment -%} Load brand fonts: Playfair Display, Inter, Montserrat {%- endcomment -%}
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+
+{%- comment -%} Load brand CSS {%- endcomment -%}
+{{ 'shelzys-brand-v2.css' | asset_url | stylesheet_tag }}

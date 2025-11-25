@@ -1,0 +1,336 @@
+/* ================================
+   Shelzy's Designs — Brand Styles
+   ================================ */
+
+/* 1. Font imports (fallback if not added in theme.liquid) */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@500;600;700&family=Playfair+Display:wght@500;600;700&display=swap');
+
+/* 2. CSS Variables for global use */
+:root {
+  /* Colors */
+  --sz-primary: #8BAA88;        /* Sage Green */
+  --sz-primary-dark: #4E5F4A;   /* Dark Sage / Evergreen */
+  --sz-neutral-light: #FAF9F6;  /* Warm White */
+  --sz-neutral-dark: #2B2B2B;   /* Charcoal */
+  --sz-accent-gold: #D1C7A1;    /* Champagne Gold */
+  --sz-border-soft: #C7D3C5;
+  --sz-border-light: #E0E3DF;
+
+  /* Fonts */
+  --sz-font-heading: "Playfair Display", "Times New Roman", serif;
+  --sz-font-body: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --sz-font-accent: "Montserrat", "Inter", sans-serif;
+}
+
+/* 3. Global Typography */
+body,
+html {
+  font-family: var(--sz-font-body);
+  color: var(--sz-neutral-dark);
+  background-color: #ffffff;
+}
+
+/* Headings */
+h1, h2, h3, h4, h5, h6,
+.heading,
+.section-header__title,
+.product-single__title,
+.page-title {
+  font-family: var(--sz-font-heading);
+  color: var(--sz-primary-dark);
+  letter-spacing: 0.02em;
+}
+
+/* Subheadings / Eyebrow text */
+.subtitle,
+.section-header__subtitle,
+.small-caption,
+.badge,
+.badge--pill {
+  font-family: var(--sz-font-accent);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 0.78rem;
+}
+
+/* Body text */
+p,
+li,
+input,
+textarea,
+select,
+.button,
+.btn,
+a,
+.product-card__title,
+.product-card__price,
+.site-nav__link {
+  font-family: var(--sz-font-body);
+}
+
+/* 4. Links */
+a {
+  color: var(--sz-primary-dark);
+  text-decoration: none;
+}
+
+a:hover,
+a:focus {
+  color: var(--sz-primary);
+  text-decoration: underline;
+}
+
+/* 5. Buttons / CTAs */
+.btn,
+.button,
+.shopify-payment-button__button,
+.product-form__cart-submit {
+  background-color: var(--sz-primary);
+  color: #ffffff;
+  border-radius: 999px;
+  border: 1px solid var(--sz-primary);
+  padding: 0.9rem 1.8rem;
+  font-family: var(--sz-font-body);
+  font-weight: 600;
+  text-transform: none;
+  letter-spacing: 0.06em;
+}
+
+.btn:hover,
+.button:hover,
+.shopify-payment-button__button:hover,
+.product-form__cart-submit:hover {
+  background-color: var(--sz-primary-dark);
+  border-color: var(--sz-primary-dark);
+  color: #ffffff;
+}
+
+/* Secondary / Ghost buttons */
+.btn--secondary,
+.button--secondary,
+.btn--tertiary,
+.button--tertiary {
+  background-color: #ffffff;
+  color: var(--sz-primary-dark);
+  border-radius: 999px;
+  border: 1px solid var(--sz-primary);
+}
+
+.btn--secondary:hover,
+.button--secondary:hover,
+.btn--tertiary:hover,
+.button--tertiary:hover {
+  background-color: var(--sz-neutral-light);
+  color: var(--sz-primary-dark);
+}
+
+/* 6. Section Backgrounds & Layout */
+.section,
+.index-section,
+.template-index .shopify-section {
+  padding-top: 40px;
+  padding-bottom: 40px;
+}
+
+/* Warm white alt background */
+.section--alt,
+.shelzys-section-alt {
+  background-color: var(--sz-neutral-light);
+}
+
+/* Light dividers */
+.section + .section,
+.index-section + .index-section {
+  border-top: 1px solid var(--sz-border-light);
+}
+
+/* 7. Header & Navigation */
+.site-header,
+.header-wrapper {
+  background-color: #ffffff;
+  border-bottom: 1px solid var(--sz-border-light);
+}
+
+.site-nav__link,
+.site-header__icon {
+  font-family: var(--sz-font-body);
+  color: var(--sz-neutral-dark);
+}
+
+.site-nav__link:hover,
+.site-header__icon:hover {
+  color: var(--sz-primary);
+}
+
+/* 8. Footer */
+.site-footer,
+.footer,
+.footer-wrapper {
+  background-color: var(--sz-primary-dark);
+  color: var(--sz-neutral-light);
+}
+
+.site-footer a,
+.footer a {
+  color: var(--sz-neutral-light);
+}
+
+.site-footer a:hover,
+.footer a:hover {
+  color: var(--sz-accent-gold);
+}
+
+/* 9. Product Cards / Collection Grid */
+.product-card,
+.grid-product,
+.collection-grid-item,
+.product-item,
+.card {
+  border: 1px solid transparent;
+  border-radius: 18px;
+  background-color: #ffffff;
+  transition: box-shadow 0.15s ease, border-color 0.15s ease, transform 0.15s ease;
+}
+
+.product-card:hover,
+.grid-product:hover,
+.collection-grid-item:hover,
+.product-item:hover,
+.card:hover {
+  border-color: var(--sz-border-soft);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.04);
+  transform: translateY(-2px);
+}
+
+.product-card__title,
+.grid-product__title,
+.card__heading {
+  font-family: var(--sz-font-heading);
+  font-size: 1rem;
+  color: var(--sz-primary-dark);
+}
+
+.product-card__price,
+.grid-product__price,
+.price {
+  font-family: var(--sz-font-body);
+  color: var(--sz-neutral-dark);
+}
+
+/* Star ratings */
+.spr-icon-star,
+.spr-icon-star-half-alt,
+.spr-icon-star-empty {
+  color: var(--sz-primary);
+}
+
+/* 10. Badges / Labels */
+.badge,
+.badge--pill,
+.product-tag,
+.product-label {
+  font-family: var(--sz-font-accent);
+  background-color: var(--sz-accent-gold);
+  color: #ffffff;
+  border-radius: 999px;
+  padding: 0.2rem 0.7rem;
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+}
+
+/* 11. Hero Section (if present) */
+.hero,
+.hero__content,
+.slideshow__text-content {
+  color: var(--sz-neutral-dark);
+}
+
+.hero__title,
+.slideshow__title {
+  font-family: var(--sz-font-heading);
+  color: var(--sz-primary-dark);
+}
+
+.hero__subtitle,
+.slideshow__subtitle {
+  font-family: var(--sz-font-body);
+  color: var(--sz-neutral-dark);
+}
+
+/* 12. Forms / Inputs */
+input,
+textarea,
+select {
+  border-radius: 999px;
+  border: 1px solid var(--sz-border-light);
+  padding: 0.7rem 1rem;
+  font-family: var(--sz-font-body);
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+  border-color: var(--sz-primary);
+  box-shadow: 0 0 0 1px rgba(139, 170, 136, 0.25);
+}
+
+/* 13. Popups / Newsletter modal */
+.popup,
+.newsletter-popup,
+.modal {
+  background-color: var(--sz-neutral-light);
+  border-radius: 24px;
+  border: 1px solid var(--sz-border-soft);
+}
+
+/* 14. "How It Works" / Icon Steps (optional) */
+.shelzys-steps {
+  display: flex;
+  gap: 20px;
+}
+
+.shelzys-step {
+  text-align: center;
+  padding: 20px;
+  border-radius: 18px;
+  background-color: #ffffff;
+  border: 1px solid var(--sz-border-light);
+}
+
+.shelzys-step__title {
+  font-family: var(--sz-font-heading);
+  margin-bottom: 8px;
+}
+
+.shelzys-step__text {
+  font-family: var(--sz-font-body);
+  font-size: 0.9rem;
+  color: var(--sz-neutral-dark);
+}
+
+/* 15. Blog Styling */
+.article__title,
+.blog__title {
+  font-family: var(--sz-font-heading);
+  color: var(--sz-primary-dark);
+}
+
+.article__meta,
+.blog__meta,
+.rte blockquote {
+  font-family: var(--sz-font-accent);
+}
+
+/* 16. Utility Classes */
+.shelzys-bg-warm-white {
+  background-color: var(--sz-neutral-light);
+}
+
+.shelzys-text-sage {
+  color: var(--sz-primary-dark);
+}
+
+.shelzys-text-gold {
+  color: var(--sz-accent-gold);
+}

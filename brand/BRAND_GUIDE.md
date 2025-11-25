@@ -38,45 +38,57 @@
 
 #### Primary Colors
 ```
-Soft Black:      #111111  (headlines, buttons, primary text)
-White:           #FFFFFF  (backgrounds, clean space)
-Brushed Beige:   #F7F4EF  (section backgrounds, product cards)
-Sage Green:      #9CAE8C  (brand accent, CTAs, highlights)
+Sage Green:      #8BAA88  (Primary CTA buttons, brand accent, highlights)
+Dark Sage:       #4E5F4A  (Headlines, headings, footer background, hover states)
+Warm White:      #FAF9F6  (Alternating section backgrounds, modals)
+Charcoal:        #2B2B2B  (Body text, navigation, pricing)
+White:           #FFFFFF  (Primary backgrounds, product cards, button text)
 ```
 
-#### Secondary Accents
+#### Accent & Border Colors
 ```
-Sandstone:       #D8CFC4  (subtle dividers, secondary backgrounds)
-Blush Apricot:   #F8D9C5  (warm accent, bridal sections)
-Dusty Seagrass:  #7C9F8C  (deeper green accent, hover states)
+Champagne Gold:  #D1C7A1  (Sale badges, product labels, premium accents)
+Soft Border:     #C7D3C5  (Product card hover borders, modal borders)
+Light Border:    #E0E3DF  (Section dividers, form inputs, header border)
 ```
 
 #### Usage Guidelines
-- **White or Brushed Beige** for main backgrounds
-- **Soft Black** for all body text and headlines
-- **Sage Green** for primary CTAs, accent elements, key highlights
-- **Blush Apricot** for bridal/feminine product highlights
-- **Sandstone** for subtle section dividers
+- **White or Warm White** for main backgrounds
+- **Dark Sage (`#4E5F4A`)** for all headings (Playfair Display font)
+- **Charcoal (`#2B2B2B`)** for all body text
+- **Sage Green (`#8BAA88`)** for primary CTAs and accent elements
+- **Champagne Gold (`#D1C7A1`)** for badges and premium highlights
+- **Dark Sage (`#4E5F4A`)** for footer background
 
 ### Typography
 
 #### Typeface Stack
 ```
-Headings:     Poppins SemiBold
-Body Text:    Inter Regular
-Captions:     Inter Regular (smaller weight)
-Buttons:      Poppins SemiBold
+Headings:     Playfair Display (500-700 weight) - Elegant serif
+Body Text:    Inter (400-600 weight) - Clean sans-serif
+Accents:      Montserrat (500-700 weight) - Uppercase subheadings, badges
+Buttons:      Inter (600 weight)
+```
+
+#### Google Fonts Import
+```css
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@500;600;700&family=Playfair+Display:wght@500;600;700&display=swap');
 ```
 
 #### Size Scale (Web)
 ```
-H1 (Hero):           48-64px
-H2 (Section):        36-42px
-H3 (Subsection):     24-28px
-Body (Primary):      16-18px
-Body (Secondary):    14-16px
-Captions:            12-14px
+H1 (Hero):           48-64px  (Playfair Display, 600 weight)
+H2 (Section):        36-42px  (Playfair Display, 600 weight)
+H3 (Subsection):     24-28px  (Playfair Display, 500 weight)
+Body (Primary):      16-18px  (Inter, 400 weight)
+Body (Secondary):    14-16px  (Inter, 400 weight)
+Captions/Badges:     12-14px  (Montserrat, uppercase, 0.12em letter-spacing)
 ```
+
+#### Typography Details
+- **Headings:** Letter-spacing 0.02em for refined elegance
+- **Subheadings/Badges:** Uppercase, 0.12em letter-spacing, Montserrat
+- **Buttons:** Inter 600 weight, 0.06em letter-spacing, no text-transform
 
 #### On-Bottle Typography (Mockups Only)
 For product mockups showing personalization:
