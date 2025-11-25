@@ -16,7 +16,7 @@ const fs = require('fs');
 const path = require('path');
 
 // Load from environment variables
-const STORE_URL = process.env.SHOPIFY_STORE_URL || 'YOUR_STORE.myshopify.com';
+const STORE_URL = process.env.SHOPIFY_STORE_URL || 'shelzys-designs.myshopify.com';
 const ACCESS_TOKEN = process.env.SHOPIFY_ACCESS_TOKEN || 'YOUR_ACCESS_TOKEN';
 const API_VERSION = '2024-01';
 
