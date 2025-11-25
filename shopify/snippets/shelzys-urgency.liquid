@@ -1,0 +1,204 @@
+{%- comment -%}
+  Shelzy's Designs - Product Urgency Elements
+
+  Shows low stock warnings and estimated delivery dates
+  Creates urgency without being pushy
+
+  Add to product page below add-to-cart button:
+  {% render 'shelzys-urgency', product: product %}
+{%- endcomment -%}
+
+{% assign current_variant = product.selected_or_first_available_variant %}
+{% assign inventory_qty = current_variant.inventory_quantity %}
+{% assign inventory_policy = current_variant.inventory_policy %}
+{% assign inventory_management = current_variant.inventory_management %}
+
+{%- comment -%} Calculate estimated delivery {%- endcomment -%}
+{% assign processing_days = 5 %}
+{% assign shipping_days_min = 3 %}
+{% assign shipping_days_max = 7 %}
+
+<style>
+  .sz-urgency-wrapper {
+    margin: 16px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .sz-urgency-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 14px;
+    background: #FAF9F6;
+    border-radius: 10px;
+    font-family: "Inter", sans-serif;
+    font-size: 14px;
+    color: #2B2B2B;
+  }
+
+  .sz-urgency-icon {
+    font-size: 16px;
+    flex-shrink: 0;
+  }
+
+  .sz-urgency-text {
+    flex: 1;
+    line-height: 1.4;
+  }
+
+  .sz-urgency-text strong {
+    color: #4E5F4A;
+    font-weight: 600;
+  }
+
+  /* Low stock warning */
+  .sz-urgency-low-stock {
+    background: #FFF9F0;
+    border: 1px solid #F5E6D3;
+  }
+
+  .sz-urgency-low-stock .sz-urgency-stock-count {
+    color: #C17F24;
+    font-weight: 700;
+  }
+
+  /* Very low stock - more urgent */
+  .sz-urgency-very-low {
+    background: #FFF5F5;
+    border: 1px solid #FECACA;
+  }
+
+  .sz-urgency-very-low .sz-urgency-stock-count {
+    color: #DC2626;
+    font-weight: 700;
+  }
+
+  /* Delivery estimate */
+  .sz-urgency-delivery {
+    background: #F0F7F0;
+    border: 1px solid #C7D3C5;
+  }
+
+  .sz-urgency-delivery strong {
+    color: #4E5F4A;
+  }
+
+  /* Trust signals */
+  .sz-trust-signals {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 1px solid #E0E3DF;
+  }
+
+  .sz-trust-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-family: "Inter", sans-serif;
+    font-size: 12px;
+    color: #666;
+  }
+
+  .sz-trust-icon {
+    font-size: 14px;
+  }
+
+  /* Pulsing animation for very low stock */
+  @keyframes sz-pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.7; }
+  }
+
+  .sz-urgency-very-low .sz-urgency-icon {
+    animation: sz-pulse 1.5s ease infinite;
+  }
+</style>
+
+<div class="sz-urgency-wrapper">
+  {%- comment -%} Low Stock Warning {%- endcomment -%}
+  {% if inventory_management == 'shopify' and inventory_qty > 0 and inventory_qty <= 10 %}
+    {% if inventory_qty <= 3 %}
+      <div class="sz-urgency-item sz-urgency-very-low">
+        <span class="sz-urgency-icon">🔥</span>
+        <span class="sz-urgency-text">
+          Only <span class="sz-urgency-stock-count">{{ inventory_qty }}</span> left in stock - order soon!
+        </span>
+      </div>
+    {% elsif inventory_qty <= 10 %}
+      <div class="sz-urgency-item sz-urgency-low-stock">
+        <span class="sz-urgency-icon">⚡</span>
+        <span class="sz-urgency-text">
+          Low stock - only <span class="sz-urgency-stock-count">{{ inventory_qty }}</span> remaining
+        </span>
+      </div>
+    {% endif %}
+  {% endif %}
+
+  {%- comment -%} Delivery Estimate {%- endcomment -%}
+  <div class="sz-urgency-item sz-urgency-delivery">
+    <span class="sz-urgency-icon">📦</span>
+    <span class="sz-urgency-text">
+      <strong>Order today</strong> for estimated delivery in {{ processing_days | plus: shipping_days_min }}-{{ processing_days | plus: shipping_days_max }} business days
+    </span>
+  </div>
+
+  {%- comment -%} Trust Signals {%- endcomment -%}
+  <div class="sz-trust-signals">
+    <div class="sz-trust-item">
+      <span class="sz-trust-icon">✓</span>
+      <span>Permanent sublimation print</span>
+    </div>
+    <div class="sz-trust-item">
+      <span class="sz-trust-icon">✓</span>
+      <span>No vinyl, no peeling</span>
+    </div>
+    <div class="sz-trust-item">
+      <span class="sz-trust-icon">✓</span>
+      <span>Free shipping $50+</span>
+    </div>
+    <div class="sz-trust-item">
+      <span class="sz-trust-icon">✓</span>
+      <span>Made with care in USA</span>
+    </div>
+  </div>
+</div>
+
+<script>
+// Update urgency elements when variant changes
+document.addEventListener('variant:changed', function(e) {
+  if (e.detail && e.detail.variant) {
+    var variant = e.detail.variant;
+    var urgencyWrapper = document.querySelector('.sz-urgency-wrapper');
+    if (!urgencyWrapper) return;
+
+    // Find or create low stock element
+    var lowStockEl = urgencyWrapper.querySelector('.sz-urgency-low-stock, .sz-urgency-very-low');
+
+    if (variant.inventory_management === 'shopify' && variant.inventory_quantity > 0 && variant.inventory_quantity <= 10) {
+      var qty = variant.inventory_quantity;
+      var isVeryLow = qty <= 3;
+
+      if (!lowStockEl) {
+        lowStockEl = document.createElement('div');
+        lowStockEl.className = 'sz-urgency-item';
+        urgencyWrapper.insertBefore(lowStockEl, urgencyWrapper.firstChild);
+      }
+
+      lowStockEl.className = 'sz-urgency-item ' + (isVeryLow ? 'sz-urgency-very-low' : 'sz-urgency-low-stock');
+      lowStockEl.innerHTML = '<span class="sz-urgency-icon">' + (isVeryLow ? '🔥' : '⚡') + '</span>' +
+        '<span class="sz-urgency-text">' +
+        (isVeryLow ? 'Only ' : 'Low stock - only ') +
+        '<span class="sz-urgency-stock-count">' + qty + '</span>' +
+        (isVeryLow ? ' left in stock - order soon!' : ' remaining') +
+        '</span>';
+    } else if (lowStockEl) {
+      lowStockEl.remove();
+    }
+  }
+});
+</script>
