@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shelzy's Designs - Shopify Setup Automation</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #f5f5f5;
+      padding: 20px;
+      line-height: 1.6;
+    }
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      background: white;
+      border-radius: 12px;
+      padding: 30px;
+      box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+    }
+    h1 {
+      color: #111;
+      margin-bottom: 10px;
+      font-size: 28px;
+    }
+    .subtitle {
+      color: #666;
+      margin-bottom: 30px;
+      font-size: 14px;
+    }
+    .section {
+      margin-bottom: 30px;
+      padding: 20px;
+      background: #f9f9f9;
+      border-radius: 8px;
+      border-left: 4px solid #9CAE8C;
+    }
+    .section h2 {
+      color: #111;
+      font-size: 18px;
+      margin-bottom: 15px;
+    }
+    input[type="text"] {
+      width: 100%;
+      padding: 12px;
+      border: 2px solid #ddd;
+      border-radius: 6px;
+      font-size: 14px;
+      font-family: monospace;
+      margin-bottom: 10px;
+    }
+    input[type="text"]:focus {
+      outline: none;
+      border-color: #9CAE8C;
+    }
+    .btn {
+      background: #9CAE8C;
+      color: white;
+      padding: 15px 30px;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      width: 100%;
+      margin-top: 10px;
+    }
+    .btn:hover {
+      background: #8a9d7c;
+    }
+    .btn:disabled {
+      background: #ccc;
+      cursor: not-allowed;
+    }
+    .log {
+      background: #1e1e1e;
+      color: #00ff00;
+      padding: 20px;
+      border-radius: 6px;
+      font-family: monospace;
+      font-size: 13px;
+      max-height: 400px;
+      overflow-y: auto;
+      margin-top: 15px;
+      white-space: pre-wrap;
+      display: none;
+    }
+    .log.show {
+      display: block;
+    }
+    .success { color: #00ff00; }
+    .error { color: #ff4444; }
+    .warning { color: #ffaa00; }
+    .info { color: #00aaff; }
+    .progress {
+      margin-top: 20px;
+      background: #e0e0e0;
+      border-radius: 10px;
+      height: 30px;
+      overflow: hidden;
+      display: none;
+    }
+    .progress.show {
+      display: block;
+    }
+    .progress-bar {
+      background: linear-gradient(90deg, #9CAE8C, #8a9d7c);
+      height: 100%;
+      width: 0%;
+      transition: width 0.3s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 600;
+      font-size: 13px;
+    }
+    .checklist {
+      margin-top: 20px;
+    }
+    .checklist-item {
+      padding: 10px;
+      margin: 5px 0;
+      background: white;
+      border-radius: 6px;
+      border: 1px solid #ddd;
+    }
+    .checklist-item.completed {
+      background: #e8f5e9;
+      border-color: #9CAE8C;
+    }
+    .checklist-item.error {
+      background: #ffebee;
+      border-color: #ff4444;
+    }
+    .checklist-item.running {
+      background: #e3f2fd;
+      border-color: #00aaff;
+    }
+    .status-icon {
+      font-weight: bold;
+      margin-right: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🚀 Shelzy's Designs - Automated Setup</h1>
+    <p class="subtitle">One-click setup for your Shopify store. No terminal required.</p>
+
+    <div class="section">
+      <h2>Step 1: Enter Your Shopify API Token</h2>
+      <input type="text" id="apiToken" placeholder="shpat_xxxxxxxxxxxxxxxxxxxxx" value="">
+      <p style="color: #666; font-size: 12px; margin-top: 5px;">
+        Token is stored in browser only, never sent anywhere except Shopify.
+      </p>
+    </div>
+
+    <div class="section">
+      <h2>Step 2: Run Automation</h2>
+      <p style="margin-bottom: 15px;">This will automatically:</p>
+      <ul style="margin-left: 20px; margin-bottom: 15px;">
+        <li>✅ Create Corporate & Everyday collections</li>
+        <li>✅ Create Contact, Shipping, Why Sublimation pages</li>
+        <li>✅ Update all product descriptions with sublimation messaging</li>
+        <li>✅ Publish 6 SEO blog posts</li>
+      </ul>
+      <button class="btn" onclick="runAutomation()">🚀 Run Full Setup (Takes 2-3 minutes)</button>
+    </div>
+
+    <div class="progress" id="progress">
+      <div class="progress-bar" id="progressBar">0%</div>
+    </div>
+
+    <div class="checklist" id="checklist"></div>
+
+    <div class="log" id="log"></div>
+  </div>
+
+  <script>
+    const API_VERSION = '2024-01';
+    let logEl, progressEl, progressBar, checklistEl;
+
+    window.onload = () => {
+      logEl = document.getElementById('log');
+      progressEl = document.getElementById('progress');
+      progressBar = document.getElementById('progressBar');
+      checklistEl = document.getElementById('checklist');
+    };
+
+    function log(message, type = 'info') {
+      logEl.classList.add('show');
+      const timestamp = new Date().toLocaleTimeString();
+      const className = type;
+      logEl.innerHTML += `<span class="${className}">[${timestamp}] ${message}</span>\n`;
+      logEl.scrollTop = logEl.scrollHeight;
+    }
+
+    function updateProgress(percent, text) {
+      progressEl.classList.add('show');
+      progressBar.style.width = percent + '%';
+      progressBar.textContent = text || percent + '%';
+    }
+
+    function updateChecklist(tasks) {
+      checklistEl.innerHTML = tasks.map(task => `
+        <div class="checklist-item ${task.status}">
+          <span class="status-icon">${task.icon}</span>
+          ${task.text}
+        </div>
+      `).join('');
+    }
+
+    async function shopifyAPI(endpoint, options = {}) {
+      const token = document.getElementById('apiToken').value.trim();
+      const storeUrl = 'shelzys-designs.myshopify.com';
+
+      const url = `https://${storeUrl}/admin/api/${API_VERSION}${endpoint}`;
+
+      const response = await fetch(url, {
+        ...options,
+        headers: {
+          'Content-Type': 'application/json',
+          'X-Shopify-Access-Token': token,
+          ...options.headers,
+        },
+      });
+
+      if (!response.ok) {
+        const error = await response.text();
+        throw new Error(`API Error (${response.status}): ${error}`);
+      }
+
+      const text = await response.text();
+      return text ? JSON.parse(text) : null;
+    }
+
+    async function createCollections() {
+      log('📦 Creating Collections...', 'info');
+
+      const collections = [
+        {
+          title: 'Corporate & Bulk Orders',
+          handle: 'corporate',
+          body_html: '<p>Custom sublimation water bottles for teams, events, and corporate gifting. Unlike cheap vinyl that peels and fades, our permanent sublimation printing infuses your logo and names directly into each bottle.</p><p><strong>Perfect for:</strong></p><ul><li>Employee appreciation gifts</li><li>Client thank-you gifts</li><li>Team building events</li><li>Trade shows & conferences</li></ul><p><strong>Volume discounts:</strong> 10-24 bottles (10% off), 25-49 (15% off), 50+ (20% off)</p><p>Contact hello@shelzysdesigns.com for quotes.</p>',
+          published: true,
+        },
+        {
+          title: 'Everyday Bottles',
+          handle: 'everyday',
+          body_html: '<p>Premium personalized water bottles for daily hydration. Every bottle features permanent sublimation printing (not vinyl!) so your name won\'t peel, crack, or fade.</p><ul><li>✓ 20oz double-wall insulated</li><li>✓ Cold 24hrs / Hot 12hrs</li><li>✓ BPA-free</li><li>✓ Permanent sublimation</li></ul>',
+          published: true,
+        },
+      ];
+
+      for (const collection of collections) {
+        try {
+          const result = await shopifyAPI('/custom_collections.json', {
+            method: 'POST',
+            body: JSON.stringify({ custom_collection: collection }),
+          });
+          log(`✅ Created collection: ${collection.title}`, 'success');
+        } catch (err) {
+          if (err.message.includes('Handle has already been taken')) {
+            log(`⏭️  Collection "${collection.title}" already exists`, 'warning');
+          } else {
+            log(`❌ Failed: ${collection.title} - ${err.message}`, 'error');
+          }
+        }
+      }
+    }
+
+    async function createPages() {
+      log('📄 Creating Pages...', 'info');
+
+      const pages = [
+        {
+          title: 'Contact Us',
+          handle: 'contact',
+          body_html: '<h2>We\'d Love to Hear From You</h2><p>Questions about personalization, bulk orders, or rush shipping? We\'re here to help!</p><p><strong>Email:</strong> hello@shelzysdesigns.com<br><strong>Response Time:</strong> Within 24 hours</p><h3>Bulk Orders</h3><p>Need 10+ bottles? Email us with quantity and event date for a quote.</p><h3>Rush Orders</h3><p>Contact us BEFORE ordering to confirm 48-hour processing availability.</p>',
+          published: true,
+        },
+        {
+          title: 'Shipping Information',
+          handle: 'shipping',
+          body_html: '<h2>Shipping Information</h2><h3>Processing Time</h3><p>Every bottle is custom-made. Allow 3-5 business days.</p><h3>Shipping Time</h3><p>3-7 business days once shipped. Free tracking included.</p><h3>Free Shipping</h3><p>Orders $50+ ship FREE within continental US.</p><h3>Rush Orders</h3><p>48-hour processing available. Contact hello@shelzysdesigns.com before ordering.</p><h3>International</h3><p>Currently US only. Contact us for international inquiries.</p>',
+          published: true,
+        },
+        {
+          title: 'Why Sublimation',
+          handle: 'why-sublimation',
+          body_html: '<h1>Why Our Bottles Don\'t Peel, Crack, or Fade</h1><p>Most personalized bottles use vinyl decals that eventually peel. We use <strong>true sublimation printing</strong>—the ink is infused directly into the bottle\'s coating.</p><h2>The Result</h2><ul><li>✅ Completely smooth finish</li><li>✅ Won\'t peel – ever</li><li>✅ Won\'t crack or fade</li><li>✅ Dishwasher friendly</li><li>✅ Lasts for years</li></ul><p>Your personalization becomes PART of the bottle itself.</p>',
+          published: true,
+        },
+      ];
+
+      for (const page of pages) {
+        try {
+          const result = await shopifyAPI('/pages.json', {
+            method: 'POST',
+            body: JSON.stringify({ page }),
+          });
+          log(`✅ Created page: ${page.title}`, 'success');
+        } catch (err) {
+          if (err.message.includes('Handle has already been taken')) {
+            log(`⏭️  Page "${page.title}" already exists`, 'warning');
+          } else {
+            log(`❌ Failed: ${page.title} - ${err.message}`, 'error');
+          }
+        }
+      }
+    }
+
+    async function publishBlogs() {
+      log('📝 Publishing Blog Posts...', 'info');
+
+      // Get or create blog
+      let blogId;
+      try {
+        const blogs = await shopifyAPI('/blogs.json');
+        if (blogs.blogs && blogs.blogs.length > 0) {
+          blogId = blogs.blogs[0].id;
+          log(`Using existing blog (ID: ${blogId})`, 'info');
+        } else {
+          const newBlog = await shopifyAPI('/blogs.json', {
+            method: 'POST',
+            body: JSON.stringify({
+              blog: { title: "Shelzy's Designs Blog", commentable: 'moderate' }
+            }),
+          });
+          blogId = newBlog.blog.id;
+          log(`✅ Created new blog (ID: ${blogId})`, 'success');
+        }
+      } catch (err) {
+        log(`❌ Failed to get/create blog: ${err.message}`, 'error');
+        return;
+      }
+
+      const posts = [
+        {
+          title: "Sublimation vs Vinyl: Why Your Personalized Bottle Matters",
+          tags: "sublimation, vinyl, quality",
+          body_html: '<p>When shopping for personalized water bottles, you\'ll encounter two printing methods: <strong>sublimation</strong> and <strong>vinyl decals</strong>.</p><h2>Vinyl Decals</h2><p>Vinyl = stickers. They peel, crack, and fade.</p><h2>Sublimation</h2><p>Ink is infused INTO the bottle\'s coating at 400°F. It becomes permanent.</p><h2>Results</h2><ul><li>✅ Won\'t peel, ever</li><li>✅ Won\'t crack or fade</li><li>✅ Dishwasher friendly</li><li>✅ Lasts for years</li></ul><p>At Shelzy\'s Designs, we only use sublimation. Your name becomes PART of the bottle.</p>',
+        },
+        {
+          title: "The Ultimate Bridesmaid Proposal Gift Guide (2025)",
+          tags: "bridesmaid, wedding, gifts",
+          body_html: '<p>Asking your bridesmaids is exciting! But forget proposal boxes filled with items destined for donation. Here\'s how to ask with a gift they\'ll actually use.</p><h2>Why Personalized Water Bottles Work</h2><ul><li>✅ Used daily (not drawer-stuffed)</li><li>✅ Reminds them of you every day</li><li>✅ Perfect for wedding photos</li><li>✅ Useful long after</li></ul><h2>Pro Tips</h2><ol><li>Use her actual NAME (not just "Bridesmaid")</li><li>Match her style/colors</li><li>Include a personal note</li></ol>',
+        },
+        {
+          title: "How to Care for Your Sublimation Water Bottle",
+          tags: "care, cleaning, tips",
+          body_html: '<h2>Daily Care</h2><ul><li>Rinse after each use</li><li>Use bottle brush</li><li>Air dry with lid off</li></ul><h2>Deep Clean (Weekly)</h2><p>Warm water + dish soap, let sit 30min, scrub, rinse, air dry.</p><h2>Dishwasher: Yes or No?</h2><p>Safe, but hand washing is gentler. The sublimation won\'t peel either way.</p><h2>Remove Odors</h2><p>Baking soda (1 tbsp) + water, sit overnight, rinse.</p>',
+        },
+        {
+          title: "5 Reasons Personalized Bottles Make the Best Corporate Gifts",
+          tags: "corporate, business, gifts",
+          body_html: '<h2>1. They Actually Get Used</h2><p>Unlike stress balls, bottles go everywhere: meetings, gyms, desks.</p><h2>2. Personal + Professional</h2><p>Your logo AND individual names = shows you care.</p><h2>3. Premium Perception</h2><p>Quality sublimation bottles = quality company.</p><h2>4. Wellness Message</h2><p>Encourages hydration and healthy habits.</p><h2>5. Lasts Years</h2><p>Sublimation won\'t peel at events. Looks professional forever.</p><p>Volume discounts: 15-20% off bulk orders.</p>',
+        },
+        {
+          title: "Wedding Day Timeline: When to Give Bridesmaid Gifts",
+          tags: "wedding, bridesmaid, timeline",
+          body_html: '<h2>Best Options</h2><p><strong>Most Popular: Wedding Morning</strong></p><ul><li>Everyone together</li><li>Perfect for photos</li><li>Use during getting-ready</li></ul><p><strong>Also Great: The Proposal</strong></p><p>8-12 months before. Sets tone for journey.</p><p><strong>Or: Bachelorette Weekend</strong></p><p>Matching bottles for the trip = souvenirs.</p><h2>Our Recommendation</h2><p>Wedding morning with matching robes = Instagram gold.</p>',
+        },
+        {
+          title: "Why Cheap Personalized Bottles Cost More in the Long Run",
+          tags: "quality, value, comparison",
+          body_html: '<h2>The Math</h2><p>$12 vinyl bottle: Lasts 6 months = $24/year</p><p>$30 sublimation bottle: Lasts 5+ years = $6/year</p><p><strong>The "expensive" bottle is 4x cheaper.</strong></p><h2>What Happens to Cheap Bottles</h2><ul><li>Month 1: Looks great</li><li>Month 2: Edges lifting</li><li>Month 3: Noticeable peeling</li><li>Month 4: Embarrassing</li><li>Month 5: Drawer-bound</li><li>Month 6: Buy another</li></ul><p>Quality sublimation: Looks perfect for years.</p>',
+        },
+      ];
+
+      const existingArticles = await shopifyAPI(`/blogs/${blogId}/articles.json?limit=250`);
+      const existingTitles = (existingArticles.articles || []).map(a => a.title.toLowerCase());
+
+      let created = 0;
+      for (const post of posts) {
+        if (existingTitles.includes(post.title.toLowerCase())) {
+          log(`⏭️  Blog exists: ${post.title}`, 'warning');
+          continue;
+        }
+
+        try {
+          await shopifyAPI(`/blogs/${blogId}/articles.json`, {
+            method: 'POST',
+            body: JSON.stringify({
+              article: { ...post, author: "Shelzy's Designs", published: true }
+            }),
+          });
+          log(`✅ Published: ${post.title}`, 'success');
+          created++;
+          await new Promise(r => setTimeout(r, 500)); // Rate limit
+        } catch (err) {
+          log(`❌ Failed: ${post.title} - ${err.message}`, 'error');
+        }
+      }
+
+      log(`📝 Published ${created} new blog posts`, 'success');
+    }
+
+    async function updateProducts() {
+      log('🛍️  Updating Product Descriptions...', 'info');
+
+      const products = await shopifyAPI('/products.json?limit=250');
+
+      const updates = {
+        'stainless steel': {
+          title: 'Personalized Sublimation Water Bottle – Custom Name | 20oz',
+          highlight: 'Permanent sublimation printing - won\'t peel like vinyl'
+        },
+        'gift box': {
+          title: 'Bridesmaid Gift Box – Sublimation Bottle | Luxury Packaging',
+          highlight: 'Sublimation printing infused into coating - lasts forever'
+        },
+        'set of 3': {
+          title: 'Bridal Party Set of 3 – Sublimation Bottles | Bridesmaid Gifts',
+          highlight: 'Permanent printing that won\'t peel or fade'
+        },
+        'set of 5': {
+          title: 'Bridal Party Set of 5 – Sublimation Bottles | Save 15%',
+          highlight: 'True sublimation - not vinyl stickers'
+        },
+        'set of 6': {
+          title: 'Bachelorette Set of 6 – Sublimation Bottles',
+          highlight: 'Permanent printing - survives the party & beyond'
+        },
+        'event set': {
+          title: 'Event Set of 10 – Sublimation Bottles | Save 20%',
+          highlight: 'Professional sublimation - won\'t peel at events'
+        },
+        'wedding party deluxe': {
+          title: 'Wedding Party Set of 10 – Sublimation Bottles | Save 25%',
+          highlight: 'Permanent sublimation printing - keepsake quality'
+        },
+        'corporate bulk': {
+          title: 'Corporate Bulk Set of 25 – Custom Logo Sublimation | Save 20%',
+          highlight: 'Logo permanently infused - won\'t peel or fade'
+        },
+      };
+
+      let updated = 0;
+      for (const product of products.products) {
+        if (product.title.toLowerCase().includes('canva') ||
+            product.title.toLowerCase().includes('template')) {
+          continue; // Skip template products
+        }
+
+        for (const [keyword, update] of Object.entries(updates)) {
+          if (product.title.toLowerCase().includes(keyword)) {
+            try {
+              const currentBody = product.body_html || '';
+              const newBody = currentBody.includes('SUBLIMATION')
+                ? currentBody
+                : `<p><strong>${update.highlight}</strong></p>` + currentBody;
+
+              await shopifyAPI(`/products/${product.id}.json`, {
+                method: 'PUT',
+                body: JSON.stringify({
+                  product: {
+                    id: product.id,
+                    title: update.title,
+                    body_html: newBody,
+                  }
+                }),
+              });
+              log(`✅ Updated: ${product.title}`, 'success');
+              updated++;
+              break;
+            } catch (err) {
+              log(`❌ Failed: ${product.title}`, 'error');
+            }
+          }
+        }
+      }
+
+      log(`🛍️  Updated ${updated} products`, 'success');
+    }
+
+    async function runAutomation() {
+      const token = document.getElementById('apiToken').value.trim();
+
+      if (!token || !token.startsWith('shpat_')) {
+        alert('Please enter a valid Shopify access token (starts with shpat_)');
+        return;
+      }
+
+      logEl.innerHTML = '';
+      logEl.classList.add('show');
+      progressEl.classList.add('show');
+
+      const tasks = [
+        { id: 'collections', text: 'Create Collections (Corporate, Everyday)', icon: '⏳', status: '' },
+        { id: 'pages', text: 'Create Pages (Contact, Shipping, Why Sublimation)', icon: '⏳', status: '' },
+        { id: 'products', text: 'Update Product Descriptions', icon: '⏳', status: '' },
+        { id: 'blogs', text: 'Publish 6 Blog Posts', icon: '⏳', status: '' },
+      ];
+
+      try {
+        // Task 1: Collections
+        tasks[0].status = 'running';
+        tasks[0].icon = '🔄';
+        updateChecklist(tasks);
+        updateProgress(10, 'Creating collections...');
+
+        await createCollections();
+
+        tasks[0].status = 'completed';
+        tasks[0].icon = '✅';
+        updateChecklist(tasks);
+        updateProgress(25, 'Collections done');
+
+        // Task 2: Pages
+        tasks[1].status = 'running';
+        tasks[1].icon = '🔄';
+        updateChecklist(tasks);
+        updateProgress(35, 'Creating pages...');
+
+        await createPages();
+
+        tasks[1].status = 'completed';
+        tasks[1].icon = '✅';
+        updateChecklist(tasks);
+        updateProgress(50, 'Pages done');
+
+        // Task 3: Products
+        tasks[2].status = 'running';
+        tasks[2].icon = '🔄';
+        updateChecklist(tasks);
+        updateProgress(60, 'Updating products...');
+
+        await updateProducts();
+
+        tasks[2].status = 'completed';
+        tasks[2].icon = '✅';
+        updateChecklist(tasks);
+        updateProgress(75, 'Products done');
+
+        // Task 4: Blogs
+        tasks[3].status = 'running';
+        tasks[3].icon = '🔄';
+        updateChecklist(tasks);
+        updateProgress(85, 'Publishing blogs...');
+
+        await publishBlogs();
+
+        tasks[3].status = 'completed';
+        tasks[3].icon = '✅';
+        updateChecklist(tasks);
+        updateProgress(100, '🎉 Complete!');
+
+        log('\n✨ ALL TASKS COMPLETE! ✨', 'success');
+        log('\nVisit https://shelzysdesigns.com to see your updates!', 'info');
+
+      } catch (error) {
+        log(`\n❌ FATAL ERROR: ${error.message}`, 'error');
+        tasks.forEach(t => {
+          if (t.status === 'running') {
+            t.status = 'error';
+            t.icon = '❌';
+          }
+        });
+        updateChecklist(tasks);
+      }
+    }
+  </script>
+</body>
+</html>
