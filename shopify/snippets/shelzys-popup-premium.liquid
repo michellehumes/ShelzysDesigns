@@ -49,13 +49,16 @@
   var success = document.getElementById('szPopupSuccess');
   var STORAGE_KEY = 'szPopupShown';
 
-  // Check if already shown this session
-  if (sessionStorage.getItem(STORAGE_KEY)) return;
+  // Check if already shown this session or if user already subscribed
+  if (sessionStorage.getItem(STORAGE_KEY) || localStorage.getItem('szSubscribed')) return;
 
-  // Show popup after delay or on exit intent
-  var showTimeout = setTimeout(showPopup, 8000);
+  // Don't show on checkout or cart pages
+  if (window.location.pathname.includes('/checkout') || window.location.pathname.includes('/cart')) return;
 
-  // Exit intent (desktop only)
+  // Show popup after 25 seconds OR on exit intent (whichever comes first)
+  var showTimeout = setTimeout(showPopup, 25000);
+
+  // Exit intent (desktop only) - triggers when mouse leaves viewport at top
   if (window.innerWidth > 768) {
     document.addEventListener('mouseout', function(e) {
       if (e.clientY < 10 && !sessionStorage.getItem(STORAGE_KEY)) {
