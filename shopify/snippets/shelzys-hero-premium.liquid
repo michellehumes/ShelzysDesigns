@@ -1,0 +1,207 @@
+{%- comment -%}
+  Shelzy's Designs - Premium Hero Section
+
+  Minimal, luxury hero with brand messaging
+  Add to homepage: {% render 'shelzys-hero-premium' %}
+{%- endcomment -%}
+
+<section class="sz-hero-premium">
+  <div class="sz-hero-premium-bg">
+    {% if section.settings.hero_image != blank %}
+      <img src="{{ section.settings.hero_image | img_url: 'master' }}" alt="{{ section.settings.hero_image.alt | default: 'Luxury personalized water bottles' }}" loading="eager">
+    {% else %}
+      {%- comment -%} Fallback to collection image or placeholder {%- endcomment -%}
+      {% assign hero_collection = collections['best-sellers'] | default: collections.all %}
+      {% if hero_collection.image %}
+        <img src="{{ hero_collection.image | img_url: 'master' }}" alt="Shelzy's Designs water bottles" loading="eager">
+      {% else %}
+        <div style="background: linear-gradient(135deg, #F5F2ED 0%, #E8DED5 100%); width: 100%; height: 100%;"></div>
+      {% endif %}
+    {% endif %}
+  </div>
+
+  <div class="sz-hero-premium-overlay"></div>
+
+  <div class="sz-hero-premium-content">
+    <div class="sz-hero-premium-text">
+      <span class="sz-eyebrow">Premium Personalized Drinkware</span>
+
+      <h1>Luxury Personalized Water Bottles for Weddings & Events</h1>
+
+      <p class="sz-hero-premium-subtitle">
+        Handcrafted with permanent sublimation printing that never peels, fades, or scratches.
+        The perfect keepsake for your special occasion.
+      </p>
+
+      <div class="sz-hero-premium-ctas">
+        <a href="/collections/all" class="sz-btn sz-btn-primary">Shop Collection</a>
+        <a href="/pages/bulk-orders" class="sz-btn sz-btn-outline">Bulk Orders</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* Premium Hero - Ensure proper display */
+  .sz-hero-premium {
+    position: relative;
+    min-height: 85vh;
+    display: flex;
+    align-items: center;
+    background: #FDF9F3;
+    overflow: hidden;
+  }
+
+  .sz-hero-premium-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+  }
+
+  .sz-hero-premium-bg img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center right;
+  }
+
+  .sz-hero-premium-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(
+      90deg,
+      rgba(250, 248, 245, 0.97) 0%,
+      rgba(250, 248, 245, 0.85) 40%,
+      rgba(250, 248, 245, 0.4) 70%,
+      rgba(250, 248, 245, 0.1) 100%
+    );
+  }
+
+  @media (max-width: 768px) {
+    .sz-hero-premium {
+      min-height: 90vh;
+    }
+
+    .sz-hero-premium-overlay {
+      background: linear-gradient(
+        180deg,
+        rgba(250, 248, 245, 0.95) 0%,
+        rgba(250, 248, 245, 0.9) 60%,
+        rgba(250, 248, 245, 0.7) 100%
+      );
+    }
+  }
+
+  .sz-hero-premium-content {
+    position: relative;
+    z-index: 2;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 60px;
+    width: 100%;
+  }
+
+  @media (max-width: 768px) {
+    .sz-hero-premium-content {
+      padding: 0 24px;
+      text-align: center;
+    }
+  }
+
+  .sz-hero-premium-text {
+    max-width: 580px;
+  }
+
+  @media (max-width: 768px) {
+    .sz-hero-premium-text {
+      max-width: 100%;
+      margin: 0 auto;
+    }
+  }
+
+  .sz-hero-premium .sz-eyebrow {
+    display: inline-block;
+    font-family: "Montserrat", sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: #B5A48A;
+    margin-bottom: 20px;
+  }
+
+  .sz-hero-premium h1 {
+    font-family: "Cormorant Garamond", "Playfair Display", Georgia, serif;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 500;
+    line-height: 1.1;
+    margin: 0 0 24px 0;
+    color: #1F1F1F;
+    letter-spacing: -0.02em;
+  }
+
+  .sz-hero-premium-subtitle {
+    font-family: "Inter", -apple-system, sans-serif;
+    font-size: 17px;
+    font-weight: 400;
+    line-height: 1.7;
+    color: #4A4A4A;
+    margin: 0 0 36px 0;
+  }
+
+  .sz-hero-premium-ctas {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  @media (max-width: 768px) {
+    .sz-hero-premium-ctas {
+      justify-content: center;
+    }
+  }
+
+  .sz-hero-premium .sz-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px 36px;
+    font-family: "Inter", sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border-radius: 0;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .sz-hero-premium .sz-btn-primary {
+    background: #2C3E2D;
+    color: #FFFFFF;
+    border: 2px solid #2C3E2D;
+  }
+
+  .sz-hero-premium .sz-btn-primary:hover {
+    background: #1F1F1F;
+    border-color: #1F1F1F;
+    transform: translateY(-2px);
+  }
+
+  .sz-hero-premium .sz-btn-outline {
+    background: transparent;
+    color: #1F1F1F;
+    border: 2px solid #1F1F1F;
+  }
+
+  .sz-hero-premium .sz-btn-outline:hover {
+    background: #1F1F1F;
+    color: #FFFFFF;
+  }
+</style>
