@@ -93,26 +93,19 @@ async function main() {
 
   console.log(`✅ Found live theme: "${liveTheme.name}" (ID: ${liveTheme.id})\n`);
 
-  // Step 2: Delete existing CSS file if it exists (to handle "generated asset" error)
-  console.log('📄 Checking for existing shelzys-brand.css...');
-  const deleteResponse = await apiRequest('DELETE', `/themes/${liveTheme.id}/assets.json?asset[key]=assets/shelzys-brand.css`);
-  if (deleteResponse.status === 200) {
-    console.log('   🗑️ Deleted existing shelzys-brand.css');
-  }
-
-  // Step 3: Add CSS file as asset
-  console.log('📄 Adding shelzys-brand.css to assets...');
+  // Step 2: Add CSS file as asset (use v2 filename to avoid generated asset conflict)
+  console.log('📄 Adding shelzys-brand-v2.css to assets...');
   const cssContent = readFileContent('assets/shelzys-brand.css');
 
   const cssAssetResponse = await apiRequest('PUT', `/themes/${liveTheme.id}/assets.json`, {
     asset: {
-      key: 'assets/shelzys-brand.css',
+      key: 'assets/shelzys-brand-v2.css',
       value: cssContent
     }
   });
 
   if (cssAssetResponse.status === 200 || cssAssetResponse.status === 201) {
-    console.log('   ✅ shelzys-brand.css added successfully!');
+    console.log('   ✅ shelzys-brand-v2.css added successfully!');
   } else {
     console.log(`   ❌ Failed to add CSS: ${JSON.stringify(cssAssetResponse.data.errors || cssAssetResponse.data)}`);
   }
