@@ -1,0 +1,694 @@
+/* ================================
+   Shelzy's Designs — Brand Styles
+   Shopify Theme Implementation
+   ================================
+
+   HOW TO USE:
+   1. Go to Online Store > Themes > Actions > Edit code
+   2. In the Assets folder, click "Add a new asset"
+   3. Create a blank file named "shelzys-brand.css"
+   4. Paste this entire file contents
+   5. Save
+   6. Then add this line to your theme.liquid <head> section:
+      {{ 'shelzys-brand.css' | asset_url | stylesheet_tag }}
+*/
+
+/* ================================
+   1. FONT IMPORTS
+   ================================ */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@500;600;700&family=Playfair+Display:wght@500;600;700&display=swap');
+
+/* ================================
+   2. CSS VARIABLES
+   ================================ */
+:root {
+  /* Primary Colors */
+  --sz-primary: #8BAA88;        /* Sage Green */
+  --sz-primary-dark: #4E5F4A;   /* Dark Sage / Evergreen */
+  --sz-neutral-light: #FAF9F6;  /* Warm White */
+  --sz-neutral-dark: #2B2B2B;   /* Charcoal */
+  --sz-accent-gold: #D1C7A1;    /* Champagne Gold */
+
+  /* Border Colors */
+  --sz-border-soft: #C7D3C5;
+  --sz-border-light: #E0E3DF;
+
+  /* Font Stacks */
+  --sz-font-heading: "Playfair Display", Georgia, "Times New Roman", serif;
+  --sz-font-body: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --sz-font-accent: "Montserrat", "Inter", sans-serif;
+}
+
+/* ================================
+   3. GLOBAL TYPOGRAPHY
+   ================================ */
+body,
+html {
+  font-family: var(--sz-font-body) !important;
+  color: var(--sz-neutral-dark);
+  background-color: #ffffff;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Headings - Playfair Display */
+h1, h2, h3, h4, h5, h6,
+.h1, .h2, .h3, .h4, .h5, .h6,
+.heading,
+.title,
+.section-header__title,
+.product-single__title,
+.product__title,
+.page-title,
+.collection__title,
+.article__title,
+.card__heading,
+.full-unstyled-link {
+  font-family: var(--sz-font-heading) !important;
+  color: var(--sz-primary-dark) !important;
+  letter-spacing: 0.02em;
+  font-weight: 600;
+}
+
+/* Subheadings / Eyebrow text - Montserrat */
+.subtitle,
+.section-header__subtitle,
+.small-caption,
+.caption,
+.caption-large,
+.badge,
+.badge--pill,
+.tag,
+.product__badge {
+  font-family: var(--sz-font-accent) !important;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 0.78rem;
+}
+
+/* Body text - Inter */
+p,
+li,
+span,
+input,
+textarea,
+select,
+.rte,
+.rte p,
+.product-card__title,
+.product-card__price,
+.price,
+.site-nav__link,
+.menu-drawer__menu-item {
+  font-family: var(--sz-font-body) !important;
+}
+
+/* ================================
+   4. LINKS
+   ================================ */
+a {
+  color: var(--sz-primary-dark);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+a:hover,
+a:focus {
+  color: var(--sz-primary);
+}
+
+/* ================================
+   5. BUTTONS / CTAs
+   ================================ */
+.btn,
+.button,
+.shopify-payment-button__button,
+.product-form__submit,
+.product-form__cart-submit,
+.cart__submit,
+button[type="submit"],
+input[type="submit"],
+.shopify-challenge__button {
+  background-color: var(--sz-primary) !important;
+  color: #ffffff !important;
+  border-radius: 999px !important;
+  border: 1px solid var(--sz-primary) !important;
+  padding: 0.9rem 1.8rem !important;
+  font-family: var(--sz-font-body) !important;
+  font-weight: 600 !important;
+  text-transform: none !important;
+  letter-spacing: 0.06em;
+  transition: all 0.3s ease !important;
+  box-shadow: none !important;
+}
+
+.btn:hover,
+.button:hover,
+.shopify-payment-button__button:hover,
+.product-form__submit:hover,
+.product-form__cart-submit:hover,
+.cart__submit:hover,
+button[type="submit"]:hover,
+input[type="submit"]:hover {
+  background-color: var(--sz-primary-dark) !important;
+  border-color: var(--sz-primary-dark) !important;
+  color: #ffffff !important;
+  transform: translateY(-1px);
+}
+
+/* Secondary / Ghost buttons */
+.btn--secondary,
+.button--secondary,
+.btn--tertiary,
+.button--tertiary,
+.button--outline {
+  background-color: #ffffff !important;
+  color: var(--sz-primary-dark) !important;
+  border-radius: 999px !important;
+  border: 1px solid var(--sz-primary) !important;
+}
+
+.btn--secondary:hover,
+.button--secondary:hover,
+.btn--tertiary:hover,
+.button--tertiary:hover,
+.button--outline:hover {
+  background-color: var(--sz-neutral-light) !important;
+  color: var(--sz-primary-dark) !important;
+}
+
+/* ================================
+   6. SECTION BACKGROUNDS & LAYOUT
+   ================================ */
+.section,
+.shopify-section,
+.index-section,
+.template-index .shopify-section {
+  padding-top: 40px;
+  padding-bottom: 40px;
+}
+
+/* Warm white alternate background */
+.section--alt,
+.shelzys-section-alt,
+.color-background-2,
+.background-secondary {
+  background-color: var(--sz-neutral-light) !important;
+}
+
+/* Light dividers between sections */
+.section + .section,
+.shopify-section + .shopify-section {
+  border-top: 1px solid var(--sz-border-light);
+}
+
+/* ================================
+   7. HEADER & NAVIGATION
+   ================================ */
+.section-header,
+.header,
+.site-header,
+.header-wrapper,
+.shopify-section-header {
+  background-color: #ffffff !important;
+  border-bottom: 1px solid var(--sz-border-light) !important;
+}
+
+.header__icon,
+.site-nav__link,
+.site-header__icon,
+.menu-drawer__menu-item,
+.header__menu-item {
+  font-family: var(--sz-font-body) !important;
+  color: var(--sz-neutral-dark) !important;
+  font-weight: 500;
+}
+
+.site-nav__link:hover,
+.site-header__icon:hover,
+.header__icon:hover,
+.menu-drawer__menu-item:hover,
+.header__menu-item:hover {
+  color: var(--sz-primary) !important;
+}
+
+/* ================================
+   8. FOOTER
+   ================================ */
+.section-footer,
+.footer,
+.site-footer,
+.footer-wrapper,
+.shopify-section-footer {
+  background-color: var(--sz-primary-dark) !important;
+  color: var(--sz-neutral-light) !important;
+}
+
+.footer h2,
+.footer h3,
+.footer h4,
+.site-footer h2,
+.site-footer h3,
+.site-footer h4,
+.footer__title,
+.footer-block__heading {
+  color: var(--sz-neutral-light) !important;
+}
+
+.site-footer a,
+.footer a,
+.footer-block a,
+.footer__list-item a {
+  color: var(--sz-neutral-light) !important;
+}
+
+.site-footer a:hover,
+.footer a:hover,
+.footer-block a:hover,
+.footer__list-item a:hover {
+  color: var(--sz-accent-gold) !important;
+}
+
+/* Footer form inputs */
+.footer input[type="email"],
+.footer .field__input {
+  background-color: rgba(255, 255, 255, 0.1) !important;
+  border-color: var(--sz-border-soft) !important;
+  color: var(--sz-neutral-light) !important;
+}
+
+/* ================================
+   9. PRODUCT CARDS / COLLECTION GRID
+   ================================ */
+.product-card,
+.product-card-wrapper,
+.grid-product,
+.collection-grid-item,
+.product-item,
+.card,
+.card-wrapper {
+  border: 1px solid transparent;
+  border-radius: 18px !important;
+  background-color: #ffffff;
+  overflow: hidden;
+  transition: box-shadow 0.15s ease, border-color 0.15s ease, transform 0.15s ease;
+}
+
+.product-card:hover,
+.product-card-wrapper:hover,
+.grid-product:hover,
+.collection-grid-item:hover,
+.product-item:hover,
+.card:hover,
+.card-wrapper:hover {
+  border-color: var(--sz-border-soft);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.04);
+  transform: translateY(-2px);
+}
+
+/* Product card image wrapper */
+.card__media,
+.product-card__image-wrapper,
+.media {
+  border-radius: 18px 18px 0 0 !important;
+  overflow: hidden;
+}
+
+.product-card__title,
+.card__heading,
+.grid-product__title,
+.product-item__title {
+  font-family: var(--sz-font-heading) !important;
+  font-size: 1rem;
+  color: var(--sz-primary-dark) !important;
+}
+
+.product-card__price,
+.grid-product__price,
+.price,
+.price-item {
+  font-family: var(--sz-font-body) !important;
+  color: var(--sz-neutral-dark) !important;
+}
+
+/* Sale price */
+.price--on-sale .price-item--sale,
+.price--sale {
+  color: var(--sz-primary) !important;
+}
+
+/* Compare at price (strikethrough) */
+.price--on-sale .price-item--regular,
+.price__regular {
+  color: #999 !important;
+}
+
+/* ================================
+   10. STAR RATINGS
+   ================================ */
+.spr-icon,
+.spr-icon-star,
+.spr-icon-star-half-alt,
+.spr-icon-star-empty,
+.rating-star,
+.jdgm-star {
+  color: var(--sz-primary) !important;
+}
+
+/* ================================
+   11. BADGES / LABELS
+   ================================ */
+.badge,
+.badge--pill,
+.product-tag,
+.product-label,
+.card__badge,
+.badge--sale,
+.badge--soldout {
+  font-family: var(--sz-font-accent) !important;
+  background-color: var(--sz-accent-gold) !important;
+  color: #ffffff !important;
+  border-radius: 999px !important;
+  padding: 0.2rem 0.7rem !important;
+  font-size: 0.7rem !important;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  border: none !important;
+}
+
+/* Sold out badge - slightly different */
+.badge--soldout,
+.sold-out-badge {
+  background-color: var(--sz-neutral-dark) !important;
+}
+
+/* ================================
+   12. HERO SECTION / SLIDESHOW
+   ================================ */
+.hero,
+.hero__content,
+.slideshow,
+.slideshow__text-content,
+.banner,
+.banner__content {
+  color: var(--sz-neutral-dark);
+}
+
+.hero__title,
+.slideshow__title,
+.banner__heading {
+  font-family: var(--sz-font-heading) !important;
+  color: var(--sz-primary-dark) !important;
+  font-weight: 600;
+}
+
+.hero__subtitle,
+.slideshow__subtitle,
+.banner__text {
+  font-family: var(--sz-font-body) !important;
+  color: var(--sz-neutral-dark) !important;
+}
+
+/* ================================
+   13. FORMS / INPUTS
+   ================================ */
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="tel"],
+input[type="number"],
+input[type="search"],
+textarea,
+select,
+.field__input {
+  border-radius: 999px !important;
+  border: 1px solid var(--sz-border-light) !important;
+  padding: 0.7rem 1rem !important;
+  font-family: var(--sz-font-body) !important;
+  background-color: #ffffff !important;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Textarea should have less rounded corners */
+textarea {
+  border-radius: 18px !important;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus,
+input[type="tel"]:focus,
+input[type="number"]:focus,
+input[type="search"]:focus,
+textarea:focus,
+select:focus,
+.field__input:focus {
+  outline: none !important;
+  border-color: var(--sz-primary) !important;
+  box-shadow: 0 0 0 1px rgba(139, 170, 136, 0.25) !important;
+}
+
+/* Field labels */
+.field__label,
+label {
+  font-family: var(--sz-font-body) !important;
+  color: var(--sz-neutral-dark) !important;
+}
+
+/* ================================
+   14. POPUPS / MODALS / NEWSLETTER
+   ================================ */
+.popup,
+.newsletter-popup,
+.modal,
+.modal__content,
+.drawer,
+.cart-drawer {
+  background-color: var(--sz-neutral-light) !important;
+  border-radius: 24px !important;
+  border: 1px solid var(--sz-border-soft) !important;
+}
+
+/* ================================
+   15. HOW IT WORKS / ICON STEPS
+   ================================ */
+.shelzys-steps {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.shelzys-step {
+  text-align: center;
+  padding: 20px;
+  border-radius: 18px;
+  background-color: #ffffff;
+  border: 1px solid var(--sz-border-light);
+  flex: 1;
+  min-width: 200px;
+  max-width: 300px;
+}
+
+.shelzys-step__icon {
+  font-size: 2.5rem;
+  color: var(--sz-primary);
+  margin-bottom: 12px;
+}
+
+.shelzys-step__title {
+  font-family: var(--sz-font-heading);
+  color: var(--sz-primary-dark);
+  margin-bottom: 8px;
+  font-size: 1.1rem;
+}
+
+.shelzys-step__text {
+  font-family: var(--sz-font-body);
+  font-size: 0.9rem;
+  color: var(--sz-neutral-dark);
+  line-height: 1.5;
+}
+
+/* ================================
+   16. BLOG STYLING
+   ================================ */
+.article__title,
+.blog__title,
+.blog-articles__article-title {
+  font-family: var(--sz-font-heading) !important;
+  color: var(--sz-primary-dark) !important;
+}
+
+.article__meta,
+.blog__meta,
+.article__comment-count {
+  font-family: var(--sz-font-accent) !important;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-size: 0.75rem;
+  color: #777;
+}
+
+.rte blockquote,
+blockquote {
+  font-family: var(--sz-font-heading) !important;
+  font-style: italic;
+  border-left: 3px solid var(--sz-primary);
+  padding-left: 1.5rem;
+  color: var(--sz-primary-dark);
+}
+
+/* ================================
+   17. CART
+   ================================ */
+.cart-item__name,
+.cart__product-title {
+  font-family: var(--sz-font-heading) !important;
+  color: var(--sz-primary-dark) !important;
+}
+
+.cart__subtotal,
+.cart-item__price {
+  font-family: var(--sz-font-body) !important;
+  color: var(--sz-neutral-dark) !important;
+}
+
+/* ================================
+   18. PRODUCT PAGE
+   ================================ */
+.product__title {
+  font-family: var(--sz-font-heading) !important;
+  color: var(--sz-primary-dark) !important;
+  font-size: 2rem;
+}
+
+.product__price,
+.price--large {
+  font-family: var(--sz-font-body) !important;
+  color: var(--sz-neutral-dark) !important;
+  font-size: 1.5rem;
+}
+
+.product__description,
+.product__text {
+  font-family: var(--sz-font-body) !important;
+  color: var(--sz-neutral-dark) !important;
+  line-height: 1.7;
+}
+
+/* Variant selectors */
+.variant-input-wrapper,
+.product-form__input {
+  border-radius: 999px !important;
+}
+
+/* ================================
+   19. ANNOUNCEMENT BAR
+   ================================ */
+.announcement-bar,
+.utility-bar {
+  background-color: var(--sz-primary-dark) !important;
+  color: var(--sz-neutral-light) !important;
+}
+
+.announcement-bar a,
+.utility-bar a {
+  color: var(--sz-accent-gold) !important;
+}
+
+/* ================================
+   20. UTILITY CLASSES
+   ================================ */
+.shelzys-bg-warm-white {
+  background-color: var(--sz-neutral-light) !important;
+}
+
+.shelzys-bg-sage {
+  background-color: var(--sz-primary) !important;
+}
+
+.shelzys-bg-dark-sage {
+  background-color: var(--sz-primary-dark) !important;
+}
+
+.shelzys-text-sage {
+  color: var(--sz-primary) !important;
+}
+
+.shelzys-text-dark-sage {
+  color: var(--sz-primary-dark) !important;
+}
+
+.shelzys-text-gold {
+  color: var(--sz-accent-gold) !important;
+}
+
+.shelzys-text-charcoal {
+  color: var(--sz-neutral-dark) !important;
+}
+
+/* ================================
+   21. RESPONSIVE ADJUSTMENTS
+   ================================ */
+@media screen and (max-width: 749px) {
+  h1, .h1 {
+    font-size: 1.75rem !important;
+  }
+
+  h2, .h2 {
+    font-size: 1.5rem !important;
+  }
+
+  .btn,
+  .button,
+  button[type="submit"] {
+    padding: 0.75rem 1.5rem !important;
+    font-size: 0.9rem !important;
+  }
+
+  .product-card,
+  .card {
+    border-radius: 12px !important;
+  }
+
+  .shelzys-steps {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .shelzys-step {
+    max-width: 100%;
+  }
+}
+
+/* ================================
+   22. DAWN THEME SPECIFIC OVERRIDES
+   ================================ */
+/* If using Dawn theme, these ensure proper styling */
+.button--full-width {
+  border-radius: 999px !important;
+}
+
+.collection-hero__title {
+  font-family: var(--sz-font-heading) !important;
+  color: var(--sz-primary-dark) !important;
+}
+
+.color-background-1 {
+  background-color: #ffffff !important;
+}
+
+.color-background-2 {
+  background-color: var(--sz-neutral-light) !important;
+}
+
+/* Ensure link colors in content areas */
+.rte a {
+  color: var(--sz-primary) !important;
+  text-decoration: underline;
+}
+
+.rte a:hover {
+  color: var(--sz-primary-dark) !important;
+}
