@@ -69,7 +69,19 @@ async function main() {
 
   // Get live theme
   const themesResponse = await apiRequest('GET', '/themes.json');
+
+  if (themesResponse.status !== 200 || !themesResponse.data || !themesResponse.data.themes) {
+    console.error('❌ Failed to fetch themes:', themesResponse.status, themesResponse.data);
+    process.exit(1);
+  }
+
   const liveTheme = themesResponse.data.themes.find(t => t.role === 'main');
+
+  if (!liveTheme) {
+    console.error('❌ No published theme found');
+    process.exit(1);
+  }
+
   console.log(`✅ Theme: "${liveTheme.name}" (ID: ${liveTheme.id})`);
   console.log('');
 
