@@ -1,0 +1,214 @@
+{%- comment -%}
+  Shelzy's Designs - Sticky Add to Cart Bar (Mobile)
+
+  Fixed bar at bottom of screen on mobile with product info and Add to Cart
+  Add to product template: {% render 'shelzys-sticky-atc', product: product %}
+{%- endcomment -%}
+
+{% assign current_variant = product.selected_or_first_available_variant %}
+
+<style>
+  .sz-sticky-atc {
+    display: none;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: #ffffff;
+    border-top: 1px solid #E0E3DF;
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.1);
+    padding: 12px 16px;
+    z-index: 999;
+    transform: translateY(100%);
+    transition: transform 0.3s ease;
+  }
+
+  .sz-sticky-atc.visible {
+    transform: translateY(0);
+  }
+
+  @media (max-width: 768px) {
+    .sz-sticky-atc {
+      display: block;
+    }
+  }
+
+  .sz-sticky-atc-inner {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    max-width: 100%;
+  }
+
+  .sz-sticky-atc-image {
+    width: 50px;
+    height: 50px;
+    border-radius: 8px;
+    object-fit: cover;
+    flex-shrink: 0;
+  }
+
+  .sz-sticky-atc-info {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .sz-sticky-atc-title {
+    font-family: "Inter", sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    color: #2B2B2B;
+    margin: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .sz-sticky-atc-price {
+    font-family: "Inter", sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    color: #4E5F4A;
+    margin: 2px 0 0 0;
+  }
+
+  .sz-sticky-atc-price .compare-price {
+    font-weight: 400;
+    color: #999;
+    text-decoration: line-through;
+    font-size: 12px;
+    margin-right: 6px;
+  }
+
+  .sz-sticky-atc-button {
+    padding: 14px 24px;
+    background: #8BAA88;
+    color: #ffffff;
+    border: none;
+    border-radius: 999px;
+    font-family: "Inter", sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: background 0.2s ease;
+  }
+
+  .sz-sticky-atc-button:hover {
+    background: #4E5F4A;
+  }
+
+  .sz-sticky-atc-button:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+  }
+
+  /* Add padding to body so content isn't hidden behind sticky bar */
+  @media (max-width: 768px) {
+    body.sz-sticky-active {
+      padding-bottom: 80px;
+    }
+  }
+</style>
+
+<div class="sz-sticky-atc" id="szStickyATC">
+  <div class="sz-sticky-atc-inner">
+    {% if product.featured_image %}
+      <img
+        src="{{ product.featured_image | img_url: '100x100', crop: 'center' }}"
+        alt="{{ product.title | escape }}"
+        class="sz-sticky-atc-image"
+      >
+    {% endif %}
+
+    <div class="sz-sticky-atc-info">
+      <p class="sz-sticky-atc-title">{{ product.title }}</p>
+      <p class="sz-sticky-atc-price">
+        {% if current_variant.compare_at_price > current_variant.price %}
+          <span class="compare-price">{{ current_variant.compare_at_price | money }}</span>
+        {% endif %}
+        {{ current_variant.price | money }}
+      </p>
+    </div>
+
+    <button
+      class="sz-sticky-atc-button"
+      id="szStickyATCBtn"
+      {% unless current_variant.available %}disabled{% endunless %}
+    >
+      {% if current_variant.available %}
+        Add to Cart
+      {% else %}
+        Sold Out
+      {% endif %}
+    </button>
+  </div>
+</div>
+
+<script>
+(function() {
+  var stickyBar = document.getElementById('szStickyATC');
+  var stickyBtn = document.getElementById('szStickyATCBtn');
+  var mainForm = document.querySelector('form[action="/cart/add"]');
+  var mainAddBtn = document.querySelector('[name="add"], .product-form__submit, .add-to-cart');
+
+  if (!stickyBar) return;
+
+  // Show/hide based on scroll position
+  function checkScroll() {
+    if (!mainAddBtn) {
+      stickyBar.classList.add('visible');
+      document.body.classList.add('sz-sticky-active');
+      return;
+    }
+
+    var btnRect = mainAddBtn.getBoundingClientRect();
+    var isVisible = btnRect.top < window.innerHeight && btnRect.bottom > 0;
+
+    if (!isVisible) {
+      stickyBar.classList.add('visible');
+      document.body.classList.add('sz-sticky-active');
+    } else {
+      stickyBar.classList.remove('visible');
+      document.body.classList.remove('sz-sticky-active');
+    }
+  }
+
+  // Throttled scroll handler
+  var scrollTimeout;
+  window.addEventListener('scroll', function() {
+    if (scrollTimeout) return;
+    scrollTimeout = setTimeout(function() {
+      checkScroll();
+      scrollTimeout = null;
+    }, 100);
+  });
+
+  // Initial check
+  setTimeout(checkScroll, 500);
+
+  // Handle click - trigger main form submission
+  if (stickyBtn && mainForm) {
+    stickyBtn.addEventListener('click', function(e) {
+      e.preventDefault();
+
+      // If there's an add to cart button, click it
+      if (mainAddBtn) {
+        mainAddBtn.click();
+      } else {
+        // Otherwise submit the form
+        mainForm.submit();
+      }
+
+      // Visual feedback
+      stickyBtn.textContent = 'Adding...';
+      setTimeout(function() {
+        stickyBtn.textContent = 'Added!';
+        setTimeout(function() {
+          stickyBtn.textContent = 'Add to Cart';
+        }, 1500);
+      }, 500);
+    });
+  }
+})();
+</script>

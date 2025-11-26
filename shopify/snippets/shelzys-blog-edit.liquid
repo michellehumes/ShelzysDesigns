@@ -1,0 +1,342 @@
+{%- comment -%}
+  Shelzy's Designs - The Shelzy Edit (Blog Section)
+
+  Editorial-style blog display for homepage
+  Shows 1-2 featured posts with links to collections
+
+  Add to homepage: {% render 'shelzys-blog-edit' %}
+{%- endcomment -%}
+
+{%- liquid
+  assign blog_handle = 'news' | default: 'blog'
+  assign target_blog = blogs[blog_handle]
+  assign max_posts = 2
+-%}
+
+<section class="sz-blog-edit">
+  <div class="sz-blog-edit-container">
+
+    <header class="sz-blog-edit-header">
+      <span class="sz-eyebrow">Inspiration & Ideas</span>
+      <h2>The Shelzy Edit</h2>
+      <p class="sz-blog-edit-intro">Tips, trends, and ideas to make your celebration unforgettable.</p>
+    </header>
+
+    <div class="sz-blog-edit-grid">
+      {%- if target_blog.articles.size > 0 -%}
+        {%- for article in target_blog.articles limit: max_posts -%}
+          <article class="sz-blog-card">
+            <a href="{{ article.url }}" class="sz-blog-card-link">
+              <div class="sz-blog-card-image">
+                {%- if article.image -%}
+                  <img
+                    src="{{ article.image | img_url: '800x600', crop: 'center' }}"
+                    alt="{{ article.title | escape }}"
+                    loading="lazy"
+                  >
+                {%- else -%}
+                  <div class="sz-blog-card-placeholder"></div>
+                {%- endif -%}
+
+                {%- if article.tags.size > 0 -%}
+                  <span class="sz-blog-card-tag">{{ article.tags | first }}</span>
+                {%- endif -%}
+              </div>
+
+              <div class="sz-blog-card-content">
+                <time class="sz-blog-card-date" datetime="{{ article.published_at | date: '%Y-%m-%d' }}">
+                  {{ article.published_at | date: '%B %d, %Y' }}
+                </time>
+
+                <h3 class="sz-blog-card-title">{{ article.title }}</h3>
+
+                <p class="sz-blog-card-excerpt">
+                  {{ article.excerpt_or_content | strip_html | truncate: 120 }}
+                </p>
+
+                <span class="sz-blog-card-read">Read More →</span>
+              </div>
+            </a>
+
+            {%- comment -%} Related Collection Link {%- endcomment -%}
+            {%- if article.tags contains 'wedding' or article.title contains 'Wedding' or article.title contains 'Bride' -%}
+              <a href="/collections/wedding" class="sz-blog-card-collection">Shop Wedding Collection →</a>
+            {%- elsif article.tags contains 'bachelorette' or article.title contains 'Bachelorette' -%}
+              <a href="/collections/bachelorette" class="sz-blog-card-collection">Shop Bachelorette Collection →</a>
+            {%- elsif article.tags contains 'corporate' or article.title contains 'Corporate' -%}
+              <a href="/pages/bulk-orders" class="sz-blog-card-collection">Get Corporate Quote →</a>
+            {%- else -%}
+              <a href="/collections/all" class="sz-blog-card-collection">Shop All Bottles →</a>
+            {%- endif -%}
+          </article>
+        {%- endfor -%}
+      {%- else -%}
+        {%- comment -%} Placeholder cards if no blog posts exist {%- endcomment -%}
+        <article class="sz-blog-card sz-blog-card-placeholder-card">
+          <div class="sz-blog-card-image">
+            <div class="sz-blog-card-placeholder" style="background: linear-gradient(135deg, #F5E6E0 0%, #E8DED5 100%);"></div>
+            <span class="sz-blog-card-tag">Wedding Tips</span>
+          </div>
+          <div class="sz-blog-card-content">
+            <time class="sz-blog-card-date">Coming Soon</time>
+            <h3 class="sz-blog-card-title">10 Ways to Personalize Your Wedding Party Gifts</h3>
+            <p class="sz-blog-card-excerpt">Discover creative ideas to make your bridesmaid and groomsmen gifts truly special...</p>
+            <span class="sz-blog-card-read">Read More →</span>
+          </div>
+          <a href="/collections/wedding" class="sz-blog-card-collection">Shop Wedding Collection →</a>
+        </article>
+
+        <article class="sz-blog-card sz-blog-card-placeholder-card">
+          <div class="sz-blog-card-image">
+            <div class="sz-blog-card-placeholder" style="background: linear-gradient(135deg, #F5D6D0 0%, #E8B4B8 100%);"></div>
+            <span class="sz-blog-card-tag">Party Planning</span>
+          </div>
+          <div class="sz-blog-card-content">
+            <time class="sz-blog-card-date">Coming Soon</time>
+            <h3 class="sz-blog-card-title">The Ultimate Bachelorette Weekend Packing List</h3>
+            <p class="sz-blog-card-excerpt">Everything you need for the perfect girls' trip, from matching bottles to party essentials...</p>
+            <span class="sz-blog-card-read">Read More →</span>
+          </div>
+          <a href="/collections/bachelorette" class="sz-blog-card-collection">Shop Bachelorette Collection →</a>
+        </article>
+      {%- endif -%}
+    </div>
+
+    {%- if target_blog.articles.size > 2 -%}
+      <div class="sz-blog-edit-footer">
+        <a href="{{ target_blog.url }}" class="sz-blog-view-all">
+          View All Posts
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="5" y1="12" x2="19" y2="12"/>
+            <polyline points="12 5 19 12 12 19"/>
+          </svg>
+        </a>
+      </div>
+    {%- endif -%}
+
+  </div>
+</section>
+
+<style>
+  .sz-blog-edit {
+    padding: 100px 20px;
+    background: #FAF8F5;
+  }
+
+  @media (max-width: 768px) {
+    .sz-blog-edit {
+      padding: 60px 20px;
+    }
+  }
+
+  .sz-blog-edit-container {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .sz-blog-edit-header {
+    text-align: center;
+    margin-bottom: 50px;
+  }
+
+  .sz-blog-edit-header .sz-eyebrow {
+    display: inline-block;
+    font-family: "Montserrat", sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: #B5A48A;
+    margin-bottom: 12px;
+  }
+
+  .sz-blog-edit-header h2 {
+    font-family: "Cormorant Garamond", Georgia, serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 500;
+    color: #1F1F1F;
+    margin: 0 0 12px 0;
+  }
+
+  .sz-blog-edit-intro {
+    font-family: "Inter", sans-serif;
+    font-size: 16px;
+    color: #7A7A7A;
+    margin: 0;
+  }
+
+  .sz-blog-edit-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 30px;
+  }
+
+  @media (max-width: 768px) {
+    .sz-blog-edit-grid {
+      grid-template-columns: 1fr;
+      gap: 24px;
+    }
+  }
+
+  /* Blog Card */
+  .sz-blog-card {
+    background: #FFFFFF;
+    border: 1px solid #E8E4DE;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .sz-blog-card-link {
+    text-decoration: none;
+    display: block;
+  }
+
+  .sz-blog-card-image {
+    position: relative;
+    aspect-ratio: 16/10;
+    overflow: hidden;
+  }
+
+  .sz-blog-card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s ease;
+  }
+
+  .sz-blog-card:hover .sz-blog-card-image img {
+    transform: scale(1.05);
+  }
+
+  .sz-blog-card-placeholder {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #F5F2ED 0%, #E8E4DE 100%);
+  }
+
+  .sz-blog-card-tag {
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    padding: 6px 12px;
+    background: #FFFFFF;
+    font-family: "Montserrat", sans-serif;
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #1F1F1F;
+  }
+
+  .sz-blog-card-content {
+    padding: 28px;
+    flex: 1;
+  }
+
+  @media (max-width: 600px) {
+    .sz-blog-card-content {
+      padding: 20px;
+    }
+  }
+
+  .sz-blog-card-date {
+    display: block;
+    font-family: "Inter", sans-serif;
+    font-size: 12px;
+    color: #9A9A9A;
+    margin-bottom: 12px;
+  }
+
+  .sz-blog-card-title {
+    font-family: "Cormorant Garamond", Georgia, serif;
+    font-size: 24px;
+    font-weight: 500;
+    color: #1F1F1F;
+    margin: 0 0 12px 0;
+    line-height: 1.3;
+    transition: color 0.2s ease;
+  }
+
+  @media (max-width: 600px) {
+    .sz-blog-card-title {
+      font-size: 20px;
+    }
+  }
+
+  .sz-blog-card:hover .sz-blog-card-title {
+    color: #2C3E2D;
+  }
+
+  .sz-blog-card-excerpt {
+    font-family: "Inter", sans-serif;
+    font-size: 14px;
+    line-height: 1.6;
+    color: #7A7A7A;
+    margin: 0 0 16px 0;
+  }
+
+  .sz-blog-card-read {
+    display: inline-block;
+    font-family: "Inter", sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    color: #2C3E2D;
+    transition: color 0.2s ease;
+  }
+
+  .sz-blog-card:hover .sz-blog-card-read {
+    color: #1F1F1F;
+    text-decoration: underline;
+  }
+
+  /* Related Collection Link */
+  .sz-blog-card-collection {
+    display: block;
+    padding: 16px 28px;
+    background: #F5F2ED;
+    font-family: "Inter", sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    color: #4A4A4A;
+    text-decoration: none;
+    border-top: 1px solid #E8E4DE;
+    transition: all 0.2s ease;
+  }
+
+  .sz-blog-card-collection:hover {
+    background: #2C3E2D;
+    color: #FFFFFF;
+  }
+
+  @media (max-width: 600px) {
+    .sz-blog-card-collection {
+      padding: 14px 20px;
+    }
+  }
+
+  /* View All */
+  .sz-blog-edit-footer {
+    text-align: center;
+    margin-top: 40px;
+  }
+
+  .sz-blog-view-all {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: "Inter", sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    color: #2C3E2D;
+    text-decoration: none;
+    padding: 14px 28px;
+    border: 1px solid #2C3E2D;
+    transition: all 0.2s ease;
+  }
+
+  .sz-blog-view-all:hover {
+    background: #2C3E2D;
+    color: #FFFFFF;
+  }
+</style>
