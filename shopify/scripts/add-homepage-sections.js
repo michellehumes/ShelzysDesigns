@@ -2,20 +2,20 @@
 
 /**
  * Shelzy's Designs - Add Homepage Sections
- *
- * Adds testimonials, why-choose-us, and trust-badges to homepage
+ * Automatically injects testimonials, why choose us, and FAQ sections to homepage
  */
 
 const https = require('https');
 
 const STORE_URL = process.env.SHOPIFY_STORE_URL || 'shelzys-designs.myshopify.com';
-const ACCESS_TOKEN = process.env.SHOPIFY_ACCESS_TOKEN || 'YOUR_ACCESS_TOKEN';
-const API_VERSION = '2024-01';
+const ACCESS_TOKEN = process.env.SHOPIFY_ACCESS_TOKEN;
 
-if (ACCESS_TOKEN === 'YOUR_ACCESS_TOKEN') {
-  console.error('❌ Missing SHOPIFY_ACCESS_TOKEN');
+if (!ACCESS_TOKEN) {
+  console.error('❌ Missing SHOPIFY_ACCESS_TOKEN environment variable');
   process.exit(1);
 }
+
+const API_VERSION = '2024-01';
 
 async function apiRequest(method, endpoint, data = null) {
   return new Promise((resolve, reject) => {
@@ -48,182 +48,153 @@ async function apiRequest(method, endpoint, data = null) {
   });
 }
 
-async function getAsset(themeId, key) {
-  const response = await apiRequest('GET', `/themes/${themeId}/assets.json?asset[key]=${encodeURIComponent(key)}`);
-  return response.status === 200 ? response.data.asset.value : null;
-}
-
 async function putAsset(themeId, key, content) {
   const response = await apiRequest('PUT', `/themes/${themeId}/assets.json`, {
     asset: { key, value: content }
   });
-  return response.status === 200 || response.status === 201;
+  return { success: response.status === 200 || response.status === 201, data: response.data };
+}
+
+async function getAsset(themeId, key) {
+  const response = await apiRequest('GET', `/themes/${themeId}/assets.json?asset[key]=${encodeURIComponent(key)}`);
+  if (response.status === 200) {
+    return response.data.asset.value;
+  }
+  return null;
 }
 
 async function main() {
   console.log('');
   console.log('╔════════════════════════════════════════════════════════════════╗');
-  console.log('║  🏠 ADDING HOMEPAGE SECTIONS                                   ║');
+  console.log('║  📄 ADDING HOMEPAGE SECTIONS                                   ║');
   console.log('╚════════════════════════════════════════════════════════════════╝');
   console.log('');
 
-  // Get live theme
-  console.log('📋 Finding live theme...');
   const themesResponse = await apiRequest('GET', '/themes.json');
-  const liveTheme = themesResponse.data.themes.find(t => t.role === 'main');
-
-  if (!liveTheme) {
-    console.error('❌ No live theme found');
+  if (!themesResponse.data?.themes) {
+    console.error('❌ Failed to fetch themes');
     process.exit(1);
   }
 
+  const liveTheme = themesResponse.data.themes.find(t => t.role === 'main');
   console.log(`✅ Theme: "${liveTheme.name}" (ID: ${liveTheme.id})`);
   console.log('');
 
-  // Check for index.json (JSON template)
-  console.log('📄 Checking homepage template...');
-  let indexJson = await getAsset(liveTheme.id, 'templates/index.json');
+  // Create a snippet that renders all homepage sections
+  console.log('1️⃣  Creating homepage sections loader...');
 
-  if (indexJson) {
-    console.log('   Found JSON template (index.json)');
-    console.log('');
-
-    try {
-      const template = JSON.parse(indexJson);
-
-      // Add our custom sections
-      const sectionsToAdd = {
-        'shelzys-testimonials': {
-          type: 'shelzys-testimonials',
-          settings: {}
-        },
-        'shelzys-why-choose-us': {
-          type: 'shelzys-why-choose-us',
-          settings: {}
-        },
-        'shelzys-trust-badges': {
-          type: 'shelzys-trust-badges',
-          settings: {}
-        }
-      };
-
-      // Check if sections already exist
-      let added = [];
-      let alreadyPresent = [];
-
-      for (const [key, section] of Object.entries(sectionsToAdd)) {
-        if (!template.sections[key]) {
-          template.sections[key] = section;
-          // Add to order if order array exists
-          if (template.order && !template.order.includes(key)) {
-            template.order.push(key);
-          }
-          added.push(key);
-        } else {
-          alreadyPresent.push(key);
-        }
-      }
-
-      if (added.length > 0) {
-        // Save updated template
-        if (await putAsset(liveTheme.id, 'templates/index.json', JSON.stringify(template, null, 2))) {
-          console.log('✅ Added sections to homepage:');
-          added.forEach(s => console.log(`   • ${s}`));
-        } else {
-          console.log('❌ Failed to update index.json');
-        }
-      }
-
-      if (alreadyPresent.length > 0) {
-        console.log('');
-        console.log('ℹ️ Already present:');
-        alreadyPresent.forEach(s => console.log(`   • ${s}`));
-      }
-
-    } catch (e) {
-      console.log('❌ Error parsing index.json:', e.message);
-      console.log('');
-      console.log('Trying alternative approach...');
-    }
-  }
-
-  // Also try to inject into theme.liquid as fallback
-  console.log('');
-  console.log('📄 Adding to theme.liquid as fallback...');
-
-  let themeLayout = await getAsset(liveTheme.id, 'layout/theme.liquid');
-
-  if (themeLayout) {
-    let modified = false;
-
-    // Find the main content area and add sections after it
-    // Look for {{ content_for_layout }} and add sections after main content areas
-
-    const sectionsCode = `
-{%- comment -%} Shelzy's Homepage Sections {%- endcomment -%}
-{%- if template.name == 'index' -%}
-  {% render 'shelzys-testimonials' %}
-  {% render 'shelzys-why-choose-us' %}
-  {% render 'shelzys-trust-badges' %}
-{%- endif -%}
+  const homepageSectionsSnippet = `{% comment %}Shelzy's - Homepage Sections Loader{% endcomment %}
+{% if template == 'index' %}
+  {% render 'sz-testimonials' %}
+  {% render 'sz-why-choose' %}
+  {% render 'sz-faq-section' %}
+{% endif %}
 `;
 
-    if (!themeLayout.includes('shelzys-testimonials') && !themeLayout.includes('shelzys-why-choose-us')) {
-      // Try to add before footer
-      const footerPatterns = [
-        /{%\s*sections?\s+['"]footer/i,
-        /{%\s*render\s+['"]footer/i,
-        /{%\s*section\s+['"]footer/i
-      ];
+  await putAsset(liveTheme.id, 'snippets/sz-homepage-sections.liquid', homepageSectionsSnippet);
+  console.log('   ✅ Created sz-homepage-sections.liquid');
 
-      let inserted = false;
-      for (const pattern of footerPatterns) {
-        const match = themeLayout.match(pattern);
-        if (match) {
-          const idx = themeLayout.indexOf(match[0]);
-          themeLayout = themeLayout.slice(0, idx) + sectionsCode + '\n' + themeLayout.slice(idx);
-          inserted = true;
-          modified = true;
-          break;
-        }
-      }
+  // Inject into theme.liquid before </body>
+  console.log('2️⃣  Injecting into theme.liquid...');
 
-      // If no footer found, add before </main> or </body>
-      if (!inserted) {
-        const mainClose = themeLayout.indexOf('</main>');
-        if (mainClose !== -1) {
-          themeLayout = themeLayout.slice(0, mainClose) + sectionsCode + '\n' + themeLayout.slice(mainClose);
-          modified = true;
-        } else {
-          // Last resort: before newsletter section or body close
-          const bodyClose = themeLayout.indexOf("{% render 'shelzys-newsletter' %}");
-          if (bodyClose !== -1) {
-            themeLayout = themeLayout.slice(0, bodyClose) + sectionsCode + '\n' + themeLayout.slice(bodyClose);
-            modified = true;
-          }
-        }
-      }
-    }
-
-    if (modified) {
-      if (await putAsset(liveTheme.id, 'layout/theme.liquid', themeLayout)) {
-        console.log('✅ Added homepage sections to theme.liquid');
-        console.log('   (Shows only on homepage via template check)');
+  let themeLiquid = await getAsset(liveTheme.id, 'layout/theme.liquid');
+  if (themeLiquid) {
+    if (!themeLiquid.includes('sz-homepage-sections')) {
+      // Add before closing body tag
+      themeLiquid = themeLiquid.replace('</body>', "{% render 'sz-homepage-sections' %}\n</body>");
+      const result = await putAsset(liveTheme.id, 'layout/theme.liquid', themeLiquid);
+      if (result.success) {
+        console.log('   ✅ Injected homepage sections into theme.liquid');
+      } else {
+        console.log('   ❌ Failed to update theme.liquid');
       }
     } else {
-      console.log('   ℹ️ Sections already present in theme.liquid');
+      console.log('   ✓ Already in theme.liquid');
     }
   }
 
+  // Also try to add sections to index.json for Shopify 2.0 themes
+  console.log('3️⃣  Updating index template...');
+
+  let indexJson = await getAsset(liveTheme.id, 'templates/index.json');
+  if (indexJson) {
+    try {
+      let indexData = JSON.parse(indexJson);
+
+      // Check if we already have our sections
+      let hasTestimonials = Object.values(indexData.sections || {}).some(s =>
+        s.type === 'custom-liquid' && s.settings?.liquid?.includes('sz-testimonials')
+      );
+
+      if (!hasTestimonials) {
+        // Add our custom sections
+        const sectionOrder = indexData.order || [];
+
+        // Add testimonials section
+        indexData.sections = indexData.sections || {};
+        indexData.sections['sz-testimonials'] = {
+          type: 'custom-liquid',
+          settings: {
+            liquid: "{% render 'sz-testimonials' %}"
+          }
+        };
+
+        // Add why choose section
+        indexData.sections['sz-why-choose'] = {
+          type: 'custom-liquid',
+          settings: {
+            liquid: "{% render 'sz-why-choose' %}"
+          }
+        };
+
+        // Add FAQ section
+        indexData.sections['sz-faq'] = {
+          type: 'custom-liquid',
+          settings: {
+            liquid: "{% render 'sz-faq-section' %}"
+          }
+        };
+
+        // Add to order if not already there
+        if (!sectionOrder.includes('sz-testimonials')) {
+          sectionOrder.push('sz-testimonials');
+        }
+        if (!sectionOrder.includes('sz-why-choose')) {
+          sectionOrder.push('sz-why-choose');
+        }
+        if (!sectionOrder.includes('sz-faq')) {
+          sectionOrder.push('sz-faq');
+        }
+
+        indexData.order = sectionOrder;
+
+        const result = await putAsset(liveTheme.id, 'templates/index.json', JSON.stringify(indexData, null, 2));
+        if (result.success) {
+          console.log('   ✅ Added sections to index.json');
+        } else {
+          console.log('   ⚠ Could not update index.json - sections will load via theme.liquid fallback');
+        }
+      } else {
+        console.log('   ✓ Sections already in index.json');
+      }
+    } catch (e) {
+      console.log('   ⚠ Could not parse index.json - using theme.liquid fallback');
+    }
+  } else {
+    console.log('   ℹ No index.json found - sections will load via theme.liquid');
+  }
+
   console.log('');
-  console.log('═══════════════════════════════════════════════════════════════');
+  console.log('╔════════════════════════════════════════════════════════════════╗');
+  console.log('║  ✅ HOMEPAGE SECTIONS ADDED                                    ║');
+  console.log('╚════════════════════════════════════════════════════════════════╝');
   console.log('');
-  console.log('🎉 Done! Visit https://shelzysdesigns.com to see:');
-  console.log('   • Customer testimonials (4.9★ reviews)');
-  console.log('   • "Why Choose Us" comparison section');
-  console.log('   • Trust badges bar');
+  console.log('The following sections are now on your homepage:');
+  console.log('  • Testimonials - Customer reviews with avatars');
+  console.log('  • Why Choose Us - Comparison table');
+  console.log('  • FAQ - Common questions answered');
   console.log('');
-  console.log('💡 Hard refresh (Cmd+Shift+R) to see changes!');
+  console.log('🔗 View at: https://shelzysdesigns.com');
   console.log('');
 }
 
