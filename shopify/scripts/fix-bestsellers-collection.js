@@ -11,7 +11,13 @@
 const https = require('https');
 
 const STORE_URL = process.env.SHOPIFY_STORE_URL || 'shelzys-designs.myshopify.com';
-const ACCESS_TOKEN = process.env.SHOPIFY_ACCESS_TOKEN || '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';
+const ACCESS_TOKEN = process.env.SHOPIFY_ACCESS_TOKEN;
+
+if (!ACCESS_TOKEN) {
+  console.error('❌ Missing SHOPIFY_ACCESS_TOKEN environment variable');
+  console.error('   Run: export SHOPIFY_ACCESS_TOKEN=your_token_here');
+  process.exit(1);
+}
 const API_VERSION = '2024-01';
 
 async function apiRequest(method, endpoint, data = null) {
