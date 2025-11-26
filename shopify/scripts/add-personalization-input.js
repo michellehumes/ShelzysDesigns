@@ -619,10 +619,24 @@ document.addEventListener('DOMContentLoaded', function() {
       }
       /* Font preview classes */
       .sz-font-script { font-family: 'Brush Script MT', 'Segoe Script', cursive; }
+      .sz-font-calligraphy { font-family: 'Edwardian Script ITC', 'Monotype Corsiva', cursive; font-style: italic; }
+      .sz-font-handwritten { font-family: 'Comic Sans MS', 'Segoe Print', cursive; }
+      .sz-font-brush { font-family: 'Mistral', 'Brush Script MT', cursive; }
+      .sz-font-signature { font-family: 'Lucida Handwriting', 'Segoe Script', cursive; font-style: italic; }
       .sz-font-serif { font-family: 'Georgia', 'Times New Roman', serif; }
+      .sz-font-elegant { font-family: 'Palatino Linotype', 'Book Antiqua', serif; }
+      .sz-font-oldenglish { font-family: 'Old English Text MT', 'Luminari', fantasy; }
+      .sz-font-roman { font-family: 'Times New Roman', 'Garamond', serif; }
+      .sz-font-playfair { font-family: 'Didot', 'Bodoni MT', serif; font-weight: 400; }
       .sz-font-sans { font-family: 'Arial', 'Helvetica', sans-serif; }
       .sz-font-modern { font-family: 'Trebuchet MS', 'Lucida Sans', sans-serif; }
-      .sz-font-elegant { font-family: 'Palatino Linotype', 'Book Antiqua', serif; }
+      .sz-font-minimalist { font-family: 'Futura', 'Century Gothic', sans-serif; letter-spacing: 2px; }
+      .sz-font-bold { font-family: 'Impact', 'Arial Black', sans-serif; font-weight: 900; }
+      .sz-font-rounded { font-family: 'Verdana', 'Arial Rounded MT Bold', sans-serif; }
+      .sz-font-artdeco { font-family: 'Copperplate', 'Copperplate Gothic Bold', serif; letter-spacing: 3px; }
+      .sz-font-stencil { font-family: 'Stencil Std', 'Impact', sans-serif; letter-spacing: 1px; }
+      .sz-font-monogram { font-family: 'Monotype Corsiva', 'Edwardian Script ITC', cursive; font-size: 28px; }
+      .sz-font-vintage { font-family: 'Courier New', 'American Typewriter', monospace; }
     </style>
 
     <h3>
@@ -637,11 +651,33 @@ document.addEventListener('DOMContentLoaded', function() {
         </label>
         <select id="sz-font-select" name="properties[Font]" required>
           <option value="">Select a font...</option>
-          <option value="Script">Script (Elegant Cursive)</option>
-          <option value="Serif">Serif (Classic)</option>
-          <option value="Sans Serif">Sans Serif (Modern)</option>
-          <option value="Modern">Modern (Contemporary)</option>
-          <option value="Elegant">Elegant (Refined)</option>
+          <optgroup label="Script & Cursive">
+            <option value="Script">Script (Elegant Cursive)</option>
+            <option value="Calligraphy">Calligraphy (Formal)</option>
+            <option value="Handwritten">Handwritten (Casual)</option>
+            <option value="Brush Script">Brush Script (Artistic)</option>
+            <option value="Signature">Signature (Personal)</option>
+          </optgroup>
+          <optgroup label="Serif (Classic)">
+            <option value="Serif">Serif (Traditional)</option>
+            <option value="Elegant">Elegant (Refined)</option>
+            <option value="Old English">Old English (Gothic)</option>
+            <option value="Roman">Roman (Timeless)</option>
+            <option value="Playfair">Playfair (Sophisticated)</option>
+          </optgroup>
+          <optgroup label="Sans Serif (Modern)">
+            <option value="Sans Serif">Sans Serif (Clean)</option>
+            <option value="Modern">Modern (Contemporary)</option>
+            <option value="Minimalist">Minimalist (Simple)</option>
+            <option value="Bold">Bold (Statement)</option>
+            <option value="Rounded">Rounded (Friendly)</option>
+          </optgroup>
+          <optgroup label="Decorative">
+            <option value="Art Deco">Art Deco (Vintage)</option>
+            <option value="Stencil">Stencil (Industrial)</option>
+            <option value="Monogram">Monogram (Initial Style)</option>
+            <option value="Vintage">Vintage (Retro)</option>
+          </optgroup>
         </select>
       </div>
 
@@ -651,13 +687,22 @@ document.addEventListener('DOMContentLoaded', function() {
         </label>
         <select id="sz-color-select" name="properties[Color]" required>
           <option value="">Select a color...</option>
-          <option value="Gold">Gold</option>
-          <option value="Silver">Silver</option>
-          <option value="Rose Gold">Rose Gold</option>
-          <option value="Black">Black</option>
-          <option value="White">White</option>
-          <option value="Navy Blue">Navy Blue</option>
-          <option value="Burgundy">Burgundy</option>
+          <optgroup label="Metallic">
+            <option value="Gold">Gold</option>
+            <option value="Silver">Silver</option>
+            <option value="Rose Gold">Rose Gold</option>
+            <option value="Champagne">Champagne</option>
+            <option value="Bronze">Bronze</option>
+          </optgroup>
+          <optgroup label="Classic">
+            <option value="Black">Black</option>
+            <option value="White">White</option>
+            <option value="Navy Blue">Navy Blue</option>
+            <option value="Burgundy">Burgundy</option>
+            <option value="Forest Green">Forest Green</option>
+            <option value="Ivory">Ivory</option>
+            <option value="Blush Pink">Blush Pink</option>
+          </optgroup>
         </select>
       </div>
     </div>
@@ -702,10 +747,24 @@ document.addEventListener('DOMContentLoaded', function() {
   // Font class mapping
   var fontClasses = {
     'Script': 'sz-font-script',
+    'Calligraphy': 'sz-font-calligraphy',
+    'Handwritten': 'sz-font-handwritten',
+    'Brush Script': 'sz-font-brush',
+    'Signature': 'sz-font-signature',
     'Serif': 'sz-font-serif',
+    'Elegant': 'sz-font-elegant',
+    'Old English': 'sz-font-oldenglish',
+    'Roman': 'sz-font-roman',
+    'Playfair': 'sz-font-playfair',
     'Sans Serif': 'sz-font-sans',
     'Modern': 'sz-font-modern',
-    'Elegant': 'sz-font-elegant'
+    'Minimalist': 'sz-font-minimalist',
+    'Bold': 'sz-font-bold',
+    'Rounded': 'sz-font-rounded',
+    'Art Deco': 'sz-font-artdeco',
+    'Stencil': 'sz-font-stencil',
+    'Monogram': 'sz-font-monogram',
+    'Vintage': 'sz-font-vintage'
   };
 
   // Color mapping
@@ -713,10 +772,15 @@ document.addEventListener('DOMContentLoaded', function() {
     'Gold': '#d4a574',
     'Silver': '#8e8e8e',
     'Rose Gold': '#b76e79',
+    'Champagne': '#f7e7ce',
+    'Bronze': '#cd7f32',
     'Black': '#222222',
     'White': '#666666',
     'Navy Blue': '#1a3a5c',
-    'Burgundy': '#722f37'
+    'Burgundy': '#722f37',
+    'Forest Green': '#228b22',
+    'Ivory': '#fffff0',
+    'Blush Pink': '#de98ab'
   };
 
   function updatePreview() {
