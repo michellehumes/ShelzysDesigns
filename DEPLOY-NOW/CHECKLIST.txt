@@ -1,0 +1,110 @@
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  ✅ DEPLOYMENT CHECKLIST - ShelzyPerkins.com
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+BEFORE YOU START
+────────────────
+□ Both ZIP files downloaded from DEPLOY-NOW folder:
+  □ shelzyperkins-theme.zip (12 KB)
+  □ shelzyperkins-auto-import.zip (39 KB)
+
+□ WordPress login ready:
+  • URL: https://shelzyperkins.com/wp-admin
+  • Email: michelle.e.humes@gmail.com
+  • Password: Perkins@22
+
+
+DEPLOYMENT STEPS
+────────────────
+□ STEP 1: Upload & Activate Theme
+  □ Go to Appearance → Themes → Add New → Upload Theme
+  □ Upload shelzyperkins-theme.zip
+  □ Click Install Now
+  □ Click Activate
+  ✓ Theme is active!
+
+□ STEP 2: Upload & Activate Plugin
+  □ Go to Plugins → Add New → Upload Plugin
+  □ Upload shelzyperkins-auto-import.zip
+  □ Click Install Now
+  □ Click Activate
+  ✓ Plugin is active!
+
+□ STEP 3: Run Import
+  □ Click "Import Content" in left sidebar
+  □ Click "🚀 Import Now" button
+  □ Wait 10-20 seconds
+  □ See green success message
+  ✓ Content imported!
+
+□ STEP 4: View Your Site
+  □ Click "View Your Site" button
+  OR
+  □ Visit: https://shelzyperkins.com
+  ✓ Site is live!
+
+
+POST-LAUNCH CHECKLIST
+─────────────────────
+□ Site looks good (theme is displaying correctly)
+□ Blog posts are visible
+□ Pages are created (About, Contact, Privacy, Disclosure)
+□ Amazon links work (click one to test)
+□ Affiliate tag is present (shelzysdesigns-20 in URL)
+□ Navigation menu works
+□ Mobile view looks good (test on phone)
+
+
+OPTIONAL BUT RECOMMENDED
+────────────────────────
+□ Add featured images to blog posts (10-15 min)
+□ Install Rank Math SEO plugin (5 min)
+□ Install LiteSpeed Cache plugin (5 min)
+□ Set up Google Analytics (10 min)
+□ Delete auto-import plugin (no longer needed)
+
+
+NEXT STEPS
+──────────
+□ Create Pinterest account (or use existing)
+□ Create pins for your 6 blog posts
+□ Share on social media
+□ Write 2-3 new blog posts per week
+□ Check Amazon Associates earnings weekly
+
+
+SUPPORT RESOURCES
+─────────────────
+WordPress Issues:
+  • wordpress.org/support
+
+Hosting/Technical Issues:
+  • GoDaddy: 1-480-505-8877
+
+Amazon Affiliate Questions:
+  • affiliate-program.amazon.com/support
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  🎉 YOU'RE READY TO MAKE MONEY! 🎉
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Total deployment time: 5-10 minutes
+Total content: 4 pages + 6 blog posts
+Total affiliate products: 92
+Your affiliate tag: shelzysdesigns-20
+
+Expected earnings timeline:
+  Month 1-3:  $50-200/month
+  Month 4-6:  $200-500/month
+  Month 7-12: $500-1,000+/month
+
+Keys to success:
+  ✓ Publish 2-3 posts per week
+  ✓ Pin to Pinterest daily
+  ✓ Build email list
+  ✓ Update old posts monthly
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Print this checklist and check off items as you go!
