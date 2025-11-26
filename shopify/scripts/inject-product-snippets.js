@@ -144,7 +144,7 @@ function getProductPageInjector() {
 '      wrapper.innerHTML = trustHTML + specsHTML;\n' +
 '      form.parentNode.insertBefore(wrapper, form.nextSibling);\n' +
 '      \n' +
-'      console.log("Shelzy\\'s product enhancements injected!");\n' +
+'      console.log("Product enhancements injected!");\n' +
 '    }\n' +
 '  }\n' +
 '  \n' +
