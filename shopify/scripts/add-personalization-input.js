@@ -463,6 +463,7 @@ async function main() {
   // Create a JS-based injection as fallback
   const jsInjectionSnippet = `{% comment %}
   Shelzy's - Auto-inject personalization input on product pages
+  Includes: Font, Color, and Name on bottle fields
 {% endcomment %}
 
 {% if template contains 'product' %}
@@ -495,43 +496,79 @@ document.addEventListener('DOMContentLoaded', function() {
     <style>
       .sz-personalization-wrapper {
         margin: 20px 0;
-        padding: 20px;
+        padding: 24px;
         background: linear-gradient(135deg, #fdf6f0 0%, #fff5eb 100%);
         border: 2px solid #d4a574;
         border-radius: 12px;
         box-shadow: 0 4px 12px rgba(212, 165, 116, 0.15);
       }
+      .sz-personalization-wrapper h3 {
+        margin: 0 0 20px 0;
+        font-size: 18px;
+        font-weight: 700;
+        color: #2c2c2c;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .sz-personalization-wrapper h3 svg {
+        width: 20px;
+        height: 20px;
+        fill: #d4a574;
+      }
+      .sz-field-group {
+        margin-bottom: 18px;
+      }
+      .sz-field-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+        margin-bottom: 18px;
+      }
+      @media (max-width: 500px) {
+        .sz-field-row {
+          grid-template-columns: 1fr;
+        }
+      }
       .sz-personalization-wrapper label {
         display: block;
-        font-size: 16px;
+        font-size: 14px;
         font-weight: 600;
         color: #2c2c2c;
-        margin-bottom: 10px;
+        margin-bottom: 8px;
       }
       .sz-personalization-wrapper .required-star {
         color: #e74c3c;
       }
-      .sz-personalization-wrapper .label-hint {
-        display: block;
-        font-size: 13px;
-        font-weight: 400;
-        color: #666;
-        margin-top: 4px;
-      }
+      .sz-personalization-wrapper select,
       .sz-personalization-wrapper input[type="text"] {
         width: 100%;
-        padding: 14px 16px;
-        font-size: 16px;
+        padding: 12px 14px;
+        font-size: 15px;
         border: 2px solid #d4a574;
         border-radius: 8px;
         background: #fff;
         color: #333;
         box-sizing: border-box;
+        transition: all 0.2s ease;
+        -webkit-appearance: none;
+        appearance: none;
       }
+      .sz-personalization-wrapper select {
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23d4a574' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: right 14px center;
+        padding-right: 40px;
+        cursor: pointer;
+      }
+      .sz-personalization-wrapper select:focus,
       .sz-personalization-wrapper input[type="text"]:focus {
         outline: none;
         border-color: #b8956a;
         box-shadow: 0 0 0 3px rgba(212, 165, 116, 0.2);
+      }
+      .sz-personalization-wrapper input[type="text"]::placeholder {
+        color: #999;
       }
       .sz-char-counter {
         display: block;
@@ -541,33 +578,38 @@ document.addEventListener('DOMContentLoaded', function() {
         margin-top: 6px;
       }
       .sz-preview-box {
-        margin-top: 12px;
-        padding: 12px;
+        margin-top: 16px;
+        padding: 16px;
         background: #fff;
-        border-radius: 8px;
-        border: 1px dashed #d4a574;
+        border-radius: 10px;
+        border: 2px dashed #d4a574;
         text-align: center;
       }
       .sz-preview-label {
         font-size: 11px;
         text-transform: uppercase;
-        letter-spacing: 1px;
+        letter-spacing: 1.5px;
         color: #888;
-        margin-bottom: 6px;
+        margin-bottom: 8px;
       }
       .sz-preview-text {
-        font-size: 18px;
+        font-size: 22px;
         font-weight: 600;
         color: #d4a574;
-        font-family: 'Georgia', serif;
-        min-height: 24px;
+        min-height: 30px;
+        transition: all 0.3s ease;
+      }
+      .sz-preview-details {
+        font-size: 12px;
+        color: #888;
+        margin-top: 8px;
       }
       .sz-error-msg {
         display: none;
         color: #e74c3c;
         font-size: 13px;
-        margin-top: 8px;
-        padding: 8px 12px;
+        margin-top: 12px;
+        padding: 10px 14px;
         background: #fdf2f2;
         border-radius: 6px;
         border-left: 3px solid #e74c3c;
@@ -575,60 +617,174 @@ document.addEventListener('DOMContentLoaded', function() {
       .sz-error-msg.show {
         display: block;
       }
+      /* Font preview classes */
+      .sz-font-script { font-family: 'Brush Script MT', 'Segoe Script', cursive; }
+      .sz-font-serif { font-family: 'Georgia', 'Times New Roman', serif; }
+      .sz-font-sans { font-family: 'Arial', 'Helvetica', sans-serif; }
+      .sz-font-modern { font-family: 'Trebuchet MS', 'Lucida Sans', sans-serif; }
+      .sz-font-elegant { font-family: 'Palatino Linotype', 'Book Antiqua', serif; }
     </style>
-    <label for="sz-name-input">
-      Name on Water Bottle <span class="required-star">*</span>
-      <span class="label-hint">Enter the name exactly as you want it to appear</span>
-    </label>
-    <input
-      id="sz-name-input"
-      type="text"
-      name="properties[Name on bottle]"
-      placeholder="e.g., Sarah, Mr. & Mrs. Smith, Team Alpha"
-      maxlength="25"
-      required
-      autocomplete="off"
-    >
-    <span class="sz-char-counter">0 / 25 characters</span>
-    <div class="sz-preview-box">
-      <div class="sz-preview-label">Preview</div>
-      <div class="sz-preview-text" id="sz-js-preview">Your name will appear here</div>
+
+    <h3>
+      <svg viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
+      Personalize Your Bottle
+    </h3>
+
+    <div class="sz-field-row">
+      <div class="sz-field-group">
+        <label for="sz-font-select">
+          Font Style <span class="required-star">*</span>
+        </label>
+        <select id="sz-font-select" name="properties[Font]" required>
+          <option value="">Select a font...</option>
+          <option value="Script">Script (Elegant Cursive)</option>
+          <option value="Serif">Serif (Classic)</option>
+          <option value="Sans Serif">Sans Serif (Modern)</option>
+          <option value="Modern">Modern (Contemporary)</option>
+          <option value="Elegant">Elegant (Refined)</option>
+        </select>
+      </div>
+
+      <div class="sz-field-group">
+        <label for="sz-color-select">
+          Text Color <span class="required-star">*</span>
+        </label>
+        <select id="sz-color-select" name="properties[Color]" required>
+          <option value="">Select a color...</option>
+          <option value="Gold">Gold</option>
+          <option value="Silver">Silver</option>
+          <option value="Rose Gold">Rose Gold</option>
+          <option value="Black">Black</option>
+          <option value="White">White</option>
+          <option value="Navy Blue">Navy Blue</option>
+          <option value="Burgundy">Burgundy</option>
+        </select>
+      </div>
     </div>
-    <div class="sz-error-msg" id="sz-js-error">Please enter a name for your bottle before adding to cart.</div>
+
+    <div class="sz-field-group">
+      <label for="sz-name-input">
+        Name on Water Bottle <span class="required-star">*</span>
+      </label>
+      <input
+        id="sz-name-input"
+        type="text"
+        name="properties[Name on bottle]"
+        placeholder="e.g., Sarah, Mr. & Mrs. Smith, Team Alpha"
+        maxlength="25"
+        required
+        autocomplete="off"
+      >
+      <span class="sz-char-counter">0 / 25 characters</span>
+    </div>
+
+    <div class="sz-preview-box">
+      <div class="sz-preview-label">Live Preview</div>
+      <div class="sz-preview-text" id="sz-js-preview">Your name will appear here</div>
+      <div class="sz-preview-details" id="sz-preview-details">Select font and color above</div>
+    </div>
+
+    <div class="sz-error-msg" id="sz-js-error">Please complete all personalization fields before adding to cart.</div>
   \`;
 
   // Insert before add button
   addButton.parentNode.insertBefore(container, addButton);
 
   // Set up event listeners
-  var input = document.getElementById('sz-name-input');
+  var nameInput = document.getElementById('sz-name-input');
+  var fontSelect = document.getElementById('sz-font-select');
+  var colorSelect = document.getElementById('sz-color-select');
   var counter = container.querySelector('.sz-char-counter');
   var preview = document.getElementById('sz-js-preview');
+  var previewDetails = document.getElementById('sz-preview-details');
   var errorMsg = document.getElementById('sz-js-error');
 
-  input.addEventListener('input', function() {
-    var len = this.value.length;
-    counter.textContent = len + ' / 25 characters';
-    counter.style.color = len >= 25 ? '#e74c3c' : (len >= 20 ? '#e67e22' : '#888');
+  // Font class mapping
+  var fontClasses = {
+    'Script': 'sz-font-script',
+    'Serif': 'sz-font-serif',
+    'Sans Serif': 'sz-font-sans',
+    'Modern': 'sz-font-modern',
+    'Elegant': 'sz-font-elegant'
+  };
 
-    if (this.value.trim()) {
-      preview.textContent = this.value;
-      preview.style.color = '#d4a574';
+  // Color mapping
+  var colorValues = {
+    'Gold': '#d4a574',
+    'Silver': '#8e8e8e',
+    'Rose Gold': '#b76e79',
+    'Black': '#222222',
+    'White': '#666666',
+    'Navy Blue': '#1a3a5c',
+    'Burgundy': '#722f37'
+  };
+
+  function updatePreview() {
+    var name = nameInput.value.trim();
+    var font = fontSelect.value;
+    var color = colorSelect.value;
+
+    // Update name preview
+    if (name) {
+      preview.textContent = name;
     } else {
       preview.textContent = 'Your name will appear here';
-      preview.style.color = '#999';
+    }
+
+    // Update font
+    preview.className = 'sz-preview-text';
+    if (font && fontClasses[font]) {
+      preview.classList.add(fontClasses[font]);
+    }
+
+    // Update color
+    if (color && colorValues[color]) {
+      preview.style.color = colorValues[color];
+    } else {
+      preview.style.color = '#d4a574';
+    }
+
+    // Update details text
+    var details = [];
+    if (font) details.push(font + ' font');
+    if (color) details.push(color + ' color');
+    if (details.length > 0) {
+      previewDetails.textContent = details.join(' • ');
+    } else {
+      previewDetails.textContent = 'Select font and color above';
     }
 
     errorMsg.classList.remove('show');
+  }
+
+  nameInput.addEventListener('input', function() {
+    var len = this.value.length;
+    counter.textContent = len + ' / 25 characters';
+    counter.style.color = len >= 25 ? '#e74c3c' : (len >= 20 ? '#e67e22' : '#888');
+    updatePreview();
   });
+
+  fontSelect.addEventListener('change', updatePreview);
+  colorSelect.addEventListener('change', updatePreview);
 
   // Validate on submit
   productForm.addEventListener('submit', function(e) {
-    if (!input.value.trim()) {
+    var errors = [];
+    if (!fontSelect.value) errors.push('font');
+    if (!colorSelect.value) errors.push('color');
+    if (!nameInput.value.trim()) errors.push('name');
+
+    if (errors.length > 0) {
       e.preventDefault();
       errorMsg.classList.add('show');
-      input.focus();
-      input.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      if (!fontSelect.value) {
+        fontSelect.focus();
+      } else if (!colorSelect.value) {
+        colorSelect.focus();
+      } else {
+        nameInput.focus();
+      }
+      container.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
   });
 });
