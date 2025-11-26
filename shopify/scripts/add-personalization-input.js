@@ -2,9 +2,7 @@
 
 /**
  * Shelzy's Designs - Add Personalization Input Field
- *
- * Adds a real text input field for personalization on product pages.
- * Uses line item properties so the name appears in orders.
+ * Supports single bottles AND multi-bottle sets with step-by-step wizard
  */
 
 const https = require('https');
@@ -91,1162 +89,686 @@ async function main() {
   console.log(`✅ Theme: "${liveTheme.name}" (ID: ${liveTheme.id})`);
   console.log('');
 
-  // ═══════════════════════════════════════════════════════════════════════════
-  // STEP 1: Create the personalization input snippet
-  // ═══════════════════════════════════════════════════════════════════════════
+  // Create the personalization snippet
   console.log('═══════════════════════════════════════════════════════════════');
-  console.log('STEP 1: CREATE PERSONALIZATION INPUT SNIPPET');
+  console.log('DEPLOYING PERSONALIZATION FORM');
   console.log('═══════════════════════════════════════════════════════════════');
   console.log('');
 
-  const personalizationSnippet = `{% comment %}
-  Shelzy's Designs - Personalization Input Field
-  This creates a real text input for customers to enter the name they want on their bottle.
-  The value is stored as a line item property and appears in order details.
-{% endcomment %}
-
-<style>
-  .sz-personalization-wrapper {
-    margin: 20px 0;
-    padding: 20px;
-    background: linear-gradient(135deg, #fdf6f0 0%, #fff5eb 100%);
-    border: 2px solid #d4a574;
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(212, 165, 116, 0.15);
-  }
-
-  .sz-personalization-wrapper label {
-    display: block;
-    font-size: 16px;
-    font-weight: 600;
-    color: #2c2c2c;
-    margin-bottom: 10px;
-    letter-spacing: 0.3px;
-  }
-
-  .sz-personalization-wrapper label .required-star {
-    color: #e74c3c;
-    margin-left: 3px;
-  }
-
-  .sz-personalization-wrapper .label-hint {
-    display: block;
-    font-size: 13px;
-    font-weight: 400;
-    color: #666;
-    margin-top: 4px;
-  }
-
-  .sz-personalization-wrapper input[type="text"] {
-    width: 100%;
-    padding: 14px 16px;
-    font-size: 16px;
-    border: 2px solid #d4a574;
-    border-radius: 8px;
-    background: #fff;
-    color: #333;
-    transition: all 0.3s ease;
-    box-sizing: border-box;
-  }
-
-  .sz-personalization-wrapper input[type="text"]:focus {
-    outline: none;
-    border-color: #b8956a;
-    box-shadow: 0 0 0 3px rgba(212, 165, 116, 0.2);
-  }
-
-  .sz-personalization-wrapper input[type="text"]::placeholder {
-    color: #999;
-    font-style: italic;
-  }
-
-  .sz-personalization-wrapper .char-counter {
-    display: block;
-    text-align: right;
-    font-size: 12px;
-    color: #888;
-    margin-top: 6px;
-  }
-
-  .sz-personalization-wrapper .char-counter.warning {
-    color: #e67e22;
-  }
-
-  .sz-personalization-wrapper .char-counter.limit {
-    color: #e74c3c;
-  }
-
-  .sz-personalization-preview {
-    margin-top: 12px;
-    padding: 12px;
-    background: #fff;
-    border-radius: 8px;
-    border: 1px dashed #d4a574;
-    text-align: center;
-  }
-
-  .sz-personalization-preview .preview-label {
-    font-size: 11px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    color: #888;
-    margin-bottom: 6px;
-  }
-
-  .sz-personalization-preview .preview-text {
-    font-size: 18px;
-    font-weight: 600;
-    color: #d4a574;
-    font-family: 'Georgia', serif;
-    min-height: 24px;
-  }
-
-  .sz-personalization-error {
-    display: none;
-    color: #e74c3c;
-    font-size: 13px;
-    margin-top: 8px;
-    padding: 8px 12px;
-    background: #fdf2f2;
-    border-radius: 6px;
-    border-left: 3px solid #e74c3c;
-  }
-
-  .sz-personalization-error.show {
-    display: block;
-  }
-</style>
-
-<div class="sz-personalization-wrapper" id="sz-personalization">
-  <label for="sz-name-on-bottle">
-    Name on Water Bottle <span class="required-star">*</span>
-    <span class="label-hint">Enter the name exactly as you want it to appear</span>
-  </label>
-
-  <input
-    id="sz-name-on-bottle"
-    type="text"
-    name="properties[Name on bottle]"
-    placeholder="e.g., Sarah, Mr. & Mrs. Smith, Team Alpha"
-    maxlength="25"
-    required
-    autocomplete="off"
-  >
-
-  <span class="char-counter" id="sz-char-counter">0 / 25 characters</span>
-
-  <div class="sz-personalization-preview">
-    <div class="preview-label">Preview</div>
-    <div class="preview-text" id="sz-preview-text">Your name will appear here</div>
-  </div>
-
-  <div class="sz-personalization-error" id="sz-personalization-error">
-    Please enter a name for your bottle before adding to cart.
-  </div>
-</div>
-
-<script>
-(function() {
-  var input = document.getElementById('sz-name-on-bottle');
-  var counter = document.getElementById('sz-char-counter');
-  var preview = document.getElementById('sz-preview-text');
-  var errorMsg = document.getElementById('sz-personalization-error');
-  var maxLength = 25;
-
-  if (!input) return;
-
-  // Update character counter and preview
-  input.addEventListener('input', function() {
-    var length = this.value.length;
-    counter.textContent = length + ' / ' + maxLength + ' characters';
-
-    // Update counter color
-    counter.classList.remove('warning', 'limit');
-    if (length >= maxLength) {
-      counter.classList.add('limit');
-    } else if (length >= maxLength - 5) {
-      counter.classList.add('warning');
-    }
-
-    // Update preview
-    if (this.value.trim()) {
-      preview.textContent = this.value;
-      preview.style.color = '#d4a574';
-    } else {
-      preview.textContent = 'Your name will appear here';
-      preview.style.color = '#999';
-    }
-
-    // Hide error when typing
-    if (errorMsg) {
-      errorMsg.classList.remove('show');
-    }
-  });
-
-  // Validate on form submit
-  var form = input.closest('form');
-  if (form) {
-    form.addEventListener('submit', function(e) {
-      if (!input.value.trim()) {
-        e.preventDefault();
-        errorMsg.classList.add('show');
-        input.focus();
-
-        // Scroll to input
-        input.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      }
-    });
-  }
-
-  // Also hook into Add to Cart buttons
-  document.addEventListener('click', function(e) {
-    var button = e.target.closest('[type="submit"], .add-to-cart, .product-form__submit, [name="add"], .btn-add-to-cart');
-    if (button && input && !input.value.trim()) {
-      // Check if this button is related to a product form with our input
-      var buttonForm = button.closest('form');
-      var inputForm = input.closest('form');
-
-      if (buttonForm === inputForm || button.closest('.product') || button.closest('.product-single')) {
-        e.preventDefault();
-        e.stopPropagation();
-        errorMsg.classList.add('show');
-        input.focus();
-        input.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      }
-    }
-  }, true);
-})();
-</script>
-`;
-
-  const result1 = await putAsset(liveTheme.id, 'snippets/sz-personalization-input.liquid', personalizationSnippet);
-  console.log(result1.success ? '   ✅ Created sz-personalization-input.liquid' : '   ❌ Failed to create snippet');
-
-  // ═══════════════════════════════════════════════════════════════════════════
-  // STEP 2: Inject into product form
-  // ═══════════════════════════════════════════════════════════════════════════
-  console.log('');
-  console.log('═══════════════════════════════════════════════════════════════');
-  console.log('STEP 2: INJECT INTO PRODUCT FORM');
-  console.log('═══════════════════════════════════════════════════════════════');
-  console.log('');
-
-  // Get list of assets to find product form section
-  const assetsResponse = await apiRequest('GET', `/themes/${liveTheme.id}/assets.json`);
-  const assets = assetsResponse.data?.assets || [];
-
-  // Find potential product form files
-  const productFiles = assets.filter(a =>
-    a.key.includes('product') &&
-    (a.key.endsWith('.liquid') || a.key.endsWith('.json'))
-  );
-
-  console.log('   Found product-related files:');
-  productFiles.forEach(f => console.log(`     - ${f.key}`));
-  console.log('');
-
-  let injected = false;
-
-  // Try to inject into main-product.liquid first (Shopify 2.0 themes)
-  const mainProductSection = await getAsset(liveTheme.id, 'sections/main-product.liquid');
-  if (mainProductSection) {
-    console.log('   Found sections/main-product.liquid');
-
-    if (!mainProductSection.includes('sz-personalization-input')) {
-      // Find the product form and inject before the add-to-cart button
-      let modified = mainProductSection;
-
-      // Try various injection points
-      const injectionPatterns = [
-        // Before variant picker
-        { pattern: /{%[-]?\s*render\s+['"]product-variant-picker['"]/, prepend: true },
-        // Before quantity selector
-        { pattern: /<quantity-input|{%[-]?\s*render\s+['"]quantity-input['"]/, prepend: true },
-        // Before add-to-cart button
-        { pattern: /<button[^>]*add-to-cart|<button[^>]*type="submit"[^>]*>(?:Add|Cart)/i, prepend: true },
-        // After product form opening
-        { pattern: /<form[^>]*product-form[^>]*>|<product-form/, append: true },
-        // After variant selects
-        { pattern: /<\/variant-selects>|{%[-]?\s*endform[-]?%}/, prepend: true },
-      ];
-
-      for (const { pattern, prepend } of injectionPatterns) {
-        if (pattern.test(modified)) {
-          const injection = "\n{% render 'sz-personalization-input' %}\n";
-          modified = modified.replace(pattern, (match) => {
-            return prepend ? injection + match : match + injection;
-          });
-          console.log('   Injected snippet into main-product.liquid');
-          injected = true;
-          break;
-        }
-      }
-
-      if (injected) {
-        const result = await putAsset(liveTheme.id, 'sections/main-product.liquid', modified);
-        console.log(result.success ? '   ✅ Updated main-product.liquid' : '   ❌ Failed to update');
-      } else {
-        console.log('   Could not find injection point in main-product.liquid');
-      }
-    } else {
-      console.log('   ✓ Already has personalization input');
-      injected = true;
-    }
-  }
-
-  // Also try product-template.liquid (older themes)
-  if (!injected) {
-    const productTemplate = await getAsset(liveTheme.id, 'sections/product-template.liquid');
-    if (productTemplate) {
-      console.log('   Found sections/product-template.liquid');
-
-      if (!productTemplate.includes('sz-personalization-input')) {
-        let modified = productTemplate;
-
-        // Look for form or add button
-        const patterns = [
-          /<button[^>]*type="submit"/i,
-          /<input[^>]*type="submit"/i,
-          /class="[^"]*add-to-cart/i,
-        ];
-
-        for (const pattern of patterns) {
-          if (pattern.test(modified)) {
-            modified = modified.replace(pattern, (match) => {
-              return "{% render 'sz-personalization-input' %}\n" + match;
-            });
-            injected = true;
-            break;
-          }
-        }
-
-        if (injected) {
-          const result = await putAsset(liveTheme.id, 'sections/product-template.liquid', modified);
-          console.log(result.success ? '   ✅ Updated product-template.liquid' : '   ❌ Failed to update');
-        }
-      } else {
-        console.log('   ✓ Already has personalization input');
-        injected = true;
-      }
-    }
-  }
-
-  // Try product.liquid in templates
-  if (!injected) {
-    const productLiquid = await getAsset(liveTheme.id, 'templates/product.liquid');
-    if (productLiquid && !productLiquid.includes('sz-personalization-input')) {
-      console.log('   Found templates/product.liquid');
-
-      // Inject near the top
-      let modified = productLiquid.replace(
-        /({%[-]?\s*layout\s+['"][^'"]+['"][-]?%})/i,
-        "$1\n{% render 'sz-personalization-input' %}"
-      );
-
-      if (modified !== productLiquid) {
-        const result = await putAsset(liveTheme.id, 'templates/product.liquid', modified);
-        console.log(result.success ? '   ✅ Updated templates/product.liquid' : '   ❌ Failed to update');
-        injected = true;
-      }
-    }
-  }
-
-  // ═══════════════════════════════════════════════════════════════════════════
-  // STEP 3: Create fallback injection via theme.liquid
-  // ═══════════════════════════════════════════════════════════════════════════
-  console.log('');
-  console.log('═══════════════════════════════════════════════════════════════');
-  console.log('STEP 3: FALLBACK - INJECT VIA THEME.LIQUID');
-  console.log('═══════════════════════════════════════════════════════════════');
-  console.log('');
-
-  // Create a JS-based injection as fallback - supports single bottles AND multi-bottle sets
-  const jsInjectionSnippet = `{% comment %}
-  Shelzy's - Auto-inject personalization input on product pages
-  Supports single bottles AND multi-bottle sets (3-pack, 10-pack, etc.)
-  Multi-bottle sets show a step-by-step wizard
+  // The snippet content - using a heredoc-style approach to avoid escaping issues
+  const snippetContent = `{% comment %}
+  Shelzy's Designs - Personalization Input
+  Supports single bottles AND multi-bottle sets (3-pack, 5-pack, 6-pack, 10-pack)
 {% endcomment %}
 
 {% if template contains 'product' %}
+<style>
+.sz-personalization-wrapper {
+  margin: 20px 0;
+  padding: 24px;
+  background: linear-gradient(135deg, #fdf6f0 0%, #fff5eb 100%);
+  border: 2px solid #d4a574;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(212, 165, 116, 0.15);
+}
+.sz-personalization-wrapper h3 {
+  margin: 0 0 16px 0;
+  font-size: 18px;
+  font-weight: 700;
+  color: #2c2c2c;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.sz-personalization-wrapper h3 svg {
+  width: 20px;
+  height: 20px;
+  fill: #d4a574;
+}
+.sz-progress {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+.sz-progress-step {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: 600;
+  background: #e8e8e8;
+  color: #888;
+  transition: all 0.3s ease;
+}
+.sz-progress-step.active {
+  background: #d4a574;
+  color: #fff;
+  transform: scale(1.1);
+}
+.sz-progress-step.completed {
+  background: #4caf50;
+  color: #fff;
+}
+.sz-current-bottle {
+  text-align: center;
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 16px;
+}
+.sz-current-bottle strong {
+  color: #d4a574;
+}
+.sz-field-group {
+  margin-bottom: 18px;
+}
+.sz-field-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 18px;
+}
+@media (max-width: 500px) {
+  .sz-field-row {
+    grid-template-columns: 1fr;
+  }
+}
+.sz-personalization-wrapper label {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  color: #2c2c2c;
+  margin-bottom: 8px;
+}
+.sz-personalization-wrapper .required-star {
+  color: #e74c3c;
+}
+.sz-personalization-wrapper select,
+.sz-personalization-wrapper input[type="text"] {
+  width: 100%;
+  padding: 12px 14px;
+  font-size: 15px;
+  border: 2px solid #d4a574;
+  border-radius: 8px;
+  background: #fff;
+  color: #333;
+  box-sizing: border-box;
+  transition: all 0.2s ease;
+  -webkit-appearance: none;
+  appearance: none;
+}
+.sz-personalization-wrapper select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23d4a574' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  padding-right: 40px;
+  cursor: pointer;
+}
+.sz-personalization-wrapper select:focus,
+.sz-personalization-wrapper input[type="text"]:focus {
+  outline: none;
+  border-color: #b8956a;
+  box-shadow: 0 0 0 3px rgba(212, 165, 116, 0.2);
+}
+.sz-personalization-wrapper input[type="text"]::placeholder {
+  color: #999;
+}
+.sz-char-counter {
+  display: block;
+  text-align: right;
+  font-size: 12px;
+  color: #888;
+  margin-top: 6px;
+}
+.sz-preview-box {
+  margin-top: 16px;
+  padding: 16px;
+  background: #fff;
+  border-radius: 10px;
+  border: 2px dashed #d4a574;
+  text-align: center;
+}
+.sz-preview-label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: #888;
+  margin-bottom: 8px;
+}
+.sz-preview-text {
+  font-size: 22px;
+  font-weight: 600;
+  color: #d4a574;
+  min-height: 30px;
+  transition: all 0.3s ease;
+}
+.sz-preview-details {
+  font-size: 12px;
+  color: #888;
+  margin-top: 8px;
+}
+.sz-error-msg {
+  display: none;
+  color: #e74c3c;
+  font-size: 13px;
+  margin-top: 12px;
+  padding: 10px 14px;
+  background: #fdf2f2;
+  border-radius: 6px;
+  border-left: 3px solid #e74c3c;
+}
+.sz-error-msg.show {
+  display: block;
+}
+.sz-btn-row {
+  display: flex;
+  gap: 12px;
+  margin-top: 16px;
+}
+.sz-btn {
+  flex: 1;
+  padding: 14px 20px;
+  font-size: 15px;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.sz-btn-next {
+  background: #d4a574;
+  color: #fff;
+}
+.sz-btn-next:hover {
+  background: #c49464;
+}
+.sz-btn-back {
+  background: #e8e8e8;
+  color: #666;
+}
+.sz-btn-back:hover {
+  background: #ddd;
+}
+.sz-completed-list {
+  margin-top: 16px;
+  padding: 12px;
+  background: #f9f9f9;
+  border-radius: 8px;
+  max-height: 200px;
+  overflow-y: auto;
+}
+.sz-completed-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 12px;
+  margin-bottom: 6px;
+  background: #fff;
+  border-radius: 6px;
+  border-left: 3px solid #4caf50;
+  font-size: 13px;
+}
+.sz-completed-item:last-child {
+  margin-bottom: 0;
+}
+.sz-completed-item .bottle-num {
+  font-weight: 600;
+  color: #d4a574;
+  min-width: 30px;
+}
+.sz-completed-item .bottle-name {
+  flex: 1;
+  margin: 0 12px;
+  color: #333;
+}
+.sz-completed-item .bottle-edit {
+  color: #d4a574;
+  text-decoration: underline;
+  cursor: pointer;
+  font-size: 12px;
+}
+.sz-all-done {
+  text-align: center;
+  padding: 20px;
+  background: #e8f5e9;
+  border-radius: 10px;
+  margin-top: 16px;
+}
+.sz-all-done h4 {
+  margin: 0 0 8px 0;
+  color: #4caf50;
+  font-size: 16px;
+}
+.sz-all-done p {
+  margin: 0;
+  color: #666;
+  font-size: 14px;
+}
+.sz-font-script { font-family: 'Brush Script MT', cursive; }
+.sz-font-calligraphy { font-family: 'Monotype Corsiva', cursive; font-style: italic; }
+.sz-font-handwritten { font-family: 'Comic Sans MS', cursive; }
+.sz-font-brush { font-family: 'Brush Script MT', cursive; }
+.sz-font-signature { font-family: 'Lucida Handwriting', cursive; font-style: italic; }
+.sz-font-serif { font-family: Georgia, serif; }
+.sz-font-elegant { font-family: 'Palatino Linotype', serif; }
+.sz-font-oldenglish { font-family: 'Old English Text MT', fantasy; }
+.sz-font-roman { font-family: 'Times New Roman', serif; }
+.sz-font-playfair { font-family: Didot, serif; }
+.sz-font-sans { font-family: Arial, sans-serif; }
+.sz-font-modern { font-family: 'Trebuchet MS', sans-serif; }
+.sz-font-minimalist { font-family: 'Century Gothic', sans-serif; letter-spacing: 2px; }
+.sz-font-bold { font-family: Impact, sans-serif; font-weight: 900; }
+.sz-font-rounded { font-family: Verdana, sans-serif; }
+.sz-font-artdeco { font-family: Copperplate, serif; letter-spacing: 3px; }
+.sz-font-stencil { font-family: Impact, sans-serif; letter-spacing: 1px; }
+.sz-font-monogram { font-family: 'Monotype Corsiva', cursive; font-size: 28px; }
+.sz-font-vintage { font-family: 'Courier New', monospace; }
+</style>
+
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-  // Check if personalization input already exists
-  if (document.getElementById('sz-personalization') || document.querySelector('[name="properties[Name on bottle]"]')) {
-    return;
-  }
+(function() {
+  function initPersonalization() {
+    // Remove existing if any
+    var existing = document.getElementById('sz-personalization');
+    if (existing) existing.remove();
 
-  // Find the product form
-  var productForm = document.querySelector('form[action*="/cart/add"]') ||
-                   document.querySelector('.product-form') ||
-                   document.querySelector('[data-product-form]');
-
-  if (!productForm) return;
-
-  // Find injection point (before add-to-cart button)
-  var addButton = productForm.querySelector('[type="submit"]') ||
-                  productForm.querySelector('.add-to-cart') ||
-                  productForm.querySelector('.product-form__submit');
-
-  if (!addButton) return;
-
-  // Detect number of bottles from product title
-  var productTitle = document.querySelector('.product__title, .product-single__title, h1.title, [data-product-title]');
-  var titleText = productTitle ? productTitle.textContent.toLowerCase() : '';
-
-  var bottleCount = 1;
-  // Check for set patterns
-  if (titleText.includes('set of 3') || titleText.includes('3 pack') || titleText.includes('3-pack') || titleText.includes('bridal party')) {
-    bottleCount = 3;
-  } else if (titleText.includes('set of 5') || titleText.includes('5 pack') || titleText.includes('5-pack')) {
-    bottleCount = 5;
-  } else if (titleText.includes('set of 10') || titleText.includes('10 pack') || titleText.includes('10-pack')) {
-    bottleCount = 10;
-  } else if (titleText.includes('set of 6') || titleText.includes('6 pack') || titleText.includes('6-pack')) {
-    bottleCount = 6;
-  } else if (titleText.includes('set of 4') || titleText.includes('4 pack') || titleText.includes('4-pack')) {
-    bottleCount = 4;
-  } else if (titleText.includes('set of 8') || titleText.includes('8 pack') || titleText.includes('8-pack')) {
-    bottleCount = 8;
-  } else if (titleText.includes('set of 12') || titleText.includes('12 pack') || titleText.includes('12-pack')) {
-    bottleCount = 12;
-  }
-
-  // Store all bottle customizations
-  var bottles = [];
-  var currentBottle = 0;
-
-  // Font options HTML
-  var fontOptionsHTML = \\\`
-    <optgroup label="Script & Cursive">
-      <option value="Script">Script (Elegant Cursive)</option>
-      <option value="Calligraphy">Calligraphy (Formal)</option>
-      <option value="Handwritten">Handwritten (Casual)</option>
-      <option value="Brush Script">Brush Script (Artistic)</option>
-      <option value="Signature">Signature (Personal)</option>
-    </optgroup>
-    <optgroup label="Serif (Classic)">
-      <option value="Serif">Serif (Traditional)</option>
-      <option value="Elegant">Elegant (Refined)</option>
-      <option value="Old English">Old English (Gothic)</option>
-      <option value="Roman">Roman (Timeless)</option>
-      <option value="Playfair">Playfair (Sophisticated)</option>
-    </optgroup>
-    <optgroup label="Sans Serif (Modern)">
-      <option value="Sans Serif">Sans Serif (Clean)</option>
-      <option value="Modern">Modern (Contemporary)</option>
-      <option value="Minimalist">Minimalist (Simple)</option>
-      <option value="Bold">Bold (Statement)</option>
-      <option value="Rounded">Rounded (Friendly)</option>
-    </optgroup>
-    <optgroup label="Decorative">
-      <option value="Art Deco">Art Deco (Vintage)</option>
-      <option value="Stencil">Stencil (Industrial)</option>
-      <option value="Monogram">Monogram (Initial Style)</option>
-      <option value="Vintage">Vintage (Retro)</option>
-    </optgroup>
-  \\\`;
-
-  // Color options HTML
-  var colorOptionsHTML = \\\`
-    <optgroup label="Metallic">
-      <option value="Gold">Gold</option>
-      <option value="Silver">Silver</option>
-      <option value="Rose Gold">Rose Gold</option>
-      <option value="Champagne">Champagne</option>
-      <option value="Bronze">Bronze</option>
-    </optgroup>
-    <optgroup label="Classic">
-      <option value="Black">Black</option>
-      <option value="White">White</option>
-      <option value="Navy Blue">Navy Blue</option>
-      <option value="Burgundy">Burgundy</option>
-      <option value="Forest Green">Forest Green</option>
-      <option value="Ivory">Ivory</option>
-      <option value="Blush Pink">Blush Pink</option>
-    </optgroup>
-  \\\`;
-
-  // Create personalization container
-  var container = document.createElement('div');
-  container.className = 'sz-personalization-wrapper';
-  container.id = 'sz-personalization';
-
-  // Build styles
-  var styles = \\\`
-    <style>
-      .sz-personalization-wrapper {
-        margin: 20px 0;
-        padding: 24px;
-        background: linear-gradient(135deg, #fdf6f0 0%, #fff5eb 100%);
-        border: 2px solid #d4a574;
-        border-radius: 12px;
-        box-shadow: 0 4px 12px rgba(212, 165, 116, 0.15);
-      }
-      .sz-personalization-wrapper h3 {
-        margin: 0 0 16px 0;
-        font-size: 18px;
-        font-weight: 700;
-        color: #2c2c2c;
-        display: flex;
-        align-items: center;
-        gap: 8px;
-      }
-      .sz-personalization-wrapper h3 svg {
-        width: 20px;
-        height: 20px;
-        fill: #d4a574;
-      }
-      /* Progress indicator for multi-bottle */
-      .sz-progress {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 8px;
-        margin-bottom: 20px;
-        flex-wrap: wrap;
-      }
-      .sz-progress-step {
-        width: 32px;
-        height: 32px;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 14px;
-        font-weight: 600;
-        background: #e8e8e8;
-        color: #888;
-        transition: all 0.3s ease;
-      }
-      .sz-progress-step.active {
-        background: #d4a574;
-        color: #fff;
-        transform: scale(1.1);
-      }
-      .sz-progress-step.completed {
-        background: #4caf50;
-        color: #fff;
-      }
-      .sz-progress-step.completed::after {
-        content: '✓';
-      }
-      .sz-progress-step.completed span {
-        display: none;
-      }
-      .sz-current-bottle {
-        text-align: center;
-        font-size: 14px;
-        color: #666;
-        margin-bottom: 16px;
-      }
-      .sz-current-bottle strong {
-        color: #d4a574;
-      }
-      .sz-field-group {
-        margin-bottom: 18px;
-      }
-      .sz-field-row {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 16px;
-        margin-bottom: 18px;
-      }
-      @media (max-width: 500px) {
-        .sz-field-row {
-          grid-template-columns: 1fr;
-        }
-      }
-      .sz-personalization-wrapper label {
-        display: block;
-        font-size: 14px;
-        font-weight: 600;
-        color: #2c2c2c;
-        margin-bottom: 8px;
-      }
-      .sz-personalization-wrapper .required-star {
-        color: #e74c3c;
-      }
-      .sz-personalization-wrapper select,
-      .sz-personalization-wrapper input[type="text"] {
-        width: 100%;
-        padding: 12px 14px;
-        font-size: 15px;
-        border: 2px solid #d4a574;
-        border-radius: 8px;
-        background: #fff;
-        color: #333;
-        box-sizing: border-box;
-        transition: all 0.2s ease;
-        -webkit-appearance: none;
-        appearance: none;
-      }
-      .sz-personalization-wrapper select {
-        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23d4a574' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
-        background-repeat: no-repeat;
-        background-position: right 14px center;
-        padding-right: 40px;
-        cursor: pointer;
-      }
-      .sz-personalization-wrapper select:focus,
-      .sz-personalization-wrapper input[type="text"]:focus {
-        outline: none;
-        border-color: #b8956a;
-        box-shadow: 0 0 0 3px rgba(212, 165, 116, 0.2);
-      }
-      .sz-personalization-wrapper input[type="text"]::placeholder {
-        color: #999;
-      }
-      .sz-char-counter {
-        display: block;
-        text-align: right;
-        font-size: 12px;
-        color: #888;
-        margin-top: 6px;
-      }
-      .sz-preview-box {
-        margin-top: 16px;
-        padding: 16px;
-        background: #fff;
-        border-radius: 10px;
-        border: 2px dashed #d4a574;
-        text-align: center;
-      }
-      .sz-preview-label {
-        font-size: 11px;
-        text-transform: uppercase;
-        letter-spacing: 1.5px;
-        color: #888;
-        margin-bottom: 8px;
-      }
-      .sz-preview-text {
-        font-size: 22px;
-        font-weight: 600;
-        color: #d4a574;
-        min-height: 30px;
-        transition: all 0.3s ease;
-      }
-      .sz-preview-details {
-        font-size: 12px;
-        color: #888;
-        margin-top: 8px;
-      }
-      .sz-error-msg {
-        display: none;
-        color: #e74c3c;
-        font-size: 13px;
-        margin-top: 12px;
-        padding: 10px 14px;
-        background: #fdf2f2;
-        border-radius: 6px;
-        border-left: 3px solid #e74c3c;
-      }
-      .sz-error-msg.show {
-        display: block;
-      }
-      /* Button styles */
-      .sz-btn-row {
-        display: flex;
-        gap: 12px;
-        margin-top: 16px;
-      }
-      .sz-btn {
-        flex: 1;
-        padding: 14px 20px;
-        font-size: 15px;
-        font-weight: 600;
-        border: none;
-        border-radius: 8px;
-        cursor: pointer;
-        transition: all 0.2s ease;
-      }
-      .sz-btn-next {
-        background: #d4a574;
-        color: #fff;
-      }
-      .sz-btn-next:hover {
-        background: #c49464;
-      }
-      .sz-btn-back {
-        background: #e8e8e8;
-        color: #666;
-      }
-      .sz-btn-back:hover {
-        background: #ddd;
-      }
-      .sz-btn:disabled {
-        opacity: 0.5;
-        cursor: not-allowed;
-      }
-      /* Completed bottles summary */
-      .sz-completed-list {
-        margin-top: 16px;
-        padding: 12px;
-        background: #f9f9f9;
-        border-radius: 8px;
-        max-height: 150px;
-        overflow-y: auto;
-      }
-      .sz-completed-item {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 8px 12px;
-        margin-bottom: 6px;
-        background: #fff;
-        border-radius: 6px;
-        border-left: 3px solid #4caf50;
-        font-size: 13px;
-      }
-      .sz-completed-item:last-child {
-        margin-bottom: 0;
-      }
-      .sz-completed-item .bottle-num {
-        font-weight: 600;
-        color: #d4a574;
-      }
-      .sz-completed-item .bottle-name {
-        flex: 1;
-        margin: 0 12px;
-        color: #333;
-      }
-      .sz-completed-item .bottle-edit {
-        color: #d4a574;
-        text-decoration: underline;
-        cursor: pointer;
-        font-size: 12px;
-      }
-      .sz-all-done {
-        text-align: center;
-        padding: 20px;
-        background: #e8f5e9;
-        border-radius: 10px;
-        margin-top: 16px;
-      }
-      .sz-all-done h4 {
-        margin: 0 0 8px 0;
-        color: #4caf50;
-        font-size: 16px;
-      }
-      .sz-all-done p {
-        margin: 0;
-        color: #666;
-        font-size: 14px;
-      }
-      /* Font preview classes */
-      .sz-font-script { font-family: 'Brush Script MT', 'Segoe Script', cursive; }
-      .sz-font-calligraphy { font-family: 'Edwardian Script ITC', 'Monotype Corsiva', cursive; font-style: italic; }
-      .sz-font-handwritten { font-family: 'Comic Sans MS', 'Segoe Print', cursive; }
-      .sz-font-brush { font-family: 'Mistral', 'Brush Script MT', cursive; }
-      .sz-font-signature { font-family: 'Lucida Handwriting', 'Segoe Script', cursive; font-style: italic; }
-      .sz-font-serif { font-family: 'Georgia', 'Times New Roman', serif; }
-      .sz-font-elegant { font-family: 'Palatino Linotype', 'Book Antiqua', serif; }
-      .sz-font-oldenglish { font-family: 'Old English Text MT', 'Luminari', fantasy; }
-      .sz-font-roman { font-family: 'Times New Roman', 'Garamond', serif; }
-      .sz-font-playfair { font-family: 'Didot', 'Bodoni MT', serif; font-weight: 400; }
-      .sz-font-sans { font-family: 'Arial', 'Helvetica', sans-serif; }
-      .sz-font-modern { font-family: 'Trebuchet MS', 'Lucida Sans', sans-serif; }
-      .sz-font-minimalist { font-family: 'Futura', 'Century Gothic', sans-serif; letter-spacing: 2px; }
-      .sz-font-bold { font-family: 'Impact', 'Arial Black', sans-serif; font-weight: 900; }
-      .sz-font-rounded { font-family: 'Verdana', 'Arial Rounded MT Bold', sans-serif; }
-      .sz-font-artdeco { font-family: 'Copperplate', 'Copperplate Gothic Bold', serif; letter-spacing: 3px; }
-      .sz-font-stencil { font-family: 'Stencil Std', 'Impact', sans-serif; letter-spacing: 1px; }
-      .sz-font-monogram { font-family: 'Monotype Corsiva', 'Edwardian Script ITC', cursive; font-size: 28px; }
-      .sz-font-vintage { font-family: 'Courier New', 'American Typewriter', monospace; }
-    </style>
-  \\\`;
-
-  // Font class mapping
-  var fontClasses = {
-    'Script': 'sz-font-script',
-    'Calligraphy': 'sz-font-calligraphy',
-    'Handwritten': 'sz-font-handwritten',
-    'Brush Script': 'sz-font-brush',
-    'Signature': 'sz-font-signature',
-    'Serif': 'sz-font-serif',
-    'Elegant': 'sz-font-elegant',
-    'Old English': 'sz-font-oldenglish',
-    'Roman': 'sz-font-roman',
-    'Playfair': 'sz-font-playfair',
-    'Sans Serif': 'sz-font-sans',
-    'Modern': 'sz-font-modern',
-    'Minimalist': 'sz-font-minimalist',
-    'Bold': 'sz-font-bold',
-    'Rounded': 'sz-font-rounded',
-    'Art Deco': 'sz-font-artdeco',
-    'Stencil': 'sz-font-stencil',
-    'Monogram': 'sz-font-monogram',
-    'Vintage': 'sz-font-vintage'
-  };
-
-  // Color mapping
-  var colorValues = {
-    'Gold': '#d4a574',
-    'Silver': '#8e8e8e',
-    'Rose Gold': '#b76e79',
-    'Champagne': '#f7e7ce',
-    'Bronze': '#cd7f32',
-    'Black': '#222222',
-    'White': '#666666',
-    'Navy Blue': '#1a3a5c',
-    'Burgundy': '#722f37',
-    'Forest Green': '#228b22',
-    'Ivory': '#fffff0',
-    'Blush Pink': '#de98ab'
-  };
-
-  // Build the HTML based on bottle count
-  if (bottleCount === 1) {
-    // Single bottle - simple form
-    container.innerHTML = styles + \\\`
-      <h3>
-        <svg viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
-        Personalize Your Bottle
-      </h3>
-      <div class="sz-field-row">
-        <div class="sz-field-group">
-          <label for="sz-font-select">Font Style <span class="required-star">*</span></label>
-          <select id="sz-font-select" name="properties[Font]" required>
-            <option value="">Select a font...</option>
-            \\\${fontOptionsHTML}
-          </select>
-        </div>
-        <div class="sz-field-group">
-          <label for="sz-color-select">Text Color <span class="required-star">*</span></label>
-          <select id="sz-color-select" name="properties[Color]" required>
-            <option value="">Select a color...</option>
-            \\\${colorOptionsHTML}
-          </select>
-        </div>
-      </div>
-      <div class="sz-field-group">
-        <label for="sz-name-input">Name on Water Bottle <span class="required-star">*</span></label>
-        <input id="sz-name-input" type="text" name="properties[Name on bottle]" placeholder="e.g., Sarah, Mr. & Mrs. Smith" maxlength="25" required autocomplete="off">
-        <span class="sz-char-counter">0 / 25 characters</span>
-      </div>
-      <div class="sz-preview-box">
-        <div class="sz-preview-label">Live Preview</div>
-        <div class="sz-preview-text" id="sz-js-preview">Your name will appear here</div>
-        <div class="sz-preview-details" id="sz-preview-details">Select font and color above</div>
-      </div>
-      <div class="sz-error-msg" id="sz-js-error">Please complete all personalization fields before adding to cart.</div>
-    \\\`;
-  } else {
-    // Multi-bottle set - wizard interface
-    var progressHTML = '<div class="sz-progress">';
-    for (var i = 0; i < bottleCount; i++) {
-      progressHTML += '<div class="sz-progress-step' + (i === 0 ? ' active' : '') + '" data-step="' + i + '"><span>' + (i + 1) + '</span></div>';
+    // Find product form
+    var productForm = document.querySelector('form[action*="/cart/add"]');
+    if (!productForm) {
+      productForm = document.querySelector('.product-form');
     }
-    progressHTML += '</div>';
+    if (!productForm) {
+      productForm = document.querySelector('[data-product-form]');
+    }
+    if (!productForm) return;
 
-    container.innerHTML = styles + \\\`
-      <h3>
-        <svg viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
-        Personalize Your \\\${bottleCount} Bottles
-      </h3>
-      \\\${progressHTML}
-      <div class="sz-current-bottle">Customizing <strong>Bottle #<span id="sz-bottle-num">1</span></strong> of \\\${bottleCount}</div>
+    // Find add button
+    var addButton = productForm.querySelector('[type="submit"]');
+    if (!addButton) addButton = productForm.querySelector('.add-to-cart');
+    if (!addButton) addButton = productForm.querySelector('button');
+    if (!addButton) return;
 
-      <div id="sz-form-area">
-        <div class="sz-field-row">
-          <div class="sz-field-group">
-            <label for="sz-font-select">Font Style <span class="required-star">*</span></label>
-            <select id="sz-font-select" required>
-              <option value="">Select a font...</option>
-              \\\${fontOptionsHTML}
-            </select>
-          </div>
-          <div class="sz-field-group">
-            <label for="sz-color-select">Text Color <span class="required-star">*</span></label>
-            <select id="sz-color-select" required>
-              <option value="">Select a color...</option>
-              \\\${colorOptionsHTML}
-            </select>
-          </div>
-        </div>
-        <div class="sz-field-group">
-          <label for="sz-name-input">Name on Water Bottle <span class="required-star">*</span></label>
-          <input id="sz-name-input" type="text" placeholder="e.g., Sarah, Emily, Jessica" maxlength="25" required autocomplete="off">
-          <span class="sz-char-counter">0 / 25 characters</span>
-        </div>
-        <div class="sz-preview-box">
-          <div class="sz-preview-label">Live Preview</div>
-          <div class="sz-preview-text" id="sz-js-preview">Your name will appear here</div>
-          <div class="sz-preview-details" id="sz-preview-details">Select font and color above</div>
-        </div>
-        <div class="sz-error-msg" id="sz-js-error">Please complete all fields for this bottle.</div>
-        <div class="sz-btn-row">
-          <button type="button" class="sz-btn sz-btn-back" id="sz-btn-back" style="display:none;">← Back</button>
-          <button type="button" class="sz-btn sz-btn-next" id="sz-btn-next">Save & Next Bottle →</button>
-        </div>
-      </div>
+    // Get product title
+    var titleEl = document.querySelector('.product__title, .product-single__title, h1.title, [data-product-title], .ProductMeta__Title, h1');
+    var titleText = titleEl ? titleEl.textContent.toLowerCase() : '';
 
-      <div id="sz-completed-area" style="display:none;">
-        <div class="sz-completed-list" id="sz-completed-list"></div>
-      </div>
-
-      <div id="sz-all-done" class="sz-all-done" style="display:none;">
-        <h4>✓ All \\\${bottleCount} Bottles Customized!</h4>
-        <p>Click "Add to Cart" to complete your order.</p>
-      </div>
-
-      <!-- Hidden inputs for form submission -->
-      <div id="sz-hidden-inputs"></div>
-    \\\`;
-  }
-
-  // Insert before add button
-  addButton.parentNode.insertBefore(container, addButton);
-
-  // Get elements
-  var nameInput = document.getElementById('sz-name-input');
-  var fontSelect = document.getElementById('sz-font-select');
-  var colorSelect = document.getElementById('sz-color-select');
-  var counter = container.querySelector('.sz-char-counter');
-  var preview = document.getElementById('sz-js-preview');
-  var previewDetails = document.getElementById('sz-preview-details');
-  var errorMsg = document.getElementById('sz-js-error');
-
-  function updatePreview() {
-    if (!nameInput || !fontSelect || !colorSelect) return;
-    var name = nameInput.value.trim();
-    var font = fontSelect.value;
-    var color = colorSelect.value;
-
-    if (name) {
-      preview.textContent = name;
+    // Detect bottle count
+    var bottleCount = 1;
+    var setMatch = titleText.match(/set of (\\d+)/);
+    if (setMatch) {
+      bottleCount = parseInt(setMatch[1]);
     } else {
-      preview.textContent = 'Your name will appear here';
-    }
-
-    preview.className = 'sz-preview-text';
-    if (font && fontClasses[font]) {
-      preview.classList.add(fontClasses[font]);
-    }
-
-    if (color && colorValues[color]) {
-      preview.style.color = colorValues[color];
-    } else {
-      preview.style.color = '#d4a574';
-    }
-
-    var details = [];
-    if (font) details.push(font + ' font');
-    if (color) details.push(color + ' color');
-    previewDetails.textContent = details.length > 0 ? details.join(' • ') : 'Select font and color above';
-
-    if (errorMsg) errorMsg.classList.remove('show');
-  }
-
-  nameInput.addEventListener('input', function() {
-    var len = this.value.length;
-    counter.textContent = len + ' / 25 characters';
-    counter.style.color = len >= 25 ? '#e74c3c' : (len >= 20 ? '#e67e22' : '#888');
-    updatePreview();
-  });
-
-  fontSelect.addEventListener('change', updatePreview);
-  colorSelect.addEventListener('change', updatePreview);
-
-  // Multi-bottle wizard logic
-  if (bottleCount > 1) {
-    var btnNext = document.getElementById('sz-btn-next');
-    var btnBack = document.getElementById('sz-btn-back');
-    var bottleNumEl = document.getElementById('sz-bottle-num');
-    var formArea = document.getElementById('sz-form-area');
-    var completedArea = document.getElementById('sz-completed-area');
-    var completedList = document.getElementById('sz-completed-list');
-    var allDoneEl = document.getElementById('sz-all-done');
-    var hiddenInputs = document.getElementById('sz-hidden-inputs');
-    var progressSteps = container.querySelectorAll('.sz-progress-step');
-
-    function updateProgress() {
-      progressSteps.forEach(function(step, idx) {
-        step.classList.remove('active', 'completed');
-        if (idx < currentBottle) {
-          step.classList.add('completed');
-        } else if (idx === currentBottle) {
-          step.classList.add('active');
-        }
-      });
-    }
-
-    function updateCompletedList() {
-      var html = '';
-      bottles.forEach(function(b, idx) {
-        html += '<div class="sz-completed-item">';
-        html += '<span class="bottle-num">#' + (idx + 1) + '</span>';
-        html += '<span class="bottle-name">' + b.name + ' (' + b.font + ', ' + b.color + ')</span>';
-        html += '<span class="bottle-edit" data-idx="' + idx + '">Edit</span>';
-        html += '</div>';
-      });
-      completedList.innerHTML = html;
-
-      // Add edit handlers
-      completedList.querySelectorAll('.bottle-edit').forEach(function(el) {
-        el.addEventListener('click', function() {
-          var idx = parseInt(this.getAttribute('data-idx'));
-          currentBottle = idx;
-          showBottleForm(idx);
-        });
-      });
-    }
-
-    function updateHiddenInputs() {
-      var html = '';
-      bottles.forEach(function(b, idx) {
-        var num = idx + 1;
-        html += '<input type="hidden" name="properties[Bottle ' + num + ' - Font]" value="' + b.font + '">';
-        html += '<input type="hidden" name="properties[Bottle ' + num + ' - Color]" value="' + b.color + '">';
-        html += '<input type="hidden" name="properties[Bottle ' + num + ' - Name]" value="' + b.name + '">';
-      });
-      hiddenInputs.innerHTML = html;
-    }
-
-    function showBottleForm(idx) {
-      formArea.style.display = 'block';
-      allDoneEl.style.display = 'none';
-      bottleNumEl.textContent = idx + 1;
-      btnBack.style.display = idx > 0 ? 'block' : 'none';
-      btnNext.textContent = idx === bottleCount - 1 ? 'Save & Finish ✓' : 'Save & Next Bottle →';
-
-      // Load existing data if editing
-      if (bottles[idx]) {
-        fontSelect.value = bottles[idx].font;
-        colorSelect.value = bottles[idx].color;
-        nameInput.value = bottles[idx].name;
-      } else {
-        fontSelect.value = '';
-        colorSelect.value = '';
-        nameInput.value = '';
+      var packMatch = titleText.match(/(\\d+)\\s*-?pack/);
+      if (packMatch) {
+        bottleCount = parseInt(packMatch[1]);
       }
+    }
+
+    // Font and color options
+    var fontOptions = '<optgroup label="Script & Cursive">' +
+      '<option value="Script">Script (Elegant Cursive)</option>' +
+      '<option value="Calligraphy">Calligraphy (Formal)</option>' +
+      '<option value="Handwritten">Handwritten (Casual)</option>' +
+      '<option value="Brush Script">Brush Script (Artistic)</option>' +
+      '<option value="Signature">Signature (Personal)</option>' +
+      '</optgroup>' +
+      '<optgroup label="Serif (Classic)">' +
+      '<option value="Serif">Serif (Traditional)</option>' +
+      '<option value="Elegant">Elegant (Refined)</option>' +
+      '<option value="Old English">Old English (Gothic)</option>' +
+      '<option value="Roman">Roman (Timeless)</option>' +
+      '<option value="Playfair">Playfair (Sophisticated)</option>' +
+      '</optgroup>' +
+      '<optgroup label="Sans Serif (Modern)">' +
+      '<option value="Sans Serif">Sans Serif (Clean)</option>' +
+      '<option value="Modern">Modern (Contemporary)</option>' +
+      '<option value="Minimalist">Minimalist (Simple)</option>' +
+      '<option value="Bold">Bold (Statement)</option>' +
+      '<option value="Rounded">Rounded (Friendly)</option>' +
+      '</optgroup>' +
+      '<optgroup label="Decorative">' +
+      '<option value="Art Deco">Art Deco (Vintage)</option>' +
+      '<option value="Stencil">Stencil (Industrial)</option>' +
+      '<option value="Monogram">Monogram (Initial Style)</option>' +
+      '<option value="Vintage">Vintage (Retro)</option>' +
+      '</optgroup>';
+
+    var colorOptions = '<optgroup label="Metallic">' +
+      '<option value="Gold">Gold</option>' +
+      '<option value="Silver">Silver</option>' +
+      '<option value="Rose Gold">Rose Gold</option>' +
+      '<option value="Champagne">Champagne</option>' +
+      '<option value="Bronze">Bronze</option>' +
+      '</optgroup>' +
+      '<optgroup label="Classic">' +
+      '<option value="Black">Black</option>' +
+      '<option value="White">White</option>' +
+      '<option value="Navy Blue">Navy Blue</option>' +
+      '<option value="Burgundy">Burgundy</option>' +
+      '<option value="Forest Green">Forest Green</option>' +
+      '<option value="Ivory">Ivory</option>' +
+      '<option value="Blush Pink">Blush Pink</option>' +
+      '</optgroup>';
+
+    var fontClasses = {
+      'Script': 'sz-font-script', 'Calligraphy': 'sz-font-calligraphy',
+      'Handwritten': 'sz-font-handwritten', 'Brush Script': 'sz-font-brush',
+      'Signature': 'sz-font-signature', 'Serif': 'sz-font-serif',
+      'Elegant': 'sz-font-elegant', 'Old English': 'sz-font-oldenglish',
+      'Roman': 'sz-font-roman', 'Playfair': 'sz-font-playfair',
+      'Sans Serif': 'sz-font-sans', 'Modern': 'sz-font-modern',
+      'Minimalist': 'sz-font-minimalist', 'Bold': 'sz-font-bold',
+      'Rounded': 'sz-font-rounded', 'Art Deco': 'sz-font-artdeco',
+      'Stencil': 'sz-font-stencil', 'Monogram': 'sz-font-monogram',
+      'Vintage': 'sz-font-vintage'
+    };
+
+    var colorValues = {
+      'Gold': '#d4a574', 'Silver': '#8e8e8e', 'Rose Gold': '#b76e79',
+      'Champagne': '#f7e7ce', 'Bronze': '#cd7f32', 'Black': '#222222',
+      'White': '#666666', 'Navy Blue': '#1a3a5c', 'Burgundy': '#722f37',
+      'Forest Green': '#228b22', 'Ivory': '#fffff0', 'Blush Pink': '#de98ab'
+    };
+
+    // Create container
+    var container = document.createElement('div');
+    container.className = 'sz-personalization-wrapper';
+    container.id = 'sz-personalization';
+
+    var html = '<h3>' +
+      '<svg viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>' +
+      'Personalize Your ' + (bottleCount > 1 ? bottleCount + ' Bottles' : 'Bottle') +
+      '</h3>';
+
+    if (bottleCount > 1) {
+      // Multi-bottle wizard
+      html += '<div class="sz-progress" id="sz-progress">';
+      for (var i = 0; i < bottleCount; i++) {
+        html += '<div class="sz-progress-step' + (i === 0 ? ' active' : '') + '" data-step="' + i + '">' + (i + 1) + '</div>';
+      }
+      html += '</div>';
+      html += '<div class="sz-current-bottle">Customizing <strong>Bottle #<span id="sz-bottle-num">1</span></strong> of ' + bottleCount + '</div>';
+    }
+
+    html += '<div id="sz-form-area">' +
+      '<div class="sz-field-row">' +
+      '<div class="sz-field-group">' +
+      '<label>Font Style <span class="required-star">*</span></label>' +
+      '<select id="sz-font"' + (bottleCount === 1 ? ' name="properties[Font]"' : '') + ' required>' +
+      '<option value="">Select a font...</option>' + fontOptions + '</select>' +
+      '</div>' +
+      '<div class="sz-field-group">' +
+      '<label>Text Color <span class="required-star">*</span></label>' +
+      '<select id="sz-color"' + (bottleCount === 1 ? ' name="properties[Color]"' : '') + ' required>' +
+      '<option value="">Select a color...</option>' + colorOptions + '</select>' +
+      '</div>' +
+      '</div>' +
+      '<div class="sz-field-group">' +
+      '<label>Name on Water Bottle <span class="required-star">*</span></label>' +
+      '<input type="text" id="sz-name"' + (bottleCount === 1 ? ' name="properties[Name on bottle]"' : '') + ' placeholder="e.g., Sarah, Mr. & Mrs. Smith" maxlength="25" required autocomplete="off">' +
+      '<span class="sz-char-counter" id="sz-counter">0 / 25 characters</span>' +
+      '</div>' +
+      '<div class="sz-preview-box">' +
+      '<div class="sz-preview-label">Live Preview</div>' +
+      '<div class="sz-preview-text" id="sz-preview">Your name will appear here</div>' +
+      '<div class="sz-preview-details" id="sz-details">Select font and color above</div>' +
+      '</div>' +
+      '<div class="sz-error-msg" id="sz-error">Please complete all fields.</div>';
+
+    if (bottleCount > 1) {
+      html += '<div class="sz-btn-row">' +
+        '<button type="button" class="sz-btn sz-btn-back" id="sz-back" style="display:none;">← Back</button>' +
+        '<button type="button" class="sz-btn sz-btn-next" id="sz-next">Save & Next Bottle →</button>' +
+        '</div>';
+    }
+
+    html += '</div>';
+
+    if (bottleCount > 1) {
+      html += '<div id="sz-completed" class="sz-completed-list" style="display:none;"></div>' +
+        '<div id="sz-done" class="sz-all-done" style="display:none;">' +
+        '<h4>✓ All ' + bottleCount + ' Bottles Customized!</h4>' +
+        '<p>Click "Add to Cart" to complete your order.</p>' +
+        '</div>' +
+        '<div id="sz-hidden"></div>';
+    }
+
+    container.innerHTML = html;
+    addButton.parentNode.insertBefore(container, addButton);
+
+    // Get elements
+    var fontEl = document.getElementById('sz-font');
+    var colorEl = document.getElementById('sz-color');
+    var nameEl = document.getElementById('sz-name');
+    var counterEl = document.getElementById('sz-counter');
+    var previewEl = document.getElementById('sz-preview');
+    var detailsEl = document.getElementById('sz-details');
+    var errorEl = document.getElementById('sz-error');
+
+    function updatePreview() {
+      var name = nameEl.value.trim();
+      var font = fontEl.value;
+      var color = colorEl.value;
+
+      previewEl.textContent = name || 'Your name will appear here';
+      previewEl.className = 'sz-preview-text';
+      if (font && fontClasses[font]) {
+        previewEl.classList.add(fontClasses[font]);
+      }
+      previewEl.style.color = (color && colorValues[color]) ? colorValues[color] : '#d4a574';
+
+      var details = [];
+      if (font) details.push(font + ' font');
+      if (color) details.push(color + ' color');
+      detailsEl.textContent = details.length ? details.join(' • ') : 'Select font and color above';
+      errorEl.classList.remove('show');
+    }
+
+    nameEl.addEventListener('input', function() {
+      var len = this.value.length;
+      counterEl.textContent = len + ' / 25 characters';
+      counterEl.style.color = len >= 25 ? '#e74c3c' : (len >= 20 ? '#e67e22' : '#888');
       updatePreview();
-      updateProgress();
-
-      if (bottles.length > 0) {
-        completedArea.style.display = 'block';
-        updateCompletedList();
-      }
-    }
-
-    function validateCurrentBottle() {
-      if (!fontSelect.value || !colorSelect.value || !nameInput.value.trim()) {
-        errorMsg.classList.add('show');
-        if (!fontSelect.value) fontSelect.focus();
-        else if (!colorSelect.value) colorSelect.focus();
-        else nameInput.focus();
-        return false;
-      }
-      return true;
-    }
-
-    function saveCurrentBottle() {
-      bottles[currentBottle] = {
-        font: fontSelect.value,
-        color: colorSelect.value,
-        name: nameInput.value.trim()
-      };
-      updateHiddenInputs();
-      updateCompletedList();
-    }
-
-    btnNext.addEventListener('click', function() {
-      if (!validateCurrentBottle()) return;
-
-      saveCurrentBottle();
-
-      if (currentBottle < bottleCount - 1) {
-        currentBottle++;
-        showBottleForm(currentBottle);
-      } else {
-        // All done
-        formArea.style.display = 'none';
-        allDoneEl.style.display = 'block';
-        completedArea.style.display = 'block';
-        updateProgress();
-        updateCompletedList();
-      }
     });
 
-    btnBack.addEventListener('click', function() {
-      if (currentBottle > 0) {
-        // Save current first
-        if (fontSelect.value && colorSelect.value && nameInput.value.trim()) {
-          saveCurrentBottle();
+    fontEl.addEventListener('change', updatePreview);
+    colorEl.addEventListener('change', updatePreview);
+
+    // Multi-bottle wizard logic
+    if (bottleCount > 1) {
+      var bottles = [];
+      var currentBottle = 0;
+      var nextBtn = document.getElementById('sz-next');
+      var backBtn = document.getElementById('sz-back');
+      var bottleNumEl = document.getElementById('sz-bottle-num');
+      var formArea = document.getElementById('sz-form-area');
+      var completedEl = document.getElementById('sz-completed');
+      var doneEl = document.getElementById('sz-done');
+      var hiddenEl = document.getElementById('sz-hidden');
+      var progressSteps = document.querySelectorAll('.sz-progress-step');
+
+      function updateProgress() {
+        progressSteps.forEach(function(step, idx) {
+          step.classList.remove('active', 'completed');
+          step.textContent = idx + 1;
+          if (idx < bottles.length) {
+            step.classList.add('completed');
+            step.textContent = '✓';
+          } else if (idx === currentBottle) {
+            step.classList.add('active');
+          }
+        });
+      }
+
+      function updateCompleted() {
+        var html = '';
+        bottles.forEach(function(b, idx) {
+          html += '<div class="sz-completed-item">' +
+            '<span class="bottle-num">#' + (idx + 1) + '</span>' +
+            '<span class="bottle-name">' + b.name + ' (' + b.font + ', ' + b.color + ')</span>' +
+            '<span class="bottle-edit" data-idx="' + idx + '">Edit</span>' +
+            '</div>';
+        });
+        completedEl.innerHTML = html;
+        completedEl.style.display = bottles.length ? 'block' : 'none';
+
+        completedEl.querySelectorAll('.bottle-edit').forEach(function(el) {
+          el.addEventListener('click', function() {
+            currentBottle = parseInt(this.getAttribute('data-idx'));
+            showForm();
+          });
+        });
+      }
+
+      function updateHidden() {
+        var html = '';
+        bottles.forEach(function(b, idx) {
+          var n = idx + 1;
+          html += '<input type="hidden" name="properties[Bottle ' + n + ' - Font]" value="' + b.font + '">' +
+            '<input type="hidden" name="properties[Bottle ' + n + ' - Color]" value="' + b.color + '">' +
+            '<input type="hidden" name="properties[Bottle ' + n + ' - Name]" value="' + b.name + '">';
+        });
+        hiddenEl.innerHTML = html;
+      }
+
+      function showForm() {
+        formArea.style.display = 'block';
+        doneEl.style.display = 'none';
+        bottleNumEl.textContent = currentBottle + 1;
+        backBtn.style.display = currentBottle > 0 ? 'block' : 'none';
+        nextBtn.textContent = currentBottle === bottleCount - 1 ? 'Save & Finish ✓' : 'Save & Next Bottle →';
+
+        if (bottles[currentBottle]) {
+          fontEl.value = bottles[currentBottle].font;
+          colorEl.value = bottles[currentBottle].color;
+          nameEl.value = bottles[currentBottle].name;
+        } else {
+          fontEl.value = '';
+          colorEl.value = '';
+          nameEl.value = '';
+        }
+        updatePreview();
+        updateProgress();
+        updateCompleted();
+      }
+
+      function validate() {
+        if (!fontEl.value || !colorEl.value || !nameEl.value.trim()) {
+          errorEl.classList.add('show');
+          if (!fontEl.value) fontEl.focus();
+          else if (!colorEl.value) colorEl.focus();
+          else nameEl.focus();
+          return false;
+        }
+        return true;
+      }
+
+      function save() {
+        bottles[currentBottle] = {
+          font: fontEl.value,
+          color: colorEl.value,
+          name: nameEl.value.trim()
+        };
+        updateHidden();
+        updateCompleted();
+      }
+
+      nextBtn.addEventListener('click', function() {
+        if (!validate()) return;
+        save();
+
+        if (currentBottle < bottleCount - 1) {
+          currentBottle++;
+          showForm();
+        } else {
+          formArea.style.display = 'none';
+          doneEl.style.display = 'block';
+          updateProgress();
+          updateCompleted();
+        }
+      });
+
+      backBtn.addEventListener('click', function() {
+        if (fontEl.value && colorEl.value && nameEl.value.trim()) {
+          save();
         }
         currentBottle--;
-        showBottleForm(currentBottle);
-      }
-    });
+        showForm();
+      });
 
-    // Form validation on submit
-    productForm.addEventListener('submit', function(e) {
-      if (bottles.length < bottleCount) {
-        e.preventDefault();
-        errorMsg.textContent = 'Please customize all ' + bottleCount + ' bottles before adding to cart.';
-        errorMsg.classList.add('show');
-        container.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      }
-    });
+      productForm.addEventListener('submit', function(e) {
+        if (bottles.length < bottleCount) {
+          e.preventDefault();
+          errorEl.textContent = 'Please customize all ' + bottleCount + ' bottles before adding to cart.';
+          errorEl.classList.add('show');
+          container.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      });
 
-    // Initialize
-    completedArea.style.display = 'none';
-    showBottleForm(0);
-
-  } else {
-    // Single bottle validation
-    productForm.addEventListener('submit', function(e) {
-      var errors = [];
-      if (!fontSelect.value) errors.push('font');
-      if (!colorSelect.value) errors.push('color');
-      if (!nameInput.value.trim()) errors.push('name');
-
-      if (errors.length > 0) {
-        e.preventDefault();
-        errorMsg.classList.add('show');
-        if (!fontSelect.value) fontSelect.focus();
-        else if (!colorSelect.value) colorSelect.focus();
-        else nameInput.focus();
-        container.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      }
-    });
+      showForm();
+    } else {
+      // Single bottle validation
+      productForm.addEventListener('submit', function(e) {
+        if (!fontEl.value || !colorEl.value || !nameEl.value.trim()) {
+          e.preventDefault();
+          errorEl.classList.add('show');
+          if (!fontEl.value) fontEl.focus();
+          else if (!colorEl.value) colorEl.focus();
+          else nameEl.focus();
+          container.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      });
+    }
   }
-});
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initPersonalization);
+  } else {
+    initPersonalization();
+  }
+})();
 </script>
 {% endif %}
 `;
 
-  const result2 = await putAsset(liveTheme.id, 'snippets/sz-personalization-inject.liquid', jsInjectionSnippet);
-  console.log(result2.success ? '   ✅ Created sz-personalization-inject.liquid' : '   ❌ Failed');
+  const result1 = await putAsset(liveTheme.id, 'snippets/sz-personalization-inject.liquid', snippetContent);
+  console.log(result1.success ? '   ✅ Created sz-personalization-inject.liquid' : '   ❌ Failed');
 
-  // Inject into theme.liquid
+  // Ensure it's in theme.liquid
   let themeLiquid = await getAsset(liveTheme.id, 'layout/theme.liquid');
-  if (themeLiquid && !themeLiquid.includes('sz-personalization-inject')) {
-    themeLiquid = themeLiquid.replace('</body>', "{% render 'sz-personalization-inject' %}\n</body>");
-    const result3 = await putAsset(liveTheme.id, 'layout/theme.liquid', themeLiquid);
-    console.log(result3.success ? '   ✅ Injected into theme.liquid' : '   ❌ Failed to inject');
-  } else if (themeLiquid) {
-    console.log('   ✓ Already injected into theme.liquid');
+  if (themeLiquid) {
+    if (!themeLiquid.includes('sz-personalization-inject')) {
+      themeLiquid = themeLiquid.replace('</body>', "{% render 'sz-personalization-inject' %}\n</body>");
+      const result2 = await putAsset(liveTheme.id, 'layout/theme.liquid', themeLiquid);
+      console.log(result2.success ? '   ✅ Injected into theme.liquid' : '   ❌ Failed to inject');
+    } else {
+      console.log('   ✓ Already in theme.liquid');
+    }
   }
 
   console.log('');
   console.log('╔════════════════════════════════════════════════════════════════╗');
-  console.log('║  ✅ PERSONALIZATION INPUT ADDED                                ║');
+  console.log('║  ✅ PERSONALIZATION DEPLOYED                                   ║');
   console.log('╚════════════════════════════════════════════════════════════════╝');
   console.log('');
-  console.log('Features added:');
-  console.log('  • Real text input field with name="properties[Name on bottle]"');
-  console.log('  • Character counter (max 25 characters)');
-  console.log('  • Live preview of personalization');
-  console.log('  • Required field validation');
-  console.log('  • Styled to match brand colors');
+  console.log('Features:');
+  console.log('  • Font selection (19 options)');
+  console.log('  • Color selection (12 options)');
+  console.log('  • Name input with character counter');
+  console.log('  • Live preview');
   console.log('');
-  console.log('The personalization will appear in:');
-  console.log('  • Order confirmations');
-  console.log('  • Shopify admin order details');
-  console.log('  • Packing slips and invoices');
+  console.log('Multi-bottle sets (auto-detected from title):');
+  console.log('  • "Set of 3", "Set of 5", "Set of 6", "Set of 10"');
+  console.log('  • Step-by-step wizard');
+  console.log('  • Progress indicator');
+  console.log('  • Edit completed bottles');
   console.log('');
-  console.log('🔗 Test: https://shelzysdesigns.com/collections/all');
-  console.log('   (View any product page)');
+  console.log('🔗 Test at: https://shelzysdesigns.com');
   console.log('');
 }
 
