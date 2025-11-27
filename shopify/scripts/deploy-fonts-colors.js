@@ -450,7 +450,7 @@ const fontsColorsTemplate = `{
         "intro_text": "<p>Picking a font and color is half the fun. Use this guide to preview our options so your bottles feel as intentional as the rest of your planning.</p>",
         "colors_heading": "Bottle Colors",
         "colors_subheading": "Mix and match or keep everything consistent — either way, your bottles will look pulled-together in every photo.",
-        "closing_text": "<p>Not sure what to choose? Start with one font and one color for your entire set. It always looks intentional and elevated.</p><p><a href=\\"/collections/all-water-bottles\\" class=\\"btn\\">Start Personalizing</a></p>"
+        "closing_text": "<p>Not sure what to choose? Start with one font and one color for your entire set. It always looks intentional and elevated.</p><p><a href=\\"/collections/all-water-bottles\\">Start Personalizing →</a></p>"
       }
     }
   },
@@ -837,7 +837,7 @@ const personalizationTemplate = `{
         "intro_text": "<p>You're not pulling a bottle off a shelf. We print your exact names and details using permanent sublimation, so your bottles feel as personal as the weekend you're planning.</p>",
         "faq_heading": "Personalization FAQs",
         "faq_subheading": "Still wondering how timing, changes, or custom ideas work? Start here.",
-        "closing_text": "<p>Have a specific timeline or custom idea in mind? <a href=\\"/pages/contact\\" class=\\"btn\\">Reach out</a> and we'll help you plan it out.</p>"
+        "closing_text": "<p>Have a specific timeline or custom idea in mind? <a href=\\"/pages/contact\\">Reach out →</a> and we'll help you plan it out.</p>"
       }
     }
   },
