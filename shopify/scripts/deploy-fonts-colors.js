@@ -763,7 +763,7 @@ const personalizationSection = `{% comment %}
 {% endschema %}`;
 
 // Personalization page template
-const personalizationTemplate = \`{
+const personalizationTemplate = `{
   "sections": {
     "main": {
       "type": "shelzys-personalization",
@@ -837,21 +837,21 @@ const personalizationTemplate = \`{
         "intro_text": "<p>You're not pulling a bottle off a shelf. We print your exact names and details using permanent sublimation, so your bottles feel as personal as the weekend you're planning.</p>",
         "faq_heading": "Personalization FAQs",
         "faq_subheading": "Still wondering how timing, changes, or custom ideas work? Start here.",
-        "closing_text": "<p>Have a specific timeline or custom idea in mind? <a href=\\\\"/pages/contact\\\\" class=\\\\"btn\\\\">Reach out</a> and we'll help you plan it out.</p>"
+        "closing_text": "<p>Have a specific timeline or custom idea in mind? <a href=\\"/pages/contact\\" class=\\"btn\\">Reach out</a> and we'll help you plan it out.</p>"
       }
     }
   },
   "order": ["main"]
-}\`;
+}`;
 
 async function main() {
   console.log('================================================================');
   console.log('  DEPLOYING FONTS/COLORS & PERSONALIZATION GUIDES');
-  console.log('================================================================\\n');
+  console.log('================================================================\n');
 
   try {
     const themeId = await getThemeId();
-    console.log(\`Theme ID: \${themeId}\\n\`);
+    console.log(`Theme ID: ${themeId}\n`);
 
     // Create the section file
     await createAsset(themeId, 'sections/shelzys-fonts-colors.liquid', fontsColorsSection);
@@ -867,7 +867,7 @@ async function main() {
     const existingPage = pages.find(p => p.handle === 'fonts-colors');
 
     if (existingPage) {
-      await shopifyRequest('PUT', \`/pages/\${existingPage.id}.json\`, {
+      await shopifyRequest('PUT', `/pages/${existingPage.id}.json`, {
         page: {
           id: existingPage.id,
           template_suffix: 'fonts-colors'
@@ -887,7 +887,7 @@ async function main() {
     }
 
     // Deploy Personalization Guide
-    console.log('\\n--- Deploying Personalization Guide ---');
+    console.log('\n--- Deploying Personalization Guide ---');
 
     await createAsset(themeId, 'sections/shelzys-personalization.liquid', personalizationSection);
     console.log('✓ Created sections/shelzys-personalization.liquid');
@@ -898,7 +898,7 @@ async function main() {
     // Create or update personalization page
     const personalizationPage = pages.find(p => p.handle === 'personalization' || p.handle === 'how-personalization-works');
     if (personalizationPage) {
-      await shopifyRequest('PUT', \`/pages/\${personalizationPage.id}.json\`, {
+      await shopifyRequest('PUT', `/pages/${personalizationPage.id}.json`, {
         page: {
           id: personalizationPage.id,
           template_suffix: 'personalization'
@@ -917,10 +917,10 @@ async function main() {
       console.log('✓ Created personalization page');
     }
 
-    console.log('\\n================================================================');
+    console.log('\n================================================================');
     console.log('  GUIDES DEPLOYED!');
     console.log('================================================================');
-    console.log('\\nPages created:');
+    console.log('\nPages created:');
     console.log('  • /pages/fonts-colors - Fonts & Colors Guide');
     console.log('  • /pages/personalization - How Personalization Works');
 
