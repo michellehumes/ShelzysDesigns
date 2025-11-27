@@ -53,20 +53,38 @@ async function addDisclosureToPosts() {
     const articlesData = await shopifyRequest('GET', `/blogs/${blog.id}/articles.json`);
 
     for (const article of articlesData.articles) {
-      // Skip if already has disclosure
-      if (article.body_html && article.body_html.includes('This post contains affiliate links')) {
-        console.log(`⏭️  "${article.title}" - already has disclosure`);
+      let html = article.body_html || '';
+      let changes = [];
+
+      // Remove "(affiliate link)" text variations
+      const originalHtml = html;
+      html = html.replace(/\s*\(affiliate link\)/gi, '');
+      html = html.replace(/\s*\(affiliate\)/gi, '');
+      html = html.replace(/\s*\[affiliate link\]/gi, '');
+
+      if (html !== originalHtml) {
+        changes.push('removed (affiliate link) markers');
+      }
+
+      // Add disclosure if not already present
+      if (!html.includes('This post contains affiliate links')) {
+        html = html + disclosure;
+        changes.push('added disclosure');
+      }
+
+      // Skip if no changes needed
+      if (changes.length === 0) {
+        console.log(`⏭️  "${article.title}" - no changes needed`);
         continue;
       }
 
-      // Add disclosure to the end
-      const newHtml = (article.body_html || '') + disclosure;
+      const newHtml = html;
 
       await shopifyRequest('PUT', `/blogs/${blog.id}/articles/${article.id}.json`, {
         article: { id: article.id, body_html: newHtml }
       });
 
-      console.log(`✅ "${article.title}" - disclosure added`);
+      console.log(`✅ "${article.title}" - ${changes.join(', ')}`);
       updated++;
     }
   }
