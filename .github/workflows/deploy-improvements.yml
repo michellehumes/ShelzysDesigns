@@ -20,6 +20,7 @@ on:
           - 'upload-images'  # Upload stock images to products and blogs
           - 'fix-homepage'   # Fix reviews blocking homepage
           - 'fix-blog-images' # Fix blog images (downloads and uploads as base64)
+          - 'debug-blog'      # Debug blog image issues
 
 env:
   NODE_VERSION: '18'
@@ -340,3 +341,26 @@ jobs:
           echo "Images have been downloaded and uploaded to all blog posts." >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "**Refresh your blog to see the images.**" >> $GITHUB_STEP_SUMMARY
+
+  # ============================================
+  # DEBUG BLOG - Test image upload methods
+  # ============================================
+  debug-blog:
+    name: Debug Blog Images
+    runs-on: ubuntu-latest
+    if: github.event.inputs.action == 'debug-blog'
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Debug blog images
+        env:
+          SHOPIFY_STORE_URL: ${{ secrets.SHOPIFY_STORE_URL }}
+          SHOPIFY_ACCESS_TOKEN: ${{ secrets.SHOPIFY_ACCESS_TOKEN }}
+        run: node shopify/scripts/debug-blog-images.js
