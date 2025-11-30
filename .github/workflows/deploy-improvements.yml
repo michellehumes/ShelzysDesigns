@@ -1,37 +1,33 @@
 name: Deploy Site Improvements
 
 on:
-  # Manual trigger
+  # Manual trigger - click "Run workflow" in GitHub Actions
   workflow_dispatch:
     inputs:
-      phase:
-        description: 'Deployment phase (1, 2, 3, 4, or all)'
+      action:
+        description: 'What to deploy'
         required: true
-        default: 'all'
+        default: 'full'
         type: choice
         options:
-          - '1'
-          - '2'
-          - '3'
-          - '4'
-          - 'all'
-      dry_run:
-        description: 'Dry run (no actual changes)'
-        required: false
-        default: false
-        type: boolean
-
-  # Scheduled runs (optional - uncomment to enable)
-  # schedule:
-  #   - cron: '0 6 * * 1'  # Every Monday at 6 AM UTC
+          - 'full'           # Everything
+          - 'pages-only'     # Just fix pages
+          - 'snippets-only'  # Just inject theme snippets
+          - 'blogs-only'     # Just publish blog posts
+          - 'dry-run'        # Test without making changes
+          - 'fix-conflicts'  # Fix snippet conflicts with theme
 
 env:
   NODE_VERSION: '18'
 
 jobs:
-  deploy:
-    name: Deploy to Shopify
+  # ============================================
+  # FULL DEPLOYMENT - Does everything automatically
+  # ============================================
+  full-deploy:
+    name: Full Site Deployment
     runs-on: ubuntu-latest
+    if: github.event.inputs.action == 'full'
 
     steps:
       - name: Checkout repository
@@ -42,31 +38,107 @@ jobs:
         with:
           node-version: ${{ env.NODE_VERSION }}
 
-      - name: Run deployment script
+      - name: Step 1 - Deploy pages and collections
         env:
           SHOPIFY_STORE_URL: ${{ secrets.SHOPIFY_STORE_URL }}
           SHOPIFY_ACCESS_TOKEN: ${{ secrets.SHOPIFY_ACCESS_TOKEN }}
         run: |
-          cd shopify/scripts
-          if [ "${{ github.event.inputs.dry_run }}" = "true" ]; then
-            node master-site-improvement.js --phase=${{ github.event.inputs.phase }} --dry-run
-          else
-            node master-site-improvement.js --phase=${{ github.event.inputs.phase }}
-          fi
+          echo "🚀 Running master site improvement..."
+          node shopify/scripts/master-site-improvement.js --phase=all
 
-      - name: Summary
+      - name: Step 2 - Inject theme snippets
+        env:
+          SHOPIFY_STORE_URL: ${{ secrets.SHOPIFY_STORE_URL }}
+          SHOPIFY_ACCESS_TOKEN: ${{ secrets.SHOPIFY_ACCESS_TOKEN }}
         run: |
-          echo "## Deployment Summary" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "- **Phase:** ${{ github.event.inputs.phase }}" >> $GITHUB_STEP_SUMMARY
-          echo "- **Dry Run:** ${{ github.event.inputs.dry_run }}" >> $GITHUB_STEP_SUMMARY
-          echo "- **Timestamp:** $(date -u)" >> $GITHUB_STEP_SUMMARY
+          echo "💉 Injecting conversion snippets into theme..."
+          node shopify/scripts/auto-inject-snippets.js
 
-  publish-blogs:
+      - name: Step 3 - Publish all blog posts
+        env:
+          SHOPIFY_STORE_URL: ${{ secrets.SHOPIFY_STORE_URL }}
+          SHOPIFY_ACCESS_TOKEN: ${{ secrets.SHOPIFY_ACCESS_TOKEN }}
+          AMAZON_ASSOCIATE_TAG: ${{ secrets.AMAZON_ASSOCIATE_TAG }}
+        run: |
+          echo "📝 Publishing blog posts with affiliate links..."
+          node shopify/scripts/publish-all-blog-posts.js
+
+      - name: Create deployment summary
+        run: |
+          echo "# 🎉 Full Deployment Complete!" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "## What was deployed:" >> $GITHUB_STEP_SUMMARY
+          echo "- ✅ About, Contact, FAQ, How It Works pages" >> $GITHUB_STEP_SUMMARY
+          echo "- ✅ All product collections" >> $GITHUB_STEP_SUMMARY
+          echo "- ✅ Brand CSS and styling" >> $GITHUB_STEP_SUMMARY
+          echo "- ✅ Free shipping bar" >> $GITHUB_STEP_SUMMARY
+          echo "- ✅ Exit-intent email popup" >> $GITHUB_STEP_SUMMARY
+          echo "- ✅ Trust badges on product pages" >> $GITHUB_STEP_SUMMARY
+          echo "- ✅ Urgency timer on product pages" >> $GITHUB_STEP_SUMMARY
+          echo "- ✅ Cart upsell section" >> $GITHUB_STEP_SUMMARY
+          echo "- ✅ Announcement bar" >> $GITHUB_STEP_SUMMARY
+          echo "- ✅ 12 SEO-optimized blog posts with affiliate links" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Timestamp:** $(date -u)" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "## Next Steps:" >> $GITHUB_STEP_SUMMARY
+          echo "1. Sign up for Amazon Associates and add your tag to secrets" >> $GITHUB_STEP_SUMMARY
+          echo "2. Review your site at https://shelzysdesigns.com" >> $GITHUB_STEP_SUMMARY
+          echo "3. Set up Tailwind for Pinterest automation" >> $GITHUB_STEP_SUMMARY
+
+  # ============================================
+  # PAGES ONLY - Just create/fix pages
+  # ============================================
+  pages-only:
+    name: Deploy Pages Only
+    runs-on: ubuntu-latest
+    if: github.event.inputs.action == 'pages-only'
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Deploy pages and collections
+        env:
+          SHOPIFY_STORE_URL: ${{ secrets.SHOPIFY_STORE_URL }}
+          SHOPIFY_ACCESS_TOKEN: ${{ secrets.SHOPIFY_ACCESS_TOKEN }}
+        run: node shopify/scripts/master-site-improvement.js --phase=1
+
+  # ============================================
+  # SNIPPETS ONLY - Just inject theme snippets
+  # ============================================
+  snippets-only:
+    name: Inject Theme Snippets
+    runs-on: ubuntu-latest
+    if: github.event.inputs.action == 'snippets-only'
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Inject snippets
+        env:
+          SHOPIFY_STORE_URL: ${{ secrets.SHOPIFY_STORE_URL }}
+          SHOPIFY_ACCESS_TOKEN: ${{ secrets.SHOPIFY_ACCESS_TOKEN }}
+        run: node shopify/scripts/auto-inject-snippets.js
+
+  # ============================================
+  # BLOGS ONLY - Just publish blog posts
+  # ============================================
+  blogs-only:
     name: Publish Blog Posts
     runs-on: ubuntu-latest
-    if: github.event.inputs.phase == '2' || github.event.inputs.phase == 'all'
-    needs: deploy
+    if: github.event.inputs.action == 'blogs-only'
 
     steps:
       - name: Checkout repository
@@ -77,31 +149,20 @@ jobs:
         with:
           node-version: ${{ env.NODE_VERSION }}
 
-      - name: Publish blog posts
+      - name: Publish blogs
         env:
           SHOPIFY_STORE_URL: ${{ secrets.SHOPIFY_STORE_URL }}
           SHOPIFY_ACCESS_TOKEN: ${{ secrets.SHOPIFY_ACCESS_TOKEN }}
-        run: |
-          if [ -f "amazon-affiliate/scripts/publish-to-shopify.js" ]; then
-            node amazon-affiliate/scripts/publish-to-shopify.js
-          else
-            echo "Blog publishing script not found, skipping..."
-          fi
+          AMAZON_ASSOCIATE_TAG: ${{ secrets.AMAZON_ASSOCIATE_TAG }}
+        run: node shopify/scripts/publish-all-blog-posts.js
 
----
-# Weekly Blog Maintenance Workflow
-name: Weekly Blog & Content Maintenance
-
-on:
-  schedule:
-    # Every Sunday at 2 AM UTC
-    - cron: '0 2 * * 0'
-  workflow_dispatch:
-
-jobs:
-  audit-affiliate-links:
-    name: Audit Amazon Affiliate Links
+  # ============================================
+  # DRY RUN - Test without making changes
+  # ============================================
+  dry-run:
+    name: Dry Run (Test Mode)
     runs-on: ubuntu-latest
+    if: github.event.inputs.action == 'dry-run'
 
     steps:
       - name: Checkout repository
@@ -110,18 +171,33 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '18'
+          node-version: ${{ env.NODE_VERSION }}
 
-      - name: Audit links
+      - name: Test deployment
         env:
           SHOPIFY_STORE_URL: ${{ secrets.SHOPIFY_STORE_URL }}
           SHOPIFY_ACCESS_TOKEN: ${{ secrets.SHOPIFY_ACCESS_TOKEN }}
-        run: |
-          if [ -f "shopify/scripts/audit-blog-amazon-links.js" ]; then
-            node shopify/scripts/audit-blog-amazon-links.js
-          fi
+        run: node shopify/scripts/master-site-improvement.js --phase=all --dry-run
 
-      - name: Create audit report
-        run: |
-          echo "## Weekly Affiliate Link Audit" >> $GITHUB_STEP_SUMMARY
-          echo "Completed: $(date -u)" >> $GITHUB_STEP_SUMMARY
+  # ============================================
+  # FIX CONFLICTS - Remove conflicting snippets
+  # ============================================
+  fix-conflicts:
+    name: Fix Snippet Conflicts
+    runs-on: ubuntu-latest
+    if: github.event.inputs.action == 'fix-conflicts'
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Fix conflicts
+        env:
+          SHOPIFY_STORE_URL: ${{ secrets.SHOPIFY_STORE_URL }}
+          SHOPIFY_ACCESS_TOKEN: ${{ secrets.SHOPIFY_ACCESS_TOKEN }}
+        run: node shopify/scripts/fix-snippet-conflicts.js
