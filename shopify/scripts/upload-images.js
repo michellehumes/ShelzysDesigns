@@ -55,15 +55,34 @@ const STOCK_IMAGES = {
     'https://images.unsplash.com/photo-1482517967863-00e15c9b44be?w=800&q=80', // christmas
     'https://images.unsplash.com/photo-1543589077-47d81606c1bf?w=800&q=80', // holiday decor
   ],
-  // Blog post images
+  // Blog post images - comprehensive mapping for all blog handles
   blog: {
+    // From deploy-all-improvements.js (6 posts)
     'best-bridesmaid-gift-ideas-2025': 'https://images.unsplash.com/photo-1519741497674-611481863552?w=1200&q=80',
     'wedding-planning-essentials-checklist': 'https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?w=1200&q=80',
     'best-kids-water-bottles-school-2025': 'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=1200&q=80',
     'how-to-plan-perfect-bridal-shower': 'https://images.unsplash.com/photo-1522673607200-164d1b6ce486?w=1200&q=80',
     'personalized-gifts-that-get-used': 'https://images.unsplash.com/photo-1549465220-1a8b9238cd48?w=1200&q=80',
     'vinyl-vs-sublimation-difference': 'https://images.unsplash.com/photo-1602143407151-7111542de6e8?w=1200&q=80',
-  }
+
+    // From publish-all-blog-posts.js (12 posts - some overlap)
+    'sublimation-vs-vinyl-why-products-peel': 'https://images.unsplash.com/photo-1602143407151-7111542de6e8?w=1200&q=80',
+    'corporate-gift-ideas-employees-love': 'https://images.unsplash.com/photo-1556761175-b413da4baf72?w=1200&q=80',
+    'bachelorette-party-planning-guide': 'https://images.unsplash.com/photo-1530103862676-de8c9debad1d?w=1200&q=80',
+    'hydration-benefits-science-backed': 'https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=1200&q=80',
+    'holiday-gift-guide-personalized-gifts-2025': 'https://images.unsplash.com/photo-1512389142860-9c449e58a814?w=1200&q=80',
+    'bridal-shower-ideas-party-favors': 'https://images.unsplash.com/photo-1522673607200-164d1b6ce486?w=1200&q=80',
+    'meal-prep-beginners-guide': 'https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=1200&q=80',
+    'teacher-appreciation-gift-ideas': 'https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=1200&q=80',
+    'sustainable-living-simple-swaps': 'https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?w=1200&q=80',
+  },
+
+  // Default images for any blog posts not in the mapping
+  blogDefaults: [
+    'https://images.unsplash.com/photo-1602143407151-7111542de6e8?w=1200&q=80', // water bottle
+    'https://images.unsplash.com/photo-1519741497674-611481863552?w=1200&q=80', // bridesmaids
+    'https://images.unsplash.com/photo-1549465220-1a8b9238cd48?w=1200&q=80', // gift box
+  ]
 };
 
 const log = {
@@ -256,9 +275,12 @@ async function uploadImages() {
         }
         await delay(500);
       } else {
-        // Use a default blog image
-        const defaultImage = 'https://images.unsplash.com/photo-1602143407151-7111542de6e8?w=1200&q=80';
-        log.info(`Adding default image to: ${article.title}`);
+        // Use a default blog image from the blogDefaults array
+        // Rotate through defaults based on article index to add variety
+        const defaultImages = STOCK_IMAGES.blogDefaults || ['https://images.unsplash.com/photo-1602143407151-7111542de6e8?w=1200&q=80'];
+        const defaultIndex = articlesUpdated % defaultImages.length;
+        const defaultImage = defaultImages[defaultIndex];
+        log.info(`Adding default image to: ${article.title} (handle: ${handle})`);
         const success = await updateArticleImage(article.blog_id, article.id, defaultImage);
         if (success) {
           log.success(`Added default image to ${article.title}`);
