@@ -751,7 +751,7 @@ const BLOG_POSTS = [
   <h2>For the Planning Process</h2>
   <ul>
     <li><strong>Wedding Planner Binder:</strong> Keep everything organized in one place. <a href="https://www.amazon.com/s?k=wedding+planner+binder&tag=${amazonTag}" target="_blank" rel="nofollow sponsored">Top-rated wedding planners</a></li>
-    <li><strong>Personalized Water Bottle:</strong> Stay hydrated during venue tours and dress fittings! <a href="/products/personalized-water-bottle">Get yours</a></li>
+    <li><strong>Personalized Water Bottle:</strong> Stay hydrated during venue tours and wedding planning! <a href="/products/personalized-water-bottle">Get yours</a></li>
     <li><strong>Comfortable Shoes:</strong> You'll be on your feet a lot during planning</li>
   </ul>
 
@@ -775,7 +775,7 @@ const BLOG_POSTS = [
 
   <h2>Getting Ready Must-Haves</h2>
   <ul>
-    <li><strong>Steamer:</strong> For last-minute dress wrinkles. <a href="https://www.amazon.com/s?k=clothes+steamer+portable&tag=${amazonTag}" target="_blank" rel="nofollow sponsored">Portable steamers</a></li>
+    <li><strong>Steamer:</strong> For last-minute wrinkles and touch-ups. <a href="https://www.amazon.com/s?k=clothes+steamer+portable&tag=${amazonTag}" target="_blank" rel="nofollow sponsored">Portable steamers</a></li>
     <li><strong>Full-Length Mirror:</strong> A must for the bridal suite</li>
     <li><strong>Good Lighting:</strong> For makeup and photos</li>
   </ul>
@@ -909,7 +909,7 @@ const BLOG_POSTS = [
   <ul>
     <li><strong>How Well Do You Know the Bride:</strong> Quiz time!</li>
     <li><strong>Wedding Mad Libs:</strong> Always hilarious</li>
-    <li><strong>Dress the Bride in Toilet Paper:</strong> A classic</li>
+    <li><strong>Bridal Bingo:</strong> A crowd favorite</li>
     <li><strong>Ring Hunt:</strong> Hide plastic rings, whoever finds most wins</li>
     <li><strong>Advice Cards:</strong> Meaningful and sweet</li>
   </ul>

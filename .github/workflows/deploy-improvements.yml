@@ -17,6 +17,7 @@ on:
           - 'blogs-only'     # Just publish blog posts
           - 'dry-run'        # Test without making changes
           - 'fix-conflicts'  # Fix snippet conflicts with theme
+          - 'upload-images'  # Upload stock images to products and blogs
 
 env:
   NODE_VERSION: '18'
@@ -240,3 +241,34 @@ jobs:
           SHOPIFY_STORE_URL: ${{ secrets.SHOPIFY_STORE_URL }}
           SHOPIFY_ACCESS_TOKEN: ${{ secrets.SHOPIFY_ACCESS_TOKEN }}
         run: node shopify/scripts/fix-snippet-conflicts.js
+
+  # ============================================
+  # UPLOAD IMAGES - Add stock images to products and blogs
+  # ============================================
+  upload-images:
+    name: Upload Images
+    runs-on: ubuntu-latest
+    if: github.event.inputs.action == 'upload-images'
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Upload images
+        env:
+          SHOPIFY_STORE_URL: ${{ secrets.SHOPIFY_STORE_URL }}
+          SHOPIFY_ACCESS_TOKEN: ${{ secrets.SHOPIFY_ACCESS_TOKEN }}
+        run: node shopify/scripts/upload-images.js
+
+      - name: Create upload summary
+        run: |
+          echo "# 📸 Image Upload Complete!" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "Stock images have been added to products and blog posts that were missing images." >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Note:** For best results, replace these with professional product photos." >> $GITHUB_STEP_SUMMARY
