@@ -21,6 +21,7 @@ on:
           - 'fix-homepage'   # Fix reviews blocking homepage
           - 'fix-blog-images' # Fix blog images (downloads and uploads as base64)
           - 'debug-blog'      # Debug blog image issues
+          - 'embed-blog-images' # Embed images directly into blog HTML (recommended)
 
 env:
   NODE_VERSION: '18'
@@ -364,3 +365,34 @@ jobs:
           SHOPIFY_STORE_URL: ${{ secrets.SHOPIFY_STORE_URL }}
           SHOPIFY_ACCESS_TOKEN: ${{ secrets.SHOPIFY_ACCESS_TOKEN }}
         run: node shopify/scripts/debug-blog-images.js
+
+  # ============================================
+  # EMBED BLOG IMAGES - Add images directly into HTML content
+  # ============================================
+  embed-blog-images:
+    name: Embed Blog Images
+    runs-on: ubuntu-latest
+    if: github.event.inputs.action == 'embed-blog-images'
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Embed images into blog posts
+        env:
+          SHOPIFY_STORE_URL: ${{ secrets.SHOPIFY_STORE_URL }}
+          SHOPIFY_ACCESS_TOKEN: ${{ secrets.SHOPIFY_ACCESS_TOKEN }}
+        run: node shopify/scripts/embed-blog-images.js
+
+      - name: Create summary
+        run: |
+          echo "# 📸 Blog Images Embedded!" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "Images have been added directly into blog post content." >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Refresh your blog to see the images!**" >> $GITHUB_STEP_SUMMARY
