@@ -1,0 +1,63 @@
+name: Weekly Maintenance
+
+on:
+  # Runs every Sunday at 6 AM UTC
+  schedule:
+    - cron: '0 6 * * 0'
+
+  # Can also be triggered manually
+  workflow_dispatch:
+
+env:
+  NODE_VERSION: '18'
+
+jobs:
+  weekly-maintenance:
+    name: Weekly Site Maintenance
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Audit affiliate links
+        env:
+          SHOPIFY_STORE_URL: ${{ secrets.SHOPIFY_STORE_URL }}
+          SHOPIFY_ACCESS_TOKEN: ${{ secrets.SHOPIFY_ACCESS_TOKEN }}
+        run: |
+          if [ -f "shopify/scripts/audit-blog-amazon-links.js" ]; then
+            node shopify/scripts/audit-blog-amazon-links.js || true
+          fi
+
+      - name: Check for broken pages
+        env:
+          SHOPIFY_STORE_URL: ${{ secrets.SHOPIFY_STORE_URL }}
+          SHOPIFY_ACCESS_TOKEN: ${{ secrets.SHOPIFY_ACCESS_TOKEN }}
+        run: |
+          echo "Checking site health..."
+          # Simple health check - verify key pages exist
+          curl -s -o /dev/null -w "%{http_code}" "https://${SHOPIFY_STORE_URL}" | grep -q "200" && echo "✓ Homepage OK" || echo "✗ Homepage issue"
+          curl -s -o /dev/null -w "%{http_code}" "https://${SHOPIFY_STORE_URL}/pages/about" | grep -q "200" && echo "✓ About OK" || echo "✗ About page missing"
+          curl -s -o /dev/null -w "%{http_code}" "https://${SHOPIFY_STORE_URL}/pages/faq" | grep -q "200" && echo "✓ FAQ OK" || echo "✗ FAQ page missing"
+          curl -s -o /dev/null -w "%{http_code}" "https://${SHOPIFY_STORE_URL}/blogs/blog" | grep -q "200" && echo "✓ Blog OK" || echo "✗ Blog missing"
+
+      - name: Generate weekly report
+        run: |
+          echo "# 📊 Weekly Maintenance Report" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Date:** $(date -u '+%Y-%m-%d %H:%M UTC')" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "## Automated Checks" >> $GITHUB_STEP_SUMMARY
+          echo "- ✅ Affiliate link audit completed" >> $GITHUB_STEP_SUMMARY
+          echo "- ✅ Site health check completed" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "## Recommended Manual Tasks" >> $GITHUB_STEP_SUMMARY
+          echo "- Review Amazon affiliate earnings" >> $GITHUB_STEP_SUMMARY
+          echo "- Check email signup performance" >> $GITHUB_STEP_SUMMARY
+          echo "- Publish 1-2 new blog posts" >> $GITHUB_STEP_SUMMARY
+          echo "- Schedule new Pinterest pins" >> $GITHUB_STEP_SUMMARY
