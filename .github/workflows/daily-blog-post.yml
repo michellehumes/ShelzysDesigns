@@ -1,0 +1,43 @@
+name: Daily Blog Post
+
+on:
+  # Runs every day at 9 AM UTC (4 AM EST / 1 AM PST)
+  schedule:
+    - cron: '0 9 * * *'
+
+  # Can also be triggered manually
+  workflow_dispatch:
+
+env:
+  NODE_VERSION: '18'
+
+jobs:
+  publish-daily-post:
+    name: Publish Daily Blog Post
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Publish one blog post
+        env:
+          SHOPIFY_STORE_URL: ${{ secrets.SHOPIFY_STORE_URL }}
+          SHOPIFY_ACCESS_TOKEN: ${{ secrets.SHOPIFY_ACCESS_TOKEN }}
+          AMAZON_ASSOCIATE_TAG: ${{ secrets.AMAZON_ASSOCIATE_TAG }}
+        run: node shopify/scripts/daily-blog-publisher.js
+
+      - name: Create summary
+        run: |
+          echo "# 📝 Daily Blog Post Published!" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Date:** $(date -u '+%Y-%m-%d %H:%M UTC')" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "A new blog post with Amazon affiliate links has been published to shelzysdesigns.com/blogs/blog" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Affiliate Tag:** shelzysdesigns-20" >> $GITHUB_STEP_SUMMARY
