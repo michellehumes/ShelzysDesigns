@@ -15,6 +15,7 @@ on:
           - 'snippets-only'  # Just inject theme snippets
           - 'blogs-only'     # Just publish blog posts
           - 'dry-run'        # Test without making changes
+          - 'fix-conflicts'  # Fix snippet conflicts with theme
 
 env:
   NODE_VERSION: '18'
@@ -177,3 +178,26 @@ jobs:
           SHOPIFY_STORE_URL: ${{ secrets.SHOPIFY_STORE_URL }}
           SHOPIFY_ACCESS_TOKEN: ${{ secrets.SHOPIFY_ACCESS_TOKEN }}
         run: node shopify/scripts/master-site-improvement.js --phase=all --dry-run
+
+  # ============================================
+  # FIX CONFLICTS - Remove conflicting snippets
+  # ============================================
+  fix-conflicts:
+    name: Fix Snippet Conflicts
+    runs-on: ubuntu-latest
+    if: github.event.inputs.action == 'fix-conflicts'
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Fix conflicts
+        env:
+          SHOPIFY_STORE_URL: ${{ secrets.SHOPIFY_STORE_URL }}
+          SHOPIFY_ACCESS_TOKEN: ${{ secrets.SHOPIFY_ACCESS_TOKEN }}
+        run: node shopify/scripts/fix-snippet-conflicts.js
