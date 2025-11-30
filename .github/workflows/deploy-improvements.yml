@@ -18,6 +18,9 @@ on:
           - 'dry-run'        # Test without making changes
           - 'fix-conflicts'  # Fix snippet conflicts with theme
           - 'upload-images'  # Upload stock images to products and blogs
+          - 'fix-homepage'   # Fix reviews blocking homepage
+          - 'fix-blog-images' # Fix blog images (downloads and uploads as base64)
+          - 'debug-blog'      # Debug blog image issues
 
 env:
   NODE_VERSION: '18'
@@ -272,3 +275,92 @@ jobs:
           echo "Stock images have been added to products and blog posts that were missing images." >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "**Note:** For best results, replace these with professional product photos." >> $GITHUB_STEP_SUMMARY
+
+  # ============================================
+  # FIX HOMEPAGE - Remove blocking reviews/social proof
+  # ============================================
+  fix-homepage:
+    name: Fix Homepage Reviews
+    runs-on: ubuntu-latest
+    if: github.event.inputs.action == 'fix-homepage'
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Fix homepage blocking issues
+        env:
+          SHOPIFY_STORE_URL: ${{ secrets.SHOPIFY_STORE_URL }}
+          SHOPIFY_ACCESS_TOKEN: ${{ secrets.SHOPIFY_ACCESS_TOKEN }}
+        run: node shopify/scripts/fix-homepage-reviews.js
+
+      - name: Create fix summary
+        run: |
+          echo "# 🔧 Homepage Fix Complete!" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "## What was fixed:" >> $GITHUB_STEP_SUMMARY
+          echo "- ✅ Removed floating 'Someone just purchased' popups" >> $GITHUB_STEP_SUMMARY
+          echo "- ✅ Removed conflicting social proof banners" >> $GITHUB_STEP_SUMMARY
+          echo "- ✅ Removed duplicate announcement bars" >> $GITHUB_STEP_SUMMARY
+          echo "- ✅ Cleaned up theme template files" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Refresh your site to see the changes.**" >> $GITHUB_STEP_SUMMARY
+
+  # ============================================
+  # FIX BLOG IMAGES - Downloads and uploads as base64
+  # ============================================
+  fix-blog-images:
+    name: Fix Blog Images
+    runs-on: ubuntu-latest
+    if: github.event.inputs.action == 'fix-blog-images'
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Fix blog images
+        env:
+          SHOPIFY_STORE_URL: ${{ secrets.SHOPIFY_STORE_URL }}
+          SHOPIFY_ACCESS_TOKEN: ${{ secrets.SHOPIFY_ACCESS_TOKEN }}
+        run: node shopify/scripts/fix-blog-images.js
+
+      - name: Create summary
+        run: |
+          echo "# 📸 Blog Images Fixed!" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "Images have been downloaded and uploaded to all blog posts." >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Refresh your blog to see the images.**" >> $GITHUB_STEP_SUMMARY
+
+  # ============================================
+  # DEBUG BLOG - Test image upload methods
+  # ============================================
+  debug-blog:
+    name: Debug Blog Images
+    runs-on: ubuntu-latest
+    if: github.event.inputs.action == 'debug-blog'
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Debug blog images
+        env:
+          SHOPIFY_STORE_URL: ${{ secrets.SHOPIFY_STORE_URL }}
+          SHOPIFY_ACCESS_TOKEN: ${{ secrets.SHOPIFY_ACCESS_TOKEN }}
+        run: node shopify/scripts/debug-blog-images.js
