@@ -784,7 +784,7 @@ async function publishBlogPosts() {
   <h2>For the Bride</h2>
   <ul>
     <li><strong>Wedding Planner Binder:</strong> Keep everything organized. <a href="https://amzn.to/wedding-planner" target="_blank" rel="nofollow sponsored">Top-rated wedding planners</a></li>
-    <li><strong>Personalized Water Bottle:</strong> Stay hydrated during dress fittings, venue tours, and the big day. <a href="/products/personalized-water-bottle">Get yours</a></li>
+    <li><strong>Personalized Water Bottle:</strong> Stay hydrated during venue tours, wedding planning, and the big day. <a href="/products/personalized-water-bottle">Get yours</a></li>
     <li><strong>Comfortable Getting-Ready Robe:</strong> Perfect for morning-of photos</li>
   </ul>
 

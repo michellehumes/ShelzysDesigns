@@ -10,12 +10,14 @@ on:
         default: 'full'
         type: choice
         options:
-          - 'full'           # Everything
+          - 'full'           # Everything (recommended)
+          - 'comprehensive'  # Enhanced deployment with more blog posts
           - 'pages-only'     # Just fix pages
           - 'snippets-only'  # Just inject theme snippets
           - 'blogs-only'     # Just publish blog posts
           - 'dry-run'        # Test without making changes
           - 'fix-conflicts'  # Fix snippet conflicts with theme
+          - 'upload-images'  # Upload stock images to products and blogs
 
 env:
   NODE_VERSION: '18'
@@ -85,6 +87,44 @@ jobs:
           echo "1. Sign up for Amazon Associates and add your tag to secrets" >> $GITHUB_STEP_SUMMARY
           echo "2. Review your site at https://shelzysdesigns.com" >> $GITHUB_STEP_SUMMARY
           echo "3. Set up Tailwind for Pinterest automation" >> $GITHUB_STEP_SUMMARY
+
+  # ============================================
+  # COMPREHENSIVE - Enhanced deployment with more features
+  # ============================================
+  comprehensive-deploy:
+    name: Comprehensive Deployment
+    runs-on: ubuntu-latest
+    if: github.event.inputs.action == 'comprehensive'
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Run comprehensive deployment
+        env:
+          SHOPIFY_STORE_URL: ${{ secrets.SHOPIFY_STORE_URL }}
+          SHOPIFY_ACCESS_TOKEN: ${{ secrets.SHOPIFY_ACCESS_TOKEN }}
+          AMAZON_ASSOCIATE_TAG: ${{ secrets.AMAZON_ASSOCIATE_TAG }}
+        run: |
+          echo "🚀 Running comprehensive site deployment..."
+          node shopify/scripts/deploy-all-improvements.js
+
+      - name: Create deployment summary
+        run: |
+          echo "# 🎉 Comprehensive Deployment Complete!" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "## What was deployed:" >> $GITHUB_STEP_SUMMARY
+          echo "- ✅ 5 pages (About, Contact, FAQ, How It Works, Bulk & Corporate)" >> $GITHUB_STEP_SUMMARY
+          echo "- ✅ 6 product collections" >> $GITHUB_STEP_SUMMARY
+          echo "- ✅ 6 SEO blog posts with Amazon affiliate links" >> $GITHUB_STEP_SUMMARY
+          echo "- ✅ Brand CSS styling" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Timestamp:** $(date -u)" >> $GITHUB_STEP_SUMMARY
 
   # ============================================
   # PAGES ONLY - Just create/fix pages
@@ -201,3 +241,34 @@ jobs:
           SHOPIFY_STORE_URL: ${{ secrets.SHOPIFY_STORE_URL }}
           SHOPIFY_ACCESS_TOKEN: ${{ secrets.SHOPIFY_ACCESS_TOKEN }}
         run: node shopify/scripts/fix-snippet-conflicts.js
+
+  # ============================================
+  # UPLOAD IMAGES - Add stock images to products and blogs
+  # ============================================
+  upload-images:
+    name: Upload Images
+    runs-on: ubuntu-latest
+    if: github.event.inputs.action == 'upload-images'
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Upload images
+        env:
+          SHOPIFY_STORE_URL: ${{ secrets.SHOPIFY_STORE_URL }}
+          SHOPIFY_ACCESS_TOKEN: ${{ secrets.SHOPIFY_ACCESS_TOKEN }}
+        run: node shopify/scripts/upload-images.js
+
+      - name: Create upload summary
+        run: |
+          echo "# 📸 Image Upload Complete!" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "Stock images have been added to products and blog posts that were missing images." >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Note:** For best results, replace these with professional product photos." >> $GITHUB_STEP_SUMMARY
