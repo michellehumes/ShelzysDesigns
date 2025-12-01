@@ -1,0 +1,178 @@
+{%- comment -%}
+  Shelzy's Designs - Sale Countdown Timer
+
+  Creates urgency with countdown to sale end
+  Add to product pages or banners:
+  {% render 'shelzys-countdown', end_date: '2025-12-31', title: 'Holiday Sale Ends In' %}
+
+  Or use default (next Sunday midnight):
+  {% render 'shelzys-countdown' %}
+{%- endcomment -%}
+
+{% assign countdown_title = title | default: 'Sale Ends In' %}
+
+<style>
+  .sz-countdown {
+    background: linear-gradient(90deg, #C17F24 0%, #d4922f 50%, #C17F24 100%);
+    padding: 16px 20px;
+    text-align: center;
+  }
+
+  .sz-countdown-container {
+    max-width: 800px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+
+  .sz-countdown-title {
+    font-family: "Inter", sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    color: #ffffff;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  .sz-countdown-timer {
+    display: flex;
+    gap: 8px;
+  }
+
+  .sz-countdown-unit {
+    background: rgba(255, 255, 255, 0.2);
+    padding: 8px 12px;
+    border-radius: 8px;
+    min-width: 50px;
+    text-align: center;
+  }
+
+  .sz-countdown-number {
+    font-family: "Montserrat", sans-serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: #ffffff;
+    display: block;
+    line-height: 1;
+  }
+
+  .sz-countdown-label {
+    font-family: "Inter", sans-serif;
+    font-size: 10px;
+    color: rgba(255, 255, 255, 0.8);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-top: 4px;
+    display: block;
+  }
+
+  .sz-countdown-cta {
+    padding: 10px 20px;
+    background: #ffffff;
+    color: #C17F24;
+    border-radius: 999px;
+    font-family: "Inter", sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.2s ease;
+  }
+
+  .sz-countdown-cta:hover {
+    background: #4E5F4A;
+    color: #ffffff;
+  }
+
+  @media (max-width: 600px) {
+    .sz-countdown-container {
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .sz-countdown-unit {
+      min-width: 44px;
+      padding: 6px 10px;
+    }
+
+    .sz-countdown-number {
+      font-size: 18px;
+    }
+  }
+</style>
+
+<div class="sz-countdown" id="szCountdown">
+  <div class="sz-countdown-container">
+    <span class="sz-countdown-title">{{ countdown_title }}</span>
+
+    <div class="sz-countdown-timer">
+      <div class="sz-countdown-unit">
+        <span class="sz-countdown-number" id="szCountDays">00</span>
+        <span class="sz-countdown-label">Days</span>
+      </div>
+      <div class="sz-countdown-unit">
+        <span class="sz-countdown-number" id="szCountHours">00</span>
+        <span class="sz-countdown-label">Hours</span>
+      </div>
+      <div class="sz-countdown-unit">
+        <span class="sz-countdown-number" id="szCountMins">00</span>
+        <span class="sz-countdown-label">Mins</span>
+      </div>
+      <div class="sz-countdown-unit">
+        <span class="sz-countdown-number" id="szCountSecs">00</span>
+        <span class="sz-countdown-label">Secs</span>
+      </div>
+    </div>
+
+    <a href="/collections/best-sellers" class="sz-countdown-cta">Shop Now</a>
+  </div>
+</div>
+
+<script>
+(function() {
+  // Set end date - defaults to next Sunday at midnight
+  var endDateStr = '{{ end_date | default: "" }}';
+  var endDate;
+
+  if (endDateStr) {
+    endDate = new Date(endDateStr + 'T23:59:59');
+  } else {
+    // Default: next Sunday midnight
+    endDate = new Date();
+    endDate.setDate(endDate.getDate() + (7 - endDate.getDay()));
+    endDate.setHours(23, 59, 59, 0);
+  }
+
+  var daysEl = document.getElementById('szCountDays');
+  var hoursEl = document.getElementById('szCountHours');
+  var minsEl = document.getElementById('szCountMins');
+  var secsEl = document.getElementById('szCountSecs');
+  var container = document.getElementById('szCountdown');
+
+  function updateCountdown() {
+    var now = new Date().getTime();
+    var distance = endDate.getTime() - now;
+
+    if (distance < 0) {
+      // Sale ended - hide countdown
+      container.style.display = 'none';
+      return;
+    }
+
+    var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    var mins = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    var secs = Math.floor((distance % (1000 * 60)) / 1000);
+
+    daysEl.textContent = days.toString().padStart(2, '0');
+    hoursEl.textContent = hours.toString().padStart(2, '0');
+    minsEl.textContent = mins.toString().padStart(2, '0');
+    secsEl.textContent = secs.toString().padStart(2, '0');
+  }
+
+  updateCountdown();
+  setInterval(updateCountdown, 1000);
+})();
+</script>

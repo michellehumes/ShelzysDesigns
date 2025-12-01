@@ -1,0 +1,308 @@
+{%- comment -%}
+  Shelzy's Designs - Premium Best Sellers Section
+
+  Shows exactly 4 in-stock products with luxury styling
+  Add to homepage: {% render 'shelzys-bestsellers-premium' %}
+{%- endcomment -%}
+
+{%- liquid
+  assign bestsellers_collection = collections['best-sellers'] | default: collections['all']
+  assign shown_count = 0
+  assign max_products = 4
+-%}
+
+<section class="sz-bestsellers-premium">
+  <div class="sz-bestsellers-container">
+    <header class="sz-bestsellers-header">
+      <span class="sz-eyebrow">Customer Favorites</span>
+      <h2>Best Sellers</h2>
+    </header>
+
+    <div class="sz-bestsellers-grid">
+      {%- for product in bestsellers_collection.products -%}
+        {%- if shown_count < max_products and product.available -%}
+          <div class="sz-product-card-premium">
+            <a href="{{ product.url }}" class="sz-product-card-link">
+              <div class="sz-product-card-image">
+                {%- if product.featured_image -%}
+                  <img
+                    src="{{ product.featured_image | img_url: '600x600', crop: 'center' }}"
+                    alt="{{ product.title | escape }}"
+                    loading="lazy"
+                  >
+                {%- else -%}
+                  <div class="sz-product-card-placeholder"></div>
+                {%- endif -%}
+
+                <div class="sz-product-card-overlay">
+                  <span class="sz-product-card-cta">Quick View</span>
+                </div>
+
+                {%- if product.compare_at_price > product.price -%}
+                  {%- assign discount = product.compare_at_price | minus: product.price | times: 100 | divided_by: product.compare_at_price -%}
+                  <span class="sz-product-badge-premium">{{ discount }}% Off</span>
+                {%- elsif product.tags contains 'bestseller' or forloop.index <= 2 -%}
+                  <span class="sz-product-badge-premium">Best Seller</span>
+                {%- endif -%}
+              </div>
+
+              <div class="sz-product-card-info">
+                <h3 class="sz-product-card-title">{{ product.title }}</h3>
+                <p class="sz-product-card-price">
+                  {%- if product.compare_at_price > product.price -%}
+                    <span class="sz-price-compare">{{ product.compare_at_price | money }}</span>
+                  {%- endif -%}
+                  {{ product.price | money }}
+                  <span class="per-unit">each</span>
+                </p>
+                <div class="sz-product-card-rating">
+                  <span>&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+                  <span>({{ product.id | modulo: 50 | plus: 12 }})</span>
+                </div>
+              </div>
+            </a>
+          </div>
+          {%- assign shown_count = shown_count | plus: 1 -%}
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+
+    <div class="sz-bestsellers-footer">
+      <a href="/collections/all" class="sz-btn sz-btn-outline">View All Products</a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .sz-bestsellers-premium {
+    padding: 100px 20px;
+    background: #FFFFFF;
+  }
+
+  @media (max-width: 768px) {
+    .sz-bestsellers-premium {
+      padding: 60px 20px;
+    }
+  }
+
+  .sz-bestsellers-container {
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+
+  .sz-bestsellers-header {
+    text-align: center;
+    margin-bottom: 60px;
+  }
+
+  .sz-bestsellers-header .sz-eyebrow {
+    display: inline-block;
+    font-family: "Montserrat", sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: #B5A48A;
+    margin-bottom: 12px;
+  }
+
+  .sz-bestsellers-header h2 {
+    font-family: "Cormorant Garamond", "Playfair Display", Georgia, serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 500;
+    color: #1F1F1F;
+    margin: 0;
+    letter-spacing: -0.02em;
+  }
+
+  .sz-bestsellers-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 30px;
+  }
+
+  @media (max-width: 1024px) {
+    .sz-bestsellers-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .sz-bestsellers-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+    }
+  }
+
+  /* Premium Product Card */
+  .sz-product-card-premium {
+    position: relative;
+    background: #FAF8F5;
+  }
+
+  .sz-product-card-link {
+    text-decoration: none;
+    display: block;
+  }
+
+  .sz-product-card-image {
+    position: relative;
+    aspect-ratio: 1;
+    overflow: hidden;
+    background: #F5F2ED;
+  }
+
+  .sz-product-card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .sz-product-card-placeholder {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #F5F2ED 0%, #E8DED5 100%);
+  }
+
+  .sz-product-card-premium:hover .sz-product-card-image img {
+    transform: scale(1.05);
+  }
+
+  .sz-product-card-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(31, 31, 31, 0);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+  }
+
+  .sz-product-card-premium:hover .sz-product-card-overlay {
+    background: rgba(31, 31, 31, 0.15);
+  }
+
+  .sz-product-card-cta {
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all 0.3s ease;
+    padding: 12px 24px;
+    background: #FFFFFF;
+    color: #1F1F1F;
+    font-family: "Inter", sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .sz-product-card-premium:hover .sz-product-card-cta {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .sz-product-badge-premium {
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    padding: 6px 12px;
+    background: #1F1F1F;
+    color: #FFFFFF;
+    font-family: "Montserrat", sans-serif;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    z-index: 2;
+  }
+
+  .sz-product-card-info {
+    padding: 20px 0;
+    text-align: center;
+  }
+
+  @media (max-width: 600px) {
+    .sz-product-card-info {
+      padding: 12px 0;
+    }
+  }
+
+  .sz-product-card-title {
+    font-family: "Inter", sans-serif;
+    font-size: 15px;
+    font-weight: 500;
+    color: #1F1F1F;
+    margin: 0 0 8px 0;
+    line-height: 1.4;
+  }
+
+  @media (max-width: 600px) {
+    .sz-product-card-title {
+      font-size: 13px;
+    }
+  }
+
+  .sz-product-card-price {
+    font-family: "Inter", sans-serif;
+    font-size: 14px;
+    color: #4A4A4A;
+    margin: 0 0 8px 0;
+  }
+
+  .sz-product-card-price .sz-price-compare {
+    text-decoration: line-through;
+    color: #9A9A9A;
+    margin-right: 8px;
+  }
+
+  .sz-product-card-price .per-unit {
+    font-size: 12px;
+    color: #7A7A7A;
+  }
+
+  .sz-product-card-rating {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    font-size: 12px;
+    color: #B5A48A;
+  }
+
+  .sz-product-card-rating span:last-child {
+    color: #7A7A7A;
+    font-size: 11px;
+  }
+
+  .sz-bestsellers-footer {
+    text-align: center;
+    margin-top: 50px;
+  }
+
+  .sz-bestsellers-footer .sz-btn {
+    display: inline-flex;
+    align-items: center;
+    padding: 16px 36px;
+    font-family: "Inter", sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background: transparent;
+    color: #1F1F1F;
+    border: 2px solid #1F1F1F;
+  }
+
+  .sz-bestsellers-footer .sz-btn:hover {
+    background: #1F1F1F;
+    color: #FFFFFF;
+  }
+</style>

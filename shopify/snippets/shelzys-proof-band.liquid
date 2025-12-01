@@ -1,0 +1,298 @@
+{%- comment -%}
+  Shelzy's Designs - Social Proof Band
+
+  Consolidated social proof with icons, stats, and testimonials
+  Add to homepage: {% render 'shelzys-proof-band' %}
+{%- endcomment -%}
+
+<section class="sz-proof-band">
+  <div class="sz-proof-container">
+
+    {%- comment -%} 3-Column Icon Stats Row {%- endcomment -%}
+    <div class="sz-proof-stats">
+      <div class="sz-proof-stat">
+        <div class="sz-proof-stat-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+          </svg>
+        </div>
+        <div class="sz-proof-stat-text-wrap">
+          <h4 class="sz-proof-stat-title">5,000+ Happy Customers</h4>
+          <p class="sz-proof-stat-text">Trusted by brides, event planners & gift-givers</p>
+        </div>
+      </div>
+
+      <div class="sz-proof-stat">
+        <div class="sz-proof-stat-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <circle cx="12" cy="12" r="10"/>
+            <path d="M12 6v6l4 2"/>
+          </svg>
+        </div>
+        <div class="sz-proof-stat-text-wrap">
+          <h4 class="sz-proof-stat-title">Ships in 3-5 Days</h4>
+          <p class="sz-proof-stat-text">Fast turnaround even for custom orders</p>
+        </div>
+      </div>
+
+      <div class="sz-proof-stat">
+        <div class="sz-proof-stat-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+            <polyline points="22 4 12 14.01 9 11.01"/>
+          </svg>
+        </div>
+        <div class="sz-proof-stat-text-wrap">
+          <h4 class="sz-proof-stat-title">Permanent Print Quality</h4>
+          <p class="sz-proof-stat-text">Sublimation printing that never peels or fades</p>
+        </div>
+      </div>
+    </div>
+
+    {%- comment -%} Featured Testimonial {%- endcomment -%}
+    <div class="sz-proof-testimonials">
+      <div class="sz-testimonial-premium" id="szTestimonialSlider">
+        <div class="sz-testimonial-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        <blockquote class="sz-testimonial-quote" id="szTestimonialQuote">
+          "These bottles were the perfect bridesmaid gifts! The quality exceeded my expectations - the print is absolutely flawless and my girls were so happy."
+        </blockquote>
+        <p class="sz-testimonial-author">
+          <strong id="szTestimonialAuthor">Sarah M.</strong> <span id="szTestimonialContext">- Bride, Wedding Party Order</span>
+        </p>
+      </div>
+    </div>
+
+    {%- comment -%} Why Sublimation Points {%- endcomment -%}
+    <div class="sz-proof-why">
+      <p class="sz-proof-why-title">Why Choose Sublimation?</p>
+      <div class="sz-proof-why-list">
+        <span class="sz-proof-why-item">No vinyl that peels</span>
+        <span class="sz-proof-why-item">Dishwasher safe</span>
+        <span class="sz-proof-why-item">Vibrant permanent colors</span>
+        <span class="sz-proof-why-item">20oz double-wall insulated</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<script>
+(function() {
+  var testimonials = [
+    {
+      quote: "These bottles were the perfect bridesmaid gifts! The quality exceeded my expectations - the print is absolutely flawless and my girls were so happy.",
+      author: "Sarah M.",
+      context: "Bride, Wedding Party Order"
+    },
+    {
+      quote: "Ordered 50 bottles for our corporate event. Amazing quality, fast shipping, and the team was so helpful with our custom design.",
+      author: "Jennifer L.",
+      context: "Event Coordinator"
+    },
+    {
+      quote: "I've washed mine hundreds of times and it still looks brand new. No peeling, no fading - true sublimation quality!",
+      author: "Rachel T.",
+      context: "Repeat Customer"
+    },
+    {
+      quote: "My daughter's dance team loved their personalized bottles! Great communication and the bottles arrived ahead of schedule.",
+      author: "Amanda K.",
+      context: "Dance Mom, Team Order"
+    }
+  ];
+
+  var currentIndex = 0;
+  var quoteEl = document.getElementById('szTestimonialQuote');
+  var authorEl = document.getElementById('szTestimonialAuthor');
+  var contextEl = document.getElementById('szTestimonialContext');
+
+  if (!quoteEl) return;
+
+  function showTestimonial(index) {
+    var t = testimonials[index];
+    quoteEl.style.opacity = 0;
+    authorEl.style.opacity = 0;
+    contextEl.style.opacity = 0;
+
+    setTimeout(function() {
+      quoteEl.textContent = '"' + t.quote + '"';
+      authorEl.textContent = t.author;
+      contextEl.textContent = '- ' + t.context;
+      quoteEl.style.opacity = 1;
+      authorEl.style.opacity = 1;
+      contextEl.style.opacity = 1;
+    }, 300);
+  }
+
+  setInterval(function() {
+    currentIndex = (currentIndex + 1) % testimonials.length;
+    showTestimonial(currentIndex);
+  }, 6000);
+})();
+</script>
+
+<style>
+  .sz-proof-band {
+    padding: 80px 20px;
+    background: #F5F2ED;
+    border-top: 1px solid #E8E4DE;
+    border-bottom: 1px solid #E8E4DE;
+  }
+
+  .sz-proof-container {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  /* Icon Stats Row */
+  .sz-proof-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px;
+    margin-bottom: 60px;
+  }
+
+  @media (max-width: 768px) {
+    .sz-proof-stats {
+      grid-template-columns: 1fr;
+      gap: 32px;
+      text-align: center;
+    }
+  }
+
+  .sz-proof-stat {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  @media (max-width: 768px) {
+    .sz-proof-stat {
+      flex-direction: column;
+      align-items: center;
+    }
+  }
+
+  .sz-proof-stat-icon {
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #FFFFFF;
+    border: 1px solid #E8E4DE;
+    color: #2C3E2D;
+    flex-shrink: 0;
+  }
+
+  .sz-proof-stat-title {
+    font-family: "Inter", sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    color: #1F1F1F;
+    margin: 0 0 4px 0;
+  }
+
+  .sz-proof-stat-text {
+    font-family: "Inter", sans-serif;
+    font-size: 14px;
+    color: #7A7A7A;
+    margin: 0;
+  }
+
+  /* Testimonial */
+  .sz-proof-testimonials {
+    position: relative;
+  }
+
+  .sz-testimonial-premium {
+    text-align: center;
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 40px;
+    background: #FFFFFF;
+    border: 1px solid #E8E4DE;
+  }
+
+  .sz-testimonial-stars {
+    font-size: 16px;
+    letter-spacing: 4px;
+    color: #B5A48A;
+    margin-bottom: 20px;
+  }
+
+  .sz-testimonial-quote {
+    font-family: "Cormorant Garamond", Georgia, serif;
+    font-size: 22px;
+    font-weight: 400;
+    font-style: italic;
+    line-height: 1.6;
+    color: #1F1F1F;
+    margin: 0 0 24px 0;
+    transition: opacity 0.3s ease;
+  }
+
+  @media (max-width: 600px) {
+    .sz-testimonial-quote {
+      font-size: 18px;
+    }
+  }
+
+  .sz-testimonial-author {
+    font-family: "Inter", sans-serif;
+    font-size: 13px;
+    color: #7A7A7A;
+    margin: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .sz-testimonial-author strong {
+    color: #1F1F1F;
+    font-weight: 500;
+    transition: opacity 0.3s ease;
+  }
+
+  /* Why Sublimation */
+  .sz-proof-why {
+    margin-top: 50px;
+    text-align: center;
+  }
+
+  .sz-proof-why-title {
+    font-family: "Inter", sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: #7A7A7A;
+    margin: 0 0 20px 0;
+  }
+
+  .sz-proof-why-list {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    flex-wrap: wrap;
+  }
+
+  @media (max-width: 600px) {
+    .sz-proof-why-list {
+      gap: 16px 32px;
+    }
+  }
+
+  .sz-proof-why-item {
+    font-family: "Inter", sans-serif;
+    font-size: 14px;
+    color: #4A4A4A;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .sz-proof-why-item::before {
+    content: "\2713";
+    color: #2C3E2D;
+    font-weight: 600;
+  }
+</style>

@@ -1,0 +1,141 @@
+{%- comment -%}
+  Shelzy's Designs - Free Shipping Progress Bar
+
+  Shows progress toward free shipping threshold ($50)
+  Displays in cart drawer and cart page
+
+  Add to cart sections:
+  {% render 'shelzys-free-shipping-bar' %}
+{%- endcomment -%}
+
+{% assign free_shipping_threshold = 5000 %} {%- comment -%} $50.00 in cents {%- endcomment -%}
+{% assign cart_total = cart.total_price %}
+{% assign remaining = free_shipping_threshold | minus: cart_total %}
+{% assign progress_percentage = cart_total | times: 100 | divided_by: free_shipping_threshold %}
+{% if progress_percentage > 100 %}
+  {% assign progress_percentage = 100 %}
+{% endif %}
+
+<style>
+  .sz-shipping-bar-wrapper {
+    padding: 16px;
+    background: #FAF9F6;
+    border-radius: 12px;
+    margin-bottom: 16px;
+  }
+
+  .sz-shipping-message {
+    font-family: "Inter", sans-serif;
+    font-size: 14px;
+    color: #2B2B2B;
+    text-align: center;
+    margin-bottom: 10px;
+    line-height: 1.4;
+  }
+
+  .sz-shipping-message strong {
+    color: #4E5F4A;
+    font-weight: 600;
+  }
+
+  .sz-shipping-message .sz-amount {
+    color: #8BAA88;
+    font-weight: 700;
+  }
+
+  .sz-shipping-success {
+    color: #4E5F4A !important;
+    font-weight: 600;
+  }
+
+  .sz-shipping-bar {
+    height: 8px;
+    background: #E0E3DF;
+    border-radius: 999px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .sz-shipping-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #8BAA88, #4E5F4A);
+    border-radius: 999px;
+    transition: width 0.4s ease;
+    position: relative;
+  }
+
+  .sz-shipping-bar-fill.complete {
+    background: linear-gradient(90deg, #8BAA88, #6B9B68);
+  }
+
+  .sz-shipping-icon {
+    display: inline-block;
+    margin-right: 4px;
+  }
+
+  /* Celebration animation when threshold reached */
+  @keyframes sz-celebrate {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+  }
+
+  .sz-shipping-bar-wrapper.qualified {
+    animation: sz-celebrate 0.5s ease;
+    background: linear-gradient(135deg, #FAF9F6 0%, #f0f5ef 100%);
+    border: 1px solid #C7D3C5;
+  }
+</style>
+
+<div class="sz-shipping-bar-wrapper{% if remaining <= 0 %} qualified{% endif %}" id="szShippingBar">
+  {% if remaining > 0 %}
+    <p class="sz-shipping-message">
+      <span class="sz-shipping-icon">🚚</span>
+      You're <span class="sz-amount">{{ remaining | money }}</span> away from <strong>FREE shipping!</strong>
+    </p>
+  {% else %}
+    <p class="sz-shipping-message sz-shipping-success">
+      <span class="sz-shipping-icon">✨</span>
+      Congrats! You've unlocked <strong>FREE shipping!</strong>
+    </p>
+  {% endif %}
+
+  <div class="sz-shipping-bar">
+    <div
+      class="sz-shipping-bar-fill{% if remaining <= 0 %} complete{% endif %}"
+      style="width: {{ progress_percentage }}%;"
+    ></div>
+  </div>
+</div>
+
+<script>
+// Update shipping bar dynamically when cart changes (for AJAX carts)
+document.addEventListener('cart:updated', function(e) {
+  if (e.detail && e.detail.total_price !== undefined) {
+    var threshold = 5000; // $50 in cents
+    var total = e.detail.total_price;
+    var remaining = threshold - total;
+    var percentage = Math.min((total / threshold) * 100, 100);
+
+    var wrapper = document.getElementById('szShippingBar');
+    var message = wrapper.querySelector('.sz-shipping-message');
+    var fill = wrapper.querySelector('.sz-shipping-bar-fill');
+
+    if (remaining > 0) {
+      wrapper.classList.remove('qualified');
+      fill.classList.remove('complete');
+      message.innerHTML = '<span class="sz-shipping-icon">🚚</span> You\'re <span class="sz-amount">' +
+        formatMoney(remaining) + '</span> away from <strong>FREE shipping!</strong>';
+    } else {
+      wrapper.classList.add('qualified');
+      fill.classList.add('complete');
+      message.innerHTML = '<span class="sz-shipping-icon">✨</span> Congrats! You\'ve unlocked <strong>FREE shipping!</strong>';
+    }
+
+    fill.style.width = percentage + '%';
+  }
+});
+
+function formatMoney(cents) {
+  return '$' + (cents / 100).toFixed(2);
+}
+</script>

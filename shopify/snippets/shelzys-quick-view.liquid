@@ -1,0 +1,312 @@
+{%- comment -%}
+  Shelzy's Designs - Quick View Modal
+
+  Shows product details in a modal without leaving the page
+  Triggered by data-quick-view="{{ product.handle }}" on any element
+
+  Add before </body>: {% render 'shelzys-quick-view' %}
+{%- endcomment -%}
+
+<style>
+  .sz-quick-view-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 10000;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+
+  .sz-quick-view-overlay.active {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .sz-quick-view-modal {
+    background: #ffffff;
+    border-radius: 16px;
+    max-width: 900px;
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+    position: relative;
+    transform: translateY(30px) scale(0.95);
+    transition: transform 0.3s ease;
+  }
+
+  .sz-quick-view-overlay.active .sz-quick-view-modal {
+    transform: translateY(0) scale(1);
+  }
+
+  .sz-quick-view-close {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    width: 36px;
+    height: 36px;
+    background: #FAF9F6;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 18px;
+    color: #666;
+    z-index: 10;
+    transition: all 0.2s ease;
+  }
+
+  .sz-quick-view-close:hover {
+    background: #4E5F4A;
+    color: #ffffff;
+  }
+
+  .sz-quick-view-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+  }
+
+  @media (max-width: 700px) {
+    .sz-quick-view-content {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .sz-quick-view-image {
+    aspect-ratio: 1;
+    background: #FAF9F6;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 16px 0 0 16px;
+    overflow: hidden;
+  }
+
+  @media (max-width: 700px) {
+    .sz-quick-view-image {
+      border-radius: 16px 16px 0 0;
+      max-height: 300px;
+    }
+  }
+
+  .sz-quick-view-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .sz-quick-view-info {
+    padding: 32px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .sz-quick-view-title {
+    font-family: "Playfair Display", serif;
+    font-size: 24px;
+    font-weight: 600;
+    color: #4E5F4A;
+    margin: 0 0 8px 0;
+    padding-right: 40px;
+  }
+
+  .sz-quick-view-price {
+    font-family: "Inter", sans-serif;
+    font-size: 20px;
+    font-weight: 600;
+    color: #2B2B2B;
+    margin-bottom: 16px;
+  }
+
+  .sz-quick-view-price .compare {
+    text-decoration: line-through;
+    color: #999;
+    font-weight: 400;
+    font-size: 16px;
+    margin-right: 8px;
+  }
+
+  .sz-quick-view-price .sale {
+    color: #C17F24;
+  }
+
+  .sz-quick-view-desc {
+    font-family: "Inter", sans-serif;
+    font-size: 14px;
+    line-height: 1.6;
+    color: #666;
+    margin-bottom: 20px;
+    flex: 1;
+  }
+
+  .sz-quick-view-features {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+  }
+
+  .sz-quick-view-feature {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-family: "Inter", sans-serif;
+    font-size: 12px;
+    color: #666;
+  }
+
+  .sz-quick-view-feature span:first-child {
+    color: #8BAA88;
+  }
+
+  .sz-quick-view-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: auto;
+  }
+
+  .sz-quick-view-btn {
+    flex: 1;
+    padding: 14px 20px;
+    border-radius: 999px;
+    font-family: "Inter", sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    transition: all 0.2s ease;
+  }
+
+  .sz-quick-view-btn-primary {
+    background: #8BAA88;
+    color: #ffffff;
+    border: none;
+  }
+
+  .sz-quick-view-btn-primary:hover {
+    background: #4E5F4A;
+  }
+
+  .sz-quick-view-btn-secondary {
+    background: transparent;
+    color: #4E5F4A;
+    border: 2px solid #4E5F4A;
+  }
+
+  .sz-quick-view-btn-secondary:hover {
+    background: #4E5F4A;
+    color: #ffffff;
+  }
+
+  .sz-quick-view-loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 60px;
+    font-family: "Inter", sans-serif;
+    color: #666;
+  }
+</style>
+
+<div class="sz-quick-view-overlay" id="szQuickViewOverlay" onclick="szCloseQuickView(event)">
+  <div class="sz-quick-view-modal" onclick="event.stopPropagation()">
+    <button class="sz-quick-view-close" onclick="szCloseQuickView()">&times;</button>
+    <div id="szQuickViewContent">
+      <div class="sz-quick-view-loading">Loading...</div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function() {
+  var overlay = document.getElementById('szQuickViewOverlay');
+  var content = document.getElementById('szQuickViewContent');
+
+  // Open quick view
+  window.szOpenQuickView = function(handle) {
+    overlay.classList.add('active');
+    document.body.style.overflow = 'hidden';
+    content.innerHTML = '<div class="sz-quick-view-loading">Loading...</div>';
+
+    // Fetch product data
+    fetch('/products/' + handle + '.js')
+      .then(function(res) { return res.json(); })
+      .then(function(product) {
+        renderQuickView(product);
+      })
+      .catch(function() {
+        content.innerHTML = '<div class="sz-quick-view-loading">Error loading product</div>';
+      });
+  };
+
+  // Close quick view
+  window.szCloseQuickView = function(e) {
+    if (e && e.target !== overlay) return;
+    overlay.classList.remove('active');
+    document.body.style.overflow = '';
+  };
+
+  // Close on escape
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') szCloseQuickView();
+  });
+
+  // Render product
+  function renderQuickView(product) {
+    var variant = product.variants[0];
+    var comparePrice = variant.compare_at_price;
+    var price = variant.price;
+    var onSale = comparePrice && comparePrice > price;
+
+    var priceHtml = onSale
+      ? '<span class="compare">' + formatMoney(comparePrice) + '</span><span class="sale">' + formatMoney(price) + '</span>'
+      : formatMoney(price);
+
+    var desc = product.description
+      ? product.description.replace(/<[^>]*>/g, '').substring(0, 200) + '...'
+      : 'Premium personalized sublimation water bottle. No vinyl, no peeling - permanent quality.';
+
+    content.innerHTML = '<div class="sz-quick-view-content">' +
+      '<div class="sz-quick-view-image">' +
+        '<img src="' + (product.featured_image || '') + '" alt="' + product.title + '">' +
+      '</div>' +
+      '<div class="sz-quick-view-info">' +
+        '<h2 class="sz-quick-view-title">' + product.title + '</h2>' +
+        '<p class="sz-quick-view-price">' + priceHtml + '</p>' +
+        '<p class="sz-quick-view-desc">' + desc + '</p>' +
+        '<div class="sz-quick-view-features">' +
+          '<div class="sz-quick-view-feature"><span>✓</span> Permanent sublimation</div>' +
+          '<div class="sz-quick-view-feature"><span>✓</span> No peeling</div>' +
+          '<div class="sz-quick-view-feature"><span>✓</span> 20oz insulated</div>' +
+          '<div class="sz-quick-view-feature"><span>✓</span> Free shipping $50+</div>' +
+        '</div>' +
+        '<div class="sz-quick-view-actions">' +
+          '<a href="/products/' + product.handle + '" class="sz-quick-view-btn sz-quick-view-btn-secondary">View Details</a>' +
+          '<a href="/products/' + product.handle + '" class="sz-quick-view-btn sz-quick-view-btn-primary">Customize & Buy</a>' +
+        '</div>' +
+      '</div>' +
+    '</div>';
+  }
+
+  function formatMoney(cents) {
+    return '$' + (cents / 100).toFixed(2);
+  }
+
+  // Attach to quick view triggers
+  document.addEventListener('click', function(e) {
+    var trigger = e.target.closest('[data-quick-view]');
+    if (trigger) {
+      e.preventDefault();
+      szOpenQuickView(trigger.dataset.quickView);
+    }
+  });
+})();
+</script>

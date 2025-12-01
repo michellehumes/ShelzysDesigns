@@ -1,0 +1,1011 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ultimate Wedding Planner - Shelzy's Designs</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Lato:wght@300;400;600&display=swap');
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Lato', sans-serif;
+      font-size: 11pt;
+      line-height: 1.6;
+      color: #333;
+      background: #fff;
+    }
+
+    .page {
+      width: 8.5in;
+      min-height: 11in;
+      padding: 0.75in;
+      margin: 0 auto;
+      page-break-after: always;
+      position: relative;
+    }
+
+    .page:last-child {
+      page-break-after: auto;
+    }
+
+    /* Cover Page */
+    .cover-page {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      background: linear-gradient(135deg, #fdf8f5 0%, #fff5f0 100%);
+    }
+
+    .cover-page h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 48pt;
+      color: #d4a574;
+      margin-bottom: 10px;
+      letter-spacing: 2px;
+    }
+
+    .cover-page .subtitle {
+      font-size: 18pt;
+      color: #666;
+      margin-bottom: 60px;
+      font-weight: 300;
+    }
+
+    .cover-page .form-field {
+      width: 80%;
+      margin: 15px 0;
+      text-align: left;
+    }
+
+    .cover-page .form-field label {
+      display: block;
+      font-size: 10pt;
+      color: #888;
+      margin-bottom: 5px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .cover-page .form-field .line {
+      border-bottom: 1px solid #d4a574;
+      height: 30px;
+    }
+
+    .cover-page .logo {
+      margin-top: 60px;
+      font-family: 'Playfair Display', serif;
+      font-size: 14pt;
+      color: #d4a574;
+    }
+
+    /* Section Headers */
+    h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 24pt;
+      color: #d4a574;
+      margin-bottom: 20px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #f0e6dc;
+    }
+
+    h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 16pt;
+      color: #2d2d2d;
+      margin: 25px 0 15px;
+    }
+
+    h4 {
+      font-size: 12pt;
+      color: #d4a574;
+      margin: 20px 0 10px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    /* Lists */
+    ul, ol {
+      margin-left: 20px;
+      margin-bottom: 15px;
+    }
+
+    li {
+      margin-bottom: 8px;
+      padding-left: 5px;
+    }
+
+    ul li::marker {
+      color: #d4a574;
+    }
+
+    /* Tables */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 15px 0;
+      font-size: 10pt;
+    }
+
+    th {
+      background: #d4a574;
+      color: white;
+      padding: 10px 8px;
+      text-align: left;
+      font-weight: 600;
+    }
+
+    td {
+      padding: 12px 8px;
+      border-bottom: 1px solid #e8e0d8;
+    }
+
+    tr:nth-child(even) {
+      background: #fdf8f5;
+    }
+
+    /* Form Fields */
+    .form-row {
+      display: flex;
+      margin-bottom: 15px;
+      align-items: flex-end;
+    }
+
+    .form-row label {
+      font-weight: 600;
+      margin-right: 10px;
+      white-space: nowrap;
+    }
+
+    .form-row .input-line {
+      flex: 1;
+      border-bottom: 1px solid #ccc;
+      min-height: 20px;
+    }
+
+    /* Checklist */
+    .checklist {
+      list-style: none;
+      margin-left: 0;
+    }
+
+    .checklist li {
+      padding: 10px 0 10px 35px;
+      position: relative;
+      border-bottom: 1px solid #f0f0f0;
+    }
+
+    .checklist li:before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 18px;
+      height: 18px;
+      border: 2px solid #d4a574;
+      border-radius: 3px;
+    }
+
+    /* Notes Section */
+    .notes-area {
+      border: 1px solid #e8e0d8;
+      border-radius: 8px;
+      padding: 20px;
+      min-height: 200px;
+      background: #fdf8f5;
+    }
+
+    .notes-lines {
+      background-image: repeating-linear-gradient(
+        transparent,
+        transparent 24px,
+        #e8e0d8 24px,
+        #e8e0d8 25px
+      );
+      min-height: 300px;
+    }
+
+    /* Page Numbers */
+    .page-number {
+      position: absolute;
+      bottom: 0.5in;
+      right: 0.75in;
+      font-size: 10pt;
+      color: #999;
+    }
+
+    /* Decorative Elements */
+    .divider {
+      text-align: center;
+      margin: 30px 0;
+      color: #d4a574;
+    }
+
+    .divider:before {
+      content: "✦ ✦ ✦";
+      letter-spacing: 10px;
+    }
+
+    /* Table of Contents */
+    .toc-item {
+      display: flex;
+      justify-content: space-between;
+      padding: 8px 0;
+      border-bottom: 1px dotted #ccc;
+    }
+
+    .toc-item span:last-child {
+      color: #d4a574;
+    }
+
+    /* Print Styles */
+    @media print {
+      body {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+
+      .page {
+        margin: 0;
+        padding: 0.5in;
+      }
+    }
+
+    /* Seating Chart Grid */
+    .seating-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      margin-top: 20px;
+    }
+
+    .table-circle {
+      width: 120px;
+      height: 120px;
+      border: 2px solid #d4a574;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 10px;
+    }
+
+    .table-label {
+      text-align: center;
+      font-weight: 600;
+      color: #d4a574;
+    }
+  </style>
+</head>
+<body>
+
+<!-- Cover Page -->
+<div class="page cover-page">
+  <h1>Ultimate Wedding Planner</h1>
+  <p class="subtitle">Plan your dream wedding with ease!</p>
+
+  <div class="form-field">
+    <label>Couple's Names</label>
+    <div class="line"></div>
+  </div>
+
+  <div class="form-field">
+    <label>Wedding Date</label>
+    <div class="line"></div>
+  </div>
+
+  <div class="form-field">
+    <label>Location</label>
+    <div class="line"></div>
+  </div>
+
+  <p class="logo">Shelzy's Designs</p>
+</div>
+
+<!-- This Planner Belongs To -->
+<div class="page">
+  <h2>This Planner Belongs To</h2>
+
+  <div class="form-row">
+    <label>Name:</label>
+    <div class="input-line"></div>
+  </div>
+
+  <div class="form-row">
+    <label>Contact Information:</label>
+    <div class="input-line"></div>
+  </div>
+
+  <div class="form-row">
+    <label>Partner's Name:</label>
+    <div class="input-line"></div>
+  </div>
+
+  <div class="form-row">
+    <label>Partner's Contact:</label>
+    <div class="input-line"></div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="form-row">
+    <label>Our Wedding Date:</label>
+    <div class="input-line"></div>
+  </div>
+
+  <div class="form-row">
+    <label>Ceremony Location:</label>
+    <div class="input-line"></div>
+  </div>
+
+  <div class="form-row">
+    <label>Reception Location:</label>
+    <div class="input-line"></div>
+  </div>
+
+  <span class="page-number">1</span>
+</div>
+
+<!-- Table of Contents -->
+<div class="page">
+  <h2>Table of Contents</h2>
+
+  <h4>Planning Checklists</h4>
+  <div class="toc-item"><span>12-Month Timeline</span><span>3</span></div>
+  <div class="toc-item"><span>9-Month Checklist</span><span>4</span></div>
+  <div class="toc-item"><span>6-Month Checklist</span><span>5</span></div>
+  <div class="toc-item"><span>4-Month Checklist</span><span>6</span></div>
+  <div class="toc-item"><span>3-Month Checklist</span><span>7</span></div>
+  <div class="toc-item"><span>2-Month Checklist</span><span>8</span></div>
+  <div class="toc-item"><span>1-Month Checklist</span><span>9</span></div>
+  <div class="toc-item"><span>2-Week Checklist</span><span>10</span></div>
+  <div class="toc-item"><span>Final Week Checklist</span><span>11</span></div>
+  <div class="toc-item"><span>Day-Of Wedding Checklist</span><span>12</span></div>
+
+  <h4>Budget & Finances</h4>
+  <div class="toc-item"><span>Master Wedding Budget</span><span>14</span></div>
+  <div class="toc-item"><span>Vendor Payments Dashboard</span><span>15</span></div>
+  <div class="toc-item"><span>Deposit Calendar</span><span>16</span></div>
+  <div class="toc-item"><span>Expense Log</span><span>17</span></div>
+  <div class="toc-item"><span>Gift Tracking</span><span>18</span></div>
+
+  <h4>Guest Management</h4>
+  <div class="toc-item"><span>Guest List Master</span><span>19</span></div>
+  <div class="toc-item"><span>RSVP Tracker</span><span>20</span></div>
+  <div class="toc-item"><span>Seating Chart Planner</span><span>21</span></div>
+
+  <h4>Vendor Management</h4>
+  <div class="toc-item"><span>Vendor Contacts</span><span>22</span></div>
+  <div class="toc-item"><span>Comparison Sheets</span><span>23-27</span></div>
+
+  <h4>Ceremony & Reception</h4>
+  <div class="toc-item"><span>Ceremony Timeline</span><span>28</span></div>
+  <div class="toc-item"><span>Reception Timeline</span><span>29</span></div>
+  <div class="toc-item"><span>Music Planner</span><span>30</span></div>
+
+  <span class="page-number">2</span>
+</div>
+
+<!-- 12-Month Timeline -->
+<div class="page">
+  <h2>12-Month Timeline</h2>
+
+  <ul class="checklist">
+    <li>Determine your wedding budget</li>
+    <li>Draft initial guest list</li>
+    <li>Choose wedding date and season</li>
+    <li>Start researching and touring venues</li>
+    <li>Select a wedding style or theme</li>
+    <li>Create inspiration boards and color schemes</li>
+    <li>Draft wedding party list</li>
+    <li>Book ceremony and reception venues</li>
+    <li>Research and contact potential vendors</li>
+    <li>Schedule engagement photoshoot (optional)</li>
+  </ul>
+
+  <h4>Notes</h4>
+  <div class="notes-lines"></div>
+
+  <span class="page-number">3</span>
+</div>
+
+<!-- 9-Month Checklist -->
+<div class="page">
+  <h2>9-Month Checklist</h2>
+
+  <ul class="checklist">
+    <li>Finalize guest list and addresses</li>
+    <li>Book key vendors (photographer, caterer, florist)</li>
+    <li>Send Save-the-Date cards</li>
+    <li>Purchase wedding attire and accessories</li>
+    <li>Design and order invitations</li>
+    <li>Reserve hotel room blocks for guests</li>
+    <li>Register for gifts</li>
+    <li>Plan engagement party or bridal shower</li>
+    <li>Begin planning honeymoon</li>
+  </ul>
+
+  <h4>Notes</h4>
+  <div class="notes-lines"></div>
+
+  <span class="page-number">4</span>
+</div>
+
+<!-- 6-Month Checklist -->
+<div class="page">
+  <h2>6-Month Checklist</h2>
+
+  <ul class="checklist">
+    <li>Finalize menu and cake tasting</li>
+    <li>Order bridesmaid dresses and groomsmen attire</li>
+    <li>Schedule hair and makeup trials</li>
+    <li>Finalize floral designs and décor concepts</li>
+    <li>Book officiant and finalize ceremony details</li>
+    <li>Reserve rentals (tables, chairs, linens)</li>
+    <li>Order invitations and stationery</li>
+    <li>Create wedding website</li>
+    <li>Finalize hotel accommodations</li>
+  </ul>
+
+  <h4>Notes</h4>
+  <div class="notes-lines"></div>
+
+  <span class="page-number">5</span>
+</div>
+
+<!-- 4-Month Checklist -->
+<div class="page">
+  <h2>4-Month Checklist</h2>
+
+  <ul class="checklist">
+    <li>Confirm final guest list</li>
+    <li>Mail invitations</li>
+    <li>Plan and book honeymoon</li>
+    <li>Schedule final dress fittings</li>
+    <li>Review and confirm rentals and décor</li>
+    <li>Start planning rehearsal dinner</li>
+    <li>Finalize wedding cake design and flavors</li>
+    <li>Arrange transportation for wedding day</li>
+    <li>Confirm music playlist with DJ/band</li>
+  </ul>
+
+  <h4>Notes</h4>
+  <div class="notes-lines"></div>
+
+  <span class="page-number">6</span>
+</div>
+
+<!-- 3-Month Checklist -->
+<div class="page">
+  <h2>3-Month Checklist</h2>
+
+  <ul class="checklist">
+    <li>Send invitations if not already sent</li>
+    <li>Meet with vendors for final details</li>
+    <li>Finalize ceremony readings and program</li>
+    <li>Plan bachelor and bachelorette parties</li>
+    <li>Schedule hair and makeup appointments</li>
+    <li>Order wedding rings</li>
+    <li>Begin drafting seating chart</li>
+    <li>Finalize décor and flower arrangements</li>
+  </ul>
+
+  <h4>Notes</h4>
+  <div class="notes-lines"></div>
+
+  <span class="page-number">7</span>
+</div>
+
+<!-- 2-Month Checklist -->
+<div class="page">
+  <h2>2-Month Checklist</h2>
+
+  <ul class="checklist">
+    <li>Confirm RSVPs and dietary preferences</li>
+    <li>Obtain marriage license</li>
+    <li>Finalize timeline for wedding day</li>
+    <li>Schedule final dress and suit fittings</li>
+    <li>Finalize transportation details</li>
+    <li>Purchase wedding party gifts</li>
+    <li>Plan welcome bags or favors</li>
+    <li>Finalize honeymoon itinerary</li>
+  </ul>
+
+  <h4>Notes</h4>
+  <div class="notes-lines"></div>
+
+  <span class="page-number">8</span>
+</div>
+
+<!-- 1-Month Checklist -->
+<div class="page">
+  <h2>1-Month Checklist</h2>
+
+  <ul class="checklist">
+    <li>Attend final dress fitting</li>
+    <li>Create seating chart and place cards</li>
+    <li>Confirm arrival times with all vendors</li>
+    <li>Print programs and menus</li>
+    <li>Write vows and speeches</li>
+    <li>Pack for honeymoon</li>
+    <li>Confirm hair and makeup schedule</li>
+    <li>Prepare payments and tips for vendors</li>
+  </ul>
+
+  <h4>Notes</h4>
+  <div class="notes-lines"></div>
+
+  <span class="page-number">9</span>
+</div>
+
+<!-- 2-Week Checklist -->
+<div class="page">
+  <h2>2-Week Checklist</h2>
+
+  <ul class="checklist">
+    <li>Confirm final headcount with caterer</li>
+    <li>Break in wedding shoes</li>
+    <li>Finalize beauty appointments</li>
+    <li>Create wedding day emergency kit</li>
+    <li>Review final playlist and cues</li>
+    <li>Delegate tasks to wedding party and coordinator</li>
+    <li>Prepare marriage license documents</li>
+    <li>Relax and get plenty of rest</li>
+  </ul>
+
+  <h4>Notes</h4>
+  <div class="notes-lines"></div>
+
+  <span class="page-number">10</span>
+</div>
+
+<!-- Final Week Checklist -->
+<div class="page">
+  <h2>Final Week Checklist</h2>
+
+  <ul class="checklist">
+    <li>Pick up wedding attire</li>
+    <li>Pack honeymoon luggage</li>
+    <li>Prepare tip envelopes for vendors</li>
+    <li>Organize décor and supplies for transport</li>
+    <li>Confirm details with vendors and wedding party</li>
+    <li>Do a final walkthrough of venue</li>
+    <li>Ensure rings and marriage license are secure</li>
+    <li>Relax and enjoy the days leading up to the wedding</li>
+  </ul>
+
+  <h4>Notes</h4>
+  <div class="notes-lines"></div>
+
+  <span class="page-number">11</span>
+</div>
+
+<!-- Day-Of Wedding Checklist -->
+<div class="page">
+  <h2>Day-Of Wedding Checklist</h2>
+
+  <ul class="checklist">
+    <li>Eat a healthy breakfast</li>
+    <li>Allow extra time for hair and makeup</li>
+    <li>Ensure bouquets and boutonnieres are delivered</li>
+    <li>Confirm vendor arrivals and setup</li>
+    <li>Sign marriage license</li>
+    <li>Stay hydrated and enjoy the day!</li>
+    <li>Smile and soak in every moment</li>
+  </ul>
+
+  <div class="divider"></div>
+
+  <h3>Wedding Weekend Overview</h3>
+
+  <div class="form-row">
+    <label>Rehearsal Dinner:</label>
+    <div class="input-line"></div>
+  </div>
+
+  <div class="form-row">
+    <label>Wedding Day:</label>
+    <div class="input-line"></div>
+  </div>
+
+  <div class="form-row">
+    <label>Post-Wedding Brunch:</label>
+    <div class="input-line"></div>
+  </div>
+
+  <span class="page-number">12</span>
+</div>
+
+<!-- Master Wedding Budget -->
+<div class="page">
+  <h2>Master Wedding Budget</h2>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Category</th>
+        <th>Estimated</th>
+        <th>Actual</th>
+        <th>Paid</th>
+        <th>Due Date</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>Venue</td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>Catering</td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>Florals</td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>Photography</td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>Videography</td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>Entertainment/DJ</td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>Wedding Attire</td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>Hair & Makeup</td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>Stationery</td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>Cake & Desserts</td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>Rentals</td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>Transportation</td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>Favors & Gifts</td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>Officiant</td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>Miscellaneous</td><td></td><td></td><td></td><td></td></tr>
+      <tr style="background: #d4a574; color: white; font-weight: bold;">
+        <td>TOTAL</td><td></td><td></td><td></td><td></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <span class="page-number">14</span>
+</div>
+
+<!-- Vendor Payments Dashboard -->
+<div class="page">
+  <h2>Vendor Payments Dashboard</h2>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Vendor</th>
+        <th>Service</th>
+        <th>Total Cost</th>
+        <th>Deposit Paid</th>
+        <th>Balance Due</th>
+        <th>Due Date</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+    </tbody>
+  </table>
+
+  <span class="page-number">15</span>
+</div>
+
+<!-- Guest List Master -->
+<div class="page">
+  <h2>Guest List Master</h2>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Guest Name</th>
+        <th>Address</th>
+        <th>RSVP</th>
+        <th>Meal</th>
+        <th>Table</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td><td></td></tr>
+    </tbody>
+  </table>
+
+  <span class="page-number">19</span>
+</div>
+
+<!-- Seating Chart Planner -->
+<div class="page">
+  <h2>Seating Chart Planner</h2>
+
+  <p style="margin-bottom: 20px; color: #666;">Use this section to draft your seating arrangements. Write guest names around each table.</p>
+
+  <div class="seating-grid">
+    <div>
+      <div class="table-circle">Table 1</div>
+      <div class="notes-area" style="min-height: 80px; font-size: 10pt;"></div>
+    </div>
+    <div>
+      <div class="table-circle">Table 2</div>
+      <div class="notes-area" style="min-height: 80px; font-size: 10pt;"></div>
+    </div>
+    <div>
+      <div class="table-circle">Table 3</div>
+      <div class="notes-area" style="min-height: 80px; font-size: 10pt;"></div>
+    </div>
+    <div>
+      <div class="table-circle">Table 4</div>
+      <div class="notes-area" style="min-height: 80px; font-size: 10pt;"></div>
+    </div>
+    <div>
+      <div class="table-circle">Table 5</div>
+      <div class="notes-area" style="min-height: 80px; font-size: 10pt;"></div>
+    </div>
+    <div>
+      <div class="table-circle">Table 6</div>
+      <div class="notes-area" style="min-height: 80px; font-size: 10pt;"></div>
+    </div>
+  </div>
+
+  <span class="page-number">21</span>
+</div>
+
+<!-- Vendor Contacts -->
+<div class="page">
+  <h2>Vendor Contacts</h2>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Vendor</th>
+        <th>Contact Person</th>
+        <th>Phone</th>
+        <th>Email</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>Venue</td><td></td><td></td><td></td></tr>
+      <tr><td>Caterer</td><td></td><td></td><td></td></tr>
+      <tr><td>Photographer</td><td></td><td></td><td></td></tr>
+      <tr><td>Videographer</td><td></td><td></td><td></td></tr>
+      <tr><td>Florist</td><td></td><td></td><td></td></tr>
+      <tr><td>DJ/Band</td><td></td><td></td><td></td></tr>
+      <tr><td>Officiant</td><td></td><td></td><td></td></tr>
+      <tr><td>Cake Baker</td><td></td><td></td><td></td></tr>
+      <tr><td>Hair Stylist</td><td></td><td></td><td></td></tr>
+      <tr><td>Makeup Artist</td><td></td><td></td><td></td></tr>
+      <tr><td>Rentals</td><td></td><td></td><td></td></tr>
+      <tr><td>Transportation</td><td></td><td></td><td></td></tr>
+    </tbody>
+  </table>
+
+  <span class="page-number">22</span>
+</div>
+
+<!-- Ceremony Timeline -->
+<div class="page">
+  <h2>Ceremony Timeline</h2>
+
+  <div class="form-row">
+    <label>Ceremony Start Time:</label>
+    <div class="input-line"></div>
+  </div>
+
+  <h4>Processional Order</h4>
+  <ol>
+    <li>Officiant</li>
+    <li>Groom and Best Man</li>
+    <li>Bridesmaids and Groomsmen</li>
+    <li>Maid/Matron of Honor</li>
+    <li>Flower Girl and Ring Bearer</li>
+    <li>Bride (with escort)</li>
+  </ol>
+
+  <h4>Ceremony Music</h4>
+  <div class="form-row">
+    <label>Prelude:</label>
+    <div class="input-line"></div>
+  </div>
+  <div class="form-row">
+    <label>Processional:</label>
+    <div class="input-line"></div>
+  </div>
+  <div class="form-row">
+    <label>Bride's Entrance:</label>
+    <div class="input-line"></div>
+  </div>
+  <div class="form-row">
+    <label>Recessional:</label>
+    <div class="input-line"></div>
+  </div>
+
+  <h4>Recessional Order</h4>
+  <ol>
+    <li>Bride and Groom</li>
+    <li>Flower Girl and Ring Bearer</li>
+    <li>Maid of Honor and Best Man</li>
+    <li>Wedding Party (paired)</li>
+    <li>Parents</li>
+    <li>Guests by row</li>
+  </ol>
+
+  <span class="page-number">28</span>
+</div>
+
+<!-- Reception Timeline -->
+<div class="page">
+  <h2>Reception Timeline</h2>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Time</th>
+        <th>Event</th>
+        <th>Notes</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td></td><td>Cocktail Hour Begins</td><td></td></tr>
+      <tr><td></td><td>Guests Seated for Dinner</td><td></td></tr>
+      <tr><td></td><td>Wedding Party Introduction</td><td></td></tr>
+      <tr><td></td><td>Couple's Grand Entrance</td><td></td></tr>
+      <tr><td></td><td>First Dance</td><td></td></tr>
+      <tr><td></td><td>Welcome Toast</td><td></td></tr>
+      <tr><td></td><td>Dinner Service</td><td></td></tr>
+      <tr><td></td><td>Toasts & Speeches</td><td></td></tr>
+      <tr><td></td><td>Parent Dances</td><td></td></tr>
+      <tr><td></td><td>Cake Cutting</td><td></td></tr>
+      <tr><td></td><td>Bouquet & Garter Toss</td><td></td></tr>
+      <tr><td></td><td>Open Dancing</td><td></td></tr>
+      <tr><td></td><td>Last Dance</td><td></td></tr>
+      <tr><td></td><td>Grand Exit</td><td></td></tr>
+    </tbody>
+  </table>
+
+  <span class="page-number">29</span>
+</div>
+
+<!-- Emergency Kit Checklist -->
+<div class="page">
+  <h2>Emergency Kit Checklist</h2>
+
+  <ul class="checklist">
+    <li>Safety pins and sewing kit</li>
+    <li>Pain relievers and medication</li>
+    <li>Blotting sheets and face powder</li>
+    <li>Mints or gum</li>
+    <li>Clear tape and glue</li>
+    <li>Phone chargers</li>
+    <li>Stain remover pen</li>
+    <li>Heel protectors and comfortable shoes</li>
+    <li>Bobby pins and hair ties</li>
+    <li>Tissues</li>
+    <li>Band-aids</li>
+    <li>Deodorant</li>
+    <li>Breath spray</li>
+    <li>Static guard</li>
+    <li>Eye drops</li>
+  </ul>
+
+  <div class="divider"></div>
+
+  <h2>Vendor Gratuity Checklist</h2>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Vendor</th>
+        <th>Suggested Tip</th>
+        <th>Amount</th>
+        <th>Paid</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>Coordinator</td><td>$50-$100</td><td></td><td></td></tr>
+      <tr><td>Caterer/Servers</td><td>15-20%</td><td></td><td></td></tr>
+      <tr><td>Bartenders</td><td>10-15%</td><td></td><td></td></tr>
+      <tr><td>DJ/Band</td><td>$50-$150</td><td></td><td></td></tr>
+      <tr><td>Photographer</td><td>$50-$200</td><td></td><td></td></tr>
+      <tr><td>Hair & Makeup</td><td>15-20%</td><td></td><td></td></tr>
+      <tr><td>Drivers</td><td>15-20%</td><td></td><td></td></tr>
+      <tr><td>Officiant</td><td>$50-$100</td><td></td><td></td></tr>
+    </tbody>
+  </table>
+
+  <span class="page-number">30</span>
+</div>
+
+<!-- Honeymoon Packing List -->
+<div class="page">
+  <h2>Honeymoon Packing List</h2>
+
+  <h4>Travel Documents</h4>
+  <ul class="checklist">
+    <li>Passports</li>
+    <li>Flight tickets/confirmations</li>
+    <li>Hotel reservations</li>
+    <li>Travel insurance documents</li>
+    <li>Driver's license</li>
+    <li>Credit cards and cash</li>
+  </ul>
+
+  <h4>Clothing</h4>
+  <ul class="checklist">
+    <li>Swimwear and cover-ups</li>
+    <li>Casual outfits</li>
+    <li>Dressy dinner outfits</li>
+    <li>Comfortable walking shoes</li>
+    <li>Sandals/flip flops</li>
+    <li>Undergarments</li>
+    <li>Sleepwear</li>
+    <li>Light jacket or sweater</li>
+  </ul>
+
+  <h4>Toiletries & Essentials</h4>
+  <ul class="checklist">
+    <li>Sunscreen</li>
+    <li>Toiletries and cosmetics</li>
+    <li>Medications</li>
+    <li>Electronics and chargers</li>
+    <li>Travel adapters</li>
+    <li>Camera</li>
+    <li>Books or entertainment</li>
+    <li>Snacks</li>
+  </ul>
+
+  <span class="page-number">31</span>
+</div>
+
+<!-- Notes Pages -->
+<div class="page">
+  <h2>Notes</h2>
+  <div class="notes-lines" style="min-height: 600px;"></div>
+  <span class="page-number">32</span>
+</div>
+
+<div class="page">
+  <h2>Notes</h2>
+  <div class="notes-lines" style="min-height: 600px;"></div>
+  <span class="page-number">33</span>
+</div>
+
+<div class="page">
+  <h2>Notes</h2>
+  <div class="notes-lines" style="min-height: 600px;"></div>
+  <span class="page-number">34</span>
+</div>
+
+<!-- Final Page -->
+<div class="page cover-page">
+  <h1 style="font-size: 36pt;">Congratulations!</h1>
+  <p class="subtitle">Wishing you a lifetime of love and happiness</p>
+
+  <div class="divider"></div>
+
+  <p style="margin-top: 40px; font-size: 14pt; color: #666;">
+    Thank you for choosing Shelzy's Designs<br>
+    for your special day!
+  </p>
+
+  <p class="logo" style="margin-top: 40px;">
+    www.shelzysdesigns.com<br>
+    @shelzysdesigns
+  </p>
+</div>
+
+</body>
+</html>

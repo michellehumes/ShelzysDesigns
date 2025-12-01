@@ -1,0 +1,366 @@
+name: Deploy Site Improvements
+
+on:
+  # Manual trigger - click "Run workflow" in GitHub Actions
+  workflow_dispatch:
+    inputs:
+      action:
+        description: 'What to deploy'
+        required: true
+        default: 'full'
+        type: choice
+        options:
+          - 'full'           # Everything (recommended)
+          - 'comprehensive'  # Enhanced deployment with more blog posts
+          - 'pages-only'     # Just fix pages
+          - 'snippets-only'  # Just inject theme snippets
+          - 'blogs-only'     # Just publish blog posts
+          - 'dry-run'        # Test without making changes
+          - 'fix-conflicts'  # Fix snippet conflicts with theme
+          - 'upload-images'  # Upload stock images to products and blogs
+          - 'fix-homepage'   # Fix reviews blocking homepage
+          - 'fix-blog-images' # Fix blog images (downloads and uploads as base64)
+          - 'debug-blog'      # Debug blog image issues
+
+env:
+  NODE_VERSION: '18'
+
+jobs:
+  # ============================================
+  # FULL DEPLOYMENT - Does everything automatically
+  # ============================================
+  full-deploy:
+    name: Full Site Deployment
+    runs-on: ubuntu-latest
+    if: github.event.inputs.action == 'full'
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Step 1 - Deploy pages and collections
+        env:
+          SHOPIFY_STORE_URL: ${{ secrets.SHOPIFY_STORE_URL }}
+          SHOPIFY_ACCESS_TOKEN: ${{ secrets.SHOPIFY_ACCESS_TOKEN }}
+        run: |
+          echo "🚀 Running master site improvement..."
+          node shopify/scripts/master-site-improvement.js --phase=all
+
+      - name: Step 2 - Inject theme snippets
+        env:
+          SHOPIFY_STORE_URL: ${{ secrets.SHOPIFY_STORE_URL }}
+          SHOPIFY_ACCESS_TOKEN: ${{ secrets.SHOPIFY_ACCESS_TOKEN }}
+        run: |
+          echo "💉 Injecting conversion snippets into theme..."
+          node shopify/scripts/auto-inject-snippets.js
+
+      - name: Step 3 - Publish all blog posts
+        env:
+          SHOPIFY_STORE_URL: ${{ secrets.SHOPIFY_STORE_URL }}
+          SHOPIFY_ACCESS_TOKEN: ${{ secrets.SHOPIFY_ACCESS_TOKEN }}
+          AMAZON_ASSOCIATE_TAG: ${{ secrets.AMAZON_ASSOCIATE_TAG }}
+        run: |
+          echo "📝 Publishing blog posts with affiliate links..."
+          node shopify/scripts/publish-all-blog-posts.js
+
+      - name: Create deployment summary
+        run: |
+          echo "# 🎉 Full Deployment Complete!" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "## What was deployed:" >> $GITHUB_STEP_SUMMARY
+          echo "- ✅ About, Contact, FAQ, How It Works pages" >> $GITHUB_STEP_SUMMARY
+          echo "- ✅ All product collections" >> $GITHUB_STEP_SUMMARY
+          echo "- ✅ Brand CSS and styling" >> $GITHUB_STEP_SUMMARY
+          echo "- ✅ Free shipping bar" >> $GITHUB_STEP_SUMMARY
+          echo "- ✅ Exit-intent email popup" >> $GITHUB_STEP_SUMMARY
+          echo "- ✅ Trust badges on product pages" >> $GITHUB_STEP_SUMMARY
+          echo "- ✅ Urgency timer on product pages" >> $GITHUB_STEP_SUMMARY
+          echo "- ✅ Cart upsell section" >> $GITHUB_STEP_SUMMARY
+          echo "- ✅ Announcement bar" >> $GITHUB_STEP_SUMMARY
+          echo "- ✅ 12 SEO-optimized blog posts with affiliate links" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Timestamp:** $(date -u)" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "## Next Steps:" >> $GITHUB_STEP_SUMMARY
+          echo "1. Sign up for Amazon Associates and add your tag to secrets" >> $GITHUB_STEP_SUMMARY
+          echo "2. Review your site at https://shelzysdesigns.com" >> $GITHUB_STEP_SUMMARY
+          echo "3. Set up Tailwind for Pinterest automation" >> $GITHUB_STEP_SUMMARY
+
+  # ============================================
+  # COMPREHENSIVE - Enhanced deployment with more features
+  # ============================================
+  comprehensive-deploy:
+    name: Comprehensive Deployment
+    runs-on: ubuntu-latest
+    if: github.event.inputs.action == 'comprehensive'
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Run comprehensive deployment
+        env:
+          SHOPIFY_STORE_URL: ${{ secrets.SHOPIFY_STORE_URL }}
+          SHOPIFY_ACCESS_TOKEN: ${{ secrets.SHOPIFY_ACCESS_TOKEN }}
+          AMAZON_ASSOCIATE_TAG: ${{ secrets.AMAZON_ASSOCIATE_TAG }}
+        run: |
+          echo "🚀 Running comprehensive site deployment..."
+          node shopify/scripts/deploy-all-improvements.js
+
+      - name: Create deployment summary
+        run: |
+          echo "# 🎉 Comprehensive Deployment Complete!" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "## What was deployed:" >> $GITHUB_STEP_SUMMARY
+          echo "- ✅ 5 pages (About, Contact, FAQ, How It Works, Bulk & Corporate)" >> $GITHUB_STEP_SUMMARY
+          echo "- ✅ 6 product collections" >> $GITHUB_STEP_SUMMARY
+          echo "- ✅ 6 SEO blog posts with Amazon affiliate links" >> $GITHUB_STEP_SUMMARY
+          echo "- ✅ Brand CSS styling" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Timestamp:** $(date -u)" >> $GITHUB_STEP_SUMMARY
+
+  # ============================================
+  # PAGES ONLY - Just create/fix pages
+  # ============================================
+  pages-only:
+    name: Deploy Pages Only
+    runs-on: ubuntu-latest
+    if: github.event.inputs.action == 'pages-only'
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Deploy pages and collections
+        env:
+          SHOPIFY_STORE_URL: ${{ secrets.SHOPIFY_STORE_URL }}
+          SHOPIFY_ACCESS_TOKEN: ${{ secrets.SHOPIFY_ACCESS_TOKEN }}
+        run: node shopify/scripts/master-site-improvement.js --phase=1
+
+  # ============================================
+  # SNIPPETS ONLY - Just inject theme snippets
+  # ============================================
+  snippets-only:
+    name: Inject Theme Snippets
+    runs-on: ubuntu-latest
+    if: github.event.inputs.action == 'snippets-only'
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Inject snippets
+        env:
+          SHOPIFY_STORE_URL: ${{ secrets.SHOPIFY_STORE_URL }}
+          SHOPIFY_ACCESS_TOKEN: ${{ secrets.SHOPIFY_ACCESS_TOKEN }}
+        run: node shopify/scripts/auto-inject-snippets.js
+
+  # ============================================
+  # BLOGS ONLY - Just publish blog posts
+  # ============================================
+  blogs-only:
+    name: Publish Blog Posts
+    runs-on: ubuntu-latest
+    if: github.event.inputs.action == 'blogs-only'
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Publish blogs
+        env:
+          SHOPIFY_STORE_URL: ${{ secrets.SHOPIFY_STORE_URL }}
+          SHOPIFY_ACCESS_TOKEN: ${{ secrets.SHOPIFY_ACCESS_TOKEN }}
+          AMAZON_ASSOCIATE_TAG: ${{ secrets.AMAZON_ASSOCIATE_TAG }}
+        run: node shopify/scripts/publish-all-blog-posts.js
+
+  # ============================================
+  # DRY RUN - Test without making changes
+  # ============================================
+  dry-run:
+    name: Dry Run (Test Mode)
+    runs-on: ubuntu-latest
+    if: github.event.inputs.action == 'dry-run'
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Test deployment
+        env:
+          SHOPIFY_STORE_URL: ${{ secrets.SHOPIFY_STORE_URL }}
+          SHOPIFY_ACCESS_TOKEN: ${{ secrets.SHOPIFY_ACCESS_TOKEN }}
+        run: node shopify/scripts/master-site-improvement.js --phase=all --dry-run
+
+  # ============================================
+  # FIX CONFLICTS - Remove conflicting snippets
+  # ============================================
+  fix-conflicts:
+    name: Fix Snippet Conflicts
+    runs-on: ubuntu-latest
+    if: github.event.inputs.action == 'fix-conflicts'
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Fix conflicts
+        env:
+          SHOPIFY_STORE_URL: ${{ secrets.SHOPIFY_STORE_URL }}
+          SHOPIFY_ACCESS_TOKEN: ${{ secrets.SHOPIFY_ACCESS_TOKEN }}
+        run: node shopify/scripts/fix-snippet-conflicts.js
+
+  # ============================================
+  # UPLOAD IMAGES - Add stock images to products and blogs
+  # ============================================
+  upload-images:
+    name: Upload Images
+    runs-on: ubuntu-latest
+    if: github.event.inputs.action == 'upload-images'
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Upload images
+        env:
+          SHOPIFY_STORE_URL: ${{ secrets.SHOPIFY_STORE_URL }}
+          SHOPIFY_ACCESS_TOKEN: ${{ secrets.SHOPIFY_ACCESS_TOKEN }}
+        run: node shopify/scripts/upload-images.js
+
+      - name: Create upload summary
+        run: |
+          echo "# 📸 Image Upload Complete!" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "Stock images have been added to products and blog posts that were missing images." >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Note:** For best results, replace these with professional product photos." >> $GITHUB_STEP_SUMMARY
+
+  # ============================================
+  # FIX HOMEPAGE - Remove blocking reviews/social proof
+  # ============================================
+  fix-homepage:
+    name: Fix Homepage Reviews
+    runs-on: ubuntu-latest
+    if: github.event.inputs.action == 'fix-homepage'
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Fix homepage blocking issues
+        env:
+          SHOPIFY_STORE_URL: ${{ secrets.SHOPIFY_STORE_URL }}
+          SHOPIFY_ACCESS_TOKEN: ${{ secrets.SHOPIFY_ACCESS_TOKEN }}
+        run: node shopify/scripts/fix-homepage-reviews.js
+
+      - name: Create fix summary
+        run: |
+          echo "# 🔧 Homepage Fix Complete!" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "## What was fixed:" >> $GITHUB_STEP_SUMMARY
+          echo "- ✅ Removed floating 'Someone just purchased' popups" >> $GITHUB_STEP_SUMMARY
+          echo "- ✅ Removed conflicting social proof banners" >> $GITHUB_STEP_SUMMARY
+          echo "- ✅ Removed duplicate announcement bars" >> $GITHUB_STEP_SUMMARY
+          echo "- ✅ Cleaned up theme template files" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Refresh your site to see the changes.**" >> $GITHUB_STEP_SUMMARY
+
+  # ============================================
+  # FIX BLOG IMAGES - Downloads and uploads as base64
+  # ============================================
+  fix-blog-images:
+    name: Fix Blog Images
+    runs-on: ubuntu-latest
+    if: github.event.inputs.action == 'fix-blog-images'
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Fix blog images
+        env:
+          SHOPIFY_STORE_URL: ${{ secrets.SHOPIFY_STORE_URL }}
+          SHOPIFY_ACCESS_TOKEN: ${{ secrets.SHOPIFY_ACCESS_TOKEN }}
+        run: node shopify/scripts/fix-blog-images.js
+
+      - name: Create summary
+        run: |
+          echo "# 📸 Blog Images Fixed!" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "Images have been downloaded and uploaded to all blog posts." >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Refresh your blog to see the images.**" >> $GITHUB_STEP_SUMMARY
+
+  # ============================================
+  # DEBUG BLOG - Test image upload methods
+  # ============================================
+  debug-blog:
+    name: Debug Blog Images
+    runs-on: ubuntu-latest
+    if: github.event.inputs.action == 'debug-blog'
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Debug blog images
+        env:
+          SHOPIFY_STORE_URL: ${{ secrets.SHOPIFY_STORE_URL }}
+          SHOPIFY_ACCESS_TOKEN: ${{ secrets.SHOPIFY_ACCESS_TOKEN }}
+        run: node shopify/scripts/debug-blog-images.js

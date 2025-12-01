@@ -1,0 +1,105 @@
+{%- comment -%}
+  Shelzy's Designs - Price Per Bottle Display
+
+  Shows per-unit price for set products
+  Add to product template: {% render 'shelzys-price-per-bottle' %}
+{%- endcomment -%}
+
+{%- liquid
+  assign is_set = false
+  assign set_quantity = 1
+
+  # Check if product is a set (by title, tags, or variant)
+  if product.title contains 'Set of'
+    assign is_set = true
+    if product.title contains 'Set of 2'
+      assign set_quantity = 2
+    elsif product.title contains 'Set of 3'
+      assign set_quantity = 3
+    elsif product.title contains 'Set of 4'
+      assign set_quantity = 4
+    elsif product.title contains 'Set of 5'
+      assign set_quantity = 5
+    elsif product.title contains 'Set of 6'
+      assign set_quantity = 6
+    elsif product.title contains 'Set of 8'
+      assign set_quantity = 8
+    elsif product.title contains 'Set of 10'
+      assign set_quantity = 10
+    elsif product.title contains 'Set of 12'
+      assign set_quantity = 12
+    endif
+  endif
+
+  # Also check tags
+  if product.tags contains 'set' or product.tags contains 'bundle' or product.tags contains 'pack'
+    assign is_set = true
+  endif
+
+  # Calculate price per bottle
+  if is_set and set_quantity > 1
+    assign price_per_bottle = product.price | divided_by: set_quantity
+  endif
+-%}
+
+{%- if is_set and set_quantity > 1 -%}
+  <div class="sz-price-per-bottle">
+    <span class="sz-ppb-label">From</span>
+    <span class="sz-ppb-price">{{ price_per_bottle | money }}</span>
+    <span class="sz-ppb-unit">per bottle</span>
+    {%- if product.compare_at_price > product.price -%}
+      {%- assign savings_percent = product.compare_at_price | minus: product.price | times: 100 | divided_by: product.compare_at_price -%}
+      <span class="sz-ppb-savings">Save {{ savings_percent }}%</span>
+    {%- endif -%}
+  </div>
+{%- endif -%}
+
+<style>
+  .sz-price-per-bottle {
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 6px;
+    padding: 12px 16px;
+    background: #F5F2ED;
+    margin: 12px 0;
+  }
+
+  .sz-ppb-label {
+    font-family: "Inter", sans-serif;
+    font-size: 13px;
+    color: #7A7A7A;
+  }
+
+  .sz-ppb-price {
+    font-family: "Inter", sans-serif;
+    font-size: 20px;
+    font-weight: 600;
+    color: #2C3E2D;
+  }
+
+  .sz-ppb-unit {
+    font-family: "Inter", sans-serif;
+    font-size: 13px;
+    color: #7A7A7A;
+  }
+
+  .sz-ppb-savings {
+    margin-left: auto;
+    font-family: "Inter", sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    color: #FFFFFF;
+    background: #2C3E2D;
+    padding: 4px 10px;
+  }
+
+  @media (max-width: 400px) {
+    .sz-ppb-savings {
+      margin-left: 0;
+      margin-top: 4px;
+      width: 100%;
+      text-align: center;
+    }
+  }
+</style>

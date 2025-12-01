@@ -1,0 +1,203 @@
+{%- comment -%}
+  Shelzy's Designs - Product Page FAQ Accordion
+
+  Common questions answered on every product page
+  Add below product description: {% render 'shelzys-product-faq' %}
+{%- endcomment -%}
+
+<style>
+  .sz-product-faq {
+    margin: 30px 0;
+    border-top: 1px solid #E0E3DF;
+    padding-top: 30px;
+  }
+
+  .sz-product-faq-title {
+    font-family: "Playfair Display", serif;
+    font-size: 20px;
+    font-weight: 600;
+    color: #4E5F4A;
+    margin: 0 0 20px 0;
+  }
+
+  .sz-faq-item {
+    border-bottom: 1px solid #E0E3DF;
+  }
+
+  .sz-faq-question {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 0;
+    background: none;
+    border: none;
+    cursor: pointer;
+    text-align: left;
+    font-family: "Inter", sans-serif;
+    font-size: 15px;
+    font-weight: 500;
+    color: #2B2B2B;
+    transition: color 0.2s ease;
+  }
+
+  .sz-faq-question:hover {
+    color: #4E5F4A;
+  }
+
+  .sz-faq-icon {
+    font-size: 18px;
+    color: #8BAA88;
+    transition: transform 0.3s ease;
+    flex-shrink: 0;
+    margin-left: 12px;
+  }
+
+  .sz-faq-item.open .sz-faq-icon {
+    transform: rotate(45deg);
+  }
+
+  .sz-faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease, padding 0.3s ease;
+  }
+
+  .sz-faq-item.open .sz-faq-answer {
+    max-height: 500px;
+    padding-bottom: 16px;
+  }
+
+  .sz-faq-answer-inner {
+    font-family: "Inter", sans-serif;
+    font-size: 14px;
+    line-height: 1.7;
+    color: #666;
+  }
+
+  .sz-faq-answer-inner strong {
+    color: #4E5F4A;
+  }
+
+  .sz-faq-answer-inner ul {
+    margin: 10px 0;
+    padding-left: 20px;
+  }
+
+  .sz-faq-answer-inner li {
+    margin-bottom: 6px;
+  }
+</style>
+
+<div class="sz-product-faq">
+  <h3 class="sz-product-faq-title">Common Questions</h3>
+
+  <div class="sz-faq-item">
+    <button class="sz-faq-question" onclick="szToggleFaq(this)">
+      <span>Is this vinyl or will it peel off?</span>
+      <span class="sz-faq-icon">+</span>
+    </button>
+    <div class="sz-faq-answer">
+      <div class="sz-faq-answer-inner">
+        <strong>No vinyl here!</strong> We use true sublimation printing where the ink is permanently infused into the bottle's coating using heat and pressure. Unlike vinyl stickers that sit on top and eventually peel, our prints become part of the bottle itself. No raised edges, no peeling, no cracking—ever.
+      </div>
+    </div>
+  </div>
+
+  <div class="sz-faq-item">
+    <button class="sz-faq-question" onclick="szToggleFaq(this)">
+      <span>How long will my order take?</span>
+      <span class="sz-faq-icon">+</span>
+    </button>
+    <div class="sz-faq-answer">
+      <div class="sz-faq-answer-inner">
+        Each bottle is made to order with your custom personalization:
+        <ul>
+          <li><strong>Processing:</strong> 3-5 business days</li>
+          <li><strong>Shipping:</strong> 3-7 business days</li>
+          <li><strong>Total:</strong> 6-12 business days</li>
+        </ul>
+        Need it faster? Contact us about rush orders!
+      </div>
+    </div>
+  </div>
+
+  <div class="sz-faq-item">
+    <button class="sz-faq-question" onclick="szToggleFaq(this)">
+      <span>Is it dishwasher safe?</span>
+      <span class="sz-faq-icon">+</span>
+    </button>
+    <div class="sz-faq-answer">
+      <div class="sz-faq-answer-inner">
+        We recommend <strong>hand washing</strong> to keep your bottle looking its best for years. That said, sublimation is much more durable than vinyl—many customers do use the dishwasher without issues. The print won't peel or crack either way!
+      </div>
+    </div>
+  </div>
+
+  <div class="sz-faq-item">
+    <button class="sz-faq-question" onclick="szToggleFaq(this)">
+      <span>How cold/hot does it keep drinks?</span>
+      <span class="sz-faq-icon">+</span>
+    </button>
+    <div class="sz-faq-answer">
+      <div class="sz-faq-answer-inner">
+        Our 20oz double-wall insulated stainless steel bottles keep:
+        <ul>
+          <li><strong>Cold drinks:</strong> Up to 24 hours</li>
+          <li><strong>Hot drinks:</strong> Up to 12 hours</li>
+        </ul>
+        Perfect for the gym, office, travel, or all-day hydration!
+      </div>
+    </div>
+  </div>
+
+  <div class="sz-faq-item">
+    <button class="sz-faq-question" onclick="szToggleFaq(this)">
+      <span>What if I need to change my order?</span>
+      <span class="sz-faq-icon">+</span>
+    </button>
+    <div class="sz-faq-answer">
+      <div class="sz-faq-answer-inner">
+        Contact us <strong>immediately</strong> at hello@shelzysdesigns.com! If production hasn't started yet, we can usually make changes. Please double-check your spelling before ordering—we print exactly what you enter.
+      </div>
+    </div>
+  </div>
+
+  <div class="sz-faq-item">
+    <button class="sz-faq-question" onclick="szToggleFaq(this)">
+      <span>Do you offer bulk/corporate orders?</span>
+      <span class="sz-faq-icon">+</span>
+    </button>
+    <div class="sz-faq-answer">
+      <div class="sz-faq-answer-inner">
+        Yes! We offer bulk pricing for:
+        <ul>
+          <li>Bridal parties (5, 8, or 10-packs)</li>
+          <li>Corporate events & team gifts</li>
+          <li>Sports teams</li>
+          <li>Wedding favors</li>
+        </ul>
+        <strong>Volume discounts:</strong> 10% off 25+, 15% off 50+, 20% off 100+ units.
+        <br><br>
+        <a href="/pages/bulk-orders" style="color: #8BAA88; font-weight: 600;">Request a bulk quote →</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+function szToggleFaq(button) {
+  var item = button.parentElement;
+  var wasOpen = item.classList.contains('open');
+
+  // Close all items
+  document.querySelectorAll('.sz-faq-item').forEach(function(el) {
+    el.classList.remove('open');
+  });
+
+  // Open clicked item if it wasn't open
+  if (!wasOpen) {
+    item.classList.add('open');
+  }
+}
+</script>
