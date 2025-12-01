@@ -1,0 +1,303 @@
+<!--
+  ABANDONED CART EMAIL SEQUENCE
+
+  Set up in: Shopify Admin > Settings > Notifications > Checkout > Abandoned checkout
+  OR use Klaviyo/Mailchimp for advanced automation
+
+  Timing:
+  - Email 1: 1 hour after abandonment
+  - Email 2: 24 hours after abandonment
+  - Email 3: 72 hours after abandonment (with discount)
+-->
+
+<!-- ============================================ -->
+<!-- EMAIL 1: Gentle Reminder (1 hour) -->
+<!-- Subject: Did you forget something? Your custom bottle is waiting -->
+<!-- ============================================ -->
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Your cart is waiting</title>
+</head>
+<body style="margin: 0; padding: 0; background-color: #f5f5f5; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+  <table width="100%" cellpadding="0" cellspacing="0" style="background-color: #f5f5f5; padding: 40px 20px;">
+    <tr>
+      <td align="center">
+        <table width="600" cellpadding="0" cellspacing="0" style="background-color: #ffffff; border-radius: 12px; overflow: hidden;">
+
+          <!-- Header -->
+          <tr>
+            <td style="background-color: #321004; padding: 30px; text-align: center;">
+              <h1 style="color: #ffffff; margin: 0; font-size: 24px;">Shelzy's Designs</h1>
+            </td>
+          </tr>
+
+          <!-- Content -->
+          <tr>
+            <td style="padding: 40px;">
+              <h2 style="color: #321004; margin: 0 0 20px 0; font-size: 28px;">Your custom bottle is waiting!</h2>
+
+              <p style="color: #555; font-size: 16px; line-height: 1.6; margin: 0 0 20px 0;">
+                Hey there,
+              </p>
+
+              <p style="color: #555; font-size: 16px; line-height: 1.6; margin: 0 0 20px 0;">
+                We noticed you left something special in your cart. Your personalized bottle is still saved and ready to be finished!
+              </p>
+
+              <p style="color: #555; font-size: 16px; line-height: 1.6; margin: 0 0 30px 0;">
+                Since each bottle is custom-made just for you, we wanted to make sure your design doesn't slip away.
+              </p>
+
+              <!-- CTA Button -->
+              <table width="100%" cellpadding="0" cellspacing="0">
+                <tr>
+                  <td align="center">
+                    <a href="{{ checkout.abandoned_checkout_url }}" style="display: inline-block; background-color: #321004; color: #ffffff; padding: 16px 40px; text-decoration: none; border-radius: 8px; font-weight: 600; font-size: 16px;">Complete My Order</a>
+                  </td>
+                </tr>
+              </table>
+
+              <p style="color: #999; font-size: 14px; text-align: center; margin: 30px 0 0 0;">
+                Questions? Reply to this email—we're here to help!
+              </p>
+            </td>
+          </tr>
+
+          <!-- Footer -->
+          <tr>
+            <td style="background-color: #f9f9f9; padding: 24px; text-align: center;">
+              <p style="color: #999; font-size: 12px; margin: 0;">
+                Shelzy's Designs • Encinitas, California<br>
+                <a href="{{ shop.url }}" style="color: #321004;">Visit our store</a>
+              </p>
+            </td>
+          </tr>
+
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>
+
+
+<!-- ============================================ -->
+<!-- EMAIL 2: Social Proof (24 hours) -->
+<!-- Subject: Still thinking it over? Here's what others are saying -->
+<!-- ============================================ -->
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>What our customers say</title>
+</head>
+<body style="margin: 0; padding: 0; background-color: #f5f5f5; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+  <table width="100%" cellpadding="0" cellspacing="0" style="background-color: #f5f5f5; padding: 40px 20px;">
+    <tr>
+      <td align="center">
+        <table width="600" cellpadding="0" cellspacing="0" style="background-color: #ffffff; border-radius: 12px; overflow: hidden;">
+
+          <!-- Header -->
+          <tr>
+            <td style="background-color: #321004; padding: 30px; text-align: center;">
+              <h1 style="color: #ffffff; margin: 0; font-size: 24px;">Shelzy's Designs</h1>
+            </td>
+          </tr>
+
+          <!-- Content -->
+          <tr>
+            <td style="padding: 40px;">
+              <h2 style="color: #321004; margin: 0 0 20px 0; font-size: 28px;">Still deciding?</h2>
+
+              <p style="color: #555; font-size: 16px; line-height: 1.6; margin: 0 0 30px 0;">
+                We get it—you want to make sure it's perfect. Here's what real customers have said about their Shelzy's bottles:
+              </p>
+
+              <!-- Testimonial 1 -->
+              <div style="background-color: #faf9f7; padding: 20px; border-radius: 8px; margin-bottom: 16px;">
+                <p style="color: #321004; font-size: 15px; font-style: italic; margin: 0 0 12px 0;">
+                  "The quality is incredible! I've had cheap vinyl bottles before and they always peel. These look brand new after months of use."
+                </p>
+                <p style="color: #999; font-size: 13px; margin: 0;">— Sarah M., Bride</p>
+              </div>
+
+              <!-- Testimonial 2 -->
+              <div style="background-color: #faf9f7; padding: 20px; border-radius: 8px; margin-bottom: 16px;">
+                <p style="color: #321004; font-size: 15px; font-style: italic; margin: 0 0 12px 0;">
+                  "Ordered 30 bottles for my company retreat. Fast shipping, perfect personalization, and everyone loved them!"
+                </p>
+                <p style="color: #999; font-size: 13px; margin: 0;">— Mike T., Marketing Director</p>
+              </div>
+
+              <!-- Testimonial 3 -->
+              <div style="background-color: #faf9f7; padding: 20px; border-radius: 8px; margin-bottom: 30px;">
+                <p style="color: #321004; font-size: 15px; font-style: italic; margin: 0 0 12px 0;">
+                  "My bridesmaids were obsessed! Such a special touch for our getting-ready photos."
+                </p>
+                <p style="color: #999; font-size: 13px; margin: 0;">— Jessica L., Happy Customer</p>
+              </div>
+
+              <!-- CTA Button -->
+              <table width="100%" cellpadding="0" cellspacing="0">
+                <tr>
+                  <td align="center">
+                    <a href="{{ checkout.abandoned_checkout_url }}" style="display: inline-block; background-color: #321004; color: #ffffff; padding: 16px 40px; text-decoration: none; border-radius: 8px; font-weight: 600; font-size: 16px;">Complete My Order</a>
+                  </td>
+                </tr>
+              </table>
+
+              <!-- Trust badges -->
+              <table width="100%" cellpadding="0" cellspacing="0" style="margin-top: 30px;">
+                <tr>
+                  <td align="center" style="color: #666; font-size: 13px;">
+                    ✓ Free shipping over $100 &nbsp;&nbsp;|&nbsp;&nbsp; ✓ 30-day returns &nbsp;&nbsp;|&nbsp;&nbsp; ✓ Ships in 3-5 days
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- Footer -->
+          <tr>
+            <td style="background-color: #f9f9f9; padding: 24px; text-align: center;">
+              <p style="color: #999; font-size: 12px; margin: 0;">
+                Shelzy's Designs • Encinitas, California<br>
+                <a href="{{ shop.url }}" style="color: #321004;">Visit our store</a>
+              </p>
+            </td>
+          </tr>
+
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>
+
+
+<!-- ============================================ -->
+<!-- EMAIL 3: Final Discount (72 hours) -->
+<!-- Subject: 10% off to finish your order - expires soon! -->
+<!-- ============================================ -->
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Special discount inside</title>
+</head>
+<body style="margin: 0; padding: 0; background-color: #f5f5f5; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+  <table width="100%" cellpadding="0" cellspacing="0" style="background-color: #f5f5f5; padding: 40px 20px;">
+    <tr>
+      <td align="center">
+        <table width="600" cellpadding="0" cellspacing="0" style="background-color: #ffffff; border-radius: 12px; overflow: hidden;">
+
+          <!-- Header -->
+          <tr>
+            <td style="background-color: #321004; padding: 30px; text-align: center;">
+              <h1 style="color: #ffffff; margin: 0; font-size: 24px;">Shelzy's Designs</h1>
+            </td>
+          </tr>
+
+          <!-- Discount Banner -->
+          <tr>
+            <td style="background: linear-gradient(135deg, #321004 0%, #5a3825 100%); padding: 30px; text-align: center;">
+              <p style="color: #ffffff; opacity: 0.9; font-size: 14px; margin: 0 0 8px 0; text-transform: uppercase; letter-spacing: 2px;">Exclusive Offer</p>
+              <h2 style="color: #ffffff; margin: 0; font-size: 42px; font-weight: 700;">10% OFF</h2>
+              <p style="color: #ffffff; opacity: 0.9; font-size: 16px; margin: 8px 0 0 0;">Your cart is waiting</p>
+            </td>
+          </tr>
+
+          <!-- Content -->
+          <tr>
+            <td style="padding: 40px;">
+              <p style="color: #555; font-size: 16px; line-height: 1.6; margin: 0 0 20px 0;">
+                Hey there,
+              </p>
+
+              <p style="color: #555; font-size: 16px; line-height: 1.6; margin: 0 0 20px 0;">
+                We really don't want you to miss out on your custom bottle. So here's something special: <strong>10% off your entire order</strong> when you complete checkout today.
+              </p>
+
+              <!-- Discount Code Box -->
+              <div style="background-color: #faf9f7; border: 2px dashed #321004; padding: 24px; text-align: center; border-radius: 8px; margin: 24px 0;">
+                <p style="color: #666; font-size: 14px; margin: 0 0 8px 0;">Use code at checkout:</p>
+                <p style="color: #321004; font-size: 28px; font-weight: 700; margin: 0; letter-spacing: 3px;">COMEBACK10</p>
+                <p style="color: #999; font-size: 12px; margin: 8px 0 0 0;">Expires in 24 hours</p>
+              </div>
+
+              <!-- CTA Button -->
+              <table width="100%" cellpadding="0" cellspacing="0">
+                <tr>
+                  <td align="center">
+                    <a href="{{ checkout.abandoned_checkout_url }}" style="display: inline-block; background-color: #321004; color: #ffffff; padding: 18px 48px; text-decoration: none; border-radius: 8px; font-weight: 600; font-size: 18px;">Claim My 10% Off</a>
+                  </td>
+                </tr>
+              </table>
+
+              <p style="color: #555; font-size: 14px; text-align: center; margin: 24px 0 0 0; line-height: 1.6;">
+                Remember: Each bottle is handcrafted and made-to-order.<br>
+                We can't wait to create something special for you!
+              </p>
+            </td>
+          </tr>
+
+          <!-- Urgency Footer -->
+          <tr>
+            <td style="background-color: #fff3e0; padding: 16px; text-align: center;">
+              <p style="color: #e65100; font-size: 14px; font-weight: 600; margin: 0;">
+                ⏰ This offer expires in 24 hours
+              </p>
+            </td>
+          </tr>
+
+          <!-- Footer -->
+          <tr>
+            <td style="background-color: #f9f9f9; padding: 24px; text-align: center;">
+              <p style="color: #999; font-size: 12px; margin: 0;">
+                Shelzy's Designs • Encinitas, California<br>
+                <a href="{{ shop.url }}" style="color: #321004;">Visit our store</a> | <a href="{{ shop.url }}/pages/contact" style="color: #321004;">Contact us</a>
+              </p>
+            </td>
+          </tr>
+
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>
+
+<!--
+  SETUP INSTRUCTIONS:
+
+  Option 1: Shopify Built-in (Basic)
+  1. Go to Settings > Notifications > Checkout
+  2. Enable "Abandoned checkout"
+  3. Paste Email 1 into the template
+  4. Shopify only allows 1 abandoned cart email
+
+  Option 2: Klaviyo (Recommended - Free up to 250 contacts)
+  1. Install Klaviyo from Shopify App Store
+  2. Create new Flow > "Abandoned Cart"
+  3. Set up 3-email sequence with delays:
+     - Email 1: 1 hour delay
+     - Email 2: 24 hour delay
+     - Email 3: 72 hour delay
+  4. Paste each email template
+  5. Create discount code "COMEBACK10" in Shopify
+
+  DISCOUNT CODE SETUP:
+  1. Shopify Admin > Discounts > Create discount
+  2. Code: COMEBACK10
+  3. Type: Percentage - 10%
+  4. Applies to: Entire order
+  5. Usage limits: One per customer
+-->

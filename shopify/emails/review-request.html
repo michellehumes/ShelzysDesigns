@@ -1,0 +1,169 @@
+<!--
+  REVIEW REQUEST EMAIL
+  Send 7-14 days after delivery
+
+  Set up in:
+  - Klaviyo: Post-Purchase Flow
+  - Judge.me: Automatic review requests (if using this app)
+  - Shopify Email: Create campaign triggered by fulfillment
+
+  Subject Lines to Test:
+  1. "How are you loving your bottle, [First Name]?"
+  2. "Quick favor? Share your thoughts (takes 30 seconds)"
+  3. "[First Name], your review helps other customers decide"
+-->
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>We'd love your feedback</title>
+</head>
+<body style="margin: 0; padding: 0; background-color: #f5f5f5; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+  <table width="100%" cellpadding="0" cellspacing="0" style="background-color: #f5f5f5; padding: 40px 20px;">
+    <tr>
+      <td align="center">
+        <table width="600" cellpadding="0" cellspacing="0" style="background-color: #ffffff; border-radius: 12px; overflow: hidden;">
+
+          <!-- Header -->
+          <tr>
+            <td style="background-color: #321004; padding: 30px; text-align: center;">
+              <h1 style="color: #ffffff; margin: 0; font-size: 24px;">Shelzy's Designs</h1>
+            </td>
+          </tr>
+
+          <!-- Content -->
+          <tr>
+            <td style="padding: 40px;">
+
+              <h2 style="color: #321004; margin: 0 0 20px 0; font-size: 26px; text-align: center;">How's your new bottle?</h2>
+
+              <p style="color: #555; font-size: 16px; line-height: 1.6; margin: 0 0 20px 0;">
+                Hey {{ customer.first_name }},
+              </p>
+
+              <p style="color: #555; font-size: 16px; line-height: 1.6; margin: 0 0 20px 0;">
+                Your personalized bottle has had a little time to settle into its new home, and we'd love to know what you think!
+              </p>
+
+              <p style="color: #555; font-size: 16px; line-height: 1.6; margin: 0 0 30px 0;">
+                Your honest review helps other customers make confident decisions—and it helps us keep creating products people love.
+              </p>
+
+              <!-- Star Rating Visual -->
+              <div style="text-align: center; margin: 30px 0;">
+                <p style="color: #666; font-size: 14px; margin: 0 0 16px 0;">How would you rate your experience?</p>
+                <table width="100%" cellpadding="0" cellspacing="0">
+                  <tr>
+                    <td align="center">
+                      <a href="{{ review_url }}&rating=5" style="text-decoration: none; font-size: 32px; margin: 0 4px;">⭐</a>
+                      <a href="{{ review_url }}&rating=4" style="text-decoration: none; font-size: 32px; margin: 0 4px;">⭐</a>
+                      <a href="{{ review_url }}&rating=3" style="text-decoration: none; font-size: 32px; margin: 0 4px;">⭐</a>
+                      <a href="{{ review_url }}&rating=2" style="text-decoration: none; font-size: 32px; margin: 0 4px;">⭐</a>
+                      <a href="{{ review_url }}&rating=1" style="text-decoration: none; font-size: 32px; margin: 0 4px;">⭐</a>
+                    </td>
+                  </tr>
+                </table>
+              </div>
+
+              <!-- CTA Button -->
+              <table width="100%" cellpadding="0" cellspacing="0">
+                <tr>
+                  <td align="center">
+                    <a href="{{ review_url }}" style="display: inline-block; background-color: #321004; color: #ffffff; padding: 16px 40px; text-decoration: none; border-radius: 8px; font-weight: 600; font-size: 16px;">Write a Review</a>
+                  </td>
+                </tr>
+              </table>
+
+              <p style="color: #999; font-size: 14px; text-align: center; margin: 24px 0 0 0;">
+                Takes less than 2 minutes—we read every single review!
+              </p>
+
+              <!-- Bonus Incentive (Optional) -->
+              <div style="background-color: #faf9f7; padding: 20px; border-radius: 8px; margin-top: 30px; text-align: center;">
+                <p style="color: #321004; font-size: 15px; font-weight: 600; margin: 0 0 8px 0;">
+                  📸 Include a photo for 15% off your next order!
+                </p>
+                <p style="color: #666; font-size: 13px; margin: 0;">
+                  We'll send your discount code after your review is published.
+                </p>
+              </div>
+
+            </td>
+          </tr>
+
+          <!-- Product Reminder -->
+          <tr>
+            <td style="padding: 0 40px 40px 40px;">
+              <div style="background-color: #f9f9f9; padding: 20px; border-radius: 8px;">
+                <table width="100%" cellpadding="0" cellspacing="0">
+                  <tr>
+                    <td width="80" style="vertical-align: top;">
+                      <!-- Product image placeholder -->
+                      <div style="width: 70px; height: 70px; background-color: #e5e5e5; border-radius: 8px;"></div>
+                    </td>
+                    <td style="vertical-align: top; padding-left: 16px;">
+                      <p style="color: #321004; font-size: 14px; font-weight: 600; margin: 0 0 4px 0;">
+                        {{ line_item.title }}
+                      </p>
+                      <p style="color: #666; font-size: 13px; margin: 0;">
+                        Order #{{ order.name }}
+                      </p>
+                    </td>
+                  </tr>
+                </table>
+              </div>
+            </td>
+          </tr>
+
+          <!-- Footer -->
+          <tr>
+            <td style="background-color: #f9f9f9; padding: 24px; text-align: center;">
+              <p style="color: #666; font-size: 13px; margin: 0 0 12px 0;">
+                Questions about your order? Just reply to this email.
+              </p>
+              <p style="color: #999; font-size: 12px; margin: 0;">
+                Shelzy's Designs • Encinitas, California<br>
+                <a href="{{ shop.url }}" style="color: #321004;">Shop</a> |
+                <a href="{{ shop.url }}/pages/faq" style="color: #321004;">FAQ</a> |
+                <a href="{{ shop.url }}/pages/contact" style="color: #321004;">Contact</a>
+              </p>
+            </td>
+          </tr>
+
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>
+
+<!--
+  SETUP INSTRUCTIONS:
+
+  Option 1: Judge.me App (Recommended - Free)
+  1. Install Judge.me from Shopify App Store
+  2. It automatically sends review requests after delivery
+  3. Customize email template in Judge.me settings
+  4. Reviews display on product pages automatically
+
+  Option 2: Klaviyo
+  1. Create Flow > Post-Purchase
+  2. Trigger: Fulfilled order
+  3. Delay: 10 days
+  4. Add email with this template
+  5. Create review landing page or use Shopify product page
+
+  Option 3: Manual via Shopify Email
+  1. Marketing > Campaigns > Create
+  2. Segment: Customers who purchased 7-14 days ago
+  3. Use this template
+  4. Schedule weekly sends
+
+  PHOTO REVIEW DISCOUNT SETUP:
+  1. Create discount code: PHOTOREVIEW15
+  2. 15% off, one-time use per customer
+  3. Send manually when photo reviews come in
+  4. Or use Judge.me's automatic reward feature
+-->

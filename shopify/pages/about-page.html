@@ -1,0 +1,388 @@
+<!--
+  ABOUT PAGE - Enhanced Version
+  Replace in Shopify Admin > Pages > About
+-->
+
+<div class="about-page-wrapper">
+  <style>
+    .about-page-wrapper {
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .about-hero {
+      text-align: center;
+      padding: 60px 20px;
+      background: linear-gradient(135deg, #faf9f7 0%, #f5f0eb 100%);
+      border-radius: 16px;
+      margin-bottom: 60px;
+    }
+
+    .about-hero h1 {
+      font-size: 42px;
+      color: #321004;
+      margin: 0 0 20px 0;
+    }
+
+    .about-hero p {
+      font-size: 20px;
+      color: #666;
+      max-width: 600px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+
+    .about-story {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      align-items: center;
+      margin-bottom: 60px;
+      padding: 0 20px;
+    }
+
+    @media (max-width: 768px) {
+      .about-story {
+        grid-template-columns: 1fr;
+        gap: 32px;
+      }
+    }
+
+    .about-story-image {
+      background: #f5f5f5;
+      border-radius: 12px;
+      aspect-ratio: 4/3;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #999;
+    }
+
+    .about-story-content h2 {
+      font-size: 28px;
+      color: #321004;
+      margin: 0 0 20px 0;
+    }
+
+    .about-story-content p {
+      font-size: 16px;
+      color: #555;
+      line-height: 1.7;
+      margin-bottom: 16px;
+    }
+
+    .about-stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+      padding: 40px;
+      background: #321004;
+      border-radius: 16px;
+      margin-bottom: 60px;
+    }
+
+    @media (max-width: 768px) {
+      .about-stats {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    .about-stat {
+      text-align: center;
+      color: #fff;
+    }
+
+    .about-stat-number {
+      font-size: 36px;
+      font-weight: 700;
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    .about-stat-label {
+      font-size: 14px;
+      opacity: 0.9;
+    }
+
+    .about-values {
+      padding: 0 20px;
+      margin-bottom: 60px;
+    }
+
+    .about-values h2 {
+      text-align: center;
+      font-size: 32px;
+      color: #321004;
+      margin-bottom: 40px;
+    }
+
+    .about-values-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 32px;
+    }
+
+    @media (max-width: 768px) {
+      .about-values-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .about-value-card {
+      text-align: center;
+      padding: 32px;
+      background: #faf9f7;
+      border-radius: 12px;
+    }
+
+    .about-value-icon {
+      width: 64px;
+      height: 64px;
+      background: #321004;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+    }
+
+    .about-value-icon svg {
+      width: 32px;
+      height: 32px;
+      color: #fff;
+    }
+
+    .about-value-card h3 {
+      font-size: 20px;
+      color: #321004;
+      margin: 0 0 12px 0;
+    }
+
+    .about-value-card p {
+      font-size: 14px;
+      color: #666;
+      line-height: 1.6;
+      margin: 0;
+    }
+
+    .about-difference {
+      background: #f5f0eb;
+      padding: 60px 40px;
+      border-radius: 16px;
+      margin-bottom: 60px;
+    }
+
+    .about-difference h2 {
+      text-align: center;
+      font-size: 28px;
+      color: #321004;
+      margin-bottom: 40px;
+    }
+
+    .about-difference-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+    }
+
+    @media (max-width: 768px) {
+      .about-difference-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .about-difference-col h3 {
+      font-size: 18px;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .about-difference-col.theirs h3 {
+      color: #999;
+    }
+
+    .about-difference-col.ours h3 {
+      color: #321004;
+    }
+
+    .about-difference-col ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .about-difference-col li {
+      padding: 8px 0;
+      font-size: 14px;
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+    }
+
+    .about-difference-col.theirs li {
+      color: #999;
+    }
+
+    .about-difference-col.ours li {
+      color: #333;
+    }
+
+    .about-cta {
+      text-align: center;
+      padding: 60px 20px;
+      background: #faf9f7;
+      border-radius: 16px;
+    }
+
+    .about-cta h2 {
+      font-size: 28px;
+      color: #321004;
+      margin: 0 0 16px 0;
+    }
+
+    .about-cta p {
+      font-size: 16px;
+      color: #666;
+      margin: 0 0 24px 0;
+    }
+
+    .about-cta a {
+      display: inline-block;
+      padding: 14px 32px;
+      background: #321004;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 16px;
+    }
+
+    .about-cta a:hover {
+      background: #4a1a08;
+    }
+  </style>
+
+  <!-- Hero Section -->
+  <div class="about-hero">
+    <h1>Crafted with Care in California</h1>
+    <p>We believe personalized gifts should feel special, not cheap. That's why we use premium sublimation printing that becomes part of the bottle—not just stuck on top.</p>
+  </div>
+
+  <!-- Our Story -->
+  <div class="about-story">
+    <div class="about-story-image">
+      <!-- Add your image here: <img src="URL" alt="Shelzy's Designs workspace"> -->
+      [Add founder/workspace photo here]
+    </div>
+    <div class="about-story-content">
+      <h2>Our Story</h2>
+      <p>Shelzy's Designs started with a simple frustration: every personalized water bottle I ordered for my sister's bachelorette party arrived with cheap vinyl decals that started peeling within weeks.</p>
+      <p>I knew there had to be a better way. After months of research and testing, I discovered sublimation printing—a process where the ink actually infuses into the bottle's coating, creating a permanent, dishwasher-safe design that won't crack, peel, or fade.</p>
+      <p>Today, we've helped thousands of brides, event planners, and businesses create memorable personalized gifts that last. Every bottle is handcrafted in our California studio with the same attention to detail I'd want for my own family's special moments.</p>
+    </div>
+  </div>
+
+  <!-- Stats -->
+  <div class="about-stats">
+    <div class="about-stat">
+      <span class="about-stat-number">10,000+</span>
+      <span class="about-stat-label">Bottles Shipped</span>
+    </div>
+    <div class="about-stat">
+      <span class="about-stat-number">500+</span>
+      <span class="about-stat-label">Weddings Served</span>
+    </div>
+    <div class="about-stat">
+      <span class="about-stat-number">4.9</span>
+      <span class="about-stat-label">Star Rating</span>
+    </div>
+    <div class="about-stat">
+      <span class="about-stat-number">3-5</span>
+      <span class="about-stat-label">Day Turnaround</span>
+    </div>
+  </div>
+
+  <!-- Values -->
+  <div class="about-values">
+    <h2>What We Stand For</h2>
+    <div class="about-values-grid">
+      <div class="about-value-card">
+        <div class="about-value-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
+          </svg>
+        </div>
+        <h3>Quality Over Quantity</h3>
+        <p>We don't mass-produce. Every bottle goes through our quality check before shipping. If it's not perfect, we remake it—no questions asked.</p>
+      </div>
+
+      <div class="about-value-card">
+        <div class="about-value-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+          </svg>
+        </div>
+        <h3>Personal Touch</h3>
+        <p>We're a real team of real people. When you email us, you'll get a thoughtful response—not a robot. Your special occasion matters to us.</p>
+      </div>
+
+      <div class="about-value-card">
+        <div class="about-value-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+          </svg>
+        </div>
+        <h3>Fast & Reliable</h3>
+        <p>We know you're planning something special. That's why we ship most orders in 3-5 business days—and offer rush options when you need them.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- The Difference -->
+  <div class="about-difference">
+    <h2>Why Sublimation Beats Vinyl Decals</h2>
+    <div class="about-difference-grid">
+      <div class="about-difference-col theirs">
+        <h3>❌ Cheap Vinyl Decals</h3>
+        <ul>
+          <li>Peels off within weeks</li>
+          <li>Cracks when bottle flexes</li>
+          <li>Not dishwasher safe</li>
+          <li>Colors fade quickly</li>
+          <li>Edges catch and lift</li>
+          <li>Looks cheap up close</li>
+        </ul>
+      </div>
+      <div class="about-difference-col ours">
+        <h3>✓ Our Sublimation Print</h3>
+        <ul>
+          <li>Ink fused into coating—permanent</li>
+          <li>Flexes with the bottle</li>
+          <li>100% dishwasher safe</li>
+          <li>Vibrant colors that last years</li>
+          <li>Smooth, seamless finish</li>
+          <li>Premium look and feel</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div class="about-cta">
+    <h2>Ready to Create Something Special?</h2>
+    <p>Browse our collections and find the perfect personalized bottle for your next occasion.</p>
+    <a href="/collections/all">Shop All Bottles</a>
+  </div>
+</div>
+
+<!--
+  INSTRUCTIONS:
+  1. Go to Shopify Admin > Online Store > Pages > About
+  2. Switch to HTML editor mode
+  3. Replace existing content with this
+  4. Add your actual photos where indicated
+  5. Update stats with your real numbers
+  6. Save
+-->

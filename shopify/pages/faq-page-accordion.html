@@ -1,0 +1,361 @@
+<!--
+  FAQ Page - Accordion Version with Schema Markup
+  Replace existing FAQ page content in Shopify Admin > Pages > FAQ
+-->
+
+<style>
+  .faq-page {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 40px 20px;
+  }
+
+  .faq-header {
+    text-align: center;
+    margin-bottom: 48px;
+  }
+
+  .faq-header h1 {
+    font-size: 36px;
+    color: #321004;
+    margin: 0 0 16px 0;
+  }
+
+  .faq-header p {
+    font-size: 18px;
+    color: #666;
+  }
+
+  .faq-search {
+    max-width: 500px;
+    margin: 0 auto 40px;
+  }
+
+  .faq-search input {
+    width: 100%;
+    padding: 16px 20px;
+    border: 2px solid #e5e5e5;
+    border-radius: 8px;
+    font-size: 16px;
+  }
+
+  .faq-search input:focus {
+    outline: none;
+    border-color: #321004;
+  }
+
+  .faq-category {
+    margin-bottom: 40px;
+  }
+
+  .faq-category-title {
+    font-size: 24px;
+    color: #321004;
+    margin: 0 0 20px 0;
+    padding-bottom: 12px;
+    border-bottom: 2px solid #321004;
+  }
+
+  .faq-item {
+    border: 1px solid #e5e5e5;
+    border-radius: 8px;
+    margin-bottom: 12px;
+    overflow: hidden;
+  }
+
+  .faq-question {
+    width: 100%;
+    padding: 20px 24px;
+    background: #fff;
+    border: none;
+    text-align: left;
+    font-size: 16px;
+    font-weight: 600;
+    color: #321004;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background 0.2s;
+  }
+
+  .faq-question:hover {
+    background: #faf9f7;
+  }
+
+  .faq-question::after {
+    content: '+';
+    font-size: 24px;
+    font-weight: 300;
+    transition: transform 0.3s;
+  }
+
+  .faq-item.active .faq-question::after {
+    transform: rotate(45deg);
+  }
+
+  .faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+  }
+
+  .faq-item.active .faq-answer {
+    max-height: 500px;
+  }
+
+  .faq-answer-content {
+    padding: 0 24px 20px;
+    color: #555;
+    line-height: 1.7;
+  }
+
+  .faq-contact {
+    text-align: center;
+    padding: 40px;
+    background: #faf9f7;
+    border-radius: 12px;
+    margin-top: 48px;
+  }
+
+  .faq-contact h3 {
+    font-size: 20px;
+    color: #321004;
+    margin: 0 0 12px 0;
+  }
+
+  .faq-contact p {
+    color: #666;
+    margin: 0 0 20px 0;
+  }
+
+  .faq-contact a {
+    display: inline-block;
+    padding: 12px 24px;
+    background: #321004;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 6px;
+    font-weight: 600;
+  }
+
+  .faq-contact a:hover {
+    background: #4a1a08;
+  }
+
+  .faq-item.hidden {
+    display: none;
+  }
+</style>
+
+<div class="faq-page">
+  <div class="faq-header">
+    <h1>Frequently Asked Questions</h1>
+    <p>Find answers to common questions about ordering, shipping, and customization.</p>
+  </div>
+
+  <div class="faq-search">
+    <input type="text" id="faqSearch" placeholder="Search questions...">
+  </div>
+
+  <!-- Ordering & Customization -->
+  <div class="faq-category">
+    <h2 class="faq-category-title">Ordering & Customization</h2>
+
+    <div class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+      <button class="faq-question" itemprop="name">How long does it take to receive my personalized bottle?</button>
+      <div class="faq-answer" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+        <div class="faq-answer-content" itemprop="text">
+          Production takes 3-5 business days, and shipping takes an additional 3-7 business days depending on your location. Rush orders are available upon request—just contact us before placing your order.
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+      <button class="faq-question" itemprop="name">How many characters can I include in the personalization?</button>
+      <div class="faq-answer" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+        <div class="faq-answer-content" itemprop="text">
+          We recommend keeping names to 15 characters or less for optimal readability. Longer text can be accommodated—just keep in mind that the font size will be smaller. Our design team ensures everything is properly balanced and centered.
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+      <button class="faq-question" itemprop="name">Can I get a proof before my order is made?</button>
+      <div class="faq-answer" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+        <div class="faq-answer-content" itemprop="text">
+          Yes! Just add a note to your order requesting a proof, and we'll email you a digital mockup before production begins. This is especially helpful for bulk orders or if you have specific design preferences.
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+      <button class="faq-question" itemprop="name">Can I make changes after placing my order?</button>
+      <div class="faq-answer" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+        <div class="faq-answer-content" itemprop="text">
+          If you need to make changes, contact us at hello@shelzysdesigns.com as soon as possible. We can accommodate changes if production hasn't started yet. Once production begins, we may not be able to modify your order.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Shipping & Delivery -->
+  <div class="faq-category">
+    <h2 class="faq-category-title">Shipping & Delivery</h2>
+
+    <div class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+      <button class="faq-question" itemprop="name">Do you offer free shipping?</button>
+      <div class="faq-answer" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+        <div class="faq-answer-content" itemprop="text">
+          Yes! We offer free standard shipping on all orders over $100. Orders under $100 have a flat rate shipping fee calculated at checkout based on your location.
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+      <button class="faq-question" itemprop="name">Do you offer rush or expedited shipping?</button>
+      <div class="faq-answer" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+        <div class="faq-answer-content" itemprop="text">
+          Yes, we offer rush production for time-sensitive orders. Contact us before placing your order to discuss your deadline, and we'll do our best to accommodate. Rush fees may apply depending on order size and timeline.
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+      <button class="faq-question" itemprop="name">How can I track my order?</button>
+      <div class="faq-answer" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+        <div class="faq-answer-content" itemprop="text">
+          Once your order ships, you'll receive an email with tracking information. You can also check your order status by logging into your account on our website or by contacting us with your order number.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Products & Care -->
+  <div class="faq-category">
+    <h2 class="faq-category-title">Products & Care</h2>
+
+    <div class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+      <button class="faq-question" itemprop="name">What is sublimation printing and why is it better than vinyl?</button>
+      <div class="faq-answer" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+        <div class="faq-answer-content" itemprop="text">
+          Sublimation printing uses heat to infuse ink directly into the bottle's coating, making the design permanent. Unlike vinyl decals that sit on top of the surface and can peel, crack, or fade, sublimation creates a smooth finish that's dishwasher safe and won't deteriorate over time.
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+      <button class="faq-question" itemprop="name">Are your bottles dishwasher safe?</button>
+      <div class="faq-answer" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+        <div class="faq-answer-content" itemprop="text">
+          Yes! Because we use sublimation printing (not vinyl), your personalized design is completely dishwasher safe. We recommend the top rack for best results, though hand washing extends the life of any drinkware.
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+      <button class="faq-question" itemprop="name">What materials are your bottles made from?</button>
+      <div class="faq-answer" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+        <div class="faq-answer-content" itemprop="text">
+          We offer bottles in various materials including double-wall vacuum insulated stainless steel (keeps drinks cold 24hrs/hot 12hrs), aluminum, and BPA-free plastic. Check each product page for specific material details.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Returns & Refunds -->
+  <div class="faq-category">
+    <h2 class="faq-category-title">Returns & Refunds</h2>
+
+    <div class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+      <button class="faq-question" itemprop="name">What is your return policy?</button>
+      <div class="faq-answer" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+        <div class="faq-answer-content" itemprop="text">
+          We offer 30-day postage-paid returns on all orders. Since items are personalized, we can only accept returns for damaged or defective products. If there's any issue with your order, contact us at hello@shelzysdesigns.com and we'll make it right.
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+      <button class="faq-question" itemprop="name">What if my bottle arrives damaged?</button>
+      <div class="faq-answer" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+        <div class="faq-answer-content" itemprop="text">
+          If your bottle arrives damaged or defective, email us at hello@shelzysdesigns.com with a photo of the issue. We'll send a replacement at no cost—no need to return the damaged item.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bulk & Corporate Orders -->
+  <div class="faq-category">
+    <h2 class="faq-category-title">Bulk & Corporate Orders</h2>
+
+    <div class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+      <button class="faq-question" itemprop="name">Do you offer bulk discounts for corporate orders?</button>
+      <div class="faq-answer" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+        <div class="faq-answer-content" itemprop="text">
+          Yes! We offer tiered bulk discounts: 20% off for 25-49 bottles, 25% off for 50-99 bottles, and 30% off for 100+ bottles. Orders of 500+ receive custom pricing. Contact us at hello@shelzysdesigns.com for a quote.
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+      <button class="faq-question" itemprop="name">Can you add a logo to corporate orders?</button>
+      <div class="faq-answer" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+        <div class="faq-answer-content" itemprop="text">
+          Absolutely! We can add your company logo along with individual employee names. There are no setup fees or minimum design charges. Just email your logo file to hello@shelzysdesigns.com after placing your order.
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+      <button class="faq-question" itemprop="name">What is the turnaround time for bulk orders?</button>
+      <div class="faq-answer" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+        <div class="faq-answer-content" itemprop="text">
+          Most bulk orders ship within 5-7 business days. For orders of 100+ bottles or rush requests, contact us to discuss timeline and ensure we can meet your deadline.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="faq-contact">
+    <h3>Still Have Questions?</h3>
+    <p>We're here to help! Reach out and we'll get back to you within 24 hours.</p>
+    <a href="/pages/contact">Contact Us</a>
+  </div>
+</div>
+
+<script>
+// Accordion functionality
+document.querySelectorAll('.faq-question').forEach(button => {
+  button.addEventListener('click', () => {
+    const item = button.parentElement;
+    const wasActive = item.classList.contains('active');
+
+    // Close all items
+    document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('active'));
+
+    // Open clicked item (if it wasn't already open)
+    if (!wasActive) {
+      item.classList.add('active');
+    }
+  });
+});
+
+// Search functionality
+document.getElementById('faqSearch').addEventListener('input', function() {
+  const searchTerm = this.value.toLowerCase();
+  const items = document.querySelectorAll('.faq-item');
+
+  items.forEach(item => {
+    const question = item.querySelector('.faq-question').textContent.toLowerCase();
+    const answer = item.querySelector('.faq-answer-content').textContent.toLowerCase();
+
+    if (question.includes(searchTerm) || answer.includes(searchTerm)) {
+      item.classList.remove('hidden');
+    } else {
+      item.classList.add('hidden');
+    }
+  });
+});
+</script>

@@ -1,0 +1,271 @@
+<!--
+  CONTACT PAGE - Replace in Shopify Admin > Pages > Contact
+  Copy this content into the page editor (HTML mode)
+-->
+
+<div class="contact-page-wrapper">
+  <style>
+    .contact-page-wrapper {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 40px 20px;
+    }
+
+    .contact-header {
+      text-align: center;
+      margin-bottom: 48px;
+    }
+
+    .contact-header h1 {
+      font-size: 36px;
+      color: #321004;
+      margin-bottom: 16px;
+    }
+
+    .contact-header p {
+      font-size: 18px;
+      color: #666;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      margin-bottom: 48px;
+    }
+
+    @media (max-width: 768px) {
+      .contact-grid {
+        grid-template-columns: 1fr;
+        gap: 32px;
+      }
+    }
+
+    .contact-info-section h2 {
+      font-size: 24px;
+      color: #321004;
+      margin-bottom: 24px;
+    }
+
+    .contact-info-item {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .contact-info-icon {
+      width: 48px;
+      height: 48px;
+      background: #f5f5f5;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .contact-info-icon svg {
+      width: 24px;
+      height: 24px;
+      color: #321004;
+    }
+
+    .contact-info-content h3 {
+      font-size: 16px;
+      font-weight: 600;
+      color: #321004;
+      margin: 0 0 4px 0;
+    }
+
+    .contact-info-content p {
+      font-size: 14px;
+      color: #666;
+      margin: 0;
+    }
+
+    .contact-info-content a {
+      color: #321004;
+      text-decoration: none;
+    }
+
+    .contact-info-content a:hover {
+      text-decoration: underline;
+    }
+
+    .contact-hours {
+      background: #faf9f7;
+      padding: 24px;
+      border-radius: 12px;
+      margin-top: 24px;
+    }
+
+    .contact-hours h3 {
+      font-size: 16px;
+      font-weight: 600;
+      color: #321004;
+      margin: 0 0 12px 0;
+    }
+
+    .contact-hours-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 14px;
+      color: #666;
+      padding: 8px 0;
+      border-bottom: 1px solid #eee;
+    }
+
+    .contact-hours-row:last-child {
+      border-bottom: none;
+    }
+
+    .response-time {
+      background: #321004;
+      color: #fff;
+      padding: 16px 24px;
+      border-radius: 8px;
+      text-align: center;
+      margin-top: 24px;
+    }
+
+    .response-time strong {
+      display: block;
+      font-size: 16px;
+      margin-bottom: 4px;
+    }
+
+    .response-time span {
+      font-size: 14px;
+      opacity: 0.9;
+    }
+
+    .contact-faq-link {
+      text-align: center;
+      padding: 32px;
+      background: #f5f5f5;
+      border-radius: 12px;
+      margin-top: 48px;
+    }
+
+    .contact-faq-link h3 {
+      font-size: 20px;
+      color: #321004;
+      margin: 0 0 12px 0;
+    }
+
+    .contact-faq-link p {
+      font-size: 14px;
+      color: #666;
+      margin: 0 0 16px 0;
+    }
+
+    .contact-faq-link a {
+      display: inline-block;
+      padding: 12px 24px;
+      background: #321004;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 6px;
+      font-weight: 600;
+    }
+
+    .contact-faq-link a:hover {
+      background: #4a1a08;
+    }
+  </style>
+
+  <div class="contact-header">
+    <h1>Get in Touch</h1>
+    <p>Have a question about your order or need help with customization? We're here to help and typically respond within 24 hours.</p>
+  </div>
+
+  <div class="contact-grid">
+    <div class="contact-info-section">
+      <h2>Contact Information</h2>
+
+      <div class="contact-info-item">
+        <div class="contact-info-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+          </svg>
+        </div>
+        <div class="contact-info-content">
+          <h3>Email</h3>
+          <p><a href="mailto:hello@shelzysdesigns.com">hello@shelzysdesigns.com</a></p>
+          <p>For general inquiries and order questions</p>
+        </div>
+      </div>
+
+      <div class="contact-info-item">
+        <div class="contact-info-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+          </svg>
+        </div>
+        <div class="contact-info-content">
+          <h3>Phone</h3>
+          <p><a href="tel:+17243168296">(724) 316-8296</a></p>
+          <p>For urgent orders and bulk inquiries</p>
+        </div>
+      </div>
+
+      <div class="contact-info-item">
+        <div class="contact-info-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+          </svg>
+        </div>
+        <div class="contact-info-content">
+          <h3>Location</h3>
+          <p>Encinitas, California</p>
+          <p>All orders are handcrafted in our studio</p>
+        </div>
+      </div>
+
+      <div class="contact-hours">
+        <h3>Business Hours</h3>
+        <div class="contact-hours-row">
+          <span>Monday - Friday</span>
+          <span>9:00 AM - 5:00 PM PST</span>
+        </div>
+        <div class="contact-hours-row">
+          <span>Saturday</span>
+          <span>10:00 AM - 2:00 PM PST</span>
+        </div>
+        <div class="contact-hours-row">
+          <span>Sunday</span>
+          <span>Closed</span>
+        </div>
+      </div>
+
+      <div class="response-time">
+        <strong>Average Response Time: Under 24 Hours</strong>
+        <span>We read every message and respond as quickly as possible</span>
+      </div>
+    </div>
+
+    <div class="contact-form-section">
+      <h2>Send Us a Message</h2>
+      <!-- The actual Shopify contact form will be rendered here -->
+      <!-- In Shopify, this section will contain {% form 'contact' %} -->
+    </div>
+  </div>
+
+  <div class="contact-faq-link">
+    <h3>Looking for Quick Answers?</h3>
+    <p>Check out our FAQ for instant answers about shipping, customization, returns, and more.</p>
+    <a href="/pages/faq">Browse FAQ</a>
+  </div>
+</div>
+
+<!--
+  INSTRUCTIONS:
+  1. Go to Shopify Admin > Online Store > Pages > Contact
+  2. Click "Show HTML" or switch to HTML editor mode
+  3. Paste this content
+  4. The contact form is built into your theme - it will appear automatically
+  5. Save the page
+-->
