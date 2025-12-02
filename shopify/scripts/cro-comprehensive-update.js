@@ -475,7 +475,7 @@ function getAnnouncementBarSnippet() {
 '    </span>\n' +
 '    <span class="sz-announcement-divider">|</span>\n' +
 '    <span class="sz-announcement-item">\n' +
-'      <span>Free shipping $50+</span>\n' +
+'      <span>Free shipping $75+</span>\n' +
 '    </span>\n' +
 '    <span class="sz-announcement-divider">|</span>\n' +
 '    <span class="sz-announcement-item">\n' +
@@ -1144,7 +1144,7 @@ function getPopupSection() {
 '        </div>\n' +
 '        <div class="sz-popup-benefit">\n' +
 '          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>\n' +
-'          <span>Free shipping on orders $50+</span>\n' +
+'          <span>Free shipping on orders $75+</span>\n' +
 '        </div>\n' +
 '      </div>\n' +
 '      \n' +
@@ -1528,7 +1528,7 @@ async function main() {
   console.log('  - "5-7 business days" turnaround');
   console.log('  - "Free personalization" on all bottles');
   console.log('  - "Permanent sublimation printing"');
-  console.log('  - "Free shipping $50+"');
+  console.log('  - "Free shipping $75+"');
   console.log('');
   console.log('View at: https://shelzysdesigns.com');
   console.log('');

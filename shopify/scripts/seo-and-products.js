@@ -53,7 +53,7 @@ async function createAsset(themeId, key, value) {
 const seoData = {
   homepage: {
     title: "Personalized Water Bottles for Weddings, Bachelorettes & Events | Shelzy's Designs",
-    description: "Custom personalized water bottles designed for weddings, bachelorette parties, bridal showers, bridesmaid gifts, birthdays, corporate events and everyday hydration. Free personalization on every bottle, free shipping $50+ and wedding-ready in 5-7 business days."
+    description: "Custom personalized water bottles designed for weddings, bachelorette parties, bridal showers, bridesmaid gifts, birthdays, corporate events and everyday hydration. Free personalization on every bottle, free shipping $75+ and wedding-ready in 5-7 business days."
   },
   collections: {
     'all-water-bottles': {
@@ -66,7 +66,7 @@ const seoData = {
     },
     'bachelorette-party-bottles': {
       title: "Bachelorette Water Bottles | Custom Bottles for Bach Trips",
-      description: "Personalized bachelorette water bottles for pool days, boat days and late nights. Choose colors, fonts and names for your full crew. Free personalization and free shipping on orders $50+."
+      description: "Personalized bachelorette water bottles for pool days, boat days and late nights. Choose colors, fonts and names for your full crew. Free personalization and free shipping on orders $75+."
     },
     'bridal-shower-bottles': {
       title: "Bridal Shower Water Bottles | Personalized Shower Favors",
@@ -111,7 +111,7 @@ const mainProductDescription = `<h2>A Bottle Made for Weddings, Weekends Away & 
 <ul>
 <li><strong>Permanent sublimation print</strong> — infused into the bottle coating, never peeling or cracking</li>
 <li><strong>Free personalization</strong> on every bottle (names, roles, dates, inside jokes)</li>
-<li><strong>Free shipping on orders $50+</strong></li>
+<li><strong>Free shipping on orders $75+</strong></li>
 <li><strong>Wedding-ready in 5–7 business days</strong> (made to order in 3–5 days + 3–7 day shipping)</li>
 <li><strong>Gift-ready packaging</strong> with tissue, ribbon, or coordinated color options</li>
 <li><strong>Perfect for photos</strong> — bridal suites, welcome bags, bachelorette itineraries</li>
@@ -168,7 +168,7 @@ const mainProductDescription = `<h2>A Bottle Made for Weddings, Weekends Away & 
 <p><strong>Processing:</strong> 3–5 business days<br>
 <strong>Shipping:</strong> 3–7 business days<br>
 <strong>Most customers receive their bottles in 5–7 business days</strong> depending on location.<br>
-<strong>Free shipping on all orders $50+.</strong></p>
+<strong>Free shipping on all orders $75+.</strong></p>
 <p>Need them sooner? Reach out — we'll help make it happen.</p>
 
 <h3>🤍 The Perfect Wedding Weekend Touch</h3>
@@ -255,7 +255,7 @@ const teamPageContent = `<div class="page-content">
 <li>Permanent sublimation print (no vinyl or stickers)</li>
 <li>Durable stainless steel for practice, games and travel</li>
 <li>Free personalization on every bottle</li>
-<li>Free shipping on orders $50+</li>
+<li>Free shipping on orders $75+</li>
 </ul>
 
 <h2>How to Order</h2>

@@ -377,7 +377,7 @@ async function main() {
   console.log('   • Upsell to sets on single bottles');
   console.log('');
   console.log('✅ SITEWIDE');
-  console.log('   • Announcement: "Free shipping $50+ • 3-5 day turnaround • Permanent sublimation"');
+  console.log('   • Announcement: "Free shipping $75+ • 3-5 day turnaround • Permanent sublimation"');
   console.log('   • ONE popup: WELCOME10 (exit intent or 25s)');
   console.log('');
   console.log('✅ PAGES');

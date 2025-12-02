@@ -106,7 +106,7 @@ async function main() {
   console.log('PHASE 1: Clean Announcement Bar');
   console.log('═══════════════════════════════════════════════════════════════');
   console.log('');
-  console.log('New message: "Free shipping $50+ • 3–5 day turnaround • Permanent sublimation printing"');
+  console.log('New message: "Free shipping $75+ • 3–5 day turnaround • Permanent sublimation printing"');
   console.log('');
 
   try {
@@ -279,7 +279,7 @@ async function main() {
   console.log('╚════════════════════════════════════════════════════════════════╝');
   console.log('');
   console.log('📢 Announcement Bar:');
-  console.log('   "Free shipping $50+ • 3–5 day turnaround • Permanent sublimation printing"');
+  console.log('   "Free shipping $75+ • 3–5 day turnaround • Permanent sublimation printing"');
   console.log('');
   console.log('🎁 Welcome Discount:');
   console.log('   Code: WELCOME10 (10% off)');

@@ -139,7 +139,7 @@ function getUnifiedAnnouncementBar() {
     </span>
     <span class="sz-announcement-divider">•</span>
     <span class="sz-announcement-item">
-      <span>Free shipping $50+</span>
+      <span>Free shipping $75+</span>
     </span>
     <span class="sz-announcement-divider">•</span>
     <span class="sz-announcement-item">
@@ -162,7 +162,7 @@ function getShippingInfoBlock() {
     <li><strong>Processing:</strong> 3–5 business days</li>
     <li><strong>Shipping:</strong> 3–7 business days (US standard)</li>
     <li><strong>Total:</strong> 6–12 business days depending on location</li>
-    <li><strong>Free shipping</strong> on orders $50+</li>
+    <li><strong>Free shipping</strong> on orders $75+</li>
   </ul>
   <p class="sz-rush-note">Need it faster? <a href="/pages/contact">Contact us</a> about rush options.</p>
 </div>
@@ -286,7 +286,7 @@ function getCleanedBenefitsStack() {
     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#4caf50" stroke-width="2">
       <polyline points="20 6 9 17 4 12"/>
     </svg>
-    <span>Free shipping on orders $50+</span>
+    <span>Free shipping on orders $75+</span>
   </div>
   <div class="sz-benefit">
     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#4caf50" stroke-width="2">
@@ -330,7 +330,7 @@ function getFreePersonalizationBlock() {
   <div class="page-width">
     <div class="personalization-content">
       <h2>Free Personalization On Every Bottle</h2>
-      <p>Add names, fonts, and colors that match your event or brand. Personalization is <strong>always free</strong> on every bottle order. Free shipping on orders $50+.</p>
+      <p>Add names, fonts, and colors that match your event or brand. Personalization is <strong>always free</strong> on every bottle order. Free shipping on orders $75+.</p>
       <a href="/collections/all" class="btn-personalize">Start Personalizing</a>
     </div>
   </div>
@@ -430,7 +430,7 @@ function getHowItWorks() {
           </svg>
         </div>
         <h3>We Print & Ship</h3>
-        <p>Made to order in 3–5 days. Free shipping on orders $50+.</p>
+        <p>Made to order in 3–5 days. Free shipping on orders $75+.</p>
       </div>
     </div>
   </div>
@@ -1104,7 +1104,7 @@ async function main() {
   console.log('========================================================');
   console.log('');
   console.log('Changes made:');
-  console.log('  1. Unified announcement bar (5-7 days, free shipping $50+, sublimation)');
+  console.log('  1. Unified announcement bar (5-7 days, free shipping $75+, sublimation)');
   console.log('  2. Standardized shipping info block');
   console.log('  3. Digital product info for downloads');
   console.log('  4. Cleaned benefits stack (no engraving mentions)');
