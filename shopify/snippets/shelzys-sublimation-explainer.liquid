@@ -1,0 +1,227 @@
+{%- comment -%}
+  Shelzy's Designs - Sublimation Explainer Snippet
+
+  Reusable component explaining sublimation vs vinyl.
+  Use on: About, How It Works, FAQ, Product pages
+
+  Parameters:
+    variant: 'full' (default), 'compact', 'inline'
+    show_cta: true/false (default: false)
+
+  Usage:
+    {% render 'shelzys-sublimation-explainer' %}
+    {% render 'shelzys-sublimation-explainer', variant: 'compact' %}
+    {% render 'shelzys-sublimation-explainer', variant: 'full', show_cta: true %}
+
+  Copy source: /copy/COPY_BANK.md - "Why Sublimation?" section
+{%- endcomment -%}
+
+{% assign explainer_variant = variant | default: 'full' %}
+{% assign explainer_show_cta = show_cta | default: false %}
+
+{% if explainer_variant == 'inline' %}
+  {%- comment -%} Inline: Single sentence for product pages or small spaces {%- endcomment -%}
+  <p class="sz-sublimation-inline">
+    <strong>True sublimation printing</strong> – the ink is permanently infused into the bottle's coating. No vinyl, no peeling, no fading.
+  </p>
+
+{% elsif explainer_variant == 'compact' %}
+  {%- comment -%} Compact: Card version for internal pages {%- endcomment -%}
+  <div class="sz-sublimation-card">
+    <h3>Why Sublimation?</h3>
+    <p>Unlike vinyl decals that eventually peel, sublimation ink is infused directly into the bottle's coating. Your personalization becomes part of the bottle itself.</p>
+    <ul class="sz-sublimation-benefits-compact">
+      <li>No peeling or cracking</li>
+      <li>Smooth, permanent finish</li>
+      <li>Dishwasher-friendly</li>
+    </ul>
+    {% if explainer_show_cta %}
+      <a href="/pages/how-it-works" class="sz-link">Learn more about our process →</a>
+    {% endif %}
+  </div>
+
+{% else %}
+  {%- comment -%} Full: Complete section for homepage or standalone {%- endcomment -%}
+  <section class="sz-sublimation-section">
+    <div class="sz-sublimation-container">
+      <h2>Why Our Bottles Don't Peel, Crack, or Fade</h2>
+      <div class="sz-sublimation-content">
+        <p class="sz-sublimation-intro">
+          Most personalized bottles use vinyl decals that eventually peel, crack, or fade.
+          At Shelzy's Designs, every name and design is created with true sublimation printing—the
+          ink is infused directly into the bottle's coating.
+        </p>
+        <p class="sz-sublimation-means">That means:</p>
+        <ul class="sz-sublimation-benefits">
+          <li>✓ No raised edges</li>
+          <li>✓ No peeling</li>
+          <li>✓ No cracking</li>
+          <li>✓ No fading</li>
+          <li>✓ A smooth, permanent finish</li>
+        </ul>
+        <p class="sz-sublimation-tagline">
+          Your personalization becomes part of the bottle itself.
+        </p>
+        {% if explainer_show_cta %}
+          <a href="/pages/how-it-works" class="sz-btn sz-btn-secondary">Learn More About Our Process</a>
+        {% endif %}
+      </div>
+    </div>
+  </section>
+{% endif %}
+
+<style>
+  /* Inline variant */
+  .sz-sublimation-inline {
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    color: #666;
+    margin: 0.75rem 0;
+  }
+
+  .sz-sublimation-inline strong {
+    color: #111;
+  }
+
+  /* Compact card variant */
+  .sz-sublimation-card {
+    background: #F7F4EF;
+    border-radius: 8px;
+    padding: 24px;
+    margin: 24px 0;
+  }
+
+  .sz-sublimation-card h3 {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    font-size: 18px;
+    color: #111;
+    margin: 0 0 12px 0;
+  }
+
+  .sz-sublimation-card p {
+    font-family: 'Inter', sans-serif;
+    font-size: 15px;
+    line-height: 1.6;
+    color: #333;
+    margin: 0 0 12px 0;
+  }
+
+  .sz-sublimation-benefits-compact {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 12px 0;
+  }
+
+  .sz-sublimation-benefits-compact li {
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    color: #333;
+    padding-left: 20px;
+    position: relative;
+    margin-bottom: 4px;
+  }
+
+  .sz-sublimation-benefits-compact li::before {
+    content: "✓";
+    position: absolute;
+    left: 0;
+    color: #9CAE8C;
+  }
+
+  .sz-link {
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    color: #9CAE8C;
+    text-decoration: none;
+  }
+
+  .sz-link:hover {
+    text-decoration: underline;
+  }
+
+  /* Full section variant */
+  .sz-sublimation-section {
+    padding: 80px 20px;
+    background: #FFFFFF;
+  }
+
+  .sz-sublimation-container {
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .sz-sublimation-section h2 {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    font-size: 36px;
+    color: #111111;
+    margin-bottom: 1.5rem;
+  }
+
+  .sz-sublimation-intro,
+  .sz-sublimation-means {
+    font-family: 'Inter', sans-serif;
+    font-size: 18px;
+    line-height: 1.6;
+    color: #111;
+    margin-bottom: 1rem;
+  }
+
+  .sz-sublimation-benefits {
+    list-style: none;
+    padding: 0;
+    margin: 2rem 0;
+    text-align: left;
+    max-width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .sz-sublimation-benefits li {
+    font-family: 'Inter', sans-serif;
+    font-size: 18px;
+    color: #111111;
+    margin-bottom: 0.75rem;
+  }
+
+  .sz-sublimation-tagline {
+    font-family: 'Inter', sans-serif;
+    font-size: 20px;
+    font-weight: 500;
+    color: #9CAE8C;
+    margin-top: 2rem;
+  }
+
+  .sz-btn-secondary {
+    display: inline-block;
+    padding: 14px 28px;
+    background: transparent;
+    color: #111111;
+    border: 2px solid #111111;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    font-size: 16px;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+    margin-top: 1.5rem;
+  }
+
+  .sz-btn-secondary:hover {
+    background: #111111;
+    color: #FFFFFF;
+  }
+
+  @media (max-width: 768px) {
+    .sz-sublimation-section h2 {
+      font-size: 28px;
+    }
+
+    .sz-sublimation-intro,
+    .sz-sublimation-benefits li {
+      font-size: 16px;
+    }
+  }
+</style>
