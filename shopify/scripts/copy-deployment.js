@@ -215,7 +215,7 @@ const szAnnouncement = `{% comment %}
     <span class="sz-announce-dot"></span>
     <span class="sz-announce-item">Free personalization on every bottle</span>
     <span class="sz-announce-dot"></span>
-    <span class="sz-announce-item">Free shipping on orders $50+</span>
+    <span class="sz-announce-item">Free shipping on orders $75+</span>
   </div>
 </div>`;
 
@@ -343,7 +343,7 @@ const szDifference = `{% comment %}
     <div class="sz-diff-card">
       <div class="sz-diff-icon">✨</div>
       <h3>Free Personalization on Every Bottle</h3>
-      <p>Add names, roles, dates, and inside jokes — personalization is always free. Free shipping kicks in at $50+, so it's easy to outfit the whole crew.</p>
+      <p>Add names, roles, dates, and inside jokes — personalization is always free. Free shipping kicks in at $75+, so it's easy to outfit the whole crew.</p>
     </div>
 
     <div class="sz-diff-card">
@@ -1055,7 +1055,7 @@ const szTrustStrip = `{% comment %}
     </span>
     <span class="sz-trust-item">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
-      Free shipping on orders $50+
+      Free shipping on orders $75+
     </span>
     <span class="sz-trust-item">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>

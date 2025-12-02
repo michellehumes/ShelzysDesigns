@@ -471,7 +471,7 @@ async function main() {
   <div class="sz-faq-grid">
     <div class="sz-faq-item">
       <h4>How long does shipping take?</h4>
-      <p>We offer 3-5 day turnaround on all orders. Most orders ship within 1-2 business days after personalization is complete. Free shipping on orders over $50!</p>
+      <p>We offer 3-5 day turnaround on all orders. Most orders ship within 1-2 business days after personalization is complete. Free shipping on orders over $75!</p>
     </div>
     <div class="sz-faq-item">
       <h4>What's the difference between sublimation and vinyl?</h4>

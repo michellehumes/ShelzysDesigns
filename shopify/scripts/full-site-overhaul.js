@@ -94,7 +94,7 @@ function getProductTrustStack() {
   </div>
   <div class="trust-item">
     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#4caf50" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-    <span>Free shipping on orders $50+</span>
+    <span>Free shipping on orders $75+</span>
   </div>
   <div class="trust-item">
     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#4caf50" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
@@ -945,7 +945,7 @@ function getBridalLandingPage() {
     <div class="step-card">
       <span class="step-number">3</span>
       <h3>We Print & Ship</h3>
-      <p>Made to order in our studio and shipped in 5–7 business days. Free shipping on orders $50+.</p>
+      <p>Made to order in our studio and shipped in 5–7 business days. Free shipping on orders $75+.</p>
     </div>
   </div>
 </div>
@@ -953,7 +953,7 @@ function getBridalLandingPage() {
 <!-- CTA -->
 <div class="cta-section">
   <h2>Ready to Order Your Bridal Bottles?</h2>
-  <p>Free personalization. Free shipping $50+. Wedding-ready in 5–7 days.</p>
+  <p>Free personalization. Free shipping $75+. Wedding-ready in 5–7 days.</p>
   <a href="/collections/bridal-party-sets" class="landing-cta">Start Your Bridal Order</a>
 </div>
 
@@ -1441,7 +1441,7 @@ function getTrustStrip() {
       </span>
       <span class="trust-strip-item">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
-        Free shipping $50+
+        Free shipping $75+
       </span>
       <span class="trust-strip-item">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>

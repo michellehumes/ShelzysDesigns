@@ -1,14 +1,14 @@
 {%- comment -%}
   Shelzy's Designs - Free Shipping Progress Bar
 
-  Shows progress toward free shipping threshold ($50)
+  Shows progress toward free shipping threshold ($75)
   Displays in cart drawer and cart page
 
   Add to cart sections:
   {% render 'shelzys-free-shipping-bar' %}
 {%- endcomment -%}
 
-{% assign free_shipping_threshold = 5000 %} {%- comment -%} $50.00 in cents {%- endcomment -%}
+{% assign free_shipping_threshold = 7500 %} {%- comment -%} $75.00 in cents {%- endcomment -%}
 {% assign cart_total = cart.total_price %}
 {% assign remaining = free_shipping_threshold | minus: cart_total %}
 {% assign progress_percentage = cart_total | times: 100 | divided_by: free_shipping_threshold %}
@@ -111,7 +111,7 @@
 // Update shipping bar dynamically when cart changes (for AJAX carts)
 document.addEventListener('cart:updated', function(e) {
   if (e.detail && e.detail.total_price !== undefined) {
-    var threshold = 5000; // $50 in cents
+    var threshold = 7500; // $75 in cents
     var total = e.detail.total_price;
     var remaining = threshold - total;
     var percentage = Math.min((total / threshold) * 100, 100);

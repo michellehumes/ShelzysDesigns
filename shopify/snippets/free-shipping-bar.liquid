@@ -1,9 +1,10 @@
 {% comment %}
   Free Shipping Progress Bar
   Installation: Add {% render 'free-shipping-bar' %} in cart drawer/page
+  Note: Threshold is $75
 {% endcomment %}
 
-{% assign free_shipping_threshold = 100 %}
+{% assign free_shipping_threshold = 75 %}
 {% assign cart_total = cart.total_price | divided_by: 100.0 %}
 {% assign remaining = free_shipping_threshold | minus: cart_total %}
 {% assign progress_percent = cart_total | divided_by: free_shipping_threshold | times: 100 %}

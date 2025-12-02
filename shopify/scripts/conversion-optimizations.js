@@ -95,7 +95,7 @@ async function main() {
 <div class="sz-announcement-bar">
   <div class="sz-announcement-content">
     <span class="sz-announcement-item">
-      <span class="sz-highlight">🎁 FREE SHIPPING</span> on orders $50+
+      <span class="sz-highlight">🎁 FREE SHIPPING</span> on orders $75+
     </span>
     <span class="sz-announcement-divider">•</span>
     <span class="sz-announcement-item">
@@ -640,7 +640,7 @@ document.addEventListener('DOMContentLoaded', function() {
   Shelzy's Free Shipping Progress Bar
 {% endcomment %}
 
-{% assign threshold = 5000 %} {% comment %} $50 in cents {% endcomment %}
+{% assign threshold = 7500 %} {% comment %} $75 in cents {% endcomment %}
 {% assign cart_total = cart.total_price %}
 {% assign remaining = threshold | minus: cart_total %}
 {% assign progress = cart_total | times: 100 | divided_by: threshold %}

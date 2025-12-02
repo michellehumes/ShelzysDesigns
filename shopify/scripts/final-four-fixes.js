@@ -609,7 +609,7 @@ async function main() {
       </div>
       <div class="shelzys-trust-badges__item" style="display: flex; align-items: center; gap: 8px;">
         <span class="icon" style="font-size: 20px;">🚚</span>
-        <p style="margin: 0; font-size: 14px; font-weight: 500;">Free shipping on $50+</p>
+        <p style="margin: 0; font-size: 14px; font-weight: 500;">Free shipping on $75+</p>
       </div>
       <div class="shelzys-trust-badges__item" style="display: flex; align-items: center; gap: 8px;">
         <span class="icon" style="font-size: 20px;">🎁</span>

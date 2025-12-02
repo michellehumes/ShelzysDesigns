@@ -249,7 +249,7 @@ async function main() {
     <div class="sz-value-prop">
       <div class="sz-value-icon">🚚</div>
       <div class="sz-value-text">
-        <strong>Free Shipping $50+</strong>
+        <strong>Free Shipping $75+</strong>
         <span>Fast, tracked delivery nationwide</span>
       </div>
     </div>
