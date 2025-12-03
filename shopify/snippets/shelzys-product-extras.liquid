@@ -1,0 +1,331 @@
+{%- comment -%}
+  Shelzy's Designs - Product Page Extras
+
+  Additional components for product pages:
+  1. Key benefits bullets
+  2. Shipping & turnaround info
+  3. Cross-sell / "Complete the Set" section
+
+  Add to product template: {% render 'shelzys-product-extras', product: product %}
+{%- endcomment -%}
+
+{%- liquid
+  assign p = product
+  assign p_tags = p.tags | join: ',' | downcase
+-%}
+
+{%- comment -%} ═══════════════════════════════════════════════════════════════════
+   SECTION 1: KEY BENEFITS (Place above Add to Cart)
+═══════════════════════════════════════════════════════════════════ {%- endcomment -%}
+
+<div class="sz-product-benefits">
+  <ul class="sz-benefits-list">
+    {%- comment -%} Determine "Perfect for" text based on tags/collection {%- endcomment -%}
+    {%- if p_tags contains 'wedding' or p_tags contains 'bridal' or p_tags contains 'bridesmaid' -%}
+      <li>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+        <span>Perfect for: Bridesmaids, Bridal Parties, Wedding Day</span>
+      </li>
+    {%- elsif p_tags contains 'bachelorette' -%}
+      <li>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+        <span>Perfect for: Bachelorette Trips, Girls' Weekends</span>
+      </li>
+    {%- elsif p_tags contains 'kids' or p_tags contains 'sports' or p_tags contains 'dance' -%}
+      <li>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+        <span>Perfect for: Kids Teams, Dance, Sports, School</span>
+      </li>
+    {%- elsif p_tags contains 'corporate' or p_tags contains 'bulk' -%}
+      <li>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+        <span>Perfect for: Corporate Events, Team Gifts, Retreats</span>
+      </li>
+    {%- else -%}
+      <li>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+        <span>Perfect for: Gifts, Daily Hydration, Events</span>
+      </li>
+    {%- endif -%}
+
+    <li>
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+      <span>Double-walled stainless steel • Keeps drinks cold 24+ hrs</span>
+    </li>
+
+    <li>
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+      <span>Permanent sublimation print — no vinyl, no peeling</span>
+    </li>
+  </ul>
+</div>
+
+{%- comment -%} ═══════════════════════════════════════════════════════════════════
+   SECTION 2: SHIPPING & TURNAROUND (Place below Add to Cart)
+═══════════════════════════════════════════════════════════════════ {%- endcomment -%}
+
+<div class="sz-product-shipping">
+  <div class="sz-shipping-item">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+      <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+    </svg>
+    <div class="sz-shipping-text">
+      <span class="sz-shipping-title">Ships in 3–5 business days</span>
+      <span class="sz-shipping-sub">Need it sooner? <a href="/pages/contact">Contact us for rush options</a></span>
+    </div>
+  </div>
+
+  <div class="sz-shipping-item">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+      <rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/>
+    </svg>
+    <div class="sz-shipping-text">
+      <span class="sz-shipping-title">Free shipping on orders $75+</span>
+    </div>
+  </div>
+</div>
+
+{%- comment -%} ═══════════════════════════════════════════════════════════════════
+   SECTION 3: CROSS-SELL / COMPLETE THE SET
+═══════════════════════════════════════════════════════════════════ {%- endcomment -%}
+
+{%- liquid
+  # Determine related collection based on tags
+  if p_tags contains 'wedding' or p_tags contains 'bridal'
+    assign related_collection = collections['wedding']
+    assign cross_sell_title = 'Complete Your Bridal Look'
+  elsif p_tags contains 'bachelorette'
+    assign related_collection = collections['bachelorette']
+    assign cross_sell_title = 'More for the Crew'
+  elsif p_tags contains 'kids' or p_tags contains 'sports'
+    assign related_collection = collections['kids']
+    assign cross_sell_title = 'More for Kids & Teams'
+  else
+    assign related_collection = collections['best-sellers']
+    assign cross_sell_title = 'Pair It With'
+  endif
+-%}
+
+{%- if related_collection.products.size > 1 -%}
+<section class="sz-cross-sell">
+  <h3 class="sz-cross-sell-title">{{ cross_sell_title }}</h3>
+
+  <div class="sz-cross-sell-grid">
+    {%- assign shown = 0 -%}
+    {%- for related_product in related_collection.products limit: 8 -%}
+      {%- if related_product.id != p.id and related_product.available and shown < 4 -%}
+        <a href="{{ related_product.url }}" class="sz-cross-sell-card">
+          <div class="sz-cross-sell-image">
+            {%- if related_product.featured_image -%}
+              <img src="{{ related_product.featured_image | img_url: '300x300', crop: 'center' }}" alt="{{ related_product.title | escape }}" loading="lazy">
+            {%- endif -%}
+          </div>
+          <div class="sz-cross-sell-info">
+            <span class="sz-cross-sell-name">{{ related_product.title | truncate: 40 }}</span>
+            <span class="sz-cross-sell-price">{{ related_product.price | money }}</span>
+          </div>
+        </a>
+        {%- assign shown = shown | plus: 1 -%}
+      {%- endif -%}
+    {%- endfor -%}
+  </div>
+</section>
+{%- endif -%}
+
+<style>
+  /* ═══════════════════════════════════════════════════════════════════
+     BENEFITS LIST
+     ═══════════════════════════════════════════════════════════════════ */
+  .sz-product-benefits {
+    margin: 24px 0;
+    padding: 20px;
+    background: #FAF8F5;
+    border: 1px solid #E8E4DE;
+  }
+
+  .sz-benefits-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .sz-benefits-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-family: "Inter", sans-serif;
+    font-size: 14px;
+    color: #1F1F1F;
+    line-height: 1.4;
+  }
+
+  .sz-benefits-list svg {
+    color: #4E5F4A;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  /* ═══════════════════════════════════════════════════════════════════
+     SHIPPING INFO
+     ═══════════════════════════════════════════════════════════════════ */
+  .sz-product-shipping {
+    margin: 20px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding-top: 20px;
+    border-top: 1px solid #E8E4DE;
+  }
+
+  .sz-shipping-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .sz-shipping-item svg {
+    color: #4E5F4A;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .sz-shipping-text {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .sz-shipping-title {
+    font-family: "Inter", sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    color: #1F1F1F;
+  }
+
+  .sz-shipping-sub {
+    font-family: "Inter", sans-serif;
+    font-size: 13px;
+    color: #7A7A7A;
+  }
+
+  .sz-shipping-sub a {
+    color: #4E5F4A;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  .sz-shipping-sub a:hover {
+    color: #2C3E2D;
+  }
+
+  /* ═══════════════════════════════════════════════════════════════════
+     CROSS-SELL SECTION
+     ═══════════════════════════════════════════════════════════════════ */
+  .sz-cross-sell {
+    margin: 60px 0;
+    padding: 40px;
+    background: #FAF8F5;
+    border: 1px solid #E8E4DE;
+  }
+
+  @media (max-width: 768px) {
+    .sz-cross-sell {
+      margin: 40px 0;
+      padding: 24px 16px;
+    }
+  }
+
+  .sz-cross-sell-title {
+    font-family: "Cormorant Garamond", Georgia, serif;
+    font-size: 24px;
+    font-weight: 500;
+    color: #1F1F1F;
+    margin: 0 0 24px 0;
+    text-align: center;
+  }
+
+  .sz-cross-sell-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+  }
+
+  @media (max-width: 900px) {
+    .sz-cross-sell-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 500px) {
+    .sz-cross-sell-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+  }
+
+  .sz-cross-sell-card {
+    display: block;
+    text-decoration: none;
+    background: #FFFFFF;
+    border: 1px solid #E8E4DE;
+    transition: all 0.2s ease;
+  }
+
+  .sz-cross-sell-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  }
+
+  .sz-cross-sell-image {
+    aspect-ratio: 1;
+    overflow: hidden;
+    background: #F5F2ED;
+  }
+
+  .sz-cross-sell-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+  }
+
+  .sz-cross-sell-card:hover .sz-cross-sell-image img {
+    transform: scale(1.05);
+  }
+
+  .sz-cross-sell-info {
+    padding: 16px;
+    text-align: center;
+  }
+
+  @media (max-width: 500px) {
+    .sz-cross-sell-info {
+      padding: 12px 8px;
+    }
+  }
+
+  .sz-cross-sell-name {
+    display: block;
+    font-family: "Inter", sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    color: #1F1F1F;
+    margin-bottom: 4px;
+    line-height: 1.4;
+  }
+
+  @media (max-width: 500px) {
+    .sz-cross-sell-name {
+      font-size: 12px;
+    }
+  }
+
+  .sz-cross-sell-price {
+    font-family: "Inter", sans-serif;
+    font-size: 13px;
+    color: #4A4A4A;
+  }
+</style>
