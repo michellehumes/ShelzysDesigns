@@ -2,7 +2,7 @@
 
 /**
  * Fix Free Shipping Threshold in Theme Settings
- * Updates all $50 references to $75 in the live theme
+ * Searches ALL theme files and updates $50 references to $75
  */
 
 const https = require('https');
@@ -17,6 +17,7 @@ if (!STORE_URL || !ACCESS_TOKEN) {
 
 console.log('\n╔════════════════════════════════════════════════════════╗');
 console.log('║   FIX FREE SHIPPING THRESHOLD ($50 → $75)              ║');
+console.log('║   Comprehensive Theme Search                           ║');
 console.log('╚════════════════════════════════════════════════════════╝\n');
 
 function shopifyRequest(method, endpoint, data = null) {
@@ -54,6 +55,11 @@ async function getActiveTheme() {
   return themes.find((t) => t.role === 'main');
 }
 
+async function getAllAssets(themeId) {
+  const { assets } = await shopifyRequest('GET', `/themes/${themeId}/assets.json`);
+  return assets;
+}
+
 async function getAsset(themeId, key) {
   try {
     const { asset } = await shopifyRequest('GET', `/themes/${themeId}/assets.json?asset[key]=${encodeURIComponent(key)}`);
@@ -69,104 +75,109 @@ async function updateAsset(themeId, key, value) {
   });
 }
 
+function replaceShippingThreshold(content) {
+  let updated = content;
+
+  // All variations of $50 shipping references
+  const replacements = [
+    [/\$50\+/g, '$75+'],
+    [/\$50 \+/g, '$75+'],
+    [/Over \$50/gi, 'Over $75'],
+    [/over \$50/gi, 'over $75'],
+    [/Free Shipping \$50/gi, 'Free Shipping $75'],
+    [/free shipping \$50/gi, 'free shipping $75'],
+    [/FREE SHIPPING \$50/gi, 'FREE SHIPPING $75'],
+    [/shipping \$50/gi, 'shipping $75'],
+    [/\$50 or more/gi, '$75 or more'],
+    [/\$50 and up/gi, '$75 and up'],
+    [/\$50 and over/gi, '$75 and over'],
+    [/"text":\s*"([^"]*)\$50([^"]*)"/g, '"text": "$1$75$2"'],
+    [/'text':\s*'([^']*)\$50([^']*)'/g, "'text': '$1$75$2'"],
+  ];
+
+  for (const [pattern, replacement] of replacements) {
+    updated = updated.replace(pattern, replacement);
+  }
+
+  return updated;
+}
+
 async function fixThemeSettings() {
   console.log('🔍 Finding active theme...');
   const theme = await getActiveTheme();
   console.log(`   Found: ${theme.name} (ID: ${theme.id})\n`);
 
-  // Files that commonly contain announcement bar text
-  const filesToCheck = [
-    'config/settings_data.json',
-    'sections/announcement-bar.liquid',
-    'sections/header.liquid',
-    'snippets/announcement-bar.liquid',
-    'layout/theme.liquid',
-  ];
+  console.log('📋 Getting list of all theme files...');
+  const allAssets = await getAllAssets(theme.id);
+  console.log(`   Found ${allAssets.length} files\n`);
 
   let updatedCount = 0;
+  let filesWithMatches = [];
 
-  for (const fileKey of filesToCheck) {
-    console.log(`📄 Checking ${fileKey}...`);
-    const asset = await getAsset(theme.id, fileKey);
+  // First pass: find all files containing $50
+  console.log('🔎 Searching all files for $50 references...\n');
 
-    if (!asset || !asset.value) {
-      console.log('   (not found or empty)\n');
+  for (const assetInfo of allAssets) {
+    // Skip binary files
+    if (assetInfo.content_type && !assetInfo.content_type.includes('text') &&
+        !assetInfo.key.endsWith('.liquid') && !assetInfo.key.endsWith('.json') &&
+        !assetInfo.key.endsWith('.js') && !assetInfo.key.endsWith('.css')) {
       continue;
     }
 
-    // Check for $50 references
-    const patterns = [
-      /\$50\+/g,
-      /\$50 /g,
-      /Over \$50/gi,
-      /over \$50/gi,
-      /"50"/g,  // JSON number values
-    ];
-
-    let newValue = asset.value;
-    let hasChanges = false;
-
-    // Replace $50+ with $75+
-    if (newValue.includes('$50')) {
-      newValue = newValue.replace(/\$50\+/g, '$75+');
-      newValue = newValue.replace(/\$50 /g, '$75 ');
-      newValue = newValue.replace(/Over \$50/gi, 'Over $75');
-      newValue = newValue.replace(/free shipping \$50/gi, 'free shipping $75');
-      hasChanges = true;
+    // Only check text-based files
+    if (!assetInfo.key.match(/\.(liquid|json|js|css|html|svg)$/)) {
+      continue;
     }
 
-    // Also check for "50" as a standalone value in JSON (common in settings)
-    if (fileKey.includes('.json') && newValue.includes('"50"')) {
-      // Be careful - only replace if it's clearly a shipping threshold context
-      // This is a simple heuristic
-      newValue = newValue.replace(/"free_shipping_threshold":\s*"50"/g, '"free_shipping_threshold": "75"');
-      newValue = newValue.replace(/"shipping_threshold":\s*"50"/g, '"shipping_threshold": "75"');
-      newValue = newValue.replace(/"threshold":\s*50/g, '"threshold": 75');
-      hasChanges = true;
-    }
+    const asset = await getAsset(theme.id, assetInfo.key);
+    if (!asset || !asset.value) continue;
 
-    if (hasChanges && newValue !== asset.value) {
-      console.log('   ✏️  Found $50 references, updating...');
+    if (asset.value.includes('$50')) {
+      filesWithMatches.push(assetInfo.key);
+      console.log(`   📄 Found $50 in: ${assetInfo.key}`);
+    }
+  }
+
+  if (filesWithMatches.length === 0) {
+    console.log('   No files found with $50 references.\n');
+    console.log('════════════════════════════════════════════════════════');
+    console.log('The $50 text might be in the Theme Customizer settings.');
+    console.log('');
+    console.log('To fix manually:');
+    console.log('1. Go to Shopify Admin → Online Store → Themes');
+    console.log('2. Click "Customize" on your live theme');
+    console.log('3. Look for "Announcement bar" section');
+    console.log('4. Edit the text to change $50 to $75');
+    console.log('5. Click Save');
+    console.log('════════════════════════════════════════════════════════\n');
+    return;
+  }
+
+  console.log(`\n✏️  Updating ${filesWithMatches.length} file(s)...\n`);
+
+  // Second pass: update all files with matches
+  for (const key of filesWithMatches) {
+    const asset = await getAsset(theme.id, key);
+    if (!asset || !asset.value) continue;
+
+    const newValue = replaceShippingThreshold(asset.value);
+
+    if (newValue !== asset.value) {
       try {
-        await updateAsset(theme.id, fileKey, newValue);
-        console.log('   ✅ Updated!\n');
+        await updateAsset(theme.id, key, newValue);
+        console.log(`   ✅ Updated: ${key}`);
         updatedCount++;
       } catch (e) {
-        console.log(`   ❌ Error: ${e.message}\n`);
+        console.log(`   ❌ Error updating ${key}: ${e.message}`);
       }
-    } else {
-      console.log('   (no $50 references found)\n');
     }
   }
 
-  // Also update metafields if they exist
-  console.log('📄 Checking theme settings for announcement text...');
-  const settingsAsset = await getAsset(theme.id, 'config/settings_data.json');
-
-  if (settingsAsset && settingsAsset.value) {
-    let settings = settingsAsset.value;
-    const original = settings;
-
-    // Common patterns in theme settings
-    settings = settings.replace(/Free Shipping Over \$50/g, 'Free Shipping Over $75');
-    settings = settings.replace(/Free shipping over \$50/g, 'Free shipping over $75');
-    settings = settings.replace(/FREE SHIPPING.*?\$50/g, (match) => match.replace('$50', '$75'));
-    settings = settings.replace(/free shipping \$50\+/gi, 'free shipping $75+');
-    settings = settings.replace(/Free shipping \$50\+/g, 'Free shipping $75+');
-
-    if (settings !== original) {
-      console.log('   ✏️  Updating settings_data.json with $75 threshold...');
-      await updateAsset(theme.id, 'config/settings_data.json', settings);
-      console.log('   ✅ Updated!\n');
-      updatedCount++;
-    }
-  }
-
-  console.log('════════════════════════════════════════════════════════');
+  console.log('\n════════════════════════════════════════════════════════');
   console.log(`✅ Complete! Updated ${updatedCount} file(s).`);
   console.log('');
   console.log('Please refresh your site to see the changes.');
-  console.log('If $50 still shows, check Theme Customizer → Announcement Bar');
   console.log('════════════════════════════════════════════════════════\n');
 }
 
