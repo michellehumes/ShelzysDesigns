@@ -3,6 +3,7 @@
 /**
  * Fix Free Shipping Threshold in Theme Settings
  * Searches ALL theme files and updates $50 references to $75
+ * Includes rate limiting to avoid 429 errors
  */
 
 const https = require('https');
@@ -17,8 +18,11 @@ if (!STORE_URL || !ACCESS_TOKEN) {
 
 console.log('\n╔════════════════════════════════════════════════════════╗');
 console.log('║   FIX FREE SHIPPING THRESHOLD ($50 → $75)              ║');
-console.log('║   Comprehensive Theme Search                           ║');
+console.log('║   Comprehensive Theme Search (with rate limiting)      ║');
 console.log('╚════════════════════════════════════════════════════════╝\n');
+
+// Delay helper to avoid rate limits
+const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
 function shopifyRequest(method, endpoint, data = null) {
   return new Promise((resolve, reject) => {
@@ -130,6 +134,9 @@ async function fixThemeSettings() {
       continue;
     }
 
+    // Add delay to avoid rate limits (500ms between reads)
+    await delay(500);
+
     const asset = await getAsset(theme.id, assetInfo.key);
     if (!asset || !asset.value) continue;
 
@@ -156,8 +163,11 @@ async function fixThemeSettings() {
 
   console.log(`\n✏️  Updating ${filesWithMatches.length} file(s)...\n`);
 
-  // Second pass: update all files with matches
+  // Second pass: update all files with matches (with 1 second delay between each)
   for (const key of filesWithMatches) {
+    // Longer delay for writes to stay well under rate limit
+    await delay(1000);
+
     const asset = await getAsset(theme.id, key);
     if (!asset || !asset.value) continue;
 
@@ -165,11 +175,25 @@ async function fixThemeSettings() {
 
     if (newValue !== asset.value) {
       try {
+        // Additional delay before write
+        await delay(500);
         await updateAsset(theme.id, key, newValue);
         console.log(`   ✅ Updated: ${key}`);
         updatedCount++;
       } catch (e) {
         console.log(`   ❌ Error updating ${key}: ${e.message}`);
+        // If rate limited, wait and retry once
+        if (e.message.includes('429')) {
+          console.log('   ⏳ Rate limited, waiting 5 seconds and retrying...');
+          await delay(5000);
+          try {
+            await updateAsset(theme.id, key, newValue);
+            console.log(`   ✅ Updated on retry: ${key}`);
+            updatedCount++;
+          } catch (retryErr) {
+            console.log(`   ❌ Retry failed: ${retryErr.message}`);
+          }
+        }
       }
     }
   }
