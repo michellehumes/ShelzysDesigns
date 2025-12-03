@@ -21,6 +21,7 @@ on:
           - 'fix-homepage'   # Fix reviews blocking homepage
           - 'fix-blog-images' # Fix blog images (downloads and uploads as base64)
           - 'debug-blog'      # Debug blog image issues
+          - 'fix-shipping'    # Fix $50 to $75 in theme announcement bars
 
 env:
   NODE_VERSION: '18'
@@ -364,3 +365,34 @@ jobs:
           SHOPIFY_STORE_URL: ${{ secrets.SHOPIFY_STORE_URL }}
           SHOPIFY_ACCESS_TOKEN: ${{ secrets.SHOPIFY_ACCESS_TOKEN }}
         run: node shopify/scripts/debug-blog-images.js
+
+  # ============================================
+  # FIX SHIPPING - Update $50 to $75 in theme
+  # ============================================
+  fix-shipping:
+    name: Fix Shipping Threshold ($50 → $75)
+    runs-on: ubuntu-latest
+    if: github.event.inputs.action == 'fix-shipping'
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Fix shipping threshold in theme
+        env:
+          SHOPIFY_STORE_URL: ${{ secrets.SHOPIFY_STORE_URL }}
+          SHOPIFY_ACCESS_TOKEN: ${{ secrets.SHOPIFY_ACCESS_TOKEN }}
+        run: node shopify/scripts/fix-shipping-threshold.js
+
+      - name: Create summary
+        run: |
+          echo "# 🚚 Shipping Threshold Fixed!" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "Updated all \$50 references to \$75 in your theme's announcement bars." >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Refresh your site to see the changes.**" >> $GITHUB_STEP_SUMMARY
