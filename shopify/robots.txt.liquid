@@ -1,0 +1,72 @@
+{% comment %}
+==================================================
+SHELZY'S DESIGNS - ROBOTS.TXT
+Upload to: Online Store → Themes → Edit Code → Templates → robots.txt.liquid
+
+This file controls search engine crawling behavior.
+==================================================
+{% endcomment %}
+
+# Shelzy's Designs Robots.txt
+# Last Updated: December 2025
+
+User-agent: *
+
+# Allow all pages
+Allow: /
+
+# Allow important pages
+Allow: /collections/
+Allow: /products/
+Allow: /pages/
+Allow: /blogs/
+
+# Disallow admin and checkout
+Disallow: /admin
+Disallow: /cart
+Disallow: /checkout
+Disallow: /orders
+Disallow: /account
+
+# Disallow search results (prevent duplicate content)
+Disallow: /search
+Disallow: /*?q=*
+Disallow: /*?variant=*
+Disallow: /*?sort_by=*
+Disallow: /*?filter=*
+
+# Disallow internal pages
+Disallow: /policies/
+Disallow: /password
+
+# Disallow tracking URLs
+Disallow: /*utm_*
+Disallow: /*ref=*
+Disallow: /*fbclid=*
+Disallow: /*gclid=*
+
+# Sitemap location
+Sitemap: {{ shop.url }}/sitemap.xml
+
+# Crawl delay for politeness
+Crawl-delay: 1
+
+# Google specific
+User-agent: Googlebot
+Allow: /
+Disallow: /checkout
+Disallow: /cart
+Disallow: /account
+
+# Bing specific
+User-agent: Bingbot
+Allow: /
+Disallow: /checkout
+Disallow: /cart
+Disallow: /account
+
+# Block bad bots (optional - uncomment if needed)
+# User-agent: AhrefsBot
+# Disallow: /
+# User-agent: SemrushBot
+# Disallow: /
