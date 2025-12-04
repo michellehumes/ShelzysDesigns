@@ -1,0 +1,32 @@
+name: Lighthouse CI
+
+on:
+  schedule:
+    # Run every Monday at 9am UTC
+    - cron: '0 9 * * 1'
+  workflow_dispatch:
+    # Allow manual triggers
+
+jobs:
+  lighthouse:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Run Lighthouse
+        uses: treosh/lighthouse-ci-action@v10
+        with:
+          urls: |
+            https://shelzysdesigns.com/
+            https://shelzysdesigns.com/collections/all
+            https://shelzysdesigns.com/products/bridal-party-bottle-set-5-pack
+          uploadArtifacts: true
+          temporaryPublicStorage: true
+          
+      - name: Save results
+        uses: actions/upload-artifact@v3
+        with:
+          name: lighthouse-results
+          path: .lighthouseci/
+          retention-days: 30
