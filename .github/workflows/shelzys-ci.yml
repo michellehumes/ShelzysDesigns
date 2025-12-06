@@ -18,15 +18,10 @@ jobs:
         with:
           node-version: '20'
 
-      - name: Install Theme Check
-        run: npm install -g @shopify/theme-check
-
-      - name: Run Theme Check
-        run: |
-          cd shopify
-          theme-check . --fail-level error || echo "Theme check complete"
-        continue-on-error: true
-
+      - name: Run Shopify Theme Check
+        uses: shopify/theme-check-action@v2
+        with:
+          theme_root: ./
   # Job 2: Lint CSS
   lint-css:
     runs-on: ubuntu-latest
