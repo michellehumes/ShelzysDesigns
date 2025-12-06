@@ -63,26 +63,40 @@
         </div>
       </div>
 
-      {%- comment -%} Shop Column {%- endcomment -%}
+      {%- comment -%} Shop by Occasion Column {%- endcomment -%}
       <div class="sz-footer-col">
-        <h4 class="sz-footer-heading">Shop</h4>
-        <nav class="sz-footer-nav" aria-label="Shop links">
-          <a href="/collections/all">All Bottles</a>
+        <h4 class="sz-footer-heading">Shop by Occasion</h4>
+        <nav class="sz-footer-nav" aria-label="Shop by occasion links">
           <a href="/collections/best-sellers">Best Sellers</a>
           <a href="/collections/wedding">Wedding</a>
-          <a href="/pages/bulk-orders">Corporate</a>
+          <a href="/collections/bachelorette">Bachelorette</a>
+          <a href="/collections/bridal-shower">Bridal Shower</a>
+          <a href="/collections/baby-shower">Baby Shower</a>
           <a href="/collections/holiday">Holiday</a>
         </nav>
       </div>
 
-      {%- comment -%} Help Column {%- endcomment -%}
+      {%- comment -%} Popular Products Column {%- endcomment -%}
       <div class="sz-footer-col">
-        <h4 class="sz-footer-heading">Help</h4>
+        <h4 class="sz-footer-heading">Popular Products</h4>
+        <nav class="sz-footer-nav" aria-label="Popular products links">
+          <a href="/collections/bridesmaid">Bridesmaid Bottles</a>
+          <a href="/collections/bridal-party">Bridal Party Sets</a>
+          <a href="/collections/bridesmaid-proposal">Proposal Boxes</a>
+          <a href="/collections/kids">Kids Bottles</a>
+          <a href="/pages/bulk-orders">Corporate & Bulk</a>
+        </nav>
+      </div>
+
+      {%- comment -%} Help & Info Column {%- endcomment -%}
+      <div class="sz-footer-col">
+        <h4 class="sz-footer-heading">Help & Info</h4>
         <nav class="sz-footer-nav" aria-label="Help links">
           <a href="/pages/faq">FAQ</a>
-          <a href="/pages/shipping">Shipping & Returns</a>
+          <a href="/pages/shipping">Shipping & Turnaround</a>
           <a href="/pages/contact">Contact Us</a>
           <a href="/pages/care-instructions">Care Instructions</a>
+          <a href="/pages/wedding-timeline">Wedding Order Timeline</a>
         </nav>
       </div>
 
@@ -164,13 +178,13 @@
   /* ─── Top Section Grid ─── */
   .sz-footer-top {
     display: grid;
-    grid-template-columns: 1.5fr repeat(3, 1fr) 1.2fr;
-    gap: 48px;
+    grid-template-columns: 1.5fr repeat(4, 1fr) 1.2fr;
+    gap: 40px;
     padding-bottom: 60px;
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   }
 
-  @media (max-width: 1024px) {
+  @media (max-width: 1200px) {
     .sz-footer-top {
       grid-template-columns: repeat(3, 1fr);
       gap: 40px;
@@ -185,10 +199,17 @@
     }
   }
 
-  @media (max-width: 600px) {
+  @media (max-width: 768px) {
     .sz-footer-top {
       grid-template-columns: repeat(2, 1fr);
       gap: 32px;
+    }
+  }
+
+  @media (max-width: 500px) {
+    .sz-footer-top {
+      grid-template-columns: 1fr;
+      gap: 28px;
     }
 
     .sz-footer-brand,

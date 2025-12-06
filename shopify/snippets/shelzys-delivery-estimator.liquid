@@ -1,0 +1,482 @@
+{%- comment -%}
+  Shelzy's Designs - Delivery Estimator
+
+  HIGH PRIORITY: Prominently displays turnaround time + shipping estimate
+  ABOVE the Add to Cart button for deadline-driven wedding purchases.
+
+  Features:
+  - Live delivery date calculation
+  - Event date input for deadline verification
+  - Rush order availability
+  - Bulk order timing info
+
+  Add ABOVE Add to Cart on product pages:
+  {% render 'shelzys-delivery-estimator', product: product %}
+{%- endcomment -%}
+
+{%- liquid
+  assign p_tags = product.tags | join: ',' | downcase
+  assign is_wedding = false
+  assign is_bulk = false
+
+  if p_tags contains 'wedding' or p_tags contains 'bridal' or p_tags contains 'bridesmaid' or p_tags contains 'bachelorette'
+    assign is_wedding = true
+  endif
+
+  if p_tags contains 'bulk' or p_tags contains 'corporate'
+    assign is_bulk = true
+  endif
+-%}
+
+<div class="sz-delivery-estimator" id="szDeliveryEstimator">
+
+  {%- comment -%} Delivery Timeline {%- endcomment -%}
+  <div class="sz-delivery-timeline">
+    <div class="sz-timeline-header">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+        <line x1="16" y1="2" x2="16" y2="6"/>
+        <line x1="8" y1="2" x2="8" y2="6"/>
+        <line x1="3" y1="10" x2="21" y2="10"/>
+      </svg>
+      <span class="sz-timeline-title">Estimated Delivery</span>
+    </div>
+
+    <div class="sz-timeline-dates">
+      <div class="sz-timeline-step">
+        <span class="sz-step-icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+          </svg>
+        </span>
+        <div class="sz-step-info">
+          <span class="sz-step-label">Production</span>
+          <span class="sz-step-value">3-5 business days</span>
+        </div>
+      </div>
+
+      <div class="sz-timeline-connector"></div>
+
+      <div class="sz-timeline-step">
+        <span class="sz-step-icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/>
+          </svg>
+        </span>
+        <div class="sz-step-info">
+          <span class="sz-step-label">Shipping</span>
+          <span class="sz-step-value">3-7 business days</span>
+        </div>
+      </div>
+
+      <div class="sz-timeline-connector"></div>
+
+      <div class="sz-timeline-step sz-step-highlight">
+        <span class="sz-step-icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+            <polyline points="22 4 12 14.01 9 11.01"/>
+          </svg>
+        </span>
+        <div class="sz-step-info">
+          <span class="sz-step-label">Arrives by</span>
+          <span class="sz-step-value sz-arrival-date" id="szArrivalDate">Loading...</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {%- comment -%} Event Date Calculator {%- endcomment -%}
+  {%- if is_wedding -%}
+  <div class="sz-event-calculator">
+    <label class="sz-event-label" for="szEventDate">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+      </svg>
+      When is your event?
+    </label>
+    <div class="sz-event-input-wrap">
+      <input
+        type="date"
+        id="szEventDate"
+        class="sz-event-input"
+        min=""
+      >
+      <button type="button" class="sz-check-timing" id="szCheckTiming">Check Timing</button>
+    </div>
+    <div class="sz-event-result" id="szEventResult" style="display: none;"></div>
+  </div>
+  {%- endif -%}
+
+  {%- comment -%} Rush Order Option {%- endcomment -%}
+  <div class="sz-rush-option">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+    </svg>
+    <span>Need it sooner? <a href="/pages/contact?subject=rush-order" class="sz-rush-link">Contact us for rush orders</a></span>
+  </div>
+
+  {%- comment -%} Quantity Discount Hint {%- endcomment -%}
+  {%- if is_wedding or is_bulk -%}
+  <div class="sz-bulk-hint">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+      <circle cx="9" cy="7" r="4"/>
+      <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+      <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+    </svg>
+    <span>Ordering 6+ bottles? <a href="/pages/bulk-orders" class="sz-bulk-link">See bulk pricing & discounts</a></span>
+  </div>
+  {%- endif -%}
+
+</div>
+
+<script>
+(function() {
+  // Calculate delivery dates
+  function calculateDeliveryDate() {
+    var today = new Date();
+    var productionDays = 5; // Max production time
+    var shippingDays = 7; // Max shipping time
+
+    // Add business days
+    var deliveryDate = new Date(today);
+    var daysAdded = 0;
+    var totalDaysNeeded = productionDays + shippingDays;
+
+    while (daysAdded < totalDaysNeeded) {
+      deliveryDate.setDate(deliveryDate.getDate() + 1);
+      var dayOfWeek = deliveryDate.getDay();
+      if (dayOfWeek !== 0 && dayOfWeek !== 6) {
+        daysAdded++;
+      }
+    }
+
+    // Format date
+    var options = { weekday: 'short', month: 'short', day: 'numeric' };
+    var formattedDate = deliveryDate.toLocaleDateString('en-US', options);
+
+    var arrivalEl = document.getElementById('szArrivalDate');
+    if (arrivalEl) {
+      arrivalEl.textContent = formattedDate;
+    }
+
+    return deliveryDate;
+  }
+
+  // Set minimum date for event input
+  var eventInput = document.getElementById('szEventDate');
+  if (eventInput) {
+    var minDate = new Date();
+    minDate.setDate(minDate.getDate() + 10); // Minimum 10 days out
+    eventInput.min = minDate.toISOString().split('T')[0];
+
+    // Default to 30 days from now
+    var defaultDate = new Date();
+    defaultDate.setDate(defaultDate.getDate() + 30);
+    eventInput.value = defaultDate.toISOString().split('T')[0];
+  }
+
+  // Check timing button
+  var checkBtn = document.getElementById('szCheckTiming');
+  var resultEl = document.getElementById('szEventResult');
+
+  if (checkBtn && resultEl) {
+    checkBtn.addEventListener('click', function() {
+      var eventDate = new Date(eventInput.value);
+      var deliveryDate = calculateDeliveryDate();
+
+      // Add buffer days for event
+      var bufferDays = 3;
+      var safeArrival = new Date(eventDate);
+      safeArrival.setDate(safeArrival.getDate() - bufferDays);
+
+      resultEl.style.display = 'block';
+
+      if (deliveryDate <= safeArrival) {
+        var daysEarly = Math.ceil((safeArrival - deliveryDate) / (1000 * 60 * 60 * 24));
+        resultEl.innerHTML = '<span class="sz-result-success"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> Perfect! Your order will arrive ' + daysEarly + ' days before your event.</span>';
+        resultEl.className = 'sz-event-result sz-result-good';
+      } else if (deliveryDate <= eventDate) {
+        resultEl.innerHTML = '<span class="sz-result-warning"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> Cutting it close! Consider rush shipping or order soon.</span>';
+        resultEl.className = 'sz-event-result sz-result-caution';
+      } else {
+        resultEl.innerHTML = '<span class="sz-result-urgent"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg> Standard delivery won\'t make it. <a href="/pages/contact?subject=rush-order">Contact us for rush options</a></span>';
+        resultEl.className = 'sz-event-result sz-result-urgent';
+      }
+    });
+  }
+
+  // Initialize
+  calculateDeliveryDate();
+})();
+</script>
+
+<style>
+  .sz-delivery-estimator {
+    background: #FAF8F5;
+    border: 1px solid #E8E4DE;
+    padding: 20px;
+    margin-bottom: 20px;
+  }
+
+  /* Timeline Header */
+  .sz-timeline-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #E8E4DE;
+  }
+
+  .sz-timeline-header svg {
+    color: #4E5F4A;
+  }
+
+  .sz-timeline-title {
+    font-family: "Inter", sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    color: #1F1F1F;
+  }
+
+  /* Timeline Steps */
+  .sz-timeline-dates {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    margin-bottom: 20px;
+  }
+
+  .sz-timeline-step {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex: 1;
+  }
+
+  .sz-step-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: #E8E4DE;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .sz-step-icon svg {
+    color: #4A4A4A;
+  }
+
+  .sz-step-highlight .sz-step-icon {
+    background: #4E5F4A;
+  }
+
+  .sz-step-highlight .sz-step-icon svg {
+    color: #FFFFFF;
+  }
+
+  .sz-step-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .sz-step-label {
+    font-family: "Inter", sans-serif;
+    font-size: 11px;
+    color: #7A7A7A;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .sz-step-value {
+    font-family: "Inter", sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    color: #1F1F1F;
+  }
+
+  .sz-arrival-date {
+    color: #4E5F4A;
+    font-weight: 600;
+    font-size: 14px;
+  }
+
+  .sz-timeline-connector {
+    width: 20px;
+    height: 2px;
+    background: #E8E4DE;
+    flex-shrink: 0;
+  }
+
+  /* Event Calculator */
+  .sz-event-calculator {
+    background: #FFFFFF;
+    border: 1px solid #E8E4DE;
+    padding: 16px;
+    margin-bottom: 16px;
+  }
+
+  .sz-event-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: "Inter", sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    color: #1F1F1F;
+    margin-bottom: 10px;
+  }
+
+  .sz-event-label svg {
+    color: #E8B4B8;
+  }
+
+  .sz-event-input-wrap {
+    display: flex;
+    gap: 10px;
+  }
+
+  .sz-event-input {
+    flex: 1;
+    padding: 10px 12px;
+    font-family: "Inter", sans-serif;
+    font-size: 14px;
+    border: 1px solid #E8E4DE;
+    background: #FFFFFF;
+  }
+
+  .sz-event-input:focus {
+    outline: none;
+    border-color: #4E5F4A;
+  }
+
+  .sz-check-timing {
+    padding: 10px 16px;
+    background: #2C3E2D;
+    color: #FFFFFF;
+    border: none;
+    font-family: "Inter", sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s ease;
+    white-space: nowrap;
+  }
+
+  .sz-check-timing:hover {
+    background: #1F1F1F;
+  }
+
+  .sz-event-result {
+    margin-top: 12px;
+    padding: 12px;
+    font-family: "Inter", sans-serif;
+    font-size: 13px;
+    line-height: 1.5;
+  }
+
+  .sz-event-result span {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .sz-event-result svg {
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .sz-result-good {
+    background: rgba(78, 95, 74, 0.1);
+    color: #2C3E2D;
+  }
+
+  .sz-result-caution {
+    background: rgba(241, 196, 15, 0.15);
+    color: #9A7B0A;
+  }
+
+  .sz-result-urgent {
+    background: rgba(192, 57, 43, 0.1);
+    color: #96281B;
+  }
+
+  .sz-result-urgent a {
+    color: inherit;
+    font-weight: 600;
+    text-decoration: underline;
+  }
+
+  /* Rush & Bulk Options */
+  .sz-rush-option,
+  .sz-bulk-hint {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: "Inter", sans-serif;
+    font-size: 13px;
+    color: #4A4A4A;
+    padding: 10px 0;
+    border-top: 1px solid #E8E4DE;
+  }
+
+  .sz-rush-option svg {
+    color: #D4AF37;
+    flex-shrink: 0;
+  }
+
+  .sz-bulk-hint svg {
+    color: #4E5F4A;
+    flex-shrink: 0;
+  }
+
+  .sz-rush-link,
+  .sz-bulk-link {
+    color: #4E5F4A;
+    font-weight: 500;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  .sz-rush-link:hover,
+  .sz-bulk-link:hover {
+    color: #2C3E2D;
+  }
+
+  /* Mobile Optimization */
+  @media (max-width: 600px) {
+    .sz-delivery-estimator {
+      padding: 16px;
+    }
+
+    .sz-timeline-dates {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 12px;
+    }
+
+    .sz-timeline-connector {
+      width: 2px;
+      height: 16px;
+      margin-left: 15px;
+    }
+
+    .sz-timeline-step {
+      width: 100%;
+    }
+
+    .sz-event-input-wrap {
+      flex-direction: column;
+    }
+
+    .sz-check-timing {
+      width: 100%;
+    }
+  }
+</style>

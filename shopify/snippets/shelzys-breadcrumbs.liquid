@@ -1,0 +1,193 @@
+{%- comment -%}
+  Shelzy's Designs - Breadcrumbs Navigation
+
+  Provides clear navigation paths for users to step back from:
+  - Product pages → Collection → Home
+  - Collection pages → Home
+
+  Add to product/collection templates:
+  {% render 'shelzys-breadcrumbs' %}
+{%- endcomment -%}
+
+{%- unless template.name == 'index' -%}
+<nav class="sz-breadcrumbs" aria-label="Breadcrumb">
+  <ol class="sz-breadcrumbs-list" itemscope itemtype="https://schema.org/BreadcrumbList">
+    {%- comment -%} Home {%- endcomment -%}
+    <li class="sz-breadcrumb-item" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+      <a href="/" itemprop="item" class="sz-breadcrumb-link">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+          <polyline points="9 22 9 12 15 12 15 22"/>
+        </svg>
+        <span itemprop="name">Home</span>
+      </a>
+      <meta itemprop="position" content="1">
+    </li>
+
+    {%- comment -%} Collection Page Breadcrumb {%- endcomment -%}
+    {%- if template.name == 'collection' -%}
+      <li class="sz-breadcrumb-item sz-breadcrumb-current" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+        <span itemprop="name" aria-current="page">{{ collection.title }}</span>
+        <meta itemprop="position" content="2">
+      </li>
+
+    {%- comment -%} Product Page Breadcrumb {%- endcomment -%}
+    {%- elsif template.name == 'product' -%}
+      {%- comment -%} Show collection if product has one {%- endcomment -%}
+      {%- if product.collections.size > 0 -%}
+        {%- assign primary_collection = product.collections | first -%}
+        {%- comment -%} Try to find a more specific collection {%- endcomment -%}
+        {%- for coll in product.collections -%}
+          {%- if coll.handle contains 'wedding' or coll.handle contains 'bridesmaid' or coll.handle contains 'bachelorette' or coll.handle contains 'bridal' -%}
+            {%- assign primary_collection = coll -%}
+            {%- break -%}
+          {%- endif -%}
+        {%- endfor -%}
+
+        <li class="sz-breadcrumb-item" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          <a href="{{ primary_collection.url }}" itemprop="item" class="sz-breadcrumb-link">
+            <span itemprop="name">{{ primary_collection.title }}</span>
+          </a>
+          <meta itemprop="position" content="2">
+        </li>
+
+        <li class="sz-breadcrumb-item sz-breadcrumb-current" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          <span itemprop="name" aria-current="page">{{ product.title | truncate: 40 }}</span>
+          <meta itemprop="position" content="3">
+        </li>
+      {%- else -%}
+        <li class="sz-breadcrumb-item sz-breadcrumb-current" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          <span itemprop="name" aria-current="page">{{ product.title | truncate: 40 }}</span>
+          <meta itemprop="position" content="2">
+        </li>
+      {%- endif -%}
+
+    {%- comment -%} Other Page Types {%- endcomment -%}
+    {%- elsif template.name == 'page' -%}
+      <li class="sz-breadcrumb-item sz-breadcrumb-current" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+        <span itemprop="name" aria-current="page">{{ page.title }}</span>
+        <meta itemprop="position" content="2">
+      </li>
+
+    {%- elsif template.name == 'blog' -%}
+      <li class="sz-breadcrumb-item sz-breadcrumb-current" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+        <span itemprop="name" aria-current="page">{{ blog.title }}</span>
+        <meta itemprop="position" content="2">
+      </li>
+
+    {%- elsif template.name == 'article' -%}
+      <li class="sz-breadcrumb-item" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+        <a href="{{ blog.url }}" itemprop="item" class="sz-breadcrumb-link">
+          <span itemprop="name">{{ blog.title }}</span>
+        </a>
+        <meta itemprop="position" content="2">
+      </li>
+      <li class="sz-breadcrumb-item sz-breadcrumb-current" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+        <span itemprop="name" aria-current="page">{{ article.title | truncate: 40 }}</span>
+        <meta itemprop="position" content="3">
+      </li>
+
+    {%- elsif template.name == 'cart' -%}
+      <li class="sz-breadcrumb-item sz-breadcrumb-current" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+        <span itemprop="name" aria-current="page">Shopping Cart</span>
+        <meta itemprop="position" content="2">
+      </li>
+
+    {%- elsif template.name == 'search' -%}
+      <li class="sz-breadcrumb-item sz-breadcrumb-current" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+        <span itemprop="name" aria-current="page">Search Results</span>
+        <meta itemprop="position" content="2">
+      </li>
+    {%- endif -%}
+  </ol>
+</nav>
+{%- endunless -%}
+
+<style>
+  .sz-breadcrumbs {
+    padding: 16px 24px;
+    background: #FAF8F5;
+    border-bottom: 1px solid #E8E4DE;
+  }
+
+  @media (max-width: 768px) {
+    .sz-breadcrumbs {
+      padding: 12px 16px;
+    }
+  }
+
+  .sz-breadcrumbs-list {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    max-width: 1400px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .sz-breadcrumb-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: "Inter", sans-serif;
+    font-size: 13px;
+  }
+
+  .sz-breadcrumb-item:not(:last-child)::after {
+    content: "";
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%237A7A7A' stroke-width='2'%3E%3Cpolyline points='9 18 15 12 9 6'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 12px;
+    opacity: 0.6;
+  }
+
+  .sz-breadcrumb-link {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: #4A4A4A;
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+
+  .sz-breadcrumb-link:hover {
+    color: #4E5F4A;
+  }
+
+  .sz-breadcrumb-link svg {
+    color: #7A7A7A;
+    flex-shrink: 0;
+  }
+
+  .sz-breadcrumb-current {
+    color: #1F1F1F;
+    font-weight: 500;
+  }
+
+  /* Mobile: truncate long breadcrumbs */
+  @media (max-width: 500px) {
+    .sz-breadcrumbs-list {
+      font-size: 12px;
+    }
+
+    .sz-breadcrumb-item {
+      max-width: 150px;
+    }
+
+    .sz-breadcrumb-current span {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: inline-block;
+      max-width: 120px;
+    }
+  }
+</style>
