@@ -736,6 +736,7 @@
     .sz-steps-progress {
       gap: 4px;
       margin-bottom: 24px;
+      padding: 0 4px;
     }
 
     .sz-step-num {
@@ -771,6 +772,198 @@
 
     .sz-step-back {
       order: 2;
+    }
+  }
+
+  /* Enhanced Mobile @ 375px (iPhone SE/small phones) */
+  @media (max-width: 375px) {
+    .sz-personalization {
+      padding: 20px 0;
+    }
+
+    .sz-steps-progress {
+      gap: 2px;
+      margin-bottom: 20px;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+
+    .sz-steps-progress::-webkit-scrollbar {
+      display: none;
+    }
+
+    .sz-step-indicator {
+      min-width: 50px;
+    }
+
+    .sz-step-num {
+      width: 24px;
+      height: 24px;
+      font-size: 11px;
+    }
+
+    .sz-step-label {
+      font-size: 8px;
+      white-space: nowrap;
+    }
+
+    .sz-step-line {
+      max-width: 12px;
+      margin-bottom: 16px;
+    }
+
+    .sz-step-title {
+      font-size: 14px;
+      margin-bottom: 16px;
+    }
+
+    /* Larger touch targets for color swatches */
+    .sz-color-grid {
+      gap: 10px;
+      justify-content: center;
+    }
+
+    .sz-color-swatch {
+      width: 44px;
+      height: 44px;
+      min-width: 44px; /* Ensure minimum touch target */
+    }
+
+    /* Full-width font options for easier tapping */
+    .sz-font-grid {
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+
+    .sz-font-option {
+      padding: 14px;
+      min-height: 60px;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 12px;
+      text-align: left;
+    }
+
+    .sz-font-preview {
+      font-size: 20px;
+      min-width: 60px;
+      margin-bottom: 0;
+    }
+
+    .sz-font-name {
+      font-size: 12px;
+    }
+
+    /* Better text input on mobile */
+    .sz-text-input {
+      font-size: 16px; /* Prevents iOS zoom */
+      padding: 14px 16px;
+      padding-right: 80px;
+    }
+
+    .sz-char-count {
+      right: 10px;
+      font-size: 11px;
+    }
+
+    .sz-text-preview {
+      padding: 20px 16px;
+    }
+
+    .sz-preview-text {
+      font-size: 24px;
+      word-break: break-word;
+    }
+
+    .sz-text-tips {
+      font-size: 12px;
+      padding: 0 4px;
+    }
+
+    /* Text color swatches */
+    .sz-text-color-grid {
+      gap: 10px;
+      justify-content: center;
+    }
+
+    .sz-text-color-swatch {
+      width: 40px;
+      height: 40px;
+      min-width: 40px;
+    }
+
+    /* Larger buttons for easier tapping */
+    .sz-step-back,
+    .sz-step-next,
+    .sz-step-complete {
+      padding: 16px 20px;
+      font-size: 15px;
+      min-height: 52px;
+    }
+
+    .sz-selected-label {
+      font-size: 13px;
+      text-align: center;
+    }
+
+    .sz-reassurance {
+      padding: 14px 12px;
+      gap: 8px;
+    }
+
+    .sz-reassurance p {
+      font-size: 12px;
+    }
+  }
+
+  /* Touch-friendly improvements for all mobile */
+  @media (max-width: 768px) {
+    /* Ensure buttons have proper touch feedback */
+    .sz-color-swatch:active,
+    .sz-font-option:active,
+    .sz-text-color-swatch:active {
+      transform: scale(0.95);
+    }
+
+    /* Better visual feedback on selection */
+    .sz-color-swatch.selected,
+    .sz-text-color-swatch.selected {
+      transform: scale(1.05);
+    }
+
+    .sz-font-option.selected {
+      background: #F0EDE8;
+      border-width: 2px;
+    }
+
+    /* Smooth scrolling for step changes */
+    .sz-step {
+      scroll-margin-top: 100px;
+    }
+
+    /* Improved focus states for accessibility */
+    .sz-text-input:focus {
+      box-shadow: 0 0 0 3px rgba(78, 95, 74, 0.2);
+    }
+
+    .sz-step-next:focus,
+    .sz-step-complete:focus {
+      box-shadow: 0 0 0 3px rgba(44, 62, 45, 0.3);
+      outline: none;
+    }
+  }
+
+  /* Prevent content jump when keyboard opens */
+  @media (max-width: 768px) {
+    .sz-personalization {
+      min-height: auto;
+    }
+
+    .sz-text-input-wrap {
+      scroll-margin-bottom: 200px;
     }
   }
 </style>

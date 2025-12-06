@@ -38,32 +38,48 @@
     <nav class="sz-main-nav" id="szMainNav" aria-label="Main navigation">
       <ul class="sz-nav-list">
 
+        {%- comment -%} Best Sellers - Social Proof Path {%- endcomment -%}
         <li class="sz-nav-item">
-          <a href="/collections/all" class="sz-nav-link">Shop All</a>
+          <a href="/collections/best-sellers" class="sz-nav-link sz-nav-featured">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style="margin-right: 4px;">
+              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+            </svg>
+            Best Sellers
+          </a>
         </li>
 
-        {%- comment -%} Weddings & Bridesmaids - With Dropdown {%- endcomment -%}
+        {%- comment -%} Shop by Occasion - Mega Menu {%- endcomment -%}
         <li class="sz-nav-item sz-has-dropdown">
-          <a href="/collections/wedding" class="sz-nav-link">
-            Weddings
+          <a href="/collections/all" class="sz-nav-link">
+            Shop by Occasion
             <svg class="sz-nav-chevron" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <polyline points="6 9 12 15 18 9"/>
             </svg>
           </a>
-          <div class="sz-dropdown">
+          <div class="sz-dropdown sz-dropdown-mega">
             <div class="sz-dropdown-inner">
               <div class="sz-dropdown-col">
-                <span class="sz-dropdown-heading">Shop Wedding</span>
+                <span class="sz-dropdown-heading">Wedding & Bridal</span>
                 <a href="/collections/wedding" class="sz-dropdown-link">All Wedding Bottles</a>
                 <a href="/collections/bridesmaid" class="sz-dropdown-link">Bridesmaid Bottles</a>
                 <a href="/collections/bridal-party" class="sz-dropdown-link">Bridal Party Sets</a>
                 <a href="/collections/bridesmaid-proposal" class="sz-dropdown-link">Bridesmaid Proposal Boxes</a>
+                <a href="/collections/wedding-day" class="sz-dropdown-link">Wedding Day Bottles</a>
               </div>
               <div class="sz-dropdown-col">
-                <span class="sz-dropdown-heading">By Occasion</span>
+                <span class="sz-dropdown-heading">Celebrations</span>
                 <a href="/collections/bachelorette" class="sz-dropdown-link">Bachelorette Party</a>
-                <a href="/collections/wedding-day" class="sz-dropdown-link">Wedding Day Bottles</a>
                 <a href="/collections/bridal-shower" class="sz-dropdown-link">Bridal Shower</a>
+                <a href="/collections/baby-shower" class="sz-dropdown-link">Baby Shower</a>
+                <a href="/collections/birthday" class="sz-dropdown-link">Birthday</a>
+                <a href="/collections/holiday" class="sz-dropdown-link">Holiday & Seasonal</a>
+              </div>
+              <div class="sz-dropdown-col">
+                <span class="sz-dropdown-heading">By Style</span>
+                <a href="/collections/modern-minimalist" class="sz-dropdown-link">Modern Minimalist</a>
+                <a href="/collections/classic-elegant" class="sz-dropdown-link">Classic Elegant</a>
+                <a href="/collections/rustic-farmhouse" class="sz-dropdown-link">Rustic Farmhouse</a>
+                <a href="/collections/boho" class="sz-dropdown-link">Boho & Free Spirit</a>
               </div>
             </div>
           </div>
@@ -137,18 +153,51 @@
 <div class="sz-mobile-menu" id="szMobileMenu" aria-hidden="true">
   <div class="sz-mobile-menu-inner">
     <nav class="sz-mobile-nav" aria-label="Mobile navigation">
-      <a href="/collections/all" class="sz-mobile-link">Shop All</a>
+      <a href="/collections/best-sellers" class="sz-mobile-link sz-mobile-featured">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="margin-right: 6px;">
+          <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+        </svg>
+        Best Sellers
+      </a>
 
       <div class="sz-mobile-accordion">
         <button class="sz-mobile-link sz-accordion-toggle" aria-expanded="false">
-          Weddings & Bridesmaids
+          Wedding & Bridal
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
         </button>
         <div class="sz-accordion-content">
           <a href="/collections/wedding" class="sz-mobile-sublink">All Wedding Bottles</a>
           <a href="/collections/bridesmaid" class="sz-mobile-sublink">Bridesmaid Bottles</a>
           <a href="/collections/bridal-party" class="sz-mobile-sublink">Bridal Party Sets</a>
+          <a href="/collections/bridesmaid-proposal" class="sz-mobile-sublink">Proposal Boxes</a>
+          <a href="/collections/wedding-day" class="sz-mobile-sublink">Wedding Day</a>
+        </div>
+      </div>
+
+      <div class="sz-mobile-accordion">
+        <button class="sz-mobile-link sz-accordion-toggle" aria-expanded="false">
+          Celebrations
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="sz-accordion-content">
           <a href="/collections/bachelorette" class="sz-mobile-sublink">Bachelorette Party</a>
+          <a href="/collections/bridal-shower" class="sz-mobile-sublink">Bridal Shower</a>
+          <a href="/collections/baby-shower" class="sz-mobile-sublink">Baby Shower</a>
+          <a href="/collections/birthday" class="sz-mobile-sublink">Birthday</a>
+          <a href="/collections/holiday" class="sz-mobile-sublink">Holiday & Seasonal</a>
+        </div>
+      </div>
+
+      <div class="sz-mobile-accordion">
+        <button class="sz-mobile-link sz-accordion-toggle" aria-expanded="false">
+          Shop by Style
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="sz-accordion-content">
+          <a href="/collections/modern-minimalist" class="sz-mobile-sublink">Modern Minimalist</a>
+          <a href="/collections/classic-elegant" class="sz-mobile-sublink">Classic Elegant</a>
+          <a href="/collections/rustic-farmhouse" class="sz-mobile-sublink">Rustic Farmhouse</a>
+          <a href="/collections/boho" class="sz-mobile-sublink">Boho & Free Spirit</a>
         </div>
       </div>
 
@@ -165,7 +214,6 @@
       </div>
 
       <a href="/pages/bulk-orders" class="sz-mobile-link">Corporate & Bulk</a>
-      <a href="/collections/holiday" class="sz-mobile-link">Holiday</a>
       <a href="/pages/faq" class="sz-mobile-link">FAQ</a>
       <a href="/pages/about" class="sz-mobile-link">About</a>
       <a href="/pages/contact" class="sz-mobile-link">Contact</a>
@@ -341,6 +389,27 @@
 
   .sz-dropdown-link:hover {
     color: #4E5F4A;
+  }
+
+  /* Featured Nav Link (Best Sellers) */
+  .sz-nav-featured {
+    color: #4E5F4A !important;
+    font-weight: 600 !important;
+  }
+
+  .sz-nav-featured svg {
+    color: #D4AF37;
+  }
+
+  /* Mega Menu Styling */
+  .sz-dropdown-mega {
+    min-width: 600px;
+  }
+
+  .sz-dropdown-mega .sz-dropdown-inner {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
   }
 
   /* ═══════════════════════════════════════════════════════════════════
@@ -537,6 +606,17 @@
 
   .sz-mobile-sublink:hover {
     color: #4E5F4A;
+  }
+
+  /* Mobile Featured Link */
+  .sz-mobile-featured {
+    color: #4E5F4A !important;
+    font-weight: 600 !important;
+    background: linear-gradient(90deg, rgba(78, 95, 74, 0.08) 0%, transparent 100%);
+  }
+
+  .sz-mobile-featured svg {
+    color: #D4AF37;
   }
 </style>
 
