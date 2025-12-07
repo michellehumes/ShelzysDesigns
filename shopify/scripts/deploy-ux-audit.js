@@ -88,10 +88,31 @@ async function main() {
   // Get live theme
   console.log('📋 Finding live theme...');
   const themesResponse = await apiRequest('GET', '/themes.json');
+
+  // Debug: Check API response
+  if (themesResponse.status !== 200) {
+    console.error(`❌ API Error (${themesResponse.status}):`, JSON.stringify(themesResponse.data, null, 2));
+    console.error('');
+    console.error('💡 Check your Shopify credentials:');
+    console.error('   SHOPIFY_STORE_URL:', STORE_URL);
+    console.error('   SHOPIFY_ACCESS_TOKEN:', ACCESS_TOKEN ? '***' + ACCESS_TOKEN.slice(-6) : 'NOT SET');
+    console.error('');
+    console.error('   Make sure your access token has these scopes:');
+    console.error('   - read_themes, write_themes');
+    console.error('   - read_content, write_content');
+    process.exit(1);
+  }
+
+  if (!themesResponse.data || !themesResponse.data.themes) {
+    console.error('❌ Unexpected API response:', JSON.stringify(themesResponse.data, null, 2));
+    process.exit(1);
+  }
+
   const liveTheme = themesResponse.data.themes.find(t => t.role === 'main');
 
   if (!liveTheme) {
     console.error('❌ No live theme found');
+    console.error('   Available themes:', themesResponse.data.themes.map(t => `${t.name} (${t.role})`).join(', '));
     process.exit(1);
   }
 
