@@ -49,58 +49,70 @@ async function apiRequest(method, endpoint, data = null) {
   });
 }
 
-// The enhanced navigation code to inject
+// The enhanced navigation code to inject - with forced visibility
 const ENHANCED_NAV_INJECTION = `
 {%- comment -%} === SHELZY'S ENHANCED NAVIGATION === {%- endcomment -%}
-<li class="site-nav__item site-nav--has-dropdown site-nav--is-megamenu" aria-haspopup="true">
-  <a href="/collections/best-sellers" class="site-nav__link site-nav__link--has-dropdown" style="color: #d4a574 !important; font-weight: 600 !important;">
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style="margin-right: 4px; vertical-align: middle;">
+<style>
+  .sz-enhanced-nav { display: inline-block !important; visibility: visible !important; opacity: 1 !important; }
+  .sz-enhanced-nav .site-nav__link { display: inline-flex !important; align-items: center !important; }
+</style>
+<li class="site-nav__item sz-enhanced-nav" style="display: inline-block !important; visibility: visible !important;">
+  <a href="/collections/best-sellers" class="site-nav__link" style="color: #d4a574 !important; font-weight: 600 !important; display: inline-flex !important; align-items: center !important;">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style="margin-right: 4px;">
       <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
     </svg>
     Best Sellers
   </a>
 </li>
-<li class="site-nav__item site-nav--has-dropdown site-nav--is-megamenu" aria-haspopup="true">
-  <a href="#" class="site-nav__link site-nav__link--has-dropdown" aria-expanded="false" aria-controls="SiteNavLabel-occasion">
+<li class="site-nav__item site-nav--has-dropdown sz-enhanced-nav" aria-haspopup="true" style="display: inline-block !important; visibility: visible !important; position: relative !important;">
+  <a href="/collections/all" class="site-nav__link site-nav__link--has-dropdown" style="display: inline-flex !important; align-items: center !important;">
     Shop by Occasion
-    <svg aria-hidden="true" focusable="false" class="icon icon-chevron-down" viewBox="0 0 10 6" style="width: 10px; height: 6px; margin-left: 4px;">
-      <path fill-rule="evenodd" clip-rule="evenodd" d="M0.5 0.5L5 5L9.5 0.5H0.5Z"/>
+    <svg aria-hidden="true" focusable="false" viewBox="0 0 10 6" style="width: 10px; height: 6px; margin-left: 4px;">
+      <path fill-rule="evenodd" clip-rule="evenodd" d="M0.5 0.5L5 5L9.5 0.5H0.5Z" fill="currentColor"/>
     </svg>
   </a>
-  <div id="SiteNavLabel-occasion" class="site-nav__dropdown megamenu text-left" style="min-width: 600px;">
-    <div class="page-width">
-      <div class="grid" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; padding: 1.5rem 0;">
-        <div class="grid__item">
-          <p class="site-nav__dropdown-link site-nav__dropdown-link--top-level" style="font-weight: 600; margin-bottom: 0.75rem; color: #d4a574;">Wedding & Bridal</p>
-          <ul style="list-style: none; padding: 0; margin: 0;">
-            <li><a href="/collections/wedding-favors" class="site-nav__dropdown-link">Wedding Favors</a></li>
-            <li><a href="/collections/bachelorette" class="site-nav__dropdown-link">Bachelorette Party</a></li>
-            <li><a href="/collections/bridesmaid-gifts" class="site-nav__dropdown-link">Bridesmaid Gifts</a></li>
-            <li><a href="/collections/bridal-shower" class="site-nav__dropdown-link">Bridal Shower</a></li>
-          </ul>
-        </div>
-        <div class="grid__item">
-          <p class="site-nav__dropdown-link site-nav__dropdown-link--top-level" style="font-weight: 600; margin-bottom: 0.75rem; color: #d4a574;">Celebrations</p>
-          <ul style="list-style: none; padding: 0; margin: 0;">
-            <li><a href="/collections/baby-shower" class="site-nav__dropdown-link">Baby Shower</a></li>
-            <li><a href="/collections/birthday" class="site-nav__dropdown-link">Birthday</a></li>
-            <li><a href="/collections/graduation" class="site-nav__dropdown-link">Graduation</a></li>
-            <li><a href="/collections/corporate-gifts" class="site-nav__dropdown-link">Corporate Gifts</a></li>
-          </ul>
-        </div>
-        <div class="grid__item">
-          <p class="site-nav__dropdown-link site-nav__dropdown-link--top-level" style="font-weight: 600; margin-bottom: 0.75rem; color: #d4a574;">Shop by Style</p>
-          <ul style="list-style: none; padding: 0; margin: 0;">
-            <li><a href="/collections/modern" class="site-nav__dropdown-link">Modern & Minimal</a></li>
-            <li><a href="/collections/classic" class="site-nav__dropdown-link">Classic & Elegant</a></li>
-            <li><a href="/collections/rustic" class="site-nav__dropdown-link">Rustic & Natural</a></li>
-            <li><a href="/collections/boho" class="site-nav__dropdown-link">Boho & Whimsical</a></li>
-          </ul>
-        </div>
+  <div class="site-nav__dropdown megamenu" style="position: absolute; left: 0; top: 100%; min-width: 600px; background: #fff; box-shadow: 0 4px 12px rgba(0,0,0,0.1); padding: 1.5rem; z-index: 100; display: none;">
+    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem;">
+      <div>
+        <p style="font-weight: 600; margin-bottom: 0.75rem; color: #d4a574; font-size: 14px;">Wedding & Bridal</p>
+        <ul style="list-style: none; padding: 0; margin: 0;">
+          <li style="margin-bottom: 0.5rem;"><a href="/collections/wedding-favors" style="color: #333; text-decoration: none; font-size: 13px;">Wedding Favors</a></li>
+          <li style="margin-bottom: 0.5rem;"><a href="/collections/bachelorette" style="color: #333; text-decoration: none; font-size: 13px;">Bachelorette Party</a></li>
+          <li style="margin-bottom: 0.5rem;"><a href="/collections/bridesmaid-gifts" style="color: #333; text-decoration: none; font-size: 13px;">Bridesmaid Gifts</a></li>
+          <li style="margin-bottom: 0.5rem;"><a href="/collections/bridal-shower" style="color: #333; text-decoration: none; font-size: 13px;">Bridal Shower</a></li>
+        </ul>
+      </div>
+      <div>
+        <p style="font-weight: 600; margin-bottom: 0.75rem; color: #d4a574; font-size: 14px;">Celebrations</p>
+        <ul style="list-style: none; padding: 0; margin: 0;">
+          <li style="margin-bottom: 0.5rem;"><a href="/collections/baby-shower" style="color: #333; text-decoration: none; font-size: 13px;">Baby Shower</a></li>
+          <li style="margin-bottom: 0.5rem;"><a href="/collections/birthday" style="color: #333; text-decoration: none; font-size: 13px;">Birthday</a></li>
+          <li style="margin-bottom: 0.5rem;"><a href="/collections/graduation" style="color: #333; text-decoration: none; font-size: 13px;">Graduation</a></li>
+          <li style="margin-bottom: 0.5rem;"><a href="/collections/corporate-gifts" style="color: #333; text-decoration: none; font-size: 13px;">Corporate Gifts</a></li>
+        </ul>
+      </div>
+      <div>
+        <p style="font-weight: 600; margin-bottom: 0.75rem; color: #d4a574; font-size: 14px;">Shop by Style</p>
+        <ul style="list-style: none; padding: 0; margin: 0;">
+          <li style="margin-bottom: 0.5rem;"><a href="/collections/modern" style="color: #333; text-decoration: none; font-size: 13px;">Modern & Minimal</a></li>
+          <li style="margin-bottom: 0.5rem;"><a href="/collections/classic" style="color: #333; text-decoration: none; font-size: 13px;">Classic & Elegant</a></li>
+          <li style="margin-bottom: 0.5rem;"><a href="/collections/rustic" style="color: #333; text-decoration: none; font-size: 13px;">Rustic & Natural</a></li>
+          <li style="margin-bottom: 0.5rem;"><a href="/collections/boho" style="color: #333; text-decoration: none; font-size: 13px;">Boho & Whimsical</a></li>
+        </ul>
       </div>
     </div>
   </div>
 </li>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  var occasionItem = document.querySelector('.sz-enhanced-nav.site-nav--has-dropdown');
+  if (occasionItem) {
+    var dropdown = occasionItem.querySelector('.site-nav__dropdown');
+    occasionItem.addEventListener('mouseenter', function() { if(dropdown) dropdown.style.display = 'block'; });
+    occasionItem.addEventListener('mouseleave', function() { if(dropdown) dropdown.style.display = 'none'; });
+  }
+});
+</script>
 {%- comment -%} === END ENHANCED NAVIGATION === {%- endcomment -%}
 `;
 
