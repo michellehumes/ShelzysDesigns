@@ -1,0 +1,15 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+
+# Environment files
+.env
+.env.local
+
+# Generated images (add to repo manually if needed)
+shelzys_images/
+
+# OS files
+.DS_Store

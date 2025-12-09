@@ -1,0 +1,23 @@
+{
+  "name": "shelzys-image-generator",
+  "version": "1.0.0",
+  "description": "Automated image generation for Shelzys Designs product photography",
+  "main": "dist/generate-images.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/generate-images.js",
+    "generate": "npx ts-node generate-images.ts",
+    "generate:dry-run": "DRY_RUN=true npx ts-node generate-images.ts"
+  },
+  "dependencies": {
+    "openai": "^4.68.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.3.3"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
