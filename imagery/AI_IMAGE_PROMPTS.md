@@ -381,5 +381,27 @@ with a small palm tree icon next to the name
 
 ---
 
-**Version:** 1.0
-**Last Updated:** November 2025
+---
+
+## AMAZON & PINTEREST PLATFORM-SPECIFIC PROMPTS
+
+For specialized Amazon listing images and Pinterest lifestyle content, see the structured JSON specifications file:
+
+**[AMAZON_PINTEREST_SPECS.json](./AMAZON_PINTEREST_SPECS.json)**
+
+This file contains 15 detailed prompts organized by category:
+- **Amazon Main Images** (4 prompts): Pure white background, single bottle focus, 1:1 aspect ratio
+- **Amazon Infographics** (3 prompts): Feature callouts, size charts, benefits - 4:5 aspect ratio
+- **Amazon Group Shots** (3 prompts): Multiple bottles, family sets, panoramic layouts
+- **Pinterest Lifestyle** (5 prompts): Flat lay, wellness, gym, poolside, kitchen scenes - 2:3 aspect ratio
+
+Each prompt includes:
+- Strict bottle geometry consistency instructions
+- Specific lighting setups
+- Font and color specifications for personalization
+- Platform-optimized aspect ratios
+
+---
+
+**Version:** 1.1
+**Last Updated:** December 2025
