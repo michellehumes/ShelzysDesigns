@@ -535,9 +535,13 @@ async function generateImage(prompt: string, dalleSize: ImageSize): Promise<Buff
     response_format: "b64_json",
   });
 
+  if (!response.data || !response.data[0]) {
+    throw new Error("No image data returned from API");
+  }
+
   const b64Data = response.data[0].b64_json;
   if (!b64Data) {
-    throw new Error("No image data returned from API");
+    throw new Error("No base64 image data in response");
   }
 
   return Buffer.from(b64Data, "base64");
