@@ -1,0 +1,103 @@
+# Weekly Listing Sync Workflow
+# Runs every Monday at 8 AM ET to re-push optimized listing content
+# Prevents content drift and ensures listings match configuration
+
+name: Weekly Listing Sync
+
+on:
+  schedule:
+    # Monday at 8 AM ET = 13:00 UTC (EST) or 12:00 UTC (EDT)
+    - cron: '0 13 * * 1'
+  workflow_dispatch:
+    inputs:
+      validate_only:
+        description: 'Only validate listings (no updates)'
+        required: false
+        default: 'false'
+        type: boolean
+
+env:
+  PYTHON_VERSION: '3.11'
+
+jobs:
+  sync-listings:
+    name: Sync Product Listings
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r amazon-automation/requirements.txt
+
+      - name: Validate listing content
+        working-directory: amazon-automation
+        run: |
+          python -c "
+          from src.automation.listing_manager import ListingManager
+          manager = ListingManager()
+          results = manager.validate_all_listings()
+
+          print('Listing Validation Results')
+          print('=' * 40)
+          print(f'Total: {results[\"total\"]}')
+          print(f'Valid: {len(results[\"valid\"])}')
+          print(f'Invalid: {len(results[\"invalid\"])}')
+
+          if results['invalid']:
+              print('\nValidation Errors:')
+              for item in results['invalid']:
+                  print(f'  {item[\"sku\"]}:')
+                  for error in item['errors']:
+                      print(f'    - {error}')
+              exit(1)
+
+          for item in results['valid']:
+              if item.get('warnings'):
+                  print(f'\nWarnings for {item[\"sku\"]}:')
+                  for warning in item['warnings']:
+                      print(f'  - {warning}')
+
+          print('\nAll listings validated successfully!')
+          "
+
+      - name: Sync listings to Amazon
+        if: ${{ github.event.inputs.validate_only != 'true' }}
+        working-directory: amazon-automation
+        env:
+          # Amazon SP-API credentials
+          SP_API_REFRESH_TOKEN: ${{ secrets.SP_API_REFRESH_TOKEN }}
+          LWA_APP_ID: ${{ secrets.LWA_APP_ID }}
+          LWA_CLIENT_SECRET: ${{ secrets.LWA_CLIENT_SECRET }}
+          SP_API_AWS_ACCESS_KEY: ${{ secrets.SP_API_AWS_ACCESS_KEY }}
+          SP_API_AWS_SECRET_KEY: ${{ secrets.SP_API_AWS_SECRET_KEY }}
+          SP_API_ROLE_ARN: ${{ secrets.SP_API_ROLE_ARN }}
+          AMAZON_SELLER_ID: ${{ secrets.AMAZON_SELLER_ID }}
+        run: |
+          python -m src.automation.listing_manager
+
+      - name: Create summary
+        if: always()
+        run: |
+          echo "## Listing Sync Results" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "Listings have been validated and synced to Amazon." >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### Products Updated" >> $GITHUB_STEP_SUMMARY
+          echo "- Clear Plastic Water Bottle (B0DGFD4LX4)" >> $GITHUB_STEP_SUMMARY
+          echo "- Stainless Steel Water Bottle (B0D92Q5R1P)" >> $GITHUB_STEP_SUMMARY
+          echo "- Sublimation Blank Tumbler (B0FH3T8QHD)" >> $GITHUB_STEP_SUMMARY
+
+      - name: Notify on failure
+        if: failure()
+        run: |
+          echo "::error::Listing sync failed. Check the logs for details."

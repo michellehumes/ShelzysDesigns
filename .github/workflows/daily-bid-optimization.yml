@@ -1,0 +1,81 @@
+# Daily Bid Optimization Workflow
+# Runs at 6 AM ET daily to optimize PPC bids
+# Rules:
+#   - Increase bids 15% when ACoS < 20% and 3+ conversions
+#   - Decrease bids 20% when ACoS > 40% and 20+ clicks
+#   - Pause keywords when ACoS > 60%, $15+ spent, 0 conversions
+#   - Add negatives when 15+ clicks, $10+ spent, 0 conversions
+
+name: Daily Bid Optimization
+
+on:
+  schedule:
+    # 6 AM ET = 11:00 UTC (EST) or 10:00 UTC (EDT)
+    - cron: '0 11 * * *'
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: 'Run in dry-run mode (no changes)'
+        required: false
+        default: 'false'
+        type: boolean
+      lookback_days:
+        description: 'Number of days to analyze'
+        required: false
+        default: '7'
+        type: string
+
+env:
+  PYTHON_VERSION: '3.11'
+
+jobs:
+  optimize-bids:
+    name: Optimize PPC Bids
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r amazon-automation/requirements.txt
+
+      - name: Run bid optimization
+        id: optimize
+        working-directory: amazon-automation
+        env:
+          # Amazon Advertising API credentials
+          AMAZON_ADS_CLIENT_ID: ${{ secrets.AMAZON_ADS_CLIENT_ID }}
+          AMAZON_ADS_CLIENT_SECRET: ${{ secrets.AMAZON_ADS_CLIENT_SECRET }}
+          AMAZON_ADS_REFRESH_TOKEN: ${{ secrets.AMAZON_ADS_REFRESH_TOKEN }}
+          AMAZON_ADS_PROFILE_ID: ${{ secrets.AMAZON_ADS_PROFILE_ID }}
+          # Optimization settings
+          DRY_RUN: ${{ github.event.inputs.dry_run || 'false' }}
+          LOOKBACK_DAYS: ${{ github.event.inputs.lookback_days || '7' }}
+        run: |
+          python -m src.automation.bid_optimizer
+
+      - name: Create summary
+        if: always()
+        run: |
+          echo "## Bid Optimization Results" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "| Metric | Count |" >> $GITHUB_STEP_SUMMARY
+          echo "|--------|-------|" >> $GITHUB_STEP_SUMMARY
+          echo "| Bid Increases | ${{ steps.optimize.outputs.bid_increases || 'N/A' }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Bid Decreases | ${{ steps.optimize.outputs.bid_decreases || 'N/A' }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Paused Keywords | ${{ steps.optimize.outputs.paused_keywords || 'N/A' }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| New Negatives | ${{ steps.optimize.outputs.new_negatives || 'N/A' }} |" >> $GITHUB_STEP_SUMMARY
+
+      - name: Notify on failure
+        if: failure()
+        run: |
+          echo "::error::Bid optimization failed. Check the logs for details."

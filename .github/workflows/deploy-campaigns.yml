@@ -1,0 +1,124 @@
+# Campaign Deployment Workflow
+# Manually triggered to deploy PPC campaigns from configuration
+# Creates campaigns, ad groups, keywords, and negative keywords
+
+name: Deploy PPC Campaigns
+
+on:
+  workflow_dispatch:
+    inputs:
+      confirm_deployment:
+        description: 'Type "DEPLOY" to confirm campaign deployment'
+        required: true
+        type: string
+
+env:
+  PYTHON_VERSION: '3.11'
+
+jobs:
+  validate-input:
+    name: Validate Deployment Request
+    runs-on: ubuntu-latest
+    outputs:
+      confirmed: ${{ steps.check.outputs.confirmed }}
+
+    steps:
+      - name: Check confirmation
+        id: check
+        run: |
+          if [ "${{ github.event.inputs.confirm_deployment }}" = "DEPLOY" ]; then
+            echo "confirmed=true" >> $GITHUB_OUTPUT
+            echo "Deployment confirmed"
+          else
+            echo "confirmed=false" >> $GITHUB_OUTPUT
+            echo "::error::Deployment not confirmed. Please type 'DEPLOY' to confirm."
+            exit 1
+          fi
+
+  deploy-campaigns:
+    name: Deploy PPC Campaigns
+    needs: validate-input
+    if: needs.validate-input.outputs.confirmed == 'true'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r amazon-automation/requirements.txt
+
+      - name: Validate campaign configurations
+        working-directory: amazon-automation
+        run: |
+          python -c "
+          from src.automation.campaign_manager import CampaignManager
+          from src.utils.config_loader import ConfigLoader
+
+          manager = CampaignManager()
+          config = ConfigLoader()
+          campaigns_config = config.load_campaigns()
+
+          print('Validating campaign configurations...')
+          print('=' * 50)
+
+          all_valid = True
+          for campaign_config in campaigns_config.get('campaigns', []):
+              validation = manager.validate_campaign_config(campaign_config)
+              status = '✓' if validation['valid'] else '✗'
+              print(f'{status} {campaign_config[\"name\"]}')
+
+              if not validation['valid']:
+                  all_valid = False
+                  for error in validation['errors']:
+                      print(f'    Error: {error}')
+
+              for warning in validation.get('warnings', []):
+                  print(f'    Warning: {warning}')
+
+          if not all_valid:
+              print('\nValidation failed. Fix errors before deploying.')
+              exit(1)
+
+          print('\nAll campaigns validated successfully!')
+          "
+
+      - name: Deploy campaigns
+        working-directory: amazon-automation
+        env:
+          # Amazon Advertising API credentials
+          AMAZON_ADS_CLIENT_ID: ${{ secrets.AMAZON_ADS_CLIENT_ID }}
+          AMAZON_ADS_CLIENT_SECRET: ${{ secrets.AMAZON_ADS_CLIENT_SECRET }}
+          AMAZON_ADS_REFRESH_TOKEN: ${{ secrets.AMAZON_ADS_REFRESH_TOKEN }}
+          AMAZON_ADS_PROFILE_ID: ${{ secrets.AMAZON_ADS_PROFILE_ID }}
+        run: |
+          python -m src.automation.campaign_manager
+
+      - name: Create deployment summary
+        if: always()
+        run: |
+          echo "## Campaign Deployment Summary" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### Campaigns Deployed" >> $GITHUB_STEP_SUMMARY
+          echo "| Campaign | Type | Daily Budget |" >> $GITHUB_STEP_SUMMARY
+          echo "|----------|------|--------------|" >> $GITHUB_STEP_SUMMARY
+          echo "| Shelzys-Auto-Discovery | Auto | \$20 |" >> $GITHUB_STEP_SUMMARY
+          echo "| Shelzys-Bridesmaid-Exact | Manual (Exact) | \$15 |" >> $GITHUB_STEP_SUMMARY
+          echo "| Shelzys-Bachelorette-Exact | Manual (Exact) | \$15 |" >> $GITHUB_STEP_SUMMARY
+          echo "| Shelzys-Wedding-Broad | Manual (Broad) | \$10 |" >> $GITHUB_STEP_SUMMARY
+          echo "| Shelzys-Sublimation-Blanks | Manual (Exact) | \$10 |" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Total Daily Budget: \$70**" >> $GITHUB_STEP_SUMMARY
+
+      - name: Notify on failure
+        if: failure()
+        run: |
+          echo "::error::Campaign deployment failed. Check the logs for details."
