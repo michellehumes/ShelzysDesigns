@@ -1,0 +1,49 @@
+{
+  "amazon_marketplace": {
+    "marketplace_id": "ATVPDKIKX0DER",
+    "country": "US",
+    "region": "na",
+    "endpoint": "https://sellingpartnerapi-na.amazon.com"
+  },
+  "advertising_api": {
+    "region": "na",
+    "endpoint": "https://advertising-api.amazon.com",
+    "profile_type": "seller"
+  },
+  "automation": {
+    "bid_optimization": {
+      "schedule": "0 6 * * *",
+      "timezone": "America/New_York",
+      "lookback_days": 7,
+      "min_data_threshold": {
+        "clicks": 5,
+        "impressions": 100
+      }
+    },
+    "review_requests": {
+      "schedule": "0 14 * * *",
+      "timezone": "America/New_York",
+      "min_days_after_delivery": 5,
+      "max_days_after_delivery": 25,
+      "batch_size": 50,
+      "delay_between_requests_ms": 1000
+    },
+    "listing_sync": {
+      "schedule": "0 8 * * 1",
+      "timezone": "America/New_York"
+    }
+  },
+  "logging": {
+    "level": "INFO",
+    "format": "%(asctime)s - %(name)s - %(levelname)s - %(message)s",
+    "file": "logs/automation.log",
+    "max_bytes": 10485760,
+    "backup_count": 5
+  },
+  "notifications": {
+    "enabled": false,
+    "slack_webhook_url": "",
+    "email_recipients": [],
+    "notify_on": ["errors", "bid_changes", "new_negatives", "paused_keywords"]
+  }
+}

@@ -1,0 +1,79 @@
+# Daily Review Request Workflow
+# Runs at 2 PM ET daily to request reviews for delivered orders
+# Targets orders delivered 5-25 days ago
+
+name: Daily Review Requests
+
+on:
+  schedule:
+    # 2 PM ET = 19:00 UTC (EST) or 18:00 UTC (EDT)
+    - cron: '0 19 * * *'
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: 'Run in dry-run mode (no requests sent)'
+        required: false
+        default: 'false'
+        type: boolean
+      max_requests:
+        description: 'Maximum number of requests to send (0 = no limit)'
+        required: false
+        default: '0'
+        type: string
+
+env:
+  PYTHON_VERSION: '3.11'
+
+jobs:
+  request-reviews:
+    name: Request Customer Reviews
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run review requests
+        id: reviews
+        env:
+          # Amazon SP-API credentials
+          SP_API_REFRESH_TOKEN: ${{ secrets.SP_API_REFRESH_TOKEN }}
+          LWA_APP_ID: ${{ secrets.LWA_APP_ID }}
+          LWA_CLIENT_SECRET: ${{ secrets.LWA_CLIENT_SECRET }}
+          SP_API_AWS_ACCESS_KEY: ${{ secrets.SP_API_AWS_ACCESS_KEY }}
+          SP_API_AWS_SECRET_KEY: ${{ secrets.SP_API_AWS_SECRET_KEY }}
+          SP_API_ROLE_ARN: ${{ secrets.SP_API_ROLE_ARN }}
+          AMAZON_SELLER_ID: ${{ secrets.AMAZON_SELLER_ID }}
+          # Request settings
+          DRY_RUN: ${{ github.event.inputs.dry_run || 'false' }}
+          MAX_REQUESTS: ${{ github.event.inputs.max_requests || '0' }}
+        run: |
+          python -m src.automation.review_requester
+
+      - name: Create summary
+        if: always()
+        run: |
+          echo "## Review Request Results" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "| Metric | Count |" >> $GITHUB_STEP_SUMMARY
+          echo "|--------|-------|" >> $GITHUB_STEP_SUMMARY
+          echo "| Eligible Orders | ${{ steps.reviews.outputs.eligible_orders || 'N/A' }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Requests Sent | ${{ steps.reviews.outputs.requests_sent || 'N/A' }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Successful | ${{ steps.reviews.outputs.successful || 'N/A' }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Failed | ${{ steps.reviews.outputs.failed || 'N/A' }} |" >> $GITHUB_STEP_SUMMARY
+
+      - name: Notify on failure
+        if: failure()
+        run: |
+          echo "::error::Review request automation failed. Check the logs for details."

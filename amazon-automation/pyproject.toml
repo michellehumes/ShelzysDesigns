@@ -1,0 +1,75 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "shelzys-amazon-automation"
+version = "1.0.0"
+description = "Amazon Seller automation system for Shelzy's Designs"
+readme = "README.md"
+requires-python = ">=3.9"
+license = {text = "Private"}
+authors = [
+    {name = "Shelzy's Designs"}
+]
+keywords = ["amazon", "seller", "automation", "ppc", "sp-api"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+]
+
+dependencies = [
+    "python-amazon-sp-api>=1.0.0",
+    "requests>=2.31.0",
+    "python-dateutil>=2.8.2",
+    "python-dotenv>=1.0.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.4.0",
+    "pytest-cov>=4.1.0",
+    "pytest-mock>=3.12.0",
+    "responses>=0.24.0",
+    "black>=23.12.0",
+    "isort>=5.13.0",
+    "flake8>=6.1.0",
+    "mypy>=1.7.0",
+    "types-requests>=2.31.0",
+]
+
+[project.scripts]
+shelzys-listing-sync = "src.automation.listing_manager:run_listing_sync"
+shelzys-campaign-deploy = "src.automation.campaign_manager:run_campaign_deployment"
+shelzys-bid-optimize = "src.automation.bid_optimizer:run_daily_optimization"
+shelzys-review-request = "src.automation.review_requester:run_daily_review_requests"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["src*", "config*"]
+
+[tool.black]
+line-length = 88
+target-version = ['py39', 'py310', 'py311']
+include = '\.pyi?$'
+
+[tool.isort]
+profile = "black"
+line_length = 88
+
+[tool.mypy]
+python_version = "3.11"
+warn_return_any = true
+warn_unused_configs = true
+ignore_missing_imports = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_functions = ["test_*"]
+addopts = "-v --tb=short"
