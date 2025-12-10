@@ -1,0 +1,145 @@
+{
+  "campaigns": [
+    {
+      "name": "Shelzys-Auto-Discovery",
+      "type": "sponsoredProducts",
+      "targeting_type": "auto",
+      "state": "enabled",
+      "daily_budget": 20.00,
+      "start_date": "auto",
+      "bidding_strategy": "legacyForSales",
+      "products": ["B0DGFD4LX4", "B0D92Q5R1P"],
+      "ad_groups": [
+        {
+          "name": "Auto-Discovery-AdGroup",
+          "default_bid": 0.75,
+          "auto_targeting_groups": [
+            {"type": "close-match", "bid": 0.85},
+            {"type": "loose-match", "bid": 0.65},
+            {"type": "substitutes", "bid": 0.55},
+            {"type": "complements", "bid": 0.45}
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Shelzys-Bridesmaid-Exact",
+      "type": "sponsoredProducts",
+      "targeting_type": "manual",
+      "state": "enabled",
+      "daily_budget": 15.00,
+      "start_date": "auto",
+      "bidding_strategy": "legacyForSales",
+      "products": ["B0DGFD4LX4", "B0D92Q5R1P"],
+      "ad_groups": [
+        {
+          "name": "Bridesmaid-Exact-AdGroup",
+          "default_bid": 0.95,
+          "keywords": [
+            {"text": "personalized bridesmaid water bottle", "match_type": "exact", "bid": 1.10},
+            {"text": "custom bridesmaid tumbler", "match_type": "exact", "bid": 1.05},
+            {"text": "bridesmaid proposal gift", "match_type": "exact", "bid": 1.15},
+            {"text": "bridesmaid gift ideas", "match_type": "exact", "bid": 0.95},
+            {"text": "personalized water bottle with name", "match_type": "exact", "bid": 0.90}
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Shelzys-Bachelorette-Exact",
+      "type": "sponsoredProducts",
+      "targeting_type": "manual",
+      "state": "enabled",
+      "daily_budget": 15.00,
+      "start_date": "auto",
+      "bidding_strategy": "legacyForSales",
+      "products": ["B0DGFD4LX4", "B0D92Q5R1P"],
+      "ad_groups": [
+        {
+          "name": "Bachelorette-Exact-AdGroup",
+          "default_bid": 0.90,
+          "keywords": [
+            {"text": "bachelorette party favors personalized", "match_type": "exact", "bid": 1.00},
+            {"text": "bachelorette party water bottles", "match_type": "exact", "bid": 0.95},
+            {"text": "bach party favors", "match_type": "exact", "bid": 0.85},
+            {"text": "bride tribe cups", "match_type": "exact", "bid": 0.90}
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Shelzys-Wedding-Broad",
+      "type": "sponsoredProducts",
+      "targeting_type": "manual",
+      "state": "enabled",
+      "daily_budget": 10.00,
+      "start_date": "auto",
+      "bidding_strategy": "legacyForSales",
+      "products": ["B0DGFD4LX4", "B0D92Q5R1P"],
+      "ad_groups": [
+        {
+          "name": "Wedding-Broad-AdGroup",
+          "default_bid": 0.65,
+          "keywords": [
+            {"text": "wedding party favors", "match_type": "broad", "bid": 0.70},
+            {"text": "bridal shower gifts", "match_type": "broad", "bid": 0.75},
+            {"text": "wedding gifts personalized", "match_type": "broad", "bid": 0.80}
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Shelzys-Sublimation-Blanks",
+      "type": "sponsoredProducts",
+      "targeting_type": "manual",
+      "state": "enabled",
+      "daily_budget": 10.00,
+      "start_date": "auto",
+      "bidding_strategy": "legacyForSales",
+      "products": ["B0FH3T8QHD"],
+      "ad_groups": [
+        {
+          "name": "Sublimation-Blanks-AdGroup",
+          "default_bid": 0.60,
+          "keywords": [
+            {"text": "sublimation blanks tumbler", "match_type": "exact", "bid": 0.70},
+            {"text": "sublimation water bottle blank", "match_type": "exact", "bid": 0.65},
+            {"text": "white tumbler for sublimation", "match_type": "exact", "bid": 0.60},
+            {"text": "heat press tumbler blank", "match_type": "exact", "bid": 0.65}
+          ]
+        }
+      ]
+    }
+  ],
+  "negative_keywords": {
+    "campaign_level": [
+      {"text": "free", "match_type": "negative_exact"},
+      {"text": "cheap", "match_type": "negative_exact"},
+      {"text": "wholesale lot", "match_type": "negative_phrase"},
+      {"text": "used", "match_type": "negative_exact"},
+      {"text": "refurbished", "match_type": "negative_exact"},
+      {"text": "stanley cup", "match_type": "negative_phrase"},
+      {"text": "yeti tumbler", "match_type": "negative_phrase"},
+      {"text": "hydro flask", "match_type": "negative_phrase"},
+      {"text": "contigo", "match_type": "negative_phrase"}
+    ]
+  },
+  "bid_optimization_rules": {
+    "increase_bid": {
+      "condition": "acos < 20 AND conversions >= 3",
+      "adjustment_percent": 15,
+      "max_bid": 3.00
+    },
+    "decrease_bid": {
+      "condition": "acos > 40 AND clicks >= 20",
+      "adjustment_percent": -20,
+      "min_bid": 0.20
+    },
+    "pause_keyword": {
+      "condition": "acos > 60 AND spend >= 15 AND conversions == 0"
+    },
+    "add_negative": {
+      "condition": "clicks >= 15 AND spend >= 10 AND conversions == 0"
+    }
+  }
+}
