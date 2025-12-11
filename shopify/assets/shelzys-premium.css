@@ -48,7 +48,7 @@
   --sz-border-medium: #D4CFC6;
 
   /* Typography */
-  --sz-font-display: "Cormorant Garamond", "Playfair Display", Georgia, serif;
+  --sz-font-display: "Playfair Display", Georgia, serif;
   --sz-font-body: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
   --sz-font-accent: "Montserrat", sans-serif;
 
