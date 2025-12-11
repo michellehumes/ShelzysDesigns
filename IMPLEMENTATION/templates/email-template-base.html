@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ email_title }}</title>
+    <!--[if mso]>
+    <style type="text/css">
+        body, table, td {font-family: Arial, sans-serif !important;}
+    </style>
+    <![endif]-->
+    <style>
+        /* Reset styles */
+        body { margin: 0; padding: 0; width: 100%; -webkit-text-size-adjust: 100%; }
+        table { border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt; }
+        img { border: 0; outline: none; text-decoration: none; -ms-interpolation-mode: bicubic; }
+
+        /* Brand colors */
+        .bg-sage { background-color: #8BAA88; }
+        .bg-dark-sage { background-color: #4E5F4A; }
+        .bg-warm-white { background-color: #FAF9F6; }
+        .bg-white { background-color: #FFFFFF; }
+
+        .text-sage { color: #8BAA88; }
+        .text-dark-sage { color: #4E5F4A; }
+        .text-charcoal { color: #2B2B2B; }
+        .text-gold { color: #D1C7A1; }
+        .text-white { color: #FFFFFF; }
+
+        /* Typography */
+        .font-heading { font-family: 'Playfair Display', Georgia, 'Times New Roman', serif; }
+        .font-body { font-family: 'Inter', Arial, sans-serif; }
+
+        /* Button styles */
+        .btn-primary {
+            background-color: #8BAA88;
+            color: #FFFFFF;
+            padding: 16px 32px;
+            border-radius: 999px;
+            text-decoration: none;
+            display: inline-block;
+            font-weight: 600;
+            font-family: 'Inter', Arial, sans-serif;
+        }
+
+        .btn-primary:hover {
+            background-color: #4E5F4A;
+        }
+
+        .btn-secondary {
+            background-color: #FFFFFF;
+            color: #4E5F4A;
+            border: 1px solid #8BAA88;
+            padding: 14px 30px;
+            border-radius: 999px;
+            text-decoration: none;
+            display: inline-block;
+            font-weight: 600;
+            font-family: 'Inter', Arial, sans-serif;
+        }
+
+        /* Responsive */
+        @media only screen and (max-width: 600px) {
+            .container { width: 100% !important; }
+            .content { padding: 20px !important; }
+            .product-image { width: 100% !important; }
+            .stack { display: block !important; width: 100% !important; }
+        }
+    </style>
+</head>
+<body style="margin: 0; padding: 0; background-color: #FAF9F6;">
+
+    <!-- Preheader text (hidden) -->
+    <div style="display: none; max-height: 0; overflow: hidden;">
+        {{ preheader_text }}
+    </div>
+
+    <!-- Email container -->
+    <table width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#FAF9F6">
+        <tr>
+            <td align="center" style="padding: 40px 20px;">
+
+                <!-- Main content container -->
+                <table class="container" width="600" cellpadding="0" cellspacing="0" border="0" bgcolor="#FFFFFF" style="border-radius: 16px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
+
+                    <!-- Header with logo -->
+                    <tr>
+                        <td align="center" style="padding: 30px 40px; border-bottom: 1px solid #E0E3DF;">
+                            <a href="https://shelzysdesigns.com" target="_blank">
+                                <img src="{{ logo_url }}" alt="Shelzy's Designs" width="180" style="display: block;">
+                            </a>
+                        </td>
+                    </tr>
+
+                    <!-- Main content -->
+                    <tr>
+                        <td class="content" style="padding: 40px;">
+
+                            <!-- Headline -->
+                            <h1 class="font-heading text-dark-sage" style="margin: 0 0 20px; font-size: 28px; line-height: 1.3; text-align: center;">
+                                {{ headline }}
+                            </h1>
+
+                            <!-- Subheadline -->
+                            <p class="font-body text-charcoal" style="margin: 0 0 30px; font-size: 16px; line-height: 1.6; text-align: center;">
+                                {{ subheadline }}
+                            </p>
+
+                            <!-- Primary CTA -->
+                            <table width="100%" cellpadding="0" cellspacing="0" border="0">
+                                <tr>
+                                    <td align="center" style="padding: 20px 0;">
+                                        <a href="{{ cta_url }}" class="btn-primary" style="background-color: #8BAA88; color: #FFFFFF; padding: 16px 32px; border-radius: 999px; text-decoration: none; display: inline-block; font-weight: 600;">
+                                            {{ cta_text }}
+                                        </a>
+                                    </td>
+                                </tr>
+                            </table>
+
+                            <!-- Dynamic content block -->
+                            {{ content_block }}
+
+                        </td>
+                    </tr>
+
+                    <!-- Trust badges -->
+                    <tr>
+                        <td align="center" style="padding: 20px 40px; background-color: #FAF9F6; border-top: 1px solid #E0E3DF;">
+                            <table cellpadding="0" cellspacing="0" border="0">
+                                <tr>
+                                    <td align="center" style="padding: 0 15px;">
+                                        <span class="font-body text-charcoal" style="font-size: 13px;">Free Shipping $75+</span>
+                                    </td>
+                                    <td align="center" style="padding: 0 15px;">
+                                        <span class="font-body text-charcoal" style="font-size: 13px;">Permanent Sublimation</span>
+                                    </td>
+                                    <td align="center" style="padding: 0 15px;">
+                                        <span class="font-body text-charcoal" style="font-size: 13px;">4.9 Stars</span>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+
+                    <!-- Footer -->
+                    <tr>
+                        <td style="padding: 30px 40px; background-color: #4E5F4A;">
+
+                            <!-- Social links -->
+                            <table width="100%" cellpadding="0" cellspacing="0" border="0">
+                                <tr>
+                                    <td align="center" style="padding-bottom: 20px;">
+                                        <a href="{{ instagram_url }}" style="text-decoration: none; padding: 0 10px;">
+                                            <img src="{{ instagram_icon }}" alt="Instagram" width="24">
+                                        </a>
+                                        <a href="{{ pinterest_url }}" style="text-decoration: none; padding: 0 10px;">
+                                            <img src="{{ pinterest_icon }}" alt="Pinterest" width="24">
+                                        </a>
+                                        <a href="{{ facebook_url }}" style="text-decoration: none; padding: 0 10px;">
+                                            <img src="{{ facebook_icon }}" alt="Facebook" width="24">
+                                        </a>
+                                    </td>
+                                </tr>
+                            </table>
+
+                            <!-- Footer text -->
+                            <p class="font-body text-white" style="margin: 0 0 10px; font-size: 13px; text-align: center; opacity: 0.9;">
+                                Shelzy's Designs | Encinitas, CA
+                            </p>
+                            <p class="font-body text-white" style="margin: 0 0 15px; font-size: 13px; text-align: center; opacity: 0.9;">
+                                <a href="https://shelzysdesigns.com" style="color: #D1C7A1; text-decoration: none;">shelzysdesigns.com</a>
+                            </p>
+
+                            <!-- Unsubscribe -->
+                            <p class="font-body text-white" style="margin: 0; font-size: 11px; text-align: center; opacity: 0.7;">
+                                <a href="{{ unsubscribe_url }}" style="color: #FFFFFF; text-decoration: underline;">Unsubscribe</a> |
+                                <a href="{{ preferences_url }}" style="color: #FFFFFF; text-decoration: underline;">Email Preferences</a>
+                            </p>
+
+                        </td>
+                    </tr>
+
+                </table>
+
+            </td>
+        </tr>
+    </table>
+
+</body>
+</html>
