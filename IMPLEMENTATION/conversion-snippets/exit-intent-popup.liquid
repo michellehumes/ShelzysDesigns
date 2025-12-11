@@ -1,0 +1,473 @@
+{%- comment -%}
+  Shelzy's Designs - Exit Intent Popup
+
+  This popup triggers when the user moves their cursor toward the browser's close/back button.
+  On mobile, it triggers after X seconds of inactivity or scroll-up.
+
+  Features:
+  - Exit intent detection
+  - Cookie to prevent showing again for 7 days
+  - Mobile-friendly fallback
+  - Integrates with Klaviyo for email capture
+{%- endcomment -%}
+
+{%- unless template contains 'cart' or template contains 'checkout' -%}
+
+<div id="sz-exit-popup" class="sz-exit-popup" role="dialog" aria-labelledby="sz-exit-title" aria-hidden="true">
+  <div class="sz-exit-popup__overlay"></div>
+  <div class="sz-exit-popup__content">
+
+    <button class="sz-exit-popup__close" aria-label="Close popup">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M18 6L6 18M6 6l12 12"/>
+      </svg>
+    </button>
+
+    <div class="sz-exit-popup__body">
+      <div class="sz-exit-popup__image">
+        <img src="{{ 'exit-popup-image.jpg' | asset_url }}" alt="Personalized bottles" loading="lazy">
+      </div>
+
+      <div class="sz-exit-popup__text">
+        <h2 id="sz-exit-title" class="sz-exit-popup__title">Wait! Don't leave empty-handed</h2>
+        <p class="sz-exit-popup__subtitle">Get <strong>10% off</strong> your first order when you sign up for our email list.</p>
+
+        <form id="sz-exit-form" class="sz-exit-popup__form klaviyo-form">
+          <input type="hidden" name="g" value="LIST_ID">
+          <input type="email" name="email" placeholder="Enter your email" required class="sz-exit-popup__input">
+          <button type="submit" class="sz-exit-popup__button">Unlock 10% Off</button>
+        </form>
+
+        <p class="sz-exit-popup__disclaimer">No spam, ever. Unsubscribe anytime.</p>
+
+        <button class="sz-exit-popup__skip">No thanks, I'll pay full price</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<style>
+  .sz-exit-popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .sz-exit-popup.is-visible {
+    display: flex;
+    opacity: 1;
+  }
+
+  .sz-exit-popup__overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(4px);
+  }
+
+  .sz-exit-popup__content {
+    position: relative;
+    background: #fff;
+    border-radius: 20px;
+    max-width: 680px;
+    width: 90%;
+    max-height: 90vh;
+    overflow: hidden;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    animation: sz-popup-slide-up 0.4s ease-out;
+  }
+
+  @keyframes sz-popup-slide-up {
+    from {
+      transform: translateY(20px);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+
+  .sz-exit-popup__close {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: rgba(255, 255, 255, 0.9);
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 2;
+    color: #4E5F4A;
+    transition: background 0.2s, transform 0.2s;
+  }
+
+  .sz-exit-popup__close:hover {
+    background: #fff;
+    transform: scale(1.1);
+  }
+
+  .sz-exit-popup__body {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .sz-exit-popup__image {
+    position: relative;
+  }
+
+  .sz-exit-popup__image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .sz-exit-popup__text {
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .sz-exit-popup__title {
+    font-family: var(--sz-font-heading, 'Playfair Display', serif);
+    font-size: 28px;
+    color: #4E5F4A;
+    margin: 0 0 12px;
+    line-height: 1.2;
+  }
+
+  .sz-exit-popup__subtitle {
+    font-size: 16px;
+    color: #666;
+    margin: 0 0 25px;
+    line-height: 1.5;
+  }
+
+  .sz-exit-popup__subtitle strong {
+    color: #8BAA88;
+  }
+
+  .sz-exit-popup__form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .sz-exit-popup__input {
+    width: 100%;
+    padding: 14px 18px;
+    border: 1px solid #E0E3DF;
+    border-radius: 999px;
+    font-size: 15px;
+    font-family: inherit;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+
+  .sz-exit-popup__input:focus {
+    outline: none;
+    border-color: #8BAA88;
+    box-shadow: 0 0 0 3px rgba(139, 170, 136, 0.15);
+  }
+
+  .sz-exit-popup__button {
+    width: 100%;
+    padding: 14px 24px;
+    background: #8BAA88;
+    color: #fff;
+    border: none;
+    border-radius: 999px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.2s;
+  }
+
+  .sz-exit-popup__button:hover {
+    background: #4E5F4A;
+    transform: translateY(-1px);
+  }
+
+  .sz-exit-popup__disclaimer {
+    font-size: 12px;
+    color: #999;
+    margin: 15px 0 0;
+    text-align: center;
+  }
+
+  .sz-exit-popup__skip {
+    background: none;
+    border: none;
+    color: #999;
+    font-size: 13px;
+    cursor: pointer;
+    margin-top: 15px;
+    text-decoration: underline;
+    transition: color 0.2s;
+  }
+
+  .sz-exit-popup__skip:hover {
+    color: #666;
+  }
+
+  /* Success state */
+  .sz-exit-popup__success {
+    text-align: center;
+    padding: 40px;
+  }
+
+  .sz-exit-popup__success-icon {
+    width: 60px;
+    height: 60px;
+    background: #8BAA88;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px;
+  }
+
+  .sz-exit-popup__success-icon svg {
+    width: 30px;
+    height: 30px;
+    color: #fff;
+  }
+
+  .sz-exit-popup__code {
+    background: #FAF9F6;
+    padding: 15px 25px;
+    border-radius: 10px;
+    font-size: 24px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    color: #8BAA88;
+    display: inline-block;
+    margin: 15px 0;
+  }
+
+  /* Mobile styles */
+  @media (max-width: 640px) {
+    .sz-exit-popup__content {
+      width: 95%;
+      max-width: 400px;
+    }
+
+    .sz-exit-popup__body {
+      grid-template-columns: 1fr;
+    }
+
+    .sz-exit-popup__image {
+      height: 150px;
+    }
+
+    .sz-exit-popup__text {
+      padding: 25px;
+    }
+
+    .sz-exit-popup__title {
+      font-size: 22px;
+    }
+  }
+</style>
+
+<script>
+(function() {
+  const COOKIE_NAME = 'sz_exit_popup_shown';
+  const COOKIE_DAYS = 7;
+
+  // Check if popup should be shown
+  function shouldShowPopup() {
+    // Don't show if cookie exists
+    if (document.cookie.includes(COOKIE_NAME)) return false;
+
+    // Don't show to logged in customers who already subscribed
+    if (window.__st && window.__st.cid) return false;
+
+    return true;
+  }
+
+  // Set cookie
+  function setCookie() {
+    const date = new Date();
+    date.setTime(date.getTime() + (COOKIE_DAYS * 24 * 60 * 60 * 1000));
+    document.cookie = `${COOKIE_NAME}=true; expires=${date.toUTCString()}; path=/`;
+  }
+
+  // Show popup
+  function showPopup() {
+    if (!shouldShowPopup()) return;
+
+    const popup = document.getElementById('sz-exit-popup');
+    if (!popup) return;
+
+    popup.classList.add('is-visible');
+    popup.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+
+    // Track popup shown
+    if (typeof gtag === 'function') {
+      gtag('event', 'popup_shown', { popup_type: 'exit_intent' });
+    }
+  }
+
+  // Hide popup
+  function hidePopup() {
+    const popup = document.getElementById('sz-exit-popup');
+    if (!popup) return;
+
+    popup.classList.remove('is-visible');
+    popup.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+    setCookie();
+  }
+
+  // Desktop: Exit intent detection
+  function initDesktopExitIntent() {
+    let triggered = false;
+
+    document.addEventListener('mouseout', function(e) {
+      if (triggered) return;
+
+      // Check if mouse left through top of viewport
+      if (e.clientY < 10 && e.relatedTarget === null) {
+        triggered = true;
+        showPopup();
+      }
+    });
+  }
+
+  // Mobile: Show after scroll up or inactivity
+  function initMobileExitIntent() {
+    let lastScrollY = window.scrollY;
+    let scrollUpCount = 0;
+    let triggered = false;
+
+    window.addEventListener('scroll', function() {
+      if (triggered) return;
+
+      const currentScrollY = window.scrollY;
+
+      // Detect scroll up (potential exit behavior)
+      if (currentScrollY < lastScrollY && currentScrollY < 200) {
+        scrollUpCount++;
+
+        if (scrollUpCount >= 3) {
+          triggered = true;
+          setTimeout(showPopup, 500);
+        }
+      } else {
+        scrollUpCount = 0;
+      }
+
+      lastScrollY = currentScrollY;
+    });
+  }
+
+  // Form submission
+  function initForm() {
+    const form = document.getElementById('sz-exit-form');
+    if (!form) return;
+
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const email = form.querySelector('input[name="email"]').value;
+
+      // Submit to Klaviyo (adjust based on your Klaviyo setup)
+      if (typeof _learnq !== 'undefined') {
+        _learnq.push(['identify', { '$email': email }]);
+        _learnq.push(['track', 'Newsletter Signup', { source: 'exit_popup' }]);
+      }
+
+      // Track signup
+      if (typeof gtag === 'function') {
+        gtag('event', 'sign_up', { method: 'exit_popup' });
+      }
+
+      // Show success message
+      const textSection = form.closest('.sz-exit-popup__text');
+      textSection.innerHTML = `
+        <div class="sz-exit-popup__success">
+          <div class="sz-exit-popup__success-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M5 13l4 4L19 7"/>
+            </svg>
+          </div>
+          <h3 class="sz-exit-popup__title">You're in! 🎉</h3>
+          <p class="sz-exit-popup__subtitle">Your discount code is:</p>
+          <span class="sz-exit-popup__code">WELCOME10</span>
+          <p class="sz-exit-popup__subtitle">Check your inbox for a welcome surprise!</p>
+          <a href="/collections/best-sellers" class="sz-exit-popup__button" style="display: inline-block; text-decoration: none; margin-top: 15px;">
+            Shop Now & Save 10%
+          </a>
+        </div>
+      `;
+    });
+  }
+
+  // Event listeners
+  function initEventListeners() {
+    const popup = document.getElementById('sz-exit-popup');
+    if (!popup) return;
+
+    // Close button
+    popup.querySelector('.sz-exit-popup__close').addEventListener('click', hidePopup);
+
+    // Overlay click
+    popup.querySelector('.sz-exit-popup__overlay').addEventListener('click', hidePopup);
+
+    // Skip button
+    const skipBtn = popup.querySelector('.sz-exit-popup__skip');
+    if (skipBtn) {
+      skipBtn.addEventListener('click', hidePopup);
+    }
+
+    // Escape key
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') hidePopup();
+    });
+  }
+
+  // Initialize
+  function init() {
+    if (!shouldShowPopup()) return;
+
+    // Detect device type
+    const isMobile = window.matchMedia('(max-width: 768px)').matches;
+
+    if (isMobile) {
+      initMobileExitIntent();
+    } else {
+      initDesktopExitIntent();
+    }
+
+    initForm();
+    initEventListeners();
+  }
+
+  // Run on DOM ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();
+</script>
+
+{%- endunless -%}

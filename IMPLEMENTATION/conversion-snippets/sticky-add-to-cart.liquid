@@ -1,0 +1,282 @@
+{%- comment -%}
+  Shelzy's Designs - Sticky Add to Cart Bar (Mobile)
+
+  Shows a fixed bottom bar with product info and Add to Cart when user scrolls past the main ATC button.
+  Mobile-focused but works on desktop too.
+
+  Usage: Include in product template after the product form
+{%- endcomment -%}
+
+{%- if product -%}
+<div id="sz-sticky-atc" class="sz-sticky-atc" data-product-available="{{ product.available }}">
+  <div class="sz-sticky-atc__inner">
+
+    <div class="sz-sticky-atc__info">
+      <img
+        src="{{ product.featured_image | image_url: width: 100 }}"
+        alt="{{ product.title | escape }}"
+        class="sz-sticky-atc__image"
+        width="50"
+        height="50"
+        loading="lazy"
+      >
+      <div class="sz-sticky-atc__details">
+        <p class="sz-sticky-atc__title">{{ product.title | truncate: 30 }}</p>
+        <p class="sz-sticky-atc__price">
+          {%- if product.compare_at_price > product.price -%}
+            <span class="sz-sticky-atc__price--compare">{{ product.compare_at_price | money }}</span>
+          {%- endif -%}
+          <span class="sz-sticky-atc__price--current">{{ product.price | money }}</span>
+        </p>
+      </div>
+    </div>
+
+    <button
+      type="button"
+      class="sz-sticky-atc__button"
+      data-sticky-atc-button
+      {%- unless product.available %} disabled{% endunless -%}
+    >
+      {%- if product.available -%}
+        Add to Cart
+      {%- else -%}
+        Sold Out
+      {%- endif -%}
+    </button>
+
+  </div>
+
+  {%- comment -%} Free shipping progress {%- endcomment -%}
+  <div class="sz-sticky-atc__shipping">
+    <span data-sticky-shipping-message>Free shipping on orders $75+</span>
+  </div>
+</div>
+
+<style>
+  .sz-sticky-atc {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 999;
+    background: #fff;
+    border-top: 1px solid #E0E3DF;
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.1);
+    transform: translateY(100%);
+    transition: transform 0.3s ease;
+  }
+
+  .sz-sticky-atc.is-visible {
+    transform: translateY(0);
+  }
+
+  .sz-sticky-atc__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 12px 16px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .sz-sticky-atc__info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex: 1;
+    min-width: 0;
+  }
+
+  .sz-sticky-atc__image {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 8px;
+    flex-shrink: 0;
+  }
+
+  .sz-sticky-atc__details {
+    min-width: 0;
+  }
+
+  .sz-sticky-atc__title {
+    font-size: 14px;
+    font-weight: 600;
+    color: #4E5F4A;
+    margin: 0 0 2px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .sz-sticky-atc__price {
+    font-size: 14px;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .sz-sticky-atc__price--compare {
+    text-decoration: line-through;
+    color: #999;
+    font-size: 12px;
+  }
+
+  .sz-sticky-atc__price--current {
+    font-weight: 600;
+    color: #2B2B2B;
+  }
+
+  .sz-sticky-atc__button {
+    flex-shrink: 0;
+    padding: 14px 24px;
+    background: #8BAA88;
+    color: #fff;
+    border: none;
+    border-radius: 999px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.1s;
+    white-space: nowrap;
+  }
+
+  .sz-sticky-atc__button:hover:not(:disabled) {
+    background: #4E5F4A;
+  }
+
+  .sz-sticky-atc__button:active:not(:disabled) {
+    transform: scale(0.98);
+  }
+
+  .sz-sticky-atc__button:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+  }
+
+  .sz-sticky-atc__shipping {
+    background: #FAF9F6;
+    padding: 8px 16px;
+    text-align: center;
+    font-size: 12px;
+    color: #666;
+  }
+
+  .sz-sticky-atc__shipping span {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  /* Hide on desktop by default, show via JS if needed */
+  @media (min-width: 769px) {
+    .sz-sticky-atc {
+      display: none;
+    }
+
+    .sz-sticky-atc.show-desktop {
+      display: block;
+    }
+  }
+
+  /* Adjust padding for safe area on iPhones */
+  @supports (padding-bottom: env(safe-area-inset-bottom)) {
+    .sz-sticky-atc__shipping {
+      padding-bottom: calc(8px + env(safe-area-inset-bottom));
+    }
+  }
+</style>
+
+<script>
+(function() {
+  const stickyBar = document.getElementById('sz-sticky-atc');
+  if (!stickyBar) return;
+
+  // Find the main Add to Cart button to track
+  const mainATCButton = document.querySelector('[data-add-to-cart], .product-form__cart-submit, [name="add"]');
+  if (!mainATCButton) return;
+
+  const stickyButton = stickyBar.querySelector('[data-sticky-atc-button]');
+  let isVisible = false;
+
+  // Show/hide based on scroll position
+  function updateVisibility() {
+    if (!mainATCButton) return;
+
+    const buttonRect = mainATCButton.getBoundingClientRect();
+    const shouldShow = buttonRect.bottom < 0; // Main button scrolled out of view
+
+    if (shouldShow && !isVisible) {
+      stickyBar.classList.add('is-visible');
+      isVisible = true;
+    } else if (!shouldShow && isVisible) {
+      stickyBar.classList.remove('is-visible');
+      isVisible = false;
+    }
+  }
+
+  // Handle sticky button click
+  function handleStickyClick() {
+    // Scroll to main form or trigger the main ATC button
+    if (mainATCButton) {
+      // Option 1: Scroll to main button
+      mainATCButton.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+      // Option 2: Or trigger the main button click
+      // mainATCButton.click();
+    }
+  }
+
+  // Update shipping message based on cart
+  function updateShippingMessage() {
+    const shippingEl = stickyBar.querySelector('[data-sticky-shipping-message]');
+    if (!shippingEl) return;
+
+    // Get cart total (would need to be updated via AJAX in real implementation)
+    fetch('/cart.js')
+      .then(r => r.json())
+      .then(cart => {
+        const threshold = 7500; // $75 in cents
+        const total = cart.total_price;
+        const remaining = threshold - total;
+
+        if (remaining <= 0) {
+          shippingEl.textContent = '✓ You qualify for FREE shipping!';
+          shippingEl.style.color = '#8BAA88';
+        } else {
+          const remainingFormatted = (remaining / 100).toFixed(2);
+          shippingEl.textContent = `Add $${remainingFormatted} more for FREE shipping`;
+        }
+      })
+      .catch(() => {
+        shippingEl.textContent = 'Free shipping on orders $75+';
+      });
+  }
+
+  // Throttled scroll handler
+  let ticking = false;
+  function onScroll() {
+    if (!ticking) {
+      requestAnimationFrame(() => {
+        updateVisibility();
+        ticking = false;
+      });
+      ticking = true;
+    }
+  }
+
+  // Event listeners
+  window.addEventListener('scroll', onScroll, { passive: true });
+  stickyButton.addEventListener('click', handleStickyClick);
+
+  // Initialize
+  updateVisibility();
+  updateShippingMessage();
+
+  // Update shipping on cart change
+  document.addEventListener('cart:updated', updateShippingMessage);
+})();
+</script>
+{%- endif -%}
