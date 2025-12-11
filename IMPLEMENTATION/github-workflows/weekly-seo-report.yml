@@ -1,0 +1,168 @@
+# =============================================================================
+# Shelzy's Designs - Weekly SEO Report
+# =============================================================================
+# Generates weekly SEO metrics report
+# Tracks rankings, traffic, and technical SEO issues
+# =============================================================================
+
+name: Weekly SEO Report
+
+on:
+  schedule:
+    # Run every Monday at 8 AM EST (1 PM UTC)
+    - cron: '0 13 * * 1'
+  workflow_dispatch:
+
+jobs:
+  generate-report:
+    name: Generate SEO Report
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Check robots.txt
+        id: robots
+        run: |
+          ROBOTS=$(curl -s https://shelzysdesigns.com/robots.txt)
+          if [ -z "$ROBOTS" ]; then
+            echo "status=missing" >> $GITHUB_OUTPUT
+            echo "::warning::robots.txt is missing or empty"
+          else
+            echo "status=ok" >> $GITHUB_OUTPUT
+            echo "robots.txt found"
+          fi
+
+      - name: Check sitemap
+        id: sitemap
+        run: |
+          SITEMAP=$(curl -s -o /dev/null -w "%{http_code}" https://shelzysdesigns.com/sitemap.xml)
+          echo "status=$SITEMAP" >> $GITHUB_OUTPUT
+          if [ "$SITEMAP" != "200" ]; then
+            echo "::warning::Sitemap returned HTTP $SITEMAP"
+          fi
+
+      - name: Check meta tags on key pages
+        id: meta
+        run: |
+          PAGES=(
+            "/"
+            "/collections/all"
+            "/pages/about"
+            "/pages/faq"
+            "/pages/contact"
+          )
+
+          ISSUES=""
+
+          for page in "${PAGES[@]}"; do
+            URL="https://shelzysdesigns.com${page}"
+            HTML=$(curl -s "$URL" 2>/dev/null || echo "")
+
+            if [ -z "$HTML" ]; then
+              ISSUES="$ISSUES\n- $page: Page not accessible"
+              continue
+            fi
+
+            # Check for title tag
+            TITLE=$(echo "$HTML" | grep -oP '(?<=<title>)[^<]+' | head -1)
+            if [ -z "$TITLE" ]; then
+              ISSUES="$ISSUES\n- $page: Missing title tag"
+            elif [ ${#TITLE} -gt 60 ]; then
+              ISSUES="$ISSUES\n- $page: Title too long (${#TITLE} chars)"
+            fi
+
+            # Check for meta description
+            META_DESC=$(echo "$HTML" | grep -oP '(?<=<meta name="description" content=")[^"]+' | head -1)
+            if [ -z "$META_DESC" ]; then
+              ISSUES="$ISSUES\n- $page: Missing meta description"
+            elif [ ${#META_DESC} -gt 160 ]; then
+              ISSUES="$ISSUES\n- $page: Meta description too long (${#META_DESC} chars)"
+            fi
+          done
+
+          echo -e "Issues found:$ISSUES"
+          echo "issues<<EOF" >> $GITHUB_OUTPUT
+          echo -e "$ISSUES" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
+      - name: Check page speed insights
+        id: pagespeed
+        env:
+          PAGESPEED_API_KEY: ${{ secrets.PAGESPEED_API_KEY }}
+        if: env.PAGESPEED_API_KEY != ''
+        run: |
+          URL="https://shelzysdesigns.com"
+          API_URL="https://www.googleapis.com/pagespeedonline/v5/runPagespeed?url=$URL&key=$PAGESPEED_API_KEY&category=performance&category=seo"
+
+          RESULT=$(curl -s "$API_URL")
+
+          PERFORMANCE=$(echo "$RESULT" | jq -r '.lighthouseResult.categories.performance.score * 100 | floor')
+          SEO=$(echo "$RESULT" | jq -r '.lighthouseResult.categories.seo.score * 100 | floor')
+
+          echo "performance=$PERFORMANCE" >> $GITHUB_OUTPUT
+          echo "seo=$SEO" >> $GITHUB_OUTPUT
+
+          echo "Performance: $PERFORMANCE"
+          echo "SEO Score: $SEO"
+
+      - name: Generate report
+        id: report
+        run: |
+          DATE=$(date +%Y-%m-%d)
+          REPORT_FILE="seo-reports/report-$DATE.md"
+          mkdir -p seo-reports
+
+          cat > "$REPORT_FILE" << EOF
+          # SEO Report - $DATE
+
+          ## Technical SEO Status
+
+          | Check | Status |
+          |-------|--------|
+          | robots.txt | ${{ steps.robots.outputs.status }} |
+          | sitemap.xml | HTTP ${{ steps.sitemap.outputs.status }} |
+
+          ## Page Speed Scores
+
+          | Metric | Score |
+          |--------|-------|
+          | Performance | ${{ steps.pagespeed.outputs.performance || 'N/A' }} |
+          | SEO | ${{ steps.pagespeed.outputs.seo || 'N/A' }} |
+
+          ## Issues Found
+
+          ${{ steps.meta.outputs.issues || 'No issues found' }}
+
+          ## Recommendations
+
+          1. Ensure all pages have unique, descriptive title tags under 60 characters
+          2. Add meta descriptions to all pages (150-160 characters)
+          3. Monitor Core Web Vitals in Search Console
+          4. Continue publishing blog content for long-tail keywords
+
+          ---
+          *Generated automatically by GitHub Actions*
+          EOF
+
+          echo "report_file=$REPORT_FILE" >> $GITHUB_OUTPUT
+          cat "$REPORT_FILE"
+
+      - name: Commit report
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add seo-reports/
+          git commit -m "Add weekly SEO report - $(date +%Y-%m-%d)" || echo "No changes to commit"
+          git push || echo "Push failed - may need permissions"
+
+      - name: Upload report artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: seo-report-${{ github.run_id }}
+          path: seo-reports/
