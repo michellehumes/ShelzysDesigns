@@ -1,0 +1,315 @@
+{%- comment -%}
+  SHELZY'S DESIGNS - ALL-IN-ONE SNIPPET
+
+  This single file contains everything you need.
+  Add this ONE snippet to your Impulse theme.
+
+  1. Go to Shopify Admin > Themes > Edit Code
+  2. Snippets > Add new snippet > Name it "shelzys-all-in-one"
+  3. Paste this entire file
+  4. Save
+  5. In layout/theme.liquid, add before </head>:
+     {% render 'shelzys-all-in-one' %}
+{%- endcomment -%}
+
+{%- comment -%} ══════════════════════════════════════════════════════════════
+   FONTS - Playfair Display (headings) + Inter (body)
+   ══════════════════════════════════════════════════════════════ {%- endcomment -%}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+
+{%- comment -%} ══════════════════════════════════════════════════════════════
+   CSS VARIABLES & BASE STYLES
+   ══════════════════════════════════════════════════════════════ {%- endcomment -%}
+<style>
+:root {
+  /* Brand Colors */
+  --sz-primary: #8BAA88;
+  --sz-primary-hover: #4E5F4A;
+  --sz-primary-dark: #4E5F4A;
+  --sz-primary-light: #A6B8A0;
+
+  /* Neutrals */
+  --sz-white: #FFFFFF;
+  --sz-warm-white: #FAF9F6;
+  --sz-beige: #F7F4EF;
+  --sz-charcoal: #2B2B2B;
+  --sz-soft-black: #111111;
+  --sz-gray: #7A7A7A;
+
+  /* Accents */
+  --sz-gold: #D1C7A1;
+  --sz-blush: #F8D9C5;
+  --sz-success: #4E5F4A;
+  --sz-error: #DC2626;
+
+  /* Typography - 2 fonts only */
+  --sz-font-heading: 'Playfair Display', Georgia, serif;
+  --sz-font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+
+  /* Sizes */
+  --sz-text-sm: 14px;
+  --sz-text-base: 16px;
+  --sz-text-lg: 18px;
+  --sz-text-xl: 20px;
+  --sz-text-2xl: 24px;
+  --sz-text-3xl: 32px;
+
+  /* Spacing */
+  --sz-space-sm: 8px;
+  --sz-space-md: 16px;
+  --sz-space-lg: 24px;
+  --sz-space-xl: 32px;
+
+  /* Borders & Shadows */
+  --sz-radius-sm: 4px;
+  --sz-radius-md: 8px;
+  --sz-border-light: #E0E3DF;
+  --sz-shadow-md: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Base Typography */
+.sz-heading {
+  font-family: var(--sz-font-heading);
+  font-weight: 600;
+  line-height: 1.2;
+  color: var(--sz-soft-black);
+}
+
+.sz-body {
+  font-family: var(--sz-font-body);
+  font-size: var(--sz-text-base);
+  line-height: 1.6;
+  color: var(--sz-charcoal);
+}
+
+/* Buttons */
+.sz-btn {
+  display: inline-block;
+  padding: 14px 28px;
+  font-family: var(--sz-font-body);
+  font-weight: 600;
+  font-size: var(--sz-text-base);
+  text-decoration: none;
+  border-radius: var(--sz-radius-sm);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: none;
+}
+
+.sz-btn-primary {
+  background: var(--sz-primary);
+  color: var(--sz-white);
+}
+
+.sz-btn-primary:hover {
+  background: var(--sz-primary-hover);
+  transform: translateY(-2px);
+}
+
+.sz-btn-secondary {
+  background: transparent;
+  color: var(--sz-soft-black);
+  border: 2px solid var(--sz-soft-black);
+}
+
+.sz-btn-secondary:hover {
+  background: var(--sz-soft-black);
+  color: var(--sz-white);
+}
+</style>
+
+{%- comment -%} ══════════════════════════════════════════════════════════════
+   FREE SHIPPING BAR
+   ══════════════════════════════════════════════════════════════ {%- endcomment -%}
+{% assign free_shipping_threshold = 7500 %}
+{% assign cart_total = cart.total_price %}
+{% assign amount_remaining = free_shipping_threshold | minus: cart_total %}
+
+<div class="sz-shipping-bar" id="szShippingBar">
+  <div class="sz-shipping-inner">
+    {% if cart_total >= free_shipping_threshold %}
+      <span class="sz-shipping-text">🎉 You've unlocked <strong>FREE SHIPPING!</strong></span>
+    {% else %}
+      <span class="sz-shipping-text">
+        Free shipping on orders $75+ — You're <strong>{{ amount_remaining | money }}</strong> away!
+      </span>
+      <div class="sz-shipping-progress">
+        <div class="sz-shipping-fill" style="width: {{ cart_total | times: 100 | divided_by: free_shipping_threshold }}%;"></div>
+      </div>
+    {% endif %}
+  </div>
+</div>
+
+<style>
+.sz-shipping-bar {
+  background: var(--sz-beige);
+  padding: 10px 16px;
+  text-align: center;
+}
+
+.sz-shipping-inner {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.sz-shipping-text {
+  font-family: var(--sz-font-body);
+  font-size: 14px;
+  color: var(--sz-charcoal);
+}
+
+.sz-shipping-progress {
+  height: 4px;
+  background: rgba(0,0,0,0.1);
+  border-radius: 2px;
+  margin-top: 8px;
+  overflow: hidden;
+}
+
+.sz-shipping-fill {
+  height: 100%;
+  background: var(--sz-primary);
+  border-radius: 2px;
+  transition: width 0.5s ease;
+}
+</style>
+
+{%- comment -%} ══════════════════════════════════════════════════════════════
+   ANNOUNCEMENT BAR
+   ══════════════════════════════════════════════════════════════ {%- endcomment -%}
+<div class="sz-announcement">
+  <div class="sz-announcement-inner">
+    <span class="sz-announcement-text">
+      ✨ Premium Sublimation Printing — No Peeling, No Fading, Ever ✨
+    </span>
+  </div>
+</div>
+
+<style>
+.sz-announcement {
+  background: var(--sz-primary-dark);
+  color: var(--sz-white);
+  padding: 10px 16px;
+  text-align: center;
+}
+
+.sz-announcement-text {
+  font-family: var(--sz-font-body);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+
+/* Hide Impulse's default announcement bar */
+.announcement-bar:not(.sz-announcement),
+[class*="announcement"]:not(.sz-announcement):not(.sz-announcement-inner):not(.sz-announcement-text) {
+  display: none !important;
+}
+</style>
+
+{%- comment -%} ══════════════════════════════════════════════════════════════
+   TRUST BADGES (for product pages)
+   ══════════════════════════════════════════════════════════════ {%- endcomment -%}
+<style>
+.sz-trust-badges {
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+  flex-wrap: wrap;
+  padding: 20px 0;
+  border-top: 1px solid var(--sz-border-light);
+  border-bottom: 1px solid var(--sz-border-light);
+  margin: 20px 0;
+}
+
+.sz-trust-badge {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--sz-font-body);
+  font-size: 13px;
+  color: var(--sz-charcoal);
+}
+
+.sz-trust-badge svg {
+  width: 20px;
+  height: 20px;
+  color: var(--sz-primary);
+}
+</style>
+
+{%- comment -%} ══════════════════════════════════════════════════════════════
+   PRODUCT PAGE ENHANCEMENTS
+   ══════════════════════════════════════════════════════════════ {%- endcomment -%}
+<style>
+/* Product title styling */
+.product__title,
+.product-single__title {
+  font-family: var(--sz-font-heading) !important;
+  font-weight: 600 !important;
+}
+
+/* Product price styling */
+.product__price,
+.price {
+  font-family: var(--sz-font-body) !important;
+  font-weight: 600 !important;
+}
+
+/* Add to cart button */
+.product-form__cart-submit,
+.btn--add-to-cart,
+.add-to-cart {
+  background: var(--sz-primary) !important;
+  border-color: var(--sz-primary) !important;
+  font-family: var(--sz-font-body) !important;
+  font-weight: 600 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.05em !important;
+}
+
+.product-form__cart-submit:hover,
+.btn--add-to-cart:hover,
+.add-to-cart:hover {
+  background: var(--sz-primary-hover) !important;
+  border-color: var(--sz-primary-hover) !important;
+}
+
+/* Section headings */
+.section-header__title,
+.collection__title,
+h2.h1 {
+  font-family: var(--sz-font-heading) !important;
+}
+</style>
+
+{%- comment -%} ══════════════════════════════════════════════════════════════
+   WHY SUBLIMATION CALLOUT (add to product pages)
+   ══════════════════════════════════════════════════════════════ {%- endcomment -%}
+<style>
+.sz-sublimation-callout {
+  background: var(--sz-beige);
+  border-left: 4px solid var(--sz-primary);
+  padding: 16px 20px;
+  margin: 24px 0;
+  border-radius: var(--sz-radius-sm);
+}
+
+.sz-sublimation-callout h4 {
+  font-family: var(--sz-font-heading);
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--sz-primary-dark);
+  margin: 0 0 8px 0;
+}
+
+.sz-sublimation-callout p {
+  font-family: var(--sz-font-body);
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--sz-charcoal);
+  margin: 0;
+}
+</style>
