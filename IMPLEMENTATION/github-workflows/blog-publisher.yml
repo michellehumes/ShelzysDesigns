@@ -1,0 +1,191 @@
+# =============================================================================
+# Shelzy's Designs - Blog Post Publisher
+# =============================================================================
+# Automated workflow to publish blog posts to Shopify
+# Triggered manually with post selection or on schedule
+# =============================================================================
+
+name: Publish Blog Post
+
+on:
+  workflow_dispatch:
+    inputs:
+      post_file:
+        description: 'Blog post file to publish (from amazon-affiliate/blog/drafts/)'
+        required: true
+        type: choice
+        options:
+          - BLOG_POST_fitness-wellness.md
+          - BLOG_POST_travel-essentials.md
+          - BLOG_POST_dog-mom-essentials.md
+          - BLOG_POST_amazon-organization-finds.md
+          - BLOG_POST_home-office-must-haves.md
+          - BLOG_POST_amazon-beauty-under-30.md
+      publish_date:
+        description: 'Publish date (YYYY-MM-DD) or "now"'
+        required: false
+        default: 'now'
+      add_affiliate_links:
+        description: 'Process Amazon affiliate links'
+        type: boolean
+        default: true
+
+env:
+  AMAZON_ASSOCIATE_TAG: ${{ secrets.AMAZON_ASSOCIATE_TAG }}
+
+jobs:
+  validate:
+    name: Validate Post
+    runs-on: ubuntu-latest
+    outputs:
+      post_exists: ${{ steps.check.outputs.exists }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check post file exists
+        id: check
+        run: |
+          POST_PATH="amazon-affiliate/blog/drafts/${{ inputs.post_file }}"
+          if [ -f "$POST_PATH" ]; then
+            echo "exists=true" >> $GITHUB_OUTPUT
+            echo "Post found: $POST_PATH"
+          else
+            echo "exists=false" >> $GITHUB_OUTPUT
+            echo "::error::Post file not found: $POST_PATH"
+            exit 1
+          fi
+
+  process:
+    name: Process Blog Post
+    runs-on: ubuntu-latest
+    needs: validate
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Read and parse markdown
+        id: parse
+        run: |
+          POST_PATH="amazon-affiliate/blog/drafts/${{ inputs.post_file }}"
+
+          # Extract title from first H1
+          TITLE=$(grep -m1 "^# " "$POST_PATH" | sed 's/^# //')
+          echo "title=$TITLE" >> $GITHUB_OUTPUT
+
+          # Extract meta description if present
+          META_DESC=$(grep -A1 "^meta_description:" "$POST_PATH" | tail -1 || echo "")
+          echo "meta_desc=$META_DESC" >> $GITHUB_OUTPUT
+
+          echo "Parsed: $TITLE"
+
+      - name: Process affiliate links
+        if: inputs.add_affiliate_links
+        run: |
+          POST_PATH="amazon-affiliate/blog/drafts/${{ inputs.post_file }}"
+          OUTPUT_PATH="processed_post.md"
+
+          # Add affiliate tag to Amazon links
+          if [ -n "$AMAZON_ASSOCIATE_TAG" ]; then
+            sed "s|amazon.com/dp/\([A-Z0-9]*\)|amazon.com/dp/\1?tag=$AMAZON_ASSOCIATE_TAG|g" "$POST_PATH" > "$OUTPUT_PATH"
+            echo "Added affiliate tags"
+          else
+            cp "$POST_PATH" "$OUTPUT_PATH"
+            echo "::warning::No Amazon Associate tag configured"
+          fi
+
+          # Add affiliate disclosure
+          echo "" >> "$OUTPUT_PATH"
+          echo "---" >> "$OUTPUT_PATH"
+          echo "*Disclosure: This post contains affiliate links. We may earn a small commission at no extra cost to you.*" >> "$OUTPUT_PATH"
+
+      - name: Convert to HTML
+        run: |
+          npm install marked
+          node -e "
+            const fs = require('fs');
+            const { marked } = require('marked');
+            const md = fs.readFileSync('processed_post.md', 'utf8');
+            const html = marked(md);
+            fs.writeFileSync('processed_post.html', html);
+          "
+          echo "Converted to HTML"
+
+      - name: Upload processed post
+        uses: actions/upload-artifact@v4
+        with:
+          name: processed-blog-post
+          path: |
+            processed_post.md
+            processed_post.html
+
+  publish:
+    name: Publish to Shopify
+    runs-on: ubuntu-latest
+    needs: process
+    if: ${{ secrets.SHOPIFY_ACCESS_TOKEN }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download processed post
+        uses: actions/download-artifact@v4
+        with:
+          name: processed-blog-post
+
+      - name: Publish via Shopify API
+        env:
+          SHOPIFY_STORE_URL: ${{ secrets.SHOPIFY_STORE_URL }}
+          SHOPIFY_ACCESS_TOKEN: ${{ secrets.SHOPIFY_ACCESS_TOKEN }}
+        run: |
+          # Read HTML content
+          CONTENT=$(cat processed_post.html | jq -sR .)
+          TITLE="${{ needs.process.outputs.title }}"
+
+          # Create blog post via Shopify Admin API
+          RESPONSE=$(curl -s -X POST \
+            "https://${SHOPIFY_STORE_URL}/admin/api/2024-01/blogs/YOUR_BLOG_ID/articles.json" \
+            -H "X-Shopify-Access-Token: ${SHOPIFY_ACCESS_TOKEN}" \
+            -H "Content-Type: application/json" \
+            -d "{
+              \"article\": {
+                \"title\": \"$TITLE\",
+                \"body_html\": $CONTENT,
+                \"published\": true
+              }
+            }")
+
+          echo "Response: $RESPONSE"
+
+          # Check for errors
+          if echo "$RESPONSE" | jq -e '.errors' > /dev/null 2>&1; then
+            echo "::error::Failed to publish blog post"
+            exit 1
+          fi
+
+          ARTICLE_ID=$(echo "$RESPONSE" | jq -r '.article.id')
+          echo "Published article ID: $ARTICLE_ID"
+
+  notify:
+    name: Send Notification
+    runs-on: ubuntu-latest
+    needs: [process, publish]
+    if: always()
+
+    steps:
+      - name: Notify on success
+        if: needs.publish.result == 'success'
+        run: |
+          echo "✅ Blog post published successfully!"
+          # Add Slack/email notification here
+
+      - name: Notify on failure
+        if: needs.publish.result == 'failure'
+        run: |
+          echo "❌ Failed to publish blog post"
+          # Add failure notification here
