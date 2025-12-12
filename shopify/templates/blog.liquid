@@ -1,0 +1,520 @@
+{%- comment -%}
+  Shelzy's Designs - Blog Template
+
+  Blog listing page showing all articles with featured images,
+  excerpts, categories/tags, and pagination.
+{%- endcomment -%}
+
+<div class="sz-blog-page">
+  <div class="sz-blog-container">
+
+    {%- comment -%} Blog Header {%- endcomment -%}
+    <header class="sz-blog-header">
+      <h1 class="sz-blog-title">{{ blog.title }}</h1>
+      {%- if current_tags -%}
+        <p class="sz-blog-subtitle">Posts tagged "{{ current_tags | join: ', ' }}"</p>
+      {%- else -%}
+        <p class="sz-blog-subtitle">Tips, inspiration, and stories about personalized gifts and special occasions</p>
+      {%- endif -%}
+    </header>
+
+    {%- comment -%} Blog Tags {%- endcomment -%}
+    {%- if blog.all_tags.size > 0 -%}
+      <nav class="sz-blog-tags" aria-label="Blog categories">
+        <a href="{{ blog.url }}" class="sz-blog-tag {% unless current_tags %}sz-tag-active{% endunless %}">All Posts</a>
+        {%- for tag in blog.all_tags -%}
+          <a
+            href="{{ blog.url }}/tagged/{{ tag | handle }}"
+            class="sz-blog-tag {% if current_tags contains tag %}sz-tag-active{% endif %}"
+          >
+            {{ tag }}
+          </a>
+        {%- endfor -%}
+      </nav>
+    {%- endif -%}
+
+    {%- comment -%} Blog Articles {%- endcomment -%}
+    {%- paginate blog.articles by 9 -%}
+
+      {%- if blog.articles.size > 0 -%}
+
+        <div class="sz-blog-grid">
+          {%- for article in blog.articles -%}
+            <article class="sz-blog-card">
+              <a href="{{ article.url }}" class="sz-blog-card-link">
+
+                {%- comment -%} Article Image {%- endcomment -%}
+                <div class="sz-blog-card-image">
+                  {%- if article.image -%}
+                    <img
+                      src="{{ article.image | image_url: width: 600 }}"
+                      srcset="{{ article.image | image_url: width: 400 }} 400w,
+                              {{ article.image | image_url: width: 600 }} 600w"
+                      sizes="(max-width: 768px) 100vw, 33vw"
+                      alt="{{ article.image.alt | default: article.title }}"
+                      loading="lazy"
+                    >
+                  {%- else -%}
+                    <div class="sz-blog-card-placeholder">
+                      <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                        <circle cx="8.5" cy="8.5" r="1.5"/>
+                        <polyline points="21 15 16 10 5 21"/>
+                      </svg>
+                    </div>
+                  {%- endif -%}
+                </div>
+
+                {%- comment -%} Article Info {%- endcomment -%}
+                <div class="sz-blog-card-content">
+                  {%- comment -%} Meta {%- endcomment -%}
+                  <div class="sz-blog-card-meta">
+                    <time datetime="{{ article.published_at | date: '%Y-%m-%d' }}">
+                      {{ article.published_at | date: '%B %d, %Y' }}
+                    </time>
+                    {%- if article.tags.size > 0 -%}
+                      <span class="sz-meta-divider">|</span>
+                      <span class="sz-blog-card-tag">{{ article.tags | first }}</span>
+                    {%- endif -%}
+                  </div>
+
+                  {%- comment -%} Title {%- endcomment -%}
+                  <h2 class="sz-blog-card-title">{{ article.title }}</h2>
+
+                  {%- comment -%} Excerpt {%- endcomment -%}
+                  <p class="sz-blog-card-excerpt">
+                    {{ article.excerpt_or_content | strip_html | truncate: 150 }}
+                  </p>
+
+                  {%- comment -%} Read More {%- endcomment -%}
+                  <span class="sz-blog-card-readmore">
+                    Read More
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <line x1="5" y1="12" x2="19" y2="12"/>
+                      <polyline points="12 5 19 12 12 19"/>
+                    </svg>
+                  </span>
+                </div>
+
+              </a>
+            </article>
+          {%- endfor -%}
+        </div>
+
+        {%- comment -%} Pagination {%- endcomment -%}
+        {%- if paginate.pages > 1 -%}
+          <nav class="sz-pagination" aria-label="Blog pagination">
+            <ul class="sz-pagination-list">
+              {%- if paginate.previous -%}
+                <li>
+                  <a href="{{ paginate.previous.url }}" class="sz-pagination-prev">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <polyline points="15 18 9 12 15 6"/>
+                    </svg>
+                    Newer Posts
+                  </a>
+                </li>
+              {%- endif -%}
+
+              {%- for part in paginate.parts -%}
+                {%- if part.is_link -%}
+                  <li>
+                    <a href="{{ part.url }}" class="sz-pagination-page">{{ part.title }}</a>
+                  </li>
+                {%- else -%}
+                  {%- if part.title == paginate.current_page -%}
+                    <li>
+                      <span class="sz-pagination-page sz-pagination-current" aria-current="page">{{ part.title }}</span>
+                    </li>
+                  {%- else -%}
+                    <li><span class="sz-pagination-ellipsis">{{ part.title }}</span></li>
+                  {%- endif -%}
+                {%- endif -%}
+              {%- endfor -%}
+
+              {%- if paginate.next -%}
+                <li>
+                  <a href="{{ paginate.next.url }}" class="sz-pagination-next">
+                    Older Posts
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <polyline points="9 18 15 12 9 6"/>
+                    </svg>
+                  </a>
+                </li>
+              {%- endif -%}
+            </ul>
+          </nav>
+        {%- endif -%}
+
+      {%- else -%}
+
+        {%- comment -%} No Articles {%- endcomment -%}
+        <div class="sz-blog-empty">
+          <p>No blog posts found.</p>
+          <a href="/" class="sz-btn sz-btn-primary">Back to Home</a>
+        </div>
+
+      {%- endif -%}
+
+    {%- endpaginate -%}
+
+    {%- comment -%} Newsletter CTA {%- endcomment -%}
+    <section class="sz-blog-newsletter">
+      <div class="sz-blog-newsletter-content">
+        <h2>Stay Inspired</h2>
+        <p>Get our latest tips, designs, and exclusive offers delivered to your inbox.</p>
+        <form action="/contact#newsletter" method="post" class="sz-newsletter-form">
+          <input type="hidden" name="contact[tags]" value="newsletter,blog">
+          <div class="sz-newsletter-row">
+            <input
+              type="email"
+              name="contact[email]"
+              placeholder="Enter your email"
+              required
+              class="sz-newsletter-input"
+              aria-label="Email address"
+            >
+            <button type="submit" class="sz-btn sz-btn-primary">Subscribe</button>
+          </div>
+        </form>
+      </div>
+    </section>
+
+  </div>
+</div>
+
+<style>
+  /* ═══════════════════════════════════════════════════════════════════
+     BLOG PAGE STYLES
+     ═══════════════════════════════════════════════════════════════════ */
+  .sz-blog-page {
+    padding: var(--sz-space-xl) var(--sz-space-md);
+    background: var(--sz-warm-white);
+    min-height: 60vh;
+  }
+
+  .sz-blog-container {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  /* Blog Header */
+  .sz-blog-header {
+    text-align: center;
+    margin-bottom: var(--sz-space-xl);
+  }
+
+  .sz-blog-title {
+    font-family: var(--sz-font-heading);
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 600;
+    color: var(--sz-primary-dark);
+    margin: 0 0 var(--sz-space-md) 0;
+  }
+
+  .sz-blog-subtitle {
+    font-family: var(--sz-font-body);
+    font-size: var(--sz-text-lg);
+    color: var(--sz-gray);
+    margin: 0;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  /* Blog Tags */
+  .sz-blog-tags {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--sz-space-sm);
+    margin-bottom: var(--sz-space-2xl);
+    padding-bottom: var(--sz-space-xl);
+    border-bottom: 1px solid var(--sz-border-light);
+  }
+
+  .sz-blog-tag {
+    padding: var(--sz-space-sm) var(--sz-space-md);
+    font-family: var(--sz-font-body);
+    font-size: var(--sz-text-sm);
+    color: var(--sz-charcoal);
+    text-decoration: none;
+    border: 1px solid var(--sz-border-light);
+    border-radius: var(--sz-radius-full);
+    background: var(--sz-white);
+    transition: all var(--sz-transition-fast);
+  }
+
+  .sz-blog-tag:hover,
+  .sz-tag-active {
+    background: var(--sz-primary);
+    border-color: var(--sz-primary);
+    color: var(--sz-white);
+  }
+
+  /* Blog Grid */
+  .sz-blog-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--sz-space-xl);
+    margin-bottom: var(--sz-space-2xl);
+  }
+
+  @media (max-width: 900px) {
+    .sz-blog-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 600px) {
+    .sz-blog-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  /* Blog Card */
+  .sz-blog-card {
+    background: var(--sz-white);
+    border-radius: var(--sz-radius-md);
+    overflow: hidden;
+    transition: box-shadow var(--sz-transition-normal);
+  }
+
+  .sz-blog-card:hover {
+    box-shadow: var(--sz-shadow-lg);
+  }
+
+  .sz-blog-card-link {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .sz-blog-card-image {
+    aspect-ratio: 16/10;
+    background: var(--sz-beige);
+    overflow: hidden;
+  }
+
+  .sz-blog-card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform var(--sz-transition-normal);
+  }
+
+  .sz-blog-card:hover .sz-blog-card-image img {
+    transform: scale(1.05);
+  }
+
+  .sz-blog-card-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--sz-gray);
+  }
+
+  .sz-blog-card-content {
+    padding: var(--sz-space-lg);
+  }
+
+  .sz-blog-card-meta {
+    display: flex;
+    align-items: center;
+    gap: var(--sz-space-sm);
+    font-family: var(--sz-font-body);
+    font-size: var(--sz-text-xs);
+    color: var(--sz-gray);
+    margin-bottom: var(--sz-space-sm);
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+  }
+
+  .sz-meta-divider {
+    color: var(--sz-border-light);
+  }
+
+  .sz-blog-card-tag {
+    color: var(--sz-primary);
+  }
+
+  .sz-blog-card-title {
+    font-family: var(--sz-font-heading);
+    font-size: var(--sz-text-xl);
+    font-weight: 600;
+    color: var(--sz-primary-dark);
+    margin: 0 0 var(--sz-space-sm) 0;
+    line-height: 1.3;
+    transition: color var(--sz-transition-fast);
+  }
+
+  .sz-blog-card:hover .sz-blog-card-title {
+    color: var(--sz-primary);
+  }
+
+  .sz-blog-card-excerpt {
+    font-family: var(--sz-font-body);
+    font-size: var(--sz-text-sm);
+    color: var(--sz-charcoal);
+    line-height: 1.6;
+    margin: 0 0 var(--sz-space-md) 0;
+  }
+
+  .sz-blog-card-readmore {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--sz-space-xs);
+    font-family: var(--sz-font-body);
+    font-size: var(--sz-text-sm);
+    font-weight: 500;
+    color: var(--sz-primary);
+    transition: gap var(--sz-transition-fast);
+  }
+
+  .sz-blog-card:hover .sz-blog-card-readmore {
+    gap: var(--sz-space-sm);
+  }
+
+  /* Blog Empty */
+  .sz-blog-empty {
+    text-align: center;
+    padding: var(--sz-space-3xl) var(--sz-space-md);
+  }
+
+  .sz-blog-empty p {
+    font-family: var(--sz-font-body);
+    font-size: var(--sz-text-lg);
+    color: var(--sz-gray);
+    margin: 0 0 var(--sz-space-xl) 0;
+  }
+
+  /* Blog Newsletter */
+  .sz-blog-newsletter {
+    background: var(--sz-primary);
+    border-radius: var(--sz-radius-lg);
+    padding: var(--sz-space-2xl);
+    text-align: center;
+    margin-top: var(--sz-space-2xl);
+  }
+
+  .sz-blog-newsletter-content {
+    max-width: 500px;
+    margin: 0 auto;
+  }
+
+  .sz-blog-newsletter h2 {
+    font-family: var(--sz-font-heading);
+    font-size: var(--sz-text-2xl);
+    font-weight: 600;
+    color: var(--sz-white);
+    margin: 0 0 var(--sz-space-sm) 0;
+  }
+
+  .sz-blog-newsletter p {
+    font-family: var(--sz-font-body);
+    font-size: var(--sz-text-base);
+    color: rgba(255, 255, 255, 0.9);
+    margin: 0 0 var(--sz-space-lg) 0;
+  }
+
+  .sz-newsletter-form {
+    max-width: 400px;
+    margin: 0 auto;
+  }
+
+  .sz-newsletter-row {
+    display: flex;
+    gap: 0;
+  }
+
+  @media (max-width: 500px) {
+    .sz-newsletter-row {
+      flex-direction: column;
+      gap: var(--sz-space-sm);
+    }
+  }
+
+  .sz-newsletter-input {
+    flex: 1;
+    padding: var(--sz-space-md);
+    font-family: var(--sz-font-body);
+    font-size: var(--sz-text-base);
+    border: none;
+    border-radius: var(--sz-radius-sm) 0 0 var(--sz-radius-sm);
+  }
+
+  @media (max-width: 500px) {
+    .sz-newsletter-input {
+      border-radius: var(--sz-radius-sm);
+    }
+  }
+
+  .sz-newsletter-input:focus {
+    outline: none;
+  }
+
+  .sz-blog-newsletter .sz-btn-primary {
+    border-radius: 0 var(--sz-radius-sm) var(--sz-radius-sm) 0;
+    background: var(--sz-charcoal);
+  }
+
+  @media (max-width: 500px) {
+    .sz-blog-newsletter .sz-btn-primary {
+      border-radius: var(--sz-radius-sm);
+      width: 100%;
+    }
+  }
+
+  .sz-blog-newsletter .sz-btn-primary:hover {
+    background: #000;
+  }
+
+  /* Pagination */
+  .sz-pagination {
+    display: flex;
+    justify-content: center;
+  }
+
+  .sz-pagination-list {
+    display: flex;
+    align-items: center;
+    gap: var(--sz-space-xs);
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .sz-pagination-page,
+  .sz-pagination-prev,
+  .sz-pagination-next {
+    display: flex;
+    align-items: center;
+    gap: var(--sz-space-xs);
+    padding: var(--sz-space-sm) var(--sz-space-md);
+    font-family: var(--sz-font-body);
+    font-size: var(--sz-text-sm);
+    color: var(--sz-charcoal);
+    text-decoration: none;
+    border-radius: var(--sz-radius-sm);
+    transition: all var(--sz-transition-fast);
+  }
+
+  .sz-pagination-page:hover,
+  .sz-pagination-prev:hover,
+  .sz-pagination-next:hover {
+    background: var(--sz-beige);
+    color: var(--sz-primary);
+  }
+
+  .sz-pagination-current {
+    background: var(--sz-primary);
+    color: var(--sz-white);
+  }
+
+  .sz-pagination-ellipsis {
+    padding: var(--sz-space-sm);
+    color: var(--sz-gray);
+  }
+</style>
