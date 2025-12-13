@@ -1,0 +1,61 @@
+{
+  "current": {
+    "color_primary": "#8BAA88",
+    "color_primary_dark": "#4E5F4A",
+    "color_background": "#FFFFFF",
+    "color_background_alt": "#FAF9F6",
+    "color_text": "#2B2B2B",
+    "color_heading": "#111111",
+    "font_size_base": 16,
+    "free_shipping_threshold": 75,
+    "show_free_shipping_bar": true,
+    "show_newsletter_popup": true,
+    "popup_delay": 5,
+    "popup_discount_code": "WELCOME10",
+    "sections": {
+      "header": {
+        "type": "header",
+        "settings": {
+          "enable_sticky": true,
+          "show_search": true,
+          "show_account": true,
+          "background_color": "#FFFFFF",
+          "text_color": "#1F1F1F",
+          "accent_color": "#4E5F4A",
+          "border_color": "#E8E4DE",
+          "cart_badge_color": "#2C3E2D",
+          "logo_height": 44
+        }
+      },
+      "footer": {
+        "type": "footer",
+        "settings": {
+          "tagline": "Premium personalized water bottles with permanent sublimation printing. No vinyl, no peeling — ever.",
+          "background_color": "#2C3E2D",
+          "text_color": "#FFFFFF",
+          "muted_color": "#BFBFBF",
+          "border_color": "#3D4F3E",
+          "copyright_text": "All rights reserved.",
+          "show_payment_icons": true
+        }
+      }
+    },
+    "content_for_index": []
+  },
+  "presets": {
+    "Default": {
+      "color_primary": "#8BAA88",
+      "color_primary_dark": "#4E5F4A",
+      "color_background": "#FFFFFF",
+      "color_background_alt": "#FAF9F6",
+      "color_text": "#2B2B2B",
+      "color_heading": "#111111",
+      "font_size_base": 16,
+      "free_shipping_threshold": 75,
+      "show_free_shipping_bar": true,
+      "show_newsletter_popup": true,
+      "popup_delay": 5,
+      "popup_discount_code": "WELCOME10"
+    }
+  }
+}

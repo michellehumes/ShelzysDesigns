@@ -1,0 +1,818 @@
+/* ================================
+   Shelzy's Designs — Brand Styles
+   Fresh, Romantic, Love Island Vibes
+   ================================ */
+
+/* ================================
+   1. FONT IMPORTS
+   ================================ */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Cormorant+Garamond:wght@400;500;600;700&display=swap');
+
+/* ================================
+   2. CSS VARIABLES - LOVE ISLAND PALETTE
+   ================================ */
+:root {
+  /* Primary Colors - Coral Pink Palette */
+  --sz-primary: #E8919A;          /* Coral Pink */
+  --sz-primary-dark: #C75B6E;     /* Deep Rose */
+  --sz-primary-light: #F5C6CB;    /* Blush Pink */
+
+  /* Neutrals */
+  --sz-white: #FFFFFF;
+  --sz-off-white: #FFFBF9;        /* Warm cream */
+  --sz-warm-white: #FFF8F6;       /* Peachy white */
+  --sz-beige: #FDF2EF;            /* Soft blush */
+  --sz-charcoal: #2D2926;         /* Warm black */
+  --sz-gray: #8B8584;             /* Warm gray */
+  --sz-gray-light: #B5AFAD;       /* Light warm gray */
+
+  /* Accent Colors */
+  --sz-gold: #D4A574;             /* Warm gold */
+  --sz-coral: #FF7F6E;            /* Bright coral */
+  --sz-sage: #9CAF88;             /* Sage green accent */
+
+  /* Semantic */
+  --sz-error: #E53935;
+  --sz-success: #43A047;
+
+  /* Legacy aliases for compatibility */
+  --sz-neutral-light: var(--sz-warm-white);
+  --sz-neutral-dark: var(--sz-charcoal);
+  --sz-accent-gold: var(--sz-gold);
+
+  /* Border Colors */
+  --sz-border-light: #F0E6E3;
+  --sz-border-soft: #E8DEDA;
+
+  /* Consistent Spacing System */
+  --sz-space-xs: 4px;
+  --sz-space-sm: 8px;
+  --sz-space-md: 16px;
+  --sz-space-lg: 24px;
+  --sz-space-xl: 32px;
+  --sz-space-2xl: 48px;
+  --sz-space-3xl: 64px;
+  --sz-space-4xl: 80px;
+
+  /* Typography Scale */
+  --sz-text-xs: 0.75rem;
+  --sz-text-sm: 0.875rem;
+  --sz-text-base: 1rem;
+  --sz-text-lg: 1.125rem;
+  --sz-text-xl: 1.25rem;
+  --sz-text-2xl: 1.5rem;
+  --sz-text-3xl: 2rem;
+  --sz-text-4xl: 2.5rem;
+
+  /* Border Radius */
+  --sz-radius-sm: 4px;
+  --sz-radius-md: 8px;
+  --sz-radius-lg: 12px;
+  --sz-radius-xl: 16px;
+  --sz-radius-2xl: 24px;
+  --sz-radius-full: 9999px;
+
+  /* Shadows - Warm tinted */
+  --sz-shadow-sm: 0 1px 3px rgba(200, 91, 110, 0.08);
+  --sz-shadow-md: 0 4px 16px rgba(200, 91, 110, 0.1);
+  --sz-shadow-lg: 0 12px 32px rgba(200, 91, 110, 0.12);
+
+  /* Transitions */
+  --sz-transition-fast: 0.15s ease;
+  --sz-transition-normal: 0.3s ease;
+
+  /* Font Stacks */
+  --sz-font-heading: "Cormorant Garamond", Georgia, serif;
+  --sz-font-body: "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --sz-font-accent: "Poppins", sans-serif;
+}
+
+/* ================================
+   3. GLOBAL TYPOGRAPHY
+   ================================ */
+body,
+html {
+  font-family: var(--sz-font-body) !important;
+  color: var(--sz-charcoal);
+  background-color: var(--sz-white);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+/* Headings - Cormorant Garamond (Elegant serif) */
+h1, h2, h3, h4, h5, h6,
+.h1, .h2, .h3, .h4, .h5, .h6,
+.heading,
+.title,
+.section-header__title,
+.product-single__title,
+.product__title,
+.page-title,
+.collection__title,
+.article__title,
+.card__heading,
+.full-unstyled-link {
+  font-family: var(--sz-font-heading) !important;
+  color: var(--sz-charcoal) !important;
+  letter-spacing: -0.01em;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+h1, .h1 { font-size: clamp(2rem, 5vw, 3rem); }
+h2, .h2 { font-size: clamp(1.5rem, 4vw, 2.25rem); }
+h3, .h3 { font-size: clamp(1.25rem, 3vw, 1.5rem); }
+
+/* Subheadings / Eyebrow text */
+.subtitle,
+.section-header__subtitle,
+.small-caption,
+.caption,
+.caption-large,
+.sz-subheading {
+  font-family: var(--sz-font-body) !important;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--sz-primary);
+}
+
+/* Body text */
+p,
+li,
+span,
+input,
+textarea,
+select,
+.rte,
+.rte p,
+.product-card__title,
+.product-card__price,
+.price,
+.site-nav__link,
+.menu-drawer__menu-item {
+  font-family: var(--sz-font-body) !important;
+}
+
+/* ================================
+   4. LINKS
+   ================================ */
+a {
+  color: var(--sz-primary-dark);
+  text-decoration: none;
+  transition: color var(--sz-transition-fast);
+}
+
+a:hover,
+a:focus {
+  color: var(--sz-primary);
+}
+
+/* ================================
+   5. BUTTONS / CTAs
+   ================================ */
+.btn,
+.button,
+.shopify-payment-button__button,
+.product-form__submit,
+.product-form__cart-submit,
+.cart__submit,
+button[type="submit"],
+input[type="submit"],
+.shopify-challenge__button,
+.sz-btn {
+  background-color: var(--sz-primary-dark) !important;
+  color: var(--sz-white) !important;
+  border-radius: var(--sz-radius-full) !important;
+  border: 2px solid var(--sz-primary-dark) !important;
+  padding: 14px 28px !important;
+  font-family: var(--sz-font-body) !important;
+  font-weight: 600 !important;
+  font-size: 14px !important;
+  text-transform: none !important;
+  letter-spacing: 0.02em;
+  transition: all var(--sz-transition-normal) !important;
+  box-shadow: none !important;
+  cursor: pointer;
+}
+
+.btn:hover,
+.button:hover,
+.shopify-payment-button__button:hover,
+.product-form__submit:hover,
+.product-form__cart-submit:hover,
+.cart__submit:hover,
+button[type="submit"]:hover,
+input[type="submit"]:hover,
+.sz-btn:hover {
+  background-color: var(--sz-charcoal) !important;
+  border-color: var(--sz-charcoal) !important;
+  color: var(--sz-white) !important;
+  transform: translateY(-2px);
+  box-shadow: var(--sz-shadow-md) !important;
+}
+
+/* Secondary / Ghost buttons */
+.btn--secondary,
+.button--secondary,
+.btn--tertiary,
+.button--tertiary,
+.button--outline,
+.sz-btn-secondary {
+  background-color: transparent !important;
+  color: var(--sz-primary-dark) !important;
+  border: 2px solid var(--sz-primary) !important;
+}
+
+.btn--secondary:hover,
+.button--secondary:hover,
+.btn--tertiary:hover,
+.button--tertiary:hover,
+.button--outline:hover,
+.sz-btn-secondary:hover {
+  background-color: var(--sz-primary) !important;
+  color: var(--sz-white) !important;
+  border-color: var(--sz-primary) !important;
+}
+
+/* ================================
+   6. SECTION BACKGROUNDS & LAYOUT
+   ================================ */
+.section,
+.shopify-section,
+.index-section,
+.template-index .shopify-section {
+  padding-top: 48px;
+  padding-bottom: 48px;
+}
+
+/* Alternate background sections */
+.section--alt,
+.shelzys-section-alt,
+.color-background-2,
+.background-secondary {
+  background-color: var(--sz-beige) !important;
+}
+
+/* Remove harsh dividers */
+.section + .section,
+.shopify-section + .shopify-section {
+  border-top: none;
+}
+
+/* ================================
+   7. HEADER & NAVIGATION
+   ================================ */
+.section-header,
+.header,
+.site-header,
+.header-wrapper,
+.shopify-section-header,
+.sz-header {
+  background-color: var(--sz-white) !important;
+  border-bottom: 1px solid var(--sz-border-light) !important;
+}
+
+.header__icon,
+.site-nav__link,
+.site-header__icon,
+.menu-drawer__menu-item,
+.header__menu-item,
+.sz-nav-link {
+  font-family: var(--sz-font-body) !important;
+  color: var(--sz-charcoal) !important;
+  font-weight: 500;
+  font-size: 14px;
+  transition: color var(--sz-transition-fast);
+}
+
+.site-nav__link:hover,
+.site-header__icon:hover,
+.header__icon:hover,
+.menu-drawer__menu-item:hover,
+.header__menu-item:hover,
+.sz-nav-link:hover {
+  color: var(--sz-primary-dark) !important;
+}
+
+/* ================================
+   8. FOOTER
+   ================================ */
+.section-footer,
+.footer,
+.site-footer,
+.footer-wrapper,
+.shopify-section-footer {
+  background-color: var(--sz-charcoal) !important;
+  color: var(--sz-white) !important;
+}
+
+.footer h2,
+.footer h3,
+.footer h4,
+.site-footer h2,
+.site-footer h3,
+.site-footer h4,
+.footer__title,
+.footer-block__heading {
+  color: var(--sz-white) !important;
+  font-family: var(--sz-font-heading) !important;
+}
+
+.site-footer a,
+.footer a,
+.footer-block a,
+.footer__list-item a {
+  color: rgba(255, 255, 255, 0.8) !important;
+}
+
+.site-footer a:hover,
+.footer a:hover,
+.footer-block a:hover,
+.footer__list-item a:hover {
+  color: var(--sz-primary-light) !important;
+}
+
+/* Footer form inputs */
+.footer input[type="email"],
+.footer .field__input {
+  background-color: rgba(255, 255, 255, 0.1) !important;
+  border-color: rgba(255, 255, 255, 0.2) !important;
+  color: var(--sz-white) !important;
+}
+
+/* ================================
+   9. PRODUCT CARDS / COLLECTION GRID
+   ================================ */
+.product-card,
+.product-card-wrapper,
+.grid-product,
+.collection-grid-item,
+.product-item,
+.card,
+.card-wrapper,
+.sz-product-card {
+  border: none;
+  border-radius: var(--sz-radius-lg) !important;
+  background-color: var(--sz-white);
+  overflow: hidden;
+  transition: transform var(--sz-transition-normal), box-shadow var(--sz-transition-normal);
+}
+
+.product-card:hover,
+.product-card-wrapper:hover,
+.grid-product:hover,
+.collection-grid-item:hover,
+.product-item:hover,
+.card:hover,
+.card-wrapper:hover,
+.sz-product-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--sz-shadow-lg);
+}
+
+/* Product card image wrapper */
+.card__media,
+.product-card__image-wrapper,
+.media,
+.sz-product-media {
+  border-radius: var(--sz-radius-lg) !important;
+  overflow: hidden;
+  background: var(--sz-beige);
+}
+
+.product-card__title,
+.card__heading,
+.grid-product__title,
+.product-item__title,
+.sz-product-title {
+  font-family: var(--sz-font-body) !important;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--sz-charcoal) !important;
+}
+
+.product-card__price,
+.grid-product__price,
+.price,
+.price-item,
+.sz-price--current {
+  font-family: var(--sz-font-body) !important;
+  color: var(--sz-charcoal) !important;
+  font-weight: 600;
+}
+
+/* Sale price */
+.price--on-sale .price-item--sale,
+.price--sale,
+.sz-price--sale {
+  color: var(--sz-primary-dark) !important;
+}
+
+/* Compare at price (strikethrough) */
+.price--on-sale .price-item--regular,
+.price__regular,
+.sz-price--compare {
+  color: var(--sz-gray) !important;
+  text-decoration: line-through;
+}
+
+/* ================================
+   10. STAR RATINGS
+   ================================ */
+.spr-icon,
+.spr-icon-star,
+.spr-icon-star-half-alt,
+.spr-icon-star-empty,
+.rating-star,
+.jdgm-star {
+  color: var(--sz-gold) !important;
+}
+
+/* ================================
+   11. BADGES / LABELS
+   ================================ */
+.badge,
+.badge--pill,
+.product-tag,
+.product-label,
+.card__badge,
+.badge--sale,
+.sz-badge {
+  font-family: var(--sz-font-body) !important;
+  background-color: var(--sz-primary-dark) !important;
+  color: var(--sz-white) !important;
+  border-radius: var(--sz-radius-sm) !important;
+  padding: 4px 10px !important;
+  font-size: 11px !important;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  border: none !important;
+}
+
+/* Sold out badge */
+.badge--soldout,
+.sold-out-badge,
+.sz-badge--soldout {
+  background-color: var(--sz-charcoal) !important;
+}
+
+/* New badge */
+.badge--new {
+  background-color: var(--sz-coral) !important;
+}
+
+/* ================================
+   12. HERO SECTION / SLIDESHOW
+   ================================ */
+.hero,
+.hero__content,
+.slideshow,
+.slideshow__text-content,
+.banner,
+.banner__content {
+  color: var(--sz-charcoal);
+}
+
+.hero__title,
+.slideshow__title,
+.banner__heading,
+.sz-hero-heading {
+  font-family: var(--sz-font-heading) !important;
+  color: inherit !important;
+  font-weight: 600;
+}
+
+.hero__subtitle,
+.slideshow__subtitle,
+.banner__text,
+.sz-hero-subheading {
+  font-family: var(--sz-font-body) !important;
+  color: inherit !important;
+}
+
+/* ================================
+   13. FORMS / INPUTS
+   ================================ */
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="tel"],
+input[type="number"],
+input[type="search"],
+textarea,
+select,
+.field__input {
+  border-radius: var(--sz-radius-md) !important;
+  border: 1px solid var(--sz-border-soft) !important;
+  padding: 12px 16px !important;
+  font-family: var(--sz-font-body) !important;
+  font-size: 14px !important;
+  background-color: var(--sz-white) !important;
+  transition: border-color var(--sz-transition-fast), box-shadow var(--sz-transition-fast);
+}
+
+textarea {
+  border-radius: var(--sz-radius-lg) !important;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus,
+input[type="tel"]:focus,
+input[type="number"]:focus,
+input[type="search"]:focus,
+textarea:focus,
+select:focus,
+.field__input:focus {
+  outline: none !important;
+  border-color: var(--sz-primary) !important;
+  box-shadow: 0 0 0 3px rgba(232, 145, 154, 0.2) !important;
+}
+
+/* Field labels */
+.field__label,
+label {
+  font-family: var(--sz-font-body) !important;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--sz-charcoal) !important;
+}
+
+/* ================================
+   14. POPUPS / MODALS / NEWSLETTER
+   ================================ */
+.popup,
+.newsletter-popup,
+.modal,
+.modal__content,
+.drawer,
+.cart-drawer {
+  background-color: var(--sz-white) !important;
+  border-radius: var(--sz-radius-2xl) !important;
+  border: none !important;
+  box-shadow: var(--sz-shadow-lg);
+}
+
+/* ================================
+   15. HOW IT WORKS / ICON STEPS
+   ================================ */
+.shelzys-steps {
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.shelzys-step {
+  text-align: center;
+  padding: 32px 24px;
+  border-radius: var(--sz-radius-xl);
+  background-color: var(--sz-white);
+  border: 1px solid var(--sz-border-light);
+  flex: 1;
+  min-width: 200px;
+  max-width: 300px;
+  transition: transform var(--sz-transition-normal), box-shadow var(--sz-transition-normal);
+}
+
+.shelzys-step:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--sz-shadow-md);
+}
+
+.shelzys-step__icon {
+  font-size: 2.5rem;
+  color: var(--sz-primary);
+  margin-bottom: 16px;
+}
+
+.shelzys-step__title {
+  font-family: var(--sz-font-heading);
+  color: var(--sz-charcoal);
+  margin-bottom: 8px;
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.shelzys-step__text {
+  font-family: var(--sz-font-body);
+  font-size: 14px;
+  color: var(--sz-gray);
+  line-height: 1.6;
+}
+
+/* ================================
+   16. BLOG STYLING
+   ================================ */
+.article__title,
+.blog__title,
+.blog-articles__article-title {
+  font-family: var(--sz-font-heading) !important;
+  color: var(--sz-charcoal) !important;
+}
+
+.article__meta,
+.blog__meta,
+.article__comment-count {
+  font-family: var(--sz-font-body) !important;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-size: 12px;
+  color: var(--sz-gray);
+}
+
+.rte blockquote,
+blockquote {
+  font-family: var(--sz-font-heading) !important;
+  font-style: italic;
+  font-size: 1.25rem;
+  border-left: 3px solid var(--sz-primary);
+  padding-left: 24px;
+  color: var(--sz-charcoal);
+}
+
+/* ================================
+   17. CART
+   ================================ */
+.cart-item__name,
+.cart__product-title {
+  font-family: var(--sz-font-body) !important;
+  font-weight: 500;
+  color: var(--sz-charcoal) !important;
+}
+
+.cart__subtotal,
+.cart-item__price {
+  font-family: var(--sz-font-body) !important;
+  font-weight: 600;
+  color: var(--sz-charcoal) !important;
+}
+
+/* ================================
+   18. PRODUCT PAGE
+   ================================ */
+.product__title {
+  font-family: var(--sz-font-heading) !important;
+  color: var(--sz-charcoal) !important;
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
+  font-weight: 600;
+}
+
+.product__price,
+.price--large {
+  font-family: var(--sz-font-body) !important;
+  color: var(--sz-charcoal) !important;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.product__description,
+.product__text {
+  font-family: var(--sz-font-body) !important;
+  color: var(--sz-charcoal) !important;
+  line-height: 1.7;
+  font-size: 15px;
+}
+
+/* Variant selectors */
+.variant-input-wrapper,
+.product-form__input {
+  border-radius: var(--sz-radius-md) !important;
+}
+
+/* ================================
+   19. ANNOUNCEMENT BAR
+   ================================ */
+.announcement-bar,
+.utility-bar {
+  background-color: var(--sz-primary-dark) !important;
+  color: var(--sz-white) !important;
+}
+
+.announcement-bar a,
+.utility-bar a {
+  color: var(--sz-primary-light) !important;
+}
+
+/* ================================
+   20. UTILITY CLASSES
+   ================================ */
+.sz-bg-primary { background-color: var(--sz-primary) !important; }
+.sz-bg-primary-dark { background-color: var(--sz-primary-dark) !important; }
+.sz-bg-beige { background-color: var(--sz-beige) !important; }
+.sz-bg-white { background-color: var(--sz-white) !important; }
+
+.sz-text-primary { color: var(--sz-primary) !important; }
+.sz-text-primary-dark { color: var(--sz-primary-dark) !important; }
+.sz-text-charcoal { color: var(--sz-charcoal) !important; }
+.sz-text-gray { color: var(--sz-gray) !important; }
+.sz-text-gold { color: var(--sz-gold) !important; }
+
+/* Legacy utility class aliases */
+.shelzys-bg-warm-white { background-color: var(--sz-warm-white) !important; }
+.shelzys-bg-sage { background-color: var(--sz-primary) !important; }
+.shelzys-bg-dark-sage { background-color: var(--sz-primary-dark) !important; }
+.shelzys-text-sage { color: var(--sz-primary) !important; }
+.shelzys-text-dark-sage { color: var(--sz-primary-dark) !important; }
+.shelzys-text-gold { color: var(--sz-gold) !important; }
+.shelzys-text-charcoal { color: var(--sz-charcoal) !important; }
+
+/* ================================
+   21. RESPONSIVE ADJUSTMENTS
+   ================================ */
+@media screen and (max-width: 768px) {
+  body, html {
+    font-size: 14px;
+  }
+
+  .section,
+  .shopify-section {
+    padding-top: 32px;
+    padding-bottom: 32px;
+  }
+
+  .btn,
+  .button,
+  button[type="submit"],
+  .sz-btn {
+    padding: 12px 24px !important;
+    font-size: 13px !important;
+  }
+
+  .product-card,
+  .card,
+  .sz-product-card {
+    border-radius: var(--sz-radius-md) !important;
+  }
+
+  .shelzys-steps {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .shelzys-step {
+    max-width: 100%;
+  }
+}
+
+/* ================================
+   22. THEME SPECIFIC OVERRIDES
+   ================================ */
+.button--full-width {
+  border-radius: var(--sz-radius-full) !important;
+}
+
+.collection-hero__title {
+  font-family: var(--sz-font-heading) !important;
+  color: var(--sz-charcoal) !important;
+}
+
+.color-background-1 {
+  background-color: var(--sz-white) !important;
+}
+
+.color-background-2 {
+  background-color: var(--sz-beige) !important;
+}
+
+/* Ensure link colors in content areas */
+.rte a {
+  color: var(--sz-primary-dark) !important;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.rte a:hover {
+  color: var(--sz-primary) !important;
+}
+
+/* ================================
+   23. CUSTOM SELECTION COLOR
+   ================================ */
+::selection {
+  background-color: var(--sz-primary-light);
+  color: var(--sz-charcoal);
+}
+
+::-moz-selection {
+  background-color: var(--sz-primary-light);
+  color: var(--sz-charcoal);
+}
+
+/* ================================
+   24. SMOOTH SCROLLING
+   ================================ */
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}

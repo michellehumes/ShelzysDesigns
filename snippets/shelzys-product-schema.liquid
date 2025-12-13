@@ -1,0 +1,103 @@
+{% comment %}
+==================================================
+SHELZY'S DESIGNS - PRODUCT SCHEMA MARKUP
+Add this snippet to your product template
+
+Usage: {% render 'shelzys-product-schema', product: product %}
+
+Provides:
+- Product structured data
+- Aggregate rating (if reviews available)
+- Offer details
+- Brand information
+==================================================
+{% endcomment %}
+
+{% if product %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Product",
+  "name": {{ product.title | json }},
+  "description": {{ product.description | strip_html | truncatewords: 50 | json }},
+  "url": {{ canonical_url | json }},
+  "sku": {{ product.selected_or_first_available_variant.sku | default: product.id | json }},
+  {% if product.featured_image %}
+  "image": [
+    {{ product.featured_image | image_url: width: 1200 | json }}
+    {% for image in product.images offset: 1 limit: 4 %}
+    ,{{ image | image_url: width: 1200 | json }}
+    {% endfor %}
+  ],
+  {% endif %}
+  "brand": {
+    "@type": "Brand",
+    "name": "Shelzy's Designs"
+  },
+  "manufacturer": {
+    "@type": "Organization",
+    "name": "Shelzy's Designs"
+  },
+  "category": {{ product.type | default: "Personalized Water Bottles" | json }},
+  "material": "Stainless Steel with Sublimation Print",
+  {% if product.metafields.reviews.rating.value %}
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": {{ product.metafields.reviews.rating.value.rating | json }},
+    "ratingCount": {{ product.metafields.reviews.rating_count | json }},
+    "bestRating": "5",
+    "worstRating": "1"
+  },
+  {% endif %}
+  "offers": {
+    "@type": "Offer",
+    "url": {{ canonical_url | json }},
+    "priceCurrency": {{ shop.currency | json }},
+    "price": {{ product.price | divided_by: 100.0 | json }},
+    {% if product.compare_at_price > product.price %}
+    "priceValidUntil": "{{ 'now' | date: '%Y' | plus: 1 }}-12-31",
+    {% endif %}
+    "availability": "{% if product.available %}https://schema.org/InStock{% else %}https://schema.org/OutOfStock{% endif %}",
+    "seller": {
+      "@type": "Organization",
+      "name": "Shelzy's Designs"
+    },
+    "shippingDetails": {
+      "@type": "OfferShippingDetails",
+      "shippingRate": {
+        "@type": "MonetaryAmount",
+        "value": "0",
+        "currency": "USD"
+      },
+      "shippingDestination": {
+        "@type": "DefinedRegion",
+        "addressCountry": "US"
+      },
+      "deliveryTime": {
+        "@type": "ShippingDeliveryTime",
+        "handlingTime": {
+          "@type": "QuantitativeValue",
+          "minValue": 3,
+          "maxValue": 5,
+          "unitCode": "d"
+        },
+        "transitTime": {
+          "@type": "QuantitativeValue",
+          "minValue": 3,
+          "maxValue": 7,
+          "unitCode": "d"
+        }
+      }
+    },
+    "hasMerchantReturnPolicy": {
+      "@type": "MerchantReturnPolicy",
+      "applicableCountry": "US",
+      "returnPolicyCategory": "https://schema.org/MerchantReturnFiniteReturnWindow",
+      "merchantReturnDays": 30,
+      "returnMethod": "https://schema.org/ReturnByMail",
+      "returnFees": "https://schema.org/FreeReturn"
+    }
+  }
+}
+</script>
+{% endif %}

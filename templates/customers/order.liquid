@@ -1,0 +1,547 @@
+{%- comment -%}
+  Shelzy's Designs - Customer Order Template
+
+  Individual order details page showing:
+  - Order status
+  - Line items
+  - Shipping address
+  - Billing information
+{%- endcomment -%}
+
+<div class="sz-account-page">
+  <div class="sz-account-container">
+
+    {%- comment -%} Order Header {%- endcomment -%}
+    <header class="sz-order-header">
+      <div class="sz-order-header-content">
+        <a href="{{ routes.account_url }}" class="sz-back-link">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="19" y1="12" x2="5" y2="12"/>
+            <polyline points="12 19 5 12 12 5"/>
+          </svg>
+          Back to Account
+        </a>
+        <h1 class="sz-order-title">Order {{ order.name }}</h1>
+        <p class="sz-order-date">Placed on {{ order.created_at | date: '%B %d, %Y at %I:%M %p' }}</p>
+      </div>
+    </header>
+
+    <div class="sz-order-layout">
+
+      {%- comment -%} Order Details {%- endcomment -%}
+      <main class="sz-order-main">
+
+        {%- comment -%} Order Status {%- endcomment -%}
+        <section class="sz-order-section sz-order-status-section">
+          <div class="sz-status-row">
+            <div class="sz-status-item">
+              <span class="sz-status-label">Payment Status</span>
+              <span class="sz-status-value sz-status-{{ order.financial_status | handleize }}">
+                {{ order.financial_status_label }}
+              </span>
+            </div>
+            <div class="sz-status-item">
+              <span class="sz-status-label">Fulfillment Status</span>
+              <span class="sz-status-value sz-status-{{ order.fulfillment_status | default: 'unfulfilled' | handleize }}">
+                {{ order.fulfillment_status_label | default: 'Processing' }}
+              </span>
+            </div>
+          </div>
+        </section>
+
+        {%- comment -%} Order Items {%- endcomment -%}
+        <section class="sz-order-section">
+          <h2 class="sz-section-title">Order Items</h2>
+          <div class="sz-order-items">
+            {%- for line_item in order.line_items -%}
+              <div class="sz-order-item">
+                <div class="sz-item-image">
+                  {%- if line_item.image -%}
+                    <img
+                      src="{{ line_item.image | image_url: width: 100 }}"
+                      alt="{{ line_item.title }}"
+                      loading="lazy"
+                    >
+                  {%- else -%}
+                    <div class="sz-item-placeholder"></div>
+                  {%- endif -%}
+                </div>
+                <div class="sz-item-details">
+                  <h3 class="sz-item-title">
+                    {%- if line_item.product.url != blank -%}
+                      <a href="{{ line_item.product.url }}">{{ line_item.title }}</a>
+                    {%- else -%}
+                      {{ line_item.title }}
+                    {%- endif -%}
+                  </h3>
+                  {%- unless line_item.product.has_only_default_variant -%}
+                    <p class="sz-item-variant">{{ line_item.variant.title }}</p>
+                  {%- endunless -%}
+                  {%- if line_item.properties.size > 0 -%}
+                    <ul class="sz-item-properties">
+                      {%- for property in line_item.properties -%}
+                        {%- unless property.last == blank -%}
+                          <li><strong>{{ property.first }}:</strong> {{ property.last }}</li>
+                        {%- endunless -%}
+                      {%- endfor -%}
+                    </ul>
+                  {%- endif -%}
+                  {%- if line_item.fulfillment -%}
+                    <p class="sz-item-fulfillment">
+                      Fulfilled {{ line_item.fulfillment.created_at | date: '%B %d, %Y' }}
+                      {%- if line_item.fulfillment.tracking_number -%}
+                        <br><a href="{{ line_item.fulfillment.tracking_url }}" target="_blank" rel="noopener">Track Package</a>
+                      {%- endif -%}
+                    </p>
+                  {%- endif -%}
+                </div>
+                <div class="sz-item-quantity">
+                  <span class="sz-qty-label">Qty:</span> {{ line_item.quantity }}
+                </div>
+                <div class="sz-item-price">
+                  {{ line_item.final_line_price | money }}
+                </div>
+              </div>
+            {%- endfor -%}
+          </div>
+        </section>
+
+        {%- comment -%} Order Summary {%- endcomment -%}
+        <section class="sz-order-section sz-order-summary">
+          <h2 class="sz-section-title">Order Summary</h2>
+          <div class="sz-summary-rows">
+            <div class="sz-summary-row">
+              <span>Subtotal</span>
+              <span>{{ order.line_items_subtotal_price | money }}</span>
+            </div>
+
+            {%- for discount_application in order.discount_applications -%}
+              <div class="sz-summary-row sz-discount-row">
+                <span>Discount ({{ discount_application.title }})</span>
+                <span>-{{ discount_application.total_allocated_amount | money }}</span>
+              </div>
+            {%- endfor -%}
+
+            {%- for shipping_method in order.shipping_methods -%}
+              <div class="sz-summary-row">
+                <span>Shipping ({{ shipping_method.title }})</span>
+                <span>{{ shipping_method.price | money }}</span>
+              </div>
+            {%- endfor -%}
+
+            {%- for tax_line in order.tax_lines -%}
+              <div class="sz-summary-row">
+                <span>{{ tax_line.title }}</span>
+                <span>{{ tax_line.price | money }}</span>
+              </div>
+            {%- endfor -%}
+
+            <div class="sz-summary-row sz-summary-total">
+              <span>Total</span>
+              <span>{{ order.total_price | money }}</span>
+            </div>
+          </div>
+        </section>
+
+      </main>
+
+      {%- comment -%} Order Sidebar {%- endcomment -%}
+      <aside class="sz-order-sidebar">
+
+        {%- comment -%} Shipping Address {%- endcomment -%}
+        <div class="sz-sidebar-card">
+          <h3 class="sz-sidebar-title">Shipping Address</h3>
+          {%- if order.shipping_address -%}
+            <address class="sz-address">
+              {{ order.shipping_address | format_address }}
+            </address>
+          {%- else -%}
+            <p class="sz-no-address">No shipping address provided</p>
+          {%- endif -%}
+        </div>
+
+        {%- comment -%} Billing Address {%- endcomment -%}
+        <div class="sz-sidebar-card">
+          <h3 class="sz-sidebar-title">Billing Address</h3>
+          {%- if order.billing_address -%}
+            <address class="sz-address">
+              {{ order.billing_address | format_address }}
+            </address>
+          {%- else -%}
+            <p class="sz-no-address">Same as shipping address</p>
+          {%- endif -%}
+        </div>
+
+        {%- comment -%} Payment Method {%- endcomment -%}
+        <div class="sz-sidebar-card">
+          <h3 class="sz-sidebar-title">Payment Method</h3>
+          {%- for transaction in order.transactions -%}
+            {%- if transaction.status == 'success' -%}
+              <p class="sz-payment-method">
+                {{ transaction.gateway_display_name }}
+              </p>
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+
+        {%- comment -%} Need Help {%- endcomment -%}
+        <div class="sz-sidebar-card sz-help-card">
+          <h3 class="sz-sidebar-title">Need Help?</h3>
+          <p>Have questions about your order?</p>
+          <a href="/pages/contact" class="sz-btn sz-btn-secondary sz-btn-full">Contact Us</a>
+        </div>
+
+      </aside>
+
+    </div>
+
+  </div>
+</div>
+
+<style>
+  .sz-account-page {
+    padding: var(--sz-space-xl) var(--sz-space-md);
+    background: var(--sz-warm-white);
+    min-height: 70vh;
+  }
+
+  .sz-account-container {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .sz-order-header {
+    margin-bottom: var(--sz-space-xl);
+  }
+
+  .sz-back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--sz-space-sm);
+    font-family: var(--sz-font-body);
+    font-size: var(--sz-text-sm);
+    color: var(--sz-primary);
+    text-decoration: none;
+    margin-bottom: var(--sz-space-md);
+    transition: gap var(--sz-transition-fast);
+  }
+
+  .sz-back-link:hover {
+    gap: var(--sz-space-md);
+  }
+
+  .sz-order-title {
+    font-family: var(--sz-font-heading);
+    font-size: var(--sz-text-2xl);
+    font-weight: 600;
+    color: var(--sz-primary-dark);
+    margin: 0 0 var(--sz-space-xs) 0;
+  }
+
+  .sz-order-date {
+    font-family: var(--sz-font-body);
+    font-size: var(--sz-text-sm);
+    color: var(--sz-gray);
+    margin: 0;
+  }
+
+  .sz-order-layout {
+    display: grid;
+    grid-template-columns: 1fr 320px;
+    gap: var(--sz-space-xl);
+  }
+
+  @media (max-width: 900px) {
+    .sz-order-layout {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .sz-order-section {
+    background: var(--sz-white);
+    border-radius: var(--sz-radius-md);
+    padding: var(--sz-space-xl);
+    margin-bottom: var(--sz-space-lg);
+    box-shadow: var(--sz-shadow-sm);
+  }
+
+  .sz-section-title {
+    font-family: var(--sz-font-heading);
+    font-size: var(--sz-text-lg);
+    font-weight: 600;
+    color: var(--sz-primary-dark);
+    margin: 0 0 var(--sz-space-lg) 0;
+    padding-bottom: var(--sz-space-md);
+    border-bottom: 1px solid var(--sz-border-light);
+  }
+
+  /* Status Section */
+  .sz-order-status-section {
+    background: var(--sz-beige);
+  }
+
+  .sz-status-row {
+    display: flex;
+    gap: var(--sz-space-2xl);
+    flex-wrap: wrap;
+  }
+
+  .sz-status-item {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sz-space-xs);
+  }
+
+  .sz-status-label {
+    font-family: var(--sz-font-body);
+    font-size: var(--sz-text-xs);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--sz-gray);
+  }
+
+  .sz-status-value {
+    font-family: var(--sz-font-body);
+    font-size: var(--sz-text-sm);
+    font-weight: 600;
+    padding: 6px 12px;
+    border-radius: var(--sz-radius-full);
+    display: inline-block;
+  }
+
+  .sz-status-paid, .sz-status-fulfilled {
+    background: #DCFCE7;
+    color: #166534;
+  }
+
+  .sz-status-pending, .sz-status-unfulfilled {
+    background: #FEF3C7;
+    color: #92400E;
+  }
+
+  .sz-status-refunded, .sz-status-voided {
+    background: #FEE2E2;
+    color: #991B1B;
+  }
+
+  /* Order Items */
+  .sz-order-items {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sz-space-lg);
+  }
+
+  .sz-order-item {
+    display: grid;
+    grid-template-columns: 80px 1fr auto auto;
+    gap: var(--sz-space-md);
+    align-items: start;
+    padding-bottom: var(--sz-space-lg);
+    border-bottom: 1px solid var(--sz-border-light);
+  }
+
+  .sz-order-item:last-child {
+    padding-bottom: 0;
+    border-bottom: none;
+  }
+
+  @media (max-width: 600px) {
+    .sz-order-item {
+      grid-template-columns: 60px 1fr;
+    }
+
+    .sz-item-quantity,
+    .sz-item-price {
+      grid-column: 2;
+    }
+  }
+
+  .sz-item-image {
+    width: 80px;
+    aspect-ratio: 1;
+    background: var(--sz-beige);
+    border-radius: var(--sz-radius-sm);
+    overflow: hidden;
+  }
+
+  @media (max-width: 600px) {
+    .sz-item-image {
+      width: 60px;
+    }
+  }
+
+  .sz-item-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .sz-item-placeholder {
+    width: 100%;
+    height: 100%;
+    background: var(--sz-beige);
+  }
+
+  .sz-item-title {
+    font-family: var(--sz-font-body);
+    font-size: var(--sz-text-base);
+    font-weight: 500;
+    color: var(--sz-charcoal);
+    margin: 0 0 var(--sz-space-xs) 0;
+  }
+
+  .sz-item-title a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .sz-item-title a:hover {
+    color: var(--sz-primary);
+  }
+
+  .sz-item-variant {
+    font-family: var(--sz-font-body);
+    font-size: var(--sz-text-sm);
+    color: var(--sz-gray);
+    margin: 0 0 var(--sz-space-xs) 0;
+  }
+
+  .sz-item-properties {
+    list-style: none;
+    padding: 0;
+    margin: var(--sz-space-xs) 0 0 0;
+  }
+
+  .sz-item-properties li {
+    font-family: var(--sz-font-body);
+    font-size: var(--sz-text-xs);
+    color: var(--sz-gray);
+  }
+
+  .sz-item-fulfillment {
+    font-family: var(--sz-font-body);
+    font-size: var(--sz-text-xs);
+    color: var(--sz-success);
+    margin: var(--sz-space-sm) 0 0 0;
+  }
+
+  .sz-item-fulfillment a {
+    color: var(--sz-primary);
+  }
+
+  .sz-item-quantity {
+    font-family: var(--sz-font-body);
+    font-size: var(--sz-text-sm);
+    color: var(--sz-gray);
+    text-align: center;
+  }
+
+  .sz-qty-label {
+    display: none;
+  }
+
+  @media (max-width: 600px) {
+    .sz-qty-label {
+      display: inline;
+    }
+  }
+
+  .sz-item-price {
+    font-family: var(--sz-font-body);
+    font-size: var(--sz-text-base);
+    font-weight: 600;
+    color: var(--sz-primary-dark);
+    text-align: right;
+  }
+
+  /* Order Summary */
+  .sz-summary-rows {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sz-space-sm);
+  }
+
+  .sz-summary-row {
+    display: flex;
+    justify-content: space-between;
+    font-family: var(--sz-font-body);
+    font-size: var(--sz-text-base);
+    color: var(--sz-charcoal);
+    padding: var(--sz-space-sm) 0;
+  }
+
+  .sz-discount-row span:last-child {
+    color: var(--sz-success);
+  }
+
+  .sz-summary-total {
+    border-top: 2px solid var(--sz-border-light);
+    margin-top: var(--sz-space-sm);
+    padding-top: var(--sz-space-md);
+    font-weight: 600;
+    font-size: var(--sz-text-lg);
+    color: var(--sz-primary-dark);
+  }
+
+  /* Sidebar */
+  .sz-order-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sz-space-lg);
+  }
+
+  .sz-sidebar-card {
+    background: var(--sz-white);
+    border-radius: var(--sz-radius-md);
+    padding: var(--sz-space-lg);
+    box-shadow: var(--sz-shadow-sm);
+  }
+
+  .sz-sidebar-title {
+    font-family: var(--sz-font-body);
+    font-size: var(--sz-text-sm);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--sz-gray);
+    margin: 0 0 var(--sz-space-md) 0;
+  }
+
+  .sz-address {
+    font-family: var(--sz-font-body);
+    font-size: var(--sz-text-sm);
+    font-style: normal;
+    color: var(--sz-charcoal);
+    line-height: 1.6;
+  }
+
+  .sz-no-address {
+    font-family: var(--sz-font-body);
+    font-size: var(--sz-text-sm);
+    color: var(--sz-gray);
+    margin: 0;
+  }
+
+  .sz-payment-method {
+    font-family: var(--sz-font-body);
+    font-size: var(--sz-text-sm);
+    color: var(--sz-charcoal);
+    margin: 0;
+  }
+
+  .sz-help-card {
+    background: var(--sz-beige);
+  }
+
+  .sz-help-card p {
+    font-family: var(--sz-font-body);
+    font-size: var(--sz-text-sm);
+    color: var(--sz-charcoal);
+    margin: 0 0 var(--sz-space-md) 0;
+  }
+
+  .sz-btn-full {
+    width: 100%;
+  }
+</style>

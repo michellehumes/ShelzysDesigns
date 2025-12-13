@@ -1,0 +1,17 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-cart",
+      "settings": {
+        "title": "Your Cart",
+        "show_shipping_bar": true,
+        "free_shipping_threshold": 75,
+        "show_trust_badges": true,
+        "checkout_button_text": "Proceed to Checkout",
+        "empty_title": "Your cart is empty",
+        "empty_text": "Looks like you haven't added any personalized bottles yet. Let's fix that!"
+      }
+    }
+  },
+  "order": ["main"]
+}

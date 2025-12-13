@@ -1,0 +1,924 @@
+{%- comment -%}
+  Shelzy's Designs - Main Product Section
+  Shopify 2.0 section for product pages with conversion optimization
+{%- endcomment -%}
+
+{%- comment -%} Product Schema for SEO {%- endcomment -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Product",
+  "name": {{ product.title | json }},
+  "description": {{ product.description | strip_html | json }},
+  "image": {{ product.featured_image | image_url: width: 1200 | json }},
+  "url": "{{ shop.url }}{{ product.url }}",
+  "brand": {
+    "@type": "Brand",
+    "name": "Shelzy's Designs"
+  },
+  "offers": {
+    "@type": "Offer",
+    "priceCurrency": {{ cart.currency.iso_code | json }},
+    "price": {{ product.price | divided_by: 100.0 | json }},
+    "availability": "{% if product.available %}https://schema.org/InStock{% else %}https://schema.org/OutOfStock{% endif %}",
+    "url": "{{ shop.url }}{{ product.url }}"
+  }
+  {%- if product.metafields.reviews.rating.value != blank -%}
+  ,"aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": {{ product.metafields.reviews.rating.value.rating | json }},
+    "reviewCount": {{ product.metafields.reviews.rating_count | json }}
+  }
+  {%- endif -%}
+}
+</script>
+
+<div class="sz-product-page">
+  <div class="sz-product-container">
+
+    {%- comment -%} Breadcrumbs {%- endcomment -%}
+    {% render 'shelzys-breadcrumbs' %}
+
+    <div class="sz-product-layout">
+
+      {%- comment -%} Left: Product Gallery {%- endcomment -%}
+      <div class="sz-product-gallery">
+        <div class="sz-product-main-image">
+          {%- if product.featured_image -%}
+            <img
+              src="{{ product.featured_image | image_url: width: 800 }}"
+              srcset="{{ product.featured_image | image_url: width: 400 }} 400w,
+                      {{ product.featured_image | image_url: width: 600 }} 600w,
+                      {{ product.featured_image | image_url: width: 800 }} 800w,
+                      {{ product.featured_image | image_url: width: 1200 }} 1200w"
+              sizes="(max-width: 768px) 100vw, 50vw"
+              alt="{{ product.featured_image.alt | default: product.title }}"
+              loading="eager"
+              class="sz-main-img"
+              id="szProductMainImage"
+            >
+          {%- else -%}
+            <div class="sz-placeholder-image">No image available</div>
+          {%- endif -%}
+
+          {%- comment -%} Product Badges {%- endcomment -%}
+          {% render 'shelzys-product-badges', product: product %}
+
+          {%- comment -%} Zoom Icon {%- endcomment -%}
+          <button type="button" class="sz-zoom-btn" aria-label="Zoom image">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+              <line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/>
+            </svg>
+          </button>
+        </div>
+
+        {%- comment -%} Thumbnail Gallery {%- endcomment -%}
+        {%- if product.images.size > 1 -%}
+          <div class="sz-product-thumbnails">
+            {%- for image in product.images -%}
+              <button
+                type="button"
+                class="sz-thumbnail{% if forloop.first %} sz-thumbnail-active{% endif %}"
+                data-image-url="{{ image | image_url: width: 800 }}"
+                data-image-url-zoom="{{ image | image_url: width: 1200 }}"
+                aria-label="View image {{ forloop.index }}"
+              >
+                <img
+                  src="{{ image | image_url: width: 100 }}"
+                  alt="{{ image.alt | default: product.title }}"
+                  loading="lazy"
+                >
+              </button>
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+      </div>
+
+      {%- comment -%} Right: Product Info {%- endcomment -%}
+      <div class="sz-product-info">
+
+        {%- comment -%} Product Title {%- endcomment -%}
+        <h1 class="sz-product-title">{{ product.title }}</h1>
+
+        {%- comment -%} Reviews Summary {%- endcomment -%}
+        {%- if section.settings.show_reviews -%}
+          <div class="sz-product-reviews-summary">
+            <div class="sz-stars">
+              {%- for i in (1..5) -%}
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="{% if i <= 5 %}currentColor{% else %}none{% endif %}" stroke="currentColor" stroke-width="2">
+                  <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                </svg>
+              {%- endfor -%}
+            </div>
+            <span class="sz-reviews-count">{{ product.metafields.reviews.rating_count | default: '47' }} reviews</span>
+          </div>
+        {%- endif -%}
+
+        {%- comment -%} Price {%- endcomment -%}
+        <div class="sz-product-price-row">
+          <span class="sz-product-price" data-product-price>{{ product.price | money }}</span>
+          {%- if product.compare_at_price > product.price -%}
+            <span class="sz-product-compare-price">{{ product.compare_at_price | money }}</span>
+            {%- assign savings = product.compare_at_price | minus: product.price | times: 100 | divided_by: product.compare_at_price -%}
+            <span class="sz-product-sale-badge">Save {{ savings }}%</span>
+          {%- endif -%}
+        </div>
+
+        {%- comment -%} Urgency - Low Stock Warning {%- endcomment -%}
+        {%- if section.settings.show_stock_warning -%}
+          {%- assign variant = product.selected_or_first_available_variant -%}
+          {%- if variant.inventory_management == 'shopify' and variant.inventory_quantity > 0 and variant.inventory_quantity <= section.settings.low_stock_threshold -%}
+            <div class="sz-low-stock-warning">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
+              </svg>
+              <span>Only <strong>{{ variant.inventory_quantity }}</strong> left in stock - order soon!</span>
+            </div>
+          {%- endif -%}
+        {%- endif -%}
+
+        {%- comment -%} Trust Indicators {%- endcomment -%}
+        <div class="sz-product-trust-strip">
+          <span class="sz-trust-item">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+            {{ section.settings.trust_shipping }}
+          </span>
+          <span class="sz-trust-item">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            {{ section.settings.trust_guarantee }}
+          </span>
+          <span class="sz-trust-item">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            {{ section.settings.trust_shipping_time }}
+          </span>
+        </div>
+
+        {%- comment -%} Product Form {%- endcomment -%}
+        <form method="post" action="/cart/add" id="szProductForm" class="sz-product-form">
+          <input type="hidden" name="id" id="szVariantId" value="{{ product.selected_or_first_available_variant.id }}">
+
+          {%- comment -%} Variant Selector {%- endcomment -%}
+          {%- unless product.has_only_default_variant -%}
+            {%- for option in product.options_with_values -%}
+              <div class="sz-form-group">
+                <label class="sz-form-label" for="Option-{{ forloop.index }}">
+                  {{ option.name }}
+                  {%- if option.name == 'Color' -%}
+                    <span class="sz-selected-value">{{ option.selected_value }}</span>
+                  {%- endif -%}
+                </label>
+
+                {%- if option.name == 'Color' and section.settings.use_color_swatches -%}
+                  <div class="sz-color-swatches">
+                    {%- for value in option.values -%}
+                      <button
+                        type="button"
+                        class="sz-color-swatch{% if option.selected_value == value %} sz-swatch-active{% endif %}"
+                        data-option-index="{{ forloop.parentloop.index0 }}"
+                        data-value="{{ value }}"
+                        title="{{ value }}"
+                        style="background-color: {{ value | handleize }};"
+                      >
+                        <span class="visually-hidden">{{ value }}</span>
+                      </button>
+                    {%- endfor -%}
+                  </div>
+                {%- else -%}
+                  <select
+                    name="options[{{ option.name | escape }}]"
+                    id="Option-{{ forloop.index }}"
+                    class="sz-form-select"
+                    data-option-index="{{ forloop.index0 }}"
+                  >
+                    {%- for value in option.values -%}
+                      <option
+                        value="{{ value | escape }}"
+                        {% if option.selected_value == value %}selected{% endif %}
+                      >
+                        {{ value }}
+                      </option>
+                    {%- endfor -%}
+                  </select>
+                {%- endif -%}
+              </div>
+            {%- endfor -%}
+          {%- endunless -%}
+
+          {%- comment -%} Personalization Fields {%- endcomment -%}
+          {% render 'shelzys-personalization-form' %}
+
+          {%- comment -%} Quantity & Add to Cart {%- endcomment -%}
+          <div class="sz-form-row">
+            <div class="sz-form-group sz-qty-group">
+              <label class="sz-form-label" for="Quantity">Quantity</label>
+              <div class="sz-quantity-selector">
+                <button type="button" class="sz-qty-btn" data-action="decrease" aria-label="Decrease quantity">-</button>
+                <input type="number" name="quantity" id="Quantity" value="1" min="1" max="99" class="sz-qty-input">
+                <button type="button" class="sz-qty-btn" data-action="increase" aria-label="Increase quantity">+</button>
+              </div>
+            </div>
+
+            <div class="sz-form-group sz-atc-group">
+              <button
+                type="submit"
+                name="add"
+                class="sz-btn sz-btn-primary sz-btn-atc"
+                {% unless product.available %}disabled{% endunless %}
+              >
+                {%- if product.available -%}
+                  <span class="sz-atc-text">{{ section.settings.add_to_cart_text }}</span>
+                  <span class="sz-atc-price">{{ product.price | money }}</span>
+                {%- else -%}
+                  Sold Out
+                {%- endif -%}
+              </button>
+            </div>
+          </div>
+
+          {%- comment -%} Buy Now Button {%- endcomment -%}
+          {%- if section.settings.show_buy_now -%}
+            <button type="submit" name="checkout" class="sz-btn sz-btn-secondary sz-btn-buy-now">
+              Buy Now
+            </button>
+          {%- endif -%}
+        </form>
+
+        {%- comment -%} Payment Icons {%- endcomment -%}
+        <div class="sz-payment-methods">
+          <span class="sz-payment-label">Secure checkout with:</span>
+          <div class="sz-payment-icons">
+            {{ shop.enabled_payment_types | payment_type_svg_tag }}
+          </div>
+        </div>
+
+        {%- comment -%} Delivery Estimator {%- endcomment -%}
+        {% render 'shelzys-delivery-estimator' %}
+
+        {%- comment -%} Product Description (Accordion) {%- endcomment -%}
+        <div class="sz-product-accordion">
+          <details class="sz-accordion-item" open>
+            <summary class="sz-accordion-header">
+              <span>Description</span>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="6 9 12 15 18 9"/>
+              </svg>
+            </summary>
+            <div class="sz-accordion-content">
+              {{ product.description }}
+            </div>
+          </details>
+
+          <details class="sz-accordion-item">
+            <summary class="sz-accordion-header">
+              <span>{{ section.settings.sublimation_heading }}</span>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="6 9 12 15 18 9"/>
+              </svg>
+            </summary>
+            <div class="sz-accordion-content">
+              <p>{{ section.settings.sublimation_text }}</p>
+            </div>
+          </details>
+
+          <details class="sz-accordion-item">
+            <summary class="sz-accordion-header">
+              <span>Shipping & Returns</span>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="6 9 12 15 18 9"/>
+              </svg>
+            </summary>
+            <div class="sz-accordion-content">
+              <ul>
+                <li>Free shipping on orders over $75</li>
+                <li>Ships within 3-5 business days</li>
+                <li>Personalized items are non-returnable</li>
+                <li>Contact us for damaged items within 48 hours</li>
+              </ul>
+            </div>
+          </details>
+        </div>
+
+      </div>
+
+    </div>
+
+    {%- comment -%} Product FAQ {%- endcomment -%}
+    {% render 'shelzys-product-faq' %}
+
+    {%- comment -%} Recently Viewed {%- endcomment -%}
+    {% render 'shelzys-recently-viewed' %}
+
+    {%- comment -%} Upsells {%- endcomment -%}
+    {% render 'shelzys-upsell-frequently-bought' %}
+
+  </div>
+</div>
+
+{% style %}
+  .sz-product-page {
+    padding: var(--sz-space-xl, 32px) var(--sz-space-md, 16px);
+    background: var(--sz-white, #FFFFFF);
+  }
+
+  .sz-product-container {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .sz-product-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--sz-space-2xl, 48px);
+    margin-top: var(--sz-space-lg, 24px);
+  }
+
+  @media (max-width: 900px) {
+    .sz-product-layout {
+      grid-template-columns: 1fr;
+      gap: var(--sz-space-xl, 32px);
+    }
+  }
+
+  /* Gallery */
+  .sz-product-gallery {
+    position: sticky;
+    top: 100px;
+    align-self: start;
+  }
+
+  @media (max-width: 900px) {
+    .sz-product-gallery {
+      position: static;
+    }
+  }
+
+  .sz-product-main-image {
+    position: relative;
+    background: var(--sz-warm-white, #FAF9F6);
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 16px;
+  }
+
+  .sz-main-img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  .sz-zoom-btn {
+    position: absolute;
+    bottom: 16px;
+    right: 16px;
+    width: 40px;
+    height: 40px;
+    background: var(--sz-white, #FFFFFF);
+    border: none;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    transition: transform 0.2s;
+  }
+
+  .sz-zoom-btn:hover {
+    transform: scale(1.1);
+  }
+
+  .sz-product-thumbnails {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .sz-thumbnail {
+    width: 80px;
+    height: 80px;
+    padding: 0;
+    border: 2px solid transparent;
+    border-radius: 8px;
+    overflow: hidden;
+    cursor: pointer;
+    background: var(--sz-warm-white, #FAF9F6);
+    transition: border-color 0.2s;
+  }
+
+  .sz-thumbnail:hover,
+  .sz-thumbnail-active {
+    border-color: var(--sz-primary, #8BAA88);
+  }
+
+  .sz-thumbnail img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  /* Product Info */
+  .sz-product-title {
+    font-family: var(--sz-font-heading, 'Playfair Display', Georgia, serif);
+    font-size: clamp(1.75rem, 4vw, 2.5rem);
+    font-weight: 600;
+    color: var(--sz-charcoal, #2B2B2B);
+    margin: 0 0 8px 0;
+    line-height: 1.2;
+  }
+
+  /* Reviews */
+  .sz-product-reviews-summary {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 16px;
+  }
+
+  .sz-stars {
+    display: flex;
+    gap: 2px;
+    color: #F59E0B;
+  }
+
+  .sz-reviews-count {
+    font-family: var(--sz-font-body, 'Inter', sans-serif);
+    font-size: 14px;
+    color: var(--sz-gray, #6B7280);
+    text-decoration: underline;
+    cursor: pointer;
+  }
+
+  /* Price */
+  .sz-product-price-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+
+  .sz-product-price {
+    font-family: var(--sz-font-body, 'Inter', sans-serif);
+    font-size: 28px;
+    font-weight: 600;
+    color: var(--sz-charcoal, #2B2B2B);
+  }
+
+  .sz-product-compare-price {
+    font-family: var(--sz-font-body, 'Inter', sans-serif);
+    font-size: 18px;
+    color: var(--sz-gray, #6B7280);
+    text-decoration: line-through;
+  }
+
+  .sz-product-sale-badge {
+    background: var(--sz-error, #DC2626);
+    color: var(--sz-white, #FFFFFF);
+    font-family: var(--sz-font-body, 'Inter', sans-serif);
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 4px 10px;
+    border-radius: 4px;
+  }
+
+  /* Low Stock Warning */
+  .sz-low-stock-warning {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 16px;
+    background: #FEF2F2;
+    border: 1px solid #FEE2E2;
+    border-radius: 8px;
+    margin-bottom: 16px;
+    color: #DC2626;
+    font-family: var(--sz-font-body, 'Inter', sans-serif);
+    font-size: 14px;
+    animation: sz-pulse 2s infinite;
+  }
+
+  @keyframes sz-pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.8; }
+  }
+
+  /* Trust Strip */
+  .sz-product-trust-strip {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    padding: 16px 0;
+    border-top: 1px solid var(--sz-border-light, #E5E7EB);
+    border-bottom: 1px solid var(--sz-border-light, #E5E7EB);
+    margin-bottom: 24px;
+  }
+
+  .sz-trust-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--sz-font-body, 'Inter', sans-serif);
+    font-size: 13px;
+    color: var(--sz-primary-dark, #4E5F4A);
+  }
+
+  .sz-trust-item svg {
+    color: var(--sz-primary, #8BAA88);
+    flex-shrink: 0;
+  }
+
+  /* Form */
+  .sz-product-form {
+    margin-bottom: 24px;
+  }
+
+  .sz-form-group {
+    margin-bottom: 20px;
+  }
+
+  .sz-form-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--sz-font-body, 'Inter', sans-serif);
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--sz-charcoal, #2B2B2B);
+    margin-bottom: 8px;
+  }
+
+  .sz-selected-value {
+    color: var(--sz-gray, #6B7280);
+    font-weight: 400;
+  }
+
+  .sz-form-select {
+    width: 100%;
+    padding: 12px 16px;
+    font-family: var(--sz-font-body, 'Inter', sans-serif);
+    font-size: 16px;
+    color: var(--sz-charcoal, #2B2B2B);
+    background: var(--sz-white, #FFFFFF);
+    border: 1px solid var(--sz-border-light, #E5E7EB);
+    border-radius: 8px;
+    cursor: pointer;
+  }
+
+  .sz-form-select:focus {
+    outline: none;
+    border-color: var(--sz-primary, #8BAA88);
+  }
+
+  /* Color Swatches */
+  .sz-color-swatches {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .sz-color-swatch {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 2px solid transparent;
+    cursor: pointer;
+    transition: all 0.2s;
+    box-shadow: inset 0 0 0 2px rgba(255,255,255,0.3);
+  }
+
+  .sz-color-swatch:hover {
+    transform: scale(1.1);
+  }
+
+  .sz-swatch-active {
+    border-color: var(--sz-charcoal, #2B2B2B);
+    box-shadow: 0 0 0 2px var(--sz-white, #FFFFFF), 0 0 0 4px var(--sz-charcoal, #2B2B2B);
+  }
+
+  /* Quantity & ATC Row */
+  .sz-form-row {
+    display: flex;
+    gap: 16px;
+    align-items: flex-end;
+  }
+
+  .sz-qty-group {
+    flex-shrink: 0;
+  }
+
+  .sz-atc-group {
+    flex: 1;
+  }
+
+  .sz-quantity-selector {
+    display: inline-flex;
+    align-items: center;
+    border: 1px solid var(--sz-border-light, #E5E7EB);
+    border-radius: 8px;
+  }
+
+  .sz-qty-btn {
+    width: 44px;
+    height: 48px;
+    background: var(--sz-warm-white, #FAF9F6);
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+
+  .sz-qty-btn:hover {
+    background: var(--sz-beige, #F5F0EB);
+  }
+
+  .sz-qty-input {
+    width: 50px;
+    height: 48px;
+    text-align: center;
+    font-family: var(--sz-font-body, 'Inter', sans-serif);
+    font-size: 16px;
+    border: none;
+    border-left: 1px solid var(--sz-border-light, #E5E7EB);
+    border-right: 1px solid var(--sz-border-light, #E5E7EB);
+  }
+
+  .sz-qty-input:focus {
+    outline: none;
+  }
+
+  /* Add to Cart Button */
+  .sz-btn-atc {
+    width: 100%;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-size: 15px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  .sz-btn-atc:disabled {
+    background: var(--sz-gray, #6B7280);
+    cursor: not-allowed;
+  }
+
+  .sz-atc-price {
+    opacity: 0.9;
+  }
+
+  /* Buy Now */
+  .sz-btn-buy-now {
+    width: 100%;
+    margin-top: 12px;
+    padding: 14px 24px;
+  }
+
+  /* Payment Methods */
+  .sz-payment-methods {
+    text-align: center;
+    padding: 16px 0;
+    border-bottom: 1px solid var(--sz-border-light, #E5E7EB);
+    margin-bottom: 24px;
+  }
+
+  .sz-payment-label {
+    display: block;
+    font-family: var(--sz-font-body, 'Inter', sans-serif);
+    font-size: 12px;
+    color: var(--sz-gray, #6B7280);
+    margin-bottom: 8px;
+  }
+
+  .sz-payment-icons {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .sz-payment-icons svg {
+    height: 24px;
+    width: auto;
+  }
+
+  /* Accordion */
+  .sz-product-accordion {
+    border-top: 1px solid var(--sz-border-light, #E5E7EB);
+  }
+
+  .sz-accordion-item {
+    border-bottom: 1px solid var(--sz-border-light, #E5E7EB);
+  }
+
+  .sz-accordion-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 0;
+    font-family: var(--sz-font-body, 'Inter', sans-serif);
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--sz-charcoal, #2B2B2B);
+    cursor: pointer;
+    list-style: none;
+  }
+
+  .sz-accordion-header::-webkit-details-marker {
+    display: none;
+  }
+
+  .sz-accordion-header svg {
+    transition: transform 0.2s;
+  }
+
+  details[open] .sz-accordion-header svg {
+    transform: rotate(180deg);
+  }
+
+  .sz-accordion-content {
+    padding: 0 0 16px 0;
+    font-family: var(--sz-font-body, 'Inter', sans-serif);
+    font-size: 14px;
+    line-height: 1.7;
+    color: var(--sz-charcoal, #2B2B2B);
+  }
+
+  .sz-accordion-content ul {
+    margin: 0;
+    padding-left: 20px;
+  }
+
+  .sz-accordion-content li {
+    margin-bottom: 8px;
+  }
+
+  .visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+{% endstyle %}
+
+<script>
+(function() {
+  // Thumbnail gallery switcher
+  var thumbnails = document.querySelectorAll('.sz-thumbnail');
+  var mainImage = document.getElementById('szProductMainImage');
+
+  thumbnails.forEach(function(thumb) {
+    thumb.addEventListener('click', function() {
+      var imageUrl = this.getAttribute('data-image-url');
+      mainImage.src = imageUrl;
+      thumbnails.forEach(function(t) { t.classList.remove('sz-thumbnail-active'); });
+      this.classList.add('sz-thumbnail-active');
+    });
+  });
+
+  // Quantity selector
+  var qtyBtns = document.querySelectorAll('.sz-qty-btn');
+  var qtyInput = document.getElementById('Quantity');
+
+  qtyBtns.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var action = this.getAttribute('data-action');
+      var currentValue = parseInt(qtyInput.value) || 1;
+      if (action === 'increase') {
+        qtyInput.value = currentValue + 1;
+      } else if (action === 'decrease' && currentValue > 1) {
+        qtyInput.value = currentValue - 1;
+      }
+    });
+  });
+
+  // Color swatches
+  var swatches = document.querySelectorAll('.sz-color-swatch');
+  swatches.forEach(function(swatch) {
+    swatch.addEventListener('click', function() {
+      var optionIndex = this.getAttribute('data-option-index');
+      var value = this.getAttribute('data-value');
+
+      // Update visual
+      var siblings = this.parentElement.querySelectorAll('.sz-color-swatch');
+      siblings.forEach(function(s) { s.classList.remove('sz-swatch-active'); });
+      this.classList.add('sz-swatch-active');
+
+      // Update label
+      var label = this.closest('.sz-form-group').querySelector('.sz-selected-value');
+      if (label) label.textContent = value;
+    });
+  });
+})();
+</script>
+
+{% schema %}
+{
+  "name": "Product Page",
+  "tag": "section",
+  "class": "sz-product-section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Reviews"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_reviews",
+      "label": "Show reviews summary",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Stock Warning"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_stock_warning",
+      "label": "Show low stock warning",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "low_stock_threshold",
+      "label": "Low stock threshold",
+      "min": 5,
+      "max": 20,
+      "step": 1,
+      "default": 10
+    },
+    {
+      "type": "header",
+      "content": "Trust Badges"
+    },
+    {
+      "type": "text",
+      "id": "trust_shipping",
+      "label": "Shipping badge text",
+      "default": "Free shipping over $75"
+    },
+    {
+      "type": "text",
+      "id": "trust_guarantee",
+      "label": "Guarantee badge text",
+      "default": "No-peel guarantee"
+    },
+    {
+      "type": "text",
+      "id": "trust_shipping_time",
+      "label": "Shipping time text",
+      "default": "Ships in 3-5 days"
+    },
+    {
+      "type": "header",
+      "content": "Buttons"
+    },
+    {
+      "type": "text",
+      "id": "add_to_cart_text",
+      "label": "Add to cart text",
+      "default": "Add to Cart"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_buy_now",
+      "label": "Show Buy Now button",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Options"
+    },
+    {
+      "type": "checkbox",
+      "id": "use_color_swatches",
+      "label": "Use color swatches",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Sublimation Info"
+    },
+    {
+      "type": "text",
+      "id": "sublimation_heading",
+      "label": "Heading",
+      "default": "Why Our Bottles Don't Peel"
+    },
+    {
+      "type": "textarea",
+      "id": "sublimation_text",
+      "label": "Description",
+      "default": "Unlike vinyl stickers, our sublimation printing infuses the design directly into the bottle's coating. The result? A smooth, permanent finish that won't peel, crack, or fade."
+    }
+  ]
+}
+{% endschema %}

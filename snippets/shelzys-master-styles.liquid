@@ -1,0 +1,470 @@
+{%- comment -%}
+  Shelzy's Designs - Master Styles
+
+  Consolidated design system with unified:
+  - CSS Variables
+  - Typography scale
+  - Spacing system
+  - Button styles
+  - Component patterns
+
+  Add to theme.liquid <head>: {% render 'shelzys-master-styles' %}
+{%- endcomment -%}
+
+<style>
+/* ═══════════════════════════════════════════════════════════════════
+   DESIGN SYSTEM - CSS VARIABLES
+   ═══════════════════════════════════════════════════════════════════ */
+:root {
+  /* ─── Primary Brand Colors ─── */
+  --sz-sage: #8BAA88;
+  --sz-sage-dark: #4E5F4A;
+  --sz-sage-light: #A6C4A2;
+  --sz-evergreen: #2C3E2D;
+
+  /* ─── Neutrals ─── */
+  --sz-white: #FFFFFF;
+  --sz-warm-white: #FAF8F5;
+  --sz-cream: #F5F2ED;
+  --sz-beige: #E8DED5;
+  --sz-taupe: #D4CFC6;
+  --sz-champagne: #B5A48A;
+  --sz-charcoal: #1F1F1F;
+  --sz-gray-dark: #4A4A4A;
+  --sz-gray: #7A7A7A;
+  --sz-gray-light: #9A9A9A;
+
+  /* ─── Semantic Colors ─── */
+  --sz-success: #4E5F4A;
+  --sz-error: #C45B5B;
+  --sz-warning: #D4A84B;
+
+  /* ─── Typography (2 fonts only for consistency) ─── */
+  /* Playfair Display: Headings, titles, display text */
+  /* Inter: Body text, buttons, navigation, UI elements */
+  --sz-font-heading: "Playfair Display", Georgia, serif;
+  --sz-font-body: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --sz-font-accent: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+
+  /* ─── Font Sizes (Desktop) ─── */
+  --sz-text-xs: 11px;
+  --sz-text-sm: 13px;
+  --sz-text-base: 15px;
+  --sz-text-md: 17px;
+  --sz-text-lg: 20px;
+  --sz-text-xl: 26px;
+  --sz-text-2xl: 32px;
+  --sz-text-3xl: 42px;
+  --sz-text-4xl: 56px;
+
+  /* ─── Spacing Scale ─── */
+  --sz-space-xs: 8px;
+  --sz-space-sm: 12px;
+  --sz-space-md: 16px;
+  --sz-space-lg: 24px;
+  --sz-space-xl: 40px;
+  --sz-space-2xl: 60px;
+  --sz-space-3xl: 100px;
+
+  /* ─── Border & Radius ─── */
+  --sz-border-light: #E8E4DE;
+  --sz-border-medium: #D4CFC6;
+  --sz-radius-sm: 4px;
+  --sz-radius-md: 8px;
+  --sz-radius-lg: 12px;
+  --sz-radius-pill: 999px;
+
+  /* ─── Shadows ─── */
+  --sz-shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.04);
+  --sz-shadow-md: 0 4px 16px rgba(0, 0, 0, 0.06);
+  --sz-shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.08);
+
+  /* ─── Transitions ─── */
+  --sz-ease: cubic-bezier(0.4, 0, 0.2, 1);
+  --sz-transition-fast: 0.15s var(--sz-ease);
+  --sz-transition: 0.3s var(--sz-ease);
+  --sz-transition-slow: 0.5s var(--sz-ease);
+
+  /* ─── Layout ─── */
+  --sz-max-width: 1400px;
+  --sz-content-width: 800px;
+  --sz-narrow-width: 600px;
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   GLOBAL RESET & BASE
+   ═══════════════════════════════════════════════════════════════════ */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--sz-font-body);
+  font-size: var(--sz-text-base);
+  line-height: 1.6;
+  color: var(--sz-charcoal);
+  background: var(--sz-white);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   TYPOGRAPHY
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* Headings */
+h1, h2, h3, h4, h5, h6,
+.sz-h1, .sz-h2, .sz-h3, .sz-h4 {
+  font-family: var(--sz-font-heading);
+  font-weight: 500;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  color: var(--sz-charcoal);
+  margin: 0;
+}
+
+h1, .sz-h1 { font-size: clamp(2.25rem, 5vw, var(--sz-text-4xl)); }
+h2, .sz-h2 { font-size: clamp(1.75rem, 4vw, var(--sz-text-3xl)); }
+h3, .sz-h3 { font-size: clamp(1.5rem, 3vw, var(--sz-text-2xl)); }
+h4, .sz-h4 { font-size: var(--sz-text-xl); }
+
+/* Eyebrow / Label text */
+.sz-eyebrow {
+  display: block;
+  font-family: var(--sz-font-accent);
+  font-size: var(--sz-text-xs);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: var(--sz-champagne);
+  margin-bottom: var(--sz-space-sm);
+}
+
+/* Body text */
+p {
+  margin: 0 0 1em 0;
+  max-width: 65ch; /* Comfortable reading width */
+}
+
+.sz-lead {
+  font-size: var(--sz-text-md);
+  line-height: 1.7;
+  color: var(--sz-gray-dark);
+}
+
+.sz-small {
+  font-size: var(--sz-text-sm);
+  color: var(--sz-gray);
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   BUTTONS
+   ═══════════════════════════════════════════════════════════════════ */
+.sz-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sz-space-xs);
+  padding: 16px 32px;
+  font-family: var(--sz-font-body);
+  font-size: var(--sz-text-sm);
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: all var(--sz-transition);
+}
+
+/* Primary button - Dark green fill */
+.sz-btn-primary {
+  background: var(--sz-evergreen);
+  color: var(--sz-white);
+  border-color: var(--sz-evergreen);
+}
+
+.sz-btn-primary:hover {
+  background: var(--sz-charcoal);
+  border-color: var(--sz-charcoal);
+  transform: translateY(-2px);
+  box-shadow: var(--sz-shadow-md);
+}
+
+/* Secondary button - Outline */
+.sz-btn-secondary,
+.sz-btn-outline {
+  background: transparent;
+  color: var(--sz-charcoal);
+  border-color: var(--sz-charcoal);
+}
+
+.sz-btn-secondary:hover,
+.sz-btn-outline:hover {
+  background: var(--sz-charcoal);
+  color: var(--sz-white);
+}
+
+/* Ghost button - Minimal */
+.sz-btn-ghost {
+  background: transparent;
+  color: var(--sz-charcoal);
+  border-color: transparent;
+  padding: 12px 16px;
+}
+
+.sz-btn-ghost:hover {
+  background: var(--sz-cream);
+}
+
+/* Button sizes */
+.sz-btn-sm {
+  padding: 10px 20px;
+  font-size: var(--sz-text-xs);
+}
+
+.sz-btn-lg {
+  padding: 20px 40px;
+  font-size: var(--sz-text-base);
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   SECTION SPACING
+   ═══════════════════════════════════════════════════════════════════ */
+.sz-section {
+  padding: var(--sz-space-3xl) var(--sz-space-lg);
+}
+
+.sz-section-sm {
+  padding: var(--sz-space-2xl) var(--sz-space-lg);
+}
+
+.sz-section-lg {
+  padding: 120px var(--sz-space-lg);
+}
+
+@media (max-width: 768px) {
+  .sz-section {
+    padding: var(--sz-space-2xl) var(--sz-space-md);
+  }
+
+  .sz-section-sm {
+    padding: var(--sz-space-xl) var(--sz-space-md);
+  }
+}
+
+.sz-container {
+  max-width: var(--sz-max-width);
+  margin: 0 auto;
+}
+
+.sz-container-narrow {
+  max-width: var(--sz-content-width);
+  margin: 0 auto;
+}
+
+/* Section headers */
+.sz-section-header {
+  text-align: center;
+  margin-bottom: var(--sz-space-2xl);
+}
+
+.sz-section-header h2 {
+  margin-top: var(--sz-space-xs);
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   BACKGROUND UTILITIES
+   ═══════════════════════════════════════════════════════════════════ */
+.sz-bg-white { background: var(--sz-white); }
+.sz-bg-cream { background: var(--sz-cream); }
+.sz-bg-warm { background: var(--sz-warm-white); }
+.sz-bg-sage { background: var(--sz-sage); color: var(--sz-white); }
+.sz-bg-evergreen { background: var(--sz-evergreen); color: var(--sz-white); }
+
+/* ═══════════════════════════════════════════════════════════════════
+   PRODUCT CARD STYLES
+   ═══════════════════════════════════════════════════════════════════ */
+.sz-product-card {
+  position: relative;
+  background: var(--sz-warm-white);
+  transition: all var(--sz-transition);
+}
+
+.sz-product-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--sz-shadow-lg);
+}
+
+.sz-product-card-image {
+  position: relative;
+  aspect-ratio: 1;
+  overflow: hidden;
+  background: var(--sz-cream);
+}
+
+.sz-product-card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s var(--sz-ease);
+}
+
+.sz-product-card:hover .sz-product-card-image img {
+  transform: scale(1.05);
+}
+
+.sz-product-card-info {
+  padding: var(--sz-space-lg) var(--sz-space-md);
+  text-align: center;
+}
+
+.sz-product-card-title {
+  font-family: var(--sz-font-body);
+  font-size: var(--sz-text-base);
+  font-weight: 500;
+  color: var(--sz-charcoal);
+  margin: 0 0 var(--sz-space-xs) 0;
+  line-height: 1.4;
+}
+
+.sz-product-card-price {
+  font-family: var(--sz-font-body);
+  font-size: var(--sz-text-sm);
+  color: var(--sz-gray-dark);
+}
+
+.sz-product-card-price .sz-price-compare {
+  text-decoration: line-through;
+  color: var(--sz-gray-light);
+  margin-right: var(--sz-space-xs);
+}
+
+.sz-product-badge {
+  position: absolute;
+  top: var(--sz-space-md);
+  left: var(--sz-space-md);
+  padding: 6px 12px;
+  background: var(--sz-charcoal);
+  color: var(--sz-white);
+  font-family: var(--sz-font-accent);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  z-index: 2;
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   FORM ELEMENTS
+   ═══════════════════════════════════════════════════════════════════ */
+.sz-input,
+.sz-select,
+.sz-textarea {
+  width: 100%;
+  padding: var(--sz-space-md) var(--sz-space-lg);
+  font-family: var(--sz-font-body);
+  font-size: var(--sz-text-sm);
+  color: var(--sz-charcoal);
+  background: var(--sz-warm-white);
+  border: 1px solid var(--sz-border-light);
+  transition: all var(--sz-transition-fast);
+}
+
+.sz-input:focus,
+.sz-select:focus,
+.sz-textarea:focus {
+  outline: none;
+  border-color: var(--sz-evergreen);
+  box-shadow: 0 0 0 3px rgba(44, 62, 45, 0.1);
+}
+
+.sz-input::placeholder {
+  color: var(--sz-gray-light);
+}
+
+.sz-label {
+  display: block;
+  font-family: var(--sz-font-body);
+  font-size: var(--sz-text-sm);
+  font-weight: 500;
+  color: var(--sz-charcoal);
+  margin-bottom: var(--sz-space-xs);
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   GRID UTILITIES
+   ═══════════════════════════════════════════════════════════════════ */
+.sz-grid-2 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--sz-space-lg);
+}
+
+.sz-grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--sz-space-lg);
+}
+
+.sz-grid-4 {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--sz-space-lg);
+}
+
+@media (max-width: 1024px) {
+  .sz-grid-4 { grid-template-columns: repeat(2, 1fr); }
+  .sz-grid-3 { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 600px) {
+  .sz-grid-4,
+  .sz-grid-3,
+  .sz-grid-2 { grid-template-columns: 1fr; }
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   LINKS
+   ═══════════════════════════════════════════════════════════════════ */
+a {
+  color: var(--sz-evergreen);
+  text-decoration: none;
+  transition: color var(--sz-transition-fast);
+}
+
+a:hover {
+  color: var(--sz-sage-dark);
+}
+
+.sz-link-arrow {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sz-space-xs);
+  font-weight: 500;
+}
+
+.sz-link-arrow::after {
+  content: "→";
+  transition: transform var(--sz-transition-fast);
+}
+
+.sz-link-arrow:hover::after {
+  transform: translateX(4px);
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   HIDE THEME CLUTTER
+   ═══════════════════════════════════════════════════════════════════ */
+/* Hide duplicate popups if theme has its own */
+.shopify-challenge__container,
+.modal--newsletter:not(.sz-popup-overlay) {
+  /* Only if theme adds duplicate popups */
+}
+
+/* Ensure our styles take precedence */
+.sz-announcement ~ .announcement-bar,
+.sz-announcement ~ [class*="announcement"] {
+  display: none !important;
+}
+</style>
