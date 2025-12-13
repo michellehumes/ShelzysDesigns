@@ -21,7 +21,7 @@ jobs:
       - name: Run Shopify Theme Check
         uses: shopify/theme-check-action@v2
         with:
-          theme_root: ./
+          theme_root: ./shopify
   # Job 2: Lint CSS
   lint-css:
     runs-on: ubuntu-latest

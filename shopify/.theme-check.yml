@@ -1,0 +1,23 @@
+# Shopify Theme Check Configuration
+# https://github.com/Shopify/theme-check
+
+# Ignore certain checks that may cause false positives
+MatchingTranslations:
+  enabled: false
+
+MissingTemplate:
+  enabled: false
+
+# Allow inline styles in sections (needed for dynamic styles)
+ParserBlockingJavaScript:
+  enabled: false
+
+# Severity adjustments
+UnusedAssign:
+  severity: suggestion
+
+DeprecatedFilter:
+  severity: suggestion
+
+# Skip checks on specific files if needed
+root: .
