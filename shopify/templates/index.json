@@ -1,0 +1,268 @@
+{
+  "sections": {
+    "announcement-bar": {
+      "type": "announcement-bar",
+      "blocks": {
+        "announcement-1": {
+          "type": "announcement",
+          "settings": {
+            "text": "Free Shipping on Orders Over $50!",
+            "icon": "truck"
+          }
+        },
+        "announcement-2": {
+          "type": "announcement",
+          "settings": {
+            "text": "Permanent Sublimation Printing — No Vinyl, No Peeling!",
+            "icon": "star"
+          }
+        },
+        "announcement-3": {
+          "type": "announcement",
+          "settings": {
+            "text": "Perfect for Weddings, Parties & Gifts",
+            "icon": "gift"
+          }
+        }
+      },
+      "block_order": ["announcement-1", "announcement-2", "announcement-3"],
+      "settings": {
+        "show_announcement": true,
+        "enable_slider": true,
+        "slider_speed": 5,
+        "background_color": "#2C3E2D",
+        "text_color": "#FFFFFF"
+      }
+    },
+    "hero": {
+      "type": "hero-slideshow",
+      "blocks": {
+        "slide-1": {
+          "type": "slide",
+          "settings": {
+            "subheading": "Wedding Season",
+            "heading": "Personalized Bottles for Your Special Day",
+            "description": "Custom bridesmaid bottles, bridal party sets, and wedding gifts with permanent sublimation printing that lasts forever.",
+            "content_position": "center-center",
+            "text_alignment": "center",
+            "text_color": "#FFFFFF",
+            "overlay_opacity": 40,
+            "button_label": "Shop Wedding Collection",
+            "button_link": "/collections/wedding",
+            "button_color": "#4E5F4A",
+            "button_text_color": "#FFFFFF",
+            "button_label_2": "View Best Sellers",
+            "button_link_2": "/collections/best-sellers"
+          }
+        },
+        "slide-2": {
+          "type": "slide",
+          "settings": {
+            "subheading": "Customer Favorites",
+            "heading": "Our Most Loved Designs",
+            "description": "Discover the personalized bottles our customers can't stop raving about.",
+            "content_position": "center-center",
+            "text_alignment": "center",
+            "text_color": "#FFFFFF",
+            "overlay_opacity": 40,
+            "button_label": "Shop Best Sellers",
+            "button_link": "/collections/best-sellers",
+            "button_color": "#4E5F4A",
+            "button_text_color": "#FFFFFF"
+          }
+        }
+      },
+      "block_order": ["slide-1", "slide-2"],
+      "settings": {
+        "height": 80,
+        "mobile_height": 60,
+        "autoplay": true,
+        "autoplay_speed": 6
+      }
+    },
+    "featured-collection-bestsellers": {
+      "type": "featured-collection",
+      "settings": {
+        "collection": "best-sellers",
+        "products_to_show": 4,
+        "columns": "4",
+        "subheading": "Shop Our Collection",
+        "heading": "Best Sellers",
+        "description": "Our most loved personalized bottles",
+        "header_alignment": "center",
+        "show_secondary_image": true,
+        "show_badges": true,
+        "show_vendor": false,
+        "show_rating": true,
+        "show_quick_add": true,
+        "text_alignment": "left",
+        "show_view_all": true,
+        "view_all_text": "View All Best Sellers",
+        "button_color": "#2C3E2D",
+        "button_text_color": "#FFFFFF",
+        "background_color": "#FFFFFF",
+        "text_color": "#1F1F1F",
+        "accent_color": "#4E5F4A",
+        "padding_top": 80,
+        "padding_bottom": 80
+      }
+    },
+    "image-with-text": {
+      "type": "image-with-text",
+      "settings": {
+        "layout": "image-left",
+        "full_width": false,
+        "image_ratio": "1/1",
+        "subheading": "Our Process",
+        "heading": "Sublimation Printing Excellence",
+        "text": "<p>Unlike vinyl that peels and cracks over time, our sublimation printing process infuses the design directly into the bottle's coating. The result is a vibrant, permanent personalization that's dishwasher safe and built to last.</p><p>Every bottle is crafted with care in our studio, ensuring the highest quality for your special occasion.</p>",
+        "text_alignment": "left",
+        "button_label": "Learn More",
+        "button_link": "/pages/about",
+        "button_color": "#2C3E2D",
+        "button_text_color": "#FFFFFF",
+        "background_color": "#F5F2ED",
+        "text_color": "#1F1F1F",
+        "accent_color": "#4E5F4A",
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "featured-collection-wedding": {
+      "type": "featured-collection",
+      "settings": {
+        "collection": "wedding",
+        "products_to_show": 4,
+        "columns": "4",
+        "subheading": "For Your Big Day",
+        "heading": "Wedding Collection",
+        "description": "Beautiful personalized bottles for brides, bridesmaids, and the whole wedding party",
+        "header_alignment": "center",
+        "show_secondary_image": true,
+        "show_badges": true,
+        "show_vendor": false,
+        "show_rating": true,
+        "show_quick_add": true,
+        "text_alignment": "left",
+        "show_view_all": true,
+        "view_all_text": "Shop All Wedding",
+        "button_color": "#2C3E2D",
+        "button_text_color": "#FFFFFF",
+        "background_color": "#FFFFFF",
+        "text_color": "#1F1F1F",
+        "accent_color": "#4E5F4A",
+        "padding_top": 80,
+        "padding_bottom": 80
+      }
+    },
+    "testimonials": {
+      "type": "testimonials",
+      "blocks": {
+        "testimonial-1": {
+          "type": "testimonial",
+          "settings": {
+            "rating": 5,
+            "title": "Perfect for My Wedding!",
+            "quote": "These bottles were a huge hit at our wedding! The quality is amazing and the personalization was exactly what we wanted. All my bridesmaids loved them and they still use them daily!",
+            "author_name": "Sarah M.",
+            "author_title": "Verified Buyer"
+          }
+        },
+        "testimonial-2": {
+          "type": "testimonial",
+          "settings": {
+            "rating": 5,
+            "title": "Amazing Quality",
+            "quote": "I've ordered from other shops before, but the sublimation printing on these is next level. No peeling, no fading — they look brand new even after months of daily use and dishwasher cycles.",
+            "author_name": "Jessica T.",
+            "author_title": "Verified Buyer"
+          }
+        },
+        "testimonial-3": {
+          "type": "testimonial",
+          "settings": {
+            "rating": 5,
+            "title": "Great for Team Gifts",
+            "quote": "Ordered these for my daughter's dance team and they were a hit! Great communication, fast shipping, and the bottles are beautiful. Will definitely order again for next season.",
+            "author_name": "Michelle R.",
+            "author_title": "Verified Buyer"
+          }
+        }
+      },
+      "block_order": ["testimonial-1", "testimonial-2", "testimonial-3"],
+      "settings": {
+        "subheading": "Customer Love",
+        "heading": "What Our Customers Say",
+        "layout": "grid-3",
+        "background_color": "#F5F2ED",
+        "card_background": "#FFFFFF",
+        "text_color": "#1F1F1F",
+        "accent_color": "#4E5F4A",
+        "star_color": "#D4AF37",
+        "padding_top": 80,
+        "padding_bottom": 80
+      }
+    },
+    "rich-text": {
+      "type": "rich-text",
+      "blocks": {
+        "subheading": {
+          "type": "subheading",
+          "settings": {
+            "text": "Why Choose Shelzy's Designs"
+          }
+        },
+        "heading": {
+          "type": "heading",
+          "settings": {
+            "text": "Quality You Can Trust",
+            "heading_size": "h2"
+          }
+        },
+        "text": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Every bottle we create is made with care and attention to detail. Our permanent sublimation printing means your personalized design becomes part of the bottle — no vinyl stickers that peel or crack.</p>"
+          }
+        },
+        "icons": {
+          "type": "icon_list",
+          "settings": {
+            "icon": "check",
+            "items": "Free Shipping Over $50 | Dishwasher Safe | No Vinyl, No Peeling | 30-Day Returns"
+          }
+        },
+        "button": {
+          "type": "button",
+          "settings": {
+            "label": "Shop All Products",
+            "link": "/collections/all",
+            "style": "primary"
+          }
+        }
+      },
+      "block_order": ["subheading", "heading", "text", "icons", "button"],
+      "settings": {
+        "width": "medium",
+        "text_alignment": "center",
+        "background_color": "#FFFFFF",
+        "text_color": "#1F1F1F",
+        "accent_color": "#4E5F4A",
+        "button_color": "#2C3E2D",
+        "button_text_color": "#FFFFFF",
+        "divider_color": "#1F1F1F",
+        "padding_top": 80,
+        "padding_bottom": 80
+      }
+    }
+  },
+  "order": [
+    "announcement-bar",
+    "hero",
+    "featured-collection-bestsellers",
+    "image-with-text",
+    "featured-collection-wedding",
+    "testimonials",
+    "rich-text"
+  ]
+}
