@@ -100,36 +100,35 @@
       <h2>Request a Quote</h2>
       <p class="sz-bulk-form-intro">Fill out the form below and we'll get back to you within 24 hours with custom pricing.</p>
 
-      <form class="sz-bulk-form" action="/contact#contact_form" method="POST">
-        <input type="hidden" name="form_type" value="contact">
-        <input type="hidden" name="utf8" value="✓">
+      {%- form 'contact', class: 'sz-bulk-form' -%}
+        <input type="hidden" name="contact[tags]" value="bulk-order,quote-request">
 
         <div class="sz-bulk-form-row">
           <div class="sz-bulk-form-group">
             <label for="bulk-name">Your Name *</label>
-            <input type="text" id="bulk-name" name="contact[name]" required placeholder="Full name">
+            <input type="text" id="bulk-name" name="contact[name]" required placeholder="Full name" autocomplete="name">
           </div>
           <div class="sz-bulk-form-group">
             <label for="bulk-email">Email Address *</label>
-            <input type="email" id="bulk-email" name="contact[email]" required placeholder="you@email.com">
+            <input type="email" id="bulk-email" name="contact[email]" required placeholder="you@email.com" autocomplete="email">
           </div>
         </div>
 
         <div class="sz-bulk-form-row">
           <div class="sz-bulk-form-group">
             <label for="bulk-phone">Phone Number</label>
-            <input type="tel" id="bulk-phone" name="contact[phone]" placeholder="(555) 123-4567">
+            <input type="tel" id="bulk-phone" name="contact[phone]" placeholder="(555) 123-4567" autocomplete="tel">
           </div>
           <div class="sz-bulk-form-group">
             <label for="bulk-company">Company/Organization</label>
-            <input type="text" id="bulk-company" name="contact[company]" placeholder="Optional">
+            <input type="text" id="bulk-company" name="contact[company]" placeholder="Optional" autocomplete="organization">
           </div>
         </div>
 
         <div class="sz-bulk-form-row">
           <div class="sz-bulk-form-group">
             <label for="bulk-quantity">Estimated Quantity *</label>
-            <select id="bulk-quantity" name="contact[quantity]" required>
+            <select id="bulk-quantity" name="contact[quantity]" required aria-required="true">
               <option value="">Select quantity</option>
               <option value="10-24">10-24 bottles</option>
               <option value="25-49">25-49 bottles</option>
@@ -139,7 +138,7 @@
           </div>
           <div class="sz-bulk-form-group">
             <label for="bulk-occasion">Occasion Type *</label>
-            <select id="bulk-occasion" name="contact[occasion]" required>
+            <select id="bulk-occasion" name="contact[occasion]" required aria-required="true">
               <option value="">Select occasion</option>
               <option value="wedding">Wedding / Bridal Party</option>
               <option value="corporate">Corporate Event</option>
@@ -163,14 +162,14 @@
 
         <div class="sz-bulk-form-group sz-bulk-form-full">
           <label for="bulk-details">Tell Us About Your Project *</label>
-          <textarea id="bulk-details" name="contact[body]" rows="5" required placeholder="Describe your vision - colors, themes, any specific designs you have in mind..."></textarea>
+          <textarea id="bulk-details" name="contact[body]" rows="5" required aria-required="true" placeholder="Describe your vision - colors, themes, any specific designs you have in mind..."></textarea>
         </div>
 
         <div class="sz-bulk-form-submit">
           <button type="submit" class="sz-btn sz-btn-primary">Submit Quote Request</button>
           <p class="sz-bulk-form-note">We typically respond within 24 hours. No commitment required.</p>
         </div>
-      </form>
+      {%- endform -%}
     </div>
 
     {%- comment -%} FAQ Section {%- endcomment -%}
