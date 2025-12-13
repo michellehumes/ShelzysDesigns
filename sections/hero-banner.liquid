@@ -20,8 +20,14 @@
       >
     </div>
   {%- else -%}
-    <div class="sz-hero-media sz-hero-placeholder">
-      <div class="sz-hero-gradient-bg"></div>
+    <div class="sz-hero-media">
+      <img
+        src="{{ 'hero-bridal-party-5.webp' | asset_url }}"
+        alt="{{ shop.name }} - Personalized Bottles for Life's Special Moments"
+        class="sz-hero-image"
+        loading="eager"
+        fetchpriority="high"
+      >
     </div>
   {%- endif -%}
 
