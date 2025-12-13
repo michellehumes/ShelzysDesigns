@@ -1,0 +1,57 @@
+{
+  "sections": {
+    "main": {
+      "type": "wedding-timeline",
+      "blocks": {
+        "step-1": {
+          "type": "timeline_step",
+          "settings": {
+            "weeks": "12+",
+            "tag": "Stress-Free",
+            "urgency": "relaxed",
+            "title": "Plenty of Time",
+            "description": "Order with confidence. You'll have time to review proofs, make changes, and still receive your bottles well before the big day."
+          }
+        },
+        "step-2": {
+          "type": "timeline_step",
+          "settings": {
+            "weeks": "8-12",
+            "tag": "Recommended",
+            "urgency": "recommended",
+            "title": "Perfect Timing",
+            "description": "This is our recommended window. Standard production plus shipping gives you a comfortable buffer for any unexpected delays."
+          }
+        },
+        "step-3": {
+          "type": "timeline_step",
+          "settings": {
+            "weeks": "4-8",
+            "tag": "Rush Available",
+            "urgency": "rush",
+            "title": "Still Possible",
+            "description": "We can make it work! Rush processing is available for an additional $5 per bottle to ensure on-time delivery.",
+            "note": "+$5/bottle rush fee applies"
+          }
+        },
+        "step-4": {
+          "type": "timeline_step",
+          "settings": {
+            "weeks": "< 4",
+            "tag": "Contact Us",
+            "urgency": "urgent",
+            "title": "Very Tight Timeline",
+            "description": "Please contact us directly to discuss your options. We'll do everything we can to help make your day special.",
+            "note": "Call or email for availability"
+          }
+        }
+      },
+      "block_order": ["step-1", "step-2", "step-3", "step-4"],
+      "settings": {
+        "heading": "When Should I Order?",
+        "subheading": "Plan ahead for a stress-free wedding experience. Here's our recommended timeline for ordering your personalized bottles."
+      }
+    }
+  },
+  "order": ["main"]
+}

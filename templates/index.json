@@ -118,6 +118,54 @@
         "padding_bottom": 80
       }
     },
+    "bundle-showcase": {
+      "type": "bundle-showcase",
+      "blocks": {
+        "bundle-1": {
+          "type": "bundle",
+          "settings": {
+            "title": "Bride + 4 Bridesmaids",
+            "includes": "1 Bride bottle + 4 Bridesmaid bottles, all personalized with names",
+            "original_price": "138",
+            "price": "120",
+            "savings": "13%",
+            "link": "/collections/bridal-party"
+          }
+        },
+        "bundle-2": {
+          "type": "bundle",
+          "settings": {
+            "title": "Bride + 6 Bridesmaids",
+            "includes": "1 Bride bottle + 6 Bridesmaid bottles, matching designs",
+            "original_price": "188",
+            "price": "165",
+            "savings": "12%",
+            "featured": true,
+            "link": "/collections/bridal-party"
+          }
+        },
+        "bundle-3": {
+          "type": "bundle",
+          "settings": {
+            "title": "Full Party (Bride + 8)",
+            "includes": "1 Bride bottle + 8 Bridesmaid bottles for the complete party",
+            "original_price": "234",
+            "price": "200",
+            "savings": "15%",
+            "note": "Best value!",
+            "link": "/collections/bridal-party"
+          }
+        }
+      },
+      "block_order": ["bundle-1", "bundle-2", "bundle-3"],
+      "settings": {
+        "subheading": "Save More Together",
+        "heading": "Bridal Party Bundles",
+        "description": "Get coordinating bottles for your entire bridal party and save up to 15%. Each bundle includes personalized bottles that match perfectly.",
+        "show_custom_cta": true,
+        "custom_link": "/pages/contact"
+      }
+    },
     "featured-collection-wedding": {
       "type": "featured-collection",
       "settings": {
@@ -138,7 +186,7 @@
         "view_all_text": "Shop All Wedding",
         "button_color": "#2C3E2D",
         "button_text_color": "#FFFFFF",
-        "background_color": "#F5F2ED",
+        "background_color": "#FFF8F6",
         "text_color": "#1F1F1F",
         "accent_color": "#4E5F4A",
         "padding_top": 80,
@@ -321,6 +369,7 @@
     "hero-banner",
     "category-showcase",
     "featured-collection-bestsellers",
+    "bundle-showcase",
     "image-with-text",
     "featured-collection-wedding",
     "testimonials",
