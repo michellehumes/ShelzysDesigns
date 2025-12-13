@@ -625,14 +625,53 @@
   var menuToggle = document.getElementById('szMenuToggle');
   var mobileMenu = document.getElementById('szMobileMenu');
   var accordions = document.querySelectorAll('.sz-accordion-toggle');
+  var focusableSelector = 'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
+  var firstFocusable = null;
+  var lastFocusable = null;
+
+  function updateFocusableElements() {
+    var focusables = mobileMenu.querySelectorAll(focusableSelector);
+    // Filter to only visible elements
+    var visibleFocusables = Array.prototype.filter.call(focusables, function(el) {
+      return el.offsetParent !== null && getComputedStyle(el).visibility !== 'hidden';
+    });
+    firstFocusable = visibleFocusables[0];
+    lastFocusable = visibleFocusables[visibleFocusables.length - 1];
+  }
+
+  function openMenu() {
+    menuToggle.setAttribute('aria-expanded', 'true');
+    mobileMenu.classList.add('sz-open');
+    mobileMenu.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+
+    // Update focusable elements and set focus
+    updateFocusableElements();
+    if (firstFocusable) {
+      setTimeout(function() {
+        firstFocusable.focus();
+      }, 100);
+    }
+  }
+
+  function closeMenu() {
+    menuToggle.setAttribute('aria-expanded', 'false');
+    mobileMenu.classList.remove('sz-open');
+    mobileMenu.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+
+    // Return focus to toggle button
+    menuToggle.focus();
+  }
 
   // Toggle mobile menu
   menuToggle.addEventListener('click', function() {
     var expanded = this.getAttribute('aria-expanded') === 'true';
-    this.setAttribute('aria-expanded', !expanded);
-    mobileMenu.classList.toggle('sz-open');
-    mobileMenu.setAttribute('aria-hidden', expanded);
-    document.body.style.overflow = expanded ? '' : 'hidden';
+    if (expanded) {
+      closeMenu();
+    } else {
+      openMenu();
+    }
   });
 
   // Accordion toggles
@@ -641,17 +680,54 @@
       var expanded = this.getAttribute('aria-expanded') === 'true';
       this.setAttribute('aria-expanded', !expanded);
       this.nextElementSibling.classList.toggle('sz-open');
+
+      // Update focusable elements after accordion state changes
+      setTimeout(updateFocusableElements, 50);
     });
   });
 
-  // Close menu on escape
+  // Keyboard navigation and focus trap
   document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape' && mobileMenu.classList.contains('sz-open')) {
-      menuToggle.setAttribute('aria-expanded', 'false');
-      mobileMenu.classList.remove('sz-open');
-      mobileMenu.setAttribute('aria-hidden', 'true');
-      document.body.style.overflow = '';
+    if (!mobileMenu.classList.contains('sz-open')) return;
+
+    // Close menu on escape
+    if (e.key === 'Escape') {
+      e.preventDefault();
+      closeMenu();
+      return;
+    }
+
+    // Focus trap with Tab key
+    if (e.key === 'Tab') {
+      updateFocusableElements();
+
+      if (e.shiftKey) {
+        // Shift + Tab: if on first element, go to last
+        if (document.activeElement === firstFocusable || document.activeElement === mobileMenu) {
+          e.preventDefault();
+          if (lastFocusable) lastFocusable.focus();
+        }
+      } else {
+        // Tab: if on last element, go to first
+        if (document.activeElement === lastFocusable) {
+          e.preventDefault();
+          if (firstFocusable) firstFocusable.focus();
+        }
+      }
     }
   });
+
+  // Close menu when clicking outside (on overlay area if visible)
+  mobileMenu.addEventListener('click', function(e) {
+    if (e.target === mobileMenu) {
+      closeMenu();
+    }
+  });
+
+  // Update cart count trigger to open cart drawer instead of navigating
+  var cartIcon = document.querySelector('.sz-cart-icon');
+  if (cartIcon && typeof window.ShelzysCart !== 'undefined') {
+    cartIcon.setAttribute('data-cart-trigger', '');
+  }
 })();
 </script>

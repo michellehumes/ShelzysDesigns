@@ -6,6 +6,61 @@
   search functionality.
 {%- endcomment -%}
 
+{%- comment -%} SEO: Tell search engines not to index 404 pages {%- endcomment -%}
+{% capture seo_meta %}
+  <meta name="robots" content="noindex, nofollow">
+{% endcapture %}
+{% assign content_for_header = content_for_header | append: seo_meta %}
+
+{%- comment -%} Structured Data for 404 Page {%- endcomment -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": "Page Not Found - {{ shop.name }}",
+  "description": "The page you're looking for could not be found.",
+  "url": "{{ request.origin }}{{ request.path }}",
+  "isPartOf": {
+    "@type": "WebSite",
+    "name": "{{ shop.name }}",
+    "url": "{{ request.origin }}"
+  },
+  "breadcrumb": {
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "{{ request.origin }}"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Page Not Found"
+      }
+    ]
+  }
+}
+</script>
+
+{%- comment -%} Analytics: Track 404 errors for debugging {%- endcomment -%}
+<script>
+  if (typeof window.dataLayer !== 'undefined') {
+    window.dataLayer.push({
+      'event': '404_error',
+      'page_path': window.location.pathname,
+      'referrer': document.referrer
+    });
+  }
+  // Console log for debugging in development
+  console.warn('404 Error:', {
+    path: window.location.pathname,
+    referrer: document.referrer,
+    timestamp: new Date().toISOString()
+  });
+</script>
+
 <div class="sz-error-page">
   <div class="sz-error-container">
 
