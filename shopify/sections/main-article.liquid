@@ -1,0 +1,542 @@
+{%- comment -%}
+  Shelzy's Designs - Article Section
+  Shopify 2.0 section for individual blog articles
+{%- endcomment -%}
+
+<article class="sz-article-page" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="sz-article-container">
+
+    {%- comment -%} Breadcrumbs {%- endcomment -%}
+    {% render 'shelzys-breadcrumbs' %}
+
+    {%- comment -%} Article Header {%- endcomment -%}
+    <header class="sz-article-header">
+      {%- if article.tags.size > 0 -%}
+        <div class="sz-article-tags">
+          {%- for tag in article.tags -%}
+            <a href="{{ blog.url }}/tagged/{{ tag | handle }}" class="sz-article-tag">{{ tag }}</a>
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+
+      <h1 class="sz-article-title" itemprop="headline">{{ article.title }}</h1>
+
+      <div class="sz-article-meta">
+        <span class="sz-article-author" itemprop="author" itemscope itemtype="https://schema.org/Person">
+          <span itemprop="name">{{ article.author }}</span>
+        </span>
+        <span class="sz-article-date" itemprop="datePublished" content="{{ article.published_at | date: '%Y-%m-%d' }}">
+          {{ article.published_at | date: '%B %d, %Y' }}
+        </span>
+      </div>
+    </header>
+
+    {%- comment -%} Featured Image {%- endcomment -%}
+    {%- if article.image and section.settings.show_featured_image -%}
+      <div class="sz-article-featured-image" itemprop="image">
+        <img
+          src="{{ article.image | image_url: width: 1200 }}"
+          srcset="{{ article.image | image_url: width: 600 }} 600w,
+                  {{ article.image | image_url: width: 900 }} 900w,
+                  {{ article.image | image_url: width: 1200 }} 1200w"
+          sizes="(max-width: 900px) 100vw, 900px"
+          alt="{{ article.image.alt | default: article.title }}"
+          loading="eager"
+        >
+      </div>
+    {%- endif -%}
+
+    {%- comment -%} Article Content {%- endcomment -%}
+    <div class="sz-article-content" itemprop="articleBody">
+      {{ article.content }}
+    </div>
+
+    {%- comment -%} Share Buttons {%- endcomment -%}
+    {%- if section.settings.show_share_buttons -%}
+      <div class="sz-article-share">
+        <span class="sz-share-label">Share this post:</span>
+        <div class="sz-share-buttons">
+          <a href="https://www.facebook.com/sharer/sharer.php?u={{ shop.url }}{{ article.url }}" target="_blank" rel="noopener" class="sz-share-btn sz-share-facebook" aria-label="Share on Facebook">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
+            </svg>
+          </a>
+          <a href="https://twitter.com/intent/tweet?url={{ shop.url }}{{ article.url }}&text={{ article.title | url_encode }}" target="_blank" rel="noopener" class="sz-share-btn sz-share-twitter" aria-label="Share on Twitter">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"/>
+            </svg>
+          </a>
+          <a href="https://pinterest.com/pin/create/button/?url={{ shop.url }}{{ article.url }}&media={{ article.image | image_url: width: 800 }}&description={{ article.title | url_encode }}" target="_blank" rel="noopener" class="sz-share-btn sz-share-pinterest" aria-label="Share on Pinterest">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 0a12 12 0 0 0-4.37 23.17c-.1-.94-.19-2.37.04-3.39l1.34-5.68s-.34-.68-.34-1.68c0-1.58.92-2.76 2.06-2.76.97 0 1.44.73 1.44 1.6 0 .98-.62 2.44-.94 3.8-.27 1.13.56 2.05 1.67 2.05 2 0 3.54-2.11 3.54-5.16 0-2.7-1.94-4.58-4.71-4.58-3.21 0-5.1 2.41-5.1 4.9 0 .97.38 2.01.84 2.57.09.11.1.21.08.33l-.32 1.29c-.05.2-.17.24-.38.14-1.41-.65-2.29-2.71-2.29-4.36 0-3.54 2.57-6.79 7.41-6.79 3.89 0 6.92 2.77 6.92 6.48 0 3.87-2.44 6.98-5.82 6.98-1.14 0-2.2-.59-2.57-1.29l-.7 2.66c-.25.98-.94 2.2-1.39 2.95A12 12 0 1 0 12 0z"/>
+            </svg>
+          </a>
+          <a href="mailto:?subject={{ article.title | url_encode }}&body={{ shop.url }}{{ article.url }}" class="sz-share-btn sz-share-email" aria-label="Share via Email">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+              <polyline points="22,6 12,13 2,6"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+    {%- endif -%}
+
+    {%- comment -%} Navigation {%- endcomment -%}
+    <nav class="sz-article-nav">
+      {%- if blog.previous_article -%}
+        <a href="{{ blog.previous_article }}" class="sz-article-nav-link sz-nav-prev">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="15 18 9 12 15 6"/>
+          </svg>
+          <span>Previous Article</span>
+        </a>
+      {%- endif -%}
+      <a href="{{ blog.url }}" class="sz-article-nav-link sz-nav-all">All Posts</a>
+      {%- if blog.next_article -%}
+        <a href="{{ blog.next_article }}" class="sz-article-nav-link sz-nav-next">
+          <span>Next Article</span>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="9 18 15 12 9 6"/>
+          </svg>
+        </a>
+      {%- endif -%}
+    </nav>
+
+    {%- comment -%} Comments {%- endcomment -%}
+    {%- if blog.comments_enabled? and section.settings.show_comments -%}
+      <div class="sz-article-comments" id="comments">
+        <h2 class="sz-comments-heading">Comments ({{ article.comments_count }})</h2>
+
+        {%- if article.comments.size > 0 -%}
+          <div class="sz-comments-list">
+            {%- for comment in article.comments -%}
+              <div class="sz-comment">
+                <div class="sz-comment-header">
+                  <span class="sz-comment-author">{{ comment.author }}</span>
+                  <span class="sz-comment-date">{{ comment.created_at | date: '%B %d, %Y' }}</span>
+                </div>
+                <div class="sz-comment-body">{{ comment.content }}</div>
+              </div>
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+
+        <div class="sz-comment-form-wrapper">
+          <h3 class="sz-comment-form-heading">Leave a Comment</h3>
+          {% form 'new_comment', article %}
+            {%- if form.posted_successfully? -%}
+              <div class="sz-form-success">
+                <p>Thank you for your comment! It will be reviewed and published shortly.</p>
+              </div>
+            {%- else -%}
+              {%- if form.errors -%}
+                <div class="sz-form-errors">
+                  {{ form.errors | default_errors }}
+                </div>
+              {%- endif -%}
+
+              <div class="sz-form-row">
+                <div class="sz-form-group">
+                  <label for="comment-author" class="sz-form-label">Name <span class="required">*</span></label>
+                  <input type="text" name="comment[author]" id="comment-author" class="sz-form-input" required>
+                </div>
+                <div class="sz-form-group">
+                  <label for="comment-email" class="sz-form-label">Email <span class="required">*</span></label>
+                  <input type="email" name="comment[email]" id="comment-email" class="sz-form-input" required>
+                </div>
+              </div>
+
+              <div class="sz-form-group">
+                <label for="comment-body" class="sz-form-label">Comment <span class="required">*</span></label>
+                <textarea name="comment[body]" id="comment-body" class="sz-form-textarea" rows="5" required></textarea>
+              </div>
+
+              <button type="submit" class="sz-btn sz-btn-primary">Post Comment</button>
+            {%- endif -%}
+          {% endform %}
+        </div>
+      </div>
+    {%- endif -%}
+
+  </div>
+</article>
+
+{% style %}
+  .sz-article-page {
+    padding: var(--sz-space-xl, 32px) var(--sz-space-md, 16px);
+    background: var(--sz-warm-white, #FAF9F6);
+    min-height: 60vh;
+  }
+
+  .sz-article-container {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .sz-article-header {
+    text-align: center;
+    margin-bottom: var(--sz-space-xl, 32px);
+  }
+
+  .sz-article-tags {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 16px;
+  }
+
+  .sz-article-tag {
+    font-family: var(--sz-font-body, 'Inter', sans-serif);
+    font-size: 12px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--sz-primary, #8BAA88);
+    text-decoration: none;
+    padding: 4px 12px;
+    background: rgba(139, 170, 136, 0.1);
+    border-radius: 999px;
+  }
+
+  .sz-article-tag:hover {
+    background: var(--sz-primary, #8BAA88);
+    color: var(--sz-white, #FFFFFF);
+  }
+
+  .sz-article-title {
+    font-family: var(--sz-font-heading, 'Playfair Display', Georgia, serif);
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 600;
+    color: var(--sz-primary-dark, #4E5F4A);
+    margin: 0 0 16px 0;
+    line-height: 1.2;
+  }
+
+  .sz-article-meta {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    font-family: var(--sz-font-body, 'Inter', sans-serif);
+    font-size: 14px;
+    color: var(--sz-gray, #6B7280);
+  }
+
+  .sz-article-featured-image {
+    margin-bottom: var(--sz-space-xl, 32px);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+
+  .sz-article-featured-image img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  .sz-article-content {
+    font-family: var(--sz-font-body, 'Inter', sans-serif);
+    font-size: 18px;
+    line-height: 1.8;
+    color: var(--sz-charcoal, #2B2B2B);
+    margin-bottom: var(--sz-space-xl, 32px);
+  }
+
+  .sz-article-content h2 {
+    font-family: var(--sz-font-heading, 'Playfair Display', Georgia, serif);
+    font-size: 28px;
+    font-weight: 600;
+    color: var(--sz-primary-dark, #4E5F4A);
+    margin: 48px 0 24px 0;
+  }
+
+  .sz-article-content h3 {
+    font-family: var(--sz-font-heading, 'Playfair Display', Georgia, serif);
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--sz-primary-dark, #4E5F4A);
+    margin: 32px 0 16px 0;
+  }
+
+  .sz-article-content p {
+    margin: 0 0 24px 0;
+  }
+
+  .sz-article-content ul,
+  .sz-article-content ol {
+    margin: 0 0 24px 0;
+    padding-left: 32px;
+  }
+
+  .sz-article-content li {
+    margin-bottom: 8px;
+  }
+
+  .sz-article-content a {
+    color: var(--sz-primary, #8BAA88);
+    text-decoration: underline;
+  }
+
+  .sz-article-content img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin: 24px 0;
+  }
+
+  .sz-article-content blockquote {
+    margin: 32px 0;
+    padding: 24px 32px;
+    background: var(--sz-beige, #F5F0EB);
+    border-left: 4px solid var(--sz-primary, #8BAA88);
+    font-style: italic;
+    border-radius: 4px;
+  }
+
+  .sz-article-share {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 24px 0;
+    border-top: 1px solid var(--sz-border-light, #E5E7EB);
+    border-bottom: 1px solid var(--sz-border-light, #E5E7EB);
+    margin-bottom: 32px;
+  }
+
+  .sz-share-label {
+    font-family: var(--sz-font-body, 'Inter', sans-serif);
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--sz-charcoal, #2B2B2B);
+  }
+
+  .sz-share-buttons {
+    display: flex;
+    gap: 8px;
+  }
+
+  .sz-share-btn {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--sz-beige, #F5F0EB);
+    border-radius: 50%;
+    color: var(--sz-charcoal, #2B2B2B);
+    transition: all 0.2s;
+  }
+
+  .sz-share-btn:hover {
+    background: var(--sz-primary, #8BAA88);
+    color: var(--sz-white, #FFFFFF);
+  }
+
+  .sz-article-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 48px;
+  }
+
+  .sz-article-nav-link {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--sz-font-body, 'Inter', sans-serif);
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--sz-charcoal, #2B2B2B);
+    text-decoration: none;
+    padding: 12px 20px;
+    background: var(--sz-white, #FFFFFF);
+    border-radius: 8px;
+    transition: all 0.2s;
+  }
+
+  .sz-article-nav-link:hover {
+    background: var(--sz-primary, #8BAA88);
+    color: var(--sz-white, #FFFFFF);
+  }
+
+  .sz-nav-all {
+    background: var(--sz-primary, #8BAA88);
+    color: var(--sz-white, #FFFFFF);
+  }
+
+  @media (max-width: 600px) {
+    .sz-article-nav {
+      flex-wrap: wrap;
+    }
+    .sz-nav-all {
+      order: -1;
+      width: 100%;
+      justify-content: center;
+    }
+  }
+
+  .sz-article-comments {
+    background: var(--sz-white, #FFFFFF);
+    border-radius: 12px;
+    padding: 32px;
+  }
+
+  .sz-comments-heading {
+    font-family: var(--sz-font-heading, 'Playfair Display', Georgia, serif);
+    font-size: 24px;
+    font-weight: 600;
+    color: var(--sz-primary-dark, #4E5F4A);
+    margin: 0 0 24px 0;
+  }
+
+  .sz-comments-list {
+    margin-bottom: 32px;
+  }
+
+  .sz-comment {
+    padding: 20px 0;
+    border-bottom: 1px solid var(--sz-border-light, #E5E7EB);
+  }
+
+  .sz-comment:last-child {
+    border-bottom: none;
+  }
+
+  .sz-comment-header {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 8px;
+  }
+
+  .sz-comment-author {
+    font-family: var(--sz-font-body, 'Inter', sans-serif);
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--sz-charcoal, #2B2B2B);
+  }
+
+  .sz-comment-date {
+    font-family: var(--sz-font-body, 'Inter', sans-serif);
+    font-size: 14px;
+    color: var(--sz-gray, #6B7280);
+  }
+
+  .sz-comment-body {
+    font-family: var(--sz-font-body, 'Inter', sans-serif);
+    font-size: 14px;
+    color: var(--sz-charcoal, #2B2B2B);
+    line-height: 1.6;
+  }
+
+  .sz-comment-form-heading {
+    font-family: var(--sz-font-heading, 'Playfair Display', Georgia, serif);
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--sz-primary-dark, #4E5F4A);
+    margin: 0 0 20px 0;
+  }
+
+  .sz-form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  @media (max-width: 500px) {
+    .sz-form-row {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .sz-form-group {
+    margin-bottom: 16px;
+  }
+
+  .sz-form-label {
+    display: block;
+    font-family: var(--sz-font-body, 'Inter', sans-serif);
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--sz-charcoal, #2B2B2B);
+    margin-bottom: 4px;
+  }
+
+  .sz-form-label .required {
+    color: var(--sz-error, #DC2626);
+  }
+
+  .sz-form-input,
+  .sz-form-textarea {
+    width: 100%;
+    padding: 12px 16px;
+    font-family: var(--sz-font-body, 'Inter', sans-serif);
+    font-size: 16px;
+    border: 1px solid var(--sz-border-light, #E5E7EB);
+    border-radius: 4px;
+    background: var(--sz-warm-white, #FAF9F6);
+  }
+
+  .sz-form-input:focus,
+  .sz-form-textarea:focus {
+    outline: none;
+    border-color: var(--sz-primary, #8BAA88);
+  }
+
+  .sz-form-textarea {
+    resize: vertical;
+    min-height: 100px;
+  }
+
+  .sz-form-success {
+    padding: 24px;
+    background: rgba(5, 150, 105, 0.1);
+    border-radius: 8px;
+    text-align: center;
+  }
+
+  .sz-form-success p {
+    font-family: var(--sz-font-body, 'Inter', sans-serif);
+    font-size: 14px;
+    color: var(--sz-success, #059669);
+    margin: 0;
+  }
+
+  .sz-form-errors {
+    background: #FEF2F2;
+    border: 1px solid var(--sz-error, #DC2626);
+    border-radius: 4px;
+    padding: 16px;
+    margin-bottom: 16px;
+    color: var(--sz-error, #DC2626);
+    font-size: 14px;
+  }
+{% endstyle %}
+
+{% schema %}
+{
+  "name": "Article",
+  "tag": "section",
+  "class": "sz-article-section",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_featured_image",
+      "label": "Show featured image",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_share_buttons",
+      "label": "Show share buttons",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_comments",
+      "label": "Show comments section",
+      "default": true
+    }
+  ]
+}
+{% endschema %}

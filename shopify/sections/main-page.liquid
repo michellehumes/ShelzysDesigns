@@ -1,0 +1,372 @@
+{%- comment -%}
+  Shelzy's Designs - Page Section
+  Shopify 2.0 section for static pages
+{%- endcomment -%}
+
+<div class="sz-page">
+  <div class="sz-page-container">
+
+    {%- comment -%} Breadcrumbs {%- endcomment -%}
+    {% render 'shelzys-breadcrumbs' %}
+
+    {%- comment -%} Page Header {%- endcomment -%}
+    <header class="sz-page-header">
+      <h1 class="sz-page-title">{{ page.title }}</h1>
+    </header>
+
+    {%- comment -%} Page Content {%- endcomment -%}
+    <article class="sz-page-content">
+      {{ page.content }}
+    </article>
+
+    {%- comment -%} Contact Section (appears on contact page) {%- endcomment -%}
+    {%- if page.handle == 'contact' or page.handle == 'contact-us' -%}
+      <div class="sz-contact-section">
+        <div class="sz-contact-grid">
+
+          <div class="sz-contact-info">
+            <h2 class="sz-contact-heading">Get in Touch</h2>
+            <p class="sz-contact-text">Have questions about personalization, bulk orders, or shipping? We're here to help!</p>
+
+            <div class="sz-contact-methods">
+              <div class="sz-contact-method">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                  <polyline points="22,6 12,13 2,6"/>
+                </svg>
+                <div>
+                  <h3>Email Us</h3>
+                  <a href="mailto:hello@shelzysdesigns.com">hello@shelzysdesigns.com</a>
+                </div>
+              </div>
+
+              <div class="sz-contact-method">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="12" cy="12" r="10"/>
+                  <polyline points="12 6 12 12 16 14"/>
+                </svg>
+                <div>
+                  <h3>Response Time</h3>
+                  <p>Within 24 hours</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="sz-contact-form-wrapper">
+            <h2 class="sz-contact-heading">Send Us a Message</h2>
+            {% form 'contact' %}
+              {%- if form.posted_successfully? -%}
+                <div class="sz-form-success">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                    <polyline points="22 4 12 14.01 9 11.01"/>
+                  </svg>
+                  <p>Thank you for your message! We'll get back to you within 24 hours.</p>
+                </div>
+              {%- else -%}
+                {%- if form.errors -%}
+                  <div class="sz-form-errors">
+                    {{ form.errors | default_errors }}
+                  </div>
+                {%- endif -%}
+
+                <div class="sz-form-group">
+                  <label for="contact-name" class="sz-form-label">Your Name <span class="required">*</span></label>
+                  <input type="text" name="contact[name]" id="contact-name" class="sz-form-input" required>
+                </div>
+
+                <div class="sz-form-group">
+                  <label for="contact-email" class="sz-form-label">Email Address <span class="required">*</span></label>
+                  <input type="email" name="contact[email]" id="contact-email" class="sz-form-input" required>
+                </div>
+
+                <div class="sz-form-group">
+                  <label for="contact-subject" class="sz-form-label">Subject</label>
+                  <select name="contact[subject]" id="contact-subject" class="sz-form-select">
+                    <option value="">Select a topic...</option>
+                    <option value="Order Question">Order Question</option>
+                    <option value="Personalization Help">Personalization Help</option>
+                    <option value="Bulk Order Inquiry">Bulk Order Inquiry</option>
+                    <option value="Shipping Question">Shipping Question</option>
+                    <option value="Returns/Exchange">Returns/Exchange</option>
+                    <option value="Other">Other</option>
+                  </select>
+                </div>
+
+                <div class="sz-form-group">
+                  <label for="contact-message" class="sz-form-label">Message <span class="required">*</span></label>
+                  <textarea name="contact[body]" id="contact-message" class="sz-form-textarea" rows="5" required></textarea>
+                </div>
+
+                <button type="submit" class="sz-btn sz-btn-primary sz-btn-submit">Send Message</button>
+              {%- endif -%}
+            {% endform %}
+          </div>
+
+        </div>
+      </div>
+    {%- endif -%}
+
+  </div>
+</div>
+
+{% style %}
+  .sz-page {
+    padding: var(--sz-space-xl, 32px) var(--sz-space-md, 16px);
+    background: var(--sz-warm-white, #FAF9F6);
+    min-height: 60vh;
+  }
+
+  .sz-page-container {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .sz-page-header {
+    text-align: center;
+    margin-bottom: var(--sz-space-2xl, 48px);
+    padding-bottom: var(--sz-space-xl, 32px);
+    border-bottom: 1px solid var(--sz-border-light, #E5E7EB);
+  }
+
+  .sz-page-title {
+    font-family: var(--sz-font-heading, 'Playfair Display', Georgia, serif);
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 600;
+    color: var(--sz-primary-dark, #4E5F4A);
+    margin: 0;
+  }
+
+  .sz-page-content {
+    font-family: var(--sz-font-body, 'Inter', sans-serif);
+    font-size: 16px;
+    line-height: 1.8;
+    color: var(--sz-charcoal, #2B2B2B);
+  }
+
+  .sz-page-content h2 {
+    font-family: var(--sz-font-heading, 'Playfair Display', Georgia, serif);
+    font-size: 24px;
+    font-weight: 600;
+    color: var(--sz-primary-dark, #4E5F4A);
+    margin: 48px 0 24px 0;
+  }
+
+  .sz-page-content h3 {
+    font-family: var(--sz-font-heading, 'Playfair Display', Georgia, serif);
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--sz-primary-dark, #4E5F4A);
+    margin: 32px 0 16px 0;
+  }
+
+  .sz-page-content p {
+    margin: 0 0 24px 0;
+  }
+
+  .sz-page-content ul,
+  .sz-page-content ol {
+    margin: 0 0 24px 0;
+    padding-left: 32px;
+  }
+
+  .sz-page-content li {
+    margin-bottom: 8px;
+  }
+
+  .sz-page-content a {
+    color: var(--sz-primary, #8BAA88);
+    text-decoration: underline;
+  }
+
+  .sz-page-content a:hover {
+    color: var(--sz-primary-dark, #4E5F4A);
+  }
+
+  .sz-page-content blockquote {
+    margin: 32px 0;
+    padding: 24px 32px;
+    background: var(--sz-beige, #F5F0EB);
+    border-left: 4px solid var(--sz-primary, #8BAA88);
+    font-style: italic;
+    border-radius: 4px;
+  }
+
+  .sz-page-content img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin: 24px 0;
+  }
+
+  .sz-contact-section {
+    margin-top: 64px;
+    padding-top: 48px;
+    border-top: 1px solid var(--sz-border-light, #E5E7EB);
+  }
+
+  .sz-contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+  }
+
+  @media (max-width: 768px) {
+    .sz-contact-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .sz-contact-heading {
+    font-family: var(--sz-font-heading, 'Playfair Display', Georgia, serif);
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--sz-primary-dark, #4E5F4A);
+    margin: 0 0 16px 0;
+  }
+
+  .sz-contact-text {
+    font-family: var(--sz-font-body, 'Inter', sans-serif);
+    font-size: 16px;
+    color: var(--sz-charcoal, #2B2B2B);
+    margin: 0 0 32px 0;
+    line-height: 1.6;
+  }
+
+  .sz-contact-methods {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .sz-contact-method {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+  }
+
+  .sz-contact-method svg {
+    color: var(--sz-primary, #8BAA88);
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .sz-contact-method h3 {
+    font-family: var(--sz-font-body, 'Inter', sans-serif);
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--sz-charcoal, #2B2B2B);
+    margin: 0 0 4px 0;
+  }
+
+  .sz-contact-method p,
+  .sz-contact-method a {
+    font-family: var(--sz-font-body, 'Inter', sans-serif);
+    font-size: 14px;
+    color: var(--sz-gray, #6B7280);
+    margin: 0;
+    text-decoration: none;
+  }
+
+  .sz-contact-method a:hover {
+    color: var(--sz-primary, #8BAA88);
+  }
+
+  .sz-contact-form-wrapper {
+    background: var(--sz-white, #FFFFFF);
+    padding: 32px;
+    border-radius: 8px;
+    border: 1px solid var(--sz-border-light, #E5E7EB);
+  }
+
+  .sz-form-group {
+    margin-bottom: 24px;
+  }
+
+  .sz-form-label {
+    display: block;
+    font-family: var(--sz-font-body, 'Inter', sans-serif);
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--sz-charcoal, #2B2B2B);
+    margin-bottom: 4px;
+  }
+
+  .sz-form-label .required {
+    color: var(--sz-error, #DC2626);
+  }
+
+  .sz-form-input,
+  .sz-form-select,
+  .sz-form-textarea {
+    width: 100%;
+    padding: 16px;
+    font-family: var(--sz-font-body, 'Inter', sans-serif);
+    font-size: 16px;
+    border: 1px solid var(--sz-border-light, #E5E7EB);
+    border-radius: 4px;
+    background: var(--sz-white, #FFFFFF);
+    transition: border-color 0.2s;
+  }
+
+  .sz-form-input:focus,
+  .sz-form-select:focus,
+  .sz-form-textarea:focus {
+    outline: none;
+    border-color: var(--sz-primary, #8BAA88);
+  }
+
+  .sz-form-textarea {
+    resize: vertical;
+    min-height: 120px;
+  }
+
+  .sz-btn-submit {
+    width: 100%;
+    padding: 16px;
+  }
+
+  .sz-form-success {
+    text-align: center;
+    padding: 32px;
+  }
+
+  .sz-form-success svg {
+    color: var(--sz-success, #059669);
+    margin-bottom: 16px;
+  }
+
+  .sz-form-success p {
+    font-family: var(--sz-font-body, 'Inter', sans-serif);
+    font-size: 16px;
+    color: var(--sz-charcoal, #2B2B2B);
+    margin: 0;
+  }
+
+  .sz-form-errors {
+    background: #FEF2F2;
+    border: 1px solid var(--sz-error, #DC2626);
+    border-radius: 4px;
+    padding: 16px;
+    margin-bottom: 24px;
+    color: var(--sz-error, #DC2626);
+    font-size: 14px;
+  }
+{% endstyle %}
+
+{% schema %}
+{
+  "name": "Page Content",
+  "tag": "section",
+  "class": "sz-page-section",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_breadcrumbs",
+      "label": "Show breadcrumbs",
+      "default": true
+    }
+  ]
+}
+{% endschema %}
