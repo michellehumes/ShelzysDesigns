@@ -1,0 +1,490 @@
+{%- comment -%}
+  Shelzy's Designs - Image Gallery / Instagram Feed
+  A visually stunning masonry-style gallery with lightbox
+{%- endcomment -%}
+
+<section class="sz-gallery" style="--bg-color: {{ section.settings.background_color }};">
+  <div class="sz-gallery-container">
+    {%- if section.settings.heading != blank or section.settings.subheading != blank -%}
+      <div class="sz-gallery-header">
+        {%- if section.settings.subheading != blank -%}
+          <span class="sz-gallery-subheading">{{ section.settings.subheading }}</span>
+        {%- endif -%}
+        {%- if section.settings.heading != blank -%}
+          <h2 class="sz-gallery-heading">{{ section.settings.heading }}</h2>
+        {%- endif -%}
+        {%- if section.settings.instagram_handle != blank -%}
+          <a href="https://instagram.com/{{ section.settings.instagram_handle }}" target="_blank" rel="noopener" class="sz-gallery-instagram-link">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+            @{{ section.settings.instagram_handle }}
+          </a>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+    <div class="sz-gallery-grid">
+      {%- for block in section.blocks -%}
+        <div class="sz-gallery-item sz-gallery-item-{{ block.settings.size }}" {{ block.shopify_attributes }}>
+          <a
+            href="{{ block.settings.link | default: '#' }}"
+            class="sz-gallery-link"
+            {%- if block.settings.link == blank -%}
+              data-gallery-lightbox
+              data-image="{{ block.settings.image | image_url: width: 1600 }}"
+            {%- endif -%}
+          >
+            {%- if block.settings.image != blank -%}
+              <img
+                src="{{ block.settings.image | image_url: width: 800 }}"
+                srcset="{{ block.settings.image | image_url: width: 400 }} 400w,
+                        {{ block.settings.image | image_url: width: 600 }} 600w,
+                        {{ block.settings.image | image_url: width: 800 }} 800w"
+                sizes="(max-width: 600px) 50vw, 25vw"
+                alt="{{ block.settings.caption | default: 'Gallery image' }}"
+                loading="lazy"
+                class="sz-gallery-image"
+              >
+            {%- else -%}
+              <div class="sz-gallery-placeholder">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                  <circle cx="8.5" cy="8.5" r="1.5"/>
+                  <polyline points="21 15 16 10 5 21"/>
+                </svg>
+              </div>
+            {%- endif -%}
+
+            <div class="sz-gallery-overlay">
+              {%- if block.settings.caption != blank -%}
+                <p class="sz-gallery-caption">{{ block.settings.caption }}</p>
+              {%- endif -%}
+              <div class="sz-gallery-icon">
+                {%- if block.settings.link != blank -%}
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                {%- else -%}
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+                {%- endif -%}
+              </div>
+            </div>
+          </a>
+        </div>
+      {%- endfor -%}
+    </div>
+
+    {%- if section.settings.show_cta -%}
+      <div class="sz-gallery-cta">
+        <a href="{{ section.settings.cta_link }}" class="sz-gallery-btn">
+          {{ section.settings.cta_text | default: 'Follow Us' }}
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{%- comment -%} Lightbox Modal {%- endcomment -%}
+<div class="sz-lightbox" id="szLightbox" aria-hidden="true">
+  <button class="sz-lightbox-close" aria-label="Close lightbox">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+  </button>
+  <div class="sz-lightbox-content">
+    <img src="" alt="" class="sz-lightbox-image" id="szLightboxImage">
+  </div>
+</div>
+
+<style>
+  .sz-gallery {
+    padding: 80px 0;
+    background: var(--bg-color);
+  }
+
+  @media (max-width: 768px) {
+    .sz-gallery {
+      padding: 60px 0;
+    }
+  }
+
+  .sz-gallery-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  .sz-gallery-header {
+    text-align: center;
+    margin-bottom: 48px;
+  }
+
+  .sz-gallery-subheading {
+    display: block;
+    font-family: "Inter", sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: #8BAA88;
+    margin-bottom: 12px;
+  }
+
+  .sz-gallery-heading {
+    font-family: "Playfair Display", Georgia, serif;
+    font-size: clamp(2rem, 4vw, 2.75rem);
+    font-weight: 500;
+    color: #1F1F1F;
+    margin: 0 0 20px;
+  }
+
+  .sz-gallery-instagram-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: "Inter", sans-serif;
+    font-size: 15px;
+    font-weight: 500;
+    color: #1F1F1F;
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+
+  .sz-gallery-instagram-link:hover {
+    color: #8BAA88;
+  }
+
+  .sz-gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+  }
+
+  @media (max-width: 1024px) {
+    .sz-gallery-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  @media (max-width: 600px) {
+    .sz-gallery-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px;
+    }
+  }
+
+  .sz-gallery-item {
+    position: relative;
+    overflow: hidden;
+    border-radius: 12px;
+  }
+
+  .sz-gallery-item-large {
+    grid-column: span 2;
+    grid-row: span 2;
+  }
+
+  @media (max-width: 600px) {
+    .sz-gallery-item-large {
+      grid-column: span 2;
+      grid-row: span 1;
+    }
+  }
+
+  .sz-gallery-link {
+    display: block;
+    position: relative;
+    aspect-ratio: 1;
+    overflow: hidden;
+  }
+
+  .sz-gallery-item-large .sz-gallery-link {
+    aspect-ratio: 1;
+  }
+
+  .sz-gallery-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s ease;
+  }
+
+  .sz-gallery-link:hover .sz-gallery-image {
+    transform: scale(1.08);
+  }
+
+  .sz-gallery-placeholder {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #8BAA88 0%, #4E5F4A 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(255, 255, 255, 0.4);
+  }
+
+  .sz-gallery-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .sz-gallery-link:hover .sz-gallery-overlay {
+    opacity: 1;
+  }
+
+  .sz-gallery-caption {
+    font-family: "Inter", sans-serif;
+    font-size: 14px;
+    color: #fff;
+    margin: 0 0 12px;
+    padding: 0 20px;
+    text-align: center;
+  }
+
+  .sz-gallery-icon {
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    border-radius: 50%;
+    color: #fff;
+  }
+
+  .sz-gallery-cta {
+    text-align: center;
+    margin-top: 48px;
+  }
+
+  .sz-gallery-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 16px 36px;
+    font-family: "Inter", sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    color: #fff;
+    background: #2C3E2D;
+    text-decoration: none;
+    border-radius: 50px;
+    transition: all 0.3s ease;
+  }
+
+  .sz-gallery-btn:hover {
+    background: #4E5F4A;
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  }
+
+  .sz-gallery-btn svg {
+    transition: transform 0.3s ease;
+  }
+
+  .sz-gallery-btn:hover svg {
+    transform: translateX(4px);
+  }
+
+  /* Lightbox */
+  .sz-lightbox {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    background: rgba(0, 0, 0, 0.95);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+  }
+
+  .sz-lightbox.is-open {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .sz-lightbox-close {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    border-radius: 50%;
+    color: #fff;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+
+  .sz-lightbox-close:hover {
+    background: rgba(255, 255, 255, 0.2);
+  }
+
+  .sz-lightbox-content {
+    max-width: 90vw;
+    max-height: 90vh;
+  }
+
+  .sz-lightbox-image {
+    max-width: 100%;
+    max-height: 90vh;
+    object-fit: contain;
+    border-radius: 8px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .sz-gallery-image,
+    .sz-gallery-overlay,
+    .sz-gallery-btn {
+      transition: none;
+    }
+  }
+</style>
+
+<script>
+(function() {
+  var lightbox = document.getElementById('szLightbox');
+  var lightboxImage = document.getElementById('szLightboxImage');
+  var closeBtn = lightbox.querySelector('.sz-lightbox-close');
+
+  document.querySelectorAll('[data-gallery-lightbox]').forEach(function(el) {
+    el.addEventListener('click', function(e) {
+      e.preventDefault();
+      var imageSrc = this.dataset.image;
+      lightboxImage.src = imageSrc;
+      lightbox.classList.add('is-open');
+      lightbox.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+    });
+  });
+
+  function closeLightbox() {
+    lightbox.classList.remove('is-open');
+    lightbox.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+    lightboxImage.src = '';
+  }
+
+  closeBtn.addEventListener('click', closeLightbox);
+  lightbox.addEventListener('click', function(e) {
+    if (e.target === lightbox) closeLightbox();
+  });
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' && lightbox.classList.contains('is-open')) {
+      closeLightbox();
+    }
+  });
+})();
+</script>
+
+{% schema %}
+{
+  "name": "Image Gallery",
+  "tag": "section",
+  "class": "sz-section-gallery",
+  "settings": [
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Follow Our Journey"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "See Our Work in Action"
+    },
+    {
+      "type": "text",
+      "id": "instagram_handle",
+      "label": "Instagram Handle",
+      "default": "shelzysdesigns"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background Color",
+      "default": "#F5F2ED"
+    },
+    {
+      "type": "header",
+      "content": "Call to Action"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_cta",
+      "label": "Show CTA Button",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "cta_text",
+      "label": "CTA Text",
+      "default": "Follow Us on Instagram"
+    },
+    {
+      "type": "url",
+      "id": "cta_link",
+      "label": "CTA Link"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "image",
+      "name": "Image",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "caption",
+          "label": "Caption"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link (optional)"
+        },
+        {
+          "type": "select",
+          "id": "size",
+          "label": "Size",
+          "options": [
+            { "value": "normal", "label": "Normal" },
+            { "value": "large", "label": "Large (2x2)" }
+          ],
+          "default": "normal"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Image Gallery",
+      "blocks": [
+        { "type": "image", "settings": { "size": "large" } },
+        { "type": "image" },
+        { "type": "image" },
+        { "type": "image" },
+        { "type": "image" },
+        { "type": "image" },
+        { "type": "image" }
+      ]
+    }
+  ]
+}
+{% endschema %}
