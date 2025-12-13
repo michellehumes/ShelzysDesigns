@@ -1,0 +1,62 @@
+/* Gift Card Template - Base Styles
+   Note: Most styles are inlined in the template for standalone functionality.
+   This file provides fallback/override styles. */
+
+/* Accessibility enhancements */
+.sz-copy-btn:focus,
+.sz-action-btn:focus {
+  outline: 2px solid var(--sz-primary-dark, #4E5F4A);
+  outline-offset: 2px;
+}
+
+/* Focus visible for keyboard navigation */
+.sz-copy-btn:focus:not(:focus-visible),
+.sz-action-btn:focus:not(:focus-visible) {
+  outline: none;
+}
+
+.sz-copy-btn:focus-visible,
+.sz-action-btn:focus-visible {
+  outline: 2px solid var(--sz-primary-dark, #4E5F4A);
+  outline-offset: 2px;
+}
+
+/* High contrast mode support */
+@media (forced-colors: active) {
+  .sz-gift-card {
+    border: 2px solid CanvasText;
+  }
+
+  .sz-gift-card-code-wrapper {
+    border: 2px solid CanvasText;
+  }
+}
+
+/* Reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  .sz-copy-btn,
+  .sz-action-btn {
+    transition: none;
+  }
+
+  .sz-copy-btn:hover,
+  .sz-action-btn:hover {
+    transform: none;
+  }
+}
+
+/* Additional print optimizations */
+@media print {
+  .sz-gift-card-header::after {
+    display: none;
+  }
+
+  .sz-gift-card-code {
+    font-size: 28px;
+  }
+
+  .sz-gift-card-qr img {
+    width: 150px;
+    height: 150px;
+  }
+}

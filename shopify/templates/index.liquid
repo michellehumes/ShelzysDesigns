@@ -505,43 +505,8 @@
   }
 </style>
 
-{% schema %}
-{
-  "name": "Homepage",
-  "settings": [
-    {
-      "type": "header",
-      "content": "Hero Section"
-    },
-    {
-      "type": "text",
-      "id": "hero_title",
-      "label": "Hero Title",
-      "default": "Premium Personalized Water Bottles"
-    },
-    {
-      "type": "textarea",
-      "id": "hero_subtitle",
-      "label": "Hero Subtitle",
-      "default": "Custom-made bottles for bridesmaids, weddings, kids, and every special occasion. True sublimation printing that never peels or fades."
-    },
-    {
-      "type": "image_picker",
-      "id": "hero_image",
-      "label": "Hero Image"
-    },
-    {
-      "type": "text",
-      "id": "cta_text",
-      "label": "Button Text",
-      "default": "Shop Best Sellers"
-    },
-    {
-      "type": "url",
-      "id": "cta_link",
-      "label": "Button Link",
-      "default": "/collections/best-sellers"
-    }
-  ]
-}
-{% endschema %}
+{%- comment -%}
+  Note: This is a legacy Liquid template for backwards compatibility.
+  Shopify 2.0 themes will use index.json instead of this file.
+  This template serves as a fallback for themes that don't fully support Online Store 2.0.
+{%- endcomment -%}
