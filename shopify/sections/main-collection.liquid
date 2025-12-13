@@ -1,6 +1,6 @@
 {%- comment -%}
-  Shelzy's Designs - Collection Section
-  Shopify 2.0 section for collection product browsing
+  Shelzy's Designs - Clean Collection Page
+  Simplified, organized collection layout with consistent spacing
 {%- endcomment -%}
 
 {%- comment -%} Collection Schema for SEO {%- endcomment -%}
@@ -14,424 +14,324 @@
 }
 </script>
 
-<div class="sz-collection-page">
-  <div class="sz-collection-container">
-
-    {%- comment -%} Breadcrumbs {%- endcomment -%}
-    {% render 'shelzys-breadcrumbs' %}
-
-    {%- comment -%} Collection Header {%- endcomment -%}
-    <div class="sz-collection-header">
-      {%- if collection.image and section.settings.show_collection_image -%}
-        <div class="sz-collection-hero">
-          <img
-            src="{{ collection.image | image_url: width: 1600 }}"
-            srcset="{{ collection.image | image_url: width: 800 }} 800w,
-                    {{ collection.image | image_url: width: 1200 }} 1200w,
-                    {{ collection.image | image_url: width: 1600 }} 1600w"
-            sizes="100vw"
-            alt="{{ collection.title }}"
-            loading="eager"
-            class="sz-collection-hero-img"
-          >
-          <div class="sz-collection-hero-overlay">
-            <h1 class="sz-collection-title">{{ collection.title }}</h1>
-            {%- if collection.description != blank and section.settings.show_description -%}
-              <div class="sz-collection-description">{{ collection.description }}</div>
-            {%- endif -%}
-          </div>
-        </div>
-      {%- else -%}
-        <div class="sz-collection-header-text">
-          <h1 class="sz-collection-title">{{ collection.title }}</h1>
-          {%- if collection.description != blank and section.settings.show_description -%}
-            <div class="sz-collection-description">{{ collection.description }}</div>
-          {%- endif -%}
-        </div>
+<div class="sz-collection">
+  {%- comment -%} Clean Header {%- endcomment -%}
+  <header class="sz-collection-header">
+    <div class="sz-collection-header-content">
+      <h1 class="sz-collection-title">{{ collection.title }}</h1>
+      {%- if collection.description != blank and section.settings.show_description -%}
+        <p class="sz-collection-desc">{{ collection.description | strip_html | truncate: 200 }}</p>
       {%- endif -%}
     </div>
+  </header>
 
-    {%- comment -%} Collection Toolbar {%- endcomment -%}
-    <div class="sz-collection-toolbar">
-      <div class="sz-collection-count">
+  <div class="sz-collection-main">
+    {%- comment -%} Toolbar {%- endcomment -%}
+    <div class="sz-toolbar">
+      <span class="sz-toolbar-count">
         {{ collection.products_count }} {{ collection.products_count | pluralize: 'product', 'products' }}
-      </div>
+      </span>
 
-      <div class="sz-collection-sort">
-        <label for="sort-by" class="sz-sort-label">Sort by:</label>
-        <select name="sort_by" id="sort-by" class="sz-sort-select" onchange="window.location.href = this.value;">
-          {%- assign sort_options = 'manual|best-selling|title-ascending|title-descending|price-ascending|price-descending|created-ascending|created-descending' | split: '|' -%}
-          {%- assign sort_labels = 'Featured|Best Selling|A to Z|Z to A|Price: Low to High|Price: High to Low|Oldest to Newest|Newest to Oldest' | split: '|' -%}
-
-          {%- for option in sort_options -%}
-            <option
-              value="{{ collection.url }}?sort_by={{ option }}"
-              {% if collection.sort_by == option or collection.default_sort_by == option and collection.sort_by == blank %}selected{% endif %}
-            >
-              {{ sort_labels[forloop.index0] }}
-            </option>
-          {%- endfor -%}
-        </select>
+      <div class="sz-toolbar-actions">
+        <div class="sz-sort">
+          <label for="sort-select" class="sz-sort-label">Sort:</label>
+          <select id="sort-select" class="sz-sort-select" onchange="window.location.href = this.value;">
+            {%- assign sort_options = 'manual|best-selling|title-ascending|price-ascending|price-descending|created-descending' | split: '|' -%}
+            {%- assign sort_labels = 'Featured|Best Selling|A-Z|Price: Low to High|Price: High to Low|Newest' | split: '|' -%}
+            {%- for option in sort_options -%}
+              <option value="{{ collection.url }}?sort_by={{ option }}" {% if collection.sort_by == option or collection.default_sort_by == option and collection.sort_by == blank %}selected{% endif %}>
+                {{ sort_labels[forloop.index0] }}
+              </option>
+            {%- endfor -%}
+          </select>
+        </div>
       </div>
     </div>
 
     {%- comment -%} Products Grid {%- endcomment -%}
     {%- if collection.products.size > 0 -%}
-
       {%- paginate collection.products by section.settings.products_per_page -%}
 
-        <div class="sz-product-grid sz-grid-{{ section.settings.columns }}">
+        <div class="sz-products" data-columns="{{ section.settings.columns }}">
           {%- for product in collection.products -%}
-            <div class="sz-product-card">
-              <a href="{{ product.url | within: collection }}" class="sz-product-card-link">
-
-                {%- comment -%} Product Image {%- endcomment -%}
-                <div class="sz-product-card-image">
+            <article class="sz-product-card">
+              <a href="{{ product.url | within: collection }}" class="sz-product-link">
+                {%- comment -%} Image {%- endcomment -%}
+                <div class="sz-product-media">
                   {%- if product.featured_image -%}
                     <img
-                      src="{{ product.featured_image | image_url: width: 400 }}"
-                      srcset="{{ product.featured_image | image_url: width: 300 }} 300w,
-                              {{ product.featured_image | image_url: width: 400 }} 400w,
-                              {{ product.featured_image | image_url: width: 600 }} 600w"
-                      sizes="(max-width: 500px) 100vw, (max-width: 900px) 50vw, 25vw"
-                      alt="{{ product.featured_image.alt | default: product.title }}"
+                      src="{{ product.featured_image | image_url: width: 480 }}"
+                      srcset="{{ product.featured_image | image_url: width: 320 }} 320w,
+                              {{ product.featured_image | image_url: width: 480 }} 480w,
+                              {{ product.featured_image | image_url: width: 640 }} 640w"
+                      sizes="(max-width: 480px) 50vw, (max-width: 768px) 33vw, 25vw"
+                      alt="{{ product.featured_image.alt | default: product.title | escape }}"
                       loading="lazy"
-                      class="sz-product-img"
+                      class="sz-product-image"
                     >
                     {%- if product.images.size > 1 and section.settings.show_secondary_image -%}
                       <img
-                        src="{{ product.images[1] | image_url: width: 400 }}"
-                        alt="{{ product.images[1].alt | default: product.title }}"
+                        src="{{ product.images[1] | image_url: width: 480 }}"
+                        alt="{{ product.images[1].alt | default: product.title | escape }}"
                         loading="lazy"
-                        class="sz-product-img-hover"
+                        class="sz-product-image sz-product-image--hover"
                       >
                     {%- endif -%}
                   {%- else -%}
-                    <div class="sz-product-placeholder">{{ product.title | truncate: 25 }}</div>
-                  {%- endif -%}
-
-                  {%- comment -%} Product Badges {%- endcomment -%}
-                  <div class="sz-product-badges">
-                    {%- if product.available == false -%}
-                      <span class="sz-badge sz-badge-soldout">Sold Out</span>
-                    {%- elsif product.compare_at_price > product.price -%}
-                      {%- assign savings = product.compare_at_price | minus: product.price | times: 100 | divided_by: product.compare_at_price -%}
-                      <span class="sz-badge sz-badge-sale">Save {{ savings }}%</span>
-                    {%- endif -%}
-                  </div>
-
-                  {%- comment -%} Quick View Button {%- endcomment -%}
-                  {%- if section.settings.enable_quick_view -%}
-                    <button
-                      type="button"
-                      class="sz-quick-view-btn"
-                      data-product-handle="{{ product.handle }}"
-                      aria-label="Quick view {{ product.title }}"
-                    >
-                      Quick View
-                    </button>
-                  {%- endif -%}
-                </div>
-
-                {%- comment -%} Product Info {%- endcomment -%}
-                <div class="sz-product-card-info">
-                  <h3 class="sz-product-card-title">{{ product.title }}</h3>
-
-                  {%- comment -%} Price {%- endcomment -%}
-                  <div class="sz-product-card-price">
-                    {%- if product.compare_at_price > product.price -%}
-                      <span class="sz-price-compare">{{ product.compare_at_price | money }}</span>
-                    {%- endif -%}
-                    <span class="sz-price-current">{{ product.price | money }}</span>
-                  </div>
-
-                  {%- comment -%} Color Variants Preview {%- endcomment -%}
-                  {%- if section.settings.show_color_swatches and product.options_by_name['Color'].values.size > 1 -%}
-                    <div class="sz-product-card-colors">
-                      {%- for color in product.options_by_name['Color'].values limit: 5 -%}
-                        <span class="sz-color-swatch" title="{{ color }}" style="background-color: {{ color | handleize }};">
-                          <span class="visually-hidden">{{ color }}</span>
-                        </span>
-                      {%- endfor -%}
-                      {%- if product.options_by_name['Color'].values.size > 5 -%}
-                        <span class="sz-color-more">+{{ product.options_by_name['Color'].values.size | minus: 5 }}</span>
-                      {%- endif -%}
+                    <div class="sz-product-placeholder">
+                      <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                        <circle cx="8.5" cy="8.5" r="1.5"/>
+                        <polyline points="21 15 16 10 5 21"/>
+                      </svg>
                     </div>
                   {%- endif -%}
+
+                  {%- comment -%} Badges {%- endcomment -%}
+                  {%- if product.available == false -%}
+                    <span class="sz-badge sz-badge--soldout">Sold Out</span>
+                  {%- elsif product.compare_at_price > product.price -%}
+                    <span class="sz-badge sz-badge--sale">Sale</span>
+                  {%- endif -%}
                 </div>
 
+                {%- comment -%} Info {%- endcomment -%}
+                <div class="sz-product-info">
+                  <h2 class="sz-product-title">{{ product.title }}</h2>
+                  <div class="sz-product-price">
+                    {%- if product.compare_at_price > product.price -%}
+                      <span class="sz-price--compare">{{ product.compare_at_price | money }}</span>
+                    {%- endif -%}
+                    <span class="sz-price--current {% if product.compare_at_price > product.price %}sz-price--sale{% endif %}">
+                      {{ product.price | money }}
+                    </span>
+                  </div>
+                </div>
               </a>
-            </div>
+            </article>
           {%- endfor -%}
         </div>
 
         {%- comment -%} Pagination {%- endcomment -%}
         {%- if paginate.pages > 1 -%}
           <nav class="sz-pagination" aria-label="Pagination">
-            <ul class="sz-pagination-list">
+            {%- if paginate.previous -%}
+              <a href="{{ paginate.previous.url }}" class="sz-pagination-btn sz-pagination-prev">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+                Previous
+              </a>
+            {%- endif -%}
 
-              {%- if paginate.previous -%}
-                <li>
-                  <a href="{{ paginate.previous.url }}" class="sz-pagination-prev" aria-label="Previous page">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                      <polyline points="15 18 9 12 15 6"/>
-                    </svg>
-                    Previous
-                  </a>
-                </li>
-              {%- endif -%}
-
+            <div class="sz-pagination-pages">
               {%- for part in paginate.parts -%}
                 {%- if part.is_link -%}
-                  <li>
-                    <a href="{{ part.url }}" class="sz-pagination-page" aria-label="Page {{ part.title }}">
-                      {{ part.title }}
-                    </a>
-                  </li>
+                  <a href="{{ part.url }}" class="sz-pagination-page">{{ part.title }}</a>
                 {%- else -%}
                   {%- if part.title == paginate.current_page -%}
-                    <li>
-                      <span class="sz-pagination-page sz-pagination-current" aria-current="page">
-                        {{ part.title }}
-                      </span>
-                    </li>
+                    <span class="sz-pagination-page sz-pagination-current" aria-current="page">{{ part.title }}</span>
                   {%- else -%}
-                    <li>
-                      <span class="sz-pagination-ellipsis">{{ part.title }}</span>
-                    </li>
+                    <span class="sz-pagination-ellipsis">{{ part.title }}</span>
                   {%- endif -%}
                 {%- endif -%}
               {%- endfor -%}
+            </div>
 
-              {%- if paginate.next -%}
-                <li>
-                  <a href="{{ paginate.next.url }}" class="sz-pagination-next" aria-label="Next page">
-                    Next
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                      <polyline points="9 18 15 12 9 6"/>
-                    </svg>
-                  </a>
-                </li>
-              {%- endif -%}
-
-            </ul>
+            {%- if paginate.next -%}
+              <a href="{{ paginate.next.url }}" class="sz-pagination-btn sz-pagination-next">
+                Next
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+              </a>
+            {%- endif -%}
           </nav>
         {%- endif -%}
 
       {%- endpaginate -%}
 
     {%- else -%}
-
-      {%- comment -%} No Products {%- endcomment -%}
-      <div class="sz-collection-empty">
+      <div class="sz-empty">
+        <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <circle cx="11" cy="11" r="8"/>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+        </svg>
         <p>No products found in this collection.</p>
-        <a href="/collections/all" class="sz-btn sz-btn-primary">Browse All Products</a>
+        <a href="/collections/all" class="sz-btn">Browse All Products</a>
       </div>
-
     {%- endif -%}
-
   </div>
 </div>
 
-{% style %}
-  .sz-collection-page {
-    padding: var(--sz-space-xl, 32px) var(--sz-space-md, 16px);
-    background: var(--sz-warm-white, #FAF9F6);
+<style>
+  /* ==========================================
+     COLLECTION PAGE - CLEAN & ORGANIZED
+     ========================================== */
+
+  .sz-collection {
+    background: #fff;
     min-height: 60vh;
   }
 
-  .sz-collection-container {
-    max-width: 1200px;
-    margin: 0 auto;
-  }
-
+  /* Header */
   .sz-collection-header {
-    margin-bottom: var(--sz-space-xl, 32px);
-  }
-
-  .sz-collection-hero {
-    position: relative;
-    height: 300px;
-    border-radius: 12px;
-    overflow: hidden;
-    margin-bottom: var(--sz-space-lg, 24px);
-  }
-
-  @media (max-width: 768px) {
-    .sz-collection-hero {
-      height: 200px;
-    }
-  }
-
-  .sz-collection-hero-img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-
-  .sz-collection-hero-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: linear-gradient(to right, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.2) 100%);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    padding: var(--sz-space-2xl, 48px);
-  }
-
-  .sz-collection-hero-overlay .sz-collection-title {
-    color: var(--sz-white, #FFFFFF);
-    text-shadow: 0 2px 8px rgba(0,0,0,0.3);
-  }
-
-  .sz-collection-hero-overlay .sz-collection-description {
-    color: rgba(255,255,255,0.9);
-    max-width: 600px;
-  }
-
-  .sz-collection-header-text {
+    background: var(--sz-beige, #F5F2ED);
+    padding: 48px 24px;
     text-align: center;
-    padding: var(--sz-space-lg, 24px) 0;
+  }
+
+  .sz-collection-header-content {
+    max-width: 680px;
+    margin: 0 auto;
   }
 
   .sz-collection-title {
-    font-family: var(--sz-font-heading, 'Playfair Display', Georgia, serif);
-    font-size: clamp(2rem, 5vw, 3rem);
-    font-weight: 600;
-    color: var(--sz-primary-dark, #4E5F4A);
-    margin: 0 0 var(--sz-space-md, 16px) 0;
+    font-family: var(--sz-font-heading);
+    font-size: clamp(1.75rem, 4vw, 2.5rem);
+    font-weight: 500;
+    color: var(--sz-charcoal, #1F1F1F);
+    margin: 0 0 12px;
+    letter-spacing: -0.02em;
   }
 
-  .sz-collection-description {
-    font-family: var(--sz-font-body, 'Inter', sans-serif);
-    font-size: 16px;
-    color: var(--sz-charcoal, #2B2B2B);
+  .sz-collection-desc {
+    font-family: var(--sz-font-body);
+    font-size: 15px;
+    color: var(--sz-gray, #6B7280);
     line-height: 1.6;
-    max-width: 700px;
-    margin: 0 auto;
+    margin: 0;
   }
 
-  .sz-collection-toolbar {
+  /* Main Container */
+  .sz-collection-main {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 32px 24px 64px;
+  }
+
+  /* Toolbar */
+  .sz-toolbar {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    flex-wrap: wrap;
-    gap: var(--sz-space-md, 16px);
-    margin-bottom: var(--sz-space-xl, 32px);
-    padding: var(--sz-space-md, 16px) 0;
-    border-bottom: 1px solid var(--sz-border-light, #E5E7EB);
+    padding-bottom: 24px;
+    margin-bottom: 24px;
+    border-bottom: 1px solid var(--sz-border-light, #E8E4DE);
   }
 
-  .sz-collection-count {
-    font-family: var(--sz-font-body, 'Inter', sans-serif);
+  .sz-toolbar-count {
+    font-family: var(--sz-font-body);
     font-size: 14px;
     color: var(--sz-gray, #6B7280);
   }
 
-  .sz-collection-sort {
+  .sz-sort {
     display: flex;
     align-items: center;
     gap: 8px;
   }
 
   .sz-sort-label {
-    font-family: var(--sz-font-body, 'Inter', sans-serif);
+    font-family: var(--sz-font-body);
     font-size: 14px;
-    color: var(--sz-charcoal, #2B2B2B);
+    color: var(--sz-charcoal, #1F1F1F);
+    font-weight: 500;
   }
 
   .sz-sort-select {
-    padding: 8px 16px;
-    font-family: var(--sz-font-body, 'Inter', sans-serif);
+    font-family: var(--sz-font-body);
     font-size: 14px;
-    border: 1px solid var(--sz-border-light, #E5E7EB);
-    border-radius: 4px;
-    background: var(--sz-white, #FFFFFF);
+    padding: 8px 32px 8px 12px;
+    border: 1px solid var(--sz-border-light, #E8E4DE);
+    border-radius: 6px;
+    background: #fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%236B7280' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E") no-repeat right 10px center;
+    appearance: none;
     cursor: pointer;
+    transition: border-color 0.2s;
+  }
+
+  .sz-sort-select:hover {
+    border-color: var(--sz-primary, #8BAA88);
   }
 
   .sz-sort-select:focus {
     outline: none;
     border-color: var(--sz-primary, #8BAA88);
+    box-shadow: 0 0 0 3px rgba(139, 170, 136, 0.1);
   }
 
-  .sz-product-grid {
+  /* Products Grid */
+  .sz-products {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: var(--sz-space-lg, 24px);
-    margin-bottom: var(--sz-space-2xl, 48px);
+    gap: 24px;
   }
 
-  .sz-grid-3 {
+  .sz-products[data-columns="4"] {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .sz-products[data-columns="3"] {
     grid-template-columns: repeat(3, 1fr);
   }
 
   @media (max-width: 1024px) {
-    .sz-product-grid {
+    .sz-products[data-columns="4"],
+    .sz-products[data-columns="3"] {
       grid-template-columns: repeat(3, 1fr);
     }
   }
 
   @media (max-width: 768px) {
-    .sz-product-grid {
+    .sz-products {
       grid-template-columns: repeat(2, 1fr);
-      gap: var(--sz-space-md, 16px);
+      gap: 16px;
+    }
+
+    .sz-collection-main {
+      padding: 24px 16px 48px;
+    }
+
+    .sz-collection-header {
+      padding: 32px 16px;
     }
   }
 
-  @media (max-width: 400px) {
-    .sz-product-grid {
-      grid-template-columns: 1fr;
-    }
-  }
-
+  /* Product Card */
   .sz-product-card {
-    background: var(--sz-white, #FFFFFF);
-    border-radius: 8px;
-    overflow: hidden;
-    transition: box-shadow 0.3s;
+    position: relative;
   }
 
-  .sz-product-card:hover {
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-  }
-
-  .sz-product-card-link {
+  .sz-product-link {
+    display: block;
     text-decoration: none;
     color: inherit;
-    display: block;
   }
 
-  .sz-product-card-image {
+  .sz-product-media {
     position: relative;
     aspect-ratio: 1;
-    background: var(--sz-beige, #F5F0EB);
     overflow: hidden;
+    border-radius: 12px;
+    background: var(--sz-beige, #F5F2ED);
+    margin-bottom: 12px;
   }
 
-  .sz-product-img {
+  .sz-product-image {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: opacity 0.3s;
+    transition: opacity 0.4s ease;
   }
 
-  .sz-product-img-hover {
+  .sz-product-image--hover {
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+    inset: 0;
     opacity: 0;
-    transition: opacity 0.3s;
   }
 
-  .sz-product-card:hover .sz-product-img-hover {
+  .sz-product-link:hover .sz-product-image--hover {
     opacity: 1;
+  }
+
+  .sz-product-link:hover .sz-product-image:not(.sz-product-image--hover) {
+    opacity: 0;
   }
 
   .sz-product-placeholder {
@@ -440,198 +340,182 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 14px;
     color: var(--sz-gray, #6B7280);
-    padding: 16px;
-    text-align: center;
   }
 
-  .sz-product-badges {
-    position: absolute;
-    top: 8px;
-    left: 8px;
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-  }
-
+  /* Badges */
   .sz-badge {
-    font-family: var(--sz-font-body, 'Inter', sans-serif);
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    font-family: var(--sz-font-body);
     font-size: 11px;
     font-weight: 600;
     text-transform: uppercase;
-    letter-spacing: 0.03em;
-    padding: 4px 8px;
+    letter-spacing: 0.05em;
+    padding: 5px 10px;
     border-radius: 4px;
   }
 
-  .sz-badge-sale {
-    background: var(--sz-error, #DC2626);
-    color: var(--sz-white, #FFFFFF);
+  .sz-badge--sale {
+    background: var(--sz-primary-dark, #4E5F4A);
+    color: #fff;
   }
 
-  .sz-badge-new {
-    background: var(--sz-primary, #8BAA88);
-    color: var(--sz-white, #FFFFFF);
+  .sz-badge--soldout {
+    background: var(--sz-charcoal, #1F1F1F);
+    color: #fff;
   }
 
-  .sz-badge-soldout {
-    background: var(--sz-charcoal, #2B2B2B);
-    color: var(--sz-white, #FFFFFF);
+  /* Product Info */
+  .sz-product-info {
+    padding: 0 4px;
   }
 
-  .sz-quick-view-btn {
-    position: absolute;
-    bottom: 16px;
-    left: 50%;
-    transform: translateX(-50%) translateY(20px);
-    background: var(--sz-white, #FFFFFF);
-    color: var(--sz-charcoal, #2B2B2B);
-    border: none;
-    padding: 8px 16px;
-    font-family: var(--sz-font-body, 'Inter', sans-serif);
+  .sz-product-title {
+    font-family: var(--sz-font-body);
     font-size: 14px;
     font-weight: 500;
-    border-radius: 999px;
-    cursor: pointer;
-    opacity: 0;
-    transition: all 0.3s;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    color: var(--sz-charcoal, #1F1F1F);
+    margin: 0 0 4px;
+    line-height: 1.4;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
   }
 
-  .sz-product-card:hover .sz-quick-view-btn {
-    opacity: 1;
-    transform: translateX(-50%) translateY(0);
-  }
-
-  .sz-quick-view-btn:hover {
-    background: var(--sz-primary, #8BAA88);
-    color: var(--sz-white, #FFFFFF);
-  }
-
-  .sz-product-card-info {
-    padding: 16px;
-  }
-
-  .sz-product-card-title {
-    font-family: var(--sz-font-body, 'Inter', sans-serif);
-    font-size: 14px;
-    font-weight: 500;
-    color: var(--sz-charcoal, #2B2B2B);
-    margin: 0 0 4px 0;
-    line-height: 1.3;
-  }
-
-  .sz-product-card-price {
+  .sz-product-price {
     display: flex;
     align-items: center;
     gap: 8px;
+    font-family: var(--sz-font-body);
   }
 
-  .sz-price-compare {
-    font-family: var(--sz-font-body, 'Inter', sans-serif);
-    font-size: 14px;
+  .sz-price--current {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--sz-charcoal, #1F1F1F);
+  }
+
+  .sz-price--current.sz-price--sale {
+    color: var(--sz-primary-dark, #4E5F4A);
+  }
+
+  .sz-price--compare {
+    font-size: 13px;
     color: var(--sz-gray, #6B7280);
     text-decoration: line-through;
   }
 
-  .sz-price-current {
-    font-family: var(--sz-font-body, 'Inter', sans-serif);
-    font-size: 16px;
-    font-weight: 600;
-    color: var(--sz-primary-dark, #4E5F4A);
-  }
-
-  .sz-product-card-colors {
-    display: flex;
-    align-items: center;
-    gap: 4px;
-    margin-top: 8px;
-  }
-
-  .sz-color-swatch {
-    width: 16px;
-    height: 16px;
-    border-radius: 50%;
-    border: 1px solid var(--sz-border-light, #E5E7EB);
-  }
-
-  .sz-color-more {
-    font-family: var(--sz-font-body, 'Inter', sans-serif);
-    font-size: 11px;
-    color: var(--sz-gray, #6B7280);
-  }
-
+  /* Pagination */
   .sz-pagination {
     display: flex;
+    align-items: center;
     justify-content: center;
+    gap: 8px;
+    margin-top: 48px;
+    padding-top: 32px;
+    border-top: 1px solid var(--sz-border-light, #E8E4DE);
   }
 
-  .sz-pagination-list {
+  .sz-pagination-pages {
     display: flex;
     align-items: center;
     gap: 4px;
-    list-style: none;
-    padding: 0;
-    margin: 0;
   }
 
-  .sz-pagination-page,
-  .sz-pagination-prev,
-  .sz-pagination-next {
-    display: flex;
-    align-items: center;
-    gap: 4px;
-    padding: 8px 16px;
-    font-family: var(--sz-font-body, 'Inter', sans-serif);
+  .sz-pagination-btn,
+  .sz-pagination-page {
+    font-family: var(--sz-font-body);
     font-size: 14px;
-    color: var(--sz-charcoal, #2B2B2B);
+    font-weight: 500;
+    color: var(--sz-charcoal, #1F1F1F);
     text-decoration: none;
-    border-radius: 4px;
-    transition: all 0.2s;
+    padding: 8px 12px;
+    border-radius: 6px;
+    transition: background 0.2s, color 0.2s;
   }
 
-  .sz-pagination-page:hover,
-  .sz-pagination-prev:hover,
-  .sz-pagination-next:hover {
-    background: var(--sz-beige, #F5F0EB);
-    color: var(--sz-primary, #8BAA88);
+  .sz-pagination-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .sz-pagination-btn:hover,
+  .sz-pagination-page:hover {
+    background: var(--sz-beige, #F5F2ED);
   }
 
   .sz-pagination-current {
-    background: var(--sz-primary, #8BAA88);
-    color: var(--sz-white, #FFFFFF);
+    background: var(--sz-primary-dark, #4E5F4A);
+    color: #fff;
+  }
+
+  .sz-pagination-current:hover {
+    background: var(--sz-primary-dark, #4E5F4A);
+    color: #fff;
   }
 
   .sz-pagination-ellipsis {
-    padding: 8px;
+    padding: 8px 4px;
     color: var(--sz-gray, #6B7280);
   }
 
-  .sz-collection-empty {
+  @media (max-width: 600px) {
+    .sz-pagination-pages {
+      display: none;
+    }
+  }
+
+  /* Empty State */
+  .sz-empty {
     text-align: center;
-    padding: var(--sz-space-3xl, 64px) var(--sz-space-md, 16px);
+    padding: 64px 24px;
   }
 
-  .sz-collection-empty p {
-    font-family: var(--sz-font-body, 'Inter', sans-serif);
-    font-size: 18px;
+  .sz-empty svg {
     color: var(--sz-gray, #6B7280);
-    margin: 0 0 var(--sz-space-xl, 32px) 0;
+    margin-bottom: 16px;
   }
 
-  .visually-hidden {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    white-space: nowrap;
-    border: 0;
+  .sz-empty p {
+    font-family: var(--sz-font-body);
+    font-size: 16px;
+    color: var(--sz-gray, #6B7280);
+    margin: 0 0 24px;
   }
-{% endstyle %}
+
+  .sz-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--sz-font-body);
+    font-size: 14px;
+    font-weight: 600;
+    color: #fff;
+    background: var(--sz-primary-dark, #4E5F4A);
+    padding: 12px 24px;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: background 0.2s;
+  }
+
+  .sz-btn:hover {
+    background: var(--sz-charcoal, #1F1F1F);
+  }
+
+  /* Reduced Motion */
+  @media (prefers-reduced-motion: reduce) {
+    .sz-product-image,
+    .sz-sort-select,
+    .sz-pagination-btn,
+    .sz-pagination-page {
+      transition: none;
+    }
+  }
+</style>
 
 {% schema %}
 {
@@ -639,12 +523,6 @@
   "tag": "section",
   "class": "sz-collection-section",
   "settings": [
-    {
-      "type": "checkbox",
-      "id": "show_collection_image",
-      "label": "Show collection image",
-      "default": true
-    },
     {
       "type": "checkbox",
       "id": "show_description",
@@ -658,7 +536,7 @@
       "min": 8,
       "max": 24,
       "step": 4,
-      "default": 12
+      "default": 16
     },
     {
       "type": "select",
@@ -674,18 +552,6 @@
       "type": "checkbox",
       "id": "show_secondary_image",
       "label": "Show second image on hover",
-      "default": true
-    },
-    {
-      "type": "checkbox",
-      "id": "enable_quick_view",
-      "label": "Enable quick view button",
-      "default": true
-    },
-    {
-      "type": "checkbox",
-      "id": "show_color_swatches",
-      "label": "Show color swatches",
       "default": true
     }
   ]
