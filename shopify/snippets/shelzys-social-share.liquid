@@ -1,0 +1,238 @@
+{% comment %}
+  Social Sharing Snippet
+  Usage: {% render 'shelzys-social-share', share_title: product.title, share_url: product.url, share_image: product.featured_image %}
+{% endcomment %}
+
+{%- assign share_url = share_url | default: request.path -%}
+{%- assign full_share_url = request.origin | append: share_url -%}
+{%- assign encoded_url = full_share_url | url_encode -%}
+{%- assign encoded_title = share_title | default: page_title | url_encode -%}
+
+<style>
+  .sz-social-share {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .sz-social-share-label {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--color-heading, #111);
+  }
+
+  .sz-social-share-buttons {
+    display: flex;
+    gap: 8px;
+  }
+
+  .sz-social-share-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--color-background-alt, #f5f5f5);
+    color: var(--color-text, #333);
+    text-decoration: none;
+    transition: background 0.2s, color 0.2s, transform 0.2s;
+  }
+
+  .sz-social-share-btn:hover {
+    transform: scale(1.1);
+  }
+
+  .sz-social-share-btn:focus-visible {
+    outline: 2px solid var(--color-primary, #8BAA88);
+    outline-offset: 2px;
+  }
+
+  .sz-social-share-btn svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .sz-social-share-btn--facebook:hover {
+    background: #1877f2;
+    color: #fff;
+  }
+
+  .sz-social-share-btn--twitter:hover {
+    background: #1da1f2;
+    color: #fff;
+  }
+
+  .sz-social-share-btn--pinterest:hover {
+    background: #e60023;
+    color: #fff;
+  }
+
+  .sz-social-share-btn--email:hover {
+    background: var(--color-primary-dark, #4E5F4A);
+    color: #fff;
+  }
+
+  .sz-social-share-btn--copy {
+    position: relative;
+  }
+
+  .sz-social-share-btn--copy:hover {
+    background: var(--color-primary, #8BAA88);
+    color: #fff;
+  }
+
+  .sz-copy-tooltip {
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #333;
+    color: #fff;
+    padding: 6px 10px;
+    border-radius: 4px;
+    font-size: 12px;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.2s, visibility 0.2s;
+    margin-bottom: 8px;
+  }
+
+  .sz-copy-tooltip::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 6px solid transparent;
+    border-top-color: #333;
+  }
+
+  .sz-social-share-btn--copy.copied .sz-copy-tooltip {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  @media (max-width: 480px) {
+    .sz-social-share {
+      justify-content: center;
+    }
+
+    .sz-social-share-label {
+      width: 100%;
+      text-align: center;
+    }
+  }
+</style>
+
+<div class="sz-social-share">
+  <span class="sz-social-share-label">{{ 'general.social.share' | t }}</span>
+
+  <div class="sz-social-share-buttons">
+    {%- comment -%} Facebook {%- endcomment -%}
+    <a
+      href="https://www.facebook.com/sharer/sharer.php?u={{ encoded_url }}"
+      class="sz-social-share-btn sz-social-share-btn--facebook"
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label="{{ 'general.social.share_on_facebook' | t }}"
+    >
+      <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+      </svg>
+    </a>
+
+    {%- comment -%} Twitter/X {%- endcomment -%}
+    <a
+      href="https://twitter.com/intent/tweet?url={{ encoded_url }}&text={{ encoded_title }}"
+      class="sz-social-share-btn sz-social-share-btn--twitter"
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label="{{ 'general.social.share_on_twitter' | t }}"
+    >
+      <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+      </svg>
+    </a>
+
+    {%- comment -%} Pinterest {%- endcomment -%}
+    {%- if share_image -%}
+      {%- assign pinterest_image = share_image | image_url: width: 1000 | prepend: 'https:' -%}
+    {%- endif -%}
+    <a
+      href="https://pinterest.com/pin/create/button/?url={{ encoded_url }}&description={{ encoded_title }}{% if pinterest_image %}&media={{ pinterest_image | url_encode }}{% endif %}"
+      class="sz-social-share-btn sz-social-share-btn--pinterest"
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label="{{ 'general.social.share_on_pinterest' | t }}"
+    >
+      <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M12.017 0C5.396 0 .029 5.367.029 11.987c0 5.079 3.158 9.417 7.618 11.162-.105-.949-.199-2.403.041-3.439.219-.937 1.406-5.957 1.406-5.957s-.359-.72-.359-1.781c0-1.663.967-2.911 2.168-2.911 1.024 0 1.518.769 1.518 1.688 0 1.029-.653 2.567-.992 3.992-.285 1.193.6 2.165 1.775 2.165 2.128 0 3.768-2.245 3.768-5.487 0-2.861-2.063-4.869-5.008-4.869-3.41 0-5.409 2.562-5.409 5.199 0 1.033.394 2.143.889 2.741.099.12.112.225.085.345-.09.375-.293 1.199-.334 1.363-.053.225-.172.271-.401.165-1.495-.69-2.433-2.878-2.433-4.646 0-3.776 2.748-7.252 7.92-7.252 4.158 0 7.392 2.967 7.392 6.923 0 4.135-2.607 7.462-6.233 7.462-1.214 0-2.354-.629-2.758-1.379l-.749 2.848c-.269 1.045-1.004 2.352-1.498 3.146 1.123.345 2.306.535 3.55.535 6.607 0 11.985-5.365 11.985-11.987C23.97 5.39 18.592.026 11.985.026L12.017 0z"/>
+      </svg>
+    </a>
+
+    {%- comment -%} Email {%- endcomment -%}
+    <a
+      href="mailto:?subject={{ encoded_title }}&body={{ 'Check out this product: ' | url_encode }}{{ encoded_url }}"
+      class="sz-social-share-btn sz-social-share-btn--email"
+      aria-label="Share via email"
+    >
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" aria-hidden="true">
+        <rect x="2" y="4" width="20" height="16" rx="2"/>
+        <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
+      </svg>
+    </a>
+
+    {%- comment -%} Copy Link {%- endcomment -%}
+    <button
+      type="button"
+      class="sz-social-share-btn sz-social-share-btn--copy"
+      data-copy-url="{{ full_share_url }}"
+      aria-label="Copy link to clipboard"
+    >
+      <span class="sz-copy-tooltip">Copied!</span>
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
+        <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
+      </svg>
+    </button>
+  </div>
+</div>
+
+<script>
+  (function() {
+    document.querySelectorAll('.sz-social-share-btn--copy').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        var url = this.dataset.copyUrl;
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(url).then(function() {
+            btn.classList.add('copied');
+            setTimeout(function() {
+              btn.classList.remove('copied');
+            }, 2000);
+          });
+        } else {
+          // Fallback for older browsers
+          var textArea = document.createElement('textarea');
+          textArea.value = url;
+          textArea.style.position = 'fixed';
+          textArea.style.left = '-999999px';
+          document.body.appendChild(textArea);
+          textArea.select();
+          try {
+            document.execCommand('copy');
+            btn.classList.add('copied');
+            setTimeout(function() {
+              btn.classList.remove('copied');
+            }, 2000);
+          } catch (err) {
+            console.error('Copy failed:', err);
+          }
+          document.body.removeChild(textArea);
+        }
+      });
+    });
+  })();
+</script>
