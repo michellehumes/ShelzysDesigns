@@ -27,11 +27,53 @@
   --sz-primary-dark: #4E5F4A;   /* Dark Sage / Evergreen */
   --sz-neutral-light: #FAF9F6;  /* Warm White */
   --sz-neutral-dark: #2B2B2B;   /* Charcoal */
-  --sz-accent-gold: #D1C7A1;    /* Champagne Gold */
+  --sz-accent-gold: #D4AF37;    /* Gold */
+  --sz-white: #FFFFFF;
+  --sz-warm-white: #FAF9F6;
+  --sz-beige: #F5F2ED;
+  --sz-charcoal: #1F1F1F;
+  --sz-gray: #6B7280;
+  --sz-error: #DC2626;
 
   /* Border Colors */
   --sz-border-soft: #C7D3C5;
-  --sz-border-light: #E0E3DF;
+  --sz-border-light: #E8E4DE;
+
+  /* Consistent Spacing System */
+  --sz-space-xs: 4px;
+  --sz-space-sm: 8px;
+  --sz-space-md: 16px;
+  --sz-space-lg: 24px;
+  --sz-space-xl: 32px;
+  --sz-space-2xl: 48px;
+  --sz-space-3xl: 64px;
+  --sz-space-4xl: 80px;
+
+  /* Typography Scale */
+  --sz-text-xs: 0.75rem;
+  --sz-text-sm: 0.875rem;
+  --sz-text-base: 1rem;
+  --sz-text-lg: 1.125rem;
+  --sz-text-xl: 1.25rem;
+  --sz-text-2xl: 1.5rem;
+  --sz-text-3xl: 2rem;
+  --sz-text-4xl: 2.5rem;
+
+  /* Border Radius */
+  --sz-radius-sm: 4px;
+  --sz-radius-md: 8px;
+  --sz-radius-lg: 12px;
+  --sz-radius-xl: 16px;
+  --sz-radius-full: 9999px;
+
+  /* Shadows */
+  --sz-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --sz-shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
+  --sz-shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.1);
+
+  /* Transitions */
+  --sz-transition-fast: 0.15s ease;
+  --sz-transition-normal: 0.3s ease;
 
   /* Font Stacks */
   --sz-font-heading: "Playfair Display", Georgia, "Times New Roman", serif;
