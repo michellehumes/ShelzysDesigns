@@ -1,0 +1,733 @@
+{%- comment -%}
+  Shelzy's Designs - Enhanced Navigation Header
+
+  Features:
+  - Logo left, cart right
+  - Simplified nav: Shop All, Weddings & Bridesmaids, Kids & Sports, Corporate, Holiday, FAQ
+  - Mega menu dropdowns
+  - Mobile hamburger menu
+
+  Add to theme.liquid after announcement bar or replace header section:
+  {% render 'shelzys-nav-header' %}
+{%- endcomment -%}
+
+<header class="sz-header" id="szHeader">
+  <div class="sz-header-inner">
+
+    {%- comment -%} Mobile Menu Toggle {%- endcomment -%}
+    <button class="sz-menu-toggle" id="szMenuToggle" aria-label="Open menu" aria-expanded="false">
+      <span class="sz-hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+      </span>
+    </button>
+
+    {%- comment -%} Logo {%- endcomment -%}
+    <div class="sz-header-logo">
+      <a href="/" class="sz-logo-link">
+        {%- if settings.logo != blank -%}
+          <img src="{{ settings.logo | image_url: width: 300 }}" alt="{{ shop.name }}" class="sz-logo-img">
+        {%- else -%}
+          <span class="sz-logo-text">{{ shop.name }}</span>
+        {%- endif -%}
+      </a>
+    </div>
+
+    {%- comment -%} Main Navigation {%- endcomment -%}
+    <nav class="sz-main-nav" id="szMainNav" aria-label="Main navigation">
+      <ul class="sz-nav-list">
+
+        {%- comment -%} Best Sellers - Social Proof Path {%- endcomment -%}
+        <li class="sz-nav-item">
+          <a href="/collections/best-sellers" class="sz-nav-link sz-nav-featured">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style="margin-right: 4px;">
+              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+            </svg>
+            Best Sellers
+          </a>
+        </li>
+
+        {%- comment -%} Shop by Occasion - Mega Menu {%- endcomment -%}
+        <li class="sz-nav-item sz-has-dropdown">
+          <a href="/collections/all" class="sz-nav-link">
+            Shop by Occasion
+            <svg class="sz-nav-chevron" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="6 9 12 15 18 9"/>
+            </svg>
+          </a>
+          <div class="sz-dropdown sz-dropdown-mega">
+            <div class="sz-dropdown-inner">
+              <div class="sz-dropdown-col">
+                <span class="sz-dropdown-heading">Wedding & Bridal</span>
+                <a href="/collections/wedding" class="sz-dropdown-link">All Wedding Bottles</a>
+                <a href="/collections/bridesmaid" class="sz-dropdown-link">Bridesmaid Bottles</a>
+                <a href="/collections/bridal-party" class="sz-dropdown-link">Bridal Party Sets</a>
+                <a href="/collections/bridesmaid-proposal" class="sz-dropdown-link">Bridesmaid Proposal Boxes</a>
+                <a href="/collections/wedding-day" class="sz-dropdown-link">Wedding Day Bottles</a>
+              </div>
+              <div class="sz-dropdown-col">
+                <span class="sz-dropdown-heading">Celebrations</span>
+                <a href="/collections/bachelorette" class="sz-dropdown-link">Bachelorette Party</a>
+                <a href="/collections/bridal-shower" class="sz-dropdown-link">Bridal Shower</a>
+                <a href="/collections/baby-shower" class="sz-dropdown-link">Baby Shower</a>
+                <a href="/collections/birthday" class="sz-dropdown-link">Birthday</a>
+                <a href="/collections/holiday" class="sz-dropdown-link">Holiday & Seasonal</a>
+              </div>
+              <div class="sz-dropdown-col">
+                <span class="sz-dropdown-heading">By Style</span>
+                <a href="/collections/modern-minimalist" class="sz-dropdown-link">Modern Minimalist</a>
+                <a href="/collections/classic-elegant" class="sz-dropdown-link">Classic Elegant</a>
+                <a href="/collections/rustic-farmhouse" class="sz-dropdown-link">Rustic Farmhouse</a>
+                <a href="/collections/boho" class="sz-dropdown-link">Boho & Free Spirit</a>
+              </div>
+            </div>
+          </div>
+        </li>
+
+        {%- comment -%} Kids & Sports {%- endcomment -%}
+        <li class="sz-nav-item sz-has-dropdown">
+          <a href="/collections/kids" class="sz-nav-link">
+            Kids & Sports
+            <svg class="sz-nav-chevron" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="6 9 12 15 18 9"/>
+            </svg>
+          </a>
+          <div class="sz-dropdown">
+            <div class="sz-dropdown-inner">
+              <div class="sz-dropdown-col">
+                <span class="sz-dropdown-heading">Shop Kids</span>
+                <a href="/collections/kids" class="sz-dropdown-link">All Kids Bottles</a>
+                <a href="/collections/sports" class="sz-dropdown-link">Sports Teams</a>
+                <a href="/collections/dance" class="sz-dropdown-link">Dance & Cheer</a>
+                <a href="/collections/school" class="sz-dropdown-link">Back to School</a>
+              </div>
+            </div>
+          </div>
+        </li>
+
+        {%- comment -%} Corporate {%- endcomment -%}
+        <li class="sz-nav-item">
+          <a href="/pages/bulk-orders" class="sz-nav-link">Corporate</a>
+        </li>
+
+        {%- comment -%} Holiday {%- endcomment -%}
+        <li class="sz-nav-item">
+          <a href="/collections/holiday" class="sz-nav-link">Holiday</a>
+        </li>
+
+        {%- comment -%} FAQ {%- endcomment -%}
+        <li class="sz-nav-item">
+          <a href="/pages/faq" class="sz-nav-link">FAQ</a>
+        </li>
+
+      </ul>
+    </nav>
+
+    {%- comment -%} Header Actions (Search, Account, Cart) {%- endcomment -%}
+    <div class="sz-header-actions">
+      <a href="/search" class="sz-header-icon" aria-label="Search">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+        </svg>
+      </a>
+
+      <a href="/account" class="sz-header-icon sz-hide-mobile" aria-label="Account">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+        </svg>
+      </a>
+
+      <a href="/cart" class="sz-header-icon sz-cart-icon" aria-label="Cart">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/>
+        </svg>
+        <span class="sz-cart-count" id="szCartCount">{{ cart.item_count }}</span>
+      </a>
+    </div>
+
+  </div>
+</header>
+
+{%- comment -%} Mobile Menu Overlay {%- endcomment -%}
+<div class="sz-mobile-menu" id="szMobileMenu" aria-hidden="true">
+  <div class="sz-mobile-menu-inner">
+    <nav class="sz-mobile-nav" aria-label="Mobile navigation">
+      <a href="/collections/best-sellers" class="sz-mobile-link sz-mobile-featured">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="margin-right: 6px;">
+          <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+        </svg>
+        Best Sellers
+      </a>
+
+      <div class="sz-mobile-accordion">
+        <button class="sz-mobile-link sz-accordion-toggle" aria-expanded="false">
+          Wedding & Bridal
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="sz-accordion-content">
+          <a href="/collections/wedding" class="sz-mobile-sublink">All Wedding Bottles</a>
+          <a href="/collections/bridesmaid" class="sz-mobile-sublink">Bridesmaid Bottles</a>
+          <a href="/collections/bridal-party" class="sz-mobile-sublink">Bridal Party Sets</a>
+          <a href="/collections/bridesmaid-proposal" class="sz-mobile-sublink">Proposal Boxes</a>
+          <a href="/collections/wedding-day" class="sz-mobile-sublink">Wedding Day</a>
+        </div>
+      </div>
+
+      <div class="sz-mobile-accordion">
+        <button class="sz-mobile-link sz-accordion-toggle" aria-expanded="false">
+          Celebrations
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="sz-accordion-content">
+          <a href="/collections/bachelorette" class="sz-mobile-sublink">Bachelorette Party</a>
+          <a href="/collections/bridal-shower" class="sz-mobile-sublink">Bridal Shower</a>
+          <a href="/collections/baby-shower" class="sz-mobile-sublink">Baby Shower</a>
+          <a href="/collections/birthday" class="sz-mobile-sublink">Birthday</a>
+          <a href="/collections/holiday" class="sz-mobile-sublink">Holiday & Seasonal</a>
+        </div>
+      </div>
+
+      <div class="sz-mobile-accordion">
+        <button class="sz-mobile-link sz-accordion-toggle" aria-expanded="false">
+          Shop by Style
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="sz-accordion-content">
+          <a href="/collections/modern-minimalist" class="sz-mobile-sublink">Modern Minimalist</a>
+          <a href="/collections/classic-elegant" class="sz-mobile-sublink">Classic Elegant</a>
+          <a href="/collections/rustic-farmhouse" class="sz-mobile-sublink">Rustic Farmhouse</a>
+          <a href="/collections/boho" class="sz-mobile-sublink">Boho & Free Spirit</a>
+        </div>
+      </div>
+
+      <div class="sz-mobile-accordion">
+        <button class="sz-mobile-link sz-accordion-toggle" aria-expanded="false">
+          Kids & Sports
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="sz-accordion-content">
+          <a href="/collections/kids" class="sz-mobile-sublink">All Kids Bottles</a>
+          <a href="/collections/sports" class="sz-mobile-sublink">Sports Teams</a>
+          <a href="/collections/dance" class="sz-mobile-sublink">Dance & Cheer</a>
+        </div>
+      </div>
+
+      <a href="/pages/bulk-orders" class="sz-mobile-link">Corporate & Bulk</a>
+      <a href="/pages/faq" class="sz-mobile-link">FAQ</a>
+      <a href="/pages/about" class="sz-mobile-link">About</a>
+      <a href="/pages/contact" class="sz-mobile-link">Contact</a>
+    </nav>
+  </div>
+</div>
+
+<style>
+  /* ═══════════════════════════════════════════════════════════════════
+     HEADER CONTAINER
+     ═══════════════════════════════════════════════════════════════════ */
+  .sz-header {
+    background: #FFFFFF;
+    border-bottom: 1px solid #E8E4DE;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+  }
+
+  .sz-header-inner {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 24px;
+    gap: 32px;
+  }
+
+  @media (max-width: 1024px) {
+    .sz-header-inner {
+      padding: 12px 16px;
+      gap: 16px;
+    }
+  }
+
+  /* ═══════════════════════════════════════════════════════════════════
+     LOGO
+     ═══════════════════════════════════════════════════════════════════ */
+  .sz-header-logo {
+    flex-shrink: 0;
+  }
+
+  .sz-logo-link {
+    display: block;
+  }
+
+  .sz-logo-img {
+    height: 44px;
+    width: auto;
+    display: block;
+  }
+
+  .sz-logo-text {
+    font-family: "Playfair Display", Georgia, serif;
+    font-size: 24px;
+    font-weight: 500;
+    color: #1F1F1F;
+  }
+
+  @media (max-width: 768px) {
+    .sz-logo-img {
+      height: 36px;
+    }
+  }
+
+  /* ═══════════════════════════════════════════════════════════════════
+     MAIN NAVIGATION (Desktop)
+     ═══════════════════════════════════════════════════════════════════ */
+  .sz-main-nav {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+  }
+
+  @media (max-width: 1024px) {
+    .sz-main-nav {
+      display: none;
+    }
+  }
+
+  .sz-nav-list {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .sz-nav-item {
+    position: relative;
+  }
+
+  .sz-nav-link {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 10px 16px;
+    font-family: "Inter", sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    color: #1F1F1F;
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+
+  .sz-nav-link:hover {
+    color: #4E5F4A;
+  }
+
+  .sz-nav-chevron {
+    transition: transform 0.2s ease;
+  }
+
+  .sz-nav-item:hover .sz-nav-chevron {
+    transform: rotate(180deg);
+  }
+
+  /* ═══════════════════════════════════════════════════════════════════
+     DROPDOWN MENUS
+     ═══════════════════════════════════════════════════════════════════ */
+  .sz-dropdown {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%) translateY(10px);
+    background: #FFFFFF;
+    border: 1px solid #E8E4DE;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.25s ease;
+    min-width: 400px;
+    padding: 24px;
+  }
+
+  .sz-nav-item:hover .sz-dropdown {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(0);
+  }
+
+  .sz-dropdown-inner {
+    display: flex;
+    gap: 40px;
+  }
+
+  .sz-dropdown-col {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .sz-dropdown-heading {
+    font-family: "Inter", sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #7A7A7A;
+    margin-bottom: 8px;
+  }
+
+  .sz-dropdown-link {
+    font-family: "Inter", sans-serif;
+    font-size: 14px;
+    color: #1F1F1F;
+    text-decoration: none;
+    padding: 6px 0;
+    transition: color 0.2s ease;
+  }
+
+  .sz-dropdown-link:hover {
+    color: #4E5F4A;
+  }
+
+  /* Featured Nav Link (Best Sellers) */
+  .sz-nav-featured {
+    color: #4E5F4A !important;
+    font-weight: 600 !important;
+  }
+
+  .sz-nav-featured svg {
+    color: #D4AF37;
+  }
+
+  /* Mega Menu Styling */
+  .sz-dropdown-mega {
+    min-width: 600px;
+  }
+
+  .sz-dropdown-mega .sz-dropdown-inner {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+  }
+
+  /* ═══════════════════════════════════════════════════════════════════
+     HEADER ACTIONS
+     ═══════════════════════════════════════════════════════════════════ */
+  .sz-header-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .sz-header-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    color: #1F1F1F;
+    transition: color 0.2s ease;
+  }
+
+  .sz-header-icon:hover {
+    color: #4E5F4A;
+  }
+
+  .sz-cart-icon {
+    position: relative;
+  }
+
+  .sz-cart-count {
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    min-width: 18px;
+    height: 18px;
+    background: #2C3E2D;
+    color: #FFFFFF;
+    font-family: "Inter", sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .sz-cart-count:empty,
+  .sz-cart-count[data-count="0"] {
+    display: none;
+  }
+
+  .sz-hide-mobile {
+    display: flex;
+  }
+
+  @media (max-width: 768px) {
+    .sz-hide-mobile {
+      display: none;
+    }
+  }
+
+  /* ═══════════════════════════════════════════════════════════════════
+     MOBILE MENU TOGGLE
+     ═══════════════════════════════════════════════════════════════════ */
+  .sz-menu-toggle {
+    display: none;
+    width: 40px;
+    height: 40px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    order: -1;
+  }
+
+  @media (max-width: 1024px) {
+    .sz-menu-toggle {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+
+  .sz-hamburger {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    width: 22px;
+  }
+
+  .sz-hamburger span {
+    height: 2px;
+    background: #1F1F1F;
+    transition: all 0.3s ease;
+  }
+
+  .sz-menu-toggle[aria-expanded="true"] .sz-hamburger span:nth-child(1) {
+    transform: rotate(45deg) translateY(10px);
+  }
+
+  .sz-menu-toggle[aria-expanded="true"] .sz-hamburger span:nth-child(2) {
+    opacity: 0;
+  }
+
+  .sz-menu-toggle[aria-expanded="true"] .sz-hamburger span:nth-child(3) {
+    transform: rotate(-45deg) translateY(-10px);
+  }
+
+  /* ═══════════════════════════════════════════════════════════════════
+     MOBILE MENU OVERLAY
+     ═══════════════════════════════════════════════════════════════════ */
+  .sz-mobile-menu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: #FFFFFF;
+    z-index: 999;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    padding-top: 70px;
+    overflow-y: auto;
+  }
+
+  .sz-mobile-menu.sz-open {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .sz-mobile-menu-inner {
+    padding: 24px;
+    max-width: 400px;
+  }
+
+  .sz-mobile-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .sz-mobile-link {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 0;
+    font-family: "Inter", sans-serif;
+    font-size: 18px;
+    font-weight: 500;
+    color: #1F1F1F;
+    text-decoration: none;
+    border-bottom: 1px solid #E8E4DE;
+    background: none;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    cursor: pointer;
+    width: 100%;
+    text-align: left;
+  }
+
+  .sz-mobile-link:hover {
+    color: #4E5F4A;
+  }
+
+  .sz-accordion-toggle svg {
+    transition: transform 0.2s ease;
+  }
+
+  .sz-accordion-toggle[aria-expanded="true"] svg {
+    transform: rotate(180deg);
+  }
+
+  .sz-accordion-content {
+    display: none;
+    padding-left: 16px;
+  }
+
+  .sz-accordion-content.sz-open {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .sz-mobile-sublink {
+    display: block;
+    padding: 12px 0;
+    font-family: "Inter", sans-serif;
+    font-size: 15px;
+    color: #4A4A4A;
+    text-decoration: none;
+    border-bottom: 1px solid #F5F2ED;
+  }
+
+  .sz-mobile-sublink:hover {
+    color: #4E5F4A;
+  }
+
+  /* Mobile Featured Link */
+  .sz-mobile-featured {
+    color: #4E5F4A !important;
+    font-weight: 600 !important;
+    background: linear-gradient(90deg, rgba(78, 95, 74, 0.08) 0%, transparent 100%);
+  }
+
+  .sz-mobile-featured svg {
+    color: #D4AF37;
+  }
+</style>
+
+<script>
+(function() {
+  var menuToggle = document.getElementById('szMenuToggle');
+  var mobileMenu = document.getElementById('szMobileMenu');
+  var accordions = document.querySelectorAll('.sz-accordion-toggle');
+  var focusableSelector = 'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
+  var firstFocusable = null;
+  var lastFocusable = null;
+
+  function updateFocusableElements() {
+    var focusables = mobileMenu.querySelectorAll(focusableSelector);
+    // Filter to only visible elements
+    var visibleFocusables = Array.prototype.filter.call(focusables, function(el) {
+      return el.offsetParent !== null && getComputedStyle(el).visibility !== 'hidden';
+    });
+    firstFocusable = visibleFocusables[0];
+    lastFocusable = visibleFocusables[visibleFocusables.length - 1];
+  }
+
+  function openMenu() {
+    menuToggle.setAttribute('aria-expanded', 'true');
+    mobileMenu.classList.add('sz-open');
+    mobileMenu.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+
+    // Update focusable elements and set focus
+    updateFocusableElements();
+    if (firstFocusable) {
+      setTimeout(function() {
+        firstFocusable.focus();
+      }, 100);
+    }
+  }
+
+  function closeMenu() {
+    menuToggle.setAttribute('aria-expanded', 'false');
+    mobileMenu.classList.remove('sz-open');
+    mobileMenu.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+
+    // Return focus to toggle button
+    menuToggle.focus();
+  }
+
+  // Toggle mobile menu
+  menuToggle.addEventListener('click', function() {
+    var expanded = this.getAttribute('aria-expanded') === 'true';
+    if (expanded) {
+      closeMenu();
+    } else {
+      openMenu();
+    }
+  });
+
+  // Accordion toggles
+  accordions.forEach(function(toggle) {
+    toggle.addEventListener('click', function() {
+      var expanded = this.getAttribute('aria-expanded') === 'true';
+      this.setAttribute('aria-expanded', !expanded);
+      this.nextElementSibling.classList.toggle('sz-open');
+
+      // Update focusable elements after accordion state changes
+      setTimeout(updateFocusableElements, 50);
+    });
+  });
+
+  // Keyboard navigation and focus trap
+  document.addEventListener('keydown', function(e) {
+    if (!mobileMenu.classList.contains('sz-open')) return;
+
+    // Close menu on escape
+    if (e.key === 'Escape') {
+      e.preventDefault();
+      closeMenu();
+      return;
+    }
+
+    // Focus trap with Tab key
+    if (e.key === 'Tab') {
+      updateFocusableElements();
+
+      if (e.shiftKey) {
+        // Shift + Tab: if on first element, go to last
+        if (document.activeElement === firstFocusable || document.activeElement === mobileMenu) {
+          e.preventDefault();
+          if (lastFocusable) lastFocusable.focus();
+        }
+      } else {
+        // Tab: if on last element, go to first
+        if (document.activeElement === lastFocusable) {
+          e.preventDefault();
+          if (firstFocusable) firstFocusable.focus();
+        }
+      }
+    }
+  });
+
+  // Close menu when clicking outside (on overlay area if visible)
+  mobileMenu.addEventListener('click', function(e) {
+    if (e.target === mobileMenu) {
+      closeMenu();
+    }
+  });
+
+  // Update cart count trigger to open cart drawer instead of navigating
+  var cartIcon = document.querySelector('.sz-cart-icon');
+  if (cartIcon && typeof window.ShelzysCart !== 'undefined') {
+    cartIcon.setAttribute('data-cart-trigger', '');
+  }
+})();
+</script>

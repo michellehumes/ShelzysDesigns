@@ -1,0 +1,538 @@
+{%- comment -%}
+  Shelzy's Designs - Hero Slideshow Section
+  Full-width hero with optional slideshow functionality
+{%- endcomment -%}
+
+<section class="sz-hero {% if section.blocks.size > 1 %}sz-hero--slideshow{% endif %}" id="szHero">
+  <div class="sz-hero-slides">
+    {%- for block in section.blocks -%}
+      <div class="sz-hero-slide {% if forloop.first %}sz-active{% endif %}" {{ block.shopify_attributes }}
+        style="
+          {%- if block.settings.image != blank -%}
+            background-image: url('{{ block.settings.image | image_url: width: 2000 }}');
+          {%- endif -%}
+          background-color: {{ block.settings.overlay_color }};
+        ">
+
+        {%- if block.settings.image != blank -%}
+          <div class="sz-hero-overlay" style="background: {{ block.settings.overlay_color }}; opacity: {{ block.settings.overlay_opacity | divided_by: 100.0 }};"></div>
+        {%- endif -%}
+
+        <div class="sz-hero-content sz-hero-content--{{ block.settings.content_position }}">
+          <div class="sz-hero-text" style="text-align: {{ block.settings.text_alignment }}; color: {{ block.settings.text_color }};">
+            {%- if block.settings.subheading != blank -%}
+              <p class="sz-hero-subheading">{{ block.settings.subheading }}</p>
+            {%- endif -%}
+
+            {%- if block.settings.heading != blank -%}
+              <h1 class="sz-hero-heading">{{ block.settings.heading }}</h1>
+            {%- endif -%}
+
+            {%- if block.settings.description != blank -%}
+              <p class="sz-hero-description">{{ block.settings.description }}</p>
+            {%- endif -%}
+
+            <div class="sz-hero-buttons">
+              {%- if block.settings.button_label != blank -%}
+                <a href="{{ block.settings.button_link }}" class="sz-hero-btn sz-hero-btn--primary" style="background: {{ block.settings.button_color }}; color: {{ block.settings.button_text_color }};">
+                  {{ block.settings.button_label }}
+                </a>
+              {%- endif -%}
+
+              {%- if block.settings.button_label_2 != blank -%}
+                <a href="{{ block.settings.button_link_2 }}" class="sz-hero-btn sz-hero-btn--secondary" style="border-color: {{ block.settings.text_color }}; color: {{ block.settings.text_color }};">
+                  {{ block.settings.button_label_2 }}
+                </a>
+              {%- endif -%}
+            </div>
+          </div>
+        </div>
+      </div>
+    {%- endfor -%}
+  </div>
+
+  {%- if section.blocks.size > 1 -%}
+    <div class="sz-hero-nav">
+      <button class="sz-hero-nav-btn sz-hero-prev" aria-label="Previous slide">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="15 18 9 12 15 6"/>
+        </svg>
+      </button>
+      <div class="sz-hero-dots">
+        {%- for block in section.blocks -%}
+          <button class="sz-hero-dot {% if forloop.first %}sz-active{% endif %}" data-index="{{ forloop.index0 }}" aria-label="Go to slide {{ forloop.index }}"></button>
+        {%- endfor -%}
+      </div>
+      <button class="sz-hero-nav-btn sz-hero-next" aria-label="Next slide">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="9 18 15 12 9 6"/>
+        </svg>
+      </button>
+    </div>
+  {%- endif -%}
+</section>
+
+{% style %}
+  .sz-hero {
+    position: relative;
+    width: 100%;
+    height: {{ section.settings.height }}vh;
+    min-height: 400px;
+    max-height: 800px;
+    overflow: hidden;
+  }
+
+  @media (max-width: 768px) {
+    .sz-hero {
+      height: {{ section.settings.mobile_height }}vh;
+      min-height: 350px;
+    }
+  }
+
+  .sz-hero-slides {
+    position: relative;
+    width: 100%;
+    height: 100%;
+  }
+
+  .sz-hero-slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.8s ease, visibility 0.8s ease;
+  }
+
+  .sz-hero-slide.sz-active {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .sz-hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+  }
+
+  .sz-hero-content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    padding: 60px 24px;
+  }
+
+  .sz-hero-content--top-left { align-items: flex-start; justify-content: flex-start; }
+  .sz-hero-content--top-center { align-items: flex-start; justify-content: center; }
+  .sz-hero-content--top-right { align-items: flex-start; justify-content: flex-end; }
+  .sz-hero-content--center-left { align-items: center; justify-content: flex-start; }
+  .sz-hero-content--center-center { align-items: center; justify-content: center; }
+  .sz-hero-content--center-right { align-items: center; justify-content: flex-end; }
+  .sz-hero-content--bottom-left { align-items: flex-end; justify-content: flex-start; }
+  .sz-hero-content--bottom-center { align-items: flex-end; justify-content: center; }
+  .sz-hero-content--bottom-right { align-items: flex-end; justify-content: flex-end; }
+
+  .sz-hero-text {
+    max-width: 700px;
+    padding: 40px;
+  }
+
+  @media (max-width: 768px) {
+    .sz-hero-text {
+      padding: 24px;
+      max-width: 100%;
+    }
+  }
+
+  .sz-hero-subheading {
+    font-family: "Inter", sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    margin: 0 0 16px 0;
+    opacity: 0.9;
+  }
+
+  .sz-hero-heading {
+    font-family: "Playfair Display", Georgia, serif;
+    font-size: clamp(32px, 6vw, 64px);
+    font-weight: 500;
+    line-height: 1.1;
+    margin: 0 0 20px 0;
+  }
+
+  .sz-hero-description {
+    font-family: "Inter", sans-serif;
+    font-size: 18px;
+    line-height: 1.6;
+    margin: 0 0 32px 0;
+    opacity: 0.9;
+  }
+
+  @media (max-width: 768px) {
+    .sz-hero-description {
+      font-size: 16px;
+    }
+  }
+
+  .sz-hero-buttons {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  .sz-hero-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px 32px;
+    font-family: "Inter", sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.3s ease;
+  }
+
+  .sz-hero-btn--primary:hover {
+    opacity: 0.9;
+    transform: translateY(-2px);
+  }
+
+  .sz-hero-btn--secondary {
+    background: transparent;
+    border: 2px solid;
+  }
+
+  .sz-hero-btn--secondary:hover {
+    background: rgba(255, 255, 255, 0.1);
+  }
+
+  /* Navigation */
+  .sz-hero-nav {
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    z-index: 10;
+  }
+
+  .sz-hero-nav-btn {
+    width: 44px;
+    height: 44px;
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #FFFFFF;
+    transition: all 0.3s ease;
+  }
+
+  .sz-hero-nav-btn:hover {
+    background: rgba(255, 255, 255, 0.3);
+  }
+
+  .sz-hero-dots {
+    display: flex;
+    gap: 8px;
+  }
+
+  .sz-hero-dot {
+    width: 10px;
+    height: 10px;
+    background: rgba(255, 255, 255, 0.4);
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .sz-hero-dot.sz-active,
+  .sz-hero-dot:hover {
+    background: #FFFFFF;
+    transform: scale(1.2);
+  }
+
+  @media (max-width: 768px) {
+    .sz-hero-nav {
+      bottom: 20px;
+    }
+
+    .sz-hero-nav-btn {
+      display: none;
+    }
+  }
+{% endstyle %}
+
+{%- if section.blocks.size > 1 -%}
+  <script>
+  (function() {
+    var hero = document.getElementById('szHero');
+    var slides = hero.querySelectorAll('.sz-hero-slide');
+    var dots = hero.querySelectorAll('.sz-hero-dot');
+    var prevBtn = hero.querySelector('.sz-hero-prev');
+    var nextBtn = hero.querySelector('.sz-hero-next');
+    var currentIndex = 0;
+    var autoplay = {{ section.settings.autoplay | json }};
+    var interval = {{ section.settings.autoplay_speed | times: 1000 }};
+    var autoplayTimer;
+
+    function goToSlide(index) {
+      slides[currentIndex].classList.remove('sz-active');
+      dots[currentIndex].classList.remove('sz-active');
+      currentIndex = (index + slides.length) % slides.length;
+      slides[currentIndex].classList.add('sz-active');
+      dots[currentIndex].classList.add('sz-active');
+    }
+
+    function nextSlide() {
+      goToSlide(currentIndex + 1);
+    }
+
+    function prevSlide() {
+      goToSlide(currentIndex - 1);
+    }
+
+    function startAutoplay() {
+      if (autoplay) {
+        autoplayTimer = setInterval(nextSlide, interval);
+      }
+    }
+
+    function stopAutoplay() {
+      clearInterval(autoplayTimer);
+    }
+
+    if (prevBtn) prevBtn.addEventListener('click', function() { stopAutoplay(); prevSlide(); startAutoplay(); });
+    if (nextBtn) nextBtn.addEventListener('click', function() { stopAutoplay(); nextSlide(); startAutoplay(); });
+
+    dots.forEach(function(dot, index) {
+      dot.addEventListener('click', function() {
+        stopAutoplay();
+        goToSlide(index);
+        startAutoplay();
+      });
+    });
+
+    hero.addEventListener('mouseenter', stopAutoplay);
+    hero.addEventListener('mouseleave', startAutoplay);
+
+    startAutoplay();
+  })();
+  </script>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Hero Slideshow",
+  "tag": "section",
+  "class": "sz-hero-section",
+  "settings": [
+    {
+      "type": "range",
+      "id": "height",
+      "label": "Desktop height",
+      "min": 40,
+      "max": 100,
+      "step": 5,
+      "default": 80,
+      "unit": "vh"
+    },
+    {
+      "type": "range",
+      "id": "mobile_height",
+      "label": "Mobile height",
+      "min": 40,
+      "max": 100,
+      "step": 5,
+      "default": 60,
+      "unit": "vh"
+    },
+    {
+      "type": "checkbox",
+      "id": "autoplay",
+      "label": "Enable autoplay",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "autoplay_speed",
+      "label": "Autoplay speed",
+      "min": 3,
+      "max": 10,
+      "step": 1,
+      "default": 6,
+      "unit": "s"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "slide",
+      "name": "Slide",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Background image"
+        },
+        {
+          "type": "color",
+          "id": "overlay_color",
+          "label": "Overlay color",
+          "default": "#000000"
+        },
+        {
+          "type": "range",
+          "id": "overlay_opacity",
+          "label": "Overlay opacity",
+          "min": 0,
+          "max": 80,
+          "step": 5,
+          "default": 30,
+          "unit": "%"
+        },
+        {
+          "type": "header",
+          "content": "Content"
+        },
+        {
+          "type": "text",
+          "id": "subheading",
+          "label": "Subheading",
+          "default": "New Collection"
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "Personalized Bottles for Every Occasion"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Description",
+          "default": "Premium sublimation printing that lasts forever. No vinyl, no peeling."
+        },
+        {
+          "type": "select",
+          "id": "content_position",
+          "label": "Content position",
+          "options": [
+            { "value": "top-left", "label": "Top left" },
+            { "value": "top-center", "label": "Top center" },
+            { "value": "top-right", "label": "Top right" },
+            { "value": "center-left", "label": "Center left" },
+            { "value": "center-center", "label": "Center" },
+            { "value": "center-right", "label": "Center right" },
+            { "value": "bottom-left", "label": "Bottom left" },
+            { "value": "bottom-center", "label": "Bottom center" },
+            { "value": "bottom-right", "label": "Bottom right" }
+          ],
+          "default": "center-center"
+        },
+        {
+          "type": "select",
+          "id": "text_alignment",
+          "label": "Text alignment",
+          "options": [
+            { "value": "left", "label": "Left" },
+            { "value": "center", "label": "Center" },
+            { "value": "right", "label": "Right" }
+          ],
+          "default": "center"
+        },
+        {
+          "type": "color",
+          "id": "text_color",
+          "label": "Text color",
+          "default": "#FFFFFF"
+        },
+        {
+          "type": "header",
+          "content": "Primary Button"
+        },
+        {
+          "type": "text",
+          "id": "button_label",
+          "label": "Button label",
+          "default": "Shop Now"
+        },
+        {
+          "type": "url",
+          "id": "button_link",
+          "label": "Button link"
+        },
+        {
+          "type": "color",
+          "id": "button_color",
+          "label": "Button color",
+          "default": "#4E5F4A"
+        },
+        {
+          "type": "color",
+          "id": "button_text_color",
+          "label": "Button text color",
+          "default": "#FFFFFF"
+        },
+        {
+          "type": "header",
+          "content": "Secondary Button"
+        },
+        {
+          "type": "text",
+          "id": "button_label_2",
+          "label": "Button label"
+        },
+        {
+          "type": "url",
+          "id": "button_link_2",
+          "label": "Button link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Hero Slideshow",
+      "blocks": [
+        {
+          "type": "slide",
+          "settings": {
+            "subheading": "Wedding Season",
+            "heading": "Personalized Bottles for Your Big Day",
+            "description": "Custom bridesmaid bottles, bridal party sets, and wedding day gifts with permanent sublimation printing.",
+            "button_label": "Shop Wedding",
+            "button_link": "/collections/wedding"
+          }
+        },
+        {
+          "type": "slide",
+          "settings": {
+            "subheading": "Best Sellers",
+            "heading": "Our Most Loved Designs",
+            "description": "Discover the personalized bottles our customers can't stop raving about.",
+            "button_label": "Shop Best Sellers",
+            "button_link": "/collections/best-sellers"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

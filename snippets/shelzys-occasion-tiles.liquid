@@ -1,0 +1,292 @@
+{%- comment -%}
+  Shelzy's Designs - Shop by Occasion Tiles
+
+  4 large clickable tiles for the homepage:
+  1. Weddings & Bridal Parties
+  2. Bachelorette Weekends
+  3. Corporate & Events
+  4. Everyday & Teams
+
+  Add to homepage: {% render 'shelzys-occasion-tiles' %}
+{%- endcomment -%}
+
+<section class="sz-occasion-tiles">
+  <div class="sz-occasion-container">
+
+    <header class="sz-occasion-header">
+      <span class="sz-eyebrow">Find Your Perfect Bottle</span>
+      <h2>Shop by Occasion</h2>
+    </header>
+
+    <div class="sz-occasion-grid">
+
+      {%- comment -%} Tile 1: Weddings & Bridal Parties {%- endcomment -%}
+      <a href="/collections/wedding" class="sz-occasion-tile">
+        <div class="sz-tile-bg">
+          {%- assign wedding_collection = collections['wedding'] | default: collections['bridal'] -%}
+          {%- if wedding_collection.image -%}
+            <img src="{{ wedding_collection.image | img_url: '800x1000', crop: 'center' }}" alt="Wedding bottles" loading="lazy">
+          {%- else -%}
+            <div class="sz-tile-placeholder" style="background: linear-gradient(135deg, #F5E6E0 0%, #E8DED5 100%);"></div>
+          {%- endif -%}
+        </div>
+        <div class="sz-tile-overlay"></div>
+        <div class="sz-tile-content">
+          <h3 class="sz-tile-title">Weddings & Bridal Parties</h3>
+          <p class="sz-tile-subtitle">Bridesmaid proposals, party favors & gifts</p>
+          <span class="sz-tile-cta">Shop Weddings →</span>
+        </div>
+      </a>
+
+      {%- comment -%} Tile 2: Bachelorette Weekends {%- endcomment -%}
+      <a href="/collections/bachelorette" class="sz-occasion-tile">
+        <div class="sz-tile-bg">
+          {%- assign bach_collection = collections['bachelorette'] | default: collections['party'] -%}
+          {%- if bach_collection.image -%}
+            <img src="{{ bach_collection.image | img_url: '800x1000', crop: 'center' }}" alt="Bachelorette bottles" loading="lazy">
+          {%- else -%}
+            <div class="sz-tile-placeholder" style="background: linear-gradient(135deg, #F5D6D0 0%, #E8B4B8 100%);"></div>
+          {%- endif -%}
+        </div>
+        <div class="sz-tile-overlay"></div>
+        <div class="sz-tile-content">
+          <h3 class="sz-tile-title">Bachelorette Weekends</h3>
+          <p class="sz-tile-subtitle">Matching bottles for the whole crew</p>
+          <span class="sz-tile-cta">Shop Bachelorette →</span>
+        </div>
+      </a>
+
+      {%- comment -%} Tile 3: Corporate & Events {%- endcomment -%}
+      <a href="/pages/bulk-orders" class="sz-occasion-tile">
+        <div class="sz-tile-bg">
+          {%- assign corp_collection = collections['corporate'] | default: collections['bulk'] -%}
+          {%- if corp_collection.image -%}
+            <img src="{{ corp_collection.image | img_url: '800x1000', crop: 'center' }}" alt="Corporate bottles" loading="lazy">
+          {%- else -%}
+            <div class="sz-tile-placeholder" style="background: linear-gradient(135deg, #D4CFC6 0%, #B5A48A 100%);"></div>
+          {%- endif -%}
+        </div>
+        <div class="sz-tile-overlay"></div>
+        <div class="sz-tile-content">
+          <h3 class="sz-tile-title">Corporate & Events</h3>
+          <p class="sz-tile-subtitle">Branded bottles for retreats & conferences</p>
+          <span class="sz-tile-cta">Get a Quote →</span>
+        </div>
+      </a>
+
+      {%- comment -%} Tile 4: Everyday & Teams {%- endcomment -%}
+      <a href="/collections/all" class="sz-occasion-tile">
+        <div class="sz-tile-bg">
+          {%- assign team_collection = collections['teams'] | default: collections['sports'] -%}
+          {%- if team_collection.image -%}
+            <img src="{{ team_collection.image | img_url: '800x1000', crop: 'center' }}" alt="Team bottles" loading="lazy">
+          {%- else -%}
+            <div class="sz-tile-placeholder" style="background: linear-gradient(135deg, #B8C5B0 0%, #8BAA88 100%);"></div>
+          {%- endif -%}
+        </div>
+        <div class="sz-tile-overlay"></div>
+        <div class="sz-tile-content">
+          <h3 class="sz-tile-title">Everyday & Teams</h3>
+          <p class="sz-tile-subtitle">Sports, dance, gym & daily hydration</p>
+          <span class="sz-tile-cta">Shop All →</span>
+        </div>
+      </a>
+
+    </div>
+
+  </div>
+</section>
+
+<style>
+  .sz-occasion-tiles {
+    padding: 100px 20px;
+    background: #FFFFFF;
+  }
+
+  @media (max-width: 768px) {
+    .sz-occasion-tiles {
+      padding: 60px 20px;
+    }
+  }
+
+  .sz-occasion-container {
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+
+  .sz-occasion-header {
+    text-align: center;
+    margin-bottom: 50px;
+  }
+
+  .sz-occasion-header .sz-eyebrow {
+    display: inline-block;
+    font-family: "Montserrat", sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: #B5A48A;
+    margin-bottom: 12px;
+  }
+
+  .sz-occasion-header h2 {
+    font-family: "Playfair Display", Georgia, serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 500;
+    color: #1F1F1F;
+    margin: 0;
+  }
+
+  .sz-occasion-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+  }
+
+  @media (max-width: 1024px) {
+    .sz-occasion-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 600px) {
+    .sz-occasion-grid {
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+  }
+
+  .sz-occasion-tile {
+    position: relative;
+    aspect-ratio: 3/4;
+    display: block;
+    overflow: hidden;
+    text-decoration: none;
+  }
+
+  @media (max-width: 1024px) {
+    .sz-occasion-tile {
+      aspect-ratio: 4/3;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .sz-occasion-tile {
+      aspect-ratio: 16/9;
+      min-height: 200px;
+    }
+  }
+
+  .sz-tile-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+  }
+
+  .sz-tile-bg img,
+  .sz-tile-placeholder {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .sz-occasion-tile:hover .sz-tile-bg img,
+  .sz-occasion-tile:hover .sz-tile-placeholder {
+    transform: scale(1.08);
+  }
+
+  .sz-tile-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(
+      180deg,
+      rgba(31, 31, 31, 0) 0%,
+      rgba(31, 31, 31, 0.5) 100%
+    );
+    transition: background 0.4s ease;
+  }
+
+  .sz-occasion-tile:hover .sz-tile-overlay {
+    background: linear-gradient(
+      180deg,
+      rgba(31, 31, 31, 0.2) 0%,
+      rgba(31, 31, 31, 0.7) 100%
+    );
+  }
+
+  .sz-tile-content {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 30px;
+    color: #FFFFFF;
+    z-index: 2;
+  }
+
+  @media (max-width: 600px) {
+    .sz-tile-content {
+      padding: 24px;
+    }
+  }
+
+  .sz-tile-title {
+    font-family: "Playfair Display", Georgia, serif;
+    font-size: 26px;
+    font-weight: 500;
+    margin: 0 0 8px 0;
+    line-height: 1.2;
+  }
+
+  @media (max-width: 1024px) {
+    .sz-tile-title {
+      font-size: 24px;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .sz-tile-title {
+      font-size: 22px;
+    }
+  }
+
+  .sz-tile-subtitle {
+    font-family: "Inter", sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    opacity: 0.85;
+    margin: 0 0 16px 0;
+    line-height: 1.4;
+  }
+
+  .sz-tile-cta {
+    display: inline-block;
+    font-family: "Inter", sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all 0.3s ease;
+  }
+
+  .sz-occasion-tile:hover .sz-tile-cta {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Mobile: always show CTA */
+  @media (max-width: 768px) {
+    .sz-tile-cta {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+</style>

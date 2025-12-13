@@ -1,0 +1,512 @@
+{%- comment -%}
+  Shelzy's Designs - Homepage Template
+
+  High-Converting Homepage Layout:
+  1. Hero - Emotional hook + clear CTA
+  2. Trust Strip - Social proof signals
+  3. Best Sellers - Top products
+  4. Why Sublimation - Unique value proposition
+  5. How It Works - 3-step process
+  6. Reviews - Customer testimonials
+  7. Email Signup - Newsletter capture
+
+  Keep it focused, reduce friction, drive conversions.
+{%- endcomment -%}
+
+{%- comment -%} ═══════ HERO SECTION ═══════ {%- endcomment -%}
+<section class="sz-hero">
+  <div class="sz-hero-container">
+    <div class="sz-hero-content">
+      <h1 class="sz-hero-title">{{ section.settings.hero_title | default: 'Premium Personalized Water Bottles' }}</h1>
+      <p class="sz-hero-subtitle">{{ section.settings.hero_subtitle | default: 'Custom-made bottles for bridesmaids, weddings, kids, and every special occasion. True sublimation printing that never peels or fades.' }}</p>
+      <div class="sz-hero-cta">
+        <a href="{{ section.settings.cta_link | default: '/collections/best-sellers' }}" class="sz-btn sz-btn-primary">
+          {{ section.settings.cta_text | default: 'Shop Best Sellers' }}
+        </a>
+        <a href="/collections/all" class="sz-btn sz-btn-secondary">Browse All</a>
+      </div>
+      <div class="sz-hero-trust">
+        <span>Free Shipping $75+</span>
+        <span>Ships in 3-5 Days</span>
+        <span>No Peeling Guarantee</span>
+      </div>
+    </div>
+    <div class="sz-hero-image">
+      {%- if section.settings.hero_image -%}
+        <img
+          src="{{ section.settings.hero_image | image_url: width: 800 }}"
+          srcset="{{ section.settings.hero_image | image_url: width: 400 }} 400w,
+                  {{ section.settings.hero_image | image_url: width: 600 }} 600w,
+                  {{ section.settings.hero_image | image_url: width: 800 }} 800w"
+          sizes="(max-width: 768px) 100vw, 50vw"
+          alt="{{ section.settings.hero_title }}"
+          loading="eager"
+          class="sz-hero-img"
+        >
+      {%- else -%}
+        <div class="sz-hero-placeholder">Featured Product Image</div>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{%- comment -%} ═══════ TRUST STRIP ═══════ {%- endcomment -%}
+{% render 'shelzys-trust-strip' %}
+
+{%- comment -%} ═══════ BEST SELLERS ═══════ {%- endcomment -%}
+<section class="sz-section sz-bg-warm">
+  <div class="sz-container">
+    <div class="sz-section-header">
+      <span class="sz-eyebrow">Most Loved</span>
+      <h2>Best Sellers</h2>
+      <p class="sz-lead">Our customers' favorite personalized bottles</p>
+    </div>
+
+    <div class="sz-product-grid">
+      {%- assign best_sellers = collections['best-sellers'].products | default: collections.all.products -%}
+      {%- for product in best_sellers limit: 4 -%}
+        <div class="sz-product-card">
+          <a href="{{ product.url }}" class="sz-product-card-link">
+            <div class="sz-product-card-image">
+              {%- if product.featured_image -%}
+                <img
+                  src="{{ product.featured_image | image_url: width: 400 }}"
+                  alt="{{ product.title }}"
+                  loading="lazy"
+                >
+              {%- else -%}
+                <div class="sz-product-placeholder">{{ product.title }}</div>
+              {%- endif -%}
+              {%- if product.available == false -%}
+                <span class="sz-product-badge">Sold Out</span>
+              {%- elsif product.compare_at_price > product.price -%}
+                <span class="sz-product-badge sz-badge-sale">Sale</span>
+              {%- endif -%}
+            </div>
+            <div class="sz-product-card-info">
+              <h3 class="sz-product-card-title">{{ product.title }}</h3>
+              <div class="sz-product-card-price">
+                {%- if product.compare_at_price > product.price -%}
+                  <span class="sz-price-compare">{{ product.compare_at_price | money }}</span>
+                {%- endif -%}
+                <span>{{ product.price | money }}</span>
+              </div>
+            </div>
+          </a>
+        </div>
+      {%- endfor -%}
+    </div>
+
+    <div class="sz-section-cta">
+      <a href="/collections/best-sellers" class="sz-btn sz-btn-secondary">View All Best Sellers</a>
+    </div>
+  </div>
+</section>
+
+{%- comment -%} ═══════ WHY SUBLIMATION ═══════ {%- endcomment -%}
+<section class="sz-section sz-bg-white">
+  <div class="sz-container sz-container-narrow">
+    <div class="sz-section-header">
+      <span class="sz-eyebrow">Why Choose Us</span>
+      <h2>Bottles That Don't Peel, Crack, or Fade</h2>
+    </div>
+    <div class="sz-value-prop">
+      <p class="sz-lead">Most personalized bottles use vinyl stickers that eventually peel, crack, or fade. At Shelzy's Designs, we use true sublimation printing—the ink is infused directly into the bottle's coating.</p>
+      <ul class="sz-value-list">
+        <li>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+          No raised edges or peeling
+        </li>
+        <li>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+          Dishwasher-friendly finish
+        </li>
+        <li>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+          Smooth, permanent design
+        </li>
+        <li>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+          Vibrant colors that last
+        </li>
+      </ul>
+      <p class="sz-tagline">Your personalization becomes part of the bottle itself.</p>
+    </div>
+  </div>
+</section>
+
+{%- comment -%} ═══════ HOW IT WORKS ═══════ {%- endcomment -%}
+<section class="sz-section sz-bg-warm">
+  <div class="sz-container">
+    <div class="sz-section-header">
+      <span class="sz-eyebrow">Simple Process</span>
+      <h2>How Your Custom Bottle Is Made</h2>
+    </div>
+    <div class="sz-steps">
+      <div class="sz-step">
+        <div class="sz-step-number">1</div>
+        <h3>Choose Your Bottle</h3>
+        <p>Pick your favorite color and style from our curated collections.</p>
+      </div>
+      <div class="sz-step">
+        <div class="sz-step-number">2</div>
+        <h3>Add Personalization</h3>
+        <p>Enter the name, choose your font and design. We'll create a perfectly balanced layout.</p>
+      </div>
+      <div class="sz-step">
+        <div class="sz-step-number">3</div>
+        <h3>We Ship to You</h3>
+        <p>Your bottle is sublimated, quality-checked, and shipped in beautiful packaging.</p>
+      </div>
+    </div>
+    <div class="sz-section-cta">
+      <a href="/collections/all" class="sz-btn sz-btn-primary">Start Creating</a>
+    </div>
+  </div>
+</section>
+
+{%- comment -%} ═══════ REVIEWS SECTION ═══════ {%- endcomment -%}
+{% render 'shelzys-reviews-carousel' %}
+
+{%- comment -%} ═══════ EMAIL SIGNUP ═══════ {%- endcomment -%}
+<section class="sz-section sz-bg-sage">
+  <div class="sz-container sz-container-narrow">
+    <div class="sz-signup">
+      <h2>Get 10% Off Your First Order</h2>
+      <p>Join our email list for exclusive offers, new designs, and hydration inspiration.</p>
+      <form action="/contact#newsletter" method="post" class="sz-signup-form">
+        <input type="hidden" name="contact[tags]" value="newsletter,homepage">
+        <div class="sz-signup-row">
+          <input
+            type="email"
+            name="contact[email]"
+            placeholder="Enter your email"
+            required
+            class="sz-signup-input"
+            aria-label="Email address"
+          >
+          <button type="submit" class="sz-btn sz-btn-dark">Sign Up</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* ═══════════════════════════════════════════════════════════════════
+     HERO SECTION
+     ═══════════════════════════════════════════════════════════════════ */
+  .sz-hero {
+    background: var(--sz-white);
+    padding: 60px 24px;
+  }
+
+  .sz-hero-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+  }
+
+  @media (max-width: 900px) {
+    .sz-hero-container {
+      grid-template-columns: 1fr;
+      gap: 40px;
+    }
+    .sz-hero-image { order: -1; }
+  }
+
+  .sz-hero-title {
+    font-family: var(--sz-font-heading);
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 600;
+    line-height: 1.15;
+    color: var(--sz-charcoal);
+    margin: 0 0 20px 0;
+  }
+
+  .sz-hero-subtitle {
+    font-family: var(--sz-font-body);
+    font-size: 18px;
+    line-height: 1.6;
+    color: var(--sz-charcoal);
+    margin: 0 0 28px 0;
+    max-width: 480px;
+  }
+
+  .sz-hero-cta {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 24px;
+  }
+
+  .sz-hero-trust {
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+    font-family: var(--sz-font-body);
+    font-size: 13px;
+    color: var(--sz-primary-dark);
+    font-weight: 500;
+  }
+
+  .sz-hero-trust span::before {
+    content: "✓ ";
+    color: var(--sz-primary);
+  }
+
+  .sz-hero-img {
+    width: 100%;
+    height: auto;
+    border-radius: var(--sz-radius-md);
+  }
+
+  .sz-hero-placeholder {
+    width: 100%;
+    aspect-ratio: 1;
+    background: var(--sz-warm-white);
+    border-radius: var(--sz-radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--sz-gray);
+  }
+
+  /* ═══════════════════════════════════════════════════════════════════
+     PRODUCT GRID
+     ═══════════════════════════════════════════════════════════════════ */
+  .sz-product-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+    margin-bottom: 40px;
+  }
+
+  @media (max-width: 1024px) {
+    .sz-product-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  @media (max-width: 500px) {
+    .sz-product-grid { grid-template-columns: 1fr; }
+  }
+
+  .sz-product-card-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+  }
+
+  .sz-product-placeholder {
+    width: 100%;
+    aspect-ratio: 1;
+    background: var(--sz-cream);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    color: var(--sz-gray);
+  }
+
+  .sz-badge-sale {
+    background: var(--sz-error) !important;
+  }
+
+  .sz-section-cta {
+    text-align: center;
+  }
+
+  /* ═══════════════════════════════════════════════════════════════════
+     VALUE PROPOSITION
+     ═══════════════════════════════════════════════════════════════════ */
+  .sz-value-prop {
+    text-align: center;
+  }
+
+  .sz-value-prop .sz-lead {
+    max-width: 600px;
+    margin: 0 auto 32px;
+  }
+
+  .sz-value-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 auto 32px;
+    max-width: 400px;
+    text-align: left;
+  }
+
+  .sz-value-list li {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-family: var(--sz-font-body);
+    font-size: 16px;
+    color: var(--sz-charcoal);
+    padding: 12px 0;
+    border-bottom: 1px solid var(--sz-border-light);
+  }
+
+  .sz-value-list li:last-child {
+    border-bottom: none;
+  }
+
+  .sz-value-list svg {
+    color: var(--sz-primary);
+    flex-shrink: 0;
+  }
+
+  .sz-tagline {
+    font-family: var(--sz-font-heading);
+    font-size: 22px;
+    font-weight: 500;
+    color: var(--sz-primary-dark);
+    font-style: italic;
+  }
+
+  /* ═══════════════════════════════════════════════════════════════════
+     STEPS
+     ═══════════════════════════════════════════════════════════════════ */
+  .sz-steps {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px;
+    margin-bottom: 40px;
+  }
+
+  @media (max-width: 768px) {
+    .sz-steps { grid-template-columns: 1fr; gap: 32px; }
+  }
+
+  .sz-step {
+    text-align: center;
+  }
+
+  .sz-step-number {
+    width: 56px;
+    height: 56px;
+    background: var(--sz-primary);
+    color: var(--sz-white);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--sz-font-body);
+    font-size: 22px;
+    font-weight: 600;
+    margin: 0 auto 20px;
+  }
+
+  .sz-step h3 {
+    font-family: var(--sz-font-heading);
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--sz-charcoal);
+    margin: 0 0 12px 0;
+  }
+
+  .sz-step p {
+    font-family: var(--sz-font-body);
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--sz-gray);
+    margin: 0;
+    max-width: 280px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  /* ═══════════════════════════════════════════════════════════════════
+     EMAIL SIGNUP
+     ═══════════════════════════════════════════════════════════════════ */
+  .sz-bg-sage {
+    background: var(--sz-primary);
+    color: var(--sz-white);
+  }
+
+  .sz-signup {
+    text-align: center;
+    max-width: 500px;
+    margin: 0 auto;
+  }
+
+  .sz-signup h2 {
+    font-family: var(--sz-font-heading);
+    font-size: clamp(1.75rem, 4vw, 2.5rem);
+    font-weight: 600;
+    color: var(--sz-white);
+    margin: 0 0 12px 0;
+  }
+
+  .sz-signup p {
+    font-family: var(--sz-font-body);
+    font-size: 16px;
+    opacity: 0.9;
+    margin: 0 0 24px 0;
+  }
+
+  .sz-signup-row {
+    display: flex;
+    gap: 0;
+  }
+
+  @media (max-width: 500px) {
+    .sz-signup-row {
+      flex-direction: column;
+      gap: 12px;
+    }
+  }
+
+  .sz-signup-input {
+    flex: 1;
+    padding: 16px 20px;
+    font-family: var(--sz-font-body);
+    font-size: 16px;
+    border: none;
+    border-radius: var(--sz-radius-sm) 0 0 var(--sz-radius-sm);
+  }
+
+  @media (max-width: 500px) {
+    .sz-signup-input {
+      border-radius: var(--sz-radius-sm);
+    }
+  }
+
+  .sz-signup-input:focus {
+    outline: 2px solid var(--sz-white);
+    outline-offset: -2px;
+  }
+
+  .sz-btn-dark {
+    background: var(--sz-charcoal);
+    color: var(--sz-white);
+    border: none;
+    padding: 16px 28px;
+    font-family: var(--sz-font-body);
+    font-size: 14px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    cursor: pointer;
+    border-radius: 0 var(--sz-radius-sm) var(--sz-radius-sm) 0;
+    transition: background 0.3s ease;
+  }
+
+  @media (max-width: 500px) {
+    .sz-btn-dark {
+      border-radius: var(--sz-radius-sm);
+    }
+  }
+
+  .sz-btn-dark:hover {
+    background: #000;
+  }
+</style>
+
+{%- comment -%}
+  Note: This is a legacy Liquid template for backwards compatibility.
+  Shopify 2.0 themes will use index.json instead of this file.
+  This template serves as a fallback for themes that don't fully support Online Store 2.0.
+{%- endcomment -%}

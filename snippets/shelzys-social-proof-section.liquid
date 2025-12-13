@@ -1,0 +1,467 @@
+{%- comment -%}
+  Shelzy's Designs - Social Proof Section
+
+  Consolidated social proof area with:
+  1. 3-column trust icons
+  2. Testimonial carousel
+  3. Sublimation vs Vinyl comparison
+
+  Add after Best Sellers: {% render 'shelzys-social-proof-section' %}
+{%- endcomment -%}
+
+<section class="sz-social-proof-section">
+  <div class="sz-social-proof-container">
+
+    {%- comment -%} ════════════════════════════════════════════════════
+       PART 1: 3-Column Icon Trust Bar
+    ════════════════════════════════════════════════════ {%- endcomment -%}
+    <div class="sz-trust-bar">
+      <div class="sz-trust-item">
+        <div class="sz-trust-icon">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+          </svg>
+        </div>
+        <h3 class="sz-trust-title">4.9★ Rated</h3>
+        <p class="sz-trust-subtitle">500+ verified reviews</p>
+      </div>
+
+      <div class="sz-trust-item">
+        <div class="sz-trust-icon">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <circle cx="12" cy="12" r="10"/>
+            <polyline points="12 6 12 12 16 14"/>
+          </svg>
+        </div>
+        <h3 class="sz-trust-title">Fast Turnaround</h3>
+        <p class="sz-trust-subtitle">3–5 business days, rush available</p>
+      </div>
+
+      <div class="sz-trust-item">
+        <div class="sz-trust-icon">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            <polyline points="9 12 11 14 15 10"/>
+          </svg>
+        </div>
+        <h3 class="sz-trust-title">Permanent Sublimation</h3>
+        <p class="sz-trust-subtitle">No peeling, no vinyl — ever</p>
+      </div>
+    </div>
+
+    {%- comment -%} ════════════════════════════════════════════════════
+       PART 2: Testimonial Carousel
+    ════════════════════════════════════════════════════ {%- endcomment -%}
+    <div class="sz-testimonial-carousel">
+      <div class="sz-testimonial-track" id="szTestimonialTrack">
+
+        <div class="sz-testimonial-card active">
+          <div class="sz-testimonial-stars">★★★★★</div>
+          <blockquote class="sz-testimonial-quote">
+            "These bottles were the highlight of my bridesmaid proposal boxes! The quality is incredible and my girls were so impressed."
+          </blockquote>
+          <p class="sz-testimonial-author">
+            <strong>Sarah M.</strong> <span>• Wedding</span>
+          </p>
+        </div>
+
+        <div class="sz-testimonial-card">
+          <div class="sz-testimonial-stars">★★★★★</div>
+          <blockquote class="sz-testimonial-quote">
+            "Ordered 30 bottles for our corporate retreat. Fast shipping, beautiful print quality, and our team loved them!"
+          </blockquote>
+          <p class="sz-testimonial-author">
+            <strong>Jennifer L.</strong> <span>• Corporate Event</span>
+          </p>
+        </div>
+
+        <div class="sz-testimonial-card">
+          <div class="sz-testimonial-stars">★★★★★</div>
+          <blockquote class="sz-testimonial-quote">
+            "I've washed mine 100+ times and it still looks brand new. No peeling like my old vinyl bottles. Worth every penny!"
+          </blockquote>
+          <p class="sz-testimonial-author">
+            <strong>Rachel T.</strong> <span>• Repeat Customer</span>
+          </p>
+        </div>
+
+        <div class="sz-testimonial-card">
+          <div class="sz-testimonial-stars">★★★★★</div>
+          <blockquote class="sz-testimonial-quote">
+            "My daughter's dance team was thrilled! The personalization was perfect and they arrived ahead of schedule."
+          </blockquote>
+          <p class="sz-testimonial-author">
+            <strong>Amanda K.</strong> <span>• Dance Team</span>
+          </p>
+        </div>
+
+        <div class="sz-testimonial-card">
+          <div class="sz-testimonial-stars">★★★★★</div>
+          <blockquote class="sz-testimonial-quote">
+            "Best party favors I've ever ordered. Guests kept asking where I got them. Already planning my next order!"
+          </blockquote>
+          <p class="sz-testimonial-author">
+            <strong>Michelle D.</strong> <span>• Birthday Party</span>
+          </p>
+        </div>
+
+      </div>
+
+      <div class="sz-testimonial-nav">
+        <button class="sz-testimonial-prev" onclick="szPrevTestimonial()" aria-label="Previous review">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="15 18 9 12 15 6"/>
+          </svg>
+        </button>
+        <div class="sz-testimonial-dots" id="szTestimonialDots"></div>
+        <button class="sz-testimonial-next" onclick="szNextTestimonial()" aria-label="Next review">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="9 18 15 12 9 6"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    {%- comment -%} ════════════════════════════════════════════════════
+       PART 3: Sublimation vs Vinyl Comparison
+    ════════════════════════════════════════════════════ {%- endcomment -%}
+    <div class="sz-sublimation-block">
+      <h4 class="sz-sublimation-title">Why sublimation is better:</h4>
+      <ul class="sz-sublimation-list">
+        <li>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="20 6 9 17 4 12"/>
+          </svg>
+          <span>Permanent full-color print</span>
+        </li>
+        <li>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="20 6 9 17 4 12"/>
+          </svg>
+          <span>Smooth finish (no vinyl bump)</span>
+        </li>
+        <li>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="20 6 9 17 4 12"/>
+          </svg>
+          <span>More durable for events and daily use</span>
+        </li>
+      </ul>
+    </div>
+
+  </div>
+</section>
+
+<script>
+(function() {
+  var cards = document.querySelectorAll('.sz-testimonial-card');
+  var dotsContainer = document.getElementById('szTestimonialDots');
+  var currentIndex = 0;
+  var autoplayInterval;
+
+  if (!cards.length) return;
+
+  // Create dots
+  cards.forEach(function(_, i) {
+    var dot = document.createElement('button');
+    dot.className = 'sz-testimonial-dot' + (i === 0 ? ' active' : '');
+    dot.setAttribute('aria-label', 'Go to review ' + (i + 1));
+    dot.onclick = function() { goToSlide(i); };
+    dotsContainer.appendChild(dot);
+  });
+
+  var dots = document.querySelectorAll('.sz-testimonial-dot');
+
+  function goToSlide(index) {
+    cards[currentIndex].classList.remove('active');
+    dots[currentIndex].classList.remove('active');
+
+    currentIndex = index;
+    if (currentIndex >= cards.length) currentIndex = 0;
+    if (currentIndex < 0) currentIndex = cards.length - 1;
+
+    cards[currentIndex].classList.add('active');
+    dots[currentIndex].classList.add('active');
+
+    resetAutoplay();
+  }
+
+  window.szNextTestimonial = function() {
+    goToSlide(currentIndex + 1);
+  };
+
+  window.szPrevTestimonial = function() {
+    goToSlide(currentIndex - 1);
+  };
+
+  function resetAutoplay() {
+    clearInterval(autoplayInterval);
+    autoplayInterval = setInterval(function() {
+      goToSlide(currentIndex + 1);
+    }, 6000);
+  }
+
+  // Start autoplay
+  resetAutoplay();
+
+  // Pause on hover
+  var carousel = document.querySelector('.sz-testimonial-carousel');
+  carousel.addEventListener('mouseenter', function() {
+    clearInterval(autoplayInterval);
+  });
+  carousel.addEventListener('mouseleave', function() {
+    resetAutoplay();
+  });
+})();
+</script>
+
+<style>
+  .sz-social-proof-section {
+    padding: 80px 20px;
+    background: #FAF8F5;
+  }
+
+  .sz-social-proof-container {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  /* ═══════════════════════════════════════════════════
+     PART 1: Trust Bar
+  ═══════════════════════════════════════════════════ */
+  .sz-trust-bar {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px;
+    margin-bottom: 70px;
+  }
+
+  @media (max-width: 768px) {
+    .sz-trust-bar {
+      grid-template-columns: 1fr;
+      gap: 32px;
+      margin-bottom: 50px;
+    }
+  }
+
+  .sz-trust-item {
+    text-align: center;
+  }
+
+  .sz-trust-icon {
+    width: 60px;
+    height: 60px;
+    margin: 0 auto 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #FFFFFF;
+    border: 1px solid #E8E4DE;
+    border-radius: 50%;
+    color: #2C3E2D;
+  }
+
+  .sz-trust-title {
+    font-family: "Inter", -apple-system, sans-serif;
+    font-size: 18px;
+    font-weight: 600;
+    color: #1F1F1F;
+    margin: 0 0 6px 0;
+  }
+
+  .sz-trust-subtitle {
+    font-family: "Inter", sans-serif;
+    font-size: 14px;
+    color: #7A7A7A;
+    margin: 0;
+  }
+
+  /* ═══════════════════════════════════════════════════
+     PART 2: Testimonial Carousel
+  ═══════════════════════════════════════════════════ */
+  .sz-testimonial-carousel {
+    max-width: 700px;
+    margin: 0 auto 60px;
+    text-align: center;
+  }
+
+  .sz-testimonial-track {
+    position: relative;
+    min-height: 200px;
+  }
+
+  .sz-testimonial-card {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px);
+    transition: all 0.4s ease;
+    padding: 40px;
+    background: #FFFFFF;
+    border: 1px solid #E8E4DE;
+  }
+
+  .sz-testimonial-card.active {
+    position: relative;
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+
+  .sz-testimonial-stars {
+    font-size: 18px;
+    letter-spacing: 3px;
+    color: #B5A48A;
+    margin-bottom: 20px;
+  }
+
+  .sz-testimonial-quote {
+    font-family: "Playfair Display", Georgia, serif;
+    font-size: 22px;
+    font-weight: 400;
+    font-style: italic;
+    line-height: 1.6;
+    color: #1F1F1F;
+    margin: 0 0 24px 0;
+  }
+
+  @media (max-width: 600px) {
+    .sz-testimonial-quote {
+      font-size: 18px;
+    }
+
+    .sz-testimonial-card {
+      padding: 30px 20px;
+    }
+  }
+
+  .sz-testimonial-author {
+    font-family: "Inter", sans-serif;
+    font-size: 14px;
+    color: #4A4A4A;
+    margin: 0;
+  }
+
+  .sz-testimonial-author strong {
+    font-weight: 600;
+    color: #1F1F1F;
+  }
+
+  .sz-testimonial-author span {
+    color: #7A7A7A;
+  }
+
+  /* Navigation */
+  .sz-testimonial-nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 24px;
+  }
+
+  .sz-testimonial-prev,
+  .sz-testimonial-next {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #FFFFFF;
+    border: 1px solid #E8E4DE;
+    border-radius: 50%;
+    cursor: pointer;
+    color: #4A4A4A;
+    transition: all 0.2s ease;
+  }
+
+  .sz-testimonial-prev:hover,
+  .sz-testimonial-next:hover {
+    background: #1F1F1F;
+    border-color: #1F1F1F;
+    color: #FFFFFF;
+  }
+
+  .sz-testimonial-dots {
+    display: flex;
+    gap: 8px;
+  }
+
+  .sz-testimonial-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #D4CFC6;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    padding: 0;
+  }
+
+  .sz-testimonial-dot.active {
+    background: #2C3E2D;
+    width: 24px;
+    border-radius: 4px;
+  }
+
+  /* ═══════════════════════════════════════════════════
+     PART 3: Sublimation Block
+  ═══════════════════════════════════════════════════ */
+  .sz-sublimation-block {
+    max-width: 500px;
+    margin: 0 auto;
+    text-align: center;
+    padding: 40px;
+    background: #FFFFFF;
+    border: 1px solid #E8E4DE;
+  }
+
+  .sz-sublimation-title {
+    font-family: "Inter", sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #7A7A7A;
+    margin: 0 0 24px 0;
+  }
+
+  .sz-sublimation-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .sz-sublimation-list li {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    font-family: "Inter", sans-serif;
+    font-size: 15px;
+    color: #1F1F1F;
+  }
+
+  .sz-sublimation-list svg {
+    color: #2C3E2D;
+    flex-shrink: 0;
+  }
+
+  @media (max-width: 500px) {
+    .sz-sublimation-block {
+      padding: 30px 20px;
+    }
+
+    .sz-sublimation-list li {
+      font-size: 14px;
+      justify-content: flex-start;
+      text-align: left;
+    }
+  }
+</style>
