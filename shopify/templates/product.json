@@ -1,0 +1,27 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-product",
+      "settings": {
+        "enable_reviews_summary": true,
+        "enable_low_stock_warning": true,
+        "low_stock_threshold": 5,
+        "enable_color_swatches": true,
+        "enable_accordion": true,
+        "enable_buy_now": true,
+        "enable_trust_badges": true,
+        "trust_badge_1": "Free Shipping Over $50",
+        "trust_badge_2": "Dishwasher Safe",
+        "trust_badge_3": "30-Day Returns"
+      }
+    },
+    "product-recommendations": {
+      "type": "product-recommendations",
+      "settings": {
+        "heading": "You May Also Like",
+        "products_to_show": 4
+      }
+    }
+  },
+  "order": ["main", "product-recommendations"]
+}
