@@ -1,0 +1,27 @@
+
+{% comment %}
+  Shelzy's Designs - Urgency Elements
+  Auto-injected by automation script
+{% endcomment %}
+{% if product.available %}
+<div class="sz-urgency">
+  <div class="sz-order-deadline">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+    <span>Order within <strong id="sz-countdown"></strong> to ship tomorrow!</span>
+  </div>
+  {% if product.variants.first.inventory_quantity <= 5 and product.variants.first.inventory_quantity > 0 %}
+  <div class="sz-low-stock"><span class="sz-pulse"></span>Only {{ product.variants.first.inventory_quantity }} left in stock!</div>
+  {% endif %}
+</div>
+<style>
+.sz-urgency{margin:15px 0}
+.sz-order-deadline{display:flex;align-items:center;gap:8px;padding:12px 15px;background:#FFF9E6;border-radius:8px;font-size:14px}
+.sz-order-deadline svg{color:#D1C7A1;flex-shrink:0}
+.sz-low-stock{display:flex;align-items:center;gap:8px;color:#e74c3c;font-size:14px;font-weight:500;margin-top:10px}
+.sz-pulse{width:8px;height:8px;background:#e74c3c;border-radius:50%;animation:szpulse 1.5s infinite}
+@keyframes szpulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(1.2)}}
+</style>
+<script>
+(function(){var el=document.getElementById("sz-countdown");if(!el)return;function upd(){var now=new Date(),cut=new Date();cut.setHours(14,0,0,0);if(now>=cut)cut.setDate(cut.getDate()+1);var d=cut-now,h=Math.floor(d/36e5),m=Math.floor((d%36e5)/6e4);el.textContent=h+"h "+m+"m"}upd();setInterval(upd,6e4)})();
+</script>
+{% endif %}

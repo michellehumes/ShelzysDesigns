@@ -48,6 +48,8 @@
 </head>
 
 <body class="template-{{ template.name | handle }}{% if template.suffix %} template-{{ template.name }}-{{ template.suffix | handle }}{% endif %}">
+{% render 'sz-announcement-bar' %}
+{% render 'sz-social-proof-banner' %}
 
   {%- comment -%} Skip Links for Accessibility {%- endcomment -%}
   <a href="#main-content" class="skip-link visually-hidden">Skip to content</a>
@@ -118,5 +120,7 @@
       border-radius: var(--sz-radius-sm);
     }
   </style>
+{% render 'sz-free-shipping-bar' %}
+{% render 'sz-email-popup' %}
 </body>
 </html>

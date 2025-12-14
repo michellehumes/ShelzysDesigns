@@ -1,0 +1,39 @@
+
+{% comment %}
+  Shelzy's Designs - Cart Upsell
+  Auto-injected by automation script
+{% endcomment %}
+{% if cart.item_count > 0 %}
+<div class="sz-cart-upsell">
+  <h4>Complete Your Order</h4>
+  <div class="sz-upsell-products">
+    {% assign upsell_products = collections['best-sellers'].products | default: collections.all.products %}
+    {% for product in upsell_products limit: 3 %}
+      {% assign in_cart = false %}
+      {% for item in cart.items %}
+        {% if item.product.id == product.id %}{% assign in_cart = true %}{% break %}{% endif %}
+      {% endfor %}
+      {% unless in_cart %}
+        <div class="sz-upsell-item">
+          <a href="{{ product.url }}">
+            {% if product.featured_image %}<img src="{{ product.featured_image | img_url: '100x' }}" alt="{{ product.title }}" loading="lazy">{% endif %}
+          </a>
+          <div class="sz-upsell-info">
+            <a href="{{ product.url }}">{{ product.title | truncate: 25 }}</a>
+            <span>{{ product.price | money }}</span>
+          </div>
+        </div>
+      {% endunless %}
+    {% endfor %}
+  </div>
+</div>
+{% endif %}
+<style>
+.sz-cart-upsell{padding:20px;background:#FAF9F6;border-radius:12px;margin-top:20px}
+.sz-cart-upsell h4{font-family:"Playfair Display",serif;color:#4E5F4A;margin:0 0 15px;font-size:16px}
+.sz-upsell-products{display:flex;gap:12px;overflow-x:auto}
+.sz-upsell-item{flex:0 0 100px;text-align:center}
+.sz-upsell-item img{width:100%;border-radius:8px;margin-bottom:6px}
+.sz-upsell-info a{color:#2B2B2B;text-decoration:none;font-size:12px;display:block}
+.sz-upsell-info span{color:#8BAA88;font-weight:600;font-size:13px}
+</style>
