@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "current": {
     "color_primary": "#8BAA88",
@@ -16,6 +25,7 @@
       "header": {
         "type": "header",
         "settings": {
+          "logo_height": 44,
           "enable_sticky": true,
           "show_search": true,
           "show_account": true,
@@ -23,8 +33,7 @@
           "text_color": "#1F1F1F",
           "accent_color": "#4E5F4A",
           "border_color": "#E8E4DE",
-          "cart_badge_color": "#2C3E2D",
-          "logo_height": 44
+          "cart_badge_color": "#2C3E2D"
         }
       },
       "footer": {
@@ -40,7 +49,65 @@
         }
       }
     },
-    "content_for_index": []
+    "content_for_index": [],
+    "blocks": {
+      "14060646107696862457": {
+        "type": "shopify://apps/judge-me-reviews/blocks/judgeme_core/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
+        "disabled": false,
+        "settings": {}
+      },
+      "3979034072534932226": {
+        "type": "shopify://apps/metashop-instagram-facebook/blocks/app-embed/a2ba3b6f-1992-4528-a81d-226ccc4d2a86",
+        "disabled": false,
+        "settings": {}
+      },
+      "15683396631634586217": {
+        "type": "shopify://apps/inbox/blocks/chat/841fc607-4181-4ad1-842d-e24d7f8bad6b",
+        "disabled": false,
+        "settings": {
+          "button_color": "#000000",
+          "secondary_color": "#FFFFFF",
+          "ternary_color": "#6A6A6A",
+          "button_icon": "chat_bubble",
+          "button_text": "chat_with_us",
+          "button_horizontal_position": "bottom_right",
+          "button_vertical_position": "lowest",
+          "greeting_message": ""
+        }
+      },
+      "855628211100114053": {
+        "type": "shopify://apps/klaviyo-email-marketing-sms/blocks/klaviyo-onsite-embed/2632fe16-c075-4321-a88b-50b567f42507",
+        "disabled": false,
+        "settings": {}
+      },
+      "7867184527792707249": {
+        "type": "shopify://apps/sc-product-options/blocks/app-embed/873c9b74-306d-4f83-b58b-a2f5043d2187",
+        "disabled": false,
+        "settings": {}
+      },
+      "13768625480086291342": {
+        "type": "shopify://apps/forms/blocks/forms/8744a304-fcb1-4347-b211-bb6b4759a76a",
+        "disabled": false,
+        "settings": {}
+      },
+      "16017602894386113438": {
+        "type": "shopify://apps/junip/blocks/junip-store-key/dc14f5a8-ed15-41b1-ad08-cfba23f9789b",
+        "disabled": false,
+        "settings": {
+          "enablePreviewMode": true
+        }
+      },
+      "5028733920296764920": {
+        "type": "shopify://apps/poptin-exit-popup-email-pop-up/blocks/poptin/182272aa-99b0-4fe3-a6ce-2aa49aed1d90",
+        "disabled": true,
+        "settings": {}
+      },
+      "12108174171315376258": {
+        "type": "shopify://apps/aov-ai-cart-drawer/blocks/avada-embed/938869e1-3feb-48fa-ab79-27fdfe609836",
+        "disabled": true,
+        "settings": {}
+      }
+    }
   },
   "presets": {
     "Default": {
