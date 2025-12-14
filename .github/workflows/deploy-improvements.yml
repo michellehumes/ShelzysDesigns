@@ -19,6 +19,7 @@ on:
           - 'fix-conflicts'  # Fix snippet conflicts with theme
           - 'upload-images'  # Upload stock images to products and blogs
           - 'update-product-images'  # Add lifestyle photos to products
+          - 'create-bottle-products'  # Create the 4 adult bottle products
           - 'fix-homepage'   # Fix reviews blocking homepage
           - 'fix-blog-images' # Fix blog images (downloads and uploads as base64)
           - 'debug-blog'      # Debug blog image issues
@@ -311,6 +312,41 @@ jobs:
           echo "- Holiday products → seasonal images" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "**Refresh your store to see the updates.**" >> $GITHUB_STEP_SUMMARY
+
+  # ============================================
+  # CREATE BOTTLE PRODUCTS - Create the 4 adult bottle products
+  # ============================================
+  create-bottle-products:
+    name: Create Bottle Products
+    runs-on: ubuntu-latest
+    if: github.event.inputs.action == 'create-bottle-products'
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Create bottle products
+        env:
+          SHOPIFY_STORE_URL: ${{ secrets.SHOPIFY_STORE_URL }}
+          SHOPIFY_ACCESS_TOKEN: ${{ secrets.SHOPIFY_ACCESS_TOKEN }}
+        run: node shopify/scripts/create-bottle-products.js
+
+      - name: Create summary
+        run: |
+          echo "# 🍼 Bottle Products Created!" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "Created the following products in Shopify:" >> $GITHUB_STEP_SUMMARY
+          echo "1. Stainless Steel Customizable (SZ-SS-CUSTOM-20) - \$24.99" >> $GITHUB_STEP_SUMMARY
+          echo "2. Clear Plastic Customizable (SZ-CLR-CUSTOM-24) - \$19.99" >> $GITHUB_STEP_SUMMARY
+          echo "3. Stainless Steel Plain White (SZ-SS-WHITE-20) - \$18.99" >> $GITHUB_STEP_SUMMARY
+          echo "4. Clear Plastic Plain (SZ-CLR-PLAIN-24) - \$12.99" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Next:** Check your Shopify admin to see the new products!" >> $GITHUB_STEP_SUMMARY
 
   # ============================================
   # FIX HOMEPAGE - Remove blocking reviews/social proof
