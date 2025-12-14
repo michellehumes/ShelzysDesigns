@@ -18,6 +18,7 @@ on:
           - 'dry-run'        # Test without making changes
           - 'fix-conflicts'  # Fix snippet conflicts with theme
           - 'upload-images'  # Upload stock images to products and blogs
+          - 'update-product-images'  # Add lifestyle photos to products
           - 'fix-homepage'   # Fix reviews blocking homepage
           - 'fix-blog-images' # Fix blog images (downloads and uploads as base64)
           - 'debug-blog'      # Debug blog image issues
@@ -275,6 +276,41 @@ jobs:
           echo "Stock images have been added to products and blog posts that were missing images." >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "**Note:** For best results, replace these with professional product photos." >> $GITHUB_STEP_SUMMARY
+
+  # ============================================
+  # UPDATE PRODUCT IMAGES - Add lifestyle photos to products
+  # ============================================
+  update-product-images:
+    name: Update Product Images
+    runs-on: ubuntu-latest
+    if: github.event.inputs.action == 'update-product-images'
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Update product images
+        env:
+          SHOPIFY_STORE_URL: ${{ secrets.SHOPIFY_STORE_URL }}
+          SHOPIFY_ACCESS_TOKEN: ${{ secrets.SHOPIFY_ACCESS_TOKEN }}
+        run: node shopify/scripts/update-product-images.js
+
+      - name: Create summary
+        run: |
+          echo "# 📸 Product Images Updated!" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "Lifestyle photos have been added to your products based on their categories:" >> $GITHUB_STEP_SUMMARY
+          echo "- Bridal products → bridal lifestyle images" >> $GITHUB_STEP_SUMMARY
+          echo "- Bridesmaid products → group/party images" >> $GITHUB_STEP_SUMMARY
+          echo "- Bachelorette products → fun party images" >> $GITHUB_STEP_SUMMARY
+          echo "- Holiday products → seasonal images" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Refresh your store to see the updates.**" >> $GITHUB_STEP_SUMMARY
 
   # ============================================
   # FIX HOMEPAGE - Remove blocking reviews/social proof
