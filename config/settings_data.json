@@ -39,8 +39,7 @@
           "show_payment_icons": true
         }
       }
-    },
-    "content_for_index": []
+    }
   },
   "presets": {
     "Default": {
