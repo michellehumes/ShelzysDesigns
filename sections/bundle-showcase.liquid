@@ -24,6 +24,7 @@
             <div class="sz-bundle-ribbon">Most Popular</div>
           {%- endif -%}
 
+          {%- assign bundle_images = 'product-elegant-bridal.png,hero-bridal-party-5.webp,gallery-beach-lineup.png' | split: ',' -%}
           <div class="sz-bundle-media">
             {%- if block.settings.image != blank -%}
               <img
@@ -33,15 +34,14 @@
                 class="sz-bundle-img"
               >
             {%- else -%}
-              <div class="sz-bundle-placeholder">
-                <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                  <path d="M20 12v10H4V12"/>
-                  <path d="M2 7h20v5H2z"/>
-                  <path d="M12 22V7"/>
-                  <path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/>
-                  <path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/>
-                </svg>
-              </div>
+              {%- assign bundle_index = forloop.index0 | modulo: bundle_images.size -%}
+              {%- assign default_bundle_image = bundle_images[bundle_index] -%}
+              <img
+                src="{{ default_bundle_image | asset_url }}"
+                alt="{{ block.settings.title }}"
+                loading="lazy"
+                class="sz-bundle-img"
+              >
             {%- endif -%}
 
             {%- if block.settings.savings != blank -%}

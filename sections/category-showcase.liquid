@@ -32,13 +32,23 @@
                 class="sz-category-card-image"
               >
             {%- else -%}
-              <div class="sz-category-card-placeholder" style="background: {{ block.settings.placeholder_color | default: '#8BAA88' }};">
-                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                  <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
-                  <circle cx="8.5" cy="8.5" r="1.5"/>
-                  <polyline points="21 15 16 10 5 21"/>
-                </svg>
-              </div>
+              {%- assign category_title_lower = block.settings.title | downcase -%}
+              {%- assign default_category_image = 'product-studio-colorful.png' -%}
+              {%- if category_title_lower contains 'wedding' or category_title_lower contains 'bridal' -%}
+                {%- assign default_category_image = 'flatlay-bride-pink.png' -%}
+              {%- elsif category_title_lower contains 'bachelorette' -%}
+                {%- assign default_category_image = 'lifestyle-bachelorette.webp' -%}
+              {%- elsif category_title_lower contains 'kid' or category_title_lower contains 'sport' -%}
+                {%- assign default_category_image = 'gallery-beach-lineup.png' -%}
+              {%- elsif category_title_lower contains 'corporate' or category_title_lower contains 'bulk' -%}
+                {%- assign default_category_image = 'product-studio-colorful.png' -%}
+              {%- endif -%}
+              <img
+                src="{{ default_category_image | asset_url }}"
+                alt="{{ block.settings.title }}"
+                loading="lazy"
+                class="sz-category-card-image"
+              >
             {%- endif -%}
             <div class="sz-category-card-overlay"></div>
           </div>
