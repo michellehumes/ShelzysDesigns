@@ -42,6 +42,9 @@
 
   {%- comment -%} No-JS Detection {%- endcomment -%}
   <script>document.documentElement.className = document.documentElement.className.replace('no-js', 'js');</script>
+
+  {%- comment -%} Hide Klaviyo Popup {%- endcomment -%}
+  {% render 'sz-hide-klaviyo-popup' %}
 </head>
 
 <body class="template-{{ template.name | handle }}{% if template.suffix %} template-{{ template.name }}-{{ template.suffix | handle }}{% endif %}">

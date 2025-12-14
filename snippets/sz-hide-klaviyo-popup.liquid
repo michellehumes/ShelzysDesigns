@@ -1,0 +1,40 @@
+{% comment %}
+  Hide Klaviyo popup - disable the aggressive discount popup
+  Add this to theme.liquid before </head>: {% render 'sz-hide-klaviyo-popup' %}
+{% endcomment %}
+
+<style>
+/* Hide Klaviyo popups completely */
+.klaviyo-popup,
+.klaviyo-form,
+.klaviyo-form-container,
+div[data-testid="klaviyo-form-container"],
+div[class*="klaviyo"],
+.needsclick.klaviyo-form,
+div[data-form] .needsclick,
+form.klaviyo-form-version-cid,
+.kl-private-reset-css-Xuajs1,
+div[tabindex="-1"][role="dialog"][aria-modal="true"]:has(.klaviyo-form),
+div.go3958317564 {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  height: 0 !important;
+  width: 0 !important;
+  overflow: hidden !important;
+}
+
+/* Hide any modal overlays from Klaviyo */
+.klaviyo-backdrop,
+div[class*="klaviyo"][class*="backdrop"],
+div[class*="klaviyo"][class*="overlay"] {
+  display: none !important;
+}
+
+/* Remove any body scroll lock from Klaviyo */
+body.klaviyo-open {
+  overflow: auto !important;
+  position: static !important;
+}
+</style>
