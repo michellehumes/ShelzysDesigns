@@ -121,7 +121,6 @@ async function main() {
   const redirects = [
     { path: "/pages/about-us", target: "/pages/about" },
     { path: "/pages/shipping-returns", target: "/pages/shipping" },
-    { path: "/pages/care-instructions", target: "/blogs/news/the-ultimate-water-bottle-maintenance-guide" },
   ];
 
   console.log("Creating redirects...");
