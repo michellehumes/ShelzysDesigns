@@ -1,0 +1,166 @@
+{
+  "products": [
+    {
+      "id": "stainless-steel-customizable",
+      "title": "Personalized Stainless Steel Water Bottle 20oz - Custom Name, Font & Color",
+      "amazon_title": "Shelzy's Designs Personalized Water Bottle 20oz Stainless Steel - Custom Name, Font & Color Choice - Double-Wall Insulated, Leak-Proof - Perfect Gift for Bridesmaids, Weddings, Sports",
+      "handle": "personalized-stainless-steel-water-bottle",
+      "product_type": "Water Bottle",
+      "vendor": "Shelzy's Designs",
+      "tags": ["personalized", "customizable", "stainless-steel", "20oz", "gift", "wedding", "bridesmaid", "insulated"],
+      "price": "24.99",
+      "compare_at_price": "34.99",
+      "sku": "SZ-SS-CUSTOM-20",
+      "weight": "0.75",
+      "weight_unit": "lb",
+      "requires_customization": true,
+      "customization_options": {
+        "name": {
+          "type": "text",
+          "label": "Name/Text to Print",
+          "required": true,
+          "max_length": 20
+        },
+        "font": {
+          "type": "select",
+          "label": "Font Style",
+          "required": true,
+          "options": ["Script Elegant", "Modern Sans", "Bold Block", "Handwritten", "Classic Serif"]
+        },
+        "color": {
+          "type": "select",
+          "label": "Print Color",
+          "required": true,
+          "options": ["Gold", "Rose Gold", "Silver", "Black", "White", "Pink", "Navy", "Sage Green"]
+        }
+      },
+      "description": {
+        "short": "Premium 20oz stainless steel water bottle with YOUR custom name, font choice, and color. Permanent sublimation printing that never peels or fades.",
+        "full": "<h3>Make It Yours - Fully Customizable</h3><p>Create a one-of-a-kind water bottle with your name, favorite font, and perfect color. Our permanent sublimation printing infuses the design directly into the bottle - no vinyl stickers that peel!</p><h3>Premium Quality</h3><ul><li><strong>20oz capacity</strong> - Perfect size for daily hydration</li><li><strong>Double-wall insulation</strong> - Keeps drinks cold 24hrs, hot 12hrs</li><li><strong>18/8 stainless steel</strong> - BPA-free, rust-resistant</li><li><strong>Leak-proof lid</strong> - Toss it in your bag worry-free</li><li><strong>Dishwasher safe</strong> - Easy cleaning</li></ul><h3>Perfect For</h3><p>Bridesmaids, wedding parties, sports teams, teacher gifts, corporate events, or treating yourself!</p>"
+      },
+      "amazon_bullets": [
+        "FULLY CUSTOMIZABLE: Add your name (up to 20 characters), choose from 5 elegant fonts, and pick your favorite print color from 8 options including Gold, Rose Gold, and Sage Green",
+        "PERMANENT SUBLIMATION PRINTING: Unlike cheap vinyl stickers that peel and crack, our sublimation process infuses the design INTO the bottle coating - it's literally part of the bottle and will never fade or peel",
+        "PREMIUM INSULATION: Double-wall vacuum insulated 18/8 stainless steel keeps drinks ice cold for 24 hours or hot for 12 hours - perfect for gym, office, or outdoor adventures",
+        "LEAK-PROOF & DURABLE: Secure twist-on lid with silicone seal prevents spills in your bag. BPA-free, rust-resistant, and built to last through daily use",
+        "PERFECT GIFT: Ideal for bridesmaids, wedding parties, sports teams, teachers, nurses, or anyone who deserves something special. Ships in beautiful gift-ready packaging"
+      ],
+      "images": [
+        "product-elegant-bridal.png",
+        "hero-bridal-party-5.webp",
+        "lifestyle-bridal-intimate.webp",
+        "flatlay-bride-pink.png"
+      ]
+    },
+    {
+      "id": "clear-plastic-customizable",
+      "title": "Personalized Clear Water Bottle 24oz - Custom Name, Font & Color",
+      "amazon_title": "Shelzy's Designs Personalized Clear Water Bottle 24oz BPA-Free - Custom Name, Font & Color - Lightweight, See-Through Design - Great for Gym, School, Office",
+      "handle": "personalized-clear-water-bottle",
+      "product_type": "Water Bottle",
+      "vendor": "Shelzy's Designs",
+      "tags": ["personalized", "customizable", "clear", "plastic", "bpa-free", "24oz", "lightweight", "gym"],
+      "price": "19.99",
+      "compare_at_price": "29.99",
+      "sku": "SZ-CLR-CUSTOM-24",
+      "weight": "0.35",
+      "weight_unit": "lb",
+      "requires_customization": true,
+      "customization_options": {
+        "name": {
+          "type": "text",
+          "label": "Name/Text to Print",
+          "required": true,
+          "max_length": 20
+        },
+        "font": {
+          "type": "select",
+          "label": "Font Style",
+          "required": true,
+          "options": ["Script Elegant", "Modern Sans", "Bold Block", "Handwritten", "Classic Serif"]
+        },
+        "color": {
+          "type": "select",
+          "label": "Print Color",
+          "required": true,
+          "options": ["Gold", "Rose Gold", "Silver", "Black", "White", "Pink", "Navy", "Sage Green"]
+        }
+      },
+      "description": {
+        "short": "Lightweight 24oz clear water bottle with YOUR custom name, font, and color. See your water level at a glance. BPA-free and eco-friendly.",
+        "full": "<h3>See-Through Style, Personalized For You</h3><p>Our clear water bottle lets you track your hydration while showing off your custom design. Add your name in your favorite font and color!</p><h3>Lightweight & Practical</h3><ul><li><strong>24oz capacity</strong> - Stay hydrated all day</li><li><strong>Crystal clear BPA-free plastic</strong> - See your water level</li><li><strong>Ultra lightweight</strong> - Only 0.35 lbs</li><li><strong>Wide mouth</strong> - Easy to fill, add ice, and clean</li><li><strong>Secure flip-top lid</strong> - One-hand operation</li></ul><h3>Perfect For</h3><p>Gym sessions, school, office desk, yoga class, hiking, or daily carry!</p>"
+      },
+      "amazon_bullets": [
+        "FULLY CUSTOMIZABLE: Add your name (up to 20 characters), choose from 5 stylish fonts, and select your print color from 8 vibrant options including Gold, Rose Gold, Pink, and Sage Green",
+        "CRYSTAL CLEAR DESIGN: See-through BPA-free plastic lets you track your water intake throughout the day. Watch yourself hit your hydration goals!",
+        "ULTRA LIGHTWEIGHT: At only 0.35 lbs, this 24oz bottle won't weigh down your gym bag, backpack, or purse. Perfect for on-the-go hydration",
+        "PRACTICAL FEATURES: Wide mouth opening makes it easy to fill, add ice cubes, and clean. Secure flip-top lid for one-handed drinking",
+        "GREAT VALUE GIFT: Affordable personalized gift for gym buddies, coworkers, students, or yourself. Arrives in cute packaging ready to gift"
+      ],
+      "images": [
+        "product-studio-colorful.png",
+        "lifestyle-friends-couch.png",
+        "product-hand-holding.png"
+      ]
+    },
+    {
+      "id": "stainless-steel-plain",
+      "title": "Stainless Steel Water Bottle 20oz - White - Double-Wall Insulated",
+      "amazon_title": "Shelzy's Designs Stainless Steel Water Bottle 20oz White - Double-Wall Vacuum Insulated - Keeps Drinks Cold 24hrs Hot 12hrs - Leak-Proof, BPA-Free",
+      "handle": "stainless-steel-water-bottle-white",
+      "product_type": "Water Bottle",
+      "vendor": "Shelzy's Designs",
+      "tags": ["stainless-steel", "white", "20oz", "insulated", "plain", "no-customization"],
+      "price": "18.99",
+      "compare_at_price": "24.99",
+      "sku": "SZ-SS-WHITE-20",
+      "weight": "0.75",
+      "weight_unit": "lb",
+      "requires_customization": false,
+      "description": {
+        "short": "Classic white 20oz stainless steel water bottle. Double-wall insulated to keep drinks cold 24hrs or hot 12hrs. Clean, minimal design.",
+        "full": "<h3>Simple. Clean. Quality.</h3><p>Sometimes you just want a great water bottle without the fuss. Our white stainless steel bottle delivers premium quality in a clean, minimal design.</p><h3>Premium Features</h3><ul><li><strong>20oz capacity</strong> - Perfect daily size</li><li><strong>Double-wall vacuum insulation</strong> - Cold 24hrs, hot 12hrs</li><li><strong>18/8 stainless steel</strong> - BPA-free, rust-resistant</li><li><strong>Powder-coated white finish</strong> - Grippy, sweat-free</li><li><strong>Leak-proof lid</strong> - Bag-safe</li><li><strong>Dishwasher safe</strong></li></ul>"
+      },
+      "amazon_bullets": [
+        "PREMIUM QUALITY: 18/8 stainless steel construction with powder-coated white finish. Built to last through years of daily use",
+        "SUPERIOR INSULATION: Double-wall vacuum technology keeps drinks ice cold for 24 hours or hot for 12 hours. No more lukewarm water!",
+        "CLEAN MINIMAL DESIGN: Sleek white finish goes with everything. Perfect for those who prefer understated elegance",
+        "LEAK-PROOF & PRACTICAL: Secure lid with silicone seal. Sweat-free exterior won't leave rings on your desk. Dishwasher safe for easy cleaning",
+        "20OZ PERFECT SIZE: Not too big, not too small - ideal for desk, gym, commute, or anywhere you need hydration"
+      ],
+      "images": [
+        "product-single-blue.png",
+        "lifestyle-couple-outdoor.webp"
+      ]
+    },
+    {
+      "id": "clear-plastic-plain",
+      "title": "Clear Water Bottle 24oz - BPA-Free Lightweight",
+      "amazon_title": "Shelzy's Designs Clear Water Bottle 24oz - BPA-Free Lightweight Plastic - Wide Mouth, Flip-Top Lid - Perfect for Gym, School, Office",
+      "handle": "clear-water-bottle-plain",
+      "product_type": "Water Bottle",
+      "vendor": "Shelzy's Designs",
+      "tags": ["clear", "plastic", "bpa-free", "24oz", "lightweight", "plain", "no-customization"],
+      "price": "12.99",
+      "compare_at_price": "17.99",
+      "sku": "SZ-CLR-PLAIN-24",
+      "weight": "0.35",
+      "weight_unit": "lb",
+      "requires_customization": false,
+      "description": {
+        "short": "Simple 24oz clear water bottle. Ultra-lightweight BPA-free plastic. See your water level, track your hydration.",
+        "full": "<h3>Simple Hydration, Clear Results</h3><p>A straightforward, quality water bottle that lets you see exactly how much you're drinking. No frills, just function.</p><h3>Practical Features</h3><ul><li><strong>24oz capacity</strong> - Great daily hydration</li><li><strong>Crystal clear BPA-free plastic</strong> - See your progress</li><li><strong>Ultra lightweight</strong> - Won't weigh you down</li><li><strong>Wide mouth</strong> - Easy fill, ice-friendly</li><li><strong>Flip-top lid</strong> - One-hand operation</li><li><strong>Easy to clean</strong></li></ul>"
+      },
+      "amazon_bullets": [
+        "SIMPLE & FUNCTIONAL: No-frills clear water bottle that does exactly what you need. See your water level at a glance",
+        "BPA-FREE SAFETY: Made from safe, BPA-free plastic. Feel good about your daily hydration",
+        "ULTRA LIGHTWEIGHT: Perfect for gym bags, backpacks, or purses. At only 0.35 lbs, you'll barely notice it",
+        "EASY TO USE: Wide mouth for easy filling and ice cubes. Flip-top lid for one-handed drinking. Simple to clean",
+        "GREAT VALUE: Quality hydration without breaking the bank. Stock up for the whole family, office, or team"
+      ],
+      "images": [
+        "product-studio-colorful.png"
+      ]
+    }
+  ]
+}
