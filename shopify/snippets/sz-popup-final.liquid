@@ -1,0 +1,62 @@
+{%- comment -%}
+  Safe fallback popup snippet.
+  Prevents Liquid error if referenced in layout/theme.liquid.
+{%- endcomment -%}
+
+{%- assign sz_popup_enabled = settings.sz_popup_enabled | default: true -%}
+
+{%- if sz_popup_enabled -%}
+  <div class="sz-popup" data-sz-popup hidden>
+    <div class="sz-popup__backdrop" data-sz-popup-close></div>
+    <div class="sz-popup__card" role="dialog" aria-modal="true" aria-label="Get 10% off">
+      <button class="sz-popup__close" type="button" aria-label="Close" data-sz-popup-close>&times;</button>
+      <h3 class="sz-popup__title">Get 10% Off</h3>
+      <p class="sz-popup__text">Join our list and save on your first order.</p>
+
+      {%- form 'customer', id: 'sz-popup-newsletter' -%}
+        <input type="hidden" name="contact[tags]" value="newsletter,sz-popup" />
+        <label class="visually-hidden" for="sz-popup-email">Email</label>
+        <input id="sz-popup-email" type="email" name="contact[email]" placeholder="Email address" required>
+        <button type="submit">Unlock 10% Off</button>
+      {%- endform -%}
+
+      <p class="sz-popup__fineprint">No spam. Unsubscribe anytime.</p>
+    </div>
+  </div>
+
+  <style>
+    .sz-popup[hidden]{display:none}
+    .sz-popup{position:fixed;inset:0;z-index:9999}
+    .sz-popup__backdrop{position:absolute;inset:0;background:rgba(0,0,0,.45)}
+    .sz-popup__card{position:relative;max-width:420px;margin:10vh auto;background:#fff;border-radius:16px;padding:32px;text-align:center;font-family:Inter,sans-serif}
+    .sz-popup__close{position:absolute;top:10px;right:12px;border:0;background:transparent;font-size:28px;cursor:pointer;color:#666}
+    .sz-popup__close:hover{color:#333}
+    .sz-popup__title{font-family:"Playfair Display",serif;font-size:24px;color:#4E5F4A;margin:0 0 8px}
+    .sz-popup__text{font-size:14px;color:#666;margin:0 0 20px}
+    .sz-popup #sz-popup-email{width:100%;padding:14px;border:1px solid #E0E3DF;border-radius:999px;font-size:16px;margin-bottom:12px;box-sizing:border-box}
+    .sz-popup button[type="submit"]{width:100%;padding:14px;background:#8BAA88;color:#fff;border:none;border-radius:999px;font-size:16px;font-weight:600;cursor:pointer}
+    .sz-popup button[type="submit"]:hover{background:#4E5F4A}
+    .sz-popup__fineprint{font-size:11px;color:#999;margin:15px 0 0}
+    .visually-hidden{position:absolute!important;height:1px;width:1px;overflow:hidden;clip:rect(1px,1px,1px,1px);white-space:nowrap}
+  </style>
+
+  <script>
+    (function(){
+      try{
+        var popup=document.querySelector('[data-sz-popup]');
+        if(!popup) return;
+        var key='sz_popup_dismissed';
+        if(localStorage.getItem(key)==='1') return;
+        var open=function(){ popup.hidden=false; };
+        var close=function(){
+          popup.hidden=true;
+          localStorage.setItem(key,'1');
+        };
+        popup.querySelectorAll('[data-sz-popup-close]').forEach(function(el){
+          el.addEventListener('click', close);
+        });
+        setTimeout(open, 1200);
+      }catch(e){}
+    })();
+  </script>
+{%- endif -%}

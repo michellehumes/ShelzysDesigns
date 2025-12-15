@@ -1,0 +1,311 @@
+{%- comment -%}
+  Shelzy's Designs - Care Instructions Page Section
+  Comprehensive guide to caring for sublimation water bottles
+{%- endcomment -%}
+
+<section class="sz-care-section">
+  <div class="sz-care-container">
+
+    {%- comment -%} Header {%- endcomment -%}
+    <header class="sz-care-header">
+      <h1 class="sz-care-title">{{ section.settings.heading }}</h1>
+      <p class="sz-care-subtitle">{{ section.settings.subheading }}</p>
+    </header>
+
+    {%- comment -%} Key Points Banner {%- endcomment -%}
+    <div class="sz-care-banner">
+      <div class="sz-care-banner-item">
+        <span class="sz-care-icon">&#10003;</span>
+        <span>Dishwasher Safe</span>
+      </div>
+      <div class="sz-care-banner-item">
+        <span class="sz-care-icon">&#10003;</span>
+        <span>No Peeling Ever</span>
+      </div>
+      <div class="sz-care-banner-item">
+        <span class="sz-care-icon">&#10003;</span>
+        <span>Permanent Print</span>
+      </div>
+    </div>
+
+    {%- comment -%} Care Content {%- endcomment -%}
+    <div class="sz-care-content">
+
+      <div class="sz-care-card">
+        <h2 class="sz-care-card-title">Why Sublimation is Different</h2>
+        <p>Unlike vinyl or stickers that sit on top of the surface, our sublimation printing infuses the ink directly into the coating of the bottle. This means:</p>
+        <ul class="sz-care-list">
+          <li><strong>No peeling</strong> &mdash; the design is part of the bottle</li>
+          <li><strong>No fading</strong> &mdash; colors stay vibrant wash after wash</li>
+          <li><strong>No cracking</strong> &mdash; flexes with the material</li>
+          <li><strong>Dishwasher safe</strong> &mdash; top rack recommended</li>
+        </ul>
+      </div>
+
+      <div class="sz-care-card">
+        <h2 class="sz-care-card-title">Daily Care</h2>
+        <ul class="sz-care-list">
+          <li>Hand wash or place on the <strong>top rack of your dishwasher</strong></li>
+          <li>Use mild soap &mdash; avoid abrasive scrubbers</li>
+          <li>Rinse thoroughly after each use</li>
+          <li>Allow to air dry completely before storing</li>
+        </ul>
+      </div>
+
+      <div class="sz-care-card">
+        <h2 class="sz-care-card-title">What to Avoid</h2>
+        <ul class="sz-care-list">
+          <li><strong>Microwaving</strong> &mdash; stainless steel is not microwave safe</li>
+          <li><strong>Freezing with liquid inside</strong> &mdash; expansion may damage the bottle</li>
+          <li><strong>Bleach or harsh chemicals</strong> &mdash; may affect the coating over time</li>
+          <li><strong>Steel wool or abrasive pads</strong> &mdash; may scratch the surface</li>
+        </ul>
+      </div>
+
+      <div class="sz-care-card">
+        <h2 class="sz-care-card-title">Temperature Tips</h2>
+        <p>Our double-wall vacuum insulated bottles are designed to:</p>
+        <ul class="sz-care-list">
+          <li>Keep drinks <strong>cold for 24 hours</strong></li>
+          <li>Keep drinks <strong>hot for 12 hours</strong></li>
+          <li>Work best when pre-chilled or pre-warmed with water first</li>
+        </ul>
+        <p class="sz-care-note">Pro tip: Add ice before your drink for maximum cold retention!</p>
+      </div>
+
+      <div class="sz-care-card">
+        <h2 class="sz-care-card-title">Deep Cleaning</h2>
+        <p>For occasional deep cleaning or odor removal:</p>
+        <ol class="sz-care-list sz-care-numbered">
+          <li>Fill bottle with warm water and 1 tablespoon of baking soda</li>
+          <li>Let sit for 15&ndash;30 minutes</li>
+          <li>Scrub gently with a bottle brush</li>
+          <li>Rinse thoroughly and air dry</li>
+        </ol>
+        <p class="sz-care-note">For stubborn odors, add a splash of white vinegar to the baking soda mixture.</p>
+      </div>
+
+      <div class="sz-care-card sz-care-card-highlight">
+        <h2 class="sz-care-card-title">Our Quality Promise</h2>
+        <p>Every Shelzy's Designs bottle is handcrafted with care using premium sublimation printing. We stand behind our products &mdash; if you ever have an issue with your design, please <a href="/pages/contact">contact us</a> and we'll make it right.</p>
+        <div class="sz-care-cta">
+          <a href="/collections/best-sellers" class="sz-btn-primary">Shop Best Sellers</a>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+{% style %}
+  .sz-care-section {
+    padding: 60px 24px 80px;
+    background: var(--sz-white, #FFFFFF);
+  }
+
+  .sz-care-container {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .sz-care-header {
+    text-align: center;
+    margin-bottom: 40px;
+  }
+
+  .sz-care-title {
+    font-family: "Playfair Display", Georgia, serif;
+    font-size: clamp(2rem, 4vw, 2.75rem);
+    font-weight: 600;
+    color: #2B2B2B;
+    margin: 0 0 12px;
+  }
+
+  .sz-care-subtitle {
+    font-family: "Inter", sans-serif;
+    font-size: 16px;
+    color: #666;
+    margin: 0;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.6;
+  }
+
+  /* Key Points Banner */
+  .sz-care-banner {
+    display: flex;
+    justify-content: center;
+    gap: 32px;
+    flex-wrap: wrap;
+    padding: 24px;
+    background: #F5F7F4;
+    border-radius: 12px;
+    margin-bottom: 48px;
+  }
+
+  .sz-care-banner-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: "Inter", sans-serif;
+    font-size: 15px;
+    font-weight: 500;
+    color: #4E5F4A;
+  }
+
+  .sz-care-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    background: #8BAA88;
+    color: #fff;
+    border-radius: 50%;
+    font-size: 14px;
+    font-weight: bold;
+  }
+
+  /* Content Cards */
+  .sz-care-content {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+  }
+
+  .sz-care-card {
+    padding: 32px;
+    background: #FAF9F6;
+    border-radius: 16px;
+  }
+
+  .sz-care-card-highlight {
+    background: linear-gradient(135deg, #8BAA88 0%, #4E5F4A 100%);
+    color: #fff;
+    text-align: center;
+  }
+
+  .sz-care-card-highlight .sz-care-card-title {
+    color: #fff;
+  }
+
+  .sz-care-card-highlight a {
+    color: #fff;
+    text-decoration: underline;
+  }
+
+  .sz-care-card-title {
+    font-family: "Playfair Display", Georgia, serif;
+    font-size: 22px;
+    font-weight: 600;
+    color: #2B2B2B;
+    margin: 0 0 16px;
+  }
+
+  .sz-care-card p {
+    font-family: "Inter", sans-serif;
+    font-size: 15px;
+    line-height: 1.7;
+    color: #555;
+    margin: 0 0 16px;
+  }
+
+  .sz-care-card-highlight p {
+    color: rgba(255, 255, 255, 0.9);
+  }
+
+  .sz-care-list {
+    margin: 0;
+    padding: 0 0 0 20px;
+  }
+
+  .sz-care-list li {
+    font-family: "Inter", sans-serif;
+    font-size: 15px;
+    line-height: 1.7;
+    color: #555;
+    margin-bottom: 8px;
+  }
+
+  .sz-care-numbered {
+    list-style-type: decimal;
+  }
+
+  .sz-care-note {
+    font-size: 14px;
+    font-style: italic;
+    color: #8BAA88;
+    margin-top: 16px;
+    padding: 12px 16px;
+    background: rgba(139, 170, 136, 0.1);
+    border-radius: 8px;
+  }
+
+  .sz-care-cta {
+    margin-top: 24px;
+  }
+
+  .sz-btn-primary {
+    display: inline-block;
+    padding: 14px 32px;
+    font-family: "Inter", sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    color: #4E5F4A;
+    background: #FFFFFF;
+    border: none;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: all 0.2s;
+  }
+
+  .sz-btn-primary:hover {
+    background: #F5F5F5;
+    transform: translateY(-2px);
+  }
+
+  @media (max-width: 600px) {
+    .sz-care-section {
+      padding: 40px 16px 60px;
+    }
+
+    .sz-care-banner {
+      flex-direction: column;
+      gap: 16px;
+      align-items: center;
+    }
+
+    .sz-care-card {
+      padding: 24px;
+    }
+  }
+{% endstyle %}
+
+{% schema %}
+{
+  "name": "Care Instructions",
+  "tag": "section",
+  "class": "sz-care-page-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Care Instructions"
+    },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Everything you need to know about caring for your personalized sublimation water bottle."
+    }
+  ],
+  "presets": [
+    {
+      "name": "Care Instructions"
+    }
+  ]
+}
+{% endschema %}
