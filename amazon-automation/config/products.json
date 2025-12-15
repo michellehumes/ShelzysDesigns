@@ -114,6 +114,41 @@
       ],
       "price": 12.99,
       "compare_at_price": 17.99
+    },
+    {
+      "asin": "B0DB99KQ5X",
+      "sku": "SZ-KIDS-CUSTOM-12",
+      "name": "Personalized Kids Water Bottle",
+      "type": "personalized",
+      "customizable": true,
+      "options": {
+        "name": "up to 12 characters",
+        "lid_color": ["Purple/Pink", "Red/Black", "Yellow/Blue", "Pink", "Pink/Teal"],
+        "font": ["Bold Block", "Playful Script", "Fun Bubble"],
+        "text_color": ["Black", "Pink", "Blue", "Red", "Purple", "Green"]
+      },
+      "listing": {
+        "title": "Shelzy's Designs Personalized Kids Water Bottle 12oz - Custom Name Stainless Steel - Insulated with Flip Straw & Handle - Leak-Proof, BPA-Free - Perfect for School, Sports, Daycare",
+        "bullet_points": [
+          "PERSONALIZED WITH YOUR CHILD'S NAME: Make their bottle unmistakably THEIRS! Each bottle features your child's name in bold, kid-friendly fonts with vibrant colors. Our permanent sublimation printing won't peel, scratch, or wash off - it's literally part of the bottle. No more lost bottles at school!",
+          "5 FUN LID COLOR OPTIONS: Choose from Purple/Pink, Red/Black, Yellow/Blue, Pink, or Pink/Teal to match your child's personality. The colorful flip-top lid features a built-in carry handle perfect for little hands and backpack hooks.",
+          "KID-SIZED & INSULATED: The 12oz capacity is perfect for school lunches, sports practice, and daycare. Double-wall stainless steel insulation keeps drinks cold for hours - no more warm water on hot playground days. Lightweight enough for kids to carry themselves.",
+          "PARENT-APPROVED SAFETY: BPA-free, lead-free, and made from food-grade 18/8 stainless steel. The leak-proof lid with pop-up straw prevents spills in backpacks and lunch boxes. Easy for kids to open, secure enough to prevent accidents.",
+          "PERFECT GIFT FOR KIDS: Birthday parties, back-to-school, holidays, or \"just because\" - personalized water bottles make kids excited about staying hydrated! Ships in fun packaging ready to gift. Proudly designed by a mom-owned small business."
+        ],
+        "description": "Get your little one excited about drinking water with Shelzy's Designs Personalized Kids Water Bottle! This 12oz stainless steel bottle features YOUR child's name in bold, vibrant letters that won't peel or fade. Choose from 5 fun lid colors to match their personality. The double-wall insulation keeps drinks cold for hours, while the leak-proof flip-top lid with pop-up straw is easy for small hands to use. Perfect for school, sports, daycare, or everyday adventures. BPA-free, lead-free, and built to survive the rough-and-tumble life of an active kid. A personalized gift they'll actually use and love! From a mom-owned small business that gets it.",
+        "search_terms": "kids water bottle personalized custom name kids tumbler school water bottle toddler water bottle sports bottle daycare bottle stainless steel kids cup leak proof kids bottle BPA free children water bottle back to school gift birthday gift for kids insulated kids bottle"
+      },
+      "images": [],
+      "price": 19.99,
+      "compare_at_price": 27.99,
+      "variations": [
+        {"lid_color": "Purple/Pink", "sku_suffix": "-PP"},
+        {"lid_color": "Red/Black", "sku_suffix": "-RB"},
+        {"lid_color": "Yellow/Blue", "sku_suffix": "-YB"},
+        {"lid_color": "Pink", "sku_suffix": "-PK"},
+        {"lid_color": "Pink/Teal", "sku_suffix": "-PT"}
+      ]
     }
   ]
 }
