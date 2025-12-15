@@ -31,6 +31,14 @@
     "listing_sync": {
       "schedule": "0 8 * * 1",
       "timezone": "America/New_York"
+    },
+    "order_download": {
+      "schedule": "0 16 * * *",
+      "timezone": "America/New_York",
+      "hours_lookback": 24,
+      "order_statuses": ["Unshipped", "PartiallyShipped", "Pending"],
+      "include_addresses": false,
+      "output_dir": "orders"
     }
   },
   "logging": {

@@ -1,0 +1,104 @@
+# Daily Order Download Workflow
+# Runs at 4 PM ET daily to download and organize Amazon orders
+# Organizes orders by: Listing → Font → Font Color → Customer Name
+
+name: Daily Order Download
+
+on:
+  schedule:
+    # 4 PM ET = 21:00 UTC (EST) or 20:00 UTC (EDT)
+    - cron: '0 21 * * *'
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: 'Run in dry-run mode (no files saved)'
+        required: false
+        default: 'false'
+        type: boolean
+      hours_lookback:
+        description: 'Hours to look back for orders (default: 24)'
+        required: false
+        default: '24'
+        type: string
+      include_addresses:
+        description: 'Include shipping addresses in report'
+        required: false
+        default: 'false'
+        type: boolean
+
+env:
+  PYTHON_VERSION: '3.11'
+
+jobs:
+  download-orders:
+    name: Download & Organize Orders
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r amazon-automation/requirements.txt
+
+      - name: Create orders directory
+        run: mkdir -p amazon-automation/orders
+
+      - name: Download and organize orders
+        id: orders
+        working-directory: amazon-automation
+        env:
+          # Amazon SP-API credentials
+          SP_API_REFRESH_TOKEN: ${{ secrets.SP_API_REFRESH_TOKEN }}
+          LWA_APP_ID: ${{ secrets.LWA_APP_ID }}
+          LWA_CLIENT_SECRET: ${{ secrets.LWA_CLIENT_SECRET }}
+          SP_API_AWS_ACCESS_KEY: ${{ secrets.SP_API_AWS_ACCESS_KEY }}
+          SP_API_AWS_SECRET_KEY: ${{ secrets.SP_API_AWS_SECRET_KEY }}
+          SP_API_ROLE_ARN: ${{ secrets.SP_API_ROLE_ARN }}
+          AMAZON_SELLER_ID: ${{ secrets.AMAZON_SELLER_ID }}
+          # Download settings
+          DRY_RUN: ${{ github.event.inputs.dry_run || 'false' }}
+          HOURS_LOOKBACK: ${{ github.event.inputs.hours_lookback || '24' }}
+          INCLUDE_ADDRESSES: ${{ github.event.inputs.include_addresses || 'false' }}
+        run: |
+          python -m src.automation.order_downloader
+
+      - name: Upload order reports
+        if: success() && github.event.inputs.dry_run != 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: order-reports-${{ github.run_number }}
+          path: amazon-automation/orders/
+          retention-days: 30
+
+      - name: Create summary
+        if: always()
+        run: |
+          echo "## 📦 Order Download Results" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Report Time:** $(date '+%Y-%m-%d %I:%M %p %Z')" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "| Metric | Count |" >> $GITHUB_STEP_SUMMARY
+          echo "|--------|-------|" >> $GITHUB_STEP_SUMMARY
+          echo "| Orders Found | ${{ steps.orders.outputs.orders_found || 'N/A' }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Total Items | ${{ steps.orders.outputs.items_found || 'N/A' }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Unique Listings | ${{ steps.orders.outputs.listings || 'N/A' }} |" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Hours Lookback:** ${{ github.event.inputs.hours_lookback || '24' }}" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          if [ "${{ steps.orders.outputs.text_report }}" != "" ]; then
+            echo "📄 **Reports saved as artifacts**" >> $GITHUB_STEP_SUMMARY
+          fi
+
+      - name: Notify on failure
+        if: failure()
+        run: |
+          echo "::error::Order download automation failed. Check the logs for details."
