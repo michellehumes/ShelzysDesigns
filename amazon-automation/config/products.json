@@ -2,58 +2,118 @@
   "brand": "Shelzy's Designs",
   "products": [
     {
-      "asin": "B0DGFD4LX4",
-      "sku": "1M-GGRA-VBRF",
-      "name": "Clear Plastic Water Bottle",
+      "asin": "B0D92Q5R1P",
+      "sku": "SZ-SS-CUSTOM-20",
+      "name": "Personalized Stainless Steel Water Bottle",
       "type": "personalized",
+      "customizable": true,
+      "options": {
+        "name": "up to 20 characters",
+        "font": ["Script Elegant", "Modern Sans", "Bold Block", "Handwritten", "Classic Serif"],
+        "color": ["Gold", "Rose Gold", "Silver", "Black", "White", "Pink", "Navy", "Sage Green"]
+      },
       "listing": {
-        "title": "Shelzy's Designs Personalized Water Bottle with Name - 25oz Custom Tumbler for Bridesmaid Gift, Bachelorette Party Favors - Clear BPA Free Plastic, Flip Top Straw - Wedding Bridal Shower Gift for Women",
+        "title": "Shelzy's Designs Personalized Water Bottle 20oz - Custom Name, Font & Color - Stainless Steel Double-Wall Insulated - Leak-Proof Flip Straw - Bridesmaid Gift, Bachelorette, Wedding Party Favor",
         "bullet_points": [
-          "PERSONALIZED WITH YOUR NAME - Make every sip special with a custom water bottle featuring the recipient's name in beautiful, permanent sublimation printing. Unlike cheap vinyl stickers that peel and fade, our sublimation process infuses the design directly into the coating for a smooth, professional finish that lasts for years.",
-          "PERFECT BRIDESMAID & BACHELORETTE GIFT - Searching for unique bridesmaid proposal gifts or bachelorette party favors? These personalized tumblers are the ideal way to ask 'Will you be my bridesmaid?' or celebrate with your bride tribe. Each bottle arrives ready for gifting at bridal showers, wedding parties, and girls' weekends.",
-          "GENEROUS 25OZ CAPACITY - Stay hydrated all day with this large-capacity tumbler that holds plenty of your favorite beverage. The convenient flip-top lid with built-in straw makes drinking easy whether you're getting ready for the big day, traveling to destination weddings, or simply staying refreshed.",
-          "BPA-FREE CLEAR PLASTIC DESIGN - Crafted from premium, BPA-free clear plastic that's lightweight yet durable. The transparent design lets you see your drink levels at a glance, while the sturdy construction withstands daily use from busy bridesmaids and bachelorette party adventures.",
-          "WOMEN-OWNED SMALL BUSINESS - When you shop Shelzy's Designs, you're supporting a women-owned small business dedicated to creating memorable, personalized gifts. We take pride in every custom order, ensuring each water bottle meets our high standards for quality and personalization."
+          "FULLY CUSTOMIZABLE: Your name (up to 20 characters), YOUR choice of 5 elegant fonts (Script, Modern Sans, Bold Block, Handwritten, Classic Serif), and YOUR favorite print color from 8 stunning options including Gold, Rose Gold, Sage Green, and more. Create a bottle that's uniquely yours.",
+          "PERMANENT SUBLIMATION PRINTING: Unlike cheap vinyl stickers that peel, crack, and fade, our professional sublimation process infuses the design directly INTO the bottle's coating. Your personalization becomes part of the bottle - smooth to the touch, dishwasher safe, and guaranteed to last for years.",
+          "PREMIUM DOUBLE-WALL INSULATION: 18/8 stainless steel construction with vacuum insulation keeps drinks ice cold for 24 hours or hot for 12 hours. No more lukewarm water at the gym or cold coffee on your commute. The powder-coated exterior is sweat-free and won't leave rings on your desk.",
+          "LEAK-PROOF & TRAVEL-READY: Secure flip-top lid with silicone seal prevents spills in your bag, backpack, or purse. The integrated straw makes sipping easy while driving, working out, or chasing kids. BPA-free, rust-resistant, and built tough for daily adventures.",
+          "PERFECT PERSONALIZED GIFT: Ideal for bridesmaids, maid of honor, bachelorette parties, wedding favors, teacher appreciation, nurses, sports teams, or anyone who deserves something special. Ships in beautiful gift-ready packaging. Proudly designed by a women-owned small business in New York."
         ],
-        "description": "Celebrate your special moments with Shelzy's Designs Personalized Water Bottles - the perfect gift for bridesmaids, bachelorette parties, and wedding celebrations. Each 25oz tumbler features permanent sublimation printing that won't peel, crack, or fade like vinyl alternatives. Our BPA-free clear plastic design is both beautiful and practical, with a convenient flip-top straw lid for easy sipping. Whether you're planning a bridal shower, asking your best friends to be bridesmaids, or creating memorable bachelorette party favors, these custom tumblers make every celebration more special. Proudly created by a women-owned small business.",
-        "search_terms": "bridesmaid personalized bridesmaid gift bachelorette bride tribe maid of honor bridal shower wedding favor personalized gift custom tumbler custom water bottle wedding party gift bridal party tumbler bachelorette party favors bridesmaid proposal gift women gift"
-      }
+        "description": "Make hydration personal with Shelzy's Designs Personalized Stainless Steel Water Bottle. This 20oz insulated tumbler features YOUR custom name in YOUR choice of font and color - creating a one-of-a-kind bottle you'll actually love using. Our permanent sublimation printing infuses the design directly into the bottle's coating (no vinyl stickers!), so your personalization is smooth, dishwasher safe, and built to last. Premium double-wall vacuum insulation keeps drinks cold 24 hours or hot 12 hours. The leak-proof flip-top lid with integrated straw is perfect for busy days. Whether you're gifting bridesmaids, celebrating bachelorettes, or treating yourself, this custom tumbler makes every sip special. Designed with love by a women-owned small business.",
+        "search_terms": "personalized water bottle custom name tumbler bridesmaid gift bachelorette party favor wedding bridal shower maid of honor gift for women stainless steel insulated tumbler custom font custom color sublimation print personalized gift teacher nurse gift team"
+      },
+      "images": [
+        "hero-bridal-party-5.webp",
+        "flatlay-bride-pink.png",
+        "product-elegant-bridal.png",
+        "lifestyle-bridal-intimate.webp",
+        "gallery-beach-lineup.png"
+      ],
+      "price": 24.99,
+      "compare_at_price": 34.99
     },
     {
-      "asin": "B0D92Q5R1P",
-      "sku": "2A-PQ74-FWLU",
-      "name": "Stainless Steel Water Bottle",
+      "asin": "B0DGFD4LX4",
+      "sku": "SZ-CLR-CUSTOM-24",
+      "name": "Personalized Clear Water Bottle",
       "type": "personalized",
+      "customizable": true,
+      "options": {
+        "name": "up to 20 characters",
+        "font": ["Script Elegant", "Modern Sans", "Bold Block", "Handwritten", "Classic Serif"],
+        "color": ["Gold", "Rose Gold", "Silver", "Black", "White", "Pink", "Navy", "Sage Green"]
+      },
       "listing": {
-        "title": "Shelzy's Designs Personalized Stainless Steel Water Bottle with Name - 25oz Custom Insulated Tumbler for Bridesmaid Gift, Bachelorette Party - Flip Top Straw, Wedding Bridal Shower Gift for Women",
+        "title": "Shelzy's Designs Personalized Clear Water Bottle 24oz - Custom Name, Font & Color - BPA-Free Lightweight Plastic - Wide Mouth Flip Straw - Perfect for Gym, School, Office, Bachelorette",
         "bullet_points": [
-          "CUSTOM NAME PERSONALIZATION - Elevate your gift-giving with a stunning personalized stainless steel water bottle. Our professional sublimation printing permanently bonds your custom text to the bottle's coating, creating a smooth, vibrant finish that outlasts vinyl decals and never peels or cracks.",
-          "THE ULTIMATE BRIDESMAID GIFT - Make your proposal unforgettable with personalized tumblers for your bridal party. These custom insulated bottles are perfect bridesmaid proposal gifts, maid of honor presents, or bachelorette party favors that your bride tribe will actually use and treasure long after the wedding.",
-          "DOUBLE-WALL INSULATED 25OZ - Keep drinks cold for up to 24 hours or hot for 12 hours with premium double-wall vacuum insulation. The generous 25-ounce capacity ensures your bridesmaids stay hydrated throughout wedding prep, rehearsal dinners, and the big day itself.",
-          "PREMIUM STAINLESS STEEL CONSTRUCTION - Built to last with high-quality 18/8 stainless steel that won't retain flavors or odors. The sleek design features a convenient flip-top lid with integrated straw for spill-resistant sipping at bridal showers, bachelorette weekends, and everyday adventures.",
-          "WOMEN-OWNED BUSINESS QUALITY - Shelzy's Designs is a proud women-owned small business committed to exceptional personalized gifts. Every custom bottle is carefully crafted with attention to detail, making each piece a cherished keepsake for weddings, celebrations, and special occasions."
+          "FULLY CUSTOMIZABLE: Add YOUR name (up to 20 characters), choose from 5 stylish fonts, and pick YOUR print color from 8 vibrant options including Gold, Rose Gold, Pink, and Sage Green. Design a bottle that matches your personality and style.",
+          "CRYSTAL CLEAR DESIGN: See-through BPA-free plastic lets you track your water intake throughout the day - watch yourself hit your hydration goals! The lightweight 24oz capacity is perfect for all-day sipping without weighing down your bag.",
+          "PERMANENT SUBLIMATION PRINTING: Our professional sublimation process creates personalization that's literally part of the bottle. No peeling vinyl, no fading text - just a smooth, vibrant design that withstands daily use, washing, and time.",
+          "PRACTICAL EVERYDAY FEATURES: Wide mouth opening makes it easy to fill, add ice cubes, and clean thoroughly. The secure flip-top lid with integrated straw is perfect for one-handed sipping at the gym, during meetings, or while multitasking.",
+          "AFFORDABLE PERSONALIZED GIFT: Great value for gym buddies, coworkers, students, bachelorette parties, or yourself. Each bottle arrives in cute packaging ready to gift. Designed with love by a women-owned small business committed to quality."
         ],
-        "description": "Make your wedding celebrations unforgettable with Shelzy's Designs Personalized Stainless Steel Water Bottles. Each 25oz insulated tumbler features premium double-wall vacuum construction that keeps drinks cold for 24 hours or hot for 12 hours. Our permanent sublimation printing creates stunning personalization that won't peel or fade like vinyl alternatives. Perfect for bridesmaid proposals, bachelorette parties, bridal showers, and wedding party gifts. The flip-top straw lid ensures convenient, spill-resistant sipping for busy bridesmaids and bachelorette adventures. Proudly handcrafted by a women-owned small business dedicated to quality personalized gifts.",
-        "search_terms": "bridesmaid personalized bridesmaid gift bachelorette bride tribe maid of honor bridal shower wedding favor personalized gift custom tumbler insulated water bottle wedding party gift bridal party tumbler stainless steel personalized bachelorette party favors bridesmaid proposal women gift"
-      }
+        "description": "Stay hydrated in style with Shelzy's Designs Personalized Clear Water Bottle. This 24oz BPA-free bottle features YOUR custom name in YOUR choice of font and color. Our permanent sublimation printing won't peel or fade like vinyl stickers. The crystal-clear design lets you see your water level while the lightweight construction is perfect for gym bags, backpacks, and daily carry. Wide mouth for easy filling and ice, flip-top straw for convenient sipping. An affordable personalized gift for gym lovers, students, coworkers, bachelorette parties, or yourself. Proudly designed by a women-owned small business.",
+        "search_terms": "personalized clear water bottle custom name tumbler bpa free gym bottle school water bottle bachelorette party favor lightweight tumbler custom font custom color see through water bottle hydration tracker office bottle women gift affordable personalized gift"
+      },
+      "images": [
+        "product-studio-colorful.png",
+        "lifestyle-bachelorette.webp",
+        "lifestyle-friends-couch.png",
+        "product-hand-holding.png"
+      ],
+      "price": 19.99,
+      "compare_at_price": 29.99
     },
     {
       "asin": "B0FH3T8QHD",
-      "sku": "BLANK-TMBLR",
-      "name": "Sublimation Blank Tumbler",
+      "sku": "SZ-SS-WHITE-20",
+      "name": "Stainless Steel Water Bottle - White",
       "type": "blank",
+      "customizable": false,
       "listing": {
-        "title": "Shelzy's Designs Sublimation Blank Tumbler 25oz - White Stainless Steel Water Bottle for Heat Press, DIY Craft Projects - Double Wall Insulated, Flip Top Straw - Bulk Crafting Supplies for Small Business",
+        "title": "Shelzy's Designs Stainless Steel Water Bottle 20oz White - Double-Wall Vacuum Insulated - Keeps Drinks Cold 24hrs Hot 12hrs - Leak-Proof Flip Straw - BPA-Free, Sweat-Proof",
         "bullet_points": [
-          "PREMIUM SUBLIMATION-READY COATING - Our 25oz white tumblers feature a professional-grade sublimation coating designed for vibrant, full-coverage heat press transfers. The smooth, consistent finish ensures your designs print beautifully with rich colors and sharp details every time.",
-          "PERFECT FOR HEAT PRESS PROJECTS - Crafters and small business owners trust our sublimation blanks for creating custom tumblers, personalized gifts, and wholesale products. Compatible with standard 20oz shrink wrap sleeves and convection ovens, these blanks deliver professional results at home.",
-          "DOUBLE-WALL INSULATED STAINLESS STEEL - Built with premium 18/8 stainless steel construction and vacuum insulation that keeps drinks cold 24 hours or hot 12 hours. Your finished products will impress customers with both beautiful designs and functional quality.",
-          "CONVENIENT FLIP-TOP STRAW LID - Each blank includes a durable flip-top lid with integrated straw for spill-resistant drinking. The practical design makes these perfect for creating personalized gifts, wedding favors, team tumblers, and small business inventory.",
-          "BULK CRAFTING SUPPLIES FROM SMALL BUSINESS - Shelzy's Designs understands crafters because we ARE crafters. Our sublimation blanks meet the quality standards of professional personalization businesses while supporting a women-owned small business that knows what creators need."
+          "PREMIUM QUALITY BUILD: 18/8 stainless steel construction with elegant powder-coated white finish. Built to last through years of daily use - from morning coffee to post-workout hydration. Rust-resistant, BPA-free, and dishwasher safe.",
+          "SUPERIOR TEMPERATURE CONTROL: Double-wall vacuum insulation technology keeps drinks ice cold for 24 hours or hot for 12 hours. No more lukewarm beverages - enjoy the perfect temperature whenever you take a sip.",
+          "CLEAN MINIMAL DESIGN: Sleek white finish goes with everything. Perfect for those who appreciate understated elegance and quality craftsmanship. A timeless look that never goes out of style.",
+          "LEAK-PROOF & SWEAT-FREE: Secure flip-top lid with silicone seal prevents spills. The insulated walls mean no condensation - your desk, bag, and hands stay dry. Integrated straw for convenient sipping on the go.",
+          "PERFECT 20OZ SIZE: Not too big, not too small - the ideal capacity for desk, gym, commute, or daily adventures. Fits standard cup holders and most bag pockets. Great standalone bottle or perfect for DIY sublimation crafters."
         ],
-        "description": "Start your sublimation crafting business or expand your inventory with Shelzy's Designs premium 25oz Sublimation Blank Tumblers. Our white stainless steel water bottles feature a professional sublimation-ready coating that produces vibrant, lasting prints with your heat press. Double-wall vacuum insulation keeps drinks at the perfect temperature, while the included flip-top straw lid adds functional value to your finished products. Perfect for creating personalized gifts, wedding party favors, team merchandise, and small business inventory. Each tumbler is quality-checked to ensure consistent coating coverage for professional results every time.",
-        "search_terms": "sublimation blanks sublimation blanks tumbler sublimation water bottle blank white tumbler for sublimation heat press tumbler blank sublimation tumbler blanks 20oz 25oz craft supplies bulk blanks DIY tumbler personalization business supplies crafting small business crafter heat transfer"
-      }
+        "description": "Sometimes you just want a great water bottle without the fuss. The Shelzy's Designs 20oz Stainless Steel Water Bottle delivers premium quality in a clean, classic white design. Double-wall vacuum insulation keeps drinks cold 24 hours or hot 12 hours. The powder-coated finish is sweat-free and grippy. Leak-proof flip-top lid with integrated straw for convenient sipping. 18/8 stainless steel construction is BPA-free, rust-resistant, and built to last. Perfect as a daily driver or as a sublimation blank for crafters. From a women-owned small business that values quality.",
+        "search_terms": "white water bottle stainless steel insulated tumbler 20oz vacuum insulated cold hot leak proof sweat free powder coated minimal design gym bottle office tumbler sublimation blank white tumbler crafting supplies"
+      },
+      "images": [
+        "product-single-blue.png",
+        "lifestyle-couple-outdoor.webp"
+      ],
+      "price": 18.99,
+      "compare_at_price": 24.99
+    },
+    {
+      "asin": "PENDING-CLR-PLAIN",
+      "sku": "SZ-CLR-PLAIN-24",
+      "name": "Clear Water Bottle - Plain",
+      "type": "blank",
+      "customizable": false,
+      "listing": {
+        "title": "Shelzy's Designs Clear Water Bottle 24oz - BPA-Free Lightweight Plastic - Wide Mouth Flip-Top Lid - Perfect for Gym, School, Office, Daily Hydration",
+        "bullet_points": [
+          "SIMPLE & FUNCTIONAL: No-frills clear water bottle that does exactly what you need. See your water level at a glance and track your daily hydration progress. Clean design for those who appreciate simplicity.",
+          "BPA-FREE SAFETY: Crafted from premium BPA-free plastic that's safe for the whole family. Feel good about your daily hydration knowing your bottle is free from harmful chemicals.",
+          "ULTRA LIGHTWEIGHT: At only 0.35 lbs, this 24oz bottle is perfect for gym bags, backpacks, school lockers, and purses. You'll barely notice it until you need it - then you'll be glad it's there.",
+          "PRACTICAL DESIGN: Wide mouth opening makes filling easy and accommodates ice cubes. Flip-top lid for one-handed drinking. Simple construction means easy cleaning - no complicated parts.",
+          "GREAT VALUE: Quality hydration without breaking the bank. Stock up for the whole family, classroom, office, or sports team. Each bottle is built to last through daily use and regular washing."
+        ],
+        "description": "The Shelzy's Designs 24oz Clear Water Bottle is hydration made simple. No bells and whistles - just a quality BPA-free bottle that lets you see your water level and stay on track with your hydration goals. Ultra-lightweight for easy carrying, wide mouth for easy filling, and a practical flip-top lid for convenient sipping. Perfect for gym workouts, school days, office hydration, or anywhere you need reliable water access. Stock up for the whole family, team, or classroom. From a women-owned small business that believes good hydration doesn't need to be complicated.",
+        "search_terms": "clear water bottle bpa free gym bottle school water bottle lightweight cheap water bottle simple water bottle bulk water bottle family pack office water bottle hydration see through bottle wide mouth flip top"
+      },
+      "images": [
+        "product-studio-colorful.png"
+      ],
+      "price": 12.99,
+      "compare_at_price": 17.99
     }
   ]
 }
