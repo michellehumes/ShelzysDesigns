@@ -51,7 +51,7 @@ async function createRedirect(path, target) {
   // Fix dead legacy URLs (adjust targets if you prefer different destinations)
   await createRedirect("/pages/about-us", "/pages/about");
   await createRedirect("/pages/shipping-returns", "/pages/shipping");
-  await createRedirect("/pages/care-instructions", "/blogs/news");
+  await createRedirect("/pages/care-instructions", "/collections/all");
 
   // If you know other dead URLs, add them here
   // await createRedirect("/collections/best-sellers/products/event-set-of-10-personalized-water-bottles", "/collections/all");
