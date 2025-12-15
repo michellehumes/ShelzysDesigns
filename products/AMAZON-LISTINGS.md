@@ -184,11 +184,57 @@ SZ-CLR-PLAIN-24
 
 ---
 
-## LISTING 5: Kids Custom Water Bottle
+## LISTING 5: Personalized Kids Water Bottle
 
-### ⏳ Waiting for images from you!
+### Title (200 chars max)
+```
+Shelzy's Designs Personalized Kids Water Bottle 12oz - Custom Name Stainless Steel - Insulated with Flip Straw & Handle - Leak-Proof, BPA-Free - Perfect for School, Sports, Daycare
+```
 
-Once you send the kids bottle images, I'll create this listing.
+### Bullet Points
+
+**Bullet 1:**
+```
+PERSONALIZED WITH YOUR CHILD'S NAME: Make their bottle unmistakably THEIRS! Each bottle features your child's name in bold, kid-friendly fonts with vibrant colors. Our permanent sublimation printing won't peel, scratch, or wash off - it's literally part of the bottle. No more lost bottles at school!
+```
+
+**Bullet 2:**
+```
+5 FUN LID COLOR OPTIONS: Choose from Purple/Pink, Red/Black, Yellow/Blue, Pink, or Pink/Teal to match your child's personality. The colorful flip-top lid features a built-in carry handle perfect for little hands and backpack hooks.
+```
+
+**Bullet 3:**
+```
+KID-SIZED & INSULATED: The 12oz capacity is perfect for school lunches, sports practice, and daycare. Double-wall stainless steel insulation keeps drinks cold for hours - no more warm water on hot playground days. Lightweight enough for kids to carry themselves.
+```
+
+**Bullet 4:**
+```
+PARENT-APPROVED SAFETY: BPA-free, lead-free, and made from food-grade 18/8 stainless steel. The leak-proof lid with pop-up straw prevents spills in backpacks and lunch boxes. Easy for kids to open, secure enough to prevent accidents.
+```
+
+**Bullet 5:**
+```
+PERFECT GIFT FOR KIDS: Birthday parties, back-to-school, holidays, or "just because" - personalized water bottles make kids excited about staying hydrated! Ships in fun packaging ready to gift. Proudly designed by a mom-owned small business.
+```
+
+### Price
+- **Your Price:** $19.99
+- **List Price:** $27.99
+
+### SKU
+```
+SZ-KIDS-CUSTOM-12
+```
+
+### Variations (Lid Colors)
+| Variation | SKU |
+|-----------|-----|
+| Purple/Pink | SZ-KIDS-CUSTOM-12-PP |
+| Red/Black | SZ-KIDS-CUSTOM-12-RB |
+| Yellow/Blue | SZ-KIDS-CUSTOM-12-YB |
+| Pink | SZ-KIDS-CUSTOM-12-PK |
+| Pink/Teal | SZ-KIDS-CUSTOM-12-PT |
 
 ---
 
@@ -200,7 +246,7 @@ Once you send the kids bottle images, I'll create this listing.
 | Clear Plastic Customizable | SZ-CLR-CUSTOM-24 | $19.99 | $29.99 |
 | Stainless Steel Plain (White) | SZ-SS-WHITE-20 | $18.99 | $24.99 |
 | Clear Plastic Plain | SZ-CLR-PLAIN-24 | $12.99 | $17.99 |
-| Kids Custom | TBD | TBD | TBD |
+| Kids Custom (5 lid colors) | SZ-KIDS-CUSTOM-12 | $19.99 | $27.99 |
 
 ---
 
