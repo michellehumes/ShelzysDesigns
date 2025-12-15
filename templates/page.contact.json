@@ -1,0 +1,16 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-contact",
+      "settings": {
+        "heading": "Get In Touch",
+        "subheading": "Have a question about your order, need help with customization, or want to discuss a bulk order? We're here to help!",
+        "email": "hello@shelzysdesigns.com",
+        "response_time": "We respond within 24 hours",
+        "location": "California, USA",
+        "success_message": "Thanks for reaching out! We'll get back to you within 24 hours."
+      }
+    }
+  },
+  "order": ["main"]
+}

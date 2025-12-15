@@ -1,0 +1,450 @@
+{%- comment -%}
+  Shelzy's Designs - Contact Page Section
+  Proper Shopify contact form with no external dependencies
+{%- endcomment -%}
+
+<section class="sz-contact-section">
+  <div class="sz-contact-container">
+
+    {%- comment -%} Header {%- endcomment -%}
+    <header class="sz-contact-header">
+      <h1 class="sz-contact-title">{{ section.settings.heading }}</h1>
+      <p class="sz-contact-subtitle">{{ section.settings.subheading }}</p>
+    </header>
+
+    <div class="sz-contact-grid">
+
+      {%- comment -%} Contact Form {%- endcomment -%}
+      <div class="sz-contact-form-wrap">
+        {%- form 'contact', class: 'sz-contact-form' -%}
+
+          {%- if form.posted_successfully? -%}
+            <div class="sz-form-success">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                <polyline points="22 4 12 14.01 9 11.01"/>
+              </svg>
+              <p>{{ section.settings.success_message }}</p>
+            </div>
+          {%- endif -%}
+
+          {%- if form.errors -%}
+            <div class="sz-form-errors">
+              {{ form.errors | default_errors }}
+            </div>
+          {%- endif -%}
+
+          <div class="sz-form-row">
+            <div class="sz-form-group">
+              <label for="contact-name" class="sz-form-label">Name <span class="required">*</span></label>
+              <input type="text" id="contact-name" name="contact[name]" required class="sz-form-input" placeholder="Your name">
+            </div>
+            <div class="sz-form-group">
+              <label for="contact-email" class="sz-form-label">Email <span class="required">*</span></label>
+              <input type="email" id="contact-email" name="contact[email]" required class="sz-form-input" placeholder="your@email.com">
+            </div>
+          </div>
+
+          <div class="sz-form-group">
+            <label for="contact-subject" class="sz-form-label">Subject</label>
+            <select id="contact-subject" name="contact[subject]" class="sz-form-select">
+              <option value="">Select a topic...</option>
+              <option value="Order Question">Question about my order</option>
+              <option value="Custom Design">Custom design request</option>
+              <option value="Bulk Order">Bulk/Corporate order inquiry</option>
+              <option value="Wedding Order">Wedding order question</option>
+              <option value="Rush Order">Rush order request</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+
+          <div class="sz-form-group">
+            <label for="contact-order" class="sz-form-label">Order Number (if applicable)</label>
+            <input type="text" id="contact-order" name="contact[order_number]" class="sz-form-input" placeholder="#12345">
+          </div>
+
+          <div class="sz-form-group">
+            <label for="contact-message" class="sz-form-label">Message <span class="required">*</span></label>
+            <textarea id="contact-message" name="contact[body]" required class="sz-form-textarea" rows="6" placeholder="How can we help you?"></textarea>
+          </div>
+
+          <button type="submit" class="sz-form-submit">
+            Send Message
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/>
+            </svg>
+          </button>
+
+        {%- endform -%}
+      </div>
+
+      {%- comment -%} Contact Info Sidebar {%- endcomment -%}
+      <aside class="sz-contact-info">
+
+        <div class="sz-contact-card">
+          <div class="sz-contact-card-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+              <polyline points="22,6 12,13 2,6"/>
+            </svg>
+          </div>
+          <div class="sz-contact-card-content">
+            <h3>Email Us</h3>
+            <p><a href="mailto:{{ section.settings.email }}">{{ section.settings.email }}</a></p>
+          </div>
+        </div>
+
+        <div class="sz-contact-card">
+          <div class="sz-contact-card-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+            </svg>
+          </div>
+          <div class="sz-contact-card-content">
+            <h3>Response Time</h3>
+            <p>{{ section.settings.response_time }}</p>
+          </div>
+        </div>
+
+        <div class="sz-contact-card">
+          <div class="sz-contact-card-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/>
+            </svg>
+          </div>
+          <div class="sz-contact-card-content">
+            <h3>Based In</h3>
+            <p>{{ section.settings.location }}</p>
+          </div>
+        </div>
+
+        <div class="sz-contact-faq-link">
+          <h3>Quick Answers</h3>
+          <p>Many questions are answered on our FAQ page.</p>
+          <a href="/pages/faq" class="sz-btn-outline">Visit FAQ</a>
+        </div>
+
+      </aside>
+
+    </div>
+
+  </div>
+</section>
+
+{% style %}
+  .sz-contact-section {
+    padding: 60px 24px 80px;
+    background: var(--sz-white, #FFFFFF);
+  }
+
+  .sz-contact-container {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .sz-contact-header {
+    text-align: center;
+    margin-bottom: 48px;
+  }
+
+  .sz-contact-title {
+    font-family: "Playfair Display", Georgia, serif;
+    font-size: clamp(2rem, 4vw, 2.75rem);
+    font-weight: 600;
+    color: #2B2B2B;
+    margin: 0 0 12px;
+  }
+
+  .sz-contact-subtitle {
+    font-family: "Inter", sans-serif;
+    font-size: 16px;
+    color: #666;
+    margin: 0;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.6;
+  }
+
+  .sz-contact-grid {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    gap: 48px;
+    align-items: start;
+  }
+
+  @media (max-width: 800px) {
+    .sz-contact-grid {
+      grid-template-columns: 1fr;
+      gap: 40px;
+    }
+  }
+
+  /* Form Styles */
+  .sz-contact-form-wrap {
+    background: #FAF9F6;
+    border-radius: 16px;
+    padding: 32px;
+  }
+
+  .sz-form-success {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px;
+    background: #ECFDF5;
+    border: 1px solid #A7F3D0;
+    border-radius: 8px;
+    margin-bottom: 24px;
+    color: #047857;
+  }
+
+  .sz-form-success p {
+    margin: 0;
+    font-family: "Inter", sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+  }
+
+  .sz-form-errors {
+    padding: 16px;
+    background: #FEF2F2;
+    border: 1px solid #FECACA;
+    border-radius: 8px;
+    margin-bottom: 24px;
+    color: #DC2626;
+    font-family: "Inter", sans-serif;
+    font-size: 14px;
+  }
+
+  .sz-form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  @media (max-width: 500px) {
+    .sz-form-row {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .sz-form-group {
+    margin-bottom: 20px;
+  }
+
+  .sz-form-label {
+    display: block;
+    font-family: "Inter", sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    color: #2B2B2B;
+    margin-bottom: 8px;
+  }
+
+  .sz-form-label .required {
+    color: #DC2626;
+  }
+
+  .sz-form-input,
+  .sz-form-select,
+  .sz-form-textarea {
+    width: 100%;
+    padding: 14px 16px;
+    font-family: "Inter", sans-serif;
+    font-size: 16px;
+    color: #2B2B2B;
+    background: #FFFFFF;
+    border: 1px solid #E0E3DF;
+    border-radius: 8px;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    box-sizing: border-box;
+  }
+
+  .sz-form-input:focus,
+  .sz-form-select:focus,
+  .sz-form-textarea:focus {
+    outline: none;
+    border-color: #8BAA88;
+    box-shadow: 0 0 0 3px rgba(139, 170, 136, 0.15);
+  }
+
+  .sz-form-input::placeholder,
+  .sz-form-textarea::placeholder {
+    color: #9CA3AF;
+  }
+
+  .sz-form-textarea {
+    resize: vertical;
+    min-height: 140px;
+  }
+
+  .sz-form-submit {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    padding: 16px 32px;
+    font-family: "Inter", sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    color: #FFFFFF;
+    background: #8BAA88;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.2s;
+  }
+
+  .sz-form-submit:hover {
+    background: #4E5F4A;
+    transform: translateY(-1px);
+  }
+
+  /* Contact Info Sidebar */
+  .sz-contact-info {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .sz-contact-card {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 20px;
+    background: #FAF9F6;
+    border-radius: 12px;
+  }
+
+  .sz-contact-card-icon {
+    flex-shrink: 0;
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #8BAA88;
+    color: #FFFFFF;
+    border-radius: 50%;
+  }
+
+  .sz-contact-card-content h3 {
+    font-family: "Inter", sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    color: #2B2B2B;
+    margin: 0 0 4px;
+  }
+
+  .sz-contact-card-content p {
+    font-family: "Inter", sans-serif;
+    font-size: 14px;
+    color: #666;
+    margin: 0;
+    line-height: 1.5;
+  }
+
+  .sz-contact-card-content a {
+    color: #8BAA88;
+    text-decoration: none;
+    font-weight: 500;
+  }
+
+  .sz-contact-card-content a:hover {
+    text-decoration: underline;
+  }
+
+  .sz-contact-faq-link {
+    padding: 24px;
+    background: linear-gradient(135deg, #8BAA88 0%, #4E5F4A 100%);
+    border-radius: 12px;
+    color: #FFFFFF;
+    text-align: center;
+    margin-top: 8px;
+  }
+
+  .sz-contact-faq-link h3 {
+    font-family: "Playfair Display", serif;
+    font-size: 18px;
+    font-weight: 600;
+    margin: 0 0 8px;
+  }
+
+  .sz-contact-faq-link p {
+    font-family: "Inter", sans-serif;
+    font-size: 14px;
+    margin: 0 0 16px;
+    opacity: 0.9;
+  }
+
+  .sz-btn-outline {
+    display: inline-block;
+    padding: 10px 24px;
+    font-family: "Inter", sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    color: #FFFFFF;
+    background: rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    border-radius: 6px;
+    text-decoration: none;
+    transition: background 0.2s;
+  }
+
+  .sz-btn-outline:hover {
+    background: rgba(255, 255, 255, 0.3);
+  }
+{% endstyle %}
+
+{% schema %}
+{
+  "name": "Contact Page",
+  "tag": "section",
+  "class": "sz-contact-page-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Get In Touch"
+    },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Have a question about your order, need help with customization, or want to discuss a bulk order? We're here to help!"
+    },
+    {
+      "type": "text",
+      "id": "email",
+      "label": "Contact email",
+      "default": "hello@shelzysdesigns.com"
+    },
+    {
+      "type": "text",
+      "id": "response_time",
+      "label": "Response time",
+      "default": "We respond within 24 hours"
+    },
+    {
+      "type": "text",
+      "id": "location",
+      "label": "Location",
+      "default": "California, USA"
+    },
+    {
+      "type": "textarea",
+      "id": "success_message",
+      "label": "Success message",
+      "default": "Thanks for reaching out! We'll get back to you within 24 hours."
+    }
+  ],
+  "presets": [
+    {
+      "name": "Contact Page"
+    }
+  ]
+}
+{% endschema %}
