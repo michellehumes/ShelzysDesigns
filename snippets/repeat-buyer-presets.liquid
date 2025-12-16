@@ -1,0 +1,455 @@
+{%- comment -%}
+================================================================================
+SHELZY'S DESIGNS - REPEAT BUYER PRESETS
+Version: 1.0.0
+================================================================================
+Shows saved personalization presets for returning customers.
+Uses localStorage to remember past personalizations.
+
+Usage: {% render 'repeat-buyer-presets', product: product %}
+
+Revenue Impact: Reduces friction for repeat purchases by remembering preferences.
+================================================================================
+{%- endcomment -%}
+
+<div class="sz-presets" id="szPresets" style="display: none;">
+  <div class="sz-presets-header">
+    <h4 class="sz-presets-title">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/>
+      </svg>
+      Your Saved Personalizations
+    </h4>
+    <button type="button" class="sz-presets-toggle" aria-expanded="true" aria-controls="szPresetsList">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <polyline points="6 9 12 15 18 9"/>
+      </svg>
+    </button>
+  </div>
+
+  <div class="sz-presets-list" id="szPresetsList">
+    <!-- Presets populated by JavaScript -->
+  </div>
+
+  <div class="sz-presets-actions">
+    <button type="button" class="sz-preset-clear" id="szClearPresets">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <polyline points="3 6 5 6 21 6"/>
+        <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+      </svg>
+      Clear All Saved
+    </button>
+  </div>
+</div>
+
+<style>
+  .sz-presets {
+    background: linear-gradient(135deg, #FFF8F0 0%, #FAF9F6 100%);
+    border: 1px solid #E8DED5;
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 20px;
+  }
+
+  .sz-presets-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+  }
+
+  .sz-presets-title {
+    font-family: var(--sz-font-body, 'Inter', sans-serif);
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--sz-primary-dark, #4E5F4A);
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .sz-presets-title svg {
+    color: var(--sz-gold, #D4AF37);
+  }
+
+  .sz-presets-toggle {
+    background: none;
+    border: none;
+    padding: 4px;
+    cursor: pointer;
+    color: var(--sz-gray, #6B7280);
+    transition: transform 0.2s;
+  }
+
+  .sz-presets-toggle[aria-expanded="false"] svg {
+    transform: rotate(-90deg);
+  }
+
+  .sz-presets-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+  }
+
+  .sz-presets-list.collapsed {
+    max-height: 0;
+    margin-bottom: 0;
+  }
+
+  .sz-preset-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px;
+    background: #FFFFFF;
+    border: 1px solid #E8E4DE;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+
+  .sz-preset-item:hover {
+    border-color: var(--sz-primary, #8BAA88);
+    box-shadow: 0 2px 8px rgba(139, 170, 136, 0.15);
+  }
+
+  .sz-preset-item.selected {
+    border-color: var(--sz-primary, #8BAA88);
+    background: linear-gradient(135deg, #F0F5F0 0%, #FFFFFF 100%);
+  }
+
+  .sz-preset-preview {
+    width: 40px;
+    height: 40px;
+    background: var(--sz-beige, #F5F2ED);
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--sz-font-heading, 'Playfair Display', Georgia, serif);
+    font-size: 14px;
+    color: var(--sz-primary-dark, #4E5F4A);
+    flex-shrink: 0;
+  }
+
+  .sz-preset-info {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .sz-preset-name {
+    font-family: var(--sz-font-body, 'Inter', sans-serif);
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--sz-charcoal, #2B2B2B);
+    margin: 0 0 2px 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .sz-preset-details {
+    font-family: var(--sz-font-body, 'Inter', sans-serif);
+    font-size: 12px;
+    color: var(--sz-gray, #6B7280);
+    margin: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .sz-preset-use {
+    flex-shrink: 0;
+    background: var(--sz-primary, #8BAA88);
+    color: #FFFFFF;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-family: var(--sz-font-body, 'Inter', sans-serif);
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+
+  .sz-preset-use:hover {
+    background: var(--sz-primary-dark, #4E5F4A);
+  }
+
+  .sz-preset-delete {
+    flex-shrink: 0;
+    background: none;
+    border: none;
+    padding: 6px;
+    color: var(--sz-gray, #6B7280);
+    cursor: pointer;
+    opacity: 0.5;
+    transition: opacity 0.2s, color 0.2s;
+  }
+
+  .sz-preset-item:hover .sz-preset-delete {
+    opacity: 1;
+  }
+
+  .sz-preset-delete:hover {
+    color: var(--sz-error, #DC2626);
+  }
+
+  .sz-presets-actions {
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid #E8E4DE;
+    text-align: right;
+  }
+
+  .sz-preset-clear {
+    background: none;
+    border: none;
+    font-family: var(--sz-font-body, 'Inter', sans-serif);
+    font-size: 12px;
+    color: var(--sz-gray, #6B7280);
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    opacity: 0.7;
+    transition: opacity 0.2s;
+  }
+
+  .sz-preset-clear:hover {
+    opacity: 1;
+  }
+
+  .sz-presets-empty {
+    text-align: center;
+    padding: 16px;
+    color: var(--sz-gray, #6B7280);
+    font-size: 13px;
+  }
+
+  /* Saved confirmation toast */
+  .sz-preset-saved-toast {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%) translateY(100px);
+    background: var(--sz-primary-dark, #4E5F4A);
+    color: #FFFFFF;
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-family: var(--sz-font-body, 'Inter', sans-serif);
+    font-size: 14px;
+    font-weight: 500;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    z-index: 1000;
+    opacity: 0;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+  }
+
+  .sz-preset-saved-toast.show {
+    transform: translateX(-50%) translateY(0);
+    opacity: 1;
+  }
+</style>
+
+<script>
+(function() {
+  var STORAGE_KEY = 'sz_personalization_presets';
+  var MAX_PRESETS = 5;
+  var productId = '{{ product.id }}';
+
+  // Initialize
+  function init() {
+    var container = document.getElementById('szPresets');
+    var list = document.getElementById('szPresetsList');
+    var toggle = container.querySelector('.sz-presets-toggle');
+    var clearBtn = document.getElementById('szClearPresets');
+
+    var presets = getPresets();
+    if (presets.length === 0) {
+      return; // Don't show if no presets
+    }
+
+    container.style.display = 'block';
+    renderPresets(list, presets);
+
+    // Toggle collapse
+    toggle.addEventListener('click', function() {
+      var expanded = this.getAttribute('aria-expanded') === 'true';
+      this.setAttribute('aria-expanded', !expanded);
+      list.classList.toggle('collapsed', expanded);
+    });
+
+    // Clear all
+    clearBtn.addEventListener('click', function() {
+      if (confirm('Clear all saved personalizations?')) {
+        localStorage.removeItem(STORAGE_KEY);
+        container.style.display = 'none';
+      }
+    });
+  }
+
+  function getPresets() {
+    try {
+      return JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+    } catch (e) {
+      return [];
+    }
+  }
+
+  function savePresets(presets) {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(presets.slice(0, MAX_PRESETS)));
+  }
+
+  function renderPresets(container, presets) {
+    if (presets.length === 0) {
+      container.innerHTML = '<p class="sz-presets-empty">No saved personalizations yet</p>';
+      return;
+    }
+
+    container.innerHTML = presets.map(function(preset, index) {
+      var initial = (preset.name || 'P').charAt(0).toUpperCase();
+      var details = [];
+      if (preset.font) details.push(preset.font);
+      if (preset.color) details.push(preset.color);
+
+      return '<div class="sz-preset-item" data-index="' + index + '">' +
+        '<div class="sz-preset-preview">' + initial + '</div>' +
+        '<div class="sz-preset-info">' +
+          '<p class="sz-preset-name">' + escapeHtml(preset.name) + '</p>' +
+          (details.length ? '<p class="sz-preset-details">' + details.join(' • ') + '</p>' : '') +
+        '</div>' +
+        '<button type="button" class="sz-preset-use">Use</button>' +
+        '<button type="button" class="sz-preset-delete" aria-label="Delete preset">' +
+          '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">' +
+            '<line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>' +
+          '</svg>' +
+        '</button>' +
+      '</div>';
+    }).join('');
+
+    // Add event listeners
+    container.querySelectorAll('.sz-preset-use').forEach(function(btn) {
+      btn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        var index = parseInt(this.closest('.sz-preset-item').dataset.index);
+        applyPreset(presets[index]);
+      });
+    });
+
+    container.querySelectorAll('.sz-preset-delete').forEach(function(btn) {
+      btn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        var index = parseInt(this.closest('.sz-preset-item').dataset.index);
+        presets.splice(index, 1);
+        savePresets(presets);
+        renderPresets(container, presets);
+
+        if (presets.length === 0) {
+          document.getElementById('szPresets').style.display = 'none';
+        }
+      });
+    });
+
+    container.querySelectorAll('.sz-preset-item').forEach(function(item) {
+      item.addEventListener('click', function() {
+        var index = parseInt(this.dataset.index);
+        applyPreset(presets[index]);
+      });
+    });
+  }
+
+  function applyPreset(preset) {
+    // Apply to personalization form fields
+    var nameInput = document.querySelector('[name="properties[Name]"], [name="properties[Personalization]"], #personalization-name');
+    var fontSelect = document.querySelector('[name="properties[Font]"], #personalization-font');
+    var colorSelect = document.querySelector('[name="properties[Color]"], #personalization-color');
+
+    if (nameInput && preset.name) {
+      nameInput.value = preset.name;
+      nameInput.dispatchEvent(new Event('input', { bubbles: true }));
+    }
+
+    if (fontSelect && preset.font) {
+      fontSelect.value = preset.font;
+      fontSelect.dispatchEvent(new Event('change', { bubbles: true }));
+    }
+
+    if (colorSelect && preset.color) {
+      colorSelect.value = preset.color;
+      colorSelect.dispatchEvent(new Event('change', { bubbles: true }));
+    }
+
+    // Visual feedback
+    document.querySelectorAll('.sz-preset-item').forEach(function(item) {
+      item.classList.remove('selected');
+    });
+    event.target.closest('.sz-preset-item').classList.add('selected');
+
+    // Trigger live preview update if available
+    document.dispatchEvent(new CustomEvent('sz:preset-applied', { detail: preset }));
+  }
+
+  function escapeHtml(text) {
+    var div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+  }
+
+  // Public method to save a new preset (called from add-to-cart)
+  window.szSavePersonalizationPreset = function(data) {
+    if (!data.name) return;
+
+    var presets = getPresets();
+
+    // Check for duplicate
+    var exists = presets.some(function(p) {
+      return p.name === data.name && p.font === data.font && p.color === data.color;
+    });
+
+    if (!exists) {
+      presets.unshift({
+        name: data.name,
+        font: data.font || null,
+        color: data.color || null,
+        savedAt: new Date().toISOString()
+      });
+
+      savePresets(presets);
+      showSavedToast();
+    }
+  };
+
+  function showSavedToast() {
+    var existing = document.querySelector('.sz-preset-saved-toast');
+    if (existing) existing.remove();
+
+    var toast = document.createElement('div');
+    toast.className = 'sz-preset-saved-toast';
+    toast.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> Personalization saved for next time!';
+    document.body.appendChild(toast);
+
+    requestAnimationFrame(function() {
+      toast.classList.add('show');
+    });
+
+    setTimeout(function() {
+      toast.classList.remove('show');
+      setTimeout(function() { toast.remove(); }, 300);
+    }, 3000);
+  }
+
+  // Run on DOM ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();
+</script>

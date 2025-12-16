@@ -1,0 +1,351 @@
+{
+  "sections": {
+    "bridal-hero": {
+      "type": "hero-banner",
+      "settings": {
+        "height": 75,
+        "mobile_height": 65,
+        "overlay_opacity": 35,
+        "badge_text": "Bridal Party Favorites",
+        "badge_icon": "heart",
+        "heading": "Personalized Bottles for Your Wedding Party",
+        "subheading": "Create beautiful, matching bottles for your bride tribe. Permanent sublimation printing means no peeling — ever. Perfect for photos and daily use long after the big day.",
+        "content_position": "center",
+        "button_label": "Shop Bridesmaid Bottles",
+        "button_link": "/collections/bridesmaid",
+        "button_label_2": "View Bundle Deals",
+        "button_link_2": "#bridal-bundles",
+        "show_trust_badges": true,
+        "show_scroll_indicator": true
+      }
+    },
+    "bridal-trust": {
+      "type": "trust-bar-compact",
+      "blocks": {
+        "trust-1": {
+          "type": "item",
+          "settings": {
+            "icon": "fast",
+            "text": "Ships in 3-5 Days"
+          }
+        },
+        "trust-2": {
+          "type": "item",
+          "settings": {
+            "icon": "personalized",
+            "text": "Free Name Personalization"
+          }
+        },
+        "trust-3": {
+          "type": "item",
+          "settings": {
+            "icon": "gift",
+            "text": "Gift-Ready Packaging"
+          }
+        },
+        "trust-4": {
+          "type": "item",
+          "settings": {
+            "icon": "quality",
+            "text": "Matching Designs Available"
+          }
+        }
+      },
+      "block_order": ["trust-1", "trust-2", "trust-3", "trust-4"],
+      "settings": {
+        "show_section": true
+      }
+    },
+    "bridal-bundles": {
+      "type": "bundle-showcase",
+      "blocks": {
+        "bundle-1": {
+          "type": "bundle",
+          "settings": {
+            "title": "Bride + 4 Bridesmaids",
+            "includes": "1 Bride bottle + 4 Bridesmaid bottles, all personalized with names",
+            "original_price": "138",
+            "price": "120",
+            "savings": "13%",
+            "link": "/collections/bridal-party"
+          }
+        },
+        "bundle-2": {
+          "type": "bundle",
+          "settings": {
+            "title": "Bride + 6 Bridesmaids",
+            "includes": "1 Bride bottle + 6 Bridesmaid bottles, matching designs throughout",
+            "original_price": "188",
+            "price": "165",
+            "savings": "12%",
+            "featured": true,
+            "link": "/collections/bridal-party"
+          }
+        },
+        "bundle-3": {
+          "type": "bundle",
+          "settings": {
+            "title": "Full Party (Bride + 8)",
+            "includes": "1 Bride bottle + 8 Bridesmaid bottles for the complete bridal party",
+            "original_price": "234",
+            "price": "200",
+            "savings": "15%",
+            "note": "Best value!",
+            "link": "/collections/bridal-party"
+          }
+        }
+      },
+      "block_order": ["bundle-1", "bundle-2", "bundle-3"],
+      "settings": {
+        "subheading": "Save Up to 15%",
+        "heading": "Bridal Party Bundle Deals",
+        "description": "Get coordinating bottles for your entire bridal party and save. Each bundle includes personalized bottles that match perfectly — bride and bridesmaids will love them!",
+        "show_custom_cta": true,
+        "custom_link": "/pages/contact"
+      }
+    },
+    "bridal-roles": {
+      "type": "category-showcase",
+      "blocks": {
+        "role-bride": {
+          "type": "category",
+          "settings": {
+            "title": "Bride",
+            "description": "For the star of the show",
+            "link": "/collections/bride",
+            "icon": "crown",
+            "placeholder_color": "#D4AF37"
+          }
+        },
+        "role-bridesmaid": {
+          "type": "category",
+          "settings": {
+            "title": "Bridesmaids",
+            "description": "For your best friends",
+            "link": "/collections/bridesmaid",
+            "icon": "heart",
+            "placeholder_color": "#E8A4C4"
+          }
+        },
+        "role-moh": {
+          "type": "category",
+          "settings": {
+            "title": "Maid of Honor",
+            "description": "For your right hand",
+            "link": "/collections/maid-of-honor",
+            "icon": "star",
+            "placeholder_color": "#C4A4E8"
+          }
+        },
+        "role-mother": {
+          "type": "category",
+          "settings": {
+            "title": "Mother of the Bride",
+            "description": "For the moms",
+            "link": "/collections/mother-of-bride",
+            "icon": "flower",
+            "placeholder_color": "#A4C4E8"
+          }
+        }
+      },
+      "block_order": ["role-bride", "role-bridesmaid", "role-moh", "role-mother"],
+      "settings": {
+        "subheading": "Shop by Role",
+        "heading": "Find the Perfect Match",
+        "background_color": "#FFF8F6"
+      }
+    },
+    "bridal-collection": {
+      "type": "featured-collection",
+      "settings": {
+        "collection": "wedding",
+        "products_to_show": 8,
+        "columns": "4",
+        "subheading": "Customer Favorites",
+        "heading": "Best-Selling Wedding Bottles",
+        "description": "The personalized bottles our brides and bridesmaids love most",
+        "header_alignment": "center",
+        "show_secondary_image": true,
+        "show_badges": true,
+        "show_vendor": false,
+        "show_rating": true,
+        "show_quick_add": true,
+        "text_alignment": "left",
+        "show_view_all": true,
+        "view_all_text": "View All Wedding Bottles",
+        "button_color": "#2C3E2D",
+        "button_text_color": "#FFFFFF",
+        "background_color": "#FFFFFF",
+        "text_color": "#1F1F1F",
+        "accent_color": "#4E5F4A",
+        "padding_top": 80,
+        "padding_bottom": 80
+      }
+    },
+    "bridal-timeline": {
+      "type": "image-with-text",
+      "settings": {
+        "layout": "image-right",
+        "full_width": false,
+        "image_ratio": "1/1",
+        "subheading": "Plan Ahead",
+        "heading": "Wedding Timeline Tips",
+        "text": "<p><strong>4+ weeks out:</strong> Perfect timing for standard orders. Relax and enjoy the planning!</p><p><strong>2-3 weeks out:</strong> Still good! Rush processing available if needed.</p><p><strong>Under 2 weeks:</strong> Contact us! We'll do our best to make it happen for your special day.</p><p>Pro tip: Order early and use them at your bachelorette party too!</p>",
+        "text_alignment": "left",
+        "button_label": "Contact Us About Rush Orders",
+        "button_link": "/pages/contact",
+        "button_color": "#2C3E2D",
+        "button_text_color": "#FFFFFF",
+        "background_color": "#F5F2ED",
+        "text_color": "#1F1F1F",
+        "accent_color": "#4E5F4A",
+        "padding_top": 80,
+        "padding_bottom": 80
+      }
+    },
+    "bridal-testimonials": {
+      "type": "testimonials",
+      "blocks": {
+        "testimonial-1": {
+          "type": "testimonial",
+          "settings": {
+            "rating": 5,
+            "title": "Perfect Bridesmaid Gifts!",
+            "quote": "My bridesmaids absolutely loved their personalized bottles! We used them at the bachelorette and they made such cute photo props. The quality is incredible — no peeling even after months of use.",
+            "author_name": "Sarah M.",
+            "author_title": "Bride, June Wedding"
+          }
+        },
+        "testimonial-2": {
+          "type": "testimonial",
+          "settings": {
+            "rating": 5,
+            "title": "Better Than Expected",
+            "quote": "I ordered bottles for my whole bridal party of 9. They arrived fast, beautifully packaged, and the personalization was flawless. Worth every penny!",
+            "author_name": "Jessica T.",
+            "author_title": "Bride, Fall Wedding"
+          }
+        },
+        "testimonial-3": {
+          "type": "testimonial",
+          "settings": {
+            "rating": 5,
+            "title": "Stunning Quality",
+            "quote": "The sublimation printing is so much nicer than the vinyl sticker bottles I've seen before. These look professional and my girls are obsessed with them!",
+            "author_name": "Amanda K.",
+            "author_title": "Bride, Spring Wedding"
+          }
+        }
+      },
+      "block_order": ["testimonial-1", "testimonial-2", "testimonial-3"],
+      "settings": {
+        "subheading": "Love from Real Brides",
+        "heading": "What Brides Are Saying",
+        "layout": "grid-3",
+        "background_color": "#FFFFFF",
+        "card_background": "#FFF8F6",
+        "text_color": "#1F1F1F",
+        "accent_color": "#4E5F4A",
+        "star_color": "#D4AF37",
+        "padding_top": 80,
+        "padding_bottom": 80
+      }
+    },
+    "bridal-faq": {
+      "type": "faq",
+      "blocks": {
+        "faq-1": {
+          "type": "question",
+          "settings": {
+            "question": "Can all the bottles match?",
+            "answer": "Yes! We offer coordinating designs for bride, bridesmaids, maid of honor, and more. Each bottle can be personalized with a different name while maintaining a cohesive look."
+          }
+        },
+        "faq-2": {
+          "type": "question",
+          "settings": {
+            "question": "How far in advance should I order?",
+            "answer": "We recommend ordering 4+ weeks before your wedding date for the most relaxed timeline. Need them sooner? Contact us about rush options!"
+          }
+        },
+        "faq-3": {
+          "type": "question",
+          "settings": {
+            "question": "Do you offer group discounts?",
+            "answer": "Yes! Our bundle deals save you up to 15%. For parties of 10+ bottles, contact us for custom bulk pricing."
+          }
+        },
+        "faq-4": {
+          "type": "question",
+          "settings": {
+            "question": "What if I need to add or change names?",
+            "answer": "Contact us within 24 hours of ordering and we'll accommodate changes. Once bottles enter production, changes may not be possible."
+          }
+        }
+      },
+      "block_order": ["faq-1", "faq-2", "faq-3", "faq-4"],
+      "settings": {
+        "subheading": "Planning Your Order",
+        "heading": "Frequently Asked Questions",
+        "padding_top": 80,
+        "padding_bottom": 80
+      }
+    },
+    "bridal-cta": {
+      "type": "rich-text",
+      "blocks": {
+        "subheading": {
+          "type": "subheading",
+          "settings": {
+            "text": "Ready to Order?"
+          }
+        },
+        "heading": {
+          "type": "heading",
+          "settings": {
+            "text": "Create Your Perfect Bridal Party Gifts",
+            "heading_size": "h2"
+          }
+        },
+        "text": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Every bottle is handcrafted with love and shipped with care. Your bridal party deserves the best — permanent, personalized bottles they'll cherish for years.</p>"
+          }
+        },
+        "button": {
+          "type": "button",
+          "settings": {
+            "label": "Shop Bridal Party Now",
+            "link": "/collections/wedding",
+            "style": "primary"
+          }
+        }
+      },
+      "block_order": ["subheading", "heading", "text", "button"],
+      "settings": {
+        "width": "medium",
+        "text_alignment": "center",
+        "background_color": "#2C3E2D",
+        "text_color": "#FFFFFF",
+        "accent_color": "#D4AF37",
+        "button_color": "#FFFFFF",
+        "button_text_color": "#2C3E2D",
+        "divider_color": "#FFFFFF",
+        "padding_top": 100,
+        "padding_bottom": 100
+      }
+    }
+  },
+  "order": [
+    "bridal-hero",
+    "bridal-trust",
+    "bridal-bundles",
+    "bridal-roles",
+    "bridal-collection",
+    "bridal-timeline",
+    "bridal-testimonials",
+    "bridal-faq",
+    "bridal-cta"
+  ]
+}

@@ -1,0 +1,395 @@
+{%- comment -%}
+================================================================================
+SHELZY'S DESIGNS - HOLIDAY MODE BANNER
+Version: 1.0.0
+================================================================================
+Toggleable holiday/event banner that displays sitewide urgency messaging.
+Enable/disable from Theme Editor settings.
+
+Revenue Impact: Creates urgency and drives holiday conversions.
+================================================================================
+{%- endcomment -%}
+
+{%- if section.settings.enabled -%}
+<div class="sz-holiday-banner"
+     style="--banner-bg: {{ section.settings.background_color }}; --banner-text: {{ section.settings.text_color }}; --banner-accent: {{ section.settings.accent_color }};"
+     role="complementary"
+     aria-label="Holiday announcement">
+  <div class="sz-holiday-banner-content">
+    {%- if section.settings.show_icon -%}
+      <span class="sz-holiday-icon" aria-hidden="true">
+        {%- case section.settings.icon_type -%}
+          {%- when 'gift' -%}
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="20 12 20 22 4 22 4 12"/>
+              <rect x="2" y="7" width="20" height="5"/>
+              <line x1="12" y1="22" x2="12" y2="7"/>
+              <path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/>
+              <path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/>
+            </svg>
+          {%- when 'snowflake' -%}
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="12" y1="2" x2="12" y2="22"/>
+              <path d="M20 6L4 18"/>
+              <path d="M4 6L20 18"/>
+              <line x1="12" y1="2" x2="12" y2="6"/>
+              <line x1="12" y1="18" x2="12" y2="22"/>
+              <line x1="4.93" y1="4.93" x2="7.76" y2="7.76"/>
+              <line x1="16.24" y1="16.24" x2="19.07" y2="19.07"/>
+              <line x1="19.07" y1="4.93" x2="16.24" y2="7.76"/>
+              <line x1="7.76" y1="16.24" x2="4.93" y2="19.07"/>
+            </svg>
+          {%- when 'heart' -%}
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2">
+              <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+            </svg>
+          {%- when 'star' -%}
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2">
+              <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+            </svg>
+          {%- when 'clock' -%}
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"/>
+              <polyline points="12 6 12 12 16 14"/>
+            </svg>
+          {%- else -%}
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 3l1.912 5.813h6.088l-4.912 3.587 1.824 5.6-5.912-4.313-5.912 4.313 1.824-5.6-4.912-3.587h6.088z"/>
+            </svg>
+          {%- endcase -%}
+      </span>
+    {%- endif -%}
+
+    <p class="sz-holiday-message">
+      {%- if section.settings.message != blank -%}
+        {{ section.settings.message }}
+      {%- else -%}
+        🎁 Order by {{ section.settings.deadline_date }} for guaranteed holiday delivery!
+      {%- endif -%}
+    </p>
+
+    {%- if section.settings.show_countdown and section.settings.countdown_end != blank -%}
+      <div class="sz-holiday-countdown" data-countdown="{{ section.settings.countdown_end }}">
+        <span class="sz-countdown-text">Ends in:</span>
+        <span class="sz-countdown-timer">
+          <span class="sz-countdown-days">--</span>d
+          <span class="sz-countdown-hours">--</span>h
+          <span class="sz-countdown-mins">--</span>m
+        </span>
+      </div>
+    {%- endif -%}
+
+    {%- if section.settings.cta_text != blank and section.settings.cta_link != blank -%}
+      <a href="{{ section.settings.cta_link }}" class="sz-holiday-cta">
+        {{ section.settings.cta_text }}
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="5" y1="12" x2="19" y2="12"/>
+          <polyline points="12 5 19 12 12 19"/>
+        </svg>
+      </a>
+    {%- endif -%}
+  </div>
+
+  {%- if section.settings.show_dismiss -%}
+    <button class="sz-holiday-dismiss" aria-label="Dismiss announcement" onclick="this.closest('.sz-holiday-banner').remove();">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <line x1="18" y1="6" x2="6" y2="18"/>
+        <line x1="6" y1="6" x2="18" y2="18"/>
+      </svg>
+    </button>
+  {%- endif -%}
+</div>
+
+<style>
+  .sz-holiday-banner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 12px 48px 12px 20px;
+    background: var(--banner-bg, #8B2323);
+    color: var(--banner-text, #FFFFFF);
+    position: relative;
+    z-index: 100;
+  }
+
+  .sz-holiday-banner-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    max-width: 1200px;
+  }
+
+  .sz-holiday-icon {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    color: var(--banner-accent, #D4AF37);
+  }
+
+  .sz-holiday-message {
+    font-family: var(--sz-font-body, 'Inter', sans-serif);
+    font-size: 14px;
+    font-weight: 500;
+    margin: 0;
+    text-align: center;
+    line-height: 1.4;
+  }
+
+  .sz-holiday-countdown {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--sz-font-body, 'Inter', sans-serif);
+    font-size: 13px;
+    background: rgba(255, 255, 255, 0.15);
+    padding: 4px 10px;
+    border-radius: 4px;
+  }
+
+  .sz-countdown-text {
+    opacity: 0.9;
+  }
+
+  .sz-countdown-timer {
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .sz-holiday-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-family: var(--sz-font-body, 'Inter', sans-serif);
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--banner-accent, #D4AF37);
+    text-decoration: none;
+    transition: opacity 0.2s;
+  }
+
+  .sz-holiday-cta:hover {
+    opacity: 0.8;
+  }
+
+  .sz-holiday-dismiss {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: var(--banner-text, #FFFFFF);
+    opacity: 0.7;
+    cursor: pointer;
+    padding: 4px;
+    transition: opacity 0.2s;
+  }
+
+  .sz-holiday-dismiss:hover {
+    opacity: 1;
+  }
+
+  @media (max-width: 768px) {
+    .sz-holiday-banner {
+      padding: 10px 40px 10px 16px;
+    }
+
+    .sz-holiday-banner-content {
+      gap: 8px;
+    }
+
+    .sz-holiday-message {
+      font-size: 13px;
+    }
+
+    .sz-holiday-countdown {
+      font-size: 12px;
+      padding: 3px 8px;
+    }
+
+    .sz-holiday-cta {
+      font-size: 12px;
+    }
+  }
+
+  /* Animation for countdown */
+  @keyframes pulse-soft {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.7; }
+  }
+
+  .sz-countdown-timer.urgent {
+    animation: pulse-soft 1s ease-in-out infinite;
+  }
+</style>
+
+<script>
+(function() {
+  var countdownEl = document.querySelector('[data-countdown]');
+  if (!countdownEl) return;
+
+  var endDate = new Date(countdownEl.dataset.countdown).getTime();
+  var daysEl = countdownEl.querySelector('.sz-countdown-days');
+  var hoursEl = countdownEl.querySelector('.sz-countdown-hours');
+  var minsEl = countdownEl.querySelector('.sz-countdown-mins');
+  var timerEl = countdownEl.querySelector('.sz-countdown-timer');
+
+  function updateCountdown() {
+    var now = new Date().getTime();
+    var distance = endDate - now;
+
+    if (distance < 0) {
+      countdownEl.style.display = 'none';
+      return;
+    }
+
+    var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+
+    daysEl.textContent = days.toString().padStart(2, '0');
+    hoursEl.textContent = hours.toString().padStart(2, '0');
+    minsEl.textContent = minutes.toString().padStart(2, '0');
+
+    // Add urgency class when less than 24 hours
+    if (days === 0) {
+      timerEl.classList.add('urgent');
+    }
+  }
+
+  updateCountdown();
+  setInterval(updateCountdown, 60000); // Update every minute
+})();
+</script>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Holiday Mode Banner",
+  "tag": "div",
+  "class": "sz-holiday-mode-section",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "enabled",
+      "label": "Enable holiday mode",
+      "info": "Toggle the entire holiday banner on/off",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Message"
+    },
+    {
+      "type": "textarea",
+      "id": "message",
+      "label": "Banner message",
+      "default": "🎁 Order by Dec 15 for guaranteed holiday delivery! Free shipping on orders $75+"
+    },
+    {
+      "type": "select",
+      "id": "icon_type",
+      "label": "Icon",
+      "options": [
+        { "value": "gift", "label": "Gift" },
+        { "value": "snowflake", "label": "Snowflake" },
+        { "value": "heart", "label": "Heart (Valentine's)" },
+        { "value": "star", "label": "Star" },
+        { "value": "clock", "label": "Clock (Urgency)" },
+        { "value": "sparkle", "label": "Sparkle" }
+      ],
+      "default": "gift"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_icon",
+      "label": "Show icon",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Countdown Timer"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_countdown",
+      "label": "Show countdown timer",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "countdown_end",
+      "label": "Countdown end date",
+      "info": "Format: YYYY-MM-DD (e.g., 2024-12-15)",
+      "placeholder": "2024-12-15"
+    },
+    {
+      "type": "text",
+      "id": "deadline_date",
+      "label": "Deadline date text",
+      "info": "Shown in default message",
+      "default": "December 15"
+    },
+    {
+      "type": "header",
+      "content": "Call to Action"
+    },
+    {
+      "type": "text",
+      "id": "cta_text",
+      "label": "CTA button text",
+      "default": "Shop Holiday Gifts"
+    },
+    {
+      "type": "url",
+      "id": "cta_link",
+      "label": "CTA link"
+    },
+    {
+      "type": "header",
+      "content": "Style"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background color",
+      "default": "#8B2323"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Accent color",
+      "info": "Used for icon and CTA",
+      "default": "#D4AF37"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_dismiss",
+      "label": "Allow users to dismiss",
+      "default": true
+    }
+  ],
+  "presets": [
+    {
+      "name": "Holiday Mode Banner",
+      "settings": {
+        "enabled": true,
+        "message": "🎁 Order by Dec 15 for guaranteed holiday delivery! Free shipping on orders $75+",
+        "icon_type": "gift",
+        "show_icon": true,
+        "cta_text": "Shop Holiday Gifts",
+        "cta_link": "/collections/holiday"
+      }
+    }
+  ]
+}
+{% endschema %}

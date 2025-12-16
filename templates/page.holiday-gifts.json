@@ -1,0 +1,351 @@
+{
+  "sections": {
+    "holiday-hero": {
+      "type": "hero-banner",
+      "settings": {
+        "height": 75,
+        "mobile_height": 65,
+        "overlay_opacity": 40,
+        "badge_text": "Holiday Gift Guide",
+        "badge_icon": "gift",
+        "heading": "Personalized Gifts They'll Actually Use",
+        "subheading": "Give a gift that lasts. Our personalized bottles combine thoughtful customization with everyday practicality — no more forgotten gifts collecting dust.",
+        "content_position": "center",
+        "button_label": "Shop Holiday Collection",
+        "button_link": "/collections/holiday",
+        "button_label_2": "Gift Guide",
+        "button_link_2": "#holiday-recipients",
+        "show_trust_badges": true,
+        "show_scroll_indicator": true
+      }
+    },
+    "holiday-trust": {
+      "type": "trust-bar-compact",
+      "blocks": {
+        "trust-1": {
+          "type": "item",
+          "settings": {
+            "icon": "fast",
+            "text": "Order by Dec 15 for Christmas"
+          }
+        },
+        "trust-2": {
+          "type": "item",
+          "settings": {
+            "icon": "personalized",
+            "text": "Free Personalization"
+          }
+        },
+        "trust-3": {
+          "type": "item",
+          "settings": {
+            "icon": "gift",
+            "text": "Gift-Ready Packaging"
+          }
+        },
+        "trust-4": {
+          "type": "item",
+          "settings": {
+            "icon": "quality",
+            "text": "Permanent Print"
+          }
+        }
+      },
+      "block_order": ["trust-1", "trust-2", "trust-3", "trust-4"],
+      "settings": {
+        "show_section": true
+      }
+    },
+    "holiday-recipients": {
+      "type": "category-showcase",
+      "blocks": {
+        "rec-teacher": {
+          "type": "category",
+          "settings": {
+            "title": "For Teachers",
+            "description": "A gift they'll love",
+            "link": "/collections/teacher",
+            "icon": "book",
+            "placeholder_color": "#5F8A6B"
+          }
+        },
+        "rec-mom": {
+          "type": "category",
+          "settings": {
+            "title": "For Mom",
+            "description": "Personalized with love",
+            "link": "/collections/mom",
+            "icon": "heart",
+            "placeholder_color": "#E8A4C4"
+          }
+        },
+        "rec-coworker": {
+          "type": "category",
+          "settings": {
+            "title": "For Coworkers",
+            "description": "Office-appropriate",
+            "link": "/collections/corporate",
+            "icon": "briefcase",
+            "placeholder_color": "#5F6B8A"
+          }
+        },
+        "rec-fitness": {
+          "type": "category",
+          "settings": {
+            "title": "For Fitness Lovers",
+            "description": "Gym-ready styles",
+            "link": "/collections/fitness",
+            "icon": "dumbbell",
+            "placeholder_color": "#8A6B5F"
+          }
+        }
+      },
+      "block_order": ["rec-teacher", "rec-mom", "rec-coworker", "rec-fitness"],
+      "settings": {
+        "subheading": "Gift Ideas",
+        "heading": "Shop by Recipient",
+        "background_color": "#FFF8F0"
+      }
+    },
+    "holiday-bestsellers": {
+      "type": "featured-collection",
+      "settings": {
+        "collection": "holiday",
+        "products_to_show": 8,
+        "columns": "4",
+        "subheading": "Most-Gifted",
+        "heading": "Holiday Best Sellers",
+        "description": "The personalized bottles flying off our shelves this season",
+        "header_alignment": "center",
+        "show_secondary_image": true,
+        "show_badges": true,
+        "show_vendor": false,
+        "show_rating": true,
+        "show_quick_add": true,
+        "text_alignment": "left",
+        "show_view_all": true,
+        "view_all_text": "View Full Holiday Collection",
+        "button_color": "#2C3E2D",
+        "button_text_color": "#FFFFFF",
+        "background_color": "#FFFFFF",
+        "text_color": "#1F1F1F",
+        "accent_color": "#4E5F4A",
+        "padding_top": 80,
+        "padding_bottom": 80
+      }
+    },
+    "holiday-bundles": {
+      "type": "bundle-showcase",
+      "blocks": {
+        "bundle-1": {
+          "type": "bundle",
+          "settings": {
+            "title": "Teacher Trio",
+            "includes": "3 personalized bottles for your child's favorite teachers",
+            "original_price": "84",
+            "price": "72",
+            "savings": "14%",
+            "link": "/collections/teacher"
+          }
+        },
+        "bundle-2": {
+          "type": "bundle",
+          "settings": {
+            "title": "Family Five",
+            "includes": "5 coordinating bottles for the whole family",
+            "original_price": "140",
+            "price": "115",
+            "savings": "18%",
+            "featured": true,
+            "link": "/collections/all"
+          }
+        },
+        "bundle-3": {
+          "type": "bundle",
+          "settings": {
+            "title": "Office Party Pack",
+            "includes": "10 bottles for your team gift exchange",
+            "original_price": "280",
+            "price": "225",
+            "savings": "20%",
+            "note": "Free Shipping!",
+            "link": "/collections/corporate"
+          }
+        }
+      },
+      "block_order": ["bundle-1", "bundle-2", "bundle-3"],
+      "settings": {
+        "subheading": "Bundle & Save",
+        "heading": "Holiday Gift Sets",
+        "description": "Save on multiple gifts and check off your whole list at once.",
+        "show_custom_cta": true,
+        "custom_link": "/pages/contact"
+      }
+    },
+    "holiday-deadline": {
+      "type": "image-with-text",
+      "settings": {
+        "layout": "image-right",
+        "full_width": false,
+        "image_ratio": "1/1",
+        "subheading": "Don't Miss the Deadline!",
+        "heading": "Holiday Shipping Cutoffs",
+        "text": "<p><strong>Standard Shipping:</strong> Order by December 15</p><p><strong>Express Shipping:</strong> Order by December 18</p><p><strong>Last Chance Rush:</strong> Order by December 20*</p><p><em>*Rush orders subject to availability and additional fees.</em></p><p>Order early to ensure your personalized gifts arrive in time for the holiday magic!</p>",
+        "text_alignment": "left",
+        "button_label": "Shop Now — Don't Wait",
+        "button_link": "/collections/holiday",
+        "button_color": "#8B2323",
+        "button_text_color": "#FFFFFF",
+        "background_color": "#FFF8F0",
+        "text_color": "#1F1F1F",
+        "accent_color": "#8B2323",
+        "padding_top": 80,
+        "padding_bottom": 80
+      }
+    },
+    "holiday-testimonials": {
+      "type": "testimonials",
+      "blocks": {
+        "testimonial-1": {
+          "type": "testimonial",
+          "settings": {
+            "rating": 5,
+            "title": "Perfect Teacher Gift!",
+            "quote": "My kids' teachers loved their personalized bottles! So much better than another mug or candle. They actually use them every day.",
+            "author_name": "Lisa M.",
+            "author_title": "Happy Parent"
+          }
+        },
+        "testimonial-2": {
+          "type": "testimonial",
+          "settings": {
+            "rating": 5,
+            "title": "Best Gift Exchange Win",
+            "quote": "Brought a personalized bottle to our office gift exchange and it was the most-wanted gift! Everyone wanted to know where I got it.",
+            "author_name": "Mark T.",
+            "author_title": "Office Gift Hero"
+          }
+        },
+        "testimonial-3": {
+          "type": "testimonial",
+          "settings": {
+            "rating": 5,
+            "title": "Mom's New Favorite",
+            "quote": "Got my mom a personalized bottle and she tears up every time she uses it. The quality is incredible and it's such a practical gift.",
+            "author_name": "Sarah K.",
+            "author_title": "Thoughtful Daughter"
+          }
+        }
+      },
+      "block_order": ["testimonial-1", "testimonial-2", "testimonial-3"],
+      "settings": {
+        "subheading": "Holiday Gift Wins",
+        "heading": "Why Customers Love Giving Us",
+        "layout": "grid-3",
+        "background_color": "#FFFFFF",
+        "card_background": "#FFF8F0",
+        "text_color": "#1F1F1F",
+        "accent_color": "#4E5F4A",
+        "star_color": "#D4AF37",
+        "padding_top": 80,
+        "padding_bottom": 80
+      }
+    },
+    "holiday-faq": {
+      "type": "faq",
+      "blocks": {
+        "faq-1": {
+          "type": "question",
+          "settings": {
+            "question": "When should I order for Christmas delivery?",
+            "answer": "For guaranteed Christmas delivery, order by December 15 with standard shipping. Rush options available through December 20 for an additional fee."
+          }
+        },
+        "faq-2": {
+          "type": "question",
+          "settings": {
+            "question": "Can you gift wrap the bottles?",
+            "answer": "All orders come in gift-ready packaging! Your bottles arrive beautifully presented, ready to give. Just add a bow if you'd like!"
+          }
+        },
+        "faq-3": {
+          "type": "question",
+          "settings": {
+            "question": "Can I ship directly to the recipient?",
+            "answer": "Absolutely! Enter their address at checkout. We don't include pricing in the package, making it perfect for direct-to-recipient gifting."
+          }
+        },
+        "faq-4": {
+          "type": "question",
+          "settings": {
+            "question": "What if my gift doesn't arrive in time?",
+            "answer": "If your order is delayed due to shipping issues, contact us and we'll make it right. We're here to ensure your gift-giving is stress-free."
+          }
+        }
+      },
+      "block_order": ["faq-1", "faq-2", "faq-3", "faq-4"],
+      "settings": {
+        "subheading": "Holiday Questions",
+        "heading": "Gift-Giving Made Easy",
+        "padding_top": 80,
+        "padding_bottom": 80
+      }
+    },
+    "holiday-cta": {
+      "type": "rich-text",
+      "blocks": {
+        "subheading": {
+          "type": "subheading",
+          "settings": {
+            "text": "Make This Holiday Memorable"
+          }
+        },
+        "heading": {
+          "type": "heading",
+          "settings": {
+            "text": "Give a Gift They'll Treasure",
+            "heading_size": "h2"
+          }
+        },
+        "text": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Personalized bottles that combine thoughtful customization with everyday practicality. Order now to secure your holiday deadline!</p>"
+          }
+        },
+        "button": {
+          "type": "button",
+          "settings": {
+            "label": "Shop Holiday Collection",
+            "link": "/collections/holiday",
+            "style": "primary"
+          }
+        }
+      },
+      "block_order": ["subheading", "heading", "text", "button"],
+      "settings": {
+        "width": "medium",
+        "text_alignment": "center",
+        "background_color": "#8B2323",
+        "text_color": "#FFFFFF",
+        "accent_color": "#D4AF37",
+        "button_color": "#FFFFFF",
+        "button_text_color": "#8B2323",
+        "divider_color": "#FFFFFF",
+        "padding_top": 100,
+        "padding_bottom": 100
+      }
+    }
+  },
+  "order": [
+    "holiday-hero",
+    "holiday-trust",
+    "holiday-recipients",
+    "holiday-bestsellers",
+    "holiday-bundles",
+    "holiday-deadline",
+    "holiday-testimonials",
+    "holiday-faq",
+    "holiday-cta"
+  ]
+}

@@ -1,0 +1,351 @@
+{
+  "sections": {
+    "corp-hero": {
+      "type": "hero-banner",
+      "settings": {
+        "height": 70,
+        "mobile_height": 60,
+        "overlay_opacity": 45,
+        "badge_text": "Corporate & Team Orders",
+        "badge_icon": "star",
+        "heading": "Custom Branded Bottles for Your Team",
+        "subheading": "Elevate your corporate gifts, team events, and employee recognition with premium personalized bottles. Bulk pricing available for orders of 10+.",
+        "content_position": "center",
+        "button_label": "Request a Quote",
+        "button_link": "/pages/bulk-orders",
+        "button_label_2": "View Options",
+        "button_link_2": "#corp-options",
+        "show_trust_badges": true,
+        "show_scroll_indicator": true
+      }
+    },
+    "corp-trust": {
+      "type": "trust-bar-compact",
+      "blocks": {
+        "trust-1": {
+          "type": "item",
+          "settings": {
+            "icon": "fast",
+            "text": "Bulk Order Turnaround"
+          }
+        },
+        "trust-2": {
+          "type": "item",
+          "settings": {
+            "icon": "personalized",
+            "text": "Custom Branding Options"
+          }
+        },
+        "trust-3": {
+          "type": "item",
+          "settings": {
+            "icon": "quality",
+            "text": "Permanent Sublimation"
+          }
+        },
+        "trust-4": {
+          "type": "item",
+          "settings": {
+            "icon": "gift",
+            "text": "Volume Discounts"
+          }
+        }
+      },
+      "block_order": ["trust-1", "trust-2", "trust-3", "trust-4"],
+      "settings": {
+        "show_section": true
+      }
+    },
+    "corp-options": {
+      "type": "category-showcase",
+      "blocks": {
+        "opt-team": {
+          "type": "category",
+          "settings": {
+            "title": "Team Gifts",
+            "description": "Employee appreciation",
+            "link": "/collections/corporate",
+            "icon": "users",
+            "placeholder_color": "#4E5F4A"
+          }
+        },
+        "opt-events": {
+          "type": "category",
+          "settings": {
+            "title": "Event Giveaways",
+            "description": "Conferences & trade shows",
+            "link": "/collections/corporate",
+            "icon": "star",
+            "placeholder_color": "#5F6B8A"
+          }
+        },
+        "opt-client": {
+          "type": "category",
+          "settings": {
+            "title": "Client Gifts",
+            "description": "Premium appreciation",
+            "link": "/collections/corporate",
+            "icon": "gift",
+            "placeholder_color": "#8A5F6B"
+          }
+        },
+        "opt-sports": {
+          "type": "category",
+          "settings": {
+            "title": "Sports Teams",
+            "description": "Team uniforms & awards",
+            "link": "/collections/sports",
+            "icon": "medal",
+            "placeholder_color": "#6B8A5F"
+          }
+        }
+      },
+      "block_order": ["opt-team", "opt-events", "opt-client", "opt-sports"],
+      "settings": {
+        "subheading": "Perfect For",
+        "heading": "Corporate Use Cases",
+        "background_color": "#F5F2ED"
+      }
+    },
+    "corp-pricing": {
+      "type": "bundle-showcase",
+      "blocks": {
+        "tier-1": {
+          "type": "bundle",
+          "settings": {
+            "title": "Team of 10-24",
+            "includes": "Personalized bottles with individual names or team branding",
+            "original_price": "25",
+            "price": "22",
+            "savings": "12%",
+            "link": "/pages/bulk-orders"
+          }
+        },
+        "tier-2": {
+          "type": "bundle",
+          "settings": {
+            "title": "Department 25-49",
+            "includes": "Consistent branding across all bottles with personalization",
+            "original_price": "25",
+            "price": "20",
+            "savings": "20%",
+            "featured": true,
+            "link": "/pages/bulk-orders"
+          }
+        },
+        "tier-3": {
+          "type": "bundle",
+          "settings": {
+            "title": "Enterprise 50+",
+            "includes": "Custom packaging, logo placement, and dedicated support",
+            "original_price": "25",
+            "price": "18",
+            "savings": "28%",
+            "note": "Best value!",
+            "link": "/pages/bulk-orders"
+          }
+        }
+      },
+      "block_order": ["tier-1", "tier-2", "tier-3"],
+      "settings": {
+        "subheading": "Volume Pricing",
+        "heading": "Bulk Order Discounts",
+        "description": "The more you order, the more you save. All bulk orders include dedicated account support and digital proofs before production.",
+        "show_custom_cta": true,
+        "custom_link": "/pages/contact"
+      }
+    },
+    "corp-process": {
+      "type": "image-with-text",
+      "settings": {
+        "layout": "image-left",
+        "full_width": false,
+        "image_ratio": "1/1",
+        "subheading": "How It Works",
+        "heading": "Simple Bulk Ordering Process",
+        "text": "<p><strong>1. Request a Quote:</strong> Tell us about your order size and customization needs.</p><p><strong>2. Review Your Proof:</strong> We'll send a digital mockup for your approval.</p><p><strong>3. Production:</strong> Once approved, we handcraft each bottle with care.</p><p><strong>4. Delivery:</strong> Professionally packaged and shipped to your location.</p>",
+        "text_alignment": "left",
+        "button_label": "Start Your Order",
+        "button_link": "/pages/bulk-orders",
+        "button_color": "#2C3E2D",
+        "button_text_color": "#FFFFFF",
+        "background_color": "#FFFFFF",
+        "text_color": "#1F1F1F",
+        "accent_color": "#4E5F4A",
+        "padding_top": 80,
+        "padding_bottom": 80
+      }
+    },
+    "corp-collection": {
+      "type": "featured-collection",
+      "settings": {
+        "collection": "corporate",
+        "products_to_show": 8,
+        "columns": "4",
+        "subheading": "Popular for Business",
+        "heading": "Corporate-Friendly Designs",
+        "description": "Clean, professional bottles perfect for branding and team gifts",
+        "header_alignment": "center",
+        "show_secondary_image": true,
+        "show_badges": true,
+        "show_vendor": false,
+        "show_rating": true,
+        "show_quick_add": false,
+        "text_alignment": "left",
+        "show_view_all": true,
+        "view_all_text": "View All Corporate Options",
+        "button_color": "#2C3E2D",
+        "button_text_color": "#FFFFFF",
+        "background_color": "#F5F2ED",
+        "text_color": "#1F1F1F",
+        "accent_color": "#4E5F4A",
+        "padding_top": 80,
+        "padding_bottom": 80
+      }
+    },
+    "corp-testimonials": {
+      "type": "testimonials",
+      "blocks": {
+        "testimonial-1": {
+          "type": "testimonial",
+          "settings": {
+            "rating": 5,
+            "title": "Perfect Team Gifts",
+            "quote": "We ordered 50 bottles for our sales team and they were a huge hit! The quality exceeded our expectations and the personalization made each team member feel special.",
+            "author_name": "Michael R.",
+            "author_title": "Sales Director"
+          }
+        },
+        "testimonial-2": {
+          "type": "testimonial",
+          "settings": {
+            "rating": 5,
+            "title": "Trade Show Success",
+            "quote": "Used these as VIP giveaways at our annual conference. The reaction was incredible — premium quality that reflects well on our brand.",
+            "author_name": "Jennifer L.",
+            "author_title": "Marketing Manager"
+          }
+        },
+        "testimonial-3": {
+          "type": "testimonial",
+          "settings": {
+            "rating": 5,
+            "title": "Annual Order Customer",
+            "quote": "We order for our entire company every year during employee appreciation week. Always on time, always perfect. Can't recommend highly enough!",
+            "author_name": "David K.",
+            "author_title": "HR Director"
+          }
+        }
+      },
+      "block_order": ["testimonial-1", "testimonial-2", "testimonial-3"],
+      "settings": {
+        "subheading": "Trusted by Teams",
+        "heading": "What Corporate Clients Say",
+        "layout": "grid-3",
+        "background_color": "#FFFFFF",
+        "card_background": "#F5F2ED",
+        "text_color": "#1F1F1F",
+        "accent_color": "#4E5F4A",
+        "star_color": "#D4AF37",
+        "padding_top": 80,
+        "padding_bottom": 80
+      }
+    },
+    "corp-faq": {
+      "type": "faq",
+      "blocks": {
+        "faq-1": {
+          "type": "question",
+          "settings": {
+            "question": "What's the minimum order for bulk pricing?",
+            "answer": "Bulk pricing starts at just 10 bottles. The more you order, the more you save — up to 28% off for orders of 50+."
+          }
+        },
+        "faq-2": {
+          "type": "question",
+          "settings": {
+            "question": "Can you add our company logo?",
+            "answer": "Yes! We can incorporate your logo into the design. Just include your logo file when requesting a quote and we'll create a custom mockup."
+          }
+        },
+        "faq-3": {
+          "type": "question",
+          "settings": {
+            "question": "What's the turnaround time for bulk orders?",
+            "answer": "Standard bulk orders ship within 7-10 business days after proof approval. Rush options available for time-sensitive events."
+          }
+        },
+        "faq-4": {
+          "type": "question",
+          "settings": {
+            "question": "Do you ship to multiple locations?",
+            "answer": "Yes! We can ship to multiple addresses for distributed teams. Contact us for multi-location shipping options and pricing."
+          }
+        }
+      },
+      "block_order": ["faq-1", "faq-2", "faq-3", "faq-4"],
+      "settings": {
+        "subheading": "Common Questions",
+        "heading": "Bulk Order FAQs",
+        "padding_top": 80,
+        "padding_bottom": 80
+      }
+    },
+    "corp-cta": {
+      "type": "rich-text",
+      "blocks": {
+        "subheading": {
+          "type": "subheading",
+          "settings": {
+            "text": "Ready to Elevate Your Team Gifts?"
+          }
+        },
+        "heading": {
+          "type": "heading",
+          "settings": {
+            "text": "Request Your Corporate Quote Today",
+            "heading_size": "h2"
+          }
+        },
+        "text": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Premium personalized bottles that reflect your brand's commitment to quality. Our team is ready to help you create the perfect corporate gift.</p>"
+          }
+        },
+        "button": {
+          "type": "button",
+          "settings": {
+            "label": "Request a Quote",
+            "link": "/pages/bulk-orders",
+            "style": "primary"
+          }
+        }
+      },
+      "block_order": ["subheading", "heading", "text", "button"],
+      "settings": {
+        "width": "medium",
+        "text_alignment": "center",
+        "background_color": "#1F1F1F",
+        "text_color": "#FFFFFF",
+        "accent_color": "#8BAA88",
+        "button_color": "#FFFFFF",
+        "button_text_color": "#1F1F1F",
+        "divider_color": "#FFFFFF",
+        "padding_top": 100,
+        "padding_bottom": 100
+      }
+    }
+  },
+  "order": [
+    "corp-hero",
+    "corp-trust",
+    "corp-options",
+    "corp-pricing",
+    "corp-process",
+    "corp-collection",
+    "corp-testimonials",
+    "corp-faq",
+    "corp-cta"
+  ]
+}
