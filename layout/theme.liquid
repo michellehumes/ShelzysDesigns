@@ -22,7 +22,6 @@ Use sections and snippets for customization.
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
   <meta name="apple-mobile-web-app-title" content="{{ shop.name }}">
   <meta name="mobile-web-app-capable" content="yes">
-  <meta name="theme-color" content="{{ settings.color_primary | default: '#8BAA88' }}">
   <meta name="format-detection" content="telephone=no">
 
   {%- comment -%} DNS Prefetch & Preconnect for Performance {%- endcomment -%}
@@ -33,9 +32,15 @@ Use sections and snippets for customization.
   {%- comment -%} SEO Meta Tags {%- endcomment -%}
   {% render 'shelzys-head-seo' %}
 
+  {%- comment -%} Organization Schema (Site-wide) {%- endcomment -%}
+  {%- if template == 'index' -%}
+    {% render 'shelzys-organization-schema' %}
+  {%- endif -%}
+
   {%- comment -%} Favicon {%- endcomment -%}
   {%- if settings.favicon != blank -%}
     <link rel="icon" type="image/png" href="{{ settings.favicon | image_url: width: 32, height: 32 }}">
+    <link rel="apple-touch-icon" href="{{ settings.favicon | image_url: width: 180, height: 180 }}">
   {%- endif -%}
 
   {%- comment -%}
@@ -59,10 +64,6 @@ Use sections and snippets for customization.
 </head>
 
 <body class="template-{{ template.name | handle }}{% if template.suffix %} template-{{ template.name }}-{{ template.suffix | handle }}{% endif %}">
-  {%- comment -%} Announcement Bars {%- endcomment -%}
-  {% render 'sz-announcement-bar' %}
-  {% render 'sz-social-proof-banner' %}
-
   {%- comment -%} Skip Links for Accessibility {%- endcomment -%}
   <a href="#main-content" class="sz-skip-link visually-hidden">Skip to content</a>
 
@@ -74,6 +75,9 @@ Use sections and snippets for customization.
 
   {%- comment -%} Free Shipping Progress Bar {%- endcomment -%}
   {% render 'shelzys-free-shipping-bar' %}
+
+  {%- comment -%} Social Proof Banner {%- endcomment -%}
+  {% render 'sz-social-proof-banner' %}
 
   {%- comment -%} Header Navigation {%- endcomment -%}
   {% render 'shelzys-nav-header' %}
@@ -100,29 +104,40 @@ Use sections and snippets for customization.
   {%- comment -%} Cart Drawer {%- endcomment -%}
   {% render 'shelzys-cart-drawer' %}
 
+  {%- comment -%} Analytics Events {%- endcomment -%}
+  {% render 'shelzys-analytics-events' %}
+
   {%- comment -%} Skip Link Styles {%- endcomment -%}
   <style>
     .sz-skip-link:focus {
       position: fixed !important;
-      top: var(--sz-space-sm);
-      left: var(--sz-space-sm);
+      top: var(--sz-space-sm, 8px);
+      left: var(--sz-space-sm, 8px);
       width: auto !important;
       height: auto !important;
-      padding: var(--sz-space-md) var(--sz-space-lg);
+      padding: var(--sz-space-md, 16px) var(--sz-space-lg, 24px);
       clip: auto !important;
-      background: var(--sz-primary-dark);
-      color: var(--sz-white);
+      background: var(--sz-primary-dark, #4E5F4A);
+      color: var(--sz-background, #FFFFFF);
       font-family: var(--sz-font-body);
-      font-size: var(--sz-text-sm);
-      font-weight: var(--sz-font-semibold);
+      font-size: var(--sz-text-sm, 14px);
+      font-weight: var(--sz-font-semibold, 600);
       text-decoration: none;
-      z-index: var(--sz-z-max);
-      border-radius: var(--sz-radius-sm);
+      z-index: var(--sz-z-max, 9999);
+      border-radius: var(--sz-radius-sm, 4px);
+    }
+
+    .visually-hidden {
+      position: absolute !important;
+      width: 1px !important;
+      height: 1px !important;
+      padding: 0 !important;
+      margin: -1px !important;
+      overflow: hidden !important;
+      clip: rect(0, 0, 0, 0) !important;
+      white-space: nowrap !important;
+      border: 0 !important;
     }
   </style>
-
-  {%- comment -%} Additional Snippets {%- endcomment -%}
-  {% render 'sz-free-shipping-bar' %}
-  {% render 'sz-email-popup' %}
 </body>
 </html>
