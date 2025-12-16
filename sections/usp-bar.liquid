@@ -1,0 +1,242 @@
+{% comment %}
+================================================================================
+SHELZY'S DESIGNS - USP BAR SECTION
+Version: 2.0.0
+Last Updated: 2024-12
+================================================================================
+Unique Selling Propositions bar.
+Displays key benefits in a horizontal/grid layout.
+
+Features:
+- Block-based for unlimited USPs
+- Icon selection
+- Responsive grid layout
+- Color scheme selection
+================================================================================
+{% endcomment %}
+
+{%- liquid
+  assign color_scheme = section.settings.color_scheme
+  case color_scheme
+    when 'light'
+      assign bg_color = 'var(--sz-background)'
+      assign text_color = 'var(--sz-text)'
+      assign icon_color = 'var(--sz-primary)'
+    when 'alt'
+      assign bg_color = 'var(--sz-background-alt)'
+      assign text_color = 'var(--sz-text)'
+      assign icon_color = 'var(--sz-primary)'
+    when 'surface'
+      assign bg_color = 'var(--sz-surface)'
+      assign text_color = 'var(--sz-text)'
+      assign icon_color = 'var(--sz-primary)'
+    when 'dark'
+      assign bg_color = 'var(--sz-primary-dark)'
+      assign text_color = 'var(--sz-background)'
+      assign icon_color = 'var(--sz-accent)'
+  endcase
+-%}
+
+<section
+  class="sz-usp{% if section.settings.full_width %} sz-usp--bleed{% endif %}"
+  style="
+    --usp-bg: {{ bg_color }};
+    --usp-text: {{ text_color }};
+    --usp-icon: {{ icon_color }};
+    --usp-padding-top: {{ section.settings.padding_top }}px;
+    --usp-padding-bottom: {{ section.settings.padding_bottom }}px;
+  "
+>
+  <div class="sz-usp__container">
+    {%- for block in section.blocks -%}
+      <div class="sz-usp__item" {{ block.shopify_attributes }}>
+        <div class="sz-usp__icon" aria-hidden="true">
+          {%- case block.settings.icon -%}
+            {%- when 'shipping' -%}
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+            {%- when 'shield' -%}
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>
+            {%- when 'heart' -%}
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+            {%- when 'star' -%}
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            {%- when 'refresh' -%}
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+            {%- when 'check' -%}
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9 12l2 2 4-4"/></svg>
+            {%- when 'gift' -%}
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 12 20 22 4 22 4 12"/><rect x="2" y="7" width="20" height="5"/><line x1="12" y1="22" x2="12" y2="7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg>
+            {%- when 'clock' -%}
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          {%- endcase -%}
+        </div>
+        <div class="sz-usp__content">
+          {%- if block.settings.title != blank -%}
+            <p class="sz-usp__title">{{ block.settings.title }}</p>
+          {%- endif -%}
+          {%- if block.settings.text != blank -%}
+            <p class="sz-usp__text">{{ block.settings.text }}</p>
+          {%- endif -%}
+        </div>
+      </div>
+    {%- endfor -%}
+  </div>
+</section>
+
+{% style %}
+  .sz-usp {
+    background-color: var(--usp-bg);
+    padding-top: var(--usp-padding-top);
+    padding-bottom: var(--usp-padding-bottom);
+  }
+
+  .sz-usp--bleed {
+    margin-inline: calc(var(--sz-container-padding) * -1);
+    padding-inline: var(--sz-container-padding);
+  }
+
+  .sz-usp__container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--sz-space-xl);
+    max-width: var(--sz-container-max);
+    margin: 0 auto;
+  }
+
+  .sz-usp__item {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--sz-space-md);
+    text-align: left;
+  }
+
+  @media (min-width: 768px) {
+    .sz-usp__item {
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+  }
+
+  .sz-usp__icon {
+    flex-shrink: 0;
+    color: var(--usp-icon);
+  }
+
+  .sz-usp__content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sz-space-xs);
+  }
+
+  .sz-usp__title {
+    font-family: var(--sz-font-body);
+    font-size: var(--sz-text-base);
+    font-weight: var(--sz-font-semibold);
+    color: var(--usp-text);
+    margin: 0;
+  }
+
+  .sz-usp__text {
+    font-family: var(--sz-font-body);
+    font-size: var(--sz-text-sm);
+    color: var(--usp-text);
+    opacity: 0.8;
+    margin: 0;
+  }
+{% endstyle %}
+
+{% schema %}
+{
+  "name": "USP Bar",
+  "tag": "section",
+  "class": "sz-section-usp",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "full_width",
+      "label": "Full width",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "color_scheme",
+      "label": "Color Scheme",
+      "options": [
+        { "value": "light", "label": "Light" },
+        { "value": "alt", "label": "Alternate" },
+        { "value": "surface", "label": "Surface" },
+        { "value": "dark", "label": "Dark" }
+      ],
+      "default": "surface"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Top Padding",
+      "min": 0,
+      "max": 80,
+      "step": 8,
+      "default": 40,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Bottom Padding",
+      "min": 0,
+      "max": 80,
+      "step": 8,
+      "default": 40,
+      "unit": "px"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "usp",
+      "name": "USP",
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icon",
+          "options": [
+            { "value": "shipping", "label": "Shipping Truck" },
+            { "value": "shield", "label": "Shield" },
+            { "value": "heart", "label": "Heart" },
+            { "value": "star", "label": "Star" },
+            { "value": "refresh", "label": "Returns" },
+            { "value": "check", "label": "Checkmark" },
+            { "value": "gift", "label": "Gift" },
+            { "value": "clock", "label": "Clock" }
+          ],
+          "default": "shipping"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Free Shipping"
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text",
+          "default": "On orders over $75"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "USP Bar",
+      "blocks": [
+        { "type": "usp", "settings": { "icon": "shipping", "title": "Free Shipping", "text": "Orders over $75" } },
+        { "type": "usp", "settings": { "icon": "shield", "title": "Permanent Printing", "text": "No vinyl, no peeling" } },
+        { "type": "usp", "settings": { "icon": "refresh", "title": "30-Day Returns", "text": "Easy exchanges" } },
+        { "type": "usp", "settings": { "icon": "heart", "title": "Made with Love", "text": "Handcrafted quality" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

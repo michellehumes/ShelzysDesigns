@@ -1,0 +1,483 @@
+{% comment %}
+================================================================================
+SHELZY'S DESIGNS - MEDIA ROW SECTION
+Version: 2.0.0
+Last Updated: 2024-12
+================================================================================
+Reversible image + text layout.
+Fully editor-driven with no hardcoded values.
+
+Features:
+- Image left or right (reversible)
+- Responsive image with srcset
+- Full width or contained
+- Multiple content blocks (subheading, heading, text, buttons)
+- Color scheme selection
+================================================================================
+{% endcomment %}
+
+{%- liquid
+  assign color_scheme = section.settings.color_scheme
+  case color_scheme
+    when 'light'
+      assign bg_color = 'var(--sz-background)'
+      assign text_color = 'var(--sz-text)'
+      assign heading_color = 'var(--sz-heading)'
+    when 'alt'
+      assign bg_color = 'var(--sz-background-alt)'
+      assign text_color = 'var(--sz-text)'
+      assign heading_color = 'var(--sz-heading)'
+    when 'surface'
+      assign bg_color = 'var(--sz-surface)'
+      assign text_color = 'var(--sz-text)'
+      assign heading_color = 'var(--sz-heading)'
+    when 'dark'
+      assign bg_color = 'var(--sz-primary-dark)'
+      assign text_color = 'var(--sz-background)'
+      assign heading_color = 'var(--sz-background)'
+  endcase
+-%}
+
+<section
+  class="sz-media-row{% if section.settings.full_width %} sz-media-row--bleed{% endif %} sz-media-row--{{ section.settings.layout }}"
+  style="
+    --section-bg: {{ bg_color }};
+    --section-text: {{ text_color }};
+    --section-heading: {{ heading_color }};
+    --section-padding-top: {{ section.settings.padding_top }}px;
+    --section-padding-bottom: {{ section.settings.padding_bottom }}px;
+  "
+>
+  <div class="sz-media-row__container">
+    {%- comment -%} Image {%- endcomment -%}
+    <div class="sz-media-row__media">
+      {%- if section.settings.image != blank -%}
+        {{
+          section.settings.image
+          | image_url: width: 1200
+          | image_tag:
+            srcset: '400w, 600w, 800w, 1000w, 1200w',
+            sizes: '(min-width: 768px) 50vw, 100vw',
+            class: 'sz-media-row__image',
+            loading: 'lazy',
+            alt: section.settings.image.alt | default: section.settings.heading
+        }}
+      {%- else -%}
+        <div class="sz-media-row__placeholder">
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" aria-hidden="true">
+            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+            <circle cx="8.5" cy="8.5" r="1.5"/>
+            <polyline points="21 15 16 10 5 21"/>
+          </svg>
+        </div>
+      {%- endif -%}
+    </div>
+
+    {%- comment -%} Content {%- endcomment -%}
+    <div class="sz-media-row__content">
+      {%- for block in section.blocks -%}
+        {%- case block.type -%}
+          {%- when 'subheading' -%}
+            <p class="sz-media-row__subheading" {{ block.shopify_attributes }}>
+              {{ block.settings.text }}
+            </p>
+
+          {%- when 'heading' -%}
+            <{{ block.settings.heading_tag }} class="sz-media-row__heading" {{ block.shopify_attributes }}>
+              {{ block.settings.text }}
+            </{{ block.settings.heading_tag }}>
+
+          {%- when 'text' -%}
+            <div class="sz-media-row__text rte" {{ block.shopify_attributes }}>
+              {{ block.settings.text }}
+            </div>
+
+          {%- when 'button' -%}
+            <div class="sz-media-row__buttons" {{ block.shopify_attributes }}>
+              <a
+                href="{{ block.settings.link }}"
+                class="sz-media-row__btn sz-media-row__btn--{{ block.settings.style }}"
+              >
+                {{ block.settings.label }}
+              </a>
+            </div>
+
+          {%- when 'icon_list' -%}
+            <ul class="sz-media-row__icons" {{ block.shopify_attributes }}>
+              {%- assign items = block.settings.items | split: '|' -%}
+              {%- for item in items -%}
+                <li class="sz-media-row__icon-item">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                    <polyline points="20 6 9 17 4 12"/>
+                  </svg>
+                  <span>{{ item | strip }}</span>
+                </li>
+              {%- endfor -%}
+            </ul>
+        {%- endcase -%}
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% style %}
+  .sz-media-row {
+    background-color: var(--section-bg);
+    color: var(--section-text);
+    padding-top: var(--section-padding-top);
+    padding-bottom: var(--section-padding-bottom);
+  }
+
+  .sz-media-row--bleed {
+    margin-inline: calc(var(--sz-container-padding) * -1);
+    padding-inline: var(--sz-container-padding);
+  }
+
+  .sz-media-row__container {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--sz-space-2xl);
+    max-width: var(--sz-container-max);
+    margin: 0 auto;
+    align-items: center;
+  }
+
+  @media (min-width: 768px) {
+    .sz-media-row__container {
+      grid-template-columns: 1fr 1fr;
+      gap: var(--sz-space-3xl);
+    }
+
+    .sz-media-row--image-right .sz-media-row__media {
+      order: 2;
+    }
+
+    .sz-media-row--image-right .sz-media-row__content {
+      order: 1;
+    }
+  }
+
+  /* Media */
+  .sz-media-row__media {
+    aspect-ratio: {{ section.settings.image_ratio }};
+    overflow: hidden;
+    border-radius: var(--sz-radius-lg);
+  }
+
+  .sz-media-row__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .sz-media-row__placeholder {
+    width: 100%;
+    height: 100%;
+    min-height: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--sz-surface);
+    color: var(--sz-text-muted);
+  }
+
+  /* Content */
+  .sz-media-row__content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sz-space-md);
+  }
+
+  .sz-media-row__subheading {
+    font-family: var(--sz-font-body);
+    font-size: var(--sz-text-xs);
+    font-weight: var(--sz-font-semibold);
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--sz-primary);
+    margin: 0;
+  }
+
+  .sz-media-row__heading {
+    font-family: var(--sz-font-heading);
+    font-size: var(--sz-text-4xl);
+    font-weight: var(--sz-font-heading-weight);
+    line-height: var(--sz-leading-tight);
+    color: var(--section-heading);
+    margin: 0;
+  }
+
+  .sz-media-row__text {
+    font-family: var(--sz-font-body);
+    font-size: var(--sz-text-base);
+    line-height: var(--sz-leading-relaxed);
+    color: var(--section-text);
+    max-width: var(--sz-content-max);
+  }
+
+  .sz-media-row__text p {
+    margin: 0 0 var(--sz-space-md) 0;
+  }
+
+  .sz-media-row__text p:last-child {
+    margin-bottom: 0;
+  }
+
+  /* Buttons */
+  .sz-media-row__buttons {
+    margin-top: var(--sz-space-sm);
+  }
+
+  .sz-media-row__btn {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--sz-space-sm);
+    padding: var(--sz-space-md) var(--sz-space-xl);
+    font-family: var(--sz-font-body);
+    font-size: var(--sz-text-base);
+    font-weight: var(--sz-font-semibold);
+    text-decoration: none;
+    border-radius: var(--sz-radius-button);
+    transition: all var(--sz-transition-normal);
+  }
+
+  .sz-media-row__btn--primary {
+    background-color: var(--sz-primary-dark);
+    color: var(--sz-background);
+    border: 2px solid var(--sz-primary-dark);
+  }
+
+  .sz-media-row__btn--primary:hover {
+    background-color: var(--sz-heading);
+    border-color: var(--sz-heading);
+    transform: translateY(-2px);
+  }
+
+  .sz-media-row__btn--secondary {
+    background-color: transparent;
+    color: var(--sz-primary-dark);
+    border: 2px solid var(--sz-primary);
+  }
+
+  .sz-media-row__btn--secondary:hover {
+    background-color: var(--sz-primary);
+    color: var(--sz-background);
+  }
+
+  /* Icon List */
+  .sz-media-row__icons {
+    list-style: none;
+    margin: var(--sz-space-md) 0 0 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--sz-space-sm);
+  }
+
+  .sz-media-row__icon-item {
+    display: flex;
+    align-items: center;
+    gap: var(--sz-space-sm);
+    font-family: var(--sz-font-body);
+    font-size: var(--sz-text-base);
+    color: var(--section-text);
+  }
+
+  .sz-media-row__icon-item svg {
+    color: var(--sz-primary);
+    flex-shrink: 0;
+  }
+
+  /* Mobile */
+  @media (max-width: 767px) {
+    .sz-media-row__heading {
+      font-size: var(--sz-text-3xl);
+    }
+  }
+{% endstyle %}
+
+{% schema %}
+{
+  "name": "Media Row",
+  "tag": "section",
+  "class": "sz-section-media-row",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "checkbox",
+      "id": "full_width",
+      "label": "Full width",
+      "default": false
+    },
+    {
+      "type": "select",
+      "id": "layout",
+      "label": "Image Position",
+      "options": [
+        { "value": "image-left", "label": "Image Left" },
+        { "value": "image-right", "label": "Image Right" }
+      ],
+      "default": "image-left"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image"
+    },
+    {
+      "type": "select",
+      "id": "image_ratio",
+      "label": "Image Ratio",
+      "options": [
+        { "value": "3/4", "label": "Portrait (3:4)" },
+        { "value": "1/1", "label": "Square (1:1)" },
+        { "value": "4/3", "label": "Landscape (4:3)" },
+        { "value": "16/9", "label": "Wide (16:9)" }
+      ],
+      "default": "1/1"
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "select",
+      "id": "color_scheme",
+      "label": "Color Scheme",
+      "options": [
+        { "value": "light", "label": "Light" },
+        { "value": "alt", "label": "Alternate" },
+        { "value": "surface", "label": "Surface" },
+        { "value": "dark", "label": "Dark" }
+      ],
+      "default": "light"
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Top Padding",
+      "min": 0,
+      "max": 120,
+      "step": 8,
+      "default": 80,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Bottom Padding",
+      "min": 0,
+      "max": 120,
+      "step": 8,
+      "default": 80,
+      "unit": "px"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "subheading",
+      "name": "Subheading",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text",
+          "default": "About Us"
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "name": "Heading",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text",
+          "default": "Our Story"
+        },
+        {
+          "type": "select",
+          "id": "heading_tag",
+          "label": "Heading Tag",
+          "options": [
+            { "value": "h1", "label": "H1" },
+            { "value": "h2", "label": "H2" },
+            { "value": "h3", "label": "H3" }
+          ],
+          "default": "h2"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "name": "Text",
+      "settings": [
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Text",
+          "default": "<p>Share your brand story with customers.</p>"
+        }
+      ]
+    },
+    {
+      "type": "button",
+      "name": "Button",
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label",
+          "default": "Learn More"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link"
+        },
+        {
+          "type": "select",
+          "id": "style",
+          "label": "Style",
+          "options": [
+            { "value": "primary", "label": "Primary" },
+            { "value": "secondary", "label": "Secondary" }
+          ],
+          "default": "primary"
+        }
+      ]
+    },
+    {
+      "type": "icon_list",
+      "name": "Icon List",
+      "settings": [
+        {
+          "type": "textarea",
+          "id": "items",
+          "label": "Items (separated by |)",
+          "default": "Feature one | Feature two | Feature three"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Media Row",
+      "blocks": [
+        { "type": "subheading", "settings": { "text": "The Shelzy's Difference" } },
+        { "type": "heading", "settings": { "text": "Permanent Sublimation Printing" } },
+        { "type": "text", "settings": { "text": "<p>Unlike vinyl that peels and cracks, our sublimation printing process infuses the design directly into the bottle's coating.</p><p>The result? A vibrant, permanent personalization that's dishwasher safe and built to last a lifetime.</p>" } },
+        { "type": "button", "settings": { "label": "Learn More", "link": "/pages/about" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

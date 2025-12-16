@@ -1,0 +1,368 @@
+{% comment %}
+================================================================================
+SHELZY'S DESIGNS - FAQ SECTION
+Version: 2.0.0
+Last Updated: 2024-12
+================================================================================
+Frequently Asked Questions with accordion.
+Includes FAQ schema for SEO.
+
+Features:
+- Accessible accordion
+- FAQ structured data for SEO
+- Block-based for unlimited questions
+- Color scheme selection
+================================================================================
+{% endcomment %}
+
+{%- liquid
+  assign color_scheme = section.settings.color_scheme
+  case color_scheme
+    when 'light'
+      assign bg_color = 'var(--sz-background)'
+      assign text_color = 'var(--sz-text)'
+      assign heading_color = 'var(--sz-heading)'
+    when 'alt'
+      assign bg_color = 'var(--sz-background-alt)'
+      assign text_color = 'var(--sz-text)'
+      assign heading_color = 'var(--sz-heading)'
+    when 'surface'
+      assign bg_color = 'var(--sz-surface)'
+      assign text_color = 'var(--sz-text)'
+      assign heading_color = 'var(--sz-heading)'
+  endcase
+-%}
+
+<section
+  class="sz-faq"
+  style="
+    --faq-bg: {{ bg_color }};
+    --faq-text: {{ text_color }};
+    --faq-heading: {{ heading_color }};
+    --faq-padding-top: {{ section.settings.padding_top }}px;
+    --faq-padding-bottom: {{ section.settings.padding_bottom }}px;
+  "
+>
+  <div class="sz-faq__container">
+    {%- if section.settings.heading != blank or section.settings.subheading != blank -%}
+      <div class="sz-faq__header">
+        {%- if section.settings.subheading != blank -%}
+          <p class="sz-faq__subheading">{{ section.settings.subheading }}</p>
+        {%- endif -%}
+        {%- if section.settings.heading != blank -%}
+          <h2 class="sz-faq__heading">{{ section.settings.heading }}</h2>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+    <div class="sz-faq__list">
+      {%- for block in section.blocks -%}
+        <details class="sz-faq__item" {{ block.shopify_attributes }}>
+          <summary class="sz-faq__question">
+            <span>{{ block.settings.question }}</span>
+            <span class="sz-faq__icon" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="6 9 12 15 18 9"/>
+              </svg>
+            </span>
+          </summary>
+          <div class="sz-faq__answer">
+            {{ block.settings.answer }}
+          </div>
+        </details>
+      {%- endfor -%}
+    </div>
+
+    {%- if section.settings.button_label != blank -%}
+      <div class="sz-faq__footer">
+        <a href="{{ section.settings.button_link }}" class="sz-faq__btn">
+          {{ section.settings.button_label }}
+        </a>
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{%- comment -%} FAQ Schema for SEO {%- endcomment -%}
+{%- if section.blocks.size > 0 -%}
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {%- for block in section.blocks -%}
+          {
+            "@type": "Question",
+            "name": {{ block.settings.question | json }},
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": {{ block.settings.answer | strip_html | json }}
+            }
+          }{%- unless forloop.last -%},{%- endunless -%}
+        {%- endfor -%}
+      ]
+    }
+  </script>
+{%- endif -%}
+
+{% style %}
+  .sz-faq {
+    background-color: var(--faq-bg);
+    padding-top: var(--faq-padding-top);
+    padding-bottom: var(--faq-padding-bottom);
+  }
+
+  .sz-faq__container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding-inline: var(--sz-container-padding);
+  }
+
+  /* Header */
+  .sz-faq__header {
+    text-align: center;
+    margin-bottom: var(--sz-space-2xl);
+  }
+
+  .sz-faq__subheading {
+    font-family: var(--sz-font-body);
+    font-size: var(--sz-text-xs);
+    font-weight: var(--sz-font-semibold);
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--sz-primary);
+    margin: 0 0 var(--sz-space-sm) 0;
+  }
+
+  .sz-faq__heading {
+    font-family: var(--sz-font-heading);
+    font-size: var(--sz-text-4xl);
+    font-weight: var(--sz-font-heading-weight);
+    line-height: var(--sz-leading-tight);
+    color: var(--faq-heading);
+    margin: 0;
+  }
+
+  /* Accordion */
+  .sz-faq__list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sz-space-sm);
+  }
+
+  .sz-faq__item {
+    background-color: var(--sz-background);
+    border: 1px solid var(--sz-border);
+    border-radius: var(--sz-radius-md);
+    overflow: hidden;
+  }
+
+  .sz-faq__question {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--sz-space-md);
+    padding: var(--sz-space-lg);
+    font-family: var(--sz-font-body);
+    font-size: var(--sz-text-base);
+    font-weight: var(--sz-font-semibold);
+    color: var(--faq-heading);
+    cursor: pointer;
+    list-style: none;
+  }
+
+  .sz-faq__question::-webkit-details-marker {
+    display: none;
+  }
+
+  .sz-faq__question:hover {
+    background-color: var(--sz-background-alt);
+  }
+
+  .sz-faq__icon {
+    flex-shrink: 0;
+    color: var(--sz-primary);
+    transition: transform var(--sz-transition-normal);
+  }
+
+  .sz-faq__item[open] .sz-faq__icon {
+    transform: rotate(180deg);
+  }
+
+  .sz-faq__answer {
+    padding: 0 var(--sz-space-lg) var(--sz-space-lg) var(--sz-space-lg);
+    font-family: var(--sz-font-body);
+    font-size: var(--sz-text-base);
+    line-height: var(--sz-leading-relaxed);
+    color: var(--faq-text);
+  }
+
+  /* Footer */
+  .sz-faq__footer {
+    text-align: center;
+    margin-top: var(--sz-space-2xl);
+  }
+
+  .sz-faq__btn {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--sz-space-sm);
+    padding: var(--sz-space-md) var(--sz-space-xl);
+    font-family: var(--sz-font-body);
+    font-size: var(--sz-text-base);
+    font-weight: var(--sz-font-semibold);
+    text-decoration: none;
+    background-color: var(--sz-primary-dark);
+    color: var(--sz-background);
+    border-radius: var(--sz-radius-button);
+    transition: all var(--sz-transition-normal);
+  }
+
+  .sz-faq__btn:hover {
+    background-color: var(--sz-heading);
+    transform: translateY(-2px);
+  }
+
+  /* Mobile */
+  @media (max-width: 767px) {
+    .sz-faq__heading {
+      font-size: var(--sz-text-3xl);
+    }
+
+    .sz-faq__question {
+      padding: var(--sz-space-md);
+      font-size: var(--sz-text-sm);
+    }
+
+    .sz-faq__answer {
+      padding: 0 var(--sz-space-md) var(--sz-space-md) var(--sz-space-md);
+    }
+  }
+{% endstyle %}
+
+{% schema %}
+{
+  "name": "FAQ",
+  "tag": "section",
+  "class": "sz-section-faq",
+  "settings": [
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Got Questions?"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Frequently Asked Questions"
+    },
+    {
+      "type": "select",
+      "id": "color_scheme",
+      "label": "Color Scheme",
+      "options": [
+        { "value": "light", "label": "Light" },
+        { "value": "alt", "label": "Alternate" },
+        { "value": "surface", "label": "Surface" }
+      ],
+      "default": "alt"
+    },
+    {
+      "type": "header",
+      "content": "Footer Button"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button Label",
+      "default": "Contact Us"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button Link"
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Top Padding",
+      "min": 0,
+      "max": 120,
+      "step": 8,
+      "default": 80,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Bottom Padding",
+      "min": 0,
+      "max": 120,
+      "step": 8,
+      "default": 80,
+      "unit": "px"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "question",
+      "name": "Question",
+      "settings": [
+        {
+          "type": "text",
+          "id": "question",
+          "label": "Question",
+          "default": "How does your personalization work?"
+        },
+        {
+          "type": "richtext",
+          "id": "answer",
+          "label": "Answer",
+          "default": "<p>We use permanent sublimation printing that infuses the design directly into the bottle's coating. Unlike vinyl stickers, our prints won't peel, crack, or fade over time.</p>"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "FAQ",
+      "blocks": [
+        {
+          "type": "question",
+          "settings": {
+            "question": "How does your personalization work?",
+            "answer": "<p>We use permanent sublimation printing that infuses the design directly into the bottle's coating. Unlike vinyl stickers, our prints won't peel, crack, or fade over time.</p>"
+          }
+        },
+        {
+          "type": "question",
+          "settings": {
+            "question": "Are the bottles dishwasher safe?",
+            "answer": "<p>Yes! Our sublimation-printed bottles are completely dishwasher safe. The design is permanently bonded to the bottle, so it won't be affected by washing.</p>"
+          }
+        },
+        {
+          "type": "question",
+          "settings": {
+            "question": "How long does production take?",
+            "answer": "<p>Most orders are produced within 2-4 business days. During peak seasons (wedding season, holidays), production may take 3-5 business days. Rush orders are available for an additional fee.</p>"
+          }
+        },
+        {
+          "type": "question",
+          "settings": {
+            "question": "What is your return policy?",
+            "answer": "<p>We offer a 30-day return policy for non-personalized items. Since personalized items are made-to-order, we cannot accept returns unless there's a defect or error on our part. We'll always make it right if we make a mistake!</p>"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

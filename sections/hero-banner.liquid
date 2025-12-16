@@ -1,104 +1,153 @@
-{%- comment -%}
-  Shelzy's Designs - Stunning Hero Banner
-  A visually striking hero with parallax, gradient overlays, and animated elements
-{%- endcomment -%}
+{% comment %}
+================================================================================
+SHELZY'S DESIGNS - HERO BANNER SECTION
+Version: 2.0.0
+Last Updated: 2024-12
+================================================================================
+Reusable hero section for all page types.
+Fully editor-driven with no hardcoded values.
 
-<section class="sz-hero-banner" style="--hero-height: {{ section.settings.height }}vh; --mobile-height: {{ section.settings.mobile_height }}vh;">
-  {%- if section.settings.background_image != blank -%}
-    <div class="sz-hero-media">
-      <img
-        src="{{ section.settings.background_image | image_url: width: 2000 }}"
-        srcset="{{ section.settings.background_image | image_url: width: 800 }} 800w,
-                {{ section.settings.background_image | image_url: width: 1200 }} 1200w,
-                {{ section.settings.background_image | image_url: width: 1600 }} 1600w,
-                {{ section.settings.background_image | image_url: width: 2000 }} 2000w"
-        sizes="100vw"
-        alt="{{ section.settings.background_image.alt | default: shop.name }}"
-        class="sz-hero-image"
-        loading="eager"
-        fetchpriority="high"
-      >
-    </div>
-  {%- else -%}
-    <div class="sz-hero-media">
-      <img
-        src="{{ 'hero-bridal-party-5.webp' | asset_url }}"
-        alt="{{ shop.name }} - Personalized Bottles for Life's Special Moments"
-        class="sz-hero-image"
-        loading="eager"
-        fetchpriority="high"
-      >
-    </div>
-  {%- endif -%}
+Features:
+- Responsive image with srcset
+- Optional overlay with configurable opacity
+- Badge, heading, subheading
+- Two CTA buttons
+- Trust badges
+- Scroll indicator
+- Container/bleed toggle
+- Content positioning
+================================================================================
+{% endcomment %}
 
-  <div class="sz-hero-overlay" style="--overlay-opacity: {{ section.settings.overlay_opacity | divided_by: 100.0 }};"></div>
+{%- liquid
+  assign has_image = false
+  if section.settings.background_image != blank
+    assign has_image = true
+  endif
+-%}
 
-  <div class="sz-hero-content">
-    <div class="sz-hero-content-inner {{ section.settings.content_position }}">
+<section
+  class="sz-hero{% if section.settings.full_width %} sz-hero--bleed{% endif %}"
+  style="
+    --hero-height: {{ section.settings.height }}vh;
+    --hero-height-mobile: {{ section.settings.mobile_height }}vh;
+    --overlay-opacity: {{ section.settings.overlay_opacity | divided_by: 100.0 }};
+  "
+>
+  {%- comment -%} Background Media {%- endcomment -%}
+  <div class="sz-hero__media">
+    {%- if has_image -%}
+      {{
+        section.settings.background_image
+        | image_url: width: 2000
+        | image_tag:
+          srcset: '800w, 1200w, 1600w, 2000w',
+          sizes: '100vw',
+          class: 'sz-hero__image',
+          loading: 'eager',
+          fetchpriority: 'high',
+          alt: section.settings.background_image.alt | default: section.settings.heading | default: shop.name
+      }}
+    {%- else -%}
+      <div class="sz-hero__placeholder"></div>
+    {%- endif -%}
+  </div>
+
+  {%- comment -%} Overlay {%- endcomment -%}
+  <div class="sz-hero__overlay" aria-hidden="true"></div>
+
+  {%- comment -%} Content {%- endcomment -%}
+  <div class="sz-hero__content">
+    <div class="sz-hero__inner sz-hero__inner--{{ section.settings.content_position }}">
+
+      {%- comment -%} Badge {%- endcomment -%}
       {%- if section.settings.badge_text != blank -%}
-        <span class="sz-hero-badge animate-fade-up">
-          {%- if section.settings.badge_icon == 'star' -%}
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-          {%- elsif section.settings.badge_icon == 'heart' -%}
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-          {%- elsif section.settings.badge_icon == 'sparkle' -%}
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3l1.5 6.5L20 12l-6.5 1.5L12 20l-1.5-6.5L4 12l6.5-1.5L12 3z"/></svg>
+        <span class="sz-hero__badge sz-animate sz-animate--fade-up">
+          {%- if section.settings.badge_icon != 'none' -%}
+            <span class="sz-hero__badge-icon">
+              {%- case section.settings.badge_icon -%}
+                {%- when 'star' -%}
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                {%- when 'heart' -%}
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                {%- when 'sparkle' -%}
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 3l1.5 6.5L20 12l-6.5 1.5L12 20l-1.5-6.5L4 12l6.5-1.5L12 3z"/></svg>
+              {%- endcase -%}
+            </span>
           {%- endif -%}
           {{ section.settings.badge_text }}
         </span>
       {%- endif -%}
 
+      {%- comment -%} Heading {%- endcomment -%}
       {%- if section.settings.heading != blank -%}
-        <h1 class="sz-hero-heading animate-fade-up delay-1">{{ section.settings.heading }}</h1>
+        <h1 class="sz-hero__heading sz-animate sz-animate--fade-up sz-animate--delay-1">
+          {{ section.settings.heading }}
+        </h1>
       {%- endif -%}
 
+      {%- comment -%} Subheading {%- endcomment -%}
       {%- if section.settings.subheading != blank -%}
-        <p class="sz-hero-subheading animate-fade-up delay-2">{{ section.settings.subheading }}</p>
+        <p class="sz-hero__subheading sz-animate sz-animate--fade-up sz-animate--delay-2">
+          {{ section.settings.subheading }}
+        </p>
       {%- endif -%}
 
-      <div class="sz-hero-buttons animate-fade-up delay-3">
-        {%- if section.settings.button_label != blank -%}
-          <a href="{{ section.settings.button_link }}" class="sz-hero-btn sz-hero-btn-primary">
-            {{ section.settings.button_label }}
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-          </a>
-        {%- endif -%}
-        {%- if section.settings.button_label_2 != blank -%}
-          <a href="{{ section.settings.button_link_2 }}" class="sz-hero-btn sz-hero-btn-secondary">
-            {{ section.settings.button_label_2 }}
-          </a>
-        {%- endif -%}
-      </div>
+      {%- comment -%} Buttons {%- endcomment -%}
+      {%- if section.settings.button_label != blank or section.settings.button_label_2 != blank -%}
+        <div class="sz-hero__buttons sz-animate sz-animate--fade-up sz-animate--delay-3">
+          {%- if section.settings.button_label != blank -%}
+            <a href="{{ section.settings.button_link }}" class="sz-hero__btn sz-hero__btn--primary">
+              {{ section.settings.button_label }}
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
+          {%- endif -%}
+          {%- if section.settings.button_label_2 != blank -%}
+            <a href="{{ section.settings.button_link_2 }}" class="sz-hero__btn sz-hero__btn--secondary">
+              {{ section.settings.button_label_2 }}
+            </a>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
 
+      {%- comment -%} Trust Badges {%- endcomment -%}
       {%- if section.settings.show_trust_badges -%}
-        <div class="sz-hero-trust animate-fade-up delay-4">
-          <div class="sz-trust-item">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>
-            <span>Permanent Printing</span>
-          </div>
-          <div class="sz-trust-item">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
-            <span>Free Shipping $75+</span>
-          </div>
-          <div class="sz-trust-item">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-            <span>Made with Love</span>
-          </div>
+        <div class="sz-hero__trust sz-animate sz-animate--fade-up sz-animate--delay-4">
+          {%- if settings.trust_badge_1 != blank -%}
+            <div class="sz-hero__trust-item">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>
+              <span>{{ settings.trust_badge_1 }}</span>
+            </div>
+          {%- endif -%}
+          {%- if settings.trust_badge_2 != blank -%}
+            <div class="sz-hero__trust-item">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+              <span>{{ settings.trust_badge_2 }}</span>
+            </div>
+          {%- endif -%}
+          {%- if settings.trust_badge_3 != blank -%}
+            <div class="sz-hero__trust-item">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+              <span>{{ settings.trust_badge_3 }}</span>
+            </div>
+          {%- endif -%}
         </div>
       {%- endif -%}
     </div>
   </div>
 
+  {%- comment -%} Scroll Indicator {%- endcomment -%}
   {%- if section.settings.show_scroll_indicator -%}
-    <div class="sz-hero-scroll">
+    <div class="sz-hero__scroll" aria-hidden="true">
       <span>Scroll</span>
-      <div class="sz-scroll-line"></div>
+      <div class="sz-hero__scroll-line"></div>
     </div>
   {%- endif -%}
 </section>
 
-<style>
-  .sz-hero-banner {
+{% style %}
+  /* Hero Container */
+  .sz-hero {
     position: relative;
     height: var(--hero-height);
     min-height: 500px;
@@ -108,52 +157,40 @@
     overflow: hidden;
   }
 
+  .sz-hero--bleed {
+    margin-inline: calc(var(--sz-container-padding) * -1);
+    width: calc(100% + var(--sz-container-padding) * 2);
+  }
+
   @media (max-width: 768px) {
-    .sz-hero-banner {
-      height: var(--mobile-height);
+    .sz-hero {
+      height: var(--hero-height-mobile);
       min-height: 400px;
     }
   }
 
-  .sz-hero-media {
+  /* Media */
+  .sz-hero__media {
     position: absolute;
     inset: 0;
     z-index: 1;
   }
 
-  .sz-hero-image {
+  .sz-hero__image {
     width: 100%;
     height: 100%;
     object-fit: cover;
     object-position: center;
-    transform: scale(1.05);
-    animation: sz-hero-zoom 20s ease-out forwards;
   }
 
-  @keyframes sz-hero-zoom {
-    to { transform: scale(1); }
+  .sz-hero__placeholder {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, var(--sz-primary-dark) 0%, var(--sz-primary) 50%, var(--sz-primary-light) 100%);
   }
 
-  .sz-hero-placeholder {
-    background: linear-gradient(135deg, #2C3E2D 0%, #4E5F4A 50%, #8BAA88 100%);
-  }
-
-  .sz-hero-gradient-bg {
-    position: absolute;
-    inset: 0;
-    background:
-      radial-gradient(ellipse at 20% 50%, rgba(139, 170, 136, 0.3) 0%, transparent 50%),
-      radial-gradient(ellipse at 80% 50%, rgba(212, 175, 55, 0.2) 0%, transparent 50%),
-      radial-gradient(ellipse at 50% 100%, rgba(78, 95, 74, 0.4) 0%, transparent 50%);
-    animation: sz-gradient-shift 15s ease-in-out infinite alternate;
-  }
-
-  @keyframes sz-gradient-shift {
-    0% { opacity: 1; }
-    100% { opacity: 0.8; transform: scale(1.1); }
-  }
-
-  .sz-hero-overlay {
+  /* Overlay */
+  .sz-hero__overlay {
     position: absolute;
     inset: 0;
     z-index: 2;
@@ -165,164 +202,172 @@
     );
   }
 
-  .sz-hero-content {
+  /* Content */
+  .sz-hero__content {
     position: relative;
     z-index: 3;
     width: 100%;
-    max-width: 1200px;
+    max-width: var(--sz-container-max);
     margin: 0 auto;
-    padding: 40px 24px;
+    padding: var(--sz-space-2xl) var(--sz-container-padding);
   }
 
-  .sz-hero-content-inner {
+  .sz-hero__inner {
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: var(--sz-space-lg);
   }
 
-  .sz-hero-content-inner.center {
+  .sz-hero__inner--center {
     align-items: center;
     text-align: center;
   }
 
-  .sz-hero-content-inner.left {
+  .sz-hero__inner--left {
     align-items: flex-start;
     text-align: left;
     max-width: 650px;
   }
 
-  .sz-hero-badge {
+  /* Badge */
+  .sz-hero__badge {
     display: inline-flex;
     align-items: center;
-    gap: 8px;
-    padding: 8px 16px;
+    gap: var(--sz-space-sm);
+    padding: var(--sz-space-sm) var(--sz-space-md);
     background: rgba(255, 255, 255, 0.15);
     backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 50px;
-    font-family: "Inter", sans-serif;
-    font-size: 13px;
-    font-weight: 600;
+    border-radius: var(--sz-radius-full);
+    font-family: var(--sz-font-body);
+    font-size: var(--sz-text-xs);
+    font-weight: var(--sz-font-semibold);
     letter-spacing: 0.05em;
     text-transform: uppercase;
-    color: #fff;
+    color: var(--sz-background);
   }
 
-  .sz-hero-badge svg {
-    color: #D4AF37;
+  .sz-hero__badge-icon {
+    color: var(--sz-accent);
+    display: flex;
   }
 
-  .sz-hero-heading {
-    font-family: "Playfair Display", Georgia, serif;
-    font-size: clamp(2.5rem, 6vw, 4.5rem);
-    font-weight: 500;
-    line-height: 1.1;
-    color: #fff;
+  /* Heading */
+  .sz-hero__heading {
+    font-family: var(--sz-font-heading);
+    font-size: var(--sz-text-6xl);
+    font-weight: var(--sz-font-heading-weight);
+    line-height: var(--sz-leading-tight);
+    color: var(--sz-background);
     margin: 0;
     text-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
   }
 
-  .sz-hero-subheading {
-    font-family: "Inter", sans-serif;
-    font-size: clamp(1rem, 2vw, 1.25rem);
-    font-weight: 400;
-    line-height: 1.6;
+  /* Subheading */
+  .sz-hero__subheading {
+    font-family: var(--sz-font-body);
+    font-size: var(--sz-text-lg);
+    font-weight: var(--sz-font-normal);
+    line-height: var(--sz-leading-relaxed);
     color: rgba(255, 255, 255, 0.9);
     margin: 0;
     max-width: 600px;
   }
 
-  .sz-hero-buttons {
+  /* Buttons */
+  .sz-hero__buttons {
     display: flex;
     flex-wrap: wrap;
-    gap: 16px;
-    margin-top: 12px;
+    gap: var(--sz-space-md);
+    margin-top: var(--sz-space-sm);
   }
 
-  .sz-hero-btn {
+  .sz-hero__btn {
     display: inline-flex;
     align-items: center;
-    gap: 10px;
-    padding: 16px 32px;
-    font-family: "Inter", sans-serif;
-    font-size: 15px;
-    font-weight: 600;
+    gap: var(--sz-space-sm);
+    padding: var(--sz-space-md) var(--sz-space-xl);
+    font-family: var(--sz-font-body);
+    font-size: var(--sz-text-base);
+    font-weight: var(--sz-font-semibold);
     text-decoration: none;
-    border-radius: 50px;
-    transition: all 0.3s ease;
+    border-radius: var(--sz-radius-full);
+    transition: all var(--sz-transition-normal);
   }
 
-  .sz-hero-btn-primary {
-    background: #fff;
-    color: #2C3E2D;
+  .sz-hero__btn--primary {
+    background: var(--sz-background);
+    color: var(--sz-heading);
   }
 
-  .sz-hero-btn-primary:hover {
-    background: #D4AF37;
-    color: #fff;
+  .sz-hero__btn--primary:hover {
+    background: var(--sz-accent);
+    color: var(--sz-background);
     transform: translateY(-2px);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    box-shadow: var(--sz-shadow-lg);
   }
 
-  .sz-hero-btn-primary svg {
-    transition: transform 0.3s ease;
+  .sz-hero__btn--primary svg {
+    transition: transform var(--sz-transition-normal);
   }
 
-  .sz-hero-btn-primary:hover svg {
+  .sz-hero__btn--primary:hover svg {
     transform: translateX(4px);
   }
 
-  .sz-hero-btn-secondary {
+  .sz-hero__btn--secondary {
     background: transparent;
-    color: #fff;
+    color: var(--sz-background);
     border: 2px solid rgba(255, 255, 255, 0.5);
   }
 
-  .sz-hero-btn-secondary:hover {
+  .sz-hero__btn--secondary:hover {
     background: rgba(255, 255, 255, 0.1);
-    border-color: #fff;
+    border-color: var(--sz-background);
   }
 
-  .sz-hero-trust {
+  /* Trust Badges */
+  .sz-hero__trust {
     display: flex;
     flex-wrap: wrap;
-    gap: 24px;
-    margin-top: 24px;
-    padding-top: 24px;
+    gap: var(--sz-space-lg);
+    margin-top: var(--sz-space-lg);
+    padding-top: var(--sz-space-lg);
     border-top: 1px solid rgba(255, 255, 255, 0.2);
   }
 
-  .sz-trust-item {
+  .sz-hero__trust-item {
     display: flex;
     align-items: center;
-    gap: 8px;
-    font-family: "Inter", sans-serif;
-    font-size: 13px;
+    gap: var(--sz-space-sm);
+    font-family: var(--sz-font-body);
+    font-size: var(--sz-text-xs);
     color: rgba(255, 255, 255, 0.85);
   }
 
-  .sz-trust-item svg {
-    color: #D4AF37;
+  .sz-hero__trust-item svg {
+    color: var(--sz-accent);
   }
 
-  .sz-hero-scroll {
+  /* Scroll Indicator */
+  .sz-hero__scroll {
     position: absolute;
-    bottom: 30px;
+    bottom: var(--sz-space-xl);
     left: 50%;
     transform: translateX(-50%);
     z-index: 3;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 8px;
+    gap: var(--sz-space-sm);
     color: rgba(255, 255, 255, 0.7);
-    font-family: "Inter", sans-serif;
+    font-family: var(--sz-font-body);
     font-size: 11px;
     letter-spacing: 0.1em;
     text-transform: uppercase;
   }
 
-  .sz-scroll-line {
+  .sz-hero__scroll-line {
     width: 1px;
     height: 40px;
     background: linear-gradient(to bottom, rgba(255,255,255,0.7), transparent);
@@ -335,16 +380,16 @@
   }
 
   /* Animations */
-  .animate-fade-up {
+  .sz-animate {
     opacity: 0;
     transform: translateY(30px);
     animation: sz-fade-up 0.8s ease-out forwards;
   }
 
-  .delay-1 { animation-delay: 0.2s; }
-  .delay-2 { animation-delay: 0.4s; }
-  .delay-3 { animation-delay: 0.6s; }
-  .delay-4 { animation-delay: 0.8s; }
+  .sz-animate--delay-1 { animation-delay: 0.2s; }
+  .sz-animate--delay-2 { animation-delay: 0.4s; }
+  .sz-animate--delay-3 { animation-delay: 0.6s; }
+  .sz-animate--delay-4 { animation-delay: 0.8s; }
 
   @keyframes sz-fade-up {
     to {
@@ -353,46 +398,44 @@
     }
   }
 
+  /* Reduced Motion */
   @media (prefers-reduced-motion: reduce) {
-    .animate-fade-up {
+    .sz-animate {
       animation: none;
       opacity: 1;
       transform: none;
     }
-    .sz-hero-image {
-      animation: none;
-      transform: none;
-    }
-    .sz-scroll-line {
+    .sz-hero__scroll-line {
       animation: none;
     }
   }
 
+  /* Mobile */
   @media (max-width: 768px) {
-    .sz-hero-content {
-      padding: 30px 20px;
+    .sz-hero__content {
+      padding: var(--sz-space-xl) var(--sz-space-md);
     }
 
-    .sz-hero-buttons {
+    .sz-hero__buttons {
       flex-direction: column;
       width: 100%;
     }
 
-    .sz-hero-btn {
+    .sz-hero__btn {
       width: 100%;
       justify-content: center;
     }
 
-    .sz-hero-trust {
+    .sz-hero__trust {
       flex-direction: column;
-      gap: 12px;
+      gap: var(--sz-space-sm);
     }
 
-    .sz-hero-scroll {
+    .sz-hero__scroll {
       display: none;
     }
   }
-</style>
+{% endstyle %}
 
 {% schema %}
 {
@@ -401,6 +444,17 @@
   "class": "sz-section-hero",
   "settings": [
     {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "checkbox",
+      "id": "full_width",
+      "label": "Full width (bleed)",
+      "default": true,
+      "info": "Extend to screen edges"
+    },
+    {
       "type": "image_picker",
       "id": "background_image",
       "label": "Background Image"
@@ -408,7 +462,7 @@
     {
       "type": "range",
       "id": "height",
-      "label": "Desktop Height (vh)",
+      "label": "Desktop Height",
       "min": 50,
       "max": 100,
       "step": 5,
@@ -418,7 +472,7 @@
     {
       "type": "range",
       "id": "mobile_height",
-      "label": "Mobile Height (vh)",
+      "label": "Mobile Height",
       "min": 40,
       "max": 100,
       "step": 5,
@@ -442,8 +496,7 @@
     {
       "type": "text",
       "id": "badge_text",
-      "label": "Badge Text",
-      "default": "Wedding Season 2024"
+      "label": "Badge Text"
     },
     {
       "type": "select",
@@ -465,13 +518,12 @@
       "type": "text",
       "id": "heading",
       "label": "Heading",
-      "default": "Personalized Bottles for Life's Special Moments"
+      "default": "Welcome to Our Store"
     },
     {
       "type": "textarea",
       "id": "subheading",
-      "label": "Subheading",
-      "default": "Handcrafted with permanent sublimation printing. No vinyl, no peeling — just beautiful, lasting designs."
+      "label": "Subheading"
     },
     {
       "type": "select",
@@ -491,7 +543,7 @@
       "type": "text",
       "id": "button_label",
       "label": "Button Label",
-      "default": "Shop Best Sellers"
+      "default": "Shop Now"
     },
     {
       "type": "url",
@@ -505,8 +557,7 @@
     {
       "type": "text",
       "id": "button_label_2",
-      "label": "Button Label",
-      "default": "View Collections"
+      "label": "Button Label"
     },
     {
       "type": "url",
@@ -521,7 +572,8 @@
       "type": "checkbox",
       "id": "show_trust_badges",
       "label": "Show Trust Badges",
-      "default": true
+      "default": true,
+      "info": "Displays badges from Theme Settings"
     },
     {
       "type": "checkbox",
@@ -532,7 +584,13 @@
   ],
   "presets": [
     {
-      "name": "Hero Banner"
+      "name": "Hero Banner",
+      "settings": {
+        "heading": "Personalized Bottles for Life's Special Moments",
+        "subheading": "Handcrafted with permanent sublimation printing. No vinyl, no peeling — just beautiful, lasting designs.",
+        "button_label": "Shop Best Sellers",
+        "button_link": "/collections/best-sellers"
+      }
     }
   ]
 }
