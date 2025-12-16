@@ -1,0 +1,163 @@
+{% comment %}
+================================================================================
+SHELZY'S DESIGNS - PERSONALIZATION CART DISPLAY
+Version: 1.0.0
+Last Updated: 2024-12
+================================================================================
+Enhanced display of personalization details in cart.
+Shows Name, Font, and Color clearly for review before checkout.
+
+Usage: {% render 'personalization-cart-display', item: item %}
+================================================================================
+{% endcomment %}
+
+{%- liquid
+  assign has_personalization = false
+  assign p_name = blank
+  assign p_names = blank
+  assign p_font = blank
+  assign p_color = blank
+  assign p_approved = blank
+
+  for property in item.properties
+    assign prop_name = property.first | downcase
+    if prop_name contains 'name'
+      if prop_name == 'names'
+        assign p_names = property.last
+      else
+        assign p_name = property.last
+      endif
+      assign has_personalization = true
+    endif
+    if prop_name contains 'font'
+      assign p_font = property.last
+    endif
+    if prop_name contains 'color'
+      assign p_color = property.last
+    endif
+    if prop_name contains 'approved'
+      assign p_approved = property.last
+    endif
+  endfor
+-%}
+
+{%- if has_personalization -%}
+<div class="sz-cart-personalization">
+  <div class="sz-cart-personalization__header">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/>
+    </svg>
+    <span>Personalization</span>
+  </div>
+
+  <div class="sz-cart-personalization__details">
+    {%- if p_name != blank -%}
+      <div class="sz-cart-personalization__row">
+        <span class="sz-cart-personalization__label">Name:</span>
+        <span class="sz-cart-personalization__value sz-cart-personalization__value--name">{{ p_name }}</span>
+      </div>
+    {%- endif -%}
+
+    {%- if p_names != blank -%}
+      <div class="sz-cart-personalization__row sz-cart-personalization__row--names">
+        <span class="sz-cart-personalization__label">Names:</span>
+        <span class="sz-cart-personalization__value">
+          {%- assign names_array = p_names | split: newline -%}
+          {%- for name in names_array -%}
+            {{ name | strip }}{%- unless forloop.last -%}, {%- endunless -%}
+          {%- endfor -%}
+        </span>
+      </div>
+    {%- endif -%}
+
+    {%- if p_font != blank -%}
+      <div class="sz-cart-personalization__row">
+        <span class="sz-cart-personalization__label">Font:</span>
+        <span class="sz-cart-personalization__value">{{ p_font }}</span>
+      </div>
+    {%- endif -%}
+
+    {%- if p_color != blank -%}
+      <div class="sz-cart-personalization__row">
+        <span class="sz-cart-personalization__label">Color:</span>
+        <span class="sz-cart-personalization__value">{{ p_color }}</span>
+      </div>
+    {%- endif -%}
+  </div>
+
+  {%- if p_approved == 'Yes' -%}
+    <div class="sz-cart-personalization__approved">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+        <polyline points="22 4 12 14.01 9 11.01"/>
+      </svg>
+      <span>Preview approved</span>
+    </div>
+  {%- endif -%}
+</div>
+
+<style>
+  .sz-cart-personalization {
+    margin-top: var(--sz-space-sm, 8px);
+    padding: var(--sz-space-sm, 10px) var(--sz-space-md, 12px);
+    background: var(--sz-surface, #F5F2ED);
+    border-radius: var(--sz-radius-md, 6px);
+    font-family: var(--sz-font-body);
+    font-size: var(--sz-text-xs, 12px);
+  }
+
+  .sz-cart-personalization__header {
+    display: flex;
+    align-items: center;
+    gap: var(--sz-space-xs, 6px);
+    font-weight: var(--sz-font-semibold, 600);
+    color: var(--sz-primary-dark, #4E5F4A);
+    margin-bottom: var(--sz-space-xs, 6px);
+  }
+
+  .sz-cart-personalization__header svg {
+    color: var(--sz-primary, #8BAA88);
+  }
+
+  .sz-cart-personalization__details {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .sz-cart-personalization__row {
+    display: flex;
+    gap: var(--sz-space-xs, 6px);
+    line-height: 1.4;
+  }
+
+  .sz-cart-personalization__row--names {
+    flex-direction: column;
+  }
+
+  .sz-cart-personalization__label {
+    color: var(--sz-text-muted, #7A7A7A);
+    flex-shrink: 0;
+  }
+
+  .sz-cart-personalization__value {
+    color: var(--sz-text, #2B2B2B);
+  }
+
+  .sz-cart-personalization__value--name {
+    font-weight: var(--sz-font-semibold, 600);
+    font-style: italic;
+  }
+
+  .sz-cart-personalization__approved {
+    display: flex;
+    align-items: center;
+    gap: var(--sz-space-xs, 4px);
+    margin-top: var(--sz-space-xs, 6px);
+    padding-top: var(--sz-space-xs, 6px);
+    border-top: 1px solid var(--sz-border, #E8E4DE);
+    color: var(--sz-success, #10B981);
+    font-size: 11px;
+  }
+</style>
+{%- endif -%}

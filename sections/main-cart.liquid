@@ -81,15 +81,9 @@
                       <p class="sz-cart-item-variant">{{ item.variant.title }}</p>
                     {%- endunless -%}
 
-                    {%- comment -%} Line item properties (personalization) {%- endcomment -%}
+                    {%- comment -%} Line item properties (personalization) - Enhanced Display {%- endcomment -%}
                     {%- if item.properties.size > 0 -%}
-                      <ul class="sz-cart-item-properties">
-                        {%- for property in item.properties -%}
-                          {%- unless property.last == blank -%}
-                            <li><strong>{{ property.first }}:</strong> {{ property.last }}</li>
-                          {%- endunless -%}
-                        {%- endfor -%}
-                      </ul>
+                      {% render 'personalization-cart-display', item: item %}
                     {%- endif -%}
 
                     <p class="sz-cart-item-price-mobile">{{ item.final_line_price | money }}</p>

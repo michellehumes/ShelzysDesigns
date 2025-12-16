@@ -605,6 +605,66 @@
         "id": "cart_saver_discount_text",
         "label": "Cart saver discount description",
         "default": "10% off"
+      },
+      {
+        "type": "header",
+        "content": "Personalization"
+      },
+      {
+        "type": "checkbox",
+        "id": "enable_personalization_preview",
+        "label": "Enable live personalization preview",
+        "default": true,
+        "info": "Shows real-time text overlay on product images"
+      },
+      {
+        "type": "range",
+        "id": "personalization_char_limit",
+        "label": "Recommended character limit",
+        "min": 8,
+        "max": 20,
+        "step": 1,
+        "default": 15,
+        "info": "Recommended length for best appearance"
+      },
+      {
+        "type": "range",
+        "id": "personalization_max_chars",
+        "label": "Maximum characters allowed",
+        "min": 15,
+        "max": 30,
+        "step": 1,
+        "default": 20
+      },
+      {
+        "type": "select",
+        "id": "personalization_default_font",
+        "label": "Default font style",
+        "options": [
+          { "value": "script", "label": "Elegant Script" },
+          { "value": "serif", "label": "Classic Serif" },
+          { "value": "modern", "label": "Modern Sans" },
+          { "value": "handwritten", "label": "Handwritten" },
+          { "value": "bold", "label": "Bold Block" },
+          { "value": "minimal", "label": "Minimal" }
+        ],
+        "default": "script"
+      },
+      {
+        "type": "select",
+        "id": "personalization_default_color",
+        "label": "Default text color",
+        "options": [
+          { "value": "white", "label": "White" },
+          { "value": "black", "label": "Black" },
+          { "value": "gold", "label": "Gold" },
+          { "value": "rose-gold", "label": "Rose Gold" },
+          { "value": "silver", "label": "Silver" },
+          { "value": "pink", "label": "Hot Pink" },
+          { "value": "navy", "label": "Navy" },
+          { "value": "sage", "label": "Sage Green" }
+        ],
+        "default": "white"
       }
     ]
   }

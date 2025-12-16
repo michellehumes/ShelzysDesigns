@@ -216,8 +216,12 @@ Conversion-optimized product page with:
             {%- endfor -%}
           {%- endunless -%}
 
-          {%- comment -%} Personalization Fields {%- endcomment -%}
-          {% render 'shelzys-personalization-form' %}
+          {%- comment -%} Personalization Fields - Live Preview System {%- endcomment -%}
+          {%- if settings.enable_personalization_preview -%}
+            {% render 'personalization-live-preview', product: product %}
+          {%- else -%}
+            {% render 'shelzys-personalization-form' %}
+          {%- endif -%}
 
           {%- comment -%} Quantity & Add to Cart {%- endcomment -%}
           <div class="sz-form-row">
