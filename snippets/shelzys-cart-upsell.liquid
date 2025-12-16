@@ -1,246 +1,275 @@
-{%- comment -%}
-  Shelzy's Designs - Smart Cart Upsell
+{% comment %}
+================================================================================
+SHELZY'S DESIGNS - SMART CART UPSELL
+Version: 2.0.0
+Last Updated: 2024-12
+================================================================================
+Shows contextual upsell suggestions based on cart contents.
+Recommends gift boxes for single bottles, bundles for multiple items.
 
-  Shows contextual upsell suggestions based on cart contents
-  Recommends gift boxes for single bottles, bundles for multiple items
+Usage: {% render 'shelzys-cart-upsell' %}
+================================================================================
+{% endcomment %}
 
-  Add to cart drawer/page after cart items:
-  {% render 'shelzys-cart-upsell' %}
-{%- endcomment -%}
-
-{% assign has_single_bottle = false %}
-{% assign has_bridal_item = false %}
-{% assign cart_item_count = cart.item_count %}
+{%- liquid
+  assign has_single_bottle = false
+  assign has_bridal_item = false
+  assign cart_item_count = cart.item_count
+  assign show_upsell = settings.show_cart_upsell | default: true
+-%}
 
 {%- comment -%} Analyze cart contents {%- endcomment -%}
-{% for item in cart.items %}
-  {% assign product_tags = item.product.tags | join: ',' | downcase %}
-  {% assign product_type = item.product.type | downcase %}
+{%- for item in cart.items -%}
+  {%- assign product_tags = item.product.tags | join: ',' | downcase -%}
+  {%- assign product_type = item.product.type | downcase -%}
 
-  {% if product_type contains 'bottle' or product_tags contains 'bottle' %}
-    {% if item.quantity == 1 and cart_item_count < 3 %}
-      {% assign has_single_bottle = true %}
-    {% endif %}
-  {% endif %}
+  {%- if product_type contains 'bottle' or product_tags contains 'bottle' -%}
+    {%- if item.quantity == 1 and cart_item_count < 3 -%}
+      {%- assign has_single_bottle = true -%}
+    {%- endif -%}
+  {%- endif -%}
 
-  {% if product_tags contains 'bridal' or product_tags contains 'bridesmaid' or product_tags contains 'wedding' %}
-    {% assign has_bridal_item = true %}
-  {% endif %}
-{% endfor %}
+  {%- if product_tags contains 'bridal' or product_tags contains 'bridesmaid' or product_tags contains 'wedding' -%}
+    {%- assign has_bridal_item = true -%}
+  {%- endif -%}
+{%- endfor -%}
+
+{%- if cart.item_count > 0 and show_upsell -%}
+<div class="sz-cart-upsell" id="szCartUpsell">
+  <button
+    type="button"
+    class="sz-cart-upsell__dismiss"
+    onclick="this.parentElement.style.display='none'"
+    aria-label="Dismiss suggestion"
+  >
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+      <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+    </svg>
+  </button>
+
+  <div class="sz-cart-upsell__header">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+      <circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/>
+    </svg>
+    <span class="sz-cart-upsell__title">Complete Your Order</span>
+  </div>
+
+  {%- if has_bridal_item and has_single_bottle -%}
+    {%- comment -%} Suggest upgrading to gift box for bridal items {%- endcomment -%}
+    <div class="sz-cart-upsell__content">
+      <img
+        src="{{ 'gift-box-upsell.jpg' | file_url }}"
+        alt="Gift Box Upgrade"
+        class="sz-cart-upsell__image"
+        onerror="this.style.display='none'"
+        loading="lazy"
+      >
+      <div class="sz-cart-upsell__info">
+        <p class="sz-cart-upsell__product-name">Upgrade to a Proposal Gift Box</p>
+        <p class="sz-cart-upsell__savings">Save 15% on the upgrade!</p>
+        <p class="sz-cart-upsell__description">
+          Includes bottle, gift box, scrunchie & candle
+        </p>
+      </div>
+      <a href="/collections/proposal-gift-boxes" class="sz-cart-upsell__button">
+        View Gift Boxes
+      </a>
+    </div>
+
+  {%- elsif has_single_bottle -%}
+    {%- comment -%} Suggest multi-pack for single bottle purchases {%- endcomment -%}
+    <div class="sz-cart-upsell__content">
+      <img
+        src="{{ 'bundle-upsell.jpg' | file_url }}"
+        alt="Bundle Deal"
+        class="sz-cart-upsell__image"
+        onerror="this.style.display='none'"
+        loading="lazy"
+      >
+      <div class="sz-cart-upsell__info">
+        <p class="sz-cart-upsell__product-name">Ordering for a group?</p>
+        <p class="sz-cart-upsell__savings">Save up to 20% with bundles</p>
+        <p class="sz-cart-upsell__description">
+          3-packs, 5-packs, and 10-packs available
+        </p>
+      </div>
+      <a href="/collections/best-sellers" class="sz-cart-upsell__button">
+        View Bundles
+      </a>
+    </div>
+
+  {%- elsif cart_item_count >= 3 -%}
+    {%- comment -%} For larger orders, highlight bulk savings {%- endcomment -%}
+    <div class="sz-cart-upsell__content">
+      <div class="sz-cart-upsell__info sz-cart-upsell__info--full">
+        <p class="sz-cart-upsell__product-name">Need more bottles?</p>
+        <p class="sz-cart-upsell__savings">Bulk orders get up to 20% off</p>
+        <p class="sz-cart-upsell__description">
+          Perfect for large bridal parties, corporate events & teams
+        </p>
+      </div>
+      <a href="/pages/bulk-orders" class="sz-cart-upsell__button">
+        Request Quote
+      </a>
+    </div>
+
+  {%- else -%}
+    {%- comment -%} Default upsell - best sellers {%- endcomment -%}
+    <div class="sz-cart-upsell__content">
+      <div class="sz-cart-upsell__info sz-cart-upsell__info--full">
+        <p class="sz-cart-upsell__product-name">Add another personalized bottle?</p>
+        <p class="sz-cart-upsell__savings">Perfect for gifting</p>
+        <p class="sz-cart-upsell__description">
+          Free shipping on orders $75+
+        </p>
+      </div>
+      <a href="/collections/best-sellers" class="sz-cart-upsell__button">
+        Shop Best Sellers
+      </a>
+    </div>
+  {%- endif -%}
+</div>
 
 <style>
-  .sz-upsell-wrapper {
-    padding: 16px;
-    background: linear-gradient(135deg, #FAF9F6 0%, #ffffff 100%);
-    border: 1px solid #E0E3DF;
-    border-radius: 12px;
-    margin: 16px 0;
+  .sz-cart-upsell {
+    position: relative;
+    padding: var(--sz-space-md, 16px);
+    background: linear-gradient(135deg, var(--sz-background-alt, #FAF9F6) 0%, var(--sz-background, #ffffff) 100%);
+    border: 1px solid var(--sz-border, #E0E3DF);
+    border-radius: var(--sz-radius-lg, 12px);
+    margin: var(--sz-space-md, 16px) 0;
   }
 
-  .sz-upsell-header {
+  .sz-cart-upsell__dismiss {
+    position: absolute;
+    top: var(--sz-space-sm, 8px);
+    right: var(--sz-space-sm, 8px);
+    background: none;
+    border: none;
+    color: var(--sz-text-muted);
+    cursor: pointer;
+    padding: var(--sz-space-xs, 4px);
+    border-radius: var(--sz-radius-sm, 4px);
+    transition: color var(--sz-transition-fast, 0.2s) ease;
+  }
+
+  .sz-cart-upsell__dismiss:hover {
+    color: var(--sz-text);
+  }
+
+  .sz-cart-upsell__dismiss:focus-visible {
+    outline: 2px solid var(--sz-primary);
+    outline-offset: 2px;
+  }
+
+  .sz-cart-upsell__header {
     display: flex;
     align-items: center;
-    gap: 8px;
-    margin-bottom: 12px;
+    gap: var(--sz-space-sm, 8px);
+    margin-bottom: var(--sz-space-sm, 12px);
   }
 
-  .sz-upsell-icon {
-    font-size: 18px;
+  .sz-cart-upsell__header svg {
+    color: var(--sz-primary);
   }
 
-  .sz-upsell-title {
-    font-family: "Inter", sans-serif;
-    font-size: 13px;
-    font-weight: 600;
-    color: #4E5F4A;
+  .sz-cart-upsell__title {
+    font-family: var(--sz-font-body);
+    font-size: var(--sz-text-xs, 13px);
+    font-weight: var(--sz-font-semibold, 600);
+    color: var(--sz-primary-dark);
     text-transform: uppercase;
     letter-spacing: 0.08em;
   }
 
-  .sz-upsell-content {
+  .sz-cart-upsell__content {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: var(--sz-space-sm, 12px);
   }
 
-  .sz-upsell-image {
+  .sz-cart-upsell__image {
     width: 70px;
     height: 70px;
     object-fit: cover;
-    border-radius: 8px;
-    border: 1px solid #E0E3DF;
+    border-radius: var(--sz-radius-md, 8px);
+    border: 1px solid var(--sz-border, #E0E3DF);
     flex-shrink: 0;
   }
 
-  .sz-upsell-info {
+  .sz-cart-upsell__info {
     flex: 1;
     min-width: 0;
   }
 
-  .sz-upsell-product-name {
-    font-family: "Inter", sans-serif;
-    font-size: 14px;
-    font-weight: 500;
-    color: #2B2B2B;
-    margin: 0 0 4px 0;
-    line-height: 1.3;
+  .sz-cart-upsell__info--full {
+    flex: 1;
   }
 
-  .sz-upsell-savings {
-    font-family: "Montserrat", sans-serif;
+  .sz-cart-upsell__product-name {
+    font-family: var(--sz-font-body);
+    font-size: var(--sz-text-sm, 14px);
+    font-weight: var(--sz-font-medium, 500);
+    color: var(--sz-text);
+    margin: 0 0 var(--sz-space-xs, 4px) 0;
+    line-height: var(--sz-leading-snug, 1.3);
+  }
+
+  .sz-cart-upsell__savings {
+    font-family: var(--sz-font-body);
     font-size: 11px;
-    font-weight: 600;
-    color: #8BAA88;
+    font-weight: var(--sz-font-semibold, 600);
+    color: var(--sz-primary);
     text-transform: uppercase;
     letter-spacing: 0.05em;
+    margin: 0 0 var(--sz-space-xs, 4px) 0;
   }
 
-  .sz-upsell-price {
-    font-family: "Inter", sans-serif;
-    font-size: 14px;
-    color: #2B2B2B;
-    margin-top: 4px;
+  .sz-cart-upsell__description {
+    font-family: var(--sz-font-body);
+    font-size: var(--sz-text-xs, 12px);
+    color: var(--sz-text-muted);
+    margin: 0;
   }
 
-  .sz-upsell-price .sz-compare-price {
-    text-decoration: line-through;
-    color: #999;
-    margin-right: 6px;
-    font-size: 12px;
-  }
-
-  .sz-upsell-button {
+  .sz-cart-upsell__button {
     display: inline-block;
-    padding: 10px 16px;
-    background: #8BAA88;
-    color: #ffffff;
+    padding: var(--sz-space-sm, 10px) var(--sz-space-md, 16px);
+    background: var(--sz-primary);
+    color: var(--sz-background, #ffffff);
     border: none;
-    border-radius: 999px;
-    font-family: "Inter", sans-serif;
-    font-size: 12px;
-    font-weight: 600;
+    border-radius: var(--sz-radius-full, 999px);
+    font-family: var(--sz-font-body);
+    font-size: var(--sz-text-xs, 12px);
+    font-weight: var(--sz-font-semibold, 600);
     letter-spacing: 0.04em;
     cursor: pointer;
-    transition: background 0.2s ease;
+    transition: background var(--sz-transition-fast, 0.2s) ease;
     white-space: nowrap;
     text-decoration: none;
     flex-shrink: 0;
   }
 
-  .sz-upsell-button:hover {
-    background: #4E5F4A;
-    color: #ffffff;
+  .sz-cart-upsell__button:hover {
+    background: var(--sz-primary-dark);
+    color: var(--sz-background, #ffffff);
   }
 
-  .sz-upsell-dismiss {
-    position: absolute;
-    top: 8px;
-    right: 8px;
-    background: none;
-    border: none;
-    color: #999;
-    cursor: pointer;
-    font-size: 16px;
-    padding: 4px;
-  }
-
-  .sz-upsell-wrapper {
-    position: relative;
+  .sz-cart-upsell__button:focus-visible {
+    outline: 2px solid var(--sz-primary);
+    outline-offset: 2px;
   }
 
   @media (max-width: 480px) {
-    .sz-upsell-content {
+    .sz-cart-upsell__content {
       flex-wrap: wrap;
     }
 
-    .sz-upsell-button {
+    .sz-cart-upsell__button {
       width: 100%;
       text-align: center;
-      margin-top: 8px;
+      margin-top: var(--sz-space-sm, 8px);
     }
   }
 </style>
-
-{% if cart.item_count > 0 %}
-<div class="sz-upsell-wrapper" id="szCartUpsell">
-  <button class="sz-upsell-dismiss" onclick="this.parentElement.style.display='none'" aria-label="Dismiss">&times;</button>
-
-  <div class="sz-upsell-header">
-    <span class="sz-upsell-icon">💡</span>
-    <span class="sz-upsell-title">Complete Your Order</span>
-  </div>
-
-  {% if has_bridal_item and has_single_bottle %}
-    {%- comment -%} Suggest upgrading to gift box for bridal items {%- endcomment -%}
-    <div class="sz-upsell-content">
-      <img
-        src="{{ 'gift-box-upsell.jpg' | file_url }}"
-        alt="Gift Box Upgrade"
-        class="sz-upsell-image"
-        onerror="this.style.display='none'"
-      >
-      <div class="sz-upsell-info">
-        <p class="sz-upsell-product-name">Upgrade to a Proposal Gift Box</p>
-        <p class="sz-upsell-savings">Save 15% on the upgrade!</p>
-        <p class="sz-upsell-price">
-          Includes bottle, gift box, scrunchie & candle
-        </p>
-      </div>
-      <a href="/collections/proposal-gift-boxes" class="sz-upsell-button">
-        View Gift Boxes
-      </a>
-    </div>
-
-  {% elsif has_single_bottle %}
-    {%- comment -%} Suggest multi-pack for single bottle purchases {%- endcomment -%}
-    <div class="sz-upsell-content">
-      <img
-        src="{{ 'bundle-upsell.jpg' | file_url }}"
-        alt="Bundle Deal"
-        class="sz-upsell-image"
-        onerror="this.style.display='none'"
-      >
-      <div class="sz-upsell-info">
-        <p class="sz-upsell-product-name">Ordering for a group?</p>
-        <p class="sz-upsell-savings">Save up to 20% with bundles</p>
-        <p class="sz-upsell-price">
-          3-packs, 5-packs, and 10-packs available
-        </p>
-      </div>
-      <a href="/collections/best-sellers" class="sz-upsell-button">
-        View Bundles
-      </a>
-    </div>
-
-  {% elsif cart_item_count >= 3 %}
-    {%- comment -%} For larger orders, highlight bulk savings {%- endcomment -%}
-    <div class="sz-upsell-content">
-      <div class="sz-upsell-info" style="flex: 1;">
-        <p class="sz-upsell-product-name">Need more bottles?</p>
-        <p class="sz-upsell-savings">Bulk orders get up to 20% off</p>
-        <p class="sz-upsell-price">
-          Perfect for large bridal parties, corporate events & teams
-        </p>
-      </div>
-      <a href="/pages/bulk-orders" class="sz-upsell-button">
-        Request Quote
-      </a>
-    </div>
-
-  {% else %}
-    {%- comment -%} Default upsell - best sellers {%- endcomment -%}
-    <div class="sz-upsell-content">
-      <div class="sz-upsell-info" style="flex: 1;">
-        <p class="sz-upsell-product-name">Add another personalized bottle?</p>
-        <p class="sz-upsell-savings">Perfect for gifting</p>
-        <p class="sz-upsell-price">
-          Free shipping on orders $75+
-        </p>
-      </div>
-      <a href="/collections/best-sellers" class="sz-upsell-button">
-        Shop Best Sellers
-      </a>
-    </div>
-  {% endif %}
-</div>
-{% endif %}
+{%- endif -%}
