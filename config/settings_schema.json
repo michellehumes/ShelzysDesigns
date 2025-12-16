@@ -2,7 +2,7 @@
   {
     "name": "theme_info",
     "theme_name": "Shelzy's Designs",
-    "theme_version": "1.0.0",
+    "theme_version": "2.0.0",
     "theme_author": "Shelzy's Designs",
     "theme_documentation_url": "https://github.com/michellehumes/shelzysdesigns",
     "theme_support_url": "https://github.com/michellehumes/shelzysdesigns/issues"
@@ -14,6 +14,16 @@
         "type": "image_picker",
         "id": "logo",
         "label": "Logo"
+      },
+      {
+        "type": "range",
+        "id": "logo_width",
+        "label": "Logo width",
+        "min": 50,
+        "max": 300,
+        "step": 10,
+        "default": 150,
+        "unit": "px"
       },
       {
         "type": "image_picker",
@@ -28,23 +38,36 @@
     "settings": [
       {
         "type": "header",
-        "content": "Primary Colors"
+        "content": "Brand Colors"
+      },
+      {
+        "type": "paragraph",
+        "content": "Define your core brand palette. These colors flow throughout the entire theme."
       },
       {
         "type": "color",
         "id": "color_primary",
-        "label": "Primary (Sage Green)",
-        "default": "#8BAA88"
+        "label": "Primary",
+        "default": "#8BAA88",
+        "info": "Main brand color for buttons, links, accents"
       },
       {
         "type": "color",
         "id": "color_primary_dark",
         "label": "Primary Dark",
-        "default": "#4E5F4A"
+        "default": "#4E5F4A",
+        "info": "Darker variant for hover states, footer"
+      },
+      {
+        "type": "color",
+        "id": "color_primary_light",
+        "label": "Primary Light",
+        "default": "#A6B8A0",
+        "info": "Lighter variant for subtle accents"
       },
       {
         "type": "header",
-        "content": "Backgrounds"
+        "content": "Neutral Colors"
       },
       {
         "type": "color",
@@ -56,7 +79,15 @@
         "type": "color",
         "id": "color_background_alt",
         "label": "Alternate Background",
-        "default": "#FAF9F6"
+        "default": "#FAF9F6",
+        "info": "Used for alternating sections"
+      },
+      {
+        "type": "color",
+        "id": "color_surface",
+        "label": "Surface",
+        "default": "#F5F2ED",
+        "info": "Cards, inputs, elevated surfaces"
       },
       {
         "type": "header",
@@ -73,6 +104,59 @@
         "id": "color_heading",
         "label": "Headings",
         "default": "#111111"
+      },
+      {
+        "type": "color",
+        "id": "color_text_muted",
+        "label": "Muted Text",
+        "default": "#6B6B6B",
+        "info": "Secondary text, captions"
+      },
+      {
+        "type": "header",
+        "content": "Accent Colors"
+      },
+      {
+        "type": "color",
+        "id": "color_accent",
+        "label": "Accent",
+        "default": "#D4AF37",
+        "info": "Gold accent for badges, stars, highlights"
+      },
+      {
+        "type": "color",
+        "id": "color_sale",
+        "label": "Sale",
+        "default": "#C41E3A",
+        "info": "Sale badges and prices"
+      },
+      {
+        "type": "color",
+        "id": "color_success",
+        "label": "Success",
+        "default": "#4E5F4A"
+      },
+      {
+        "type": "color",
+        "id": "color_error",
+        "label": "Error",
+        "default": "#DC2626"
+      },
+      {
+        "type": "header",
+        "content": "Border Colors"
+      },
+      {
+        "type": "color",
+        "id": "color_border",
+        "label": "Border",
+        "default": "#E0E3DF"
+      },
+      {
+        "type": "color",
+        "id": "color_border_dark",
+        "label": "Border Dark",
+        "default": "#C7D3C5"
       }
     ]
   },
@@ -80,8 +164,30 @@
     "name": "Typography",
     "settings": [
       {
+        "type": "header",
+        "content": "Font Families"
+      },
+      {
         "type": "paragraph",
-        "content": "This theme uses Playfair Display for headings and Inter for body text."
+        "content": "This theme uses 2 fonts maximum for optimal performance: a display font for headings and a body font for everything else."
+      },
+      {
+        "type": "font_picker",
+        "id": "font_heading",
+        "label": "Heading Font",
+        "default": "playfair_display_n5",
+        "info": "Used for h1-h6, display text"
+      },
+      {
+        "type": "font_picker",
+        "id": "font_body",
+        "label": "Body Font",
+        "default": "inter_n4",
+        "info": "Used for body text, buttons, navigation"
+      },
+      {
+        "type": "header",
+        "content": "Base Size"
       },
       {
         "type": "range",
@@ -91,7 +197,99 @@
         "max": 20,
         "step": 1,
         "default": 16,
+        "unit": "px",
+        "info": "All other sizes scale from this"
+      },
+      {
+        "type": "header",
+        "content": "Heading Sizes"
+      },
+      {
+        "type": "range",
+        "id": "heading_scale",
+        "label": "Heading Scale",
+        "min": 100,
+        "max": 150,
+        "step": 5,
+        "default": 125,
+        "unit": "%",
+        "info": "Scale ratio between heading levels"
+      }
+    ]
+  },
+  {
+    "name": "Layout",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Container"
+      },
+      {
+        "type": "range",
+        "id": "container_width",
+        "label": "Max Container Width",
+        "min": 1000,
+        "max": 1600,
+        "step": 50,
+        "default": 1400,
         "unit": "px"
+      },
+      {
+        "type": "range",
+        "id": "content_width",
+        "label": "Content Width",
+        "min": 500,
+        "max": 900,
+        "step": 50,
+        "default": 700,
+        "unit": "px",
+        "info": "Max width for readable text content (72-80ch)"
+      },
+      {
+        "type": "header",
+        "content": "Spacing"
+      },
+      {
+        "type": "range",
+        "id": "spacing_scale",
+        "label": "Spacing Scale",
+        "min": 75,
+        "max": 125,
+        "step": 5,
+        "default": 100,
+        "unit": "%",
+        "info": "Adjusts all spacing proportionally"
+      },
+      {
+        "type": "range",
+        "id": "section_padding",
+        "label": "Section Padding",
+        "min": 40,
+        "max": 120,
+        "step": 8,
+        "default": 80,
+        "unit": "px"
+      },
+      {
+        "type": "header",
+        "content": "Border Radius"
+      },
+      {
+        "type": "range",
+        "id": "border_radius",
+        "label": "Border Radius Scale",
+        "min": 0,
+        "max": 24,
+        "step": 2,
+        "default": 8,
+        "unit": "px",
+        "info": "Base radius for cards, buttons, inputs"
+      },
+      {
+        "type": "checkbox",
+        "id": "buttons_rounded",
+        "label": "Fully rounded buttons",
+        "default": true
       }
     ]
   },
@@ -117,6 +315,11 @@
         "type": "text",
         "id": "social_tiktok_link",
         "label": "TikTok URL"
+      },
+      {
+        "type": "text",
+        "id": "social_youtube_link",
+        "label": "YouTube URL"
       }
     ]
   },
@@ -138,6 +341,77 @@
         "id": "show_free_shipping_bar",
         "label": "Show Free Shipping Progress Bar",
         "default": true
+      },
+      {
+        "type": "select",
+        "id": "cart_type",
+        "label": "Cart Type",
+        "options": [
+          { "value": "drawer", "label": "Drawer" },
+          { "value": "page", "label": "Page" }
+        ],
+        "default": "drawer"
+      },
+      {
+        "type": "checkbox",
+        "id": "enable_cart_upsell",
+        "label": "Enable Cart Upsell",
+        "default": true
+      }
+    ]
+  },
+  {
+    "name": "Product",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Product Cards"
+      },
+      {
+        "type": "checkbox",
+        "id": "product_show_secondary_image",
+        "label": "Show second image on hover",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "product_show_badges",
+        "label": "Show product badges",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "product_show_vendor",
+        "label": "Show vendor",
+        "default": false
+      },
+      {
+        "type": "checkbox",
+        "id": "product_show_rating",
+        "label": "Show rating",
+        "default": true
+      },
+      {
+        "type": "header",
+        "content": "Product Page"
+      },
+      {
+        "type": "checkbox",
+        "id": "product_enable_reviews",
+        "label": "Enable reviews section",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "product_enable_recommendations",
+        "label": "Enable product recommendations",
+        "default": true
+      },
+      {
+        "type": "text",
+        "id": "product_recommendations_heading",
+        "label": "Recommendations heading",
+        "default": "You May Also Like"
       }
     ]
   },
@@ -162,9 +436,113 @@
       },
       {
         "type": "text",
+        "id": "popup_heading",
+        "label": "Popup Heading",
+        "default": "Get 10% Off Your First Order"
+      },
+      {
+        "type": "textarea",
+        "id": "popup_text",
+        "label": "Popup Text",
+        "default": "Subscribe to our newsletter for exclusive offers and updates."
+      },
+      {
+        "type": "text",
         "id": "popup_discount_code",
         "label": "Discount Code",
         "default": "WELCOME10"
+      },
+      {
+        "type": "image_picker",
+        "id": "popup_image",
+        "label": "Popup Image"
+      }
+    ]
+  },
+  {
+    "name": "Trust & Social Proof",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Trust Badges"
+      },
+      {
+        "type": "text",
+        "id": "trust_badge_1",
+        "label": "Trust Badge 1",
+        "default": "Free Shipping Over $75"
+      },
+      {
+        "type": "text",
+        "id": "trust_badge_2",
+        "label": "Trust Badge 2",
+        "default": "Dishwasher Safe"
+      },
+      {
+        "type": "text",
+        "id": "trust_badge_3",
+        "label": "Trust Badge 3",
+        "default": "30-Day Returns"
+      },
+      {
+        "type": "text",
+        "id": "trust_badge_4",
+        "label": "Trust Badge 4",
+        "default": "Made with Love"
+      },
+      {
+        "type": "header",
+        "content": "Shipping & Production"
+      },
+      {
+        "type": "text",
+        "id": "production_time",
+        "label": "Production Time",
+        "default": "2-4 business days"
+      },
+      {
+        "type": "text",
+        "id": "shipping_time",
+        "label": "Shipping Time",
+        "default": "3-5 business days"
+      }
+    ]
+  },
+  {
+    "name": "Advanced",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Performance"
+      },
+      {
+        "type": "checkbox",
+        "id": "enable_lazy_loading",
+        "label": "Enable lazy loading for images",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "enable_preload_fonts",
+        "label": "Preload heading font",
+        "default": true,
+        "info": "Improves LCP but increases initial load"
+      },
+      {
+        "type": "header",
+        "content": "Animations"
+      },
+      {
+        "type": "checkbox",
+        "id": "enable_animations",
+        "label": "Enable animations",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "respect_reduce_motion",
+        "label": "Respect reduced motion preference",
+        "default": true
       }
     ]
   }

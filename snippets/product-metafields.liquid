@@ -1,0 +1,289 @@
+{% comment %}
+================================================================================
+SHELZY'S DESIGNS - PRODUCT METAFIELDS SNIPPET
+Version: 2.0.0
+Last Updated: 2024-12
+================================================================================
+Renders product metafields with safe fallbacks.
+Empty metafields do not break UI.
+
+Usage: {% render 'product-metafields', product: product %}
+
+Expected Metafields (namespace: custom):
+- custom.highlights (multi-line text or list)
+- custom.materials (multi-line text)
+- custom.care_instructions (richtext or text)
+- custom.personalization_notes (richtext or text)
+- custom.production_time (text)
+- custom.size_info (richtext)
+- custom.feature_list (list)
+================================================================================
+{% endcomment %}
+
+{%- liquid
+  assign has_highlights = false
+  assign has_materials = false
+  assign has_care = false
+  assign has_personalization = false
+  assign has_production = false
+  assign has_size = false
+  assign has_features = false
+
+  if product.metafields.custom.highlights != blank
+    assign has_highlights = true
+    assign highlights = product.metafields.custom.highlights.value
+  endif
+
+  if product.metafields.custom.materials != blank
+    assign has_materials = true
+    assign materials = product.metafields.custom.materials.value
+  endif
+
+  if product.metafields.custom.care_instructions != blank
+    assign has_care = true
+    assign care = product.metafields.custom.care_instructions.value
+  endif
+
+  if product.metafields.custom.personalization_notes != blank
+    assign has_personalization = true
+    assign personalization = product.metafields.custom.personalization_notes.value
+  endif
+
+  if product.metafields.custom.production_time != blank
+    assign has_production = true
+    assign production_time = product.metafields.custom.production_time.value
+  endif
+
+  if product.metafields.custom.size_info != blank
+    assign has_size = true
+    assign size_info = product.metafields.custom.size_info.value
+  endif
+
+  if product.metafields.custom.feature_list != blank
+    assign has_features = true
+    assign features = product.metafields.custom.feature_list.value
+  endif
+
+  assign has_any_metafield = has_highlights or has_materials or has_care or has_personalization or has_production or has_size or has_features
+-%}
+
+{%- if has_any_metafield -%}
+  <div class="sz-product-metafields">
+
+    {%- comment -%} Product Highlights {%- endcomment -%}
+    {%- if has_highlights -%}
+      <div class="sz-metafield sz-metafield--highlights">
+        <h4 class="sz-metafield__title">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+          </svg>
+          Product Highlights
+        </h4>
+        <ul class="sz-metafield__list sz-metafield__list--highlights">
+          {%- if highlights.first -%}
+            {%- for item in highlights -%}
+              <li>{{ item }}</li>
+            {%- endfor -%}
+          {%- else -%}
+            {%- assign highlight_lines = highlights | split: newline -%}
+            {%- for line in highlight_lines -%}
+              {%- if line != blank -%}
+                <li>{{ line }}</li>
+              {%- endif -%}
+            {%- endfor -%}
+          {%- endif -%}
+        </ul>
+      </div>
+    {%- endif -%}
+
+    {%- comment -%} Materials {%- endcomment -%}
+    {%- if has_materials -%}
+      <div class="sz-metafield sz-metafield--materials">
+        <h4 class="sz-metafield__title">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+          </svg>
+          Materials
+        </h4>
+        <div class="sz-metafield__content">
+          {{ materials }}
+        </div>
+      </div>
+    {%- endif -%}
+
+    {%- comment -%} Care Instructions {%- endcomment -%}
+    {%- if has_care -%}
+      <div class="sz-metafield sz-metafield--care">
+        <h4 class="sz-metafield__title">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <circle cx="12" cy="12" r="10"/>
+            <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
+            <line x1="12" y1="17" x2="12.01" y2="17"/>
+          </svg>
+          Care Instructions
+        </h4>
+        <div class="sz-metafield__content rte">
+          {{ care }}
+        </div>
+      </div>
+    {%- endif -%}
+
+    {%- comment -%} Personalization Notes {%- endcomment -%}
+    {%- if has_personalization -%}
+      <div class="sz-metafield sz-metafield--personalization">
+        <h4 class="sz-metafield__title">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="M12 20h9"/>
+            <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/>
+          </svg>
+          Personalization Notes
+        </h4>
+        <div class="sz-metafield__content rte">
+          {{ personalization }}
+        </div>
+      </div>
+    {%- endif -%}
+
+    {%- comment -%} Production Time {%- endcomment -%}
+    {%- if has_production -%}
+      <div class="sz-metafield sz-metafield--production">
+        <h4 class="sz-metafield__title">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <circle cx="12" cy="12" r="10"/>
+            <polyline points="12 6 12 12 16 14"/>
+          </svg>
+          Production Time
+        </h4>
+        <div class="sz-metafield__content">
+          {{ production_time }}
+        </div>
+      </div>
+    {%- endif -%}
+
+    {%- comment -%} Size Info {%- endcomment -%}
+    {%- if has_size -%}
+      <div class="sz-metafield sz-metafield--size">
+        <h4 class="sz-metafield__title">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <line x1="21" y1="10" x2="3" y2="10"/>
+            <line x1="21" y1="6" x2="3" y2="6"/>
+            <line x1="21" y1="14" x2="3" y2="14"/>
+            <line x1="21" y1="18" x2="3" y2="18"/>
+          </svg>
+          Size Information
+        </h4>
+        <div class="sz-metafield__content rte">
+          {{ size_info }}
+        </div>
+      </div>
+    {%- endif -%}
+
+    {%- comment -%} Feature List {%- endcomment -%}
+    {%- if has_features -%}
+      <div class="sz-metafield sz-metafield--features">
+        <h4 class="sz-metafield__title">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <polyline points="9 11 12 14 22 4"/>
+            <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/>
+          </svg>
+          Features
+        </h4>
+        <ul class="sz-metafield__list sz-metafield__list--features">
+          {%- for feature in features -%}
+            <li>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <polyline points="20 6 9 17 4 12"/>
+              </svg>
+              {{ feature }}
+            </li>
+          {%- endfor -%}
+        </ul>
+      </div>
+    {%- endif -%}
+
+  </div>
+{%- endif -%}
+
+<style>
+  .sz-product-metafields {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sz-space-lg);
+    margin: var(--sz-space-xl) 0;
+  }
+
+  .sz-metafield {
+    padding: var(--sz-space-lg);
+    background-color: var(--sz-background-alt);
+    border-radius: var(--sz-radius-md);
+  }
+
+  .sz-metafield__title {
+    display: flex;
+    align-items: center;
+    gap: var(--sz-space-sm);
+    font-family: var(--sz-font-body);
+    font-size: var(--sz-text-base);
+    font-weight: var(--sz-font-semibold);
+    color: var(--sz-heading);
+    margin: 0 0 var(--sz-space-md) 0;
+  }
+
+  .sz-metafield__title svg {
+    color: var(--sz-primary);
+    flex-shrink: 0;
+  }
+
+  .sz-metafield__content {
+    font-family: var(--sz-font-body);
+    font-size: var(--sz-text-sm);
+    line-height: var(--sz-leading-relaxed);
+    color: var(--sz-text);
+  }
+
+  .sz-metafield__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    font-family: var(--sz-font-body);
+    font-size: var(--sz-text-sm);
+    line-height: var(--sz-leading-relaxed);
+    color: var(--sz-text);
+  }
+
+  .sz-metafield__list li {
+    padding: var(--sz-space-xs) 0;
+  }
+
+  .sz-metafield__list--highlights li::before {
+    content: "★";
+    color: var(--sz-accent);
+    margin-right: var(--sz-space-sm);
+  }
+
+  .sz-metafield__list--features li {
+    display: flex;
+    align-items: center;
+    gap: var(--sz-space-sm);
+  }
+
+  .sz-metafield__list--features svg {
+    color: var(--sz-primary);
+    flex-shrink: 0;
+  }
+
+  /* Specific Styles */
+  .sz-metafield--personalization {
+    background-color: var(--sz-surface);
+    border-left: 3px solid var(--sz-primary);
+  }
+
+  .sz-metafield--production {
+    background-color: var(--sz-surface);
+  }
+
+  .sz-metafield--production .sz-metafield__content {
+    font-weight: var(--sz-font-semibold);
+    color: var(--sz-primary-dark);
+  }
+</style>

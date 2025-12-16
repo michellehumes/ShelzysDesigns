@@ -1,184 +1,273 @@
 {% comment %}
-==================================================
-SHELZY'S DESIGNS - CONSOLIDATED CSS VARIABLES
-Add this snippet to theme.liquid in <head> section
+================================================================================
+SHELZY'S DESIGNS - GLOBAL CSS DESIGN TOKENS
+Version: 2.0.0
+Last Updated: 2024-12
+================================================================================
+SINGLE SOURCE OF TRUTH for all design tokens.
+All values are editor-driven via Theme Settings.
 
-Usage: {% render 'shelzys-css-variables' %}
+Usage: {% render 'shelzys-css-variables' %} in theme.liquid <head>
 
-This is the SINGLE SOURCE OF TRUTH for all brand colors.
-Remove conflicting variables from other CSS files.
-==================================================
+DO NOT:
+- Hardcode hex colors in section files
+- Hardcode pixel values for spacing
+- Hardcode font families
+- Create duplicate token systems
+
+ALWAYS USE:
+- var(--sz-*) for all styling
+- Theme settings for customization
+================================================================================
 {% endcomment %}
+
+{%- comment -%} Calculate fluid font scale {%- endcomment -%}
+{%- assign base_size = settings.font_size_base | default: 16 -%}
+{%- assign scale = settings.heading_scale | default: 125 | divided_by: 100.0 -%}
+{%- assign spacing_scale = settings.spacing_scale | default: 100 | divided_by: 100.0 -%}
+{%- assign radius_base = settings.border_radius | default: 8 -%}
 
 <style>
 :root {
-  /* ====== PRIMARY BRAND COLORS ====== */
-  --sz-primary: #8BAA88;              /* Sage Green - CTAs, accents */
-  --sz-primary-hover: #4E5F4A;        /* Dark Sage - hover states */
-  --sz-primary-dark: #4E5F4A;         /* Dark Sage - headings, footer */
-  --sz-primary-light: #A6B8A0;        /* Light Sage - subtle accents */
+  /* ==========================================================================
+     COLORS - All from Theme Settings
+     ========================================================================== */
 
-  /* ====== NEUTRAL COLORS ====== */
-  --sz-white: #FFFFFF;                /* Pure White - primary background */
-  --sz-warm-white: #FAF9F6;           /* Warm White - section backgrounds */
-  --sz-beige: #F7F4EF;                /* Brushed Beige - alt backgrounds */
-  --sz-charcoal: #2B2B2B;             /* Charcoal - body text */
-  --sz-soft-black: #111111;           /* Soft Black - bold text */
+  /* Brand Colors */
+  --sz-primary: {{ settings.color_primary | default: '#8BAA88' }};
+  --sz-primary-dark: {{ settings.color_primary_dark | default: '#4E5F4A' }};
+  --sz-primary-light: {{ settings.color_primary_light | default: '#A6B8A0' }};
+  --sz-primary-hover: {{ settings.color_primary_dark | default: '#4E5F4A' }};
 
-  /* ====== ACCENT COLORS ====== */
-  --sz-gold: #D1C7A1;                 /* Champagne Gold - badges, premium */
-  --sz-sandstone: #D8CFC4;            /* Sandstone - subtle accents */
-  --sz-blush: #F8D9C5;                /* Blush Apricot - feminine accents */
+  /* Backgrounds */
+  --sz-background: {{ settings.color_background | default: '#FFFFFF' }};
+  --sz-background-alt: {{ settings.color_background_alt | default: '#FAF9F6' }};
+  --sz-surface: {{ settings.color_surface | default: '#F5F2ED' }};
 
-  /* ====== FUNCTIONAL COLORS ====== */
-  --sz-success: #4E5F4A;              /* Success messages */
-  --sz-warning: #C17F24;              /* Warning/urgency */
-  --sz-error: #DC2626;                /* Error states */
-  --sz-info: #8BAA88;                 /* Info messages */
+  /* Legacy aliases for backwards compatibility */
+  --sz-white: {{ settings.color_background | default: '#FFFFFF' }};
+  --sz-warm-white: {{ settings.color_background_alt | default: '#FAF9F6' }};
+  --sz-beige: {{ settings.color_surface | default: '#F5F2ED' }};
 
-  /* ====== BORDER COLORS ====== */
-  --sz-border-soft: #C7D3C5;          /* Soft Border - dividers */
-  --sz-border-light: #E0E3DF;         /* Light Border - subtle lines */
-  --sz-border-dark: #4E5F4A;          /* Dark Border - emphasis */
+  /* Text Colors */
+  --sz-text: {{ settings.color_text | default: '#2B2B2B' }};
+  --sz-heading: {{ settings.color_heading | default: '#111111' }};
+  --sz-text-muted: {{ settings.color_text_muted | default: '#6B6B6B' }};
 
-  /* ====== TYPOGRAPHY (2 fonts only for consistency) ====== */
-  /* Playfair Display: Headings, titles, display text */
-  /* Inter: Body text, buttons, navigation, UI elements */
-  --sz-font-heading: 'Playfair Display', Georgia, serif;
-  --sz-font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-  --sz-font-accent: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  /* Legacy aliases */
+  --sz-charcoal: {{ settings.color_text | default: '#2B2B2B' }};
+  --sz-soft-black: {{ settings.color_heading | default: '#111111' }};
 
-  /* ====== FONT SIZES ====== */
-  --sz-text-xs: 12px;
-  --sz-text-sm: 14px;
-  --sz-text-base: 16px;
-  --sz-text-lg: 18px;
-  --sz-text-xl: 20px;
-  --sz-text-2xl: 24px;
-  --sz-text-3xl: 32px;
-  --sz-text-4xl: 40px;
-  --sz-text-5xl: 48px;
+  /* Accent Colors */
+  --sz-accent: {{ settings.color_accent | default: '#D4AF37' }};
+  --sz-gold: {{ settings.color_accent | default: '#D4AF37' }};
+  --sz-sale: {{ settings.color_sale | default: '#C41E3A' }};
+  --sz-success: {{ settings.color_success | default: '#4E5F4A' }};
+  --sz-error: {{ settings.color_error | default: '#DC2626' }};
+  --sz-warning: #C17F24;
+  --sz-info: {{ settings.color_primary | default: '#8BAA88' }};
 
-  /* ====== FONT WEIGHTS ====== */
+  /* Border Colors */
+  --sz-border: {{ settings.color_border | default: '#E0E3DF' }};
+  --sz-border-dark: {{ settings.color_border_dark | default: '#C7D3C5' }};
+  --sz-border-light: {{ settings.color_border | default: '#E0E3DF' }};
+  --sz-border-soft: {{ settings.color_border_dark | default: '#C7D3C5' }};
+
+  /* ==========================================================================
+     TYPOGRAPHY - From Theme Settings Font Picker
+     ========================================================================== */
+
+  /* Font Families */
+  --sz-font-heading: {{ settings.font_heading.family }}, {{ settings.font_heading.fallback_families }};
+  --sz-font-body: {{ settings.font_body.family }}, {{ settings.font_body.fallback_families }};
+  --sz-font-accent: {{ settings.font_body.family }}, {{ settings.font_body.fallback_families }};
+
+  /* Font Weights */
+  --sz-font-heading-weight: {{ settings.font_heading.weight | default: 500 }};
+  --sz-font-body-weight: {{ settings.font_body.weight | default: 400 }};
   --sz-font-normal: 400;
   --sz-font-medium: 500;
   --sz-font-semibold: 600;
   --sz-font-bold: 700;
 
-  /* ====== SPACING ====== */
-  --sz-space-xs: 4px;
-  --sz-space-sm: 8px;
-  --sz-space-md: 16px;
-  --sz-space-lg: 24px;
-  --sz-space-xl: 32px;
-  --sz-space-2xl: 48px;
-  --sz-space-3xl: 64px;
-  --sz-space-4xl: 80px;
+  /* Base Size - Used for fluid scaling */
+  --sz-font-size-base: {{ base_size }}px;
 
-  /* ====== BORDER RADIUS ====== */
-  --sz-radius-sm: 4px;
-  --sz-radius-md: 8px;
-  --sz-radius-lg: 12px;
-  --sz-radius-xl: 16px;
-  --sz-radius-full: 999px;
+  /* Fluid Font Scale - Responsive typography */
+  --sz-text-xs: clamp(0.7rem, 0.65rem + 0.25vw, 0.75rem);
+  --sz-text-sm: clamp(0.8rem, 0.75rem + 0.25vw, 0.875rem);
+  --sz-text-base: clamp(0.9rem, 0.85rem + 0.25vw, 1rem);
+  --sz-text-lg: clamp(1rem, 0.95rem + 0.25vw, 1.125rem);
+  --sz-text-xl: clamp(1.1rem, 1rem + 0.5vw, 1.25rem);
+  --sz-text-2xl: clamp(1.25rem, 1.1rem + 0.75vw, 1.5rem);
+  --sz-text-3xl: clamp(1.5rem, 1.25rem + 1.25vw, 2rem);
+  --sz-text-4xl: clamp(1.75rem, 1.5rem + 1.5vw, 2.5rem);
+  --sz-text-5xl: clamp(2rem, 1.5rem + 2.5vw, 3rem);
+  --sz-text-6xl: clamp(2.5rem, 2rem + 2.5vw, 3.75rem);
 
-  /* ====== SHADOWS ====== */
-  --sz-shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08);
-  --sz-shadow-md: 0 4px 12px rgba(0, 0, 0, 0.1);
-  --sz-shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.12);
-  --sz-shadow-xl: 0 20px 40px rgba(0, 0, 0, 0.15);
+  /* Line Heights */
+  --sz-leading-none: 1;
+  --sz-leading-tight: 1.2;
+  --sz-leading-snug: 1.375;
+  --sz-leading-normal: 1.5;
+  --sz-leading-relaxed: 1.625;
+  --sz-leading-loose: 2;
 
-  /* ====== TRANSITIONS ====== */
-  --sz-transition-fast: 0.15s ease;
-  --sz-transition-normal: 0.3s ease;
-  --sz-transition-slow: 0.5s ease;
-  --sz-transition-bounce: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  /* ==========================================================================
+     SPACING - Proportional scale with settings multiplier
+     ========================================================================== */
 
-  /* ====== Z-INDEX SCALE ====== */
-  --sz-z-base: 1;
-  --sz-z-dropdown: 100;
-  --sz-z-sticky: 500;
-  --sz-z-modal: 1000;
-  --sz-z-popup: 2000;
-  --sz-z-toast: 3000;
-  --sz-z-tooltip: 4000;
+  --sz-space-unit: calc(4px * {{ spacing_scale }});
 
-  /* ====== CONTAINER WIDTHS ====== */
+  --sz-space-xs: calc(var(--sz-space-unit) * 1);   /* 4px */
+  --sz-space-sm: calc(var(--sz-space-unit) * 2);   /* 8px */
+  --sz-space-md: calc(var(--sz-space-unit) * 4);   /* 16px */
+  --sz-space-lg: calc(var(--sz-space-unit) * 6);   /* 24px */
+  --sz-space-xl: calc(var(--sz-space-unit) * 8);   /* 32px */
+  --sz-space-2xl: calc(var(--sz-space-unit) * 12); /* 48px */
+  --sz-space-3xl: calc(var(--sz-space-unit) * 16); /* 64px */
+  --sz-space-4xl: calc(var(--sz-space-unit) * 20); /* 80px */
+  --sz-space-5xl: calc(var(--sz-space-unit) * 24); /* 96px */
+
+  /* Section Spacing */
+  --sz-section-padding: {{ settings.section_padding | default: 80 }}px;
+  --sz-section-gap: var(--sz-space-3xl);
+
+  /* ==========================================================================
+     LAYOUT - Container and content widths
+     ========================================================================== */
+
+  --sz-container-max: {{ settings.container_width | default: 1400 }}px;
+  --sz-content-max: {{ settings.content_width | default: 700 }}px;
+  --sz-container-padding: var(--sz-space-lg);
+
+  /* Responsive container */
   --sz-container-sm: 640px;
   --sz-container-md: 768px;
   --sz-container-lg: 1024px;
-  --sz-container-xl: 1200px;
-  --sz-container-2xl: 1400px;
+  --sz-container-xl: {{ settings.container_width | default: 1400 }}px;
+  --sz-container-2xl: 1536px;
+
+  /* ==========================================================================
+     BORDER RADIUS - From settings with scale
+     ========================================================================== */
+
+  --sz-radius-none: 0;
+  --sz-radius-sm: {{ radius_base | divided_by: 2 }}px;
+  --sz-radius-md: {{ radius_base }}px;
+  --sz-radius-lg: {{ radius_base | times: 1.5 | round }}px;
+  --sz-radius-xl: {{ radius_base | times: 2 }}px;
+  --sz-radius-2xl: {{ radius_base | times: 3 }}px;
+  --sz-radius-full: 9999px;
+
+  /* Button radius - configurable pill vs rounded */
+  --sz-radius-button: {% if settings.buttons_rounded %}var(--sz-radius-full){% else %}var(--sz-radius-md){% endif %};
+
+  /* ==========================================================================
+     SHADOWS - Consistent elevation system
+     ========================================================================== */
+
+  --sz-shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --sz-shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.04);
+  --sz-shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07), 0 2px 4px rgba(0, 0, 0, 0.04);
+  --sz-shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.08), 0 4px 6px rgba(0, 0, 0, 0.04);
+  --sz-shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.1), 0 10px 10px rgba(0, 0, 0, 0.04);
+  --sz-shadow-2xl: 0 25px 50px rgba(0, 0, 0, 0.15);
+
+  /* Colored shadows for brand elements */
+  --sz-shadow-primary: 0 4px 14px rgba({{ settings.color_primary | color_extract: 'red' }}, {{ settings.color_primary | color_extract: 'green' }}, {{ settings.color_primary | color_extract: 'blue' }}, 0.25);
+
+  /* ==========================================================================
+     TRANSITIONS - Animation timing
+     ========================================================================== */
+
+  --sz-duration-fast: 150ms;
+  --sz-duration-normal: 300ms;
+  --sz-duration-slow: 500ms;
+
+  --sz-ease-default: cubic-bezier(0.4, 0, 0.2, 1);
+  --sz-ease-in: cubic-bezier(0.4, 0, 1, 1);
+  --sz-ease-out: cubic-bezier(0, 0, 0.2, 1);
+  --sz-ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  --sz-transition-fast: var(--sz-duration-fast) var(--sz-ease-default);
+  --sz-transition-normal: var(--sz-duration-normal) var(--sz-ease-default);
+  --sz-transition-slow: var(--sz-duration-slow) var(--sz-ease-default);
+  --sz-transition-bounce: var(--sz-duration-normal) var(--sz-ease-bounce);
+
+  /* ==========================================================================
+     Z-INDEX SCALE - Layering system
+     ========================================================================== */
+
+  --sz-z-base: 1;
+  --sz-z-dropdown: 100;
+  --sz-z-sticky: 200;
+  --sz-z-header: 300;
+  --sz-z-overlay: 400;
+  --sz-z-modal: 500;
+  --sz-z-popup: 600;
+  --sz-z-toast: 700;
+  --sz-z-tooltip: 800;
+  --sz-z-max: 9999;
 }
 
-/* ====== BASE TYPOGRAPHY STYLES ====== */
+/* ============================================================================
+   BASE STYLES - Typography and elements
+   ============================================================================ */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: var(--sz-font-size-base);
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
 body {
+  margin: 0;
   font-family: var(--sz-font-body);
+  font-weight: var(--sz-font-body-weight);
   font-size: var(--sz-text-base);
-  font-weight: var(--sz-font-normal);
-  line-height: 1.6;
-  color: var(--sz-charcoal);
-  background-color: var(--sz-white);
+  line-height: var(--sz-leading-relaxed);
+  color: var(--sz-text);
+  background-color: var(--sz-background);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-h1, h2, h3, h4, h5, h6 {
+/* Headings */
+h1, h2, h3, h4, h5, h6,
+.h1, .h2, .h3, .h4, .h5, .h6 {
+  margin-top: 0;
+  margin-bottom: var(--sz-space-md);
   font-family: var(--sz-font-heading);
-  font-weight: var(--sz-font-semibold);
-  line-height: 1.2;
-  color: var(--sz-primary-dark);
+  font-weight: var(--sz-font-heading-weight);
+  line-height: var(--sz-leading-tight);
+  color: var(--sz-heading);
 }
 
-h1 { font-size: clamp(var(--sz-text-3xl), 5vw, var(--sz-text-5xl)); }
-h2 { font-size: clamp(var(--sz-text-2xl), 4vw, var(--sz-text-4xl)); }
-h3 { font-size: clamp(var(--sz-text-xl), 3vw, var(--sz-text-3xl)); }
-h4 { font-size: var(--sz-text-xl); }
-h5 { font-size: var(--sz-text-lg); }
-h6 { font-size: var(--sz-text-base); }
+h1, .h1 { font-size: var(--sz-text-5xl); }
+h2, .h2 { font-size: var(--sz-text-4xl); }
+h3, .h3 { font-size: var(--sz-text-3xl); }
+h4, .h4 { font-size: var(--sz-text-2xl); }
+h5, .h5 { font-size: var(--sz-text-xl); }
+h6, .h6 { font-size: var(--sz-text-lg); }
 
-/* ====== BUTTON BASE STYLES ====== */
-.btn,
-.button,
-button[type="submit"] {
-  font-family: var(--sz-font-body);
-  font-weight: var(--sz-font-semibold);
-  font-size: var(--sz-text-base);
-  padding: 14px 28px;
-  border-radius: var(--sz-radius-full);
-  border: none;
-  cursor: pointer;
-  transition: all var(--sz-transition-normal);
-  text-decoration: none;
-  display: inline-block;
-  text-align: center;
+/* Paragraphs */
+p {
+  margin-top: 0;
+  margin-bottom: var(--sz-space-md);
 }
 
-.btn-primary,
-.button--primary {
-  background-color: var(--sz-primary);
-  color: var(--sz-white);
+p:last-child {
+  margin-bottom: 0;
 }
 
-.btn-primary:hover,
-.button--primary:hover {
-  background-color: var(--sz-primary-hover);
-  transform: translateY(-2px);
-  box-shadow: var(--sz-shadow-md);
-}
-
-.btn-secondary,
-.button--secondary {
-  background-color: transparent;
-  color: var(--sz-primary-dark);
-  border: 2px solid var(--sz-primary);
-}
-
-.btn-secondary:hover,
-.button--secondary:hover {
-  background-color: var(--sz-primary);
-  color: var(--sz-white);
-}
-
-/* ====== LINK STYLES ====== */
+/* Links */
 a {
   color: var(--sz-primary);
   text-decoration: none;
@@ -189,7 +278,69 @@ a:hover {
   color: var(--sz-primary-dark);
 }
 
-/* ====== FOCUS STYLES (Accessibility) ====== */
+/* ============================================================================
+   BUTTON BASE STYLES
+   ============================================================================ */
+
+.sz-btn,
+.btn,
+.button,
+button[type="submit"],
+input[type="submit"] {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sz-space-sm);
+  padding: var(--sz-space-md) var(--sz-space-xl);
+  font-family: var(--sz-font-body);
+  font-size: var(--sz-text-base);
+  font-weight: var(--sz-font-semibold);
+  line-height: 1;
+  text-decoration: none;
+  border: 2px solid transparent;
+  border-radius: var(--sz-radius-button);
+  cursor: pointer;
+  transition: all var(--sz-transition-normal);
+}
+
+/* Primary Button */
+.sz-btn--primary,
+.btn-primary,
+.button--primary {
+  background-color: var(--sz-primary-dark);
+  border-color: var(--sz-primary-dark);
+  color: var(--sz-white);
+}
+
+.sz-btn--primary:hover,
+.btn-primary:hover,
+.button--primary:hover {
+  background-color: var(--sz-heading);
+  border-color: var(--sz-heading);
+  transform: translateY(-2px);
+  box-shadow: var(--sz-shadow-md);
+}
+
+/* Secondary Button */
+.sz-btn--secondary,
+.btn-secondary,
+.button--secondary {
+  background-color: transparent;
+  border-color: var(--sz-primary);
+  color: var(--sz-primary-dark);
+}
+
+.sz-btn--secondary:hover,
+.btn-secondary:hover,
+.button--secondary:hover {
+  background-color: var(--sz-primary);
+  color: var(--sz-white);
+}
+
+/* ============================================================================
+   FOCUS STYLES - Accessibility
+   ============================================================================ */
+
 :focus {
   outline: 3px solid var(--sz-primary);
   outline-offset: 2px;
@@ -203,4 +354,76 @@ a:hover {
   outline: 3px solid var(--sz-primary);
   outline-offset: 2px;
 }
+
+/* ============================================================================
+   UTILITY CLASSES
+   ============================================================================ */
+
+/* Container */
+.sz-container {
+  width: 100%;
+  max-width: var(--sz-container-max);
+  margin-inline: auto;
+  padding-inline: var(--sz-container-padding);
+}
+
+.sz-container--narrow {
+  max-width: var(--sz-content-max);
+}
+
+/* Section Spacing */
+.sz-section {
+  padding-block: var(--sz-section-padding);
+}
+
+/* Screen reader only */
+.sz-sr-only,
+.visually-hidden {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+/* ============================================================================
+   REDUCED MOTION
+   ============================================================================ */
+
+{% if settings.respect_reduce_motion %}
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+{% endif %}
+
+/* ============================================================================
+   RESPONSIVE UTILITIES
+   ============================================================================ */
+
+@media (max-width: 768px) {
+  :root {
+    --sz-section-padding: calc({{ settings.section_padding | default: 80 }}px * 0.6);
+    --sz-container-padding: var(--sz-space-md);
+  }
+}
 </style>
+
+{%- comment -%} Preload critical fonts if enabled {%- endcomment -%}
+{%- if settings.enable_preload_fonts -%}
+<link rel="preload" as="font" href="{{ settings.font_heading | font_url }}" type="font/woff2" crossorigin>
+{%- endif -%}
+
+{%- comment -%} Load Shopify fonts {%- endcomment -%}
+{{ settings.font_heading | font_face: font_display: 'swap' }}
+{{ settings.font_body | font_face: font_display: 'swap' }}

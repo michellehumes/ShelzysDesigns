@@ -1,3 +1,15 @@
+{% comment %}
+================================================================================
+SHELZY'S DESIGNS - THEME LAYOUT
+Version: 2.0.0
+Last Updated: 2024-12
+================================================================================
+Main layout file. All pages inherit from this template.
+
+DO NOT modify this file unless absolutely necessary.
+Use sections and snippets for customization.
+================================================================================
+{% endcomment %}
 <!DOCTYPE html>
 <html lang="{{ request.locale.iso_code }}" class="no-js">
 <head>
@@ -26,16 +38,15 @@
     <link rel="icon" type="image/png" href="{{ settings.favicon | image_url: width: 32, height: 32 }}">
   {%- endif -%}
 
-  {%- comment -%} Font Loading - Optimized for 2 fonts only {%- endcomment -%}
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
-
-  {%- comment -%} CSS Variables & Base Styles {%- endcomment -%}
+  {%- comment -%}
+  ================================================================================
+  CSS VARIABLES & DESIGN TOKENS
+  This is the SINGLE SOURCE OF TRUTH for all styling.
+  All fonts are loaded here via Shopify's font system.
+  DO NOT add additional font imports.
+  ================================================================================
+  {%- endcomment -%}
   {% render 'shelzys-css-variables' %}
-
-  {%- comment -%} Theme Stylesheet {%- endcomment -%}
-  {{ 'shelzys-brand.css' | asset_url | stylesheet_tag }}
 
   {%- comment -%} Shopify Required Tags {%- endcomment -%}
   {{ content_for_header }}
@@ -48,11 +59,12 @@
 </head>
 
 <body class="template-{{ template.name | handle }}{% if template.suffix %} template-{{ template.name }}-{{ template.suffix | handle }}{% endif %}">
-{% render 'sz-announcement-bar' %}
-{% render 'sz-social-proof-banner' %}
+  {%- comment -%} Announcement Bars {%- endcomment -%}
+  {% render 'sz-announcement-bar' %}
+  {% render 'sz-social-proof-banner' %}
 
   {%- comment -%} Skip Links for Accessibility {%- endcomment -%}
-  <a href="#main-content" class="skip-link visually-hidden">Skip to content</a>
+  <a href="#main-content" class="sz-skip-link visually-hidden">Skip to content</a>
 
   {%- comment -%} Centralized Settings {%- endcomment -%}
   {% render 'shelzys-settings' %}
@@ -88,39 +100,29 @@
   {%- comment -%} Cart Drawer {%- endcomment -%}
   {% render 'shelzys-cart-drawer' %}
 
-  {%- comment -%} Accessibility Styles {%- endcomment -%}
+  {%- comment -%} Skip Link Styles {%- endcomment -%}
   <style>
-    .visually-hidden {
-      position: absolute !important;
-      width: 1px !important;
-      height: 1px !important;
-      padding: 0 !important;
-      margin: -1px !important;
-      overflow: hidden !important;
-      clip: rect(0, 0, 0, 0) !important;
-      white-space: nowrap !important;
-      border: 0 !important;
-    }
-
-    .skip-link:focus {
+    .sz-skip-link:focus {
       position: fixed !important;
-      top: 10px;
-      left: 10px;
+      top: var(--sz-space-sm);
+      left: var(--sz-space-sm);
       width: auto !important;
       height: auto !important;
-      padding: 16px 24px;
+      padding: var(--sz-space-md) var(--sz-space-lg);
       clip: auto !important;
       background: var(--sz-primary-dark);
       color: var(--sz-white);
       font-family: var(--sz-font-body);
-      font-size: 14px;
-      font-weight: 600;
+      font-size: var(--sz-text-sm);
+      font-weight: var(--sz-font-semibold);
       text-decoration: none;
-      z-index: 10000;
+      z-index: var(--sz-z-max);
       border-radius: var(--sz-radius-sm);
     }
   </style>
-{% render 'sz-free-shipping-bar' %}
-{% render 'sz-email-popup' %}
+
+  {%- comment -%} Additional Snippets {%- endcomment -%}
+  {% render 'sz-free-shipping-bar' %}
+  {% render 'sz-email-popup' %}
 </body>
 </html>
