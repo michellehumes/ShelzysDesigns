@@ -1,7 +1,15 @@
-{%- comment -%}
-  Shelzy's Designs - Clean Collection Page
-  Simplified, organized collection layout with consistent spacing
-{%- endcomment -%}
+{% comment %}
+================================================================================
+SHELZY'S DESIGNS - MAIN COLLECTION
+Version: 2.0.0
+Last Updated: 2024-12
+================================================================================
+Clean, conversion-optimized collection page.
+Includes: smart badges, collection intro from metafields, confidence messaging.
+
+Revenue Impact: Reduces choice friction with merchandising cues.
+================================================================================
+{% endcomment %}
 
 {%- comment -%} Collection Schema for SEO {%- endcomment -%}
 <script type="application/ld+json">
@@ -26,6 +34,11 @@
   </header>
 
   <div class="sz-collection-main">
+    {%- comment -%} Collection Intro (metafield-driven) {%- endcomment -%}
+    {%- if section.settings.show_collection_intro -%}
+      {% render 'collection-intro', collection: collection, show_default_confidence: section.settings.show_default_confidence %}
+    {%- endif -%}
+
     {%- comment -%} Toolbar {%- endcomment -%}
     <div class="sz-toolbar">
       <span class="sz-toolbar-count">
@@ -87,11 +100,15 @@
                     </div>
                   {%- endif -%}
 
-                  {%- comment -%} Badges {%- endcomment -%}
-                  {%- if product.available == false -%}
-                    <span class="sz-badge sz-badge--soldout">Sold Out</span>
-                  {%- elsif product.compare_at_price > product.price -%}
-                    <span class="sz-badge sz-badge--sale">Sale</span>
+                  {%- comment -%} Smart Badges (data-driven) {%- endcomment -%}
+                  {%- if section.settings.show_smart_badges -%}
+                    {% render 'product-badges-smart', product: product %}
+                  {%- else -%}
+                    {%- if product.available == false -%}
+                      <span class="sz-badge sz-badge--soldout">Sold Out</span>
+                    {%- elsif product.compare_at_price > product.price -%}
+                      <span class="sz-badge sz-badge--sale">Sale</span>
+                    {%- endif -%}
                   {%- endif -%}
                 </div>
 
@@ -106,6 +123,10 @@
                       {{ product.price | money }}
                     </span>
                   </div>
+                  {%- comment -%} Confidence line {%- endcomment -%}
+                  {%- if section.settings.show_confidence_line -%}
+                    <p class="sz-product-confidence">Personalized in 3-5 days</p>
+                  {%- endif -%}
                 </div>
               </a>
             </article>
@@ -408,6 +429,22 @@
     text-decoration: line-through;
   }
 
+  /* Confidence line */
+  .sz-product-confidence {
+    font-family: var(--sz-font-body);
+    font-size: 11px;
+    color: var(--sz-primary-dark, #4E5F4A);
+    margin: 6px 0 0 0;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .sz-product-confidence::before {
+    content: "✓";
+    font-size: 10px;
+  }
+
   /* Pagination */
   .sz-pagination {
     display: flex;
@@ -528,6 +565,42 @@
       "id": "show_description",
       "label": "Show collection description",
       "default": true
+    },
+    {
+      "type": "header",
+      "content": "Merchandising"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_collection_intro",
+      "label": "Show collection intro",
+      "info": "Displays metafield-driven intro block",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_default_confidence",
+      "label": "Show default confidence message",
+      "info": "Shows 'Free personalization' when no metafields",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "show_smart_badges",
+      "label": "Show smart product badges",
+      "info": "Best Seller, Great Gift, etc. based on tags",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_confidence_line",
+      "label": "Show turnaround time on cards",
+      "info": "Adds 'Personalized in 3-5 days' line",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Layout"
     },
     {
       "type": "range",
