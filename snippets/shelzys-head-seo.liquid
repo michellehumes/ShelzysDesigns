@@ -1,7 +1,11 @@
 {% comment %}
-==================================================
+================================================================================
 SHELZY'S DESIGNS - SEO HEAD TAGS
-Add this snippet to your theme.liquid inside <head>
+Version: 2.0.0
+Last Updated: 2024-12
+================================================================================
+Comprehensive SEO meta tags for all page types.
+Include in theme.liquid inside <head>
 
 Usage: {% render 'shelzys-head-seo' %}
 
@@ -11,18 +15,18 @@ Includes:
 - Canonical URLs
 - Open Graph tags
 - Twitter Card tags
-- Preconnect for fonts
-==================================================
+- Theme color
+================================================================================
 {% endcomment %}
 
-{% comment %} Dynamic Title Tag {% endcomment %}
+{%- comment -%} Dynamic Title Tag {%- endcomment -%}
 <title>
   {%- if page_title -%}
-    {{ page_title }} | {{ shop.name }}
+    {{ page_title }}{% unless page_title contains shop.name %} | {{ shop.name }}{% endunless %}
   {%- elsif template == 'index' -%}
     {{ shop.name }} | Custom Personalized Water Bottles & Gifts
   {%- elsif product -%}
-    {{ product.title }} | Personalized by Shelzy's Designs
+    {{ product.title }} | Personalized by {{ shop.name }}
   {%- elsif collection -%}
     {{ collection.title }} | {{ shop.name }}
   {%- elsif article -%}
@@ -32,102 +36,71 @@ Includes:
   {%- endif -%}
 </title>
 
-{% comment %} Meta Description {% endcomment %}
-<meta name="description" content="
-  {%- if page_description and page_description != blank -%}
-    {{ page_description | strip_html | truncatewords: 30 }}
-  {%- elsif template == 'index' -%}
-    Custom personalized water bottles with permanent sublimation printing. No vinyl, no peeling. Perfect for bridesmaids, weddings, kids, and gifts. Free shipping on orders $75+.
-  {%- elsif product -%}
-    {{ product.title }} - Premium sublimated water bottle. Permanent print that never peels or fades. Personalized just for you. Shop now at Shelzy's Designs.
-  {%- elsif collection -%}
-    Shop {{ collection.title }} at Shelzy's Designs. Custom sublimation water bottles personalized with your name. Quality that lasts.
-  {%- elsif template contains 'page' -%}
-    {%- if page.handle == 'about' -%}
-      Learn about Shelzy's Designs - where we create premium personalized water bottles with permanent sublimation printing. Made with care, one bottle at a time.
-    {%- elsif page.handle == 'contact' -%}
-      Contact Shelzy's Designs for custom orders, bulk inquiries, or questions about our personalized water bottles. We'd love to hear from you!
-    {%- elsif page.handle == 'faq' -%}
-      Frequently asked questions about Shelzy's Designs personalized water bottles. Learn about sublimation printing, care instructions, shipping, and more.
-    {%- else -%}
-      {{ shop.description | default: 'Premium personalized water bottles with permanent sublimation printing.' | strip_html | truncatewords: 30 }}
-    {%- endif -%}
-  {%- else -%}
-    Premium personalized water bottles with permanent sublimation printing. No vinyl, no peeling. Free shipping over $75. Shop Shelzy's Designs.
-  {%- endif -%}
-">
+{%- comment -%} Meta Description {%- endcomment -%}
+<meta name="description" content="{%- if page_description and page_description != blank -%}{{ page_description | strip_html | truncatewords: 30 }}{%- elsif template == 'index' -%}Custom personalized water bottles with permanent sublimation printing. No vinyl, no peeling. Perfect for bridesmaids, weddings, kids, and gifts. Free shipping on orders $75+.{%- elsif product -%}{{ product.title }} - Premium sublimated water bottle. Permanent print that never peels or fades. Personalized just for you. Shop now at {{ shop.name }}.{%- elsif collection -%}Shop {{ collection.title }} at {{ shop.name }}. Custom sublimation water bottles personalized with your name. Quality that lasts.{%- elsif template contains 'page' -%}{%- if page.handle == 'about' -%}Learn about {{ shop.name }} - where we create premium personalized water bottles with permanent sublimation printing. Made with care, one bottle at a time.{%- elsif page.handle == 'contact' -%}Contact {{ shop.name }} for custom orders, bulk inquiries, or questions about our personalized water bottles. We'd love to hear from you!{%- elsif page.handle == 'faq' -%}Frequently asked questions about {{ shop.name }} personalized water bottles. Learn about sublimation printing, care instructions, shipping, and more.{%- else -%}{{ shop.description | default: 'Premium personalized water bottles with permanent sublimation printing.' | strip_html | truncatewords: 30 }}{%- endif -%}{%- else -%}Premium personalized water bottles with permanent sublimation printing. No vinyl, no peeling. Free shipping over $75. Shop {{ shop.name }}.{%- endif -%}">
 
-{% comment %} Canonical URL {% endcomment %}
+{%- comment -%} Canonical URL {%- endcomment -%}
 <link rel="canonical" href="{{ canonical_url }}">
 
-{% comment %} Open Graph Tags {% endcomment %}
+{%- comment -%} Open Graph Tags {%- endcomment -%}
 <meta property="og:site_name" content="{{ shop.name }}">
 <meta property="og:url" content="{{ canonical_url }}">
 <meta property="og:type" content="{% if template contains 'product' %}product{% elsif template contains 'article' %}article{% else %}website{% endif %}">
+<meta property="og:locale" content="en_US">
 
-<meta property="og:title" content="
-  {%- if product -%}
-    {{ product.title }} | {{ shop.name }}
-  {%- elsif collection -%}
-    {{ collection.title }} | {{ shop.name }}
-  {%- elsif article -%}
-    {{ article.title }} | {{ shop.name }}
-  {%- else -%}
-    {{ page_title | default: shop.name }}
-  {%- endif -%}
-">
+<meta property="og:title" content="{%- if product -%}{{ product.title }} | {{ shop.name }}{%- elsif collection -%}{{ collection.title }} | {{ shop.name }}{%- elsif article -%}{{ article.title }} | {{ shop.name }}{%- else -%}{{ page_title | default: shop.name }}{%- endif -%}">
 
-<meta property="og:description" content="
-  {%- if product -%}
-    {{ product.description | strip_html | truncatewords: 30 }}
-  {%- elsif collection.description -%}
-    {{ collection.description | strip_html | truncatewords: 30 }}
-  {%- elsif page_description -%}
-    {{ page_description | strip_html | truncatewords: 30 }}
-  {%- else -%}
-    Premium personalized water bottles with permanent sublimation printing. Shop Shelzy's Designs.
-  {%- endif -%}
-">
+<meta property="og:description" content="{%- if product -%}{{ product.description | strip_html | truncatewords: 30 }}{%- elsif collection.description -%}{{ collection.description | strip_html | truncatewords: 30 }}{%- elsif page_description -%}{{ page_description | strip_html | truncatewords: 30 }}{%- else -%}Premium personalized water bottles with permanent sublimation printing. Shop {{ shop.name }}.{%- endif -%}">
 
-{% if product.featured_image %}
+{%- if product.featured_image -%}
   <meta property="og:image" content="{{ product.featured_image | image_url: width: 1200 }}">
   <meta property="og:image:width" content="1200">
-  <meta property="og:image:height" content="1200">
-{% elsif collection.image %}
+  <meta property="og:image:height" content="{{ 1200 | divided_by: product.featured_image.aspect_ratio | default: 1200 | round }}">
+  <meta property="og:image:alt" content="{{ product.featured_image.alt | default: product.title | escape }}">
+{%- elsif collection.image -%}
   <meta property="og:image" content="{{ collection.image | image_url: width: 1200 }}">
-{% elsif page.image %}
-  <meta property="og:image" content="{{ page.image | image_url: width: 1200 }}">
-{% else %}
+{%- elsif article.image -%}
+  <meta property="og:image" content="{{ article.image | image_url: width: 1200 }}">
+{%- elsif settings.share_image -%}
+  <meta property="og:image" content="{{ settings.share_image | image_url: width: 1200 }}">
+{%- else -%}
   <meta property="og:image" content="{{ 'og-default.jpg' | asset_url }}">
-{% endif %}
+{%- endif -%}
 
-{% comment %} Twitter Card Tags {% endcomment %}
+{%- comment -%} Twitter Card Tags {%- endcomment -%}
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="{{ page_title | default: shop.name }}">
-<meta name="twitter:description" content="
-  {%- if product -%}
-    {{ product.description | strip_html | truncatewords: 25 }}
-  {%- elsif page_description -%}
-    {{ page_description | strip_html | truncatewords: 25 }}
-  {%- else -%}
-    Custom personalized water bottles with permanent sublimation. Shop Shelzy's Designs.
-  {%- endif -%}
-">
+<meta name="twitter:description" content="{%- if product -%}{{ product.description | strip_html | truncatewords: 25 }}{%- elsif page_description -%}{{ page_description | strip_html | truncatewords: 25 }}{%- else -%}Custom personalized water bottles with permanent sublimation. Shop {{ shop.name }}.{%- endif -%}">
 
-{% comment %} Product-specific Open Graph {% endcomment %}
-{% if product %}
+{%- if product.featured_image -%}
+  <meta name="twitter:image" content="{{ product.featured_image | image_url: width: 1200 }}">
+{%- elsif settings.share_image -%}
+  <meta name="twitter:image" content="{{ settings.share_image | image_url: width: 1200 }}">
+{%- endif -%}
+
+{%- comment -%} Product-specific Open Graph {%- endcomment -%}
+{%- if product -%}
   <meta property="og:price:amount" content="{{ product.price | money_without_currency }}">
   <meta property="og:price:currency" content="{{ shop.currency }}">
   <meta property="product:availability" content="{% if product.available %}in stock{% else %}out of stock{% endif %}">
-{% endif %}
+  <meta property="product:condition" content="new">
+  <meta property="product:brand" content="{{ shop.name }}">
+  {%- if product.selected_or_first_available_variant.sku != blank -%}
+    <meta property="product:retailer_item_id" content="{{ product.selected_or_first_available_variant.sku }}">
+  {%- endif -%}
+{%- endif -%}
 
-{% comment %} Font Preconnect (Performance Optimization) {% endcomment %}
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@500;600;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
-<noscript>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@500;600;700&display=swap">
-</noscript>
+{%- comment -%} Article-specific Open Graph {%- endcomment -%}
+{%- if article -%}
+  <meta property="article:published_time" content="{{ article.published_at | date: '%Y-%m-%dT%H:%M:%S%z' }}">
+  <meta property="article:author" content="{{ article.author }}">
+  {%- for tag in article.tags -%}
+    <meta property="article:tag" content="{{ tag }}">
+  {%- endfor -%}
+{%- endif -%}
 
-{% comment %} Theme Color for Mobile {% endcomment %}
-<meta name="theme-color" content="#4E5F4A">
+{%- comment -%} Theme Color for Mobile Browsers {%- endcomment -%}
+<meta name="theme-color" content="{{ settings.color_primary | default: '#4E5F4A' }}">
+
+{%- comment -%} Preconnect to Shopify CDN {%- endcomment -%}
+<link rel="preconnect" href="https://cdn.shopify.com" crossorigin>

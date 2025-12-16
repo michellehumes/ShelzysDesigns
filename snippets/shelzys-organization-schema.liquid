@@ -1,0 +1,55 @@
+{% comment %}
+================================================================================
+SHELZY'S DESIGNS - ORGANIZATION SCHEMA
+Version: 2.0.0
+Last Updated: 2024-12
+================================================================================
+Organization structured data for brand identity in search results.
+Include once in theme.liquid, typically in the <head> or before </body>.
+
+Usage: {% render 'shelzys-organization-schema' %}
+================================================================================
+{% endcomment %}
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "@id": "{{ shop.url }}/#organization",
+  "name": {{ shop.name | json }},
+  "url": {{ shop.url | json }},
+  "description": {{ shop.description | default: "Premium personalized water bottles with permanent sublimation printing" | strip_html | json }},
+  {%- if settings.logo != blank -%}
+  "logo": {
+    "@type": "ImageObject",
+    "url": {{ settings.logo | image_url: width: 600 | json }},
+    "width": 600,
+    "height": 200
+  },
+  {%- endif -%}
+  "sameAs": [
+    {%- if settings.social_instagram != blank -%}
+    {{ settings.social_instagram | json }}{% unless settings.social_facebook == blank and settings.social_pinterest == blank and settings.social_tiktok == blank %},{% endunless %}
+    {%- endif -%}
+    {%- if settings.social_facebook != blank -%}
+    {{ settings.social_facebook | json }}{% unless settings.social_pinterest == blank and settings.social_tiktok == blank %},{% endunless %}
+    {%- endif -%}
+    {%- if settings.social_pinterest != blank -%}
+    {{ settings.social_pinterest | json }}{% unless settings.social_tiktok == blank %},{% endunless %}
+    {%- endif -%}
+    {%- if settings.social_tiktok != blank -%}
+    {{ settings.social_tiktok | json }}
+    {%- endif -%}
+  ],
+  "contactPoint": {
+    "@type": "ContactPoint",
+    "contactType": "customer service",
+    "email": {{ shop.email | json }},
+    "availableLanguage": "English"
+  },
+  "address": {
+    "@type": "PostalAddress",
+    "addressCountry": "US"
+  }
+}
+</script>

@@ -1,143 +1,151 @@
-{%- comment -%}
-  Shelzy's Designs - Breadcrumbs Navigation
+{% comment %}
+================================================================================
+SHELZY'S DESIGNS - BREADCRUMBS NAVIGATION
+Version: 2.0.0
+Last Updated: 2024-12
+================================================================================
+Provides clear navigation paths with SEO-friendly BreadcrumbList schema.
+Supports: Product, Collection, Page, Blog, Article, Cart, Search
 
-  Provides clear navigation paths for users to step back from:
-  - Product pages → Collection → Home
-  - Collection pages → Home
-
-  Add to product/collection templates:
-  {% render 'shelzys-breadcrumbs' %}
-{%- endcomment -%}
+Usage: {% render 'shelzys-breadcrumbs' %}
+================================================================================
+{% endcomment %}
 
 {%- unless template.name == 'index' -%}
-<nav class="sz-breadcrumbs" aria-label="Breadcrumb">
-  <ol class="sz-breadcrumbs-list" itemscope itemtype="https://schema.org/BreadcrumbList">
-    {%- comment -%} Home {%- endcomment -%}
-    <li class="sz-breadcrumb-item" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-      <a href="/" itemprop="item" class="sz-breadcrumb-link">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-          <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
-          <polyline points="9 22 9 12 15 12 15 22"/>
-        </svg>
-        <span itemprop="name">Home</span>
-      </a>
-      <meta itemprop="position" content="1">
-    </li>
+{%- liquid
+  assign breadcrumb_items = "" | split: "|"
+  assign home_item = "Home||/"
+  assign breadcrumb_items = breadcrumb_items | push: home_item
+-%}
 
-    {%- comment -%} Collection Page Breadcrumb {%- endcomment -%}
-    {%- if template.name == 'collection' -%}
-      <li class="sz-breadcrumb-item sz-breadcrumb-current" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-        <span itemprop="name" aria-current="page">{{ collection.title }}</span>
-        <meta itemprop="position" content="2">
-      </li>
+{%- comment -%} Build breadcrumb array based on template {%- endcomment -%}
+{%- if template.name == 'collection' -%}
+  {%- assign item = collection.title | append: "||" | append: collection.url -%}
+  {%- assign breadcrumb_items = breadcrumb_items | push: item -%}
 
-    {%- comment -%} Product Page Breadcrumb {%- endcomment -%}
-    {%- elsif template.name == 'product' -%}
-      {%- comment -%} Show collection if product has one {%- endcomment -%}
-      {%- if product.collections.size > 0 -%}
-        {%- assign primary_collection = product.collections | first -%}
-        {%- comment -%} Try to find a more specific collection {%- endcomment -%}
-        {%- for coll in product.collections -%}
-          {%- if coll.handle contains 'wedding' or coll.handle contains 'bridesmaid' or coll.handle contains 'bachelorette' or coll.handle contains 'bridal' -%}
-            {%- assign primary_collection = coll -%}
-            {%- break -%}
-          {%- endif -%}
-        {%- endfor -%}
-
-        <li class="sz-breadcrumb-item" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-          <a href="{{ primary_collection.url }}" itemprop="item" class="sz-breadcrumb-link">
-            <span itemprop="name">{{ primary_collection.title }}</span>
-          </a>
-          <meta itemprop="position" content="2">
-        </li>
-
-        <li class="sz-breadcrumb-item sz-breadcrumb-current" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-          <span itemprop="name" aria-current="page">{{ product.title | truncate: 40 }}</span>
-          <meta itemprop="position" content="3">
-        </li>
-      {%- else -%}
-        <li class="sz-breadcrumb-item sz-breadcrumb-current" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-          <span itemprop="name" aria-current="page">{{ product.title | truncate: 40 }}</span>
-          <meta itemprop="position" content="2">
-        </li>
+{%- elsif template.name == 'product' -%}
+  {%- if product.collections.size > 0 -%}
+    {%- assign primary_collection = product.collections | first -%}
+    {%- for coll in product.collections -%}
+      {%- if coll.handle contains 'wedding' or coll.handle contains 'bridesmaid' or coll.handle contains 'bachelorette' or coll.handle contains 'bridal' -%}
+        {%- assign primary_collection = coll -%}
+        {%- break -%}
       {%- endif -%}
+    {%- endfor -%}
+    {%- assign coll_item = primary_collection.title | append: "||" | append: primary_collection.url -%}
+    {%- assign breadcrumb_items = breadcrumb_items | push: coll_item -%}
+  {%- endif -%}
+  {%- assign prod_item = product.title | append: "||" | append: product.url -%}
+  {%- assign breadcrumb_items = breadcrumb_items | push: prod_item -%}
 
-    {%- comment -%} Other Page Types {%- endcomment -%}
-    {%- elsif template.name == 'page' -%}
-      <li class="sz-breadcrumb-item sz-breadcrumb-current" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-        <span itemprop="name" aria-current="page">{{ page.title }}</span>
-        <meta itemprop="position" content="2">
-      </li>
+{%- elsif template.name == 'page' -%}
+  {%- assign item = page.title | append: "||" | append: page.url -%}
+  {%- assign breadcrumb_items = breadcrumb_items | push: item -%}
 
-    {%- elsif template.name == 'blog' -%}
-      <li class="sz-breadcrumb-item sz-breadcrumb-current" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-        <span itemprop="name" aria-current="page">{{ blog.title }}</span>
-        <meta itemprop="position" content="2">
-      </li>
+{%- elsif template.name == 'blog' -%}
+  {%- assign item = blog.title | append: "||" | append: blog.url -%}
+  {%- assign breadcrumb_items = breadcrumb_items | push: item -%}
 
-    {%- elsif template.name == 'article' -%}
-      <li class="sz-breadcrumb-item" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-        <a href="{{ blog.url }}" itemprop="item" class="sz-breadcrumb-link">
-          <span itemprop="name">{{ blog.title }}</span>
-        </a>
-        <meta itemprop="position" content="2">
-      </li>
-      <li class="sz-breadcrumb-item sz-breadcrumb-current" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-        <span itemprop="name" aria-current="page">{{ article.title | truncate: 40 }}</span>
-        <meta itemprop="position" content="3">
-      </li>
+{%- elsif template.name == 'article' -%}
+  {%- assign blog_item = blog.title | append: "||" | append: blog.url -%}
+  {%- assign breadcrumb_items = breadcrumb_items | push: blog_item -%}
+  {%- assign article_item = article.title | append: "||" | append: article.url -%}
+  {%- assign breadcrumb_items = breadcrumb_items | push: article_item -%}
 
-    {%- elsif template.name == 'cart' -%}
-      <li class="sz-breadcrumb-item sz-breadcrumb-current" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-        <span itemprop="name" aria-current="page">Shopping Cart</span>
-        <meta itemprop="position" content="2">
-      </li>
+{%- elsif template.name == 'cart' -%}
+  {%- assign item = "Shopping Cart||/cart" -%}
+  {%- assign breadcrumb_items = breadcrumb_items | push: item -%}
 
-    {%- elsif template.name == 'search' -%}
-      <li class="sz-breadcrumb-item sz-breadcrumb-current" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-        <span itemprop="name" aria-current="page">Search Results</span>
-        <meta itemprop="position" content="2">
+{%- elsif template.name == 'search' -%}
+  {%- assign item = "Search Results||/search" -%}
+  {%- assign breadcrumb_items = breadcrumb_items | push: item -%}
+{%- endif -%}
+
+{%- comment -%} JSON-LD BreadcrumbList Schema {%- endcomment -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {%- for item in breadcrumb_items -%}
+      {%- assign parts = item | split: "||" -%}
+      {%- assign item_name = parts[0] -%}
+      {%- assign item_url = parts[1] -%}
+    {
+      "@type": "ListItem",
+      "position": {{ forloop.index }},
+      "name": {{ item_name | json }},
+      "item": "{{ shop.url }}{{ item_url }}"
+    }{% unless forloop.last %},{% endunless %}
+    {%- endfor -%}
+  ]
+}
+</script>
+
+{%- comment -%} Visual Breadcrumbs {%- endcomment -%}
+<nav class="sz-breadcrumbs" aria-label="Breadcrumb">
+  <ol class="sz-breadcrumbs__list">
+    {%- for item in breadcrumb_items -%}
+      {%- assign parts = item | split: "||" -%}
+      {%- assign item_name = parts[0] -%}
+      {%- assign item_url = parts[1] -%}
+      {%- assign is_last = forloop.last -%}
+
+      <li class="sz-breadcrumbs__item{% if is_last %} sz-breadcrumbs__item--current{% endif %}">
+        {%- if is_last -%}
+          <span aria-current="page">{{ item_name | truncate: 40 }}</span>
+        {%- else -%}
+          <a href="{{ item_url }}" class="sz-breadcrumbs__link">
+            {%- if forloop.first -%}
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+                <polyline points="9 22 9 12 15 12 15 22"/>
+              </svg>
+            {%- endif -%}
+            <span>{{ item_name }}</span>
+          </a>
+        {%- endif -%}
       </li>
-    {%- endif -%}
+    {%- endfor -%}
   </ol>
 </nav>
 {%- endunless -%}
 
 <style>
   .sz-breadcrumbs {
-    padding: 16px 24px;
-    background: #FAF8F5;
-    border-bottom: 1px solid #E8E4DE;
+    padding: var(--sz-space-md, 16px) var(--sz-space-lg, 24px);
+    background: var(--sz-background-alt, #FAF8F5);
+    border-bottom: 1px solid var(--sz-border, #E8E4DE);
   }
 
   @media (max-width: 768px) {
     .sz-breadcrumbs {
-      padding: 12px 16px;
+      padding: var(--sz-space-sm, 12px) var(--sz-space-md, 16px);
     }
   }
 
-  .sz-breadcrumbs-list {
+  .sz-breadcrumbs__list {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    gap: 8px;
+    gap: var(--sz-space-sm, 8px);
     list-style: none;
     margin: 0;
     padding: 0;
-    max-width: 1400px;
+    max-width: var(--sz-container-max, 1400px);
     margin-left: auto;
     margin-right: auto;
   }
 
-  .sz-breadcrumb-item {
+  .sz-breadcrumbs__item {
     display: flex;
     align-items: center;
-    gap: 8px;
-    font-family: "Inter", sans-serif;
-    font-size: 13px;
+    gap: var(--sz-space-sm, 8px);
+    font-family: var(--sz-font-body);
+    font-size: var(--sz-text-xs, 13px);
   }
 
-  .sz-breadcrumb-item:not(:last-child)::after {
+  .sz-breadcrumbs__item:not(:last-child)::after {
     content: "";
     display: inline-block;
     width: 16px;
@@ -149,40 +157,46 @@
     opacity: 0.6;
   }
 
-  .sz-breadcrumb-link {
+  .sz-breadcrumbs__link {
     display: flex;
     align-items: center;
     gap: 6px;
-    color: #4A4A4A;
+    color: var(--sz-text-muted);
     text-decoration: none;
-    transition: color 0.2s ease;
+    transition: color var(--sz-transition-fast, 0.2s) ease;
   }
 
-  .sz-breadcrumb-link:hover {
-    color: #4E5F4A;
+  .sz-breadcrumbs__link:hover {
+    color: var(--sz-primary);
   }
 
-  .sz-breadcrumb-link svg {
-    color: #7A7A7A;
+  .sz-breadcrumbs__link:focus-visible {
+    outline: 2px solid var(--sz-primary);
+    outline-offset: 2px;
+    border-radius: var(--sz-radius-sm, 4px);
+  }
+
+  .sz-breadcrumbs__link svg {
+    color: var(--sz-text-muted);
     flex-shrink: 0;
   }
 
-  .sz-breadcrumb-current {
-    color: #1F1F1F;
-    font-weight: 500;
+  .sz-breadcrumbs__item--current {
+    color: var(--sz-text);
+    font-weight: var(--sz-font-medium, 500);
   }
 
   /* Mobile: truncate long breadcrumbs */
   @media (max-width: 500px) {
-    .sz-breadcrumbs-list {
-      font-size: 12px;
+    .sz-breadcrumbs__list {
+      font-size: var(--sz-text-xs, 12px);
     }
 
-    .sz-breadcrumb-item {
+    .sz-breadcrumbs__item {
       max-width: 150px;
     }
 
-    .sz-breadcrumb-current span {
+    .sz-breadcrumbs__item--current span {
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
