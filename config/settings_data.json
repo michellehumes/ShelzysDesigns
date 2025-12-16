@@ -18,7 +18,7 @@
     "font_size_base": 16,
     "free_shipping_threshold": 75,
     "show_free_shipping_bar": true,
-    "show_newsletter_popup": true,
+    "show_newsletter_popup": false,
     "popup_delay": 5,
     "popup_discount_code": "WELCOME10",
     "sections": {
@@ -120,7 +120,7 @@
       "font_size_base": 16,
       "free_shipping_threshold": 75,
       "show_free_shipping_bar": true,
-      "show_newsletter_popup": true,
+      "show_newsletter_popup": false,
       "popup_delay": 5,
       "popup_discount_code": "WELCOME10"
     }
