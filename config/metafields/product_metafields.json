@@ -1,0 +1,42 @@
+{
+  "metafield_definitions": [
+    {
+      "namespace": "shelzys",
+      "key": "selling_points",
+      "name": "Selling Points",
+      "description": "List of product selling points displayed on product pages. Each point highlights a key feature or benefit.",
+      "type": "list.single_line_text_field",
+      "owner_type": "PRODUCT",
+      "pin": true,
+      "validations": [
+        {
+          "name": "choices",
+          "value": null
+        }
+      ],
+      "visible_to_storefront_api": true,
+      "use_as_collection_condition": false
+    },
+    {
+      "namespace": "shelzys",
+      "key": "badges",
+      "name": "Product Badges",
+      "description": "Badges to display on product cards (e.g., 'new', 'bestseller', 'limited'). Used by sz-badges section.",
+      "type": "list.single_line_text_field",
+      "owner_type": "PRODUCT",
+      "pin": true,
+      "validations": [
+        {
+          "name": "choices",
+          "value": "[\"new\", \"bestseller\", \"limited\", \"sale\", \"exclusive\", \"back-in-stock\"]"
+        }
+      ],
+      "visible_to_storefront_api": true,
+      "use_as_collection_condition": true
+    }
+  ],
+  "graphql_mutations": {
+    "create_selling_points": "mutation CreateSellingPointsMetafield { metafieldDefinitionCreate(definition: { namespace: \"shelzys\", key: \"selling_points\", name: \"Selling Points\", description: \"List of product selling points\", type: \"list.single_line_text_field\", ownerType: PRODUCT, pin: true, visibleToStorefrontApi: true }) { createdDefinition { id } userErrors { field message } } }",
+    "create_badges": "mutation CreateBadgesMetafield { metafieldDefinitionCreate(definition: { namespace: \"shelzys\", key: \"badges\", name: \"Product Badges\", description: \"Product badges for display\", type: \"list.single_line_text_field\", ownerType: PRODUCT, pin: true, visibleToStorefrontApi: true, validations: [{ name: \"choices\", value: \"[\\\"new\\\", \\\"bestseller\\\", \\\"limited\\\", \\\"sale\\\", \\\"exclusive\\\", \\\"back-in-stock\\\"]\" }] }) { createdDefinition { id } userErrors { field message } } }"
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "metafield_definitions": [
+    {
+      "namespace": "shelzys",
+      "key": "hero_image",
+      "name": "Collection Hero Image",
+      "description": "Hero image displayed at the top of collection pages. Should be high-resolution (1600x800px recommended).",
+      "type": "file_reference",
+      "owner_type": "COLLECTION",
+      "pin": true,
+      "validations": [
+        {
+          "name": "file_type_options",
+          "value": "[\"Image\"]"
+        }
+      ],
+      "visible_to_storefront_api": true
+    }
+  ],
+  "graphql_mutations": {
+    "create_hero_image": "mutation CreateHeroImageMetafield { metafieldDefinitionCreate(definition: { namespace: \"shelzys\", key: \"hero_image\", name: \"Collection Hero Image\", description: \"Hero image for collection pages\", type: \"file_reference\", ownerType: COLLECTION, pin: true, visibleToStorefrontApi: true, validations: [{ name: \"file_type_options\", value: \"[\\\"Image\\\"]\" }] }) { createdDefinition { id } userErrors { field message } } }"
+  }
+}

@@ -1,0 +1,63 @@
+{
+  "sections": {
+    "collection-hero": {
+      "type": "sz-hero",
+      "settings": {
+        "media_type": "image",
+        "height": 50,
+        "mobile_height": 40,
+        "overlay_opacity": 30,
+        "badge_text": "Spring 2025",
+        "badge_icon": "flower",
+        "heading": "{{ collection.title }}",
+        "subheading": "{{ collection.description | strip_html | truncate: 150 }}",
+        "content_position": "center",
+        "button_label": "",
+        "button_link": "",
+        "show_scroll_indicator": false
+      }
+    },
+    "sz-badges": {
+      "type": "sz-badges",
+      "blocks": {
+        "badge-1": {
+          "type": "badge",
+          "settings": {
+            "icon": "sparkles",
+            "text": "New Arrivals"
+          }
+        },
+        "badge-2": {
+          "type": "badge",
+          "settings": {
+            "icon": "shield-check",
+            "text": "Permanent Print"
+          }
+        },
+        "badge-3": {
+          "type": "badge",
+          "settings": {
+            "icon": "truck",
+            "text": "Free Shipping $50+"
+          }
+        }
+      },
+      "block_order": ["badge-1", "badge-2", "badge-3"],
+      "settings": {
+        "background_color": "#F5F2ED",
+        "text_color": "#1F1F1F",
+        "icon_color": "#4E5F4A"
+      }
+    },
+    "main": {
+      "type": "main-collection",
+      "settings": {
+        "show_description": false,
+        "products_per_page": 16,
+        "columns": "4",
+        "show_secondary_image": true
+      }
+    }
+  },
+  "order": ["collection-hero", "sz-badges", "main"]
+}

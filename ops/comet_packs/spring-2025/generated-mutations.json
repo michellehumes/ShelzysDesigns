@@ -1,0 +1,229 @@
+{
+  "campaign": {
+    "slug": "spring-2025",
+    "name": "Spring Collection 2025",
+    "generated_at": "2025-12-16T05:58:04.126Z"
+  },
+  "shop_mutations": {
+    "announcement_bar": "\nmutation SetAnnouncementBar {\n  metafieldsSet(metafields: [{\n    namespace: \"shelzys\"\n    key: \"announcement_bar\"\n    ownerId: \"gid://shopify/Shop/SHOP_ID\"\n    type: \"single_line_text_field\"\n    value: \"Spring Collection is HERE! Free shipping on orders $50+ | Use code SPRING25 for 15% off\"\n  }]) {\n    metafields { id key value }\n    userErrors { field message }\n  }\n}"
+  },
+  "product_mutations": [
+    {
+      "handle": "spring-floral-bottle",
+      "mutations": [
+        {
+          "type": "selling_points",
+          "query": "\nmutation SetProductSellingPoints {\n  productUpdate(input: {\n    id: \"gid://shopify/Product/PRODUCT_ID_FOR_spring-floral-bottle\"\n    metafields: [{\n      namespace: \"shelzys\"\n      key: \"selling_points\"\n      type: \"list.single_line_text_field\"\n      value: \"[\\\"Permanent sublimation printing\\\",\\\"Double-wall insulated\\\",\\\"24hr cold / 12hr hot\\\",\\\"BPA-free and durable\\\"]\"\n    }]\n  }) {\n    product { id title }\n    userErrors { field message }\n  }\n}",
+          "values": [
+            "Permanent sublimation printing",
+            "Double-wall insulated",
+            "24hr cold / 12hr hot",
+            "BPA-free and durable"
+          ]
+        },
+        {
+          "type": "badges",
+          "query": "\nmutation SetProductBadges {\n  productUpdate(input: {\n    id: \"gid://shopify/Product/PRODUCT_ID_FOR_spring-floral-bottle\"\n    metafields: [{\n      namespace: \"shelzys\"\n      key: \"badges\"\n      type: \"list.single_line_text_field\"\n      value: \"[\\\"new\\\",\\\"limited\\\"]\"\n    }]\n  }) {\n    product { id title }\n    userErrors { field message }\n  }\n}",
+          "values": [
+            "new",
+            "limited"
+          ]
+        }
+      ]
+    },
+    {
+      "handle": "cherry-blossom-bottle",
+      "mutations": [
+        {
+          "type": "selling_points",
+          "query": "\nmutation SetProductSellingPoints {\n  productUpdate(input: {\n    id: \"gid://shopify/Product/PRODUCT_ID_FOR_cherry-blossom-bottle\"\n    metafields: [{\n      namespace: \"shelzys\"\n      key: \"selling_points\"\n      type: \"list.single_line_text_field\"\n      value: \"[\\\"Delicate cherry blossom design\\\",\\\"Permanent sublimation print\\\",\\\"Premium insulated steel\\\",\\\"Gift-ready packaging\\\"]\"\n    }]\n  }) {\n    product { id title }\n    userErrors { field message }\n  }\n}",
+          "values": [
+            "Delicate cherry blossom design",
+            "Permanent sublimation print",
+            "Premium insulated steel",
+            "Gift-ready packaging"
+          ]
+        },
+        {
+          "type": "badges",
+          "query": "\nmutation SetProductBadges {\n  productUpdate(input: {\n    id: \"gid://shopify/Product/PRODUCT_ID_FOR_cherry-blossom-bottle\"\n    metafields: [{\n      namespace: \"shelzys\"\n      key: \"badges\"\n      type: \"list.single_line_text_field\"\n      value: \"[\\\"new\\\",\\\"bestseller\\\"]\"\n    }]\n  }) {\n    product { id title }\n    userErrors { field message }\n  }\n}",
+          "values": [
+            "new",
+            "bestseller"
+          ]
+        }
+      ]
+    },
+    {
+      "handle": "lavender-fields-bottle",
+      "mutations": [
+        {
+          "type": "selling_points",
+          "query": "\nmutation SetProductSellingPoints {\n  productUpdate(input: {\n    id: \"gid://shopify/Product/PRODUCT_ID_FOR_lavender-fields-bottle\"\n    metafields: [{\n      namespace: \"shelzys\"\n      key: \"selling_points\"\n      type: \"list.single_line_text_field\"\n      value: \"[\\\"Calming lavender aesthetic\\\",\\\"Permanent sublimation\\\",\\\"Keeps drinks cold 24hrs\\\",\\\"Scratch-resistant finish\\\"]\"\n    }]\n  }) {\n    product { id title }\n    userErrors { field message }\n  }\n}",
+          "values": [
+            "Calming lavender aesthetic",
+            "Permanent sublimation",
+            "Keeps drinks cold 24hrs",
+            "Scratch-resistant finish"
+          ]
+        },
+        {
+          "type": "badges",
+          "query": "\nmutation SetProductBadges {\n  productUpdate(input: {\n    id: \"gid://shopify/Product/PRODUCT_ID_FOR_lavender-fields-bottle\"\n    metafields: [{\n      namespace: \"shelzys\"\n      key: \"badges\"\n      type: \"list.single_line_text_field\"\n      value: \"[\\\"new\\\"]\"\n    }]\n  }) {\n    product { id title }\n    userErrors { field message }\n  }\n}",
+          "values": [
+            "new"
+          ]
+        }
+      ]
+    },
+    {
+      "handle": "pastel-rainbow-bottle",
+      "mutations": [
+        {
+          "type": "selling_points",
+          "query": "\nmutation SetProductSellingPoints {\n  productUpdate(input: {\n    id: \"gid://shopify/Product/PRODUCT_ID_FOR_pastel-rainbow-bottle\"\n    metafields: [{\n      namespace: \"shelzys\"\n      key: \"selling_points\"\n      type: \"list.single_line_text_field\"\n      value: \"[\\\"Soft rainbow gradient\\\",\\\"Permanent personalization\\\",\\\"Double-wall insulated\\\",\\\"Perfect for everyday\\\"]\"\n    }]\n  }) {\n    product { id title }\n    userErrors { field message }\n  }\n}",
+          "values": [
+            "Soft rainbow gradient",
+            "Permanent personalization",
+            "Double-wall insulated",
+            "Perfect for everyday"
+          ]
+        },
+        {
+          "type": "badges",
+          "query": "\nmutation SetProductBadges {\n  productUpdate(input: {\n    id: \"gid://shopify/Product/PRODUCT_ID_FOR_pastel-rainbow-bottle\"\n    metafields: [{\n      namespace: \"shelzys\"\n      key: \"badges\"\n      type: \"list.single_line_text_field\"\n      value: \"[\\\"new\\\"]\"\n    }]\n  }) {\n    product { id title }\n    userErrors { field message }\n  }\n}",
+          "values": [
+            "new"
+          ]
+        }
+      ]
+    },
+    {
+      "handle": "mint-green-botanical",
+      "mutations": [
+        {
+          "type": "selling_points",
+          "query": "\nmutation SetProductSellingPoints {\n  productUpdate(input: {\n    id: \"gid://shopify/Product/PRODUCT_ID_FOR_mint-green-botanical\"\n    metafields: [{\n      namespace: \"shelzys\"\n      key: \"selling_points\"\n      type: \"list.single_line_text_field\"\n      value: \"[\\\"Fresh botanical design\\\",\\\"Premium insulated steel\\\",\\\"Permanent sublimation\\\",\\\"No vinyl ever\\\"]\"\n    }]\n  }) {\n    product { id title }\n    userErrors { field message }\n  }\n}",
+          "values": [
+            "Fresh botanical design",
+            "Premium insulated steel",
+            "Permanent sublimation",
+            "No vinyl ever"
+          ]
+        },
+        {
+          "type": "badges",
+          "query": "\nmutation SetProductBadges {\n  productUpdate(input: {\n    id: \"gid://shopify/Product/PRODUCT_ID_FOR_mint-green-botanical\"\n    metafields: [{\n      namespace: \"shelzys\"\n      key: \"badges\"\n      type: \"list.single_line_text_field\"\n      value: \"[\\\"new\\\",\\\"limited\\\"]\"\n    }]\n  }) {\n    product { id title }\n    userErrors { field message }\n  }\n}",
+          "values": [
+            "new",
+            "limited"
+          ]
+        }
+      ]
+    },
+    {
+      "handle": "peach-blossom-bottle",
+      "mutations": [
+        {
+          "type": "selling_points",
+          "query": "\nmutation SetProductSellingPoints {\n  productUpdate(input: {\n    id: \"gid://shopify/Product/PRODUCT_ID_FOR_peach-blossom-bottle\"\n    metafields: [{\n      namespace: \"shelzys\"\n      key: \"selling_points\"\n      type: \"list.single_line_text_field\"\n      value: \"[\\\"Elegant peach florals\\\",\\\"24hr cold retention\\\",\\\"Permanent design\\\",\\\"Handcrafted with care\\\"]\"\n    }]\n  }) {\n    product { id title }\n    userErrors { field message }\n  }\n}",
+          "values": [
+            "Elegant peach florals",
+            "24hr cold retention",
+            "Permanent design",
+            "Handcrafted with care"
+          ]
+        },
+        {
+          "type": "badges",
+          "query": "\nmutation SetProductBadges {\n  productUpdate(input: {\n    id: \"gid://shopify/Product/PRODUCT_ID_FOR_peach-blossom-bottle\"\n    metafields: [{\n      namespace: \"shelzys\"\n      key: \"badges\"\n      type: \"list.single_line_text_field\"\n      value: \"[\\\"new\\\"]\"\n    }]\n  }) {\n    product { id title }\n    userErrors { field message }\n  }\n}",
+          "values": [
+            "new"
+          ]
+        }
+      ]
+    },
+    {
+      "handle": "wildflower-meadow-bottle",
+      "mutations": [
+        {
+          "type": "selling_points",
+          "query": "\nmutation SetProductSellingPoints {\n  productUpdate(input: {\n    id: \"gid://shopify/Product/PRODUCT_ID_FOR_wildflower-meadow-bottle\"\n    metafields: [{\n      namespace: \"shelzys\"\n      key: \"selling_points\"\n      type: \"list.single_line_text_field\"\n      value: \"[\\\"Vibrant wildflower print\\\",\\\"Dishwasher safe\\\",\\\"Permanent sublimation\\\",\\\"Gallery-quality finish\\\"]\"\n    }]\n  }) {\n    product { id title }\n    userErrors { field message }\n  }\n}",
+          "values": [
+            "Vibrant wildflower print",
+            "Dishwasher safe",
+            "Permanent sublimation",
+            "Gallery-quality finish"
+          ]
+        },
+        {
+          "type": "badges",
+          "query": "\nmutation SetProductBadges {\n  productUpdate(input: {\n    id: \"gid://shopify/Product/PRODUCT_ID_FOR_wildflower-meadow-bottle\"\n    metafields: [{\n      namespace: \"shelzys\"\n      key: \"badges\"\n      type: \"list.single_line_text_field\"\n      value: \"[\\\"new\\\",\\\"bestseller\\\"]\"\n    }]\n  }) {\n    product { id title }\n    userErrors { field message }\n  }\n}",
+          "values": [
+            "new",
+            "bestseller"
+          ]
+        }
+      ]
+    },
+    {
+      "handle": "baby-blue-daisy-bottle",
+      "mutations": [
+        {
+          "type": "selling_points",
+          "query": "\nmutation SetProductSellingPoints {\n  productUpdate(input: {\n    id: \"gid://shopify/Product/PRODUCT_ID_FOR_baby-blue-daisy-bottle\"\n    metafields: [{\n      namespace: \"shelzys\"\n      key: \"selling_points\"\n      type: \"list.single_line_text_field\"\n      value: \"[\\\"Sweet daisy design\\\",\\\"Soft baby blue\\\",\\\"Permanent printing\\\",\\\"Perfect spring gift\\\"]\"\n    }]\n  }) {\n    product { id title }\n    userErrors { field message }\n  }\n}",
+          "values": [
+            "Sweet daisy design",
+            "Soft baby blue",
+            "Permanent printing",
+            "Perfect spring gift"
+          ]
+        },
+        {
+          "type": "badges",
+          "query": "\nmutation SetProductBadges {\n  productUpdate(input: {\n    id: \"gid://shopify/Product/PRODUCT_ID_FOR_baby-blue-daisy-bottle\"\n    metafields: [{\n      namespace: \"shelzys\"\n      key: \"badges\"\n      type: \"list.single_line_text_field\"\n      value: \"[\\\"new\\\"]\"\n    }]\n  }) {\n    product { id title }\n    userErrors { field message }\n  }\n}",
+          "values": [
+            "new"
+          ]
+        }
+      ]
+    }
+  ],
+  "collection_mutations": [
+    {
+      "handle": "spring-2025",
+      "mutations": [
+        {
+          "type": "hero_image",
+          "query": "\nmutation SetCollectionHeroImage {\n  collectionUpdate(input: {\n    id: \"gid://shopify/Collection/COLLECTION_ID_FOR_spring-2025\"\n    metafields: [{\n      namespace: \"shelzys\"\n      key: \"hero_image\"\n      type: \"file_reference\"\n      value: \"gid://shopify/MediaImage/MEDIA_ID_FOR_spring-collection-hero.jpg\"\n    }]\n  }) {\n    collection { id title }\n    userErrors { field message }\n  }\n}",
+          "file": "spring-collection-hero.jpg"
+        }
+      ]
+    },
+    {
+      "handle": "floral-designs",
+      "mutations": [
+        {
+          "type": "hero_image",
+          "query": "\nmutation SetCollectionHeroImage {\n  collectionUpdate(input: {\n    id: \"gid://shopify/Collection/COLLECTION_ID_FOR_floral-designs\"\n    metafields: [{\n      namespace: \"shelzys\"\n      key: \"hero_image\"\n      type: \"file_reference\"\n      value: \"gid://shopify/MediaImage/MEDIA_ID_FOR_floral-collection-hero.jpg\"\n    }]\n  }) {\n    collection { id title }\n    userErrors { field message }\n  }\n}",
+          "file": "floral-collection-hero.jpg"
+        }
+      ]
+    },
+    {
+      "handle": "pastel-collection",
+      "mutations": [
+        {
+          "type": "hero_image",
+          "query": "\nmutation SetCollectionHeroImage {\n  collectionUpdate(input: {\n    id: \"gid://shopify/Collection/COLLECTION_ID_FOR_pastel-collection\"\n    metafields: [{\n      namespace: \"shelzys\"\n      key: \"hero_image\"\n      type: \"file_reference\"\n      value: \"gid://shopify/MediaImage/MEDIA_ID_FOR_pastel-collection-hero.jpg\"\n    }]\n  }) {\n    collection { id title }\n    userErrors { field message }\n  }\n}",
+          "file": "pastel-collection-hero.jpg"
+        }
+      ]
+    }
+  ],
+  "summary": {
+    "products": 8,
+    "collections": 3,
+    "total_mutations": 20
+  }
+}

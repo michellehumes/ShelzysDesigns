@@ -1,0 +1,432 @@
+{%- comment -%}
+  Shelzy's Designs - SZ Collection Tiles Section
+  Responsive grid of collection tiles with images, labels, and links
+  Supports custom images or collection featured images
+{%- endcomment -%}
+
+{%- liquid
+  assign columns_desktop = section.settings.columns_desktop
+  assign columns_mobile = section.settings.columns_mobile
+  assign bg_color = section.settings.background_color
+  assign image_ratio = section.settings.image_ratio
+-%}
+
+<section
+  class="sz-collection-tiles"
+  role="region"
+  aria-labelledby="sz-tiles-heading-{{ section.id }}"
+  style="--sz-tiles-bg: {{ bg_color }}; --sz-tiles-columns-desktop: {{ columns_desktop }}; --sz-tiles-columns-mobile: {{ columns_mobile }};"
+>
+  <div class="sz-collection-tiles__container">
+    {%- if section.settings.heading != blank or section.settings.subheading != blank -%}
+      <header class="sz-collection-tiles__header">
+        {%- if section.settings.subheading != blank -%}
+          <span class="sz-collection-tiles__subheading">{{ section.settings.subheading }}</span>
+        {%- endif -%}
+        {%- if section.settings.heading != blank -%}
+          <h2 class="sz-collection-tiles__heading" id="sz-tiles-heading-{{ section.id }}">{{ section.settings.heading }}</h2>
+        {%- endif -%}
+      </header>
+    {%- endif -%}
+
+    <div class="sz-collection-tiles__grid" role="list">
+      {%- for block in section.blocks -%}
+        {%- case block.type -%}
+          {%- when 'tile' -%}
+            {%- liquid
+              assign collection = collections[block.settings.collection]
+              assign tile_image = block.settings.custom_image | default: collection.featured_image
+              assign tile_label = block.settings.label | default: collection.title
+              assign tile_link = block.settings.custom_link | default: collection.url
+            -%}
+
+            <article class="sz-collection-tiles__tile" role="listitem" {{ block.shopify_attributes }}>
+              <a href="{{ tile_link }}" class="sz-collection-tiles__link" aria-label="Shop {{ tile_label }}">
+                <div class="sz-collection-tiles__image-wrapper sz-collection-tiles__image-wrapper--{{ image_ratio }}">
+                  {%- if tile_image != blank -%}
+                    <img
+                      src="{{ tile_image | image_url: width: 600 }}"
+                      srcset="{{ tile_image | image_url: width: 300 }} 300w,
+                              {{ tile_image | image_url: width: 450 }} 450w,
+                              {{ tile_image | image_url: width: 600 }} 600w"
+                      sizes="(max-width: 480px) 50vw, (max-width: 768px) 33vw, 25vw"
+                      alt="{{ tile_image.alt | default: tile_label }}"
+                      class="sz-collection-tiles__image"
+                      loading="lazy"
+                    >
+                  {%- else -%}
+                    <div class="sz-collection-tiles__placeholder" aria-hidden="true">
+                      <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                        <circle cx="8.5" cy="8.5" r="1.5"/>
+                        <polyline points="21 15 16 10 5 21"/>
+                      </svg>
+                    </div>
+                  {%- endif -%}
+                  <div class="sz-collection-tiles__overlay" aria-hidden="true"></div>
+                </div>
+
+                <div class="sz-collection-tiles__content">
+                  <h3 class="sz-collection-tiles__label">{{ tile_label }}</h3>
+                  {%- if block.settings.description != blank -%}
+                    <p class="sz-collection-tiles__description">{{ block.settings.description }}</p>
+                  {%- endif -%}
+                  <span class="sz-collection-tiles__cta">
+                    Shop Now
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                      <path d="M5 12h14M12 5l7 7-7 7"/>
+                    </svg>
+                  </span>
+                </div>
+              </a>
+            </article>
+        {%- endcase -%}
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+<style>
+  .sz-collection-tiles {
+    background-color: var(--sz-tiles-bg);
+    padding: 80px 0;
+  }
+
+  .sz-collection-tiles__container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  .sz-collection-tiles__header {
+    text-align: center;
+    margin-bottom: 48px;
+  }
+
+  .sz-collection-tiles__subheading {
+    display: block;
+    font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #4E5F4A;
+    margin-bottom: 8px;
+  }
+
+  .sz-collection-tiles__heading {
+    font-family: "Playfair Display", Georgia, serif;
+    font-size: clamp(1.75rem, 4vw, 2.5rem);
+    font-weight: 500;
+    color: #1F1F1F;
+    margin: 0;
+  }
+
+  .sz-collection-tiles__grid {
+    display: grid;
+    grid-template-columns: repeat(var(--sz-tiles-columns-desktop), 1fr);
+    gap: 24px;
+  }
+
+  .sz-collection-tiles__tile {
+    position: relative;
+  }
+
+  .sz-collection-tiles__link {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+    border-radius: 12px;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .sz-collection-tiles__link:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+  }
+
+  .sz-collection-tiles__image-wrapper {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .sz-collection-tiles__image-wrapper--square {
+    aspect-ratio: 1 / 1;
+  }
+
+  .sz-collection-tiles__image-wrapper--portrait {
+    aspect-ratio: 3 / 4;
+  }
+
+  .sz-collection-tiles__image-wrapper--landscape {
+    aspect-ratio: 4 / 3;
+  }
+
+  .sz-collection-tiles__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+  }
+
+  .sz-collection-tiles__link:hover .sz-collection-tiles__image {
+    transform: scale(1.05);
+  }
+
+  .sz-collection-tiles__placeholder {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #e8e8e8 0%, #f5f5f5 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #999;
+  }
+
+  .sz-collection-tiles__overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to top,
+      rgba(0, 0, 0, 0.6) 0%,
+      rgba(0, 0, 0, 0.2) 40%,
+      transparent 100%
+    );
+    transition: opacity 0.3s ease;
+  }
+
+  .sz-collection-tiles__link:hover .sz-collection-tiles__overlay {
+    opacity: 0.8;
+  }
+
+  .sz-collection-tiles__content {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 24px;
+    color: #fff;
+    text-align: center;
+  }
+
+  .sz-collection-tiles__label {
+    font-family: "Playfair Display", Georgia, serif;
+    font-size: clamp(1.125rem, 2vw, 1.5rem);
+    font-weight: 500;
+    margin: 0 0 4px 0;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  }
+
+  .sz-collection-tiles__description {
+    font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 14px;
+    margin: 0 0 8px 0;
+    opacity: 0.9;
+  }
+
+  .sz-collection-tiles__cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+  }
+
+  .sz-collection-tiles__link:hover .sz-collection-tiles__cta {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .sz-collection-tiles__cta svg {
+    transition: transform 0.3s ease;
+  }
+
+  .sz-collection-tiles__link:hover .sz-collection-tiles__cta svg {
+    transform: translateX(4px);
+  }
+
+  @media (max-width: 768px) {
+    .sz-collection-tiles {
+      padding: 60px 0;
+    }
+
+    .sz-collection-tiles__grid {
+      grid-template-columns: repeat(var(--sz-tiles-columns-mobile), 1fr);
+      gap: 16px;
+    }
+
+    .sz-collection-tiles__header {
+      margin-bottom: 32px;
+    }
+
+    .sz-collection-tiles__content {
+      padding: 16px;
+    }
+
+    .sz-collection-tiles__cta {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .sz-collection-tiles__link,
+    .sz-collection-tiles__image,
+    .sz-collection-tiles__overlay,
+    .sz-collection-tiles__cta {
+      transition: none;
+    }
+
+    .sz-collection-tiles__link:hover {
+      transform: none;
+    }
+
+    .sz-collection-tiles__link:hover .sz-collection-tiles__image {
+      transform: none;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "SZ Collection Tiles",
+  "tag": "section",
+  "class": "sz-section-collection-tiles",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Header"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Shop by Collection"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Find Your Perfect Style"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "columns_desktop",
+      "label": "Columns (Desktop)",
+      "min": 2,
+      "max": 6,
+      "step": 1,
+      "default": 4
+    },
+    {
+      "type": "range",
+      "id": "columns_mobile",
+      "label": "Columns (Mobile)",
+      "min": 1,
+      "max": 2,
+      "step": 1,
+      "default": 2
+    },
+    {
+      "type": "select",
+      "id": "image_ratio",
+      "label": "Image Ratio",
+      "options": [
+        { "value": "square", "label": "Square (1:1)" },
+        { "value": "portrait", "label": "Portrait (3:4)" },
+        { "value": "landscape", "label": "Landscape (4:3)" }
+      ],
+      "default": "square"
+    },
+    {
+      "type": "header",
+      "content": "Style"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background Color",
+      "default": "#F5F2ED"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "tile",
+      "name": "Collection Tile",
+      "settings": [
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Collection"
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Custom Label",
+          "info": "Overrides collection title"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Description",
+          "info": "Optional short description"
+        },
+        {
+          "type": "image_picker",
+          "id": "custom_image",
+          "label": "Custom Image",
+          "info": "Overrides collection featured image"
+        },
+        {
+          "type": "url",
+          "id": "custom_link",
+          "label": "Custom Link",
+          "info": "Overrides collection URL"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "SZ Collection Tiles",
+      "blocks": [
+        {
+          "type": "tile",
+          "settings": {
+            "label": "Spring 2025"
+          }
+        },
+        {
+          "type": "tile",
+          "settings": {
+            "label": "Wedding & Bridal"
+          }
+        },
+        {
+          "type": "tile",
+          "settings": {
+            "label": "Best Sellers"
+          }
+        },
+        {
+          "type": "tile",
+          "settings": {
+            "label": "Kids Collection"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

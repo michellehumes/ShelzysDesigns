@@ -1,0 +1,64 @@
+{
+  "campaign_slug": "spring-2025",
+  "campaign_name": "Spring Collection 2025",
+  "campaign_start": "2025-03-01",
+  "campaign_end": "2025-05-31",
+  "announcement_bar": "Spring Collection is HERE! Free shipping on orders $50+ | Use code SPRING25 for 15% off",
+  "hero": {
+    "heading": "Fresh Starts Deserve Fresh Style",
+    "subheading": "Introducing the Spring 2025 Collection — vibrant colors, floral designs, and personalized bottles perfect for the season of new beginnings.",
+    "badge_text": "New Spring 2025",
+    "badge_icon": "flower",
+    "primary_cta": {
+      "label": "Shop Spring Collection",
+      "link": "/collections/spring-2025"
+    },
+    "secondary_cta": {
+      "label": "View All Collections",
+      "link": "/collections/all"
+    },
+    "media": {
+      "type": "image",
+      "src": "spring-hero-2025.jpg",
+      "alt": "Spring 2025 Collection personalized water bottles with floral designs"
+    }
+  },
+  "featured_collections": [
+    {
+      "handle": "spring-2025",
+      "title": "Spring 2025",
+      "priority": 1
+    },
+    {
+      "handle": "floral-designs",
+      "title": "Floral Designs",
+      "priority": 2
+    },
+    {
+      "handle": "pastel-collection",
+      "title": "Pastel Collection",
+      "priority": 3
+    }
+  ],
+  "badges": {
+    "new": {
+      "label": "New",
+      "icon": "sparkle",
+      "color": "#4E5F4A"
+    },
+    "limited": {
+      "label": "Limited Edition",
+      "icon": "star",
+      "color": "#D4AF37"
+    },
+    "bestseller": {
+      "label": "Best Seller",
+      "icon": "fire",
+      "color": "#E8A4C4"
+    }
+  },
+  "seo": {
+    "title": "Spring 2025 Collection | Personalized Water Bottles | Shelzy's Designs",
+    "description": "Discover our Spring 2025 Collection of personalized sublimation water bottles. Fresh floral designs, vibrant pastel colors, and permanent printing that never peels."
+  }
+}

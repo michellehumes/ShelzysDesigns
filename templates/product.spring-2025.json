@@ -1,0 +1,61 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-product",
+      "settings": {
+        "enable_reviews_summary": true,
+        "enable_low_stock_warning": true,
+        "low_stock_threshold": 5,
+        "enable_color_swatches": true,
+        "enable_accordion": true,
+        "enable_buy_now": true,
+        "enable_trust_badges": true,
+        "trust_badge_1": "Free Shipping Over $50",
+        "trust_badge_2": "Permanent Sublimation",
+        "trust_badge_3": "30-Day Returns"
+      }
+    },
+    "sz-badges-product": {
+      "type": "sz-badges",
+      "blocks": {
+        "product-badges": {
+          "type": "product_badge",
+          "settings": {}
+        }
+      },
+      "block_order": ["product-badges"],
+      "settings": {
+        "background_color": "#FFF8F6",
+        "text_color": "#1F1F1F",
+        "icon_color": "#4E5F4A"
+      }
+    },
+    "product-recommendations": {
+      "type": "product-recommendations",
+      "settings": {
+        "heading": "Complete Your Spring Look",
+        "products_to_show": 4
+      }
+    },
+    "featured-collection": {
+      "type": "featured-collection",
+      "settings": {
+        "collection": "spring-2025",
+        "products_to_show": 4,
+        "columns": "4",
+        "subheading": "More from Spring 2025",
+        "heading": "You May Also Like",
+        "header_alignment": "center",
+        "show_secondary_image": true,
+        "show_badges": true,
+        "show_rating": true,
+        "show_quick_add": true,
+        "show_view_all": true,
+        "view_all_text": "Shop All Spring",
+        "background_color": "#F5F2ED",
+        "accent_color": "#4E5F4A"
+      }
+    }
+  },
+  "order": ["main", "sz-badges-product", "product-recommendations", "featured-collection"]
+}

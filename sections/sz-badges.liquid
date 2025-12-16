@@ -1,0 +1,259 @@
+{%- comment -%}
+  Shelzy's Designs - SZ Badges Section
+  Dynamic badges from product metafields with icon mapping
+  Supports trust badges, promotional badges, and product-specific badges
+{%- endcomment -%}
+
+{%- liquid
+  assign bg_color = section.settings.background_color
+  assign text_color = section.settings.text_color
+  assign icon_color = section.settings.icon_color
+-%}
+
+<section
+  class="sz-badges"
+  role="region"
+  aria-label="Store features and guarantees"
+  style="--sz-badges-bg: {{ bg_color }}; --sz-badges-text: {{ text_color }}; --sz-badges-icon: {{ icon_color }};"
+>
+  <div class="sz-badges__container">
+    <div class="sz-badges__grid">
+      {%- for block in section.blocks -%}
+        {%- case block.type -%}
+          {%- when 'badge' -%}
+            <div class="sz-badges__item" {{ block.shopify_attributes }}>
+              <span class="sz-badges__icon" aria-hidden="true">
+                {%- case block.settings.icon -%}
+                  {%- when 'truck' -%}
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+                  {%- when 'shield-check' -%}
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>
+                  {%- when 'sparkles' -%}
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.5 6.5L20 12l-6.5 1.5L12 20l-1.5-6.5L4 12l6.5-1.5L12 3z"/><path d="M5 3v4"/><path d="M3 5h4"/><path d="M19 17v4"/><path d="M17 19h4"/></svg>
+                  {%- when 'refresh' -%}
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+                  {%- when 'heart' -%}
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                  {%- when 'star' -%}
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                  {%- when 'check-circle' -%}
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                  {%- when 'gift' -%}
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 12 20 22 4 22 4 12"/><rect x="2" y="7" width="20" height="5"/><line x1="12" y1="22" x2="12" y2="7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg>
+                  {%- when 'clock' -%}
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                  {%- when 'droplet' -%}
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg>
+                  {%- else -%}
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                {%- endcase -%}
+              </span>
+              <span class="sz-badges__text">{{ block.settings.text }}</span>
+            </div>
+
+          {%- when 'product_badge' -%}
+            {%- comment -%} Dynamic badge from product metafield {%- endcomment -%}
+            {%- if product.metafields.shelzys.badges != blank -%}
+              {%- for badge in product.metafields.shelzys.badges.value -%}
+                <div class="sz-badges__item sz-badges__item--product" {{ block.shopify_attributes }}>
+                  <span class="sz-badges__icon" aria-hidden="true">
+                    {%- case badge -%}
+                      {%- when 'new' -%}
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l1.5 6.5L20 12l-6.5 1.5L12 20l-1.5-6.5L4 12l6.5-1.5L12 3z"/></svg>
+                      {%- when 'bestseller' -%}
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                      {%- when 'limited' -%}
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                      {%- when 'sale' -%}
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>
+                    {%- endcase -%}
+                  </span>
+                  <span class="sz-badges__text">{{ badge | capitalize }}</span>
+                </div>
+              {%- endfor -%}
+            {%- endif -%}
+        {%- endcase -%}
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+<style>
+  .sz-badges {
+    background-color: var(--sz-badges-bg);
+    padding: 16px 0;
+  }
+
+  .sz-badges__container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  .sz-badges__grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 32px;
+  }
+
+  .sz-badges__item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .sz-badges__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--sz-badges-icon);
+  }
+
+  .sz-badges__icon svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .sz-badges__text {
+    font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--sz-badges-text);
+    white-space: nowrap;
+  }
+
+  .sz-badges__item--product {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 8px 16px;
+    border-radius: 50px;
+  }
+
+  @media (max-width: 768px) {
+    .sz-badges__grid {
+      gap: 16px 24px;
+    }
+
+    .sz-badges__icon svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    .sz-badges__text {
+      font-size: 13px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .sz-badges__grid {
+      flex-direction: column;
+      gap: 12px;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "SZ Badges",
+  "tag": "section",
+  "class": "sz-section-badges",
+  "settings": [
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background Color",
+      "default": "#4E5F4A"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text Color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "icon_color",
+      "label": "Icon Color",
+      "default": "#D4AF37"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "badge",
+      "name": "Trust Badge",
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icon",
+          "options": [
+            { "value": "truck", "label": "Truck (Shipping)" },
+            { "value": "shield-check", "label": "Shield Check (Quality)" },
+            { "value": "sparkles", "label": "Sparkles (Handcrafted)" },
+            { "value": "refresh", "label": "Refresh (Returns)" },
+            { "value": "heart", "label": "Heart (Made with Love)" },
+            { "value": "star", "label": "Star (Rating)" },
+            { "value": "check-circle", "label": "Check Circle (Verified)" },
+            { "value": "gift", "label": "Gift (Gift Ready)" },
+            { "value": "clock", "label": "Clock (Fast Processing)" },
+            { "value": "droplet", "label": "Droplet (BPA Free)" }
+          ],
+          "default": "truck"
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text",
+          "default": "Free Shipping $50+"
+        }
+      ]
+    },
+    {
+      "type": "product_badge",
+      "name": "Product Badge (Metafield)",
+      "settings": [
+        {
+          "type": "paragraph",
+          "content": "This block displays badges from the product's shelzys.badges metafield. Use on product pages."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "SZ Badges",
+      "blocks": [
+        {
+          "type": "badge",
+          "settings": {
+            "icon": "truck",
+            "text": "Free Shipping $50+"
+          }
+        },
+        {
+          "type": "badge",
+          "settings": {
+            "icon": "shield-check",
+            "text": "Permanent Sublimation"
+          }
+        },
+        {
+          "type": "badge",
+          "settings": {
+            "icon": "sparkles",
+            "text": "Handcrafted with Care"
+          }
+        },
+        {
+          "type": "badge",
+          "settings": {
+            "icon": "refresh",
+            "text": "30-Day Returns"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

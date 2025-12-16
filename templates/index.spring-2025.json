@@ -1,0 +1,254 @@
+{
+  "sections": {
+    "sz-hero-spring": {
+      "type": "sz-hero",
+      "settings": {
+        "media_type": "image",
+        "height": 90,
+        "mobile_height": 75,
+        "overlay_opacity": 25,
+        "badge_text": "New Spring 2025",
+        "badge_icon": "flower",
+        "heading": "Fresh Starts Deserve Fresh Style",
+        "subheading": "Introducing the Spring 2025 Collection — vibrant colors, floral designs, and personalized bottles perfect for the season of new beginnings.",
+        "content_position": "center",
+        "button_label": "Shop Spring Collection",
+        "button_link": "/collections/spring-2025",
+        "button_label_2": "View All Collections",
+        "button_link_2": "/collections/all",
+        "show_scroll_indicator": true
+      }
+    },
+    "sz-badges-spring": {
+      "type": "sz-badges",
+      "blocks": {
+        "badge-1": {
+          "type": "badge",
+          "settings": {
+            "icon": "truck",
+            "text": "Free Shipping $50+"
+          }
+        },
+        "badge-2": {
+          "type": "badge",
+          "settings": {
+            "icon": "shield-check",
+            "text": "Permanent Sublimation"
+          }
+        },
+        "badge-3": {
+          "type": "badge",
+          "settings": {
+            "icon": "sparkles",
+            "text": "Handcrafted with Care"
+          }
+        },
+        "badge-4": {
+          "type": "badge",
+          "settings": {
+            "icon": "refresh",
+            "text": "30-Day Returns"
+          }
+        }
+      },
+      "block_order": ["badge-1", "badge-2", "badge-3", "badge-4"],
+      "settings": {
+        "background_color": "#4E5F4A",
+        "text_color": "#FFFFFF",
+        "icon_color": "#D4AF37"
+      }
+    },
+    "sz-collection-tiles": {
+      "type": "sz-collection-tiles",
+      "blocks": {
+        "tile-spring": {
+          "type": "tile",
+          "settings": {
+            "collection": "spring-2025",
+            "label": "Spring 2025"
+          }
+        },
+        "tile-floral": {
+          "type": "tile",
+          "settings": {
+            "collection": "floral-designs",
+            "label": "Floral Designs"
+          }
+        },
+        "tile-pastel": {
+          "type": "tile",
+          "settings": {
+            "collection": "pastel-collection",
+            "label": "Pastel Collection"
+          }
+        },
+        "tile-wedding": {
+          "type": "tile",
+          "settings": {
+            "collection": "wedding",
+            "label": "Wedding & Bridal"
+          }
+        }
+      },
+      "block_order": ["tile-spring", "tile-floral", "tile-pastel", "tile-wedding"],
+      "settings": {
+        "heading": "Shop by Collection",
+        "subheading": "Find Your Perfect Style",
+        "columns_desktop": 4,
+        "columns_mobile": 2,
+        "image_ratio": "square",
+        "background_color": "#F5F2ED"
+      }
+    },
+    "featured-collection-spring": {
+      "type": "featured-collection",
+      "settings": {
+        "collection": "spring-2025",
+        "products_to_show": 8,
+        "columns": "4",
+        "subheading": "Just Arrived",
+        "heading": "Spring 2025 Collection",
+        "description": "Celebrate the season with our newest personalized bottles featuring fresh florals, soft pastels, and springtime vibes.",
+        "header_alignment": "center",
+        "show_secondary_image": true,
+        "show_badges": true,
+        "show_vendor": false,
+        "show_rating": true,
+        "show_quick_add": true,
+        "text_alignment": "left",
+        "show_view_all": true,
+        "view_all_text": "Shop All Spring",
+        "button_color": "#2C3E2D",
+        "button_text_color": "#FFFFFF",
+        "background_color": "#FFFFFF",
+        "text_color": "#1F1F1F",
+        "accent_color": "#4E5F4A",
+        "padding_top": 80,
+        "padding_bottom": 80
+      }
+    },
+    "image-with-text": {
+      "type": "image-with-text",
+      "settings": {
+        "layout": "image-left",
+        "full_width": false,
+        "image_ratio": "1/1",
+        "subheading": "The Shelzy's Difference",
+        "heading": "Permanent Sublimation Printing",
+        "text": "<p><strong>Unlike vinyl that peels and cracks</strong>, our sublimation printing process infuses the design directly into the bottle's coating.</p><p>The result? A vibrant, permanent personalization that's <strong>dishwasher safe</strong> and built to last a lifetime.</p><p>Every bottle is handcrafted with care in our studio, ensuring gallery-quality results for your special occasion.</p>",
+        "text_alignment": "left",
+        "button_label": "Learn About Our Process",
+        "button_link": "/pages/about",
+        "button_color": "#2C3E2D",
+        "button_text_color": "#FFFFFF",
+        "background_color": "#FFFFFF",
+        "text_color": "#1F1F1F",
+        "accent_color": "#4E5F4A",
+        "padding_top": 80,
+        "padding_bottom": 80
+      }
+    },
+    "testimonials": {
+      "type": "testimonials",
+      "blocks": {
+        "testimonial-1": {
+          "type": "testimonial",
+          "settings": {
+            "rating": 5,
+            "title": "Perfect for My Wedding!",
+            "quote": "These bottles were a huge hit at our wedding! The quality is amazing and the personalization was exactly what we wanted. All my bridesmaids loved them and they still use them daily!",
+            "author_name": "Sarah M.",
+            "author_title": "Bride, June 2024"
+          }
+        },
+        "testimonial-2": {
+          "type": "testimonial",
+          "settings": {
+            "rating": 5,
+            "title": "Amazing Quality",
+            "quote": "I've ordered from other shops before, but the sublimation printing on these is next level. No peeling, no fading — they look brand new even after months of daily use and dishwasher cycles.",
+            "author_name": "Jessica T.",
+            "author_title": "Repeat Customer"
+          }
+        },
+        "testimonial-3": {
+          "type": "testimonial",
+          "settings": {
+            "rating": 5,
+            "title": "Love the Spring Collection!",
+            "quote": "Just received my Cherry Blossom bottle and it's absolutely gorgeous! The floral design is so delicate and pretty. Already ordering more for my mom and sisters!",
+            "author_name": "Amanda R.",
+            "author_title": "Spring 2025 Customer"
+          }
+        }
+      },
+      "block_order": ["testimonial-1", "testimonial-2", "testimonial-3"],
+      "settings": {
+        "subheading": "Real Reviews",
+        "heading": "What Our Customers Say",
+        "layout": "grid-3",
+        "background_color": "#FFF8F6",
+        "card_background": "#FFFFFF",
+        "text_color": "#1F1F1F",
+        "accent_color": "#4E5F4A",
+        "star_color": "#D4AF37",
+        "padding_top": 80,
+        "padding_bottom": 80
+      }
+    },
+    "rich-text": {
+      "type": "rich-text",
+      "blocks": {
+        "subheading": {
+          "type": "subheading",
+          "settings": {
+            "text": "Spring 2025 Special"
+          }
+        },
+        "heading": {
+          "type": "heading",
+          "settings": {
+            "text": "15% Off Your First Order",
+            "heading_size": "h2"
+          }
+        },
+        "text": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Celebrate the new season with code SPRING25 at checkout. Free shipping on orders over $50.</p>"
+          }
+        },
+        "button": {
+          "type": "button",
+          "settings": {
+            "label": "Shop Spring Collection",
+            "link": "/collections/spring-2025",
+            "style": "primary"
+          }
+        }
+      },
+      "block_order": ["subheading", "heading", "text", "button"],
+      "settings": {
+        "width": "medium",
+        "text_alignment": "center",
+        "background_color": "#4E5F4A",
+        "text_color": "#FFFFFF",
+        "accent_color": "#D4AF37",
+        "button_color": "#FFFFFF",
+        "button_text_color": "#4E5F4A",
+        "divider_color": "#FFFFFF",
+        "padding_top": 100,
+        "padding_bottom": 100
+      }
+    }
+  },
+  "order": [
+    "sz-hero-spring",
+    "sz-badges-spring",
+    "sz-collection-tiles",
+    "featured-collection-spring",
+    "image-with-text",
+    "testimonials",
+    "rich-text"
+  ]
+}

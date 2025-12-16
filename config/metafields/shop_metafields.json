@@ -1,0 +1,25 @@
+{
+  "metafield_definitions": [
+    {
+      "namespace": "shelzys",
+      "key": "announcement_bar",
+      "name": "Announcement Bar Text",
+      "description": "Text displayed in the site-wide announcement bar. Supports campaign promotions, shipping info, and special offers.",
+      "type": "single_line_text_field",
+      "owner_type": "SHOP",
+      "pin": true,
+      "validations": [
+        {
+          "name": "max_length",
+          "value": "200"
+        }
+      ],
+      "visible_to_storefront_api": true
+    }
+  ],
+  "graphql_mutations": {
+    "create_announcement_bar": "mutation CreateAnnouncementBarMetafield { metafieldDefinitionCreate(definition: { namespace: \"shelzys\", key: \"announcement_bar\", name: \"Announcement Bar Text\", description: \"Site-wide announcement bar text\", type: \"single_line_text_field\", ownerType: SHOP, pin: true, visibleToStorefrontApi: true, validations: [{ name: \"max_length\", value: \"200\" }] }) { createdDefinition { id } userErrors { field message } } }",
+    "set_value": "mutation SetAnnouncementBar($value: String!) { metafieldsSet(metafields: [{ namespace: \"shelzys\", key: \"announcement_bar\", ownerId: \"gid://shopify/Shop/SHOP_ID\", type: \"single_line_text_field\", value: $value }]) { metafields { id } userErrors { field message } } }"
+  },
+  "current_campaign_value": "Spring Collection is HERE! Free shipping on orders $50+ | Use code SPRING25 for 15% off"
+}

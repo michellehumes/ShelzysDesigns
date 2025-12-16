@@ -1,0 +1,138 @@
+{
+  "template": "index",
+  "sections_order": [
+    "sz-hero-spring",
+    "sz-badges-spring",
+    "sz-collection-tiles",
+    "featured-collection-spring",
+    "image-with-text",
+    "testimonials",
+    "rich-text"
+  ],
+  "sections": {
+    "sz-hero-spring": {
+      "type": "sz-hero",
+      "settings": {
+        "height": 90,
+        "mobile_height": 75,
+        "overlay_opacity": 25,
+        "badge_text": "New Spring 2025",
+        "badge_icon": "flower",
+        "heading": "Fresh Starts Deserve Fresh Style",
+        "subheading": "Introducing the Spring 2025 Collection — vibrant colors, floral designs, and personalized bottles perfect for the season of new beginnings.",
+        "content_position": "center",
+        "button_label": "Shop Spring Collection",
+        "button_link": "/collections/spring-2025",
+        "button_label_2": "View All Collections",
+        "button_link_2": "/collections/all",
+        "media_type": "image",
+        "show_scroll_indicator": true
+      }
+    },
+    "sz-badges-spring": {
+      "type": "sz-badges",
+      "blocks": {
+        "badge-1": {
+          "type": "badge",
+          "settings": {
+            "icon": "truck",
+            "text": "Free Shipping $50+"
+          }
+        },
+        "badge-2": {
+          "type": "badge",
+          "settings": {
+            "icon": "shield-check",
+            "text": "Permanent Sublimation"
+          }
+        },
+        "badge-3": {
+          "type": "badge",
+          "settings": {
+            "icon": "sparkles",
+            "text": "Handcrafted with Care"
+          }
+        },
+        "badge-4": {
+          "type": "badge",
+          "settings": {
+            "icon": "refresh",
+            "text": "30-Day Returns"
+          }
+        }
+      },
+      "block_order": ["badge-1", "badge-2", "badge-3", "badge-4"],
+      "settings": {
+        "background_color": "#4E5F4A",
+        "text_color": "#FFFFFF",
+        "icon_color": "#D4AF37"
+      }
+    },
+    "sz-collection-tiles": {
+      "type": "sz-collection-tiles",
+      "blocks": {
+        "tile-spring": {
+          "type": "tile",
+          "settings": {
+            "collection": "spring-2025",
+            "label": "Spring 2025",
+            "custom_image": "spring-tile.jpg"
+          }
+        },
+        "tile-floral": {
+          "type": "tile",
+          "settings": {
+            "collection": "floral-designs",
+            "label": "Floral Designs",
+            "custom_image": "floral-tile.jpg"
+          }
+        },
+        "tile-pastel": {
+          "type": "tile",
+          "settings": {
+            "collection": "pastel-collection",
+            "label": "Pastel Collection",
+            "custom_image": "pastel-tile.jpg"
+          }
+        },
+        "tile-wedding": {
+          "type": "tile",
+          "settings": {
+            "collection": "wedding",
+            "label": "Wedding & Bridal",
+            "custom_image": "wedding-tile.jpg"
+          }
+        }
+      },
+      "block_order": ["tile-spring", "tile-floral", "tile-pastel", "tile-wedding"],
+      "settings": {
+        "heading": "Shop by Collection",
+        "subheading": "Find Your Perfect Style",
+        "columns_desktop": 4,
+        "columns_mobile": 2,
+        "image_ratio": "square",
+        "background_color": "#F5F2ED"
+      }
+    },
+    "featured-collection-spring": {
+      "type": "featured-collection",
+      "settings": {
+        "collection": "spring-2025",
+        "products_to_show": 8,
+        "columns": "4",
+        "subheading": "Just Arrived",
+        "heading": "Spring 2025 Collection",
+        "description": "Celebrate the season with our newest personalized bottles featuring fresh florals, soft pastels, and springtime vibes.",
+        "header_alignment": "center",
+        "show_secondary_image": true,
+        "show_badges": true,
+        "show_rating": true,
+        "show_quick_add": true,
+        "show_view_all": true,
+        "view_all_text": "Shop All Spring",
+        "background_color": "#FFFFFF",
+        "accent_color": "#4E5F4A"
+      }
+    }
+  }
+}
