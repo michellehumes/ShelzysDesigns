@@ -1,0 +1,248 @@
+{
+  "sections": {
+    "landing-hero": {
+      "type": "hero-banner",
+      "settings": {
+        "height": 70,
+        "mobile_height": 60,
+        "overlay_opacity": 40,
+        "badge_text": "",
+        "badge_icon": "none",
+        "heading": "Page Heading",
+        "subheading": "Customize this landing page in the theme editor for bridal party, corporate gifts, or holiday promotions.",
+        "content_position": "center",
+        "button_label": "Shop Collection",
+        "button_link": "/collections/all",
+        "button_label_2": "View Bundles",
+        "button_link_2": "/collections/bundles",
+        "show_trust_badges": true,
+        "show_scroll_indicator": false
+      }
+    },
+    "landing-trust": {
+      "type": "trust-bar-compact",
+      "blocks": {
+        "trust-1": {
+          "type": "item",
+          "settings": {
+            "icon": "fast",
+            "text": "3-5 Day Turnaround"
+          }
+        },
+        "trust-2": {
+          "type": "item",
+          "settings": {
+            "icon": "personalized",
+            "text": "Free Personalization"
+          }
+        },
+        "trust-3": {
+          "type": "item",
+          "settings": {
+            "icon": "gift",
+            "text": "Gift-Ready"
+          }
+        },
+        "trust-4": {
+          "type": "item",
+          "settings": {
+            "icon": "quality",
+            "text": "Permanent Print"
+          }
+        }
+      },
+      "block_order": ["trust-1", "trust-2", "trust-3", "trust-4"],
+      "settings": {
+        "show_section": true
+      }
+    },
+    "landing-bundles": {
+      "type": "bundle-showcase",
+      "blocks": {
+        "bundle-1": {
+          "type": "bundle",
+          "settings": {
+            "title": "Starter Set",
+            "includes": "Perfect for small groups",
+            "original_price": "75",
+            "price": "65",
+            "savings": "13%",
+            "link": "/collections/all"
+          }
+        },
+        "bundle-2": {
+          "type": "bundle",
+          "settings": {
+            "title": "Popular Set",
+            "includes": "Our most requested option",
+            "original_price": "150",
+            "price": "125",
+            "savings": "17%",
+            "featured": true,
+            "link": "/collections/all"
+          }
+        },
+        "bundle-3": {
+          "type": "bundle",
+          "settings": {
+            "title": "Full Set",
+            "includes": "Best value for large groups",
+            "original_price": "225",
+            "price": "185",
+            "savings": "18%",
+            "note": "Best Value!",
+            "link": "/collections/all"
+          }
+        }
+      },
+      "block_order": ["bundle-1", "bundle-2", "bundle-3"],
+      "settings": {
+        "subheading": "Save More Together",
+        "heading": "Bundle & Save",
+        "description": "Save up to 18% when you order sets. Perfect for groups, parties, and teams.",
+        "show_custom_cta": true,
+        "custom_link": "/pages/contact"
+      }
+    },
+    "landing-collection": {
+      "type": "featured-collection",
+      "settings": {
+        "collection": "",
+        "products_to_show": 8,
+        "columns": "4",
+        "subheading": "Shop the Collection",
+        "heading": "Featured Products",
+        "description": "Hand-picked personalized bottles for this occasion",
+        "header_alignment": "center",
+        "show_secondary_image": true,
+        "show_badges": true,
+        "show_vendor": false,
+        "show_rating": true,
+        "show_quick_add": true,
+        "text_alignment": "left",
+        "show_view_all": true,
+        "view_all_text": "View All",
+        "button_color": "#2C3E2D",
+        "button_text_color": "#FFFFFF",
+        "background_color": "#F5F2ED",
+        "text_color": "#1F1F1F",
+        "accent_color": "#4E5F4A",
+        "padding_top": 80,
+        "padding_bottom": 80
+      }
+    },
+    "landing-social-proof": {
+      "type": "testimonials",
+      "blocks": {
+        "testimonial-1": {
+          "type": "testimonial",
+          "settings": {
+            "rating": 5,
+            "title": "Exceeded Expectations!",
+            "quote": "The quality is incredible and the personalization came out perfect. Everyone loved their bottles!",
+            "author_name": "Happy Customer",
+            "author_title": "Verified Buyer"
+          }
+        },
+        "testimonial-2": {
+          "type": "testimonial",
+          "settings": {
+            "rating": 5,
+            "title": "Fast Shipping",
+            "quote": "Ordered last minute and they arrived with time to spare. Communication was excellent throughout.",
+            "author_name": "Satisfied Customer",
+            "author_title": "Verified Buyer"
+          }
+        },
+        "testimonial-3": {
+          "type": "testimonial",
+          "settings": {
+            "rating": 5,
+            "title": "Will Order Again",
+            "quote": "This is my third order. The quality is consistent and the bottles make such thoughtful gifts.",
+            "author_name": "Repeat Customer",
+            "author_title": "Verified Buyer"
+          }
+        }
+      },
+      "block_order": ["testimonial-1", "testimonial-2", "testimonial-3"],
+      "settings": {
+        "subheading": "Customer Love",
+        "heading": "What People Are Saying",
+        "layout": "grid-3",
+        "background_color": "#FFFFFF",
+        "card_background": "#F5F2ED",
+        "text_color": "#1F1F1F",
+        "accent_color": "#4E5F4A",
+        "star_color": "#D4AF37",
+        "padding_top": 80,
+        "padding_bottom": 80
+      }
+    },
+    "landing-faq": {
+      "type": "faq",
+      "blocks": {
+        "faq-1": {
+          "type": "question",
+          "settings": {
+            "question": "How long does personalization take?",
+            "answer": "We handcraft each bottle with care. Standard orders ship within 3-5 business days. Rush options available."
+          }
+        },
+        "faq-2": {
+          "type": "question",
+          "settings": {
+            "question": "Is the printing permanent?",
+            "answer": "Yes! Our sublimation printing infuses the design into the bottle's coating. It won't peel, crack, or fade — and it's dishwasher safe."
+          }
+        },
+        "faq-3": {
+          "type": "question",
+          "settings": {
+            "question": "Can I see a proof before production?",
+            "answer": "We offer digital proofs for orders of 10+ bottles. For smaller orders, our preview system shows exactly how your bottle will look."
+          }
+        },
+        "faq-4": {
+          "type": "question",
+          "settings": {
+            "question": "What if I need to make changes?",
+            "answer": "Contact us within 24 hours of ordering and we'll do our best to accommodate changes. Once production begins, changes may not be possible."
+          }
+        }
+      },
+      "block_order": ["faq-1", "faq-2", "faq-3", "faq-4"],
+      "settings": {
+        "subheading": "Questions?",
+        "heading": "Frequently Asked Questions",
+        "padding_top": 80,
+        "padding_bottom": 80
+      }
+    },
+    "landing-newsletter": {
+      "type": "newsletter",
+      "settings": {
+        "full_width": true,
+        "color_scheme": "dark",
+        "subheading": "Stay Connected",
+        "heading": "Get Exclusive Offers",
+        "text": "Subscribe for special deals, gift inspiration, and early access to new designs.",
+        "placeholder": "Enter your email",
+        "button_label": "Subscribe",
+        "success_message": "Welcome! Check your inbox for a special offer.",
+        "disclaimer": "We respect your privacy.",
+        "padding_top": 80,
+        "padding_bottom": 80
+      }
+    }
+  },
+  "order": [
+    "landing-hero",
+    "landing-trust",
+    "landing-bundles",
+    "landing-collection",
+    "landing-social-proof",
+    "landing-faq",
+    "landing-newsletter"
+  ]
+}

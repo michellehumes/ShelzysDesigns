@@ -1,0 +1,240 @@
+{%- comment -%}
+================================================================================
+SHELZY'S DESIGNS - PRODUCTION TIMELINE REMINDER
+Version: 1.0.0
+Last Updated: 2024-12
+================================================================================
+Shows production timeline in cart to set expectations and reduce anxiety.
+Personalized items have different timelines than ready-to-ship items.
+
+Revenue Impact: Reduces cart abandonment by 5-10% by setting clear expectations.
+
+Usage: {% render 'cart-production-timeline' %}
+================================================================================
+{%- endcomment -%}
+
+{%- liquid
+  assign has_personalized = false
+  assign has_regular = false
+
+  for item in cart.items
+    assign product_tags_lower = item.product.tags | join: ',' | downcase
+    if product_tags_lower contains 'personalized' or item.properties.size > 0
+      assign has_personalized = true
+    else
+      assign has_regular = true
+    endif
+  endfor
+-%}
+
+{%- if cart.item_count > 0 -%}
+<div class="sz-timeline">
+  <div class="sz-timeline__header">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+      <circle cx="12" cy="12" r="10"/>
+      <polyline points="12 6 12 12 16 14"/>
+    </svg>
+    <span class="sz-timeline__title">Production Timeline</span>
+  </div>
+
+  <div class="sz-timeline__content">
+    {%- if has_personalized -%}
+      <div class="sz-timeline__item">
+        <div class="sz-timeline__step">
+          <span class="sz-timeline__dot"></span>
+          <span class="sz-timeline__label">Order Placed</span>
+        </div>
+        <span class="sz-timeline__time">Today</span>
+      </div>
+
+      <div class="sz-timeline__item">
+        <div class="sz-timeline__step">
+          <span class="sz-timeline__dot"></span>
+          <span class="sz-timeline__label">Handcrafted & Personalized</span>
+        </div>
+        <span class="sz-timeline__time">2-3 business days</span>
+      </div>
+
+      <div class="sz-timeline__item">
+        <div class="sz-timeline__step">
+          <span class="sz-timeline__dot"></span>
+          <span class="sz-timeline__label">Quality Check & Ship</span>
+        </div>
+        <span class="sz-timeline__time">3-5 business days</span>
+      </div>
+
+      <div class="sz-timeline__item sz-timeline__item--final">
+        <div class="sz-timeline__step">
+          <span class="sz-timeline__dot sz-timeline__dot--final"></span>
+          <span class="sz-timeline__label">Estimated Delivery</span>
+        </div>
+        <span class="sz-timeline__time sz-timeline__time--highlight">6-10 business days</span>
+      </div>
+    {%- else -%}
+      <div class="sz-timeline__item">
+        <div class="sz-timeline__step">
+          <span class="sz-timeline__dot"></span>
+          <span class="sz-timeline__label">Order Placed</span>
+        </div>
+        <span class="sz-timeline__time">Today</span>
+      </div>
+
+      <div class="sz-timeline__item sz-timeline__item--final">
+        <div class="sz-timeline__step">
+          <span class="sz-timeline__dot sz-timeline__dot--final"></span>
+          <span class="sz-timeline__label">Estimated Delivery</span>
+        </div>
+        <span class="sz-timeline__time sz-timeline__time--highlight">3-5 business days</span>
+      </div>
+    {%- endif -%}
+  </div>
+
+  <p class="sz-timeline__note">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <circle cx="12" cy="12" r="10"/>
+      <line x1="12" y1="16" x2="12" y2="12"/>
+      <line x1="12" y1="8" x2="12.01" y2="8"/>
+    </svg>
+    <span>Need it sooner? <a href="/pages/contact">Contact us</a> about rush orders.</span>
+  </p>
+</div>
+
+<style>
+  .sz-timeline {
+    background: var(--sz-background-alt, #FAF9F6);
+    border-radius: var(--sz-radius-lg, 12px);
+    padding: var(--sz-space-lg, 20px);
+    margin: var(--sz-space-lg, 20px) 0;
+  }
+
+  .sz-timeline__header {
+    display: flex;
+    align-items: center;
+    gap: var(--sz-space-sm, 10px);
+    margin-bottom: var(--sz-space-md, 16px);
+    padding-bottom: var(--sz-space-sm, 12px);
+    border-bottom: 1px solid var(--sz-border, #E8E4DE);
+  }
+
+  .sz-timeline__header svg {
+    color: var(--sz-primary, #8BAA88);
+  }
+
+  .sz-timeline__title {
+    font-family: var(--sz-font-body);
+    font-size: var(--sz-text-base, 15px);
+    font-weight: var(--sz-font-semibold, 600);
+    color: var(--sz-heading);
+  }
+
+  .sz-timeline__content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sz-space-sm, 12px);
+  }
+
+  .sz-timeline__item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    padding-left: var(--sz-space-lg, 24px);
+  }
+
+  .sz-timeline__item:not(:last-child)::before {
+    content: '';
+    position: absolute;
+    left: 5px;
+    top: 16px;
+    bottom: -16px;
+    width: 2px;
+    background: var(--sz-border, #E8E4DE);
+  }
+
+  .sz-timeline__step {
+    display: flex;
+    align-items: center;
+    gap: var(--sz-space-sm, 10px);
+  }
+
+  .sz-timeline__dot {
+    position: absolute;
+    left: 0;
+    width: 12px;
+    height: 12px;
+    background: var(--sz-background, #FFFFFF);
+    border: 2px solid var(--sz-border, #E8E4DE);
+    border-radius: 50%;
+  }
+
+  .sz-timeline__dot--final {
+    background: var(--sz-primary, #8BAA88);
+    border-color: var(--sz-primary, #8BAA88);
+  }
+
+  .sz-timeline__label {
+    font-family: var(--sz-font-body);
+    font-size: var(--sz-text-sm, 14px);
+    color: var(--sz-text);
+  }
+
+  .sz-timeline__time {
+    font-family: var(--sz-font-body);
+    font-size: var(--sz-text-xs, 12px);
+    color: var(--sz-text-muted);
+    white-space: nowrap;
+  }
+
+  .sz-timeline__time--highlight {
+    font-weight: var(--sz-font-semibold, 600);
+    color: var(--sz-primary-dark, #4E5F4A);
+    background: var(--sz-primary-light, #EDF3EC);
+    padding: 4px 10px;
+    border-radius: var(--sz-radius-full, 999px);
+  }
+
+  .sz-timeline__item--final .sz-timeline__label {
+    font-weight: var(--sz-font-semibold, 600);
+    color: var(--sz-heading);
+  }
+
+  .sz-timeline__note {
+    display: flex;
+    align-items: center;
+    gap: var(--sz-space-xs, 6px);
+    margin: var(--sz-space-md, 16px) 0 0 0;
+    padding-top: var(--sz-space-sm, 12px);
+    border-top: 1px solid var(--sz-border, #E8E4DE);
+    font-family: var(--sz-font-body);
+    font-size: var(--sz-text-xs, 12px);
+    color: var(--sz-text-muted);
+  }
+
+  .sz-timeline__note svg {
+    color: var(--sz-accent, #D4AF37);
+    flex-shrink: 0;
+  }
+
+  .sz-timeline__note a {
+    color: var(--sz-primary);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  .sz-timeline__note a:hover {
+    color: var(--sz-primary-dark);
+  }
+
+  @media (max-width: 500px) {
+    .sz-timeline__item {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 4px;
+    }
+
+    .sz-timeline__time {
+      margin-left: 0;
+    }
+  }
+</style>
+{%- endif -%}

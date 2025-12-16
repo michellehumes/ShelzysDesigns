@@ -13,10 +13,47 @@
         "content_position": "center",
         "button_label": "Shop Best Sellers",
         "button_link": "/collections/best-sellers",
-        "button_label_2": "View Collections",
+        "button_label_2": "Personalize Yours",
         "button_link_2": "/collections/all",
         "show_trust_badges": true,
         "show_scroll_indicator": true
+      }
+    },
+    "trust-bar": {
+      "type": "trust-bar-compact",
+      "blocks": {
+        "trust-1": {
+          "type": "item",
+          "settings": {
+            "icon": "fast",
+            "text": "3-5 Day Turnaround"
+          }
+        },
+        "trust-2": {
+          "type": "item",
+          "settings": {
+            "icon": "personalized",
+            "text": "Free Personalization"
+          }
+        },
+        "trust-3": {
+          "type": "item",
+          "settings": {
+            "icon": "gift",
+            "text": "Gift-Ready Packaging"
+          }
+        },
+        "trust-4": {
+          "type": "item",
+          "settings": {
+            "icon": "quality",
+            "text": "No Vinyl, No Peeling"
+          }
+        }
+      },
+      "block_order": ["trust-1", "trust-2", "trust-3", "trust-4"],
+      "settings": {
+        "show_section": true
       }
     },
     "category-showcase": {
@@ -65,8 +102,8 @@
       },
       "block_order": ["cat-wedding", "cat-bachelorette", "cat-kids", "cat-corporate"],
       "settings": {
-        "subheading": "Shop by Category",
-        "heading": "Find Your Perfect Bottle",
+        "subheading": "Shop by Occasion",
+        "heading": "Find Your Perfect Gift",
         "background_color": "#FFFFFF"
       }
     },
@@ -76,7 +113,7 @@
         "collection": "best-sellers",
         "products_to_show": 8,
         "columns": "4",
-        "subheading": "Customer Favorites",
+        "subheading": "Most Popular",
         "heading": "Best Sellers",
         "description": "The personalized bottles our customers can't stop raving about",
         "header_alignment": "center",
@@ -91,27 +128,6 @@
         "button_color": "#2C3E2D",
         "button_text_color": "#FFFFFF",
         "background_color": "#F5F2ED",
-        "text_color": "#1F1F1F",
-        "accent_color": "#4E5F4A",
-        "padding_top": 80,
-        "padding_bottom": 80
-      }
-    },
-    "image-with-text": {
-      "type": "image-with-text",
-      "settings": {
-        "layout": "image-left",
-        "full_width": false,
-        "image_ratio": "1/1",
-        "subheading": "The Shelzy's Difference",
-        "heading": "Permanent Sublimation Printing",
-        "text": "<p><strong>Unlike vinyl that peels and cracks</strong>, our sublimation printing process infuses the design directly into the bottle's coating.</p><p>The result? A vibrant, permanent personalization that's <strong>dishwasher safe</strong> and built to last a lifetime.</p><p>Every bottle is handcrafted with care in our studio, ensuring gallery-quality results for your special occasion.</p>",
-        "text_alignment": "left",
-        "button_label": "Learn About Our Process",
-        "button_link": "/pages/about",
-        "button_color": "#2C3E2D",
-        "button_text_color": "#FFFFFF",
-        "background_color": "#FFFFFF",
         "text_color": "#1F1F1F",
         "accent_color": "#4E5F4A",
         "padding_top": 80,
@@ -164,6 +180,27 @@
         "description": "Get coordinating bottles for your entire bridal party and save up to 15%. Each bundle includes personalized bottles that match perfectly.",
         "show_custom_cta": true,
         "custom_link": "/pages/contact"
+      }
+    },
+    "image-with-text": {
+      "type": "image-with-text",
+      "settings": {
+        "layout": "image-left",
+        "full_width": false,
+        "image_ratio": "1/1",
+        "subheading": "The Shelzy's Difference",
+        "heading": "Permanent Sublimation Printing",
+        "text": "<p><strong>Unlike vinyl that peels and cracks</strong>, our sublimation printing process infuses the design directly into the bottle's coating.</p><p>The result? A vibrant, permanent personalization that's <strong>dishwasher safe</strong> and built to last a lifetime.</p><p>Every bottle is handcrafted with care in our studio, ensuring gallery-quality results for your special occasion.</p>",
+        "text_alignment": "left",
+        "button_label": "Learn About Our Process",
+        "button_link": "/pages/about",
+        "button_color": "#2C3E2D",
+        "button_text_color": "#FFFFFF",
+        "background_color": "#FFFFFF",
+        "text_color": "#1F1F1F",
+        "accent_color": "#4E5F4A",
+        "padding_top": 80,
+        "padding_bottom": 80
       }
     },
     "featured-collection-wedding": {
@@ -237,6 +274,22 @@
         "text_color": "#1F1F1F",
         "accent_color": "#4E5F4A",
         "star_color": "#D4AF37",
+        "padding_top": 80,
+        "padding_bottom": 80
+      }
+    },
+    "newsletter": {
+      "type": "newsletter",
+      "settings": {
+        "full_width": true,
+        "color_scheme": "surface",
+        "subheading": "Stay Updated",
+        "heading": "Get Gift Ideas & Early Access",
+        "text": "Subscribe for exclusive offers, seasonal gift guides, and be first to know about new designs.",
+        "placeholder": "Enter your email",
+        "button_label": "Subscribe",
+        "success_message": "Thanks for subscribing! Check your inbox for a welcome surprise.",
+        "disclaimer": "We respect your privacy. Unsubscribe at any time.",
         "padding_top": 80,
         "padding_bottom": 80
       }
@@ -338,7 +391,7 @@
           "type": "icon_list",
           "settings": {
             "icon": "check",
-            "items": "Free Shipping Over $50 | Dishwasher Safe | No Vinyl, No Peeling | 30-Day Returns"
+            "items": "Free Shipping Over $75 | Dishwasher Safe | No Vinyl, No Peeling | Handcrafted with Care"
           }
         },
         "button": {
@@ -367,12 +420,14 @@
   },
   "order": [
     "hero-banner",
+    "trust-bar",
     "category-showcase",
     "featured-collection-bestsellers",
     "bundle-showcase",
     "image-with-text",
     "featured-collection-wedding",
     "testimonials",
+    "newsletter",
     "image-gallery",
     "rich-text"
   ]
