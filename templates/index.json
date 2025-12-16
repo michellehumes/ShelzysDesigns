@@ -6,15 +6,15 @@
         "height": 90,
         "mobile_height": 75,
         "overlay_opacity": 35,
-        "badge_text": "Wedding Season 2024",
+        "badge_text": "Free Personalization on Every Order",
         "badge_icon": "sparkle",
         "heading": "Personalized Bottles for Life's Special Moments",
         "subheading": "Handcrafted with permanent sublimation printing. No vinyl, no peeling — just beautiful, lasting designs that celebrate your story.",
         "content_position": "center",
         "button_label": "Shop Best Sellers",
         "button_link": "/collections/best-sellers",
-        "button_label_2": "Personalize Yours",
-        "button_link_2": "/collections/all",
+        "button_label_2": "Customize Yours",
+        "button_link_2": "/collections/personalized-bottles",
         "show_trust_badges": true,
         "show_scroll_indicator": true
       }
