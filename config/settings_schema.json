@@ -543,6 +543,33 @@
         "id": "respect_reduce_motion",
         "label": "Respect reduced motion preference",
         "default": true
+      },
+      {
+        "type": "header",
+        "content": "Analytics"
+      },
+      {
+        "type": "checkbox",
+        "id": "enable_analytics_events",
+        "label": "Enable analytics events",
+        "default": true,
+        "info": "Fires GA4/GTM dataLayer events for ecommerce tracking"
+      },
+      {
+        "type": "header",
+        "content": "CRO Features"
+      },
+      {
+        "type": "checkbox",
+        "id": "enable_sticky_atc",
+        "label": "Enable sticky add-to-cart (mobile)",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "show_cart_upsell",
+        "label": "Show cart upsell suggestions",
+        "default": true
       }
     ]
   }

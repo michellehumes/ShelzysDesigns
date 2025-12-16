@@ -1,0 +1,270 @@
+{% comment %}
+================================================================================
+SHELZY'S DESIGNS - ANALYTICS EVENTS
+Version: 2.0.0
+Last Updated: 2024-12
+================================================================================
+Ecommerce analytics events for GA4 / GTM dataLayer.
+Fires standard events: view_item, add_to_cart, begin_checkout, search, purchase.
+
+Enable/disable via Theme Settings > Advanced > Enable Analytics Events
+
+Usage: Add to theme.liquid before </body>
+{% render 'shelzys-analytics-events' %}
+================================================================================
+{% endcomment %}
+
+{%- liquid
+  assign enable_analytics = settings.enable_analytics_events | default: true
+-%}
+
+{%- if enable_analytics -%}
+<script>
+(function() {
+  'use strict';
+
+  // Initialize dataLayer
+  window.dataLayer = window.dataLayer || [];
+
+  // Helper: Format price for analytics (cents to dollars)
+  function formatPrice(cents) {
+    return (cents / 100).toFixed(2);
+  }
+
+  // Helper: Get item data for GA4
+  function getItemData(product, variant, quantity) {
+    return {
+      item_id: variant ? variant.sku || variant.id : product.id,
+      item_name: product.title,
+      item_brand: '{{ shop.name | escape }}',
+      item_category: product.type || 'Water Bottles',
+      item_variant: variant ? variant.title : null,
+      price: variant ? formatPrice(variant.price) : formatPrice(product.price),
+      quantity: quantity || 1
+    };
+  }
+
+  // ============================================
+  // VIEW ITEM EVENT (Product Page)
+  // ============================================
+  {% if template contains 'product' and product %}
+  (function viewItem() {
+    var product = {
+      id: {{ product.id | json }},
+      title: {{ product.title | json }},
+      type: {{ product.type | json }},
+      price: {{ product.price }},
+      vendor: {{ product.vendor | json }}
+    };
+
+    var variant = {
+      id: {{ product.selected_or_first_available_variant.id }},
+      sku: {{ product.selected_or_first_available_variant.sku | json }},
+      title: {{ product.selected_or_first_available_variant.title | json }},
+      price: {{ product.selected_or_first_available_variant.price }}
+    };
+
+    window.dataLayer.push({
+      event: 'view_item',
+      ecommerce: {
+        currency: {{ cart.currency.iso_code | json }},
+        value: formatPrice(variant.price),
+        items: [getItemData(product, variant, 1)]
+      }
+    });
+  })();
+  {% endif %}
+
+  // ============================================
+  // VIEW ITEM LIST EVENT (Collection Page)
+  // ============================================
+  {% if template contains 'collection' and collection %}
+  (function viewItemList() {
+    var items = [];
+    var index = 0;
+
+    {% for product in collection.products limit: 20 %}
+    items.push({
+      item_id: {{ product.selected_or_first_available_variant.sku | default: product.id | json }},
+      item_name: {{ product.title | json }},
+      item_brand: '{{ shop.name | escape }}',
+      item_category: {{ product.type | default: 'Water Bottles' | json }},
+      price: formatPrice({{ product.price }}),
+      index: {{ forloop.index0 }},
+      item_list_id: {{ collection.id | json }},
+      item_list_name: {{ collection.title | json }}
+    });
+    {% endfor %}
+
+    if (items.length > 0) {
+      window.dataLayer.push({
+        event: 'view_item_list',
+        ecommerce: {
+          item_list_id: {{ collection.id | json }},
+          item_list_name: {{ collection.title | json }},
+          items: items
+        }
+      });
+    }
+  })();
+  {% endif %}
+
+  // ============================================
+  // SEARCH EVENT
+  // ============================================
+  {% if template contains 'search' and search.performed %}
+  (function searchEvent() {
+    window.dataLayer.push({
+      event: 'search',
+      search_term: {{ search.terms | json }}
+    });
+
+    {% if search.results_count > 0 %}
+    var searchItems = [];
+    {% for item in search.results limit: 10 %}
+      {% if item.object_type == 'product' %}
+      searchItems.push({
+        item_id: {{ item.selected_or_first_available_variant.sku | default: item.id | json }},
+        item_name: {{ item.title | json }},
+        item_brand: '{{ shop.name | escape }}',
+        price: formatPrice({{ item.price }}),
+        index: {{ forloop.index0 }}
+      });
+      {% endif %}
+    {% endfor %}
+
+    if (searchItems.length > 0) {
+      window.dataLayer.push({
+        event: 'view_search_results',
+        ecommerce: {
+          items: searchItems
+        }
+      });
+    }
+    {% endif %}
+  })();
+  {% endif %}
+
+  // ============================================
+  // ADD TO CART EVENT
+  // ============================================
+  document.addEventListener('submit', function(e) {
+    var form = e.target;
+    if (form.action && form.action.includes('/cart/add')) {
+      // Get form data
+      var formData = new FormData(form);
+      var variantId = formData.get('id');
+      var quantity = parseInt(formData.get('quantity')) || 1;
+
+      // Try to get product data from the page
+      var productData = window.szProductData || {};
+
+      window.dataLayer.push({
+        event: 'add_to_cart',
+        ecommerce: {
+          currency: {{ cart.currency.iso_code | json }},
+          value: productData.price ? formatPrice(productData.price * quantity) : null,
+          items: [{
+            item_id: productData.sku || variantId,
+            item_name: productData.title || document.title.split('|')[0].trim(),
+            item_brand: '{{ shop.name | escape }}',
+            quantity: quantity,
+            price: productData.price ? formatPrice(productData.price) : null
+          }]
+        }
+      });
+    }
+  });
+
+  // ============================================
+  // REMOVE FROM CART EVENT
+  // ============================================
+  document.addEventListener('click', function(e) {
+    var removeBtn = e.target.closest('[data-cart-remove], .cart-item__remove, [href*="/cart/change"]');
+    if (removeBtn) {
+      var itemTitle = removeBtn.closest('[data-cart-item], .cart-item')?.querySelector('[data-item-title], .cart-item__name')?.textContent?.trim();
+
+      window.dataLayer.push({
+        event: 'remove_from_cart',
+        ecommerce: {
+          items: [{
+            item_name: itemTitle || 'Unknown Item',
+            item_brand: '{{ shop.name | escape }}'
+          }]
+        }
+      });
+    }
+  });
+
+  // ============================================
+  // BEGIN CHECKOUT EVENT
+  // ============================================
+  document.addEventListener('click', function(e) {
+    var checkoutBtn = e.target.closest('[name="checkout"], [href*="/checkout"], .cart__checkout-button');
+    if (checkoutBtn) {
+      {% if cart.item_count > 0 %}
+      var cartItems = [];
+      {% for item in cart.items %}
+      cartItems.push({
+        item_id: {{ item.sku | default: item.variant_id | json }},
+        item_name: {{ item.product.title | json }},
+        item_brand: '{{ shop.name | escape }}',
+        item_variant: {{ item.variant.title | json }},
+        price: formatPrice({{ item.final_price }}),
+        quantity: {{ item.quantity }}
+      });
+      {% endfor %}
+
+      window.dataLayer.push({
+        event: 'begin_checkout',
+        ecommerce: {
+          currency: {{ cart.currency.iso_code | json }},
+          value: formatPrice({{ cart.total_price }}),
+          items: cartItems
+        }
+      });
+      {% endif %}
+    }
+  });
+
+  // ============================================
+  // PRODUCT CLICK EVENT (Collection/Search)
+  // ============================================
+  document.addEventListener('click', function(e) {
+    var productLink = e.target.closest('.sz-product-card__link, [data-product-link]');
+    if (productLink) {
+      var card = productLink.closest('.sz-product-card, [data-product-card]');
+      if (card) {
+        var handle = card.dataset.productHandle;
+        var title = card.querySelector('.sz-product-card__title, [data-product-title]')?.textContent?.trim();
+
+        window.dataLayer.push({
+          event: 'select_item',
+          ecommerce: {
+            items: [{
+              item_id: handle,
+              item_name: title,
+              item_brand: '{{ shop.name | escape }}'
+            }]
+          }
+        });
+      }
+    }
+  });
+
+  // ============================================
+  // STORE PRODUCT DATA FOR ADD TO CART
+  // ============================================
+  {% if template contains 'product' and product %}
+  window.szProductData = {
+    id: {{ product.id }},
+    title: {{ product.title | json }},
+    sku: {{ product.selected_or_first_available_variant.sku | json }},
+    price: {{ product.selected_or_first_available_variant.price }},
+    variant: {{ product.selected_or_first_available_variant.title | json }}
+  };
+  {% endif %}
+
+})();
+</script>
+{%- endif -%}
