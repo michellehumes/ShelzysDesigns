@@ -1,0 +1,168 @@
+{% comment %}
+================================================================================
+SHELZY'S DESIGNS - COMPACT TRUST BAR
+Version: 2.0.0
+Last Updated: 2024-12
+================================================================================
+Confidence-building trust strip for homepage placement.
+Shows key value props that drive purchasing decisions.
+
+Revenue Impact: Reduces friction by addressing objections immediately.
+Place above-the-fold or directly after hero.
+================================================================================
+{% endcomment %}
+
+{%- liquid
+  assign show_section = section.settings.show_section | default: true
+-%}
+
+{%- if show_section -%}
+<section class="sz-trust-bar-compact">
+  <div class="sz-trust-bar-compact__container">
+    {%- for block in section.blocks -%}
+      <div class="sz-trust-bar-compact__item" {{ block.shopify_attributes }}>
+        <span class="sz-trust-bar-compact__icon">
+          {%- case block.settings.icon -%}
+            {%- when 'personalized' -%}
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+            {%- when 'fast' -%}
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            {%- when 'gift' -%}
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 12 20 22 4 22 4 12"/><rect x="2" y="7" width="20" height="5"/><line x1="12" y1="22" x2="12" y2="7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg>
+            {%- when 'quality' -%}
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>
+            {%- when 'shipping' -%}
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+            {%- when 'check' -%}
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+            {%- when 'star' -%}
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          {%- endcase -%}
+        </span>
+        <span class="sz-trust-bar-compact__text">{{ block.settings.text }}</span>
+      </div>
+    {%- endfor -%}
+  </div>
+</section>
+{%- endif -%}
+
+<style>
+  .sz-trust-bar-compact {
+    background: var(--sz-background-alt, #FAF9F6);
+    border-bottom: 1px solid var(--sz-border, #E8E4DE);
+    padding: var(--sz-space-sm, 12px) var(--sz-space-md, 16px);
+  }
+
+  .sz-trust-bar-compact__container {
+    max-width: var(--sz-container-max, 1400px);
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: var(--sz-space-lg, 32px);
+    flex-wrap: wrap;
+  }
+
+  .sz-trust-bar-compact__item {
+    display: flex;
+    align-items: center;
+    gap: var(--sz-space-xs, 8px);
+  }
+
+  .sz-trust-bar-compact__icon {
+    color: var(--sz-primary, #8BAA88);
+    display: flex;
+    align-items: center;
+  }
+
+  .sz-trust-bar-compact__text {
+    font-family: var(--sz-font-body);
+    font-size: var(--sz-text-xs, 13px);
+    font-weight: var(--sz-font-medium, 500);
+    color: var(--sz-text, #2B2B2B);
+    white-space: nowrap;
+  }
+
+  @media (max-width: 768px) {
+    .sz-trust-bar-compact__container {
+      gap: var(--sz-space-md, 16px);
+      justify-content: space-around;
+    }
+
+    .sz-trust-bar-compact__text {
+      font-size: 11px;
+    }
+
+    .sz-trust-bar-compact__icon svg {
+      width: 16px;
+      height: 16px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .sz-trust-bar-compact__container {
+      gap: var(--sz-space-sm, 12px);
+    }
+
+    .sz-trust-bar-compact__item:nth-child(n+4) {
+      display: none;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Trust Bar (Compact)",
+  "tag": "section",
+  "class": "sz-section-trust-bar-compact",
+  "max_blocks": 5,
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_section",
+      "label": "Show section",
+      "default": true
+    }
+  ],
+  "blocks": [
+    {
+      "type": "trust_point",
+      "name": "Trust Point",
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icon",
+          "options": [
+            { "value": "personalized", "label": "Personalized (Pen)" },
+            { "value": "fast", "label": "Fast (Clock)" },
+            { "value": "gift", "label": "Gift (Box)" },
+            { "value": "quality", "label": "Quality (Shield)" },
+            { "value": "shipping", "label": "Shipping (Truck)" },
+            { "value": "check", "label": "Check" },
+            { "value": "star", "label": "Star" }
+          ],
+          "default": "check"
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text",
+          "default": "Free Personalization"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Trust Bar (Compact)",
+      "blocks": [
+        { "type": "trust_point", "settings": { "icon": "personalized", "text": "Free Personalization" } },
+        { "type": "trust_point", "settings": { "icon": "fast", "text": "Ships in 3-5 Days" } },
+        { "type": "trust_point", "settings": { "icon": "gift", "text": "Gift Ready" } },
+        { "type": "trust_point", "settings": { "icon": "quality", "text": "Permanent Print" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

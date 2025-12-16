@@ -1,0 +1,496 @@
+{% comment %}
+================================================================================
+SHELZY'S DESIGNS - GIFT OCCASION NAVIGATOR
+Version: 2.0.0
+Last Updated: 2024-12
+================================================================================
+Editorial use-case navigation section.
+Guides first-time buyers by gifting occasion with clear visual hierarchy.
+
+Revenue Impact: Reduces choice paralysis, increases category page visits,
+improves conversion by matching intent to products.
+
+Use Cases: Bridal Party, Corporate Gifts, Holidays, Everyday/Personal
+================================================================================
+{% endcomment %}
+
+{%- liquid
+  assign color_scheme = section.settings.color_scheme
+  case color_scheme
+    when 'light'
+      assign bg_color = 'var(--sz-background)'
+    when 'alt'
+      assign bg_color = 'var(--sz-background-alt)'
+    when 'surface'
+      assign bg_color = 'var(--sz-surface)'
+    when 'dark'
+      assign bg_color = 'var(--sz-primary-dark)'
+      assign is_dark = true
+  endcase
+-%}
+
+<section
+  class="sz-gift-navigator{% if is_dark %} sz-gift-navigator--dark{% endif %}"
+  style="
+    --section-bg: {{ bg_color }};
+    --section-padding-top: {{ section.settings.padding_top }}px;
+    --section-padding-bottom: {{ section.settings.padding_bottom }}px;
+  "
+>
+  <div class="sz-gift-navigator__container">
+    {%- if section.settings.subheading != blank or section.settings.heading != blank -%}
+      <div class="sz-gift-navigator__header">
+        {%- if section.settings.subheading != blank -%}
+          <p class="sz-gift-navigator__subheading">{{ section.settings.subheading }}</p>
+        {%- endif -%}
+        {%- if section.settings.heading != blank -%}
+          <h2 class="sz-gift-navigator__heading">{{ section.settings.heading }}</h2>
+        {%- endif -%}
+        {%- if section.settings.description != blank -%}
+          <p class="sz-gift-navigator__description">{{ section.settings.description }}</p>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+    <div class="sz-gift-navigator__grid sz-gift-navigator__grid--{{ section.blocks.size }}">
+      {%- for block in section.blocks -%}
+        <a href="{{ block.settings.link }}" class="sz-gift-navigator__card{% if block.settings.featured %} sz-gift-navigator__card--featured{% endif %}" {{ block.shopify_attributes }}>
+          {%- if block.settings.image != blank -%}
+            <div class="sz-gift-navigator__image-wrapper">
+              <img
+                src="{{ block.settings.image | image_url: width: 600 }}"
+                srcset="{{ block.settings.image | image_url: width: 400 }} 400w,
+                        {{ block.settings.image | image_url: width: 600 }} 600w,
+                        {{ block.settings.image | image_url: width: 800 }} 800w"
+                sizes="(min-width: 1024px) 300px, (min-width: 768px) 50vw, 100vw"
+                alt="{{ block.settings.title | escape }}"
+                class="sz-gift-navigator__image"
+                loading="lazy"
+              >
+              {%- if block.settings.badge != blank -%}
+                <span class="sz-gift-navigator__badge">{{ block.settings.badge }}</span>
+              {%- endif -%}
+            </div>
+          {%- else -%}
+            <div class="sz-gift-navigator__image-wrapper sz-gift-navigator__image-wrapper--placeholder">
+              <div class="sz-gift-navigator__icon">
+                {%- case block.settings.icon -%}
+                  {%- when 'wedding' -%}
+                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                  {%- when 'corporate' -%}
+                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 7h-9"/><path d="M14 17H5"/><circle cx="17" cy="17" r="3"/><circle cx="7" cy="7" r="3"/></svg>
+                  {%- when 'holiday' -%}
+                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                  {%- when 'everyday' -%}
+                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>
+                {%- endcase -%}
+              </div>
+            </div>
+          {%- endif -%}
+
+          <div class="sz-gift-navigator__content">
+            <h3 class="sz-gift-navigator__title">{{ block.settings.title }}</h3>
+            {%- if block.settings.subtitle != blank -%}
+              <p class="sz-gift-navigator__subtitle">{{ block.settings.subtitle }}</p>
+            {%- endif -%}
+            <span class="sz-gift-navigator__cta">
+              {{ block.settings.cta_text | default: 'Shop Now' }}
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </span>
+          </div>
+        </a>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+<style>
+  .sz-gift-navigator {
+    background: var(--section-bg);
+    padding-top: var(--section-padding-top);
+    padding-bottom: var(--section-padding-bottom);
+  }
+
+  .sz-gift-navigator__container {
+    max-width: var(--sz-container-max, 1400px);
+    margin: 0 auto;
+    padding: 0 var(--sz-container-padding, 24px);
+  }
+
+  .sz-gift-navigator__header {
+    text-align: center;
+    margin-bottom: var(--sz-space-2xl, 48px);
+  }
+
+  .sz-gift-navigator__subheading {
+    font-family: var(--sz-font-body);
+    font-size: var(--sz-text-xs, 13px);
+    font-weight: var(--sz-font-semibold, 600);
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--sz-primary);
+    margin: 0 0 var(--sz-space-sm, 12px) 0;
+  }
+
+  .sz-gift-navigator__heading {
+    font-family: var(--sz-font-heading);
+    font-size: var(--sz-text-4xl);
+    font-weight: var(--sz-font-heading-weight, 500);
+    color: var(--sz-heading);
+    margin: 0 0 var(--sz-space-md, 16px) 0;
+  }
+
+  .sz-gift-navigator--dark .sz-gift-navigator__heading,
+  .sz-gift-navigator--dark .sz-gift-navigator__description {
+    color: var(--sz-background, #FFFFFF);
+  }
+
+  .sz-gift-navigator__description {
+    font-family: var(--sz-font-body);
+    font-size: var(--sz-text-base, 16px);
+    line-height: var(--sz-leading-relaxed, 1.6);
+    color: var(--sz-text-muted);
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .sz-gift-navigator__grid {
+    display: grid;
+    gap: var(--sz-space-lg, 24px);
+  }
+
+  .sz-gift-navigator__grid--2 { grid-template-columns: repeat(2, 1fr); }
+  .sz-gift-navigator__grid--3 { grid-template-columns: repeat(3, 1fr); }
+  .sz-gift-navigator__grid--4 { grid-template-columns: repeat(4, 1fr); }
+
+  @media (max-width: 1024px) {
+    .sz-gift-navigator__grid--4 { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  @media (max-width: 768px) {
+    .sz-gift-navigator__grid--2,
+    .sz-gift-navigator__grid--3,
+    .sz-gift-navigator__grid--4 {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .sz-gift-navigator__grid {
+      gap: var(--sz-space-md, 16px);
+    }
+  }
+
+  .sz-gift-navigator__card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    color: inherit;
+    background: var(--sz-background, #FFFFFF);
+    border-radius: var(--sz-radius-lg, 12px);
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    transition: all var(--sz-transition-normal, 0.3s) ease;
+  }
+
+  .sz-gift-navigator__card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  }
+
+  .sz-gift-navigator__card--featured {
+    border: 2px solid var(--sz-accent, #D4AF37);
+  }
+
+  .sz-gift-navigator__image-wrapper {
+    position: relative;
+    aspect-ratio: 4/3;
+    overflow: hidden;
+  }
+
+  .sz-gift-navigator__image-wrapper--placeholder {
+    background: var(--sz-surface, #F5F2ED);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .sz-gift-navigator__icon {
+    color: var(--sz-primary, #8BAA88);
+    opacity: 0.7;
+  }
+
+  .sz-gift-navigator__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform var(--sz-transition-normal, 0.4s) ease;
+  }
+
+  .sz-gift-navigator__card:hover .sz-gift-navigator__image {
+    transform: scale(1.05);
+  }
+
+  .sz-gift-navigator__badge {
+    position: absolute;
+    top: var(--sz-space-sm, 12px);
+    left: var(--sz-space-sm, 12px);
+    padding: var(--sz-space-xs, 6px) var(--sz-space-sm, 10px);
+    background: var(--sz-accent, #D4AF37);
+    color: var(--sz-heading, #1F1F1F);
+    font-family: var(--sz-font-body);
+    font-size: 11px;
+    font-weight: var(--sz-font-semibold, 600);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border-radius: var(--sz-radius-sm, 4px);
+  }
+
+  .sz-gift-navigator__content {
+    padding: var(--sz-space-lg, 24px);
+  }
+
+  .sz-gift-navigator__title {
+    font-family: var(--sz-font-heading);
+    font-size: var(--sz-text-xl, 20px);
+    font-weight: var(--sz-font-heading-weight, 500);
+    color: var(--sz-heading);
+    margin: 0 0 var(--sz-space-xs, 6px) 0;
+  }
+
+  .sz-gift-navigator__subtitle {
+    font-family: var(--sz-font-body);
+    font-size: var(--sz-text-sm, 14px);
+    color: var(--sz-text-muted);
+    margin: 0 0 var(--sz-space-md, 16px) 0;
+    line-height: var(--sz-leading-relaxed, 1.5);
+  }
+
+  .sz-gift-navigator__cta {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--sz-space-xs, 6px);
+    font-family: var(--sz-font-body);
+    font-size: var(--sz-text-sm, 14px);
+    font-weight: var(--sz-font-semibold, 600);
+    color: var(--sz-primary-dark);
+    transition: gap var(--sz-transition-fast, 0.2s) ease;
+  }
+
+  .sz-gift-navigator__card:hover .sz-gift-navigator__cta {
+    gap: var(--sz-space-sm, 10px);
+  }
+
+  .sz-gift-navigator__cta svg {
+    transition: transform var(--sz-transition-fast, 0.2s) ease;
+  }
+
+  .sz-gift-navigator__card:hover .sz-gift-navigator__cta svg {
+    transform: translateX(4px);
+  }
+
+  @media (max-width: 768px) {
+    .sz-gift-navigator__content {
+      padding: var(--sz-space-md, 16px);
+    }
+
+    .sz-gift-navigator__title {
+      font-size: var(--sz-text-lg, 18px);
+    }
+  }
+
+  /* Reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    .sz-gift-navigator__card,
+    .sz-gift-navigator__image,
+    .sz-gift-navigator__cta,
+    .sz-gift-navigator__cta svg {
+      transition: none;
+    }
+
+    .sz-gift-navigator__card:hover {
+      transform: none;
+    }
+
+    .sz-gift-navigator__card:hover .sz-gift-navigator__image {
+      transform: none;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Gift Occasion Navigator",
+  "tag": "section",
+  "class": "sz-section-gift-navigator",
+  "max_blocks": 4,
+  "settings": [
+    {
+      "type": "select",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "options": [
+        { "value": "light", "label": "Light" },
+        { "value": "alt", "label": "Alternate" },
+        { "value": "surface", "label": "Surface" },
+        { "value": "dark", "label": "Dark" }
+      ],
+      "default": "light"
+    },
+    {
+      "type": "header",
+      "content": "Header"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Shop By Occasion"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Find the Perfect Gift"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description",
+      "default": "Not sure where to start? Browse by occasion to find the perfect personalized bottle."
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Top padding",
+      "min": 0,
+      "max": 120,
+      "step": 8,
+      "default": 64,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 120,
+      "step": 8,
+      "default": 64,
+      "unit": "px"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "occasion",
+      "name": "Occasion",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icon (if no image)",
+          "options": [
+            { "value": "wedding", "label": "Wedding (Heart)" },
+            { "value": "corporate", "label": "Corporate (Team)" },
+            { "value": "holiday", "label": "Holiday (Star)" },
+            { "value": "everyday", "label": "Everyday (Smile)" }
+          ],
+          "default": "wedding"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Bridal Party"
+        },
+        {
+          "type": "text",
+          "id": "subtitle",
+          "label": "Subtitle",
+          "default": "Personalized bottles for the bride and her squad"
+        },
+        {
+          "type": "text",
+          "id": "badge",
+          "label": "Badge text",
+          "info": "Optional badge (e.g. 'Popular', 'Best Seller')"
+        },
+        {
+          "type": "text",
+          "id": "cta_text",
+          "label": "CTA text",
+          "default": "Shop Now"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link"
+        },
+        {
+          "type": "checkbox",
+          "id": "featured",
+          "label": "Featured (gold border)",
+          "default": false
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Gift Occasion Navigator",
+      "blocks": [
+        {
+          "type": "occasion",
+          "settings": {
+            "icon": "wedding",
+            "title": "Bridal Party",
+            "subtitle": "Personalized bottles for the bride and her squad",
+            "badge": "Most Popular",
+            "cta_text": "Shop Bridal",
+            "link": "/collections/wedding",
+            "featured": true
+          }
+        },
+        {
+          "type": "occasion",
+          "settings": {
+            "icon": "corporate",
+            "title": "Corporate & Teams",
+            "subtitle": "Bulk orders for offices, sports teams, and events",
+            "cta_text": "Get Quote",
+            "link": "/pages/bulk-orders"
+          }
+        },
+        {
+          "type": "occasion",
+          "settings": {
+            "icon": "holiday",
+            "title": "Holidays & Birthdays",
+            "subtitle": "Thoughtful personalized gifts they'll actually use",
+            "cta_text": "Shop Gifts",
+            "link": "/collections/all"
+          }
+        },
+        {
+          "type": "occasion",
+          "settings": {
+            "icon": "everyday",
+            "title": "Everyday Style",
+            "subtitle": "Trendy designs for gym, work, or just because",
+            "cta_text": "Explore",
+            "link": "/collections/best-sellers"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
