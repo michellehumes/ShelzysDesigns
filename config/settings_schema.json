@@ -570,6 +570,41 @@
         "id": "show_cart_upsell",
         "label": "Show cart upsell suggestions",
         "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "show_cart_gift_message",
+        "label": "Show gift message option in cart",
+        "default": true
+      },
+      {
+        "type": "header",
+        "content": "Email Capture"
+      },
+      {
+        "type": "checkbox",
+        "id": "show_newsletter_popup",
+        "label": "Show newsletter popup",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "show_exit_intent_cart_saver",
+        "label": "Show exit intent cart saver",
+        "default": true,
+        "info": "Shows discount popup when users try to leave with items in cart"
+      },
+      {
+        "type": "text",
+        "id": "cart_saver_discount_code",
+        "label": "Cart saver discount code",
+        "default": "SAVE10"
+      },
+      {
+        "type": "text",
+        "id": "cart_saver_discount_text",
+        "label": "Cart saver discount description",
+        "default": "10% off"
       }
     ]
   }

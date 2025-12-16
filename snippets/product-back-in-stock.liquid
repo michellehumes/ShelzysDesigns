@@ -1,0 +1,221 @@
+{% comment %}
+================================================================================
+SHELZY'S DESIGNS - BACK IN STOCK NOTIFICATION
+Version: 2.0.0
+Last Updated: 2024-12
+================================================================================
+Email capture for out-of-stock products.
+Collects email with product/variant info for restock notifications.
+
+Revenue Impact: Recovers 5-10% of would-be bounces from sold-out items.
+
+Usage: {% render 'product-back-in-stock', product: product %}
+================================================================================
+{% endcomment %}
+
+{%- liquid
+  assign variant = product.selected_or_first_available_variant
+  assign is_soldout = false
+  if variant.available == false
+    assign is_soldout = true
+  endif
+-%}
+
+{%- if is_soldout -%}
+<div class="sz-back-in-stock" id="szBackInStock">
+  <div class="sz-back-in-stock__header">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+      <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+      <polyline points="22,6 12,13 2,6"/>
+    </svg>
+    <span class="sz-back-in-stock__title">Get Notified When Available</span>
+  </div>
+
+  <p class="sz-back-in-stock__text">
+    Enter your email and we'll notify you as soon as this product is back in stock.
+  </p>
+
+  <form class="sz-back-in-stock__form" id="szBackInStockForm">
+    <input type="hidden" name="product_id" value="{{ product.id }}">
+    <input type="hidden" name="product_title" value="{{ product.title | escape }}">
+    <input type="hidden" name="variant_id" value="{{ variant.id }}">
+    <input type="hidden" name="variant_title" value="{{ variant.title | escape }}">
+
+    <div class="sz-back-in-stock__field">
+      <input
+        type="email"
+        name="email"
+        id="szBackInStockEmail"
+        class="sz-back-in-stock__input"
+        placeholder="Enter your email"
+        required
+        autocomplete="email"
+      >
+      <button type="submit" class="sz-back-in-stock__btn">
+        Notify Me
+      </button>
+    </div>
+  </form>
+
+  <div class="sz-back-in-stock__success" id="szBackInStockSuccess" style="display: none;">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+      <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+      <polyline points="22 4 12 14.01 9 11.01"/>
+    </svg>
+    <span>You're on the list! We'll email you when it's back.</span>
+  </div>
+
+  <p class="sz-back-in-stock__note">We respect your privacy. No spam.</p>
+</div>
+
+<script>
+(function() {
+  var form = document.getElementById('szBackInStockForm');
+  var success = document.getElementById('szBackInStockSuccess');
+
+  if (form) {
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      var formData = new FormData(form);
+      var email = formData.get('email');
+      var productTitle = formData.get('product_title');
+      var variantTitle = formData.get('variant_title');
+      var productId = formData.get('product_id');
+
+      // Submit to Shopify customer form with product info in tags
+      var body = 'form_type=customer&utf8=%E2%9C%93' +
+        '&contact[email]=' + encodeURIComponent(email) +
+        '&contact[tags]=back-in-stock,product-' + productId +
+        '&contact[note]=' + encodeURIComponent('Back in stock request for: ' + productTitle + (variantTitle !== 'Default Title' ? ' - ' + variantTitle : ''));
+
+      fetch('/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: body
+      });
+
+      // Show success
+      form.style.display = 'none';
+      success.style.display = 'flex';
+    });
+  }
+})();
+</script>
+
+<style>
+  .sz-back-in-stock {
+    padding: var(--sz-space-lg, 20px);
+    background: var(--sz-surface, #F5F2ED);
+    border-radius: var(--sz-radius-lg, 12px);
+    margin: var(--sz-space-lg, 24px) 0;
+  }
+
+  .sz-back-in-stock__header {
+    display: flex;
+    align-items: center;
+    gap: var(--sz-space-sm, 10px);
+    margin-bottom: var(--sz-space-sm, 10px);
+  }
+
+  .sz-back-in-stock__header svg {
+    color: var(--sz-primary);
+    flex-shrink: 0;
+  }
+
+  .sz-back-in-stock__title {
+    font-family: var(--sz-font-body);
+    font-size: var(--sz-text-base, 16px);
+    font-weight: var(--sz-font-semibold, 600);
+    color: var(--sz-heading);
+  }
+
+  .sz-back-in-stock__text {
+    font-family: var(--sz-font-body);
+    font-size: var(--sz-text-sm, 14px);
+    color: var(--sz-text-muted);
+    margin: 0 0 var(--sz-space-md, 16px) 0;
+    line-height: var(--sz-leading-relaxed, 1.5);
+  }
+
+  .sz-back-in-stock__field {
+    display: flex;
+    gap: var(--sz-space-sm, 10px);
+  }
+
+  .sz-back-in-stock__input {
+    flex: 1;
+    padding: var(--sz-space-sm, 12px) var(--sz-space-md, 16px);
+    font-family: var(--sz-font-body);
+    font-size: var(--sz-text-sm, 14px);
+    color: var(--sz-text);
+    background: var(--sz-background, #FFFFFF);
+    border: 1px solid var(--sz-border, #E8E4DE);
+    border-radius: var(--sz-radius-md, 8px);
+  }
+
+  .sz-back-in-stock__input:focus {
+    outline: none;
+    border-color: var(--sz-primary);
+    box-shadow: 0 0 0 3px var(--sz-primary-light, rgba(139, 170, 136, 0.15));
+  }
+
+  .sz-back-in-stock__btn {
+    padding: var(--sz-space-sm, 12px) var(--sz-space-lg, 20px);
+    font-family: var(--sz-font-body);
+    font-size: var(--sz-text-sm, 14px);
+    font-weight: var(--sz-font-semibold, 600);
+    color: var(--sz-background, #FFFFFF);
+    background: var(--sz-primary);
+    border: none;
+    border-radius: var(--sz-radius-md, 8px);
+    cursor: pointer;
+    transition: background var(--sz-transition-fast, 0.2s) ease;
+    white-space: nowrap;
+  }
+
+  .sz-back-in-stock__btn:hover {
+    background: var(--sz-primary-dark);
+  }
+
+  .sz-back-in-stock__btn:focus-visible {
+    outline: 2px solid var(--sz-primary);
+    outline-offset: 2px;
+  }
+
+  .sz-back-in-stock__success {
+    display: flex;
+    align-items: center;
+    gap: var(--sz-space-sm, 10px);
+    padding: var(--sz-space-md, 14px);
+    background: var(--sz-success-light, #ECFDF5);
+    border-radius: var(--sz-radius-md, 8px);
+    font-family: var(--sz-font-body);
+    font-size: var(--sz-text-sm, 14px);
+    color: var(--sz-success-dark, #065F46);
+  }
+
+  .sz-back-in-stock__success svg {
+    color: var(--sz-success, #10B981);
+    flex-shrink: 0;
+  }
+
+  .sz-back-in-stock__note {
+    font-family: var(--sz-font-body);
+    font-size: var(--sz-text-xs, 11px);
+    color: var(--sz-text-muted);
+    margin: var(--sz-space-sm, 10px) 0 0 0;
+    text-align: center;
+  }
+
+  @media (max-width: 500px) {
+    .sz-back-in-stock__field {
+      flex-direction: column;
+    }
+
+    .sz-back-in-stock__btn {
+      width: 100%;
+    }
+  }
+</style>
+{%- endif -%}

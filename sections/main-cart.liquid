@@ -148,6 +148,12 @@
             <input type="hidden" name="checkout" value="">
           </form>
 
+          {%- comment -%} Gift Message Option {%- endcomment -%}
+          {% render 'cart-gift-message' %}
+
+          {%- comment -%} Order Reassurance {%- endcomment -%}
+          {% render 'cart-order-reassurance' %}
+
         </div>
 
         {%- comment -%} Cart Summary {%- endcomment -%}

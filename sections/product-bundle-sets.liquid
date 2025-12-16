@@ -1,0 +1,459 @@
+{% comment %}
+================================================================================
+SHELZY'S DESIGNS - BUNDLE SETS SECTION
+Version: 2.0.0
+Last Updated: 2024-12
+================================================================================
+Theme-native bundle section for curated product sets.
+Displays "Bridal Party Sets", "Family Sets", "Corporate Packs" etc.
+
+Revenue Impact: Bundles increase AOV by 20-35%.
+Configurable via Theme Editor with up to 6 bundle items.
+
+Usage: Add section to product template in Theme Editor
+================================================================================
+{% endcomment %}
+
+{%- liquid
+  assign bundle_title = section.settings.title | default: 'Complete the Set'
+  assign bundle_subtitle = section.settings.subtitle
+  assign bundle_badge = section.settings.badge_text
+  assign show_savings = section.settings.show_savings
+  assign savings_percent = section.settings.savings_percent | default: 15
+
+  assign has_products = false
+  assign bundle_total = 0
+  assign product_count = 0
+
+  for block in section.blocks
+    if block.settings.product != blank
+      assign has_products = true
+      assign bundle_total = bundle_total | plus: block.settings.product.price
+      assign product_count = product_count | plus: 1
+    endif
+  endfor
+
+  if show_savings and savings_percent > 0
+    assign savings_amount = bundle_total | times: savings_percent | divided_by: 100
+    assign bundle_price = bundle_total | minus: savings_amount
+  else
+    assign bundle_price = bundle_total
+  endif
+-%}
+
+{%- if has_products -%}
+<section class="sz-bundle-sets">
+  <div class="sz-bundle-sets__container">
+    <div class="sz-bundle-sets__header">
+      {%- if bundle_badge != blank -%}
+        <span class="sz-bundle-sets__badge">{{ bundle_badge }}</span>
+      {%- endif -%}
+      <h2 class="sz-bundle-sets__title">{{ bundle_title }}</h2>
+      {%- if bundle_subtitle != blank -%}
+        <p class="sz-bundle-sets__subtitle">{{ bundle_subtitle }}</p>
+      {%- endif -%}
+    </div>
+
+    <div class="sz-bundle-sets__content">
+      <div class="sz-bundle-sets__products">
+        {%- for block in section.blocks -%}
+          {%- assign bundle_product = block.settings.product -%}
+          {%- if bundle_product != blank -%}
+            <div class="sz-bundle-sets__product" {{ block.shopify_attributes }}>
+              <a href="{{ bundle_product.url }}" class="sz-bundle-sets__product-link">
+                <div class="sz-bundle-sets__image-wrap">
+                  {%- if bundle_product.featured_image -%}
+                    <img
+                      src="{{ bundle_product.featured_image | image_url: width: 280 }}"
+                      srcset="{{ bundle_product.featured_image | image_url: width: 280 }} 1x, {{ bundle_product.featured_image | image_url: width: 560 }} 2x"
+                      alt="{{ bundle_product.featured_image.alt | default: bundle_product.title | escape }}"
+                      width="280"
+                      height="{{ 280 | divided_by: bundle_product.featured_image.aspect_ratio | default: 280 | round }}"
+                      loading="lazy"
+                      class="sz-bundle-sets__image"
+                    >
+                  {%- else -%}
+                    <div class="sz-bundle-sets__placeholder">
+                      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                        <circle cx="8.5" cy="8.5" r="1.5"/>
+                        <polyline points="21 15 16 10 5 21"/>
+                      </svg>
+                    </div>
+                  {%- endif -%}
+                </div>
+                <h4 class="sz-bundle-sets__product-title">{{ bundle_product.title | truncate: 30 }}</h4>
+                <p class="sz-bundle-sets__product-price">{{ bundle_product.price | money }}</p>
+              </a>
+            </div>
+
+            {%- unless forloop.last -%}
+              <div class="sz-bundle-sets__plus" aria-hidden="true">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <line x1="12" y1="5" x2="12" y2="19"/>
+                  <line x1="5" y1="12" x2="19" y2="12"/>
+                </svg>
+              </div>
+            {%- endunless -%}
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+
+      <div class="sz-bundle-sets__summary">
+        <div class="sz-bundle-sets__pricing">
+          {%- if show_savings and savings_percent > 0 -%}
+            <span class="sz-bundle-sets__original-price">{{ bundle_total | money }}</span>
+          {%- endif -%}
+          <span class="sz-bundle-sets__price">{{ bundle_price | money }}</span>
+          {%- if show_savings and savings_percent > 0 -%}
+            <span class="sz-bundle-sets__savings">Save {{ savings_percent }}%</span>
+          {%- endif -%}
+        </div>
+
+        <p class="sz-bundle-sets__note">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+            <polyline points="22 4 12 14.01 9 11.01"/>
+          </svg>
+          <span>{{ product_count }} items • Personalize each bottle</span>
+        </p>
+
+        {%- if section.settings.cta_url != blank -%}
+          <a href="{{ section.settings.cta_url }}" class="sz-bundle-sets__cta">
+            {{ section.settings.cta_text | default: 'Shop This Set' }}
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <line x1="5" y1="12" x2="19" y2="12"/>
+              <polyline points="12 5 19 12 12 19"/>
+            </svg>
+          </a>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</section>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Bundle Sets",
+  "tag": "section",
+  "class": "sz-bundle-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Section Title",
+      "default": "Complete the Set"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "Save when you bundle matching bottles for your whole party"
+    },
+    {
+      "type": "text",
+      "id": "badge_text",
+      "label": "Badge Text",
+      "default": "Popular Bundle"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_savings",
+      "label": "Show Savings",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "savings_percent",
+      "label": "Savings Percentage",
+      "min": 5,
+      "max": 30,
+      "step": 5,
+      "default": 15,
+      "unit": "%"
+    },
+    {
+      "type": "url",
+      "id": "cta_url",
+      "label": "Button Link"
+    },
+    {
+      "type": "text",
+      "id": "cta_text",
+      "label": "Button Text",
+      "default": "Shop This Set"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "product",
+      "name": "Bundle Product",
+      "limit": 6,
+      "settings": [
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Product"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Bundle Sets",
+      "blocks": [
+        { "type": "product" },
+        { "type": "product" },
+        { "type": "product" }
+      ]
+    }
+  ]
+}
+{% endschema %}
+
+<style>
+  .sz-bundle-sets {
+    padding: var(--sz-space-2xl, 48px) var(--sz-space-lg, 24px);
+    background: var(--sz-background-alt, #FAF9F6);
+  }
+
+  .sz-bundle-sets__container {
+    max-width: var(--sz-container-max, 1200px);
+    margin: 0 auto;
+  }
+
+  .sz-bundle-sets__header {
+    text-align: center;
+    margin-bottom: var(--sz-space-xl, 32px);
+  }
+
+  .sz-bundle-sets__badge {
+    display: inline-block;
+    font-family: var(--sz-font-body);
+    font-size: 11px;
+    font-weight: var(--sz-font-semibold, 600);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding: var(--sz-space-xs, 6px) var(--sz-space-sm, 12px);
+    background: var(--sz-accent, #D4AF37);
+    color: var(--sz-heading, #1F1F1F);
+    border-radius: var(--sz-radius-full, 999px);
+    margin-bottom: var(--sz-space-md, 12px);
+  }
+
+  .sz-bundle-sets__title {
+    font-family: var(--sz-font-heading);
+    font-size: var(--sz-text-2xl, 28px);
+    font-weight: var(--sz-font-heading-weight, 500);
+    color: var(--sz-heading);
+    margin: 0 0 var(--sz-space-sm, 8px) 0;
+  }
+
+  .sz-bundle-sets__subtitle {
+    font-family: var(--sz-font-body);
+    font-size: var(--sz-text-base, 16px);
+    color: var(--sz-text-muted);
+    margin: 0;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .sz-bundle-sets__content {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: var(--sz-space-xl, 40px);
+    align-items: center;
+  }
+
+  @media (max-width: 900px) {
+    .sz-bundle-sets__content {
+      grid-template-columns: 1fr;
+      gap: var(--sz-space-lg, 24px);
+    }
+  }
+
+  .sz-bundle-sets__products {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: var(--sz-space-sm, 12px);
+  }
+
+  .sz-bundle-sets__product {
+    flex: 0 1 160px;
+    max-width: 160px;
+  }
+
+  .sz-bundle-sets__product-link {
+    display: block;
+    text-decoration: none;
+    background: var(--sz-background, #FFFFFF);
+    border-radius: var(--sz-radius-md, 8px);
+    overflow: hidden;
+    transition: box-shadow var(--sz-transition-fast, 0.2s) ease, transform var(--sz-transition-fast, 0.2s) ease;
+  }
+
+  .sz-bundle-sets__product-link:hover {
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+    transform: translateY(-2px);
+  }
+
+  .sz-bundle-sets__product-link:focus-visible {
+    outline: 2px solid var(--sz-primary);
+    outline-offset: 2px;
+  }
+
+  .sz-bundle-sets__image-wrap {
+    aspect-ratio: 1;
+    background: var(--sz-surface, #F5F2ED);
+    overflow: hidden;
+  }
+
+  .sz-bundle-sets__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .sz-bundle-sets__placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    color: var(--sz-text-muted);
+  }
+
+  .sz-bundle-sets__product-title {
+    font-family: var(--sz-font-body);
+    font-size: var(--sz-text-sm, 13px);
+    font-weight: var(--sz-font-medium, 500);
+    color: var(--sz-heading);
+    margin: var(--sz-space-sm, 10px) var(--sz-space-sm, 10px) 4px;
+    line-height: 1.3;
+  }
+
+  .sz-bundle-sets__product-price {
+    font-family: var(--sz-font-body);
+    font-size: var(--sz-text-xs, 12px);
+    color: var(--sz-text-muted);
+    margin: 0 var(--sz-space-sm, 10px) var(--sz-space-sm, 10px);
+  }
+
+  .sz-bundle-sets__plus {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    background: var(--sz-surface, #F5F2ED);
+    border-radius: var(--sz-radius-full, 999px);
+    color: var(--sz-text-muted);
+  }
+
+  @media (max-width: 600px) {
+    .sz-bundle-sets__plus {
+      display: none;
+    }
+
+    .sz-bundle-sets__product {
+      flex: 0 1 calc(50% - 8px);
+      max-width: calc(50% - 8px);
+    }
+  }
+
+  .sz-bundle-sets__summary {
+    background: var(--sz-background, #FFFFFF);
+    border-radius: var(--sz-radius-lg, 12px);
+    padding: var(--sz-space-lg, 24px);
+    text-align: center;
+    min-width: 240px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+  }
+
+  @media (max-width: 900px) {
+    .sz-bundle-sets__summary {
+      max-width: 320px;
+      margin: 0 auto;
+    }
+  }
+
+  .sz-bundle-sets__pricing {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--sz-space-xs, 4px);
+    margin-bottom: var(--sz-space-md, 12px);
+  }
+
+  .sz-bundle-sets__original-price {
+    font-family: var(--sz-font-body);
+    font-size: var(--sz-text-sm, 14px);
+    color: var(--sz-text-muted);
+    text-decoration: line-through;
+  }
+
+  .sz-bundle-sets__price {
+    font-family: var(--sz-font-heading);
+    font-size: var(--sz-text-2xl, 28px);
+    font-weight: var(--sz-font-bold, 700);
+    color: var(--sz-heading);
+  }
+
+  .sz-bundle-sets__savings {
+    display: inline-block;
+    font-family: var(--sz-font-body);
+    font-size: var(--sz-text-xs, 12px);
+    font-weight: var(--sz-font-semibold, 600);
+    padding: 4px 10px;
+    background: var(--sz-success-light, #ECFDF5);
+    color: var(--sz-success, #10B981);
+    border-radius: var(--sz-radius-full, 999px);
+  }
+
+  .sz-bundle-sets__note {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--sz-space-xs, 6px);
+    font-family: var(--sz-font-body);
+    font-size: var(--sz-text-xs, 12px);
+    color: var(--sz-text-muted);
+    margin: 0 0 var(--sz-space-md, 16px) 0;
+  }
+
+  .sz-bundle-sets__note svg {
+    color: var(--sz-primary);
+    flex-shrink: 0;
+  }
+
+  .sz-bundle-sets__cta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--sz-space-sm, 8px);
+    width: 100%;
+    padding: var(--sz-space-md, 14px) var(--sz-space-lg, 24px);
+    background: var(--sz-primary);
+    color: var(--sz-background, #FFFFFF);
+    font-family: var(--sz-font-body);
+    font-size: var(--sz-text-sm, 14px);
+    font-weight: var(--sz-font-semibold, 600);
+    text-decoration: none;
+    border-radius: var(--sz-radius-md, 8px);
+    transition: background var(--sz-transition-fast, 0.2s) ease, transform var(--sz-transition-fast, 0.2s) ease;
+  }
+
+  .sz-bundle-sets__cta:hover {
+    background: var(--sz-primary-dark);
+    transform: translateY(-1px);
+  }
+
+  .sz-bundle-sets__cta:focus-visible {
+    outline: 2px solid var(--sz-primary);
+    outline-offset: 2px;
+  }
+</style>

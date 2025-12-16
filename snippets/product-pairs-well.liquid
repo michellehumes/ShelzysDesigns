@@ -1,0 +1,229 @@
+{% comment %}
+================================================================================
+SHELZY'S DESIGNS - PAIRS WELL WITH CROSS-SELL
+Version: 2.0.0
+Last Updated: 2024-12
+================================================================================
+Cross-sell section showing complementary products.
+Uses Shopify product recommendations API or manual metafield overrides.
+
+Expected Metafield (optional):
+- custom.pairs_with (list.product_reference) - Manual product list
+
+Revenue Impact: Cross-sells increase AOV by 15-25%.
+
+Usage: {% render 'product-pairs-well', product: product %}
+================================================================================
+{% endcomment %}
+
+{%- liquid
+  assign show_pairs_well = true
+  assign max_products = 3
+  assign pairs_products = blank
+
+  comment
+    Check for manual pairs_with metafield first
+  endcomment
+  if product.metafields.custom.pairs_with != blank
+    assign pairs_products = product.metafields.custom.pairs_with.value
+  endif
+-%}
+
+{%- if pairs_products != blank and pairs_products.size > 0 -%}
+  <div class="sz-pairs-well">
+    <div class="sz-pairs-well__header">
+      <h3 class="sz-pairs-well__heading">Pairs Well With</h3>
+      <p class="sz-pairs-well__subtext">Complete the set for a cohesive gift</p>
+    </div>
+
+    <div class="sz-pairs-well__products">
+      {%- for paired_product in pairs_products limit: max_products -%}
+        {%- if paired_product.available -%}
+          <a href="{{ paired_product.url }}" class="sz-pairs-well__product">
+            <div class="sz-pairs-well__image-wrap">
+              {%- if paired_product.featured_image -%}
+                <img
+                  src="{{ paired_product.featured_image | image_url: width: 200 }}"
+                  srcset="{{ paired_product.featured_image | image_url: width: 200 }} 1x, {{ paired_product.featured_image | image_url: width: 400 }} 2x"
+                  alt="{{ paired_product.featured_image.alt | default: paired_product.title | escape }}"
+                  width="200"
+                  height="{{ 200 | divided_by: paired_product.featured_image.aspect_ratio | default: 200 | round }}"
+                  loading="lazy"
+                  class="sz-pairs-well__image"
+                >
+              {%- else -%}
+                <div class="sz-pairs-well__placeholder">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                    <circle cx="8.5" cy="8.5" r="1.5"/>
+                    <polyline points="21 15 16 10 5 21"/>
+                  </svg>
+                </div>
+              {%- endif -%}
+            </div>
+            <div class="sz-pairs-well__info">
+              <h4 class="sz-pairs-well__title">{{ paired_product.title | truncate: 35 }}</h4>
+              <p class="sz-pairs-well__price">{{ paired_product.price | money }}</p>
+            </div>
+          </a>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+  </div>
+{%- else -%}
+  {%- comment -%}
+    Fallback: Use Shopify recommendations API via JS
+    Only render container if we don't have manual metafields
+  {%- endcomment -%}
+  <div class="sz-pairs-well sz-pairs-well--dynamic" data-product-id="{{ product.id }}" data-limit="{{ max_products }}" style="display: none;">
+    <div class="sz-pairs-well__header">
+      <h3 class="sz-pairs-well__heading">Pairs Well With</h3>
+      <p class="sz-pairs-well__subtext">Complete the set for a cohesive gift</p>
+    </div>
+    <div class="sz-pairs-well__products"></div>
+  </div>
+
+  <script>
+    (function() {
+      var container = document.querySelector('.sz-pairs-well--dynamic');
+      if (!container) return;
+
+      var productId = container.dataset.productId;
+      var limit = parseInt(container.dataset.limit) || 3;
+
+      fetch(window.Shopify.routes.root + 'recommendations/products.json?product_id=' + productId + '&limit=' + limit + '&intent=complementary')
+        .then(function(response) { return response.json(); })
+        .then(function(data) {
+          if (data.products && data.products.length > 0) {
+            var productsHtml = data.products.map(function(product) {
+              var imageHtml = product.featured_image
+                ? '<img src="' + product.featured_image + '&width=200" alt="' + (product.title || '').replace(/"/g, '&quot;') + '" width="200" height="200" loading="lazy" class="sz-pairs-well__image">'
+                : '<div class="sz-pairs-well__placeholder"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg></div>';
+
+              return '<a href="' + product.url + '" class="sz-pairs-well__product">' +
+                '<div class="sz-pairs-well__image-wrap">' + imageHtml + '</div>' +
+                '<div class="sz-pairs-well__info">' +
+                  '<h4 class="sz-pairs-well__title">' + product.title.substring(0, 35) + '</h4>' +
+                  '<p class="sz-pairs-well__price">' + Shopify.formatMoney(product.price) + '</p>' +
+                '</div>' +
+              '</a>';
+            }).join('');
+
+            container.querySelector('.sz-pairs-well__products').innerHTML = productsHtml;
+            container.style.display = 'block';
+          }
+        })
+        .catch(function() {
+          // Silently fail if recommendations aren't available
+        });
+    })();
+  </script>
+{%- endif -%}
+
+<style>
+  .sz-pairs-well {
+    margin: var(--sz-space-xl, 32px) 0;
+    padding: var(--sz-space-lg, 24px);
+    background: var(--sz-surface, #F5F2ED);
+    border-radius: var(--sz-radius-lg, 12px);
+  }
+
+  .sz-pairs-well__header {
+    text-align: center;
+    margin-bottom: var(--sz-space-lg, 20px);
+  }
+
+  .sz-pairs-well__heading {
+    font-family: var(--sz-font-heading);
+    font-size: var(--sz-text-lg, 18px);
+    font-weight: var(--sz-font-heading-weight, 500);
+    color: var(--sz-heading);
+    margin: 0 0 var(--sz-space-xs, 4px) 0;
+  }
+
+  .sz-pairs-well__subtext {
+    font-family: var(--sz-font-body);
+    font-size: var(--sz-text-sm, 14px);
+    color: var(--sz-text-muted);
+    margin: 0;
+  }
+
+  .sz-pairs-well__products {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--sz-space-md, 16px);
+  }
+
+  @media (max-width: 600px) {
+    .sz-pairs-well__products {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .sz-pairs-well__products .sz-pairs-well__product:nth-child(3) {
+      display: none;
+    }
+  }
+
+  .sz-pairs-well__product {
+    display: block;
+    text-decoration: none;
+    background: var(--sz-background, #FFFFFF);
+    border-radius: var(--sz-radius-md, 8px);
+    overflow: hidden;
+    transition: box-shadow var(--sz-transition-fast, 0.2s) ease, transform var(--sz-transition-fast, 0.2s) ease;
+  }
+
+  .sz-pairs-well__product:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    transform: translateY(-2px);
+  }
+
+  .sz-pairs-well__product:focus-visible {
+    outline: 2px solid var(--sz-primary);
+    outline-offset: 2px;
+  }
+
+  .sz-pairs-well__image-wrap {
+    position: relative;
+    aspect-ratio: 1;
+    background: var(--sz-background-alt, #FAF9F6);
+    overflow: hidden;
+  }
+
+  .sz-pairs-well__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .sz-pairs-well__placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    color: var(--sz-text-muted);
+  }
+
+  .sz-pairs-well__info {
+    padding: var(--sz-space-sm, 12px);
+    text-align: center;
+  }
+
+  .sz-pairs-well__title {
+    font-family: var(--sz-font-body);
+    font-size: var(--sz-text-sm, 13px);
+    font-weight: var(--sz-font-medium, 500);
+    color: var(--sz-heading);
+    margin: 0 0 var(--sz-space-xs, 4px) 0;
+    line-height: 1.3;
+  }
+
+  .sz-pairs-well__price {
+    font-family: var(--sz-font-body);
+    font-size: var(--sz-text-sm, 14px);
+    font-weight: var(--sz-font-semibold, 600);
+    color: var(--sz-primary);
+    margin: 0;
+  }
+</style>

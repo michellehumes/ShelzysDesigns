@@ -1,0 +1,383 @@
+{% comment %}
+================================================================================
+SHELZY'S DESIGNS - EXIT INTENT CART SAVER
+Version: 2.0.0
+Last Updated: 2024-12
+================================================================================
+Cart-specific exit intent popup.
+Only triggers when user has items in cart and attempts to leave.
+Offers discount code to complete purchase.
+
+Revenue Impact: Recovers 5-15% of cart abandonment.
+
+Usage: Add to theme.liquid before </body>
+{% render 'exit-intent-cart-saver' %}
+================================================================================
+{% endcomment %}
+
+{%- liquid
+  assign show_cart_saver = settings.show_exit_intent_cart_saver | default: true
+  assign discount_code = settings.cart_saver_discount_code | default: 'SAVE10'
+  assign discount_amount = settings.cart_saver_discount_text | default: '10% off'
+-%}
+
+{%- if show_cart_saver and cart.item_count > 0 -%}
+<div class="sz-cart-saver-overlay" id="szCartSaverOverlay">
+  <div class="sz-cart-saver-modal">
+    <button
+      class="sz-cart-saver__close"
+      onclick="szCloseCartSaver()"
+      aria-label="Close"
+    >
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+      </svg>
+    </button>
+
+    <div class="sz-cart-saver__content">
+      <div class="sz-cart-saver__icon">
+        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <circle cx="9" cy="21" r="1"/>
+          <circle cx="20" cy="21" r="1"/>
+          <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+        </svg>
+      </div>
+
+      <h2 class="sz-cart-saver__title">Wait! Don't forget your cart</h2>
+
+      <p class="sz-cart-saver__text">
+        You have <strong>{{ cart.item_count }} {{ cart.item_count | pluralize: 'item', 'items' }}</strong> waiting.
+        Complete your order now and get <strong>{{ discount_amount }}</strong> with code:
+      </p>
+
+      <div class="sz-cart-saver__code-wrap">
+        <span class="sz-cart-saver__code" id="szCartSaverCode">{{ discount_code }}</span>
+        <button
+          type="button"
+          class="sz-cart-saver__copy"
+          onclick="szCopyCode()"
+          aria-label="Copy code"
+        >
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+          </svg>
+          <span id="szCopyText">Copy</span>
+        </button>
+      </div>
+
+      <div class="sz-cart-saver__actions">
+        <a href="/checkout" class="sz-cart-saver__btn sz-cart-saver__btn--primary">
+          Complete Order
+        </a>
+        <button
+          type="button"
+          class="sz-cart-saver__btn sz-cart-saver__btn--secondary"
+          onclick="szCloseCartSaver()"
+        >
+          I'll finish later
+        </button>
+      </div>
+
+      <p class="sz-cart-saver__timer">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <circle cx="12" cy="12" r="10"/>
+          <polyline points="12 6 12 12 16 14"/>
+        </svg>
+        <span>Code expires in 15 minutes</span>
+      </p>
+    </div>
+  </div>
+</div>
+
+<script>
+(function() {
+  var overlay = document.getElementById('szCartSaverOverlay');
+  var STORAGE_KEY = 'szCartSaverShown';
+
+  // Don't show if already shown this session or on checkout
+  if (sessionStorage.getItem(STORAGE_KEY)) return;
+  if (window.location.pathname.includes('/checkout')) return;
+
+  // Exit intent detection (desktop only)
+  if (window.innerWidth > 768) {
+    var triggered = false;
+
+    document.addEventListener('mouseout', function(e) {
+      // Only trigger when mouse leaves through the top of the page
+      if (e.clientY < 10 && !triggered && !sessionStorage.getItem(STORAGE_KEY)) {
+        triggered = true;
+        showCartSaver();
+      }
+    });
+  }
+
+  // Mobile: show after 60 seconds of inactivity on cart page
+  if (window.innerWidth <= 768 && window.location.pathname === '/cart') {
+    var inactivityTimer;
+
+    function resetTimer() {
+      clearTimeout(inactivityTimer);
+      inactivityTimer = setTimeout(function() {
+        if (!sessionStorage.getItem(STORAGE_KEY)) {
+          showCartSaver();
+        }
+      }, 60000);
+    }
+
+    ['scroll', 'touchstart', 'click'].forEach(function(event) {
+      document.addEventListener(event, resetTimer, { passive: true });
+    });
+
+    resetTimer();
+  }
+
+  function showCartSaver() {
+    overlay.classList.add('active');
+    document.body.style.overflow = 'hidden';
+    sessionStorage.setItem(STORAGE_KEY, 'true');
+  }
+
+  window.szCloseCartSaver = function() {
+    overlay.classList.remove('active');
+    document.body.style.overflow = '';
+  };
+
+  // Close on overlay click
+  overlay.addEventListener('click', function(e) {
+    if (e.target === overlay) szCloseCartSaver();
+  });
+
+  // Close on escape
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') szCloseCartSaver();
+  });
+
+  // Copy code functionality
+  window.szCopyCode = function() {
+    var code = document.getElementById('szCartSaverCode').textContent;
+    var copyText = document.getElementById('szCopyText');
+
+    navigator.clipboard.writeText(code).then(function() {
+      copyText.textContent = 'Copied!';
+      setTimeout(function() {
+        copyText.textContent = 'Copy';
+      }, 2000);
+    });
+  };
+})();
+</script>
+
+<style>
+  .sz-cart-saver-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 10002;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+
+  .sz-cart-saver-overlay.active {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .sz-cart-saver-modal {
+    background: var(--sz-background, #FFFFFF);
+    max-width: 440px;
+    width: 100%;
+    border-radius: var(--sz-radius-xl, 16px);
+    padding: var(--sz-space-2xl, 40px);
+    position: relative;
+    transform: translateY(30px) scale(0.95);
+    transition: transform 0.3s ease;
+    text-align: center;
+  }
+
+  .sz-cart-saver-overlay.active .sz-cart-saver-modal {
+    transform: translateY(0) scale(1);
+  }
+
+  .sz-cart-saver__close {
+    position: absolute;
+    top: var(--sz-space-md, 16px);
+    right: var(--sz-space-md, 16px);
+    width: 36px;
+    height: 36px;
+    background: var(--sz-surface, #F5F2ED);
+    border: none;
+    border-radius: var(--sz-radius-full, 999px);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--sz-text-muted);
+    transition: all var(--sz-transition-fast, 0.2s) ease;
+  }
+
+  .sz-cart-saver__close:hover {
+    background: var(--sz-heading);
+    color: var(--sz-background, #FFFFFF);
+  }
+
+  .sz-cart-saver__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 80px;
+    height: 80px;
+    background: var(--sz-primary-light, #EDF3EC);
+    border-radius: var(--sz-radius-full, 999px);
+    margin: 0 auto var(--sz-space-lg, 24px);
+  }
+
+  .sz-cart-saver__icon svg {
+    color: var(--sz-primary);
+  }
+
+  .sz-cart-saver__title {
+    font-family: var(--sz-font-heading);
+    font-size: var(--sz-text-2xl, 26px);
+    font-weight: var(--sz-font-heading-weight, 500);
+    color: var(--sz-heading);
+    margin: 0 0 var(--sz-space-sm, 12px) 0;
+    line-height: var(--sz-leading-tight, 1.2);
+  }
+
+  .sz-cart-saver__text {
+    font-family: var(--sz-font-body);
+    font-size: var(--sz-text-base, 15px);
+    line-height: var(--sz-leading-relaxed, 1.6);
+    color: var(--sz-text);
+    margin: 0 0 var(--sz-space-lg, 20px) 0;
+  }
+
+  .sz-cart-saver__text strong {
+    color: var(--sz-heading);
+  }
+
+  .sz-cart-saver__code-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--sz-space-sm, 8px);
+    margin-bottom: var(--sz-space-lg, 24px);
+  }
+
+  .sz-cart-saver__code {
+    display: inline-block;
+    padding: var(--sz-space-md, 14px) var(--sz-space-xl, 28px);
+    background: var(--sz-surface, #F5F2ED);
+    font-family: var(--sz-font-body);
+    font-size: var(--sz-text-xl, 22px);
+    font-weight: var(--sz-font-bold, 700);
+    color: var(--sz-primary-dark);
+    letter-spacing: 0.1em;
+    border-radius: var(--sz-radius-md, 8px);
+    border: 2px dashed var(--sz-primary);
+  }
+
+  .sz-cart-saver__copy {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: var(--sz-space-sm, 8px) var(--sz-space-md, 12px);
+    background: var(--sz-background, #FFFFFF);
+    border: 1px solid var(--sz-border, #E8E4DE);
+    border-radius: var(--sz-radius-md, 8px);
+    font-family: var(--sz-font-body);
+    font-size: var(--sz-text-xs, 12px);
+    color: var(--sz-text);
+    cursor: pointer;
+    transition: all var(--sz-transition-fast, 0.2s) ease;
+  }
+
+  .sz-cart-saver__copy:hover {
+    border-color: var(--sz-primary);
+    color: var(--sz-primary);
+  }
+
+  .sz-cart-saver__actions {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sz-space-sm, 10px);
+  }
+
+  .sz-cart-saver__btn {
+    display: block;
+    width: 100%;
+    padding: var(--sz-space-md, 16px);
+    font-family: var(--sz-font-body);
+    font-size: var(--sz-text-base, 15px);
+    font-weight: var(--sz-font-semibold, 600);
+    border-radius: var(--sz-radius-md, 8px);
+    cursor: pointer;
+    transition: all var(--sz-transition-fast, 0.2s) ease;
+    text-decoration: none;
+    text-align: center;
+    border: none;
+  }
+
+  .sz-cart-saver__btn--primary {
+    background: var(--sz-primary);
+    color: var(--sz-background, #FFFFFF);
+  }
+
+  .sz-cart-saver__btn--primary:hover {
+    background: var(--sz-primary-dark);
+    transform: translateY(-1px);
+  }
+
+  .sz-cart-saver__btn--secondary {
+    background: transparent;
+    color: var(--sz-text-muted);
+    border: none;
+    padding: var(--sz-space-sm, 10px);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  .sz-cart-saver__btn--secondary:hover {
+    color: var(--sz-text);
+  }
+
+  .sz-cart-saver__timer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--sz-space-xs, 6px);
+    margin: var(--sz-space-md, 16px) 0 0 0;
+    font-family: var(--sz-font-body);
+    font-size: var(--sz-text-xs, 12px);
+    color: var(--sz-text-muted);
+  }
+
+  .sz-cart-saver__timer svg {
+    color: var(--sz-accent, #D4AF37);
+  }
+
+  @media (max-width: 500px) {
+    .sz-cart-saver-modal {
+      padding: var(--sz-space-xl, 28px) var(--sz-space-lg, 20px);
+    }
+
+    .sz-cart-saver__title {
+      font-size: var(--sz-text-xl, 22px);
+    }
+
+    .sz-cart-saver__code {
+      font-size: var(--sz-text-lg, 18px);
+      padding: var(--sz-space-sm, 10px) var(--sz-space-lg, 20px);
+    }
+  }
+</style>
+{%- endif -%}

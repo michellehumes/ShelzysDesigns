@@ -254,6 +254,10 @@ Conversion-optimized product page with:
             </button>
           {%- endif -%}
         </form>
+
+        {%- comment -%} Back In Stock Notification (for sold out items) {%- endcomment -%}
+        {% render 'product-back-in-stock', product: product %}
+
 {% render 'sz-urgency' %}
 {% render 'sz-trust-badges' %}
 
@@ -315,6 +319,15 @@ Conversion-optimized product page with:
       </div>
 
     </div>
+
+    {%- comment -%} Gift Positioning - "Perfect For" {%- endcomment -%}
+    {% render 'product-perfect-for', product: product %}
+
+    {%- comment -%} How Personalization Works {%- endcomment -%}
+    {% render 'product-personalization-steps' %}
+
+    {%- comment -%} Cross-Sell - Pairs Well With {%- endcomment -%}
+    {% render 'product-pairs-well', product: product %}
 
     {%- comment -%} Product FAQ {%- endcomment -%}
     {% render 'shelzys-product-faq' %}
