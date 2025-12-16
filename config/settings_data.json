@@ -9,6 +9,8 @@
  */
 {
   "current": {
+    "logo": "shopify://shop_images/Untitled_7_x_8_in_7_x_6_in.png",
+    "favicon": "shopify://shop_images/12oz-1_1.jpg",
     "color_primary": "#8BAA88",
     "color_primary_dark": "#4E5F4A",
     "color_background": "#FFFFFF",
@@ -16,9 +18,12 @@
     "color_text": "#2B2B2B",
     "color_heading": "#111111",
     "font_size_base": 16,
+    "social_instagram_link": "https://www.instagram.com/shelzysdesigns/",
+    "social_facebook_link": "https://www.facebook.com/ShelzysDesigns/",
+    "social_tiktok_link": "https://www.tiktok.com/@shelzyperkins",
     "free_shipping_threshold": 75,
     "show_free_shipping_bar": true,
-    "show_newsletter_popup": true,
+    "show_newsletter_popup": false,
     "popup_delay": 5,
     "popup_discount_code": "WELCOME10",
     "sections": {
