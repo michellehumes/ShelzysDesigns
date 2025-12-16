@@ -1,23 +1,19 @@
 {%- comment -%}
 ================================================================================
 SHELZY'S DESIGNS - CONVERSION NAVIGATION HEADER
-Version: 3.0.0
+Version: 4.0.0
 Last Updated: 2024-12
 ================================================================================
-Clean, conversion-focused navigation with 5-6 top-level items.
-Optimized for gifting store: Best Sellers first, gift use-cases prominent.
+Exact IA structure per conversion overhaul requirements:
+1. Shop Bottles (dropdown)
+2. Customize Yours (CTA-styled, high priority)
+3. Wedding & Bridal (dropdown)
+4. Corporate & Events (dropdown)
+5. How It Works (dropdown with process + FAQ)
+6. About
 
-Revenue Impact: Reduces navigation friction, guides to high-intent pages.
-
-Top-level structure:
-- Best Sellers (featured, social proof)
-- Shop (products dropdown)
-- Gifts (use-case dropdown)
-- Corporate/Bulk (dropdown)
-- About
-- Help
-
-Usage: {% render 'shelzys-nav-header' %}
+Mobile: "Customize Yours" appears first/sticky CTA
+Touch targets ≥44px, accordion dropdowns, keyboard accessible
 ================================================================================
 {%- endcomment -%}
 
@@ -45,25 +41,15 @@ Usage: {% render 'shelzys-nav-header' %}
     </div>
 
     {%- comment -%} ══════════════════════════════════════════════════════════
-       MAIN NAVIGATION (Desktop) - 5 Items Max
+       MAIN NAVIGATION (Desktop) - 6 Items Exact IA
     ══════════════════════════════════════════════════════════ {%- endcomment -%}
     <nav class="sz-main-nav" id="szMainNav" aria-label="Main navigation">
       <ul class="sz-nav-list" role="menubar">
 
-        {%- comment -%} 1. BEST SELLERS - Featured, Social Proof Path {%- endcomment -%}
-        <li class="sz-nav-item" role="none">
-          <a href="/collections/best-sellers" class="sz-nav-link sz-nav-featured" role="menuitem">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-            </svg>
-            <span>Best Sellers</span>
-          </a>
-        </li>
-
-        {%- comment -%} 2. SHOP - Products Dropdown {%- endcomment -%}
+        {%- comment -%} 1. SHOP BOTTLES - Dropdown {%- endcomment -%}
         <li class="sz-nav-item sz-has-dropdown" role="none">
           <a href="/collections/all" class="sz-nav-link" role="menuitem" aria-haspopup="true" aria-expanded="false">
-            <span>Shop</span>
+            <span>Shop Bottles</span>
             <svg class="sz-nav-chevron" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
               <polyline points="6 9 12 15 18 9"/>
             </svg>
@@ -71,52 +57,92 @@ Usage: {% render 'shelzys-nav-header' %}
           <div class="sz-dropdown" role="menu" aria-label="Shop submenu">
             <div class="sz-dropdown-inner">
               <div class="sz-dropdown-col">
+                <a href="/collections/white-bottles" class="sz-dropdown-link" role="menuitem">
+                  <span>Stainless Steel White Bottles</span>
+                </a>
+                <a href="/collections/personalized-bottles" class="sz-dropdown-link" role="menuitem">
+                  <span>Personalized Name Bottles</span>
+                </a>
                 <a href="/collections/best-sellers" class="sz-dropdown-link sz-dropdown-featured" role="menuitem">
                   <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                     <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
                   </svg>
-                  Best Sellers
+                  <span>Best Sellers</span>
                 </a>
-                <a href="/collections/all" class="sz-dropdown-link" role="menuitem">All Bottles</a>
-                <a href="/collections/bundles" class="sz-dropdown-link" role="menuitem">Bundles & Sets</a>
-                <a href="/collections/new" class="sz-dropdown-link" role="menuitem">New Arrivals</a>
+                <a href="/collections/ready-to-ship" class="sz-dropdown-link" role="menuitem">
+                  <span>Ready-to-Ship</span>
+                </a>
               </div>
             </div>
           </div>
         </li>
 
-        {%- comment -%} 3. GIFTS - Use-Case Dropdown (Money Pages) {%- endcomment -%}
+        {%- comment -%} 2. CUSTOMIZE YOURS - CTA Styled (High Priority) {%- endcomment -%}
         <li class="sz-nav-item sz-has-dropdown" role="none">
-          <a href="/collections/gifts" class="sz-nav-link" role="menuitem" aria-haspopup="true" aria-expanded="false">
-            <span>Gifts</span>
+          <a href="/collections/personalized-bottles" class="sz-nav-link sz-nav-cta" role="menuitem" aria-haspopup="true" aria-expanded="false">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/>
+            </svg>
+            <span>Customize Yours</span>
             <svg class="sz-nav-chevron" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
               <polyline points="6 9 12 15 18 9"/>
             </svg>
           </a>
-          <div class="sz-dropdown sz-dropdown-mega" role="menu" aria-label="Gifts submenu">
+          <div class="sz-dropdown" role="menu" aria-label="Customization options">
             <div class="sz-dropdown-inner">
               <div class="sz-dropdown-col">
-                <span class="sz-dropdown-heading">By Occasion</span>
-                <a href="/collections/bridal-party" class="sz-dropdown-link" role="menuitem">Bridal Party</a>
-                <a href="/collections/bachelorette" class="sz-dropdown-link" role="menuitem">Bachelorette</a>
-                <a href="/collections/birthday" class="sz-dropdown-link" role="menuitem">Birthdays</a>
-                <a href="/collections/holiday" class="sz-dropdown-link" role="menuitem">Holidays</a>
-              </div>
-              <div class="sz-dropdown-col">
-                <span class="sz-dropdown-heading">By Recipient</span>
-                <a href="/collections/bridesmaid" class="sz-dropdown-link" role="menuitem">Bridesmaids</a>
-                <a href="/collections/teachers" class="sz-dropdown-link" role="menuitem">Teachers</a>
-                <a href="/collections/kids" class="sz-dropdown-link" role="menuitem">Kids & Sports</a>
-                <a href="/collections/all" class="sz-dropdown-link" role="menuitem">Personalized Gifts</a>
+                <a href="/collections/personalized-bottles" class="sz-dropdown-link sz-dropdown-featured" role="menuitem">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/>
+                  </svg>
+                  <span>Start Customizing</span>
+                </a>
+                <a href="/pages/fonts" class="sz-dropdown-link" role="menuitem">
+                  <span>Font Options</span>
+                </a>
+                <a href="/pages/colors" class="sz-dropdown-link" role="menuitem">
+                  <span>Color Options</span>
+                </a>
+                <a href="/pages/live-preview" class="sz-dropdown-link" role="menuitem">
+                  <span>Live Preview</span>
+                </a>
               </div>
             </div>
           </div>
         </li>
 
-        {%- comment -%} 4. CORPORATE / BULK - Dropdown {%- endcomment -%}
+        {%- comment -%} 3. WEDDING & BRIDAL - Dropdown {%- endcomment -%}
+        <li class="sz-nav-item sz-has-dropdown" role="none">
+          <a href="/collections/wedding" class="sz-nav-link" role="menuitem" aria-haspopup="true" aria-expanded="false">
+            <span>Wedding & Bridal</span>
+            <svg class="sz-nav-chevron" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <polyline points="6 9 12 15 18 9"/>
+            </svg>
+          </a>
+          <div class="sz-dropdown" role="menu" aria-label="Wedding submenu">
+            <div class="sz-dropdown-inner">
+              <div class="sz-dropdown-col">
+                <a href="/collections/bridal-party" class="sz-dropdown-link" role="menuitem">
+                  <span>Bridal Party Bottles</span>
+                </a>
+                <a href="/collections/wedding-favors" class="sz-dropdown-link" role="menuitem">
+                  <span>Wedding Favors</span>
+                </a>
+                <a href="/collections/bachelorette" class="sz-dropdown-link" role="menuitem">
+                  <span>Bachelorette Gifts</span>
+                </a>
+                <a href="/pages/bulk-orders" class="sz-dropdown-link" role="menuitem">
+                  <span>Bulk Orders</span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </li>
+
+        {%- comment -%} 4. CORPORATE & EVENTS - Dropdown {%- endcomment -%}
         <li class="sz-nav-item sz-has-dropdown" role="none">
           <a href="/pages/bulk-orders" class="sz-nav-link" role="menuitem" aria-haspopup="true" aria-expanded="false">
-            <span>Corporate</span>
+            <span>Corporate & Events</span>
             <svg class="sz-nav-chevron" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
               <polyline points="6 9 12 15 18 9"/>
             </svg>
@@ -124,28 +150,80 @@ Usage: {% render 'shelzys-nav-header' %}
           <div class="sz-dropdown" role="menu" aria-label="Corporate submenu">
             <div class="sz-dropdown-inner">
               <div class="sz-dropdown-col">
-                <a href="/collections/corporate" class="sz-dropdown-link" role="menuitem">Team Gifts</a>
-                <a href="/pages/bulk-orders" class="sz-dropdown-link" role="menuitem">Bulk Orders (10+)</a>
-                <a href="/pages/contact" class="sz-dropdown-link" role="menuitem">Corporate Inquiry</a>
+                <a href="/collections/corporate" class="sz-dropdown-link" role="menuitem">
+                  <span>Corporate Gifting</span>
+                </a>
+                <a href="/collections/team-bottles" class="sz-dropdown-link" role="menuitem">
+                  <span>Team Bottles</span>
+                </a>
+                <a href="/collections/event-bottles" class="sz-dropdown-link" role="menuitem">
+                  <span>Event Bottles</span>
+                </a>
+                <a href="/pages/bulk-orders" class="sz-dropdown-link" role="menuitem">
+                  <span>Bulk Pricing</span>
+                </a>
               </div>
             </div>
           </div>
         </li>
 
-        {%- comment -%} 5. ABOUT {%- endcomment -%}
-        <li class="sz-nav-item" role="none">
-          <a href="/pages/about" class="sz-nav-link" role="menuitem">About</a>
+        {%- comment -%} 5. HOW IT WORKS - Dropdown with Process + FAQ {%- endcomment -%}
+        <li class="sz-nav-item sz-has-dropdown" role="none">
+          <a href="/pages/how-it-works" class="sz-nav-link" role="menuitem" aria-haspopup="true" aria-expanded="false">
+            <span>How It Works</span>
+            <svg class="sz-nav-chevron" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <polyline points="6 9 12 15 18 9"/>
+            </svg>
+          </a>
+          <div class="sz-dropdown sz-dropdown-wide" role="menu" aria-label="How it works submenu">
+            <div class="sz-dropdown-inner sz-dropdown-process">
+              <div class="sz-dropdown-col">
+                <span class="sz-dropdown-heading">The Process</span>
+                <a href="/collections/all" class="sz-dropdown-link sz-dropdown-step" role="menuitem">
+                  <span class="sz-step-num">1</span>
+                  <span>Choose Your Bottle</span>
+                </a>
+                <a href="/pages/personalization" class="sz-dropdown-link sz-dropdown-step" role="menuitem">
+                  <span class="sz-step-num">2</span>
+                  <span>Personalize</span>
+                </a>
+                <a href="/pages/preview" class="sz-dropdown-link sz-dropdown-step" role="menuitem">
+                  <span class="sz-step-num">3</span>
+                  <span>Preview Your Design</span>
+                </a>
+                <a href="/pages/shipping" class="sz-dropdown-link sz-dropdown-step" role="menuitem">
+                  <span class="sz-step-num">4</span>
+                  <span>Shipping & Turnaround</span>
+                </a>
+              </div>
+              <div class="sz-dropdown-col">
+                <span class="sz-dropdown-heading">FAQ</span>
+                <a href="/pages/faq#personalization" class="sz-dropdown-link" role="menuitem">
+                  <span>Personalization FAQ</span>
+                </a>
+                <a href="/pages/faq#shipping" class="sz-dropdown-link" role="menuitem">
+                  <span>Shipping FAQ</span>
+                </a>
+                <a href="/pages/faq#returns" class="sz-dropdown-link" role="menuitem">
+                  <span>Returns & Exchanges</span>
+                </a>
+                <a href="/pages/contact" class="sz-dropdown-link" role="menuitem">
+                  <span>Contact Us</span>
+                </a>
+              </div>
+            </div>
+          </div>
         </li>
 
-        {%- comment -%} 6. HELP/FAQ {%- endcomment -%}
+        {%- comment -%} 6. ABOUT {%- endcomment -%}
         <li class="sz-nav-item" role="none">
-          <a href="/pages/faq" class="sz-nav-link" role="menuitem">Help</a>
+          <a href="/pages/about" class="sz-nav-link" role="menuitem">About</a>
         </li>
 
       </ul>
     </nav>
 
-    {%- comment -%} Header Actions (Search, Account, Cart) {%- endcomment -%}
+    {%- comment -%} Header Actions (Search + Cart) {%- endcomment -%}
     <div class="sz-header-actions">
       <button type="button" class="sz-header-icon sz-search-toggle" aria-label="Search" data-search-toggle>
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
@@ -171,77 +249,87 @@ Usage: {% render 'shelzys-nav-header' %}
 </header>
 
 {%- comment -%} ══════════════════════════════════════════════════════════════
-   MOBILE MENU OVERLAY - Conversion Optimized Order
+   MOBILE MENU - "Customize Yours" CTA First
 ══════════════════════════════════════════════════════════════ {%- endcomment -%}
 <div class="sz-mobile-menu" id="szMobileMenu" aria-hidden="true" role="dialog" aria-label="Mobile navigation">
   <div class="sz-mobile-menu-inner">
 
-    {%- comment -%} Quick Actions - Most Important First {%- endcomment -%}
-    <div class="sz-mobile-quick-actions">
-      <a href="/collections/best-sellers" class="sz-mobile-quick-btn sz-mobile-quick-featured">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-          <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+    {%- comment -%} Customize CTA - First/Prominent {%- endcomment -%}
+    <div class="sz-mobile-cta-section">
+      <a href="/collections/personalized-bottles" class="sz-mobile-cta-btn">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/>
         </svg>
-        Best Sellers
-      </a>
-      <a href="/collections/gifts" class="sz-mobile-quick-btn">
+        <span>Customize Yours</span>
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-          <polyline points="20 12 20 22 4 22 4 12"/><rect x="2" y="7" width="20" height="5"/><line x1="12" y1="22" x2="12" y2="7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/>
+          <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
         </svg>
-        Shop Gifts
       </a>
     </div>
 
     <nav class="sz-mobile-nav" aria-label="Mobile navigation">
 
-      {%- comment -%} Shop Accordion {%- endcomment -%}
+      {%- comment -%} Shop Bottles Accordion {%- endcomment -%}
       <div class="sz-mobile-accordion">
         <button class="sz-mobile-link sz-accordion-toggle" aria-expanded="false" aria-controls="mobileShopMenu">
-          Shop
+          Shop Bottles
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
         </button>
         <div class="sz-accordion-content" id="mobileShopMenu">
-          <a href="/collections/best-sellers" class="sz-mobile-sublink">Best Sellers</a>
-          <a href="/collections/all" class="sz-mobile-sublink">All Bottles</a>
-          <a href="/collections/bundles" class="sz-mobile-sublink">Bundles & Sets</a>
-          <a href="/collections/new" class="sz-mobile-sublink">New Arrivals</a>
+          <a href="/collections/white-bottles" class="sz-mobile-sublink">Stainless Steel White Bottles</a>
+          <a href="/collections/personalized-bottles" class="sz-mobile-sublink">Personalized Name Bottles</a>
+          <a href="/collections/best-sellers" class="sz-mobile-sublink sz-mobile-sublink-featured">Best Sellers</a>
+          <a href="/collections/ready-to-ship" class="sz-mobile-sublink">Ready-to-Ship</a>
         </div>
       </div>
 
-      {%- comment -%} Gifts Accordion {%- endcomment -%}
+      {%- comment -%} Wedding & Bridal Accordion {%- endcomment -%}
       <div class="sz-mobile-accordion">
-        <button class="sz-mobile-link sz-accordion-toggle" aria-expanded="false" aria-controls="mobileGiftsMenu">
-          Gifts by Occasion
+        <button class="sz-mobile-link sz-accordion-toggle" aria-expanded="false" aria-controls="mobileWeddingMenu">
+          Wedding & Bridal
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
         </button>
-        <div class="sz-accordion-content" id="mobileGiftsMenu">
-          <a href="/collections/bridal-party" class="sz-mobile-sublink">Bridal Party</a>
-          <a href="/collections/bachelorette" class="sz-mobile-sublink">Bachelorette</a>
-          <a href="/collections/birthday" class="sz-mobile-sublink">Birthdays</a>
-          <a href="/collections/holiday" class="sz-mobile-sublink">Holidays</a>
-          <a href="/collections/bridesmaid" class="sz-mobile-sublink">Bridesmaids</a>
-          <a href="/collections/teachers" class="sz-mobile-sublink">Teachers</a>
-          <a href="/collections/kids" class="sz-mobile-sublink">Kids & Sports</a>
+        <div class="sz-accordion-content" id="mobileWeddingMenu">
+          <a href="/collections/bridal-party" class="sz-mobile-sublink">Bridal Party Bottles</a>
+          <a href="/collections/wedding-favors" class="sz-mobile-sublink">Wedding Favors</a>
+          <a href="/collections/bachelorette" class="sz-mobile-sublink">Bachelorette Gifts</a>
+          <a href="/pages/bulk-orders" class="sz-mobile-sublink">Bulk Orders</a>
         </div>
       </div>
 
-      {%- comment -%} Corporate Accordion {%- endcomment -%}
+      {%- comment -%} Corporate & Events Accordion {%- endcomment -%}
       <div class="sz-mobile-accordion">
         <button class="sz-mobile-link sz-accordion-toggle" aria-expanded="false" aria-controls="mobileCorporateMenu">
-          Corporate & Bulk
+          Corporate & Events
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
         </button>
         <div class="sz-accordion-content" id="mobileCorporateMenu">
-          <a href="/collections/corporate" class="sz-mobile-sublink">Team Gifts</a>
-          <a href="/pages/bulk-orders" class="sz-mobile-sublink">Bulk Orders (10+)</a>
-          <a href="/pages/contact" class="sz-mobile-sublink">Corporate Inquiry</a>
+          <a href="/collections/corporate" class="sz-mobile-sublink">Corporate Gifting</a>
+          <a href="/collections/team-bottles" class="sz-mobile-sublink">Team Bottles</a>
+          <a href="/collections/event-bottles" class="sz-mobile-sublink">Event Bottles</a>
+          <a href="/pages/bulk-orders" class="sz-mobile-sublink">Bulk Pricing</a>
         </div>
       </div>
 
-      {%- comment -%} Direct Links {%- endcomment -%}
-      <a href="/pages/about" class="sz-mobile-link">About Us</a>
-      <a href="/pages/faq" class="sz-mobile-link">Help & FAQ</a>
-      <a href="/pages/contact" class="sz-mobile-link">Contact</a>
+      {%- comment -%} How It Works Accordion {%- endcomment -%}
+      <div class="sz-mobile-accordion">
+        <button class="sz-mobile-link sz-accordion-toggle" aria-expanded="false" aria-controls="mobileHowItWorksMenu">
+          How It Works
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="sz-accordion-content" id="mobileHowItWorksMenu">
+          <a href="/collections/all" class="sz-mobile-sublink">1. Choose Your Bottle</a>
+          <a href="/pages/personalization" class="sz-mobile-sublink">2. Personalize</a>
+          <a href="/pages/preview" class="sz-mobile-sublink">3. Preview Your Design</a>
+          <a href="/pages/shipping" class="sz-mobile-sublink">4. Shipping & Turnaround</a>
+          <div class="sz-mobile-sublink-divider"></div>
+          <a href="/pages/faq" class="sz-mobile-sublink">FAQ</a>
+          <a href="/pages/contact" class="sz-mobile-sublink">Contact Us</a>
+        </div>
+      </div>
+
+      {%- comment -%} Direct Link {%- endcomment -%}
+      <a href="/pages/about" class="sz-mobile-link">About</a>
 
     </nav>
 
@@ -249,15 +337,15 @@ Usage: {% render 'shelzys-nav-header' %}
     <div class="sz-mobile-trust">
       <div class="sz-mobile-trust-item">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-          <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+          <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>
         </svg>
-        <span>3-5 Day Turnaround</span>
+        <span>Live preview before checkout</span>
       </div>
       <div class="sz-mobile-trust-item">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-          <path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/>
+          <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
         </svg>
-        <span>Free Personalization</span>
+        <span>Made to order • Ships in 3-5 days</span>
       </div>
     </div>
 
@@ -268,9 +356,6 @@ Usage: {% render 'shelzys-nav-header' %}
    STYLES
 ══════════════════════════════════════════════════════════════ {%- endcomment -%}
 <style>
-  /* ─────────────────────────────────────────────────────────
-     HEADER CONTAINER
-  ───────────────────────────────────────────────────────── */
   .sz-header {
     background: var(--sz-background, #FFFFFF);
     border-bottom: 1px solid var(--sz-border, #E8E4DE);
@@ -285,519 +370,261 @@ Usage: {% render 'shelzys-nav-header' %}
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 14px 24px;
-    gap: 24px;
+    padding: 12px 24px;
+    gap: 20px;
   }
 
   @media (max-width: 1024px) {
-    .sz-header-inner {
-      padding: 12px 16px;
-      gap: 12px;
-    }
+    .sz-header-inner { padding: 10px 16px; gap: 12px; }
   }
 
-  /* ─────────────────────────────────────────────────────────
-     LOGO
-  ───────────────────────────────────────────────────────── */
-  .sz-header-logo {
-    flex-shrink: 0;
-  }
-
-  .sz-logo-link {
-    display: block;
-  }
-
-  .sz-logo-img {
-    height: 44px;
-    width: auto;
-    display: block;
-  }
-
+  .sz-header-logo { flex-shrink: 0; }
+  .sz-logo-link { display: block; }
+  .sz-logo-img { height: 40px; width: auto; display: block; }
   .sz-logo-text {
     font-family: var(--sz-font-display, "Playfair Display", Georgia, serif);
-    font-size: 22px;
-    font-weight: 500;
-    color: var(--sz-heading, #1F1F1F);
+    font-size: 20px; font-weight: 500; color: var(--sz-heading, #1F1F1F);
     text-decoration: none;
   }
 
   @media (max-width: 768px) {
-    .sz-logo-img {
-      height: 36px;
-    }
-    .sz-logo-text {
-      font-size: 18px;
-    }
+    .sz-logo-img { height: 34px; }
+    .sz-logo-text { font-size: 18px; }
   }
 
-  /* ─────────────────────────────────────────────────────────
-     MAIN NAVIGATION (Desktop)
-  ───────────────────────────────────────────────────────── */
-  .sz-main-nav {
-    flex: 1;
-    display: flex;
-    justify-content: center;
-  }
-
-  @media (max-width: 1024px) {
-    .sz-main-nav {
-      display: none;
-    }
-  }
+  .sz-main-nav { flex: 1; display: flex; justify-content: center; }
+  @media (max-width: 1024px) { .sz-main-nav { display: none; } }
 
   .sz-nav-list {
-    display: flex;
-    align-items: center;
-    gap: 4px;
-    list-style: none;
-    margin: 0;
-    padding: 0;
+    display: flex; align-items: center; gap: 2px;
+    list-style: none; margin: 0; padding: 0;
   }
 
-  .sz-nav-item {
-    position: relative;
-  }
+  .sz-nav-item { position: relative; }
 
   .sz-nav-link {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    padding: 10px 14px;
+    display: flex; align-items: center; gap: 4px;
+    padding: 10px 12px;
     font-family: var(--sz-font-body, "Inter", sans-serif);
-    font-size: 14px;
-    font-weight: 500;
+    font-size: 14px; font-weight: 500;
     color: var(--sz-text, #1F1F1F);
     text-decoration: none;
     transition: color 0.2s ease;
-    white-space: nowrap;
+    white-space: nowrap; border-radius: 6px;
   }
 
-  .sz-nav-link:hover,
-  .sz-nav-link:focus {
-    color: var(--sz-primary-dark, #4E5F4A);
-  }
+  .sz-nav-link:hover, .sz-nav-link:focus { color: var(--sz-primary-dark, #4E5F4A); }
 
-  .sz-nav-chevron {
-    transition: transform 0.2s ease;
-    flex-shrink: 0;
-  }
-
+  .sz-nav-chevron { transition: transform 0.2s ease; flex-shrink: 0; opacity: 0.7; }
   .sz-nav-item:hover .sz-nav-chevron,
-  .sz-nav-item:focus-within .sz-nav-chevron {
-    transform: rotate(180deg);
-  }
+  .sz-nav-item:focus-within .sz-nav-chevron { transform: rotate(180deg); }
 
-  /* Featured Link (Best Sellers) */
-  .sz-nav-featured {
-    color: var(--sz-primary-dark, #4E5F4A) !important;
-    font-weight: 600 !important;
+  /* CTA Link - "Customize Yours" */
+  .sz-nav-cta {
+    background: var(--sz-primary-dark, #4E5F4A);
+    color: #FFFFFF !important; font-weight: 600;
+    border-radius: 6px; padding: 10px 14px;
   }
-
-  .sz-nav-featured svg {
-    color: var(--sz-accent, #D4AF37);
-    flex-shrink: 0;
+  .sz-nav-cta:hover, .sz-nav-cta:focus {
+    background: var(--sz-primary, #3A4D3A);
+    color: #FFFFFF !important;
   }
+  .sz-nav-cta .sz-nav-chevron { opacity: 0.9; }
 
-  /* ─────────────────────────────────────────────────────────
-     DROPDOWN MENUS
-  ───────────────────────────────────────────────────────── */
+  /* Dropdown Menus */
   .sz-dropdown {
-    position: absolute;
-    top: 100%;
-    left: 50%;
+    position: absolute; top: 100%; left: 50%;
     transform: translateX(-50%) translateY(8px);
     background: var(--sz-background, #FFFFFF);
     border: 1px solid var(--sz-border, #E8E4DE);
-    border-radius: var(--sz-radius-md, 8px);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
-    opacity: 0;
-    visibility: hidden;
+    border-radius: 10px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+    opacity: 0; visibility: hidden;
     transition: opacity 0.2s ease, visibility 0.2s ease, transform 0.2s ease;
-    min-width: 200px;
-    padding: 16px 20px;
-    z-index: 100;
+    min-width: 220px; padding: 16px 20px; z-index: 100;
   }
 
   .sz-nav-item:hover .sz-dropdown,
   .sz-nav-item:focus-within .sz-dropdown {
-    opacity: 1;
-    visibility: visible;
+    opacity: 1; visibility: visible;
     transform: translateX(-50%) translateY(0);
   }
 
-  .sz-dropdown-inner {
-    display: flex;
-    gap: 32px;
-  }
-
-  .sz-dropdown-col {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-    min-width: 140px;
-  }
+  .sz-dropdown-wide { min-width: 400px; }
+  .sz-dropdown-inner { display: flex; gap: 28px; }
+  .sz-dropdown-process { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  .sz-dropdown-col { display: flex; flex-direction: column; gap: 2px; min-width: 150px; }
 
   .sz-dropdown-heading {
     font-family: var(--sz-font-body, "Inter", sans-serif);
-    font-size: 10px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.12em;
+    font-size: 10px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.12em;
     color: var(--sz-text-muted, #7A7A7A);
-    padding-bottom: 8px;
-    margin-bottom: 4px;
+    padding-bottom: 10px; margin-bottom: 6px;
     border-bottom: 1px solid var(--sz-border, #E8E4DE);
   }
 
   .sz-dropdown-link {
-    display: flex;
-    align-items: center;
-    gap: 6px;
+    display: flex; align-items: center; gap: 8px;
     font-family: var(--sz-font-body, "Inter", sans-serif);
-    font-size: 14px;
-    color: var(--sz-text, #1F1F1F);
-    text-decoration: none;
-    padding: 8px 0;
+    font-size: 14px; color: var(--sz-text, #1F1F1F);
+    text-decoration: none; padding: 10px 0;
     transition: color 0.15s ease;
   }
+  .sz-dropdown-link:hover, .sz-dropdown-link:focus { color: var(--sz-primary-dark, #4E5F4A); }
 
-  .sz-dropdown-link:hover,
-  .sz-dropdown-link:focus {
-    color: var(--sz-primary-dark, #4E5F4A);
-  }
+  .sz-dropdown-featured { color: var(--sz-primary-dark, #4E5F4A) !important; font-weight: 600; }
+  .sz-dropdown-featured svg { color: var(--sz-accent, #D4AF37); }
 
-  .sz-dropdown-featured {
-    color: var(--sz-primary-dark, #4E5F4A) !important;
-    font-weight: 600;
-  }
-
-  .sz-dropdown-featured svg {
-    color: var(--sz-accent, #D4AF37);
-  }
-
-  /* Mega Menu (2 columns) */
-  .sz-dropdown-mega {
-    min-width: 360px;
-  }
-
-  .sz-dropdown-mega .sz-dropdown-inner {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 24px;
-  }
-
-  /* ─────────────────────────────────────────────────────────
-     HEADER ACTIONS
-  ───────────────────────────────────────────────────────── */
-  .sz-header-actions {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    flex-shrink: 0;
-  }
-
-  .sz-header-icon {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 40px;
-    height: 40px;
-    color: var(--sz-text, #1F1F1F);
-    background: transparent;
-    border: none;
-    cursor: pointer;
-    transition: color 0.2s ease;
-    text-decoration: none;
-  }
-
-  .sz-header-icon:hover,
-  .sz-header-icon:focus {
-    color: var(--sz-primary-dark, #4E5F4A);
-  }
-
-  .sz-cart-icon {
-    position: relative;
-  }
-
-  .sz-cart-count {
-    position: absolute;
-    top: 2px;
-    right: 2px;
-    min-width: 18px;
-    height: 18px;
-    background: var(--sz-primary-dark, #2C3E2D);
-    color: #FFFFFF;
-    font-family: var(--sz-font-body, "Inter", sans-serif);
-    font-size: 10px;
-    font-weight: 700;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .sz-cart-count:empty,
-  .sz-cart-count[data-cart-count="0"] {
-    display: none;
-  }
-
-  .sz-hide-mobile {
-    display: flex;
-  }
-
-  @media (max-width: 768px) {
-    .sz-hide-mobile {
-      display: none;
-    }
-  }
-
-  /* ─────────────────────────────────────────────────────────
-     MOBILE MENU TOGGLE
-  ───────────────────────────────────────────────────────── */
-  .sz-menu-toggle {
-    display: none;
-    width: 40px;
-    height: 40px;
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 0;
-    order: -1;
-  }
-
-  @media (max-width: 1024px) {
-    .sz-menu-toggle {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-  }
-
-  .sz-hamburger {
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-    width: 22px;
-  }
-
-  .sz-hamburger span {
-    height: 2px;
-    background: var(--sz-text, #1F1F1F);
-    transition: all 0.3s ease;
-    border-radius: 1px;
-  }
-
-  .sz-menu-toggle[aria-expanded="true"] .sz-hamburger span:nth-child(1) {
-    transform: rotate(45deg) translateY(10px);
-  }
-
-  .sz-menu-toggle[aria-expanded="true"] .sz-hamburger span:nth-child(2) {
-    opacity: 0;
-  }
-
-  .sz-menu-toggle[aria-expanded="true"] .sz-hamburger span:nth-child(3) {
-    transform: rotate(-45deg) translateY(-10px);
-  }
-
-  /* ─────────────────────────────────────────────────────────
-     MOBILE MENU OVERLAY
-  ───────────────────────────────────────────────────────── */
-  .sz-mobile-menu {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: var(--sz-background, #FFFFFF);
-    z-index: 999;
-    opacity: 0;
-    visibility: hidden;
-    transition: all 0.3s ease;
-    padding-top: 68px;
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
-  }
-
-  .sz-mobile-menu.sz-open {
-    opacity: 1;
-    visibility: visible;
-  }
-
-  .sz-mobile-menu-inner {
-    padding: 20px;
-    max-width: 480px;
-  }
-
-  /* Mobile Quick Actions (Best Sellers + Gifts) */
-  .sz-mobile-quick-actions {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
-    margin-bottom: 24px;
-  }
-
-  .sz-mobile-quick-btn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    padding: 14px 16px;
-    background: var(--sz-surface, #F5F2ED);
-    border-radius: var(--sz-radius-md, 8px);
-    font-family: var(--sz-font-body, "Inter", sans-serif);
-    font-size: 14px;
-    font-weight: 600;
-    color: var(--sz-text, #1F1F1F);
-    text-decoration: none;
-    transition: all 0.2s ease;
-  }
-
-  .sz-mobile-quick-btn:hover,
-  .sz-mobile-quick-btn:active {
+  .sz-dropdown-step { align-items: flex-start; }
+  .sz-step-num {
+    display: flex; align-items: center; justify-content: center;
+    width: 22px; height: 22px;
     background: var(--sz-primary-light, #EDF3EC);
     color: var(--sz-primary-dark, #4E5F4A);
+    font-size: 11px; font-weight: 700;
+    border-radius: 50%; flex-shrink: 0;
   }
 
-  .sz-mobile-quick-featured {
-    background: var(--sz-primary-dark, #4E5F4A);
-    color: #FFFFFF;
-  }
+  /* Header Actions */
+  .sz-header-actions { display: flex; align-items: center; gap: 4px; flex-shrink: 0; }
 
-  .sz-mobile-quick-featured:hover,
-  .sz-mobile-quick-featured:active {
-    background: var(--sz-primary, #2C3E2D);
-    color: #FFFFFF;
-  }
-
-  .sz-mobile-quick-featured svg {
-    color: var(--sz-accent, #D4AF37);
-  }
-
-  /* Mobile Nav */
-  .sz-mobile-nav {
-    display: flex;
-    flex-direction: column;
-  }
-
-  .sz-mobile-link {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 16px 0;
-    font-family: var(--sz-font-body, "Inter", sans-serif);
-    font-size: 17px;
-    font-weight: 500;
+  .sz-header-icon {
+    display: flex; align-items: center; justify-content: center;
+    width: 44px; height: 44px;
     color: var(--sz-text, #1F1F1F);
-    text-decoration: none;
-    border-bottom: 1px solid var(--sz-border, #E8E4DE);
-    background: none;
-    border-top: none;
-    border-left: none;
-    border-right: none;
-    cursor: pointer;
-    width: 100%;
-    text-align: left;
+    background: transparent; border: none; cursor: pointer;
+    transition: color 0.2s ease; text-decoration: none; border-radius: 8px;
+  }
+  .sz-header-icon:hover, .sz-header-icon:focus {
+    color: var(--sz-primary-dark, #4E5F4A);
+    background: var(--sz-surface, #F5F2ED);
+  }
+
+  .sz-cart-icon { position: relative; }
+  .sz-cart-count {
+    position: absolute; top: 4px; right: 4px;
+    min-width: 18px; height: 18px;
+    background: var(--sz-primary-dark, #2C3E2D); color: #FFFFFF;
+    font-family: var(--sz-font-body, "Inter", sans-serif);
+    font-size: 10px; font-weight: 700; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .sz-cart-count:empty, .sz-cart-count[data-cart-count="0"] { display: none; }
+
+  .sz-hide-mobile { display: flex; }
+  @media (max-width: 768px) { .sz-hide-mobile { display: none; } }
+
+  /* Mobile Menu Toggle */
+  .sz-menu-toggle {
+    display: none; width: 44px; height: 44px;
+    background: none; border: none; cursor: pointer; padding: 0; order: -1;
+  }
+  @media (max-width: 1024px) {
+    .sz-menu-toggle { display: flex; align-items: center; justify-content: center; }
+  }
+
+  .sz-hamburger { display: flex; flex-direction: column; gap: 5px; width: 22px; }
+  .sz-hamburger span { height: 2px; background: var(--sz-text, #1F1F1F); transition: all 0.3s ease; border-radius: 1px; }
+  .sz-menu-toggle[aria-expanded="true"] .sz-hamburger span:nth-child(1) { transform: rotate(45deg) translateY(10px); }
+  .sz-menu-toggle[aria-expanded="true"] .sz-hamburger span:nth-child(2) { opacity: 0; }
+  .sz-menu-toggle[aria-expanded="true"] .sz-hamburger span:nth-child(3) { transform: rotate(-45deg) translateY(-10px); }
+
+  /* Mobile Menu Overlay */
+  .sz-mobile-menu {
+    position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+    background: var(--sz-background, #FFFFFF); z-index: 999;
+    opacity: 0; visibility: hidden;
+    transition: all 0.3s ease; padding-top: 64px;
+    overflow-y: auto; -webkit-overflow-scrolling: touch;
+  }
+  .sz-mobile-menu.sz-open { opacity: 1; visibility: visible; }
+  .sz-mobile-menu-inner { padding: 16px 20px; max-width: 480px; }
+
+  /* Mobile CTA Section */
+  .sz-mobile-cta-section { margin-bottom: 20px; }
+  .sz-mobile-cta-btn {
+    display: flex; align-items: center; justify-content: center; gap: 10px;
+    width: 100%; padding: 16px 20px;
+    background: var(--sz-primary-dark, #4E5F4A); color: #FFFFFF;
+    border-radius: 10px;
+    font-family: var(--sz-font-body, "Inter", sans-serif);
+    font-size: 16px; font-weight: 600;
+    text-decoration: none; transition: background 0.2s ease;
     min-height: 54px;
   }
+  .sz-mobile-cta-btn:hover, .sz-mobile-cta-btn:active { background: var(--sz-primary, #3A4D3A); }
 
-  .sz-mobile-link:active {
-    color: var(--sz-primary-dark, #4E5F4A);
-  }
+  /* Mobile Nav */
+  .sz-mobile-nav { display: flex; flex-direction: column; }
 
-  .sz-accordion-toggle svg {
-    transition: transform 0.2s ease;
-    flex-shrink: 0;
+  .sz-mobile-link {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 16px 0;
+    font-family: var(--sz-font-body, "Inter", sans-serif);
+    font-size: 16px; font-weight: 500;
+    color: var(--sz-text, #1F1F1F); text-decoration: none;
+    border-bottom: 1px solid var(--sz-border, #E8E4DE);
+    background: none; border-top: none; border-left: none; border-right: none;
+    cursor: pointer; width: 100%; text-align: left;
+    min-height: 54px;
   }
+  .sz-mobile-link:active { color: var(--sz-primary-dark, #4E5F4A); }
 
-  .sz-accordion-toggle[aria-expanded="true"] svg {
-    transform: rotate(180deg);
-  }
+  .sz-accordion-toggle svg { transition: transform 0.2s ease; flex-shrink: 0; }
+  .sz-accordion-toggle[aria-expanded="true"] svg { transform: rotate(180deg); }
 
   .sz-accordion-content {
-    display: none;
-    flex-direction: column;
-    padding: 0 0 8px 16px;
+    display: none; flex-direction: column; padding: 0 0 8px 0;
     background: var(--sz-surface, #FAFAFA);
-    margin: 0 -20px;
-    padding-left: 36px;
-    padding-right: 20px;
+    margin: 0 -20px; padding-left: 20px; padding-right: 20px;
   }
-
-  .sz-accordion-content.sz-open {
-    display: flex;
-  }
+  .sz-accordion-content.sz-open { display: flex; }
 
   .sz-mobile-sublink {
-    display: block;
-    padding: 14px 0;
+    display: flex; align-items: center; padding: 14px 16px;
     font-family: var(--sz-font-body, "Inter", sans-serif);
-    font-size: 15px;
-    font-weight: 400;
-    color: var(--sz-text, #4A4A4A);
-    text-decoration: none;
+    font-size: 15px; font-weight: 400;
+    color: var(--sz-text, #4A4A4A); text-decoration: none;
     border-bottom: 1px solid var(--sz-border-light, #F0EDE8);
+    min-height: 48px;
   }
-
-  .sz-mobile-sublink:last-child {
-    border-bottom: none;
-  }
-
-  .sz-mobile-sublink:active {
-    color: var(--sz-primary-dark, #4E5F4A);
-  }
+  .sz-mobile-sublink:last-child { border-bottom: none; }
+  .sz-mobile-sublink:active { color: var(--sz-primary-dark, #4E5F4A); }
+  .sz-mobile-sublink-featured { color: var(--sz-primary-dark, #4E5F4A); font-weight: 600; }
+  .sz-mobile-sublink-divider { height: 1px; background: var(--sz-border, #E8E4DE); margin: 8px 16px; }
 
   /* Mobile Trust Strip */
   .sz-mobile-trust {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    margin-top: 32px;
-    padding-top: 24px;
+    display: flex; flex-direction: column; gap: 12px;
+    margin-top: 28px; padding-top: 20px;
     border-top: 1px solid var(--sz-border, #E8E4DE);
   }
-
   .sz-mobile-trust-item {
-    display: flex;
-    align-items: center;
-    gap: 10px;
+    display: flex; align-items: center; gap: 10px;
     font-family: var(--sz-font-body, "Inter", sans-serif);
-    font-size: 13px;
-    color: var(--sz-text-muted, #7A7A7A);
+    font-size: 13px; color: var(--sz-text-muted, #7A7A7A);
   }
-
-  .sz-mobile-trust-item svg {
-    color: var(--sz-primary, #8BAA88);
-    flex-shrink: 0;
-  }
+  .sz-mobile-trust-item svg { color: var(--sz-primary, #8BAA88); flex-shrink: 0; }
 </style>
 
 {%- comment -%} ══════════════════════════════════════════════════════════════
-   JAVASCRIPT - Minimal, Accessible
+   JAVASCRIPT
 ══════════════════════════════════════════════════════════════ {%- endcomment -%}
 <script>
 (function() {
   'use strict';
-
   var menuToggle = document.getElementById('szMenuToggle');
   var mobileMenu = document.getElementById('szMobileMenu');
   var accordions = document.querySelectorAll('.sz-accordion-toggle');
-  var header = document.getElementById('szHeader');
-
-  // ═══════════════════════════════════════════════════════════
-  // MOBILE MENU
-  // ═══════════════════════════════════════════════════════════
 
   function openMobileMenu() {
     menuToggle.setAttribute('aria-expanded', 'true');
     mobileMenu.classList.add('sz-open');
     mobileMenu.setAttribute('aria-hidden', 'false');
     document.body.style.overflow = 'hidden';
-
-    // Focus first interactive element
     var firstLink = mobileMenu.querySelector('a, button');
-    if (firstLink) {
-      setTimeout(function() { firstLink.focus(); }, 100);
-    }
+    if (firstLink) setTimeout(function() { firstLink.focus(); }, 100);
   }
 
   function closeMobileMenu() {
@@ -811,119 +638,63 @@ Usage: {% render 'shelzys-nav-header' %}
   if (menuToggle && mobileMenu) {
     menuToggle.addEventListener('click', function() {
       var expanded = this.getAttribute('aria-expanded') === 'true';
-      if (expanded) {
-        closeMobileMenu();
-      } else {
-        openMobileMenu();
-      }
+      expanded ? closeMobileMenu() : openMobileMenu();
     });
   }
-
-  // ═══════════════════════════════════════════════════════════
-  // ACCORDION TOGGLES (Mobile)
-  // ═══════════════════════════════════════════════════════════
 
   accordions.forEach(function(toggle) {
     toggle.addEventListener('click', function() {
       var expanded = this.getAttribute('aria-expanded') === 'true';
       var content = this.nextElementSibling;
-
-      // Close all other accordions
       accordions.forEach(function(other) {
         if (other !== toggle) {
           other.setAttribute('aria-expanded', 'false');
-          if (other.nextElementSibling) {
-            other.nextElementSibling.classList.remove('sz-open');
-          }
+          if (other.nextElementSibling) other.nextElementSibling.classList.remove('sz-open');
         }
       });
-
-      // Toggle this one
       this.setAttribute('aria-expanded', !expanded);
-      if (content) {
-        content.classList.toggle('sz-open');
-      }
+      if (content) content.classList.toggle('sz-open');
     });
   });
 
-  // ═══════════════════════════════════════════════════════════
-  // KEYBOARD NAVIGATION
-  // ═══════════════════════════════════════════════════════════
-
   document.addEventListener('keydown', function(e) {
-    // Close mobile menu on Escape
     if (e.key === 'Escape' && mobileMenu && mobileMenu.classList.contains('sz-open')) {
       e.preventDefault();
       closeMobileMenu();
     }
   });
 
-  // ═══════════════════════════════════════════════════════════
-  // DESKTOP DROPDOWN KEYBOARD SUPPORT
-  // ═══════════════════════════════════════════════════════════
-
   var dropdownItems = document.querySelectorAll('.sz-has-dropdown');
-
   dropdownItems.forEach(function(item) {
     var link = item.querySelector('.sz-nav-link');
     var dropdown = item.querySelector('.sz-dropdown');
-
     if (link && dropdown) {
-      // Show dropdown on focus
-      link.addEventListener('focus', function() {
-        link.setAttribute('aria-expanded', 'true');
-      });
-
-      // Hide dropdown when focus leaves the item
+      link.addEventListener('focus', function() { link.setAttribute('aria-expanded', 'true'); });
       item.addEventListener('focusout', function(e) {
-        if (!item.contains(e.relatedTarget)) {
-          link.setAttribute('aria-expanded', 'false');
-        }
+        if (!item.contains(e.relatedTarget)) link.setAttribute('aria-expanded', 'false');
       });
-
-      // Enter key opens dropdown links
       link.addEventListener('keydown', function(e) {
         if (e.key === 'Enter' && dropdown) {
           var firstLink = dropdown.querySelector('a');
-          if (firstLink) {
-            e.preventDefault();
-            firstLink.focus();
-          }
+          if (firstLink) { e.preventDefault(); firstLink.focus(); }
         }
       });
     }
   });
 
-  // ═══════════════════════════════════════════════════════════
-  // CART DRAWER TRIGGER (if available)
-  // ═══════════════════════════════════════════════════════════
-
   var cartToggle = document.querySelector('[data-cart-toggle]');
   if (cartToggle) {
     cartToggle.addEventListener('click', function(e) {
-      // If cart drawer exists, open it instead of navigating
       var cartDrawer = document.getElementById('szCartDrawer') || document.querySelector('[data-cart-drawer]');
       if (cartDrawer && typeof window.ShelzysCart !== 'undefined' && window.ShelzysCart.open) {
-        e.preventDefault();
-        window.ShelzysCart.open();
-      } else {
-        // Fallback: navigate to cart page
-        window.location.href = '/cart';
-      }
+        e.preventDefault(); window.ShelzysCart.open();
+      } else { window.location.href = '/cart'; }
     });
   }
-
-  // ═══════════════════════════════════════════════════════════
-  // SEARCH TOGGLE (optional)
-  // ═══════════════════════════════════════════════════════════
 
   var searchToggle = document.querySelector('[data-search-toggle]');
   if (searchToggle) {
-    searchToggle.addEventListener('click', function() {
-      // Navigate to search page (or implement search modal)
-      window.location.href = '/search';
-    });
+    searchToggle.addEventListener('click', function() { window.location.href = '/search'; });
   }
-
 })();
 </script>

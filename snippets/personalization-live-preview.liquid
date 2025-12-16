@@ -247,6 +247,67 @@ Usage: {% render 'personalization-live-preview', product: product %}
           <span class="sz-personalize__font-preview" style="font-family: 'Inter', sans-serif; font-weight: 300; letter-spacing: 0.15em;">Sarah</span>
           <span class="sz-personalize__font-name">Minimal</span>
         </button>
+
+        {%- comment -%} Additional 5 Fonts {%- endcomment -%}
+        <button
+          type="button"
+          class="sz-personalize__font{% if default_font == 'calligraphy' %} sz-personalize__font--selected{% endif %}"
+          data-font="calligraphy"
+          data-font-family="'Great Vibes', cursive"
+          role="radio"
+          aria-checked="{% if default_font == 'calligraphy' %}true{% else %}false{% endif %}"
+        >
+          <span class="sz-personalize__font-preview" style="font-family: 'Great Vibes', cursive;">Sarah</span>
+          <span class="sz-personalize__font-name">Calligraphy</span>
+        </button>
+
+        <button
+          type="button"
+          class="sz-personalize__font{% if default_font == 'retro' %} sz-personalize__font--selected{% endif %}"
+          data-font="retro"
+          data-font-family="'Bebas Neue', sans-serif"
+          role="radio"
+          aria-checked="{% if default_font == 'retro' %}true{% else %}false{% endif %}"
+        >
+          <span class="sz-personalize__font-preview" style="font-family: 'Bebas Neue', sans-serif; text-transform: uppercase; letter-spacing: 0.05em;">SARAH</span>
+          <span class="sz-personalize__font-name">Retro</span>
+        </button>
+
+        <button
+          type="button"
+          class="sz-personalize__font{% if default_font == 'typewriter' %} sz-personalize__font--selected{% endif %}"
+          data-font="typewriter"
+          data-font-family="'Special Elite', cursive"
+          role="radio"
+          aria-checked="{% if default_font == 'typewriter' %}true{% else %}false{% endif %}"
+        >
+          <span class="sz-personalize__font-preview" style="font-family: 'Special Elite', cursive;">Sarah</span>
+          <span class="sz-personalize__font-name">Typewriter</span>
+        </button>
+
+        <button
+          type="button"
+          class="sz-personalize__font{% if default_font == 'rounded' %} sz-personalize__font--selected{% endif %}"
+          data-font="rounded"
+          data-font-family="'Quicksand', sans-serif"
+          role="radio"
+          aria-checked="{% if default_font == 'rounded' %}true{% else %}false{% endif %}"
+        >
+          <span class="sz-personalize__font-preview" style="font-family: 'Quicksand', sans-serif; font-weight: 500;">Sarah</span>
+          <span class="sz-personalize__font-name">Rounded</span>
+        </button>
+
+        <button
+          type="button"
+          class="sz-personalize__font{% if default_font == 'formal' %} sz-personalize__font--selected{% endif %}"
+          data-font="formal"
+          data-font-family="'Cinzel', serif"
+          role="radio"
+          aria-checked="{% if default_font == 'formal' %}true{% else %}false{% endif %}"
+        >
+          <span class="sz-personalize__font-preview" style="font-family: 'Cinzel', serif; font-weight: 500; letter-spacing: 0.08em;">SARAH</span>
+          <span class="sz-personalize__font-name">Formal</span>
+        </button>
       </div>
 
       <input type="hidden" name="properties[Font Style]" id="szFontInput" value="Elegant Script">
@@ -372,6 +433,147 @@ Usage: {% render 'personalization-live-preview', product: product %}
         >
           <span class="sz-personalize__color-check">✓</span>
         </button>
+
+        {%- comment -%} Additional 10 Font Colors {%- endcomment -%}
+        <button
+          type="button"
+          class="sz-personalize__color{% if default_color == 'burgundy' %} sz-personalize__color--selected{% endif %}"
+          data-color="burgundy"
+          data-color-hex="#722F37"
+          data-color-name="Burgundy"
+          style="background: #722F37;"
+          role="radio"
+          aria-checked="{% if default_color == 'burgundy' %}true{% else %}false{% endif %}"
+          aria-label="Burgundy"
+        >
+          <span class="sz-personalize__color-check">✓</span>
+        </button>
+
+        <button
+          type="button"
+          class="sz-personalize__color{% if default_color == 'coral' %} sz-personalize__color--selected{% endif %}"
+          data-color="coral"
+          data-color-hex="#FF7F50"
+          data-color-name="Coral"
+          style="background: #FF7F50;"
+          role="radio"
+          aria-checked="{% if default_color == 'coral' %}true{% else %}false{% endif %}"
+          aria-label="Coral"
+        >
+          <span class="sz-personalize__color-check">✓</span>
+        </button>
+
+        <button
+          type="button"
+          class="sz-personalize__color{% if default_color == 'teal' %} sz-personalize__color--selected{% endif %}"
+          data-color="teal"
+          data-color-hex="#008080"
+          data-color-name="Teal"
+          style="background: #008080;"
+          role="radio"
+          aria-checked="{% if default_color == 'teal' %}true{% else %}false{% endif %}"
+          aria-label="Teal"
+        >
+          <span class="sz-personalize__color-check">✓</span>
+        </button>
+
+        <button
+          type="button"
+          class="sz-personalize__color{% if default_color == 'purple' %} sz-personalize__color--selected{% endif %}"
+          data-color="purple"
+          data-color-hex="#6B3FA0"
+          data-color-name="Purple"
+          style="background: #6B3FA0;"
+          role="radio"
+          aria-checked="{% if default_color == 'purple' %}true{% else %}false{% endif %}"
+          aria-label="Purple"
+        >
+          <span class="sz-personalize__color-check">✓</span>
+        </button>
+
+        <button
+          type="button"
+          class="sz-personalize__color{% if default_color == 'blush' %} sz-personalize__color--selected{% endif %}"
+          data-color="blush"
+          data-color-hex="#F5C6C6"
+          data-color-name="Blush Pink"
+          style="background: #F5C6C6;"
+          role="radio"
+          aria-checked="{% if default_color == 'blush' %}true{% else %}false{% endif %}"
+          aria-label="Blush Pink"
+        >
+          <span class="sz-personalize__color-check">✓</span>
+        </button>
+
+        <button
+          type="button"
+          class="sz-personalize__color{% if default_color == 'red' %} sz-personalize__color--selected{% endif %}"
+          data-color="red"
+          data-color-hex="#C41E3A"
+          data-color-name="Red"
+          style="background: #C41E3A;"
+          role="radio"
+          aria-checked="{% if default_color == 'red' %}true{% else %}false{% endif %}"
+          aria-label="Red"
+        >
+          <span class="sz-personalize__color-check">✓</span>
+        </button>
+
+        <button
+          type="button"
+          class="sz-personalize__color{% if default_color == 'orange' %} sz-personalize__color--selected{% endif %}"
+          data-color="orange"
+          data-color-hex="#E67E22"
+          data-color-name="Orange"
+          style="background: #E67E22;"
+          role="radio"
+          aria-checked="{% if default_color == 'orange' %}true{% else %}false{% endif %}"
+          aria-label="Orange"
+        >
+          <span class="sz-personalize__color-check">✓</span>
+        </button>
+
+        <button
+          type="button"
+          class="sz-personalize__color{% if default_color == 'forest' %} sz-personalize__color--selected{% endif %}"
+          data-color="forest"
+          data-color-hex="#228B22"
+          data-color-name="Forest Green"
+          style="background: #228B22;"
+          role="radio"
+          aria-checked="{% if default_color == 'forest' %}true{% else %}false{% endif %}"
+          aria-label="Forest Green"
+        >
+          <span class="sz-personalize__color-check">✓</span>
+        </button>
+
+        <button
+          type="button"
+          class="sz-personalize__color{% if default_color == 'lavender' %} sz-personalize__color--selected{% endif %}"
+          data-color="lavender"
+          data-color-hex="#967BB6"
+          data-color-name="Lavender"
+          style="background: #967BB6;"
+          role="radio"
+          aria-checked="{% if default_color == 'lavender' %}true{% else %}false{% endif %}"
+          aria-label="Lavender"
+        >
+          <span class="sz-personalize__color-check">✓</span>
+        </button>
+
+        <button
+          type="button"
+          class="sz-personalize__color{% if default_color == 'champagne' %} sz-personalize__color--selected{% endif %}"
+          data-color="champagne"
+          data-color-hex="#F7E7CE"
+          data-color-name="Champagne"
+          style="background: #F7E7CE; border: 1px solid #E0D8C8;"
+          role="radio"
+          aria-checked="{% if default_color == 'champagne' %}true{% else %}false{% endif %}"
+          aria-label="Champagne"
+        >
+          <span class="sz-personalize__color-check">✓</span>
+        </button>
       </div>
 
       <p class="sz-personalize__color-selected">
@@ -423,7 +625,7 @@ Usage: {% render 'personalization-live-preview', product: product %}
 ═══════════════════════════════════════════════════════════ {%- endcomment -%}
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500&family=Inter:wght@300;400;500&family=Montserrat:wght@400;500;600&family=Oswald:wght@400;600&family=Pinyon+Script&family=Playfair+Display:wght@400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Cinzel:wght@400;500&family=Dancing+Script:wght@400;500&family=Great+Vibes&family=Inter:wght@300;400;500&family=Montserrat:wght@400;500;600&family=Oswald:wght@400;600&family=Pinyon+Script&family=Playfair+Display:wght@400;600&family=Quicksand:wght@400;500&family=Special+Elite&display=swap" rel="stylesheet">
 
 {%- comment -%} ═══════════════════════════════════════════════════════════
    JAVASCRIPT - Personalization Logic
@@ -473,7 +675,12 @@ Usage: {% render 'personalization-live-preview', product: product %}
     'modern': { family: "'Montserrat', sans-serif", label: 'Modern Sans', transform: 'uppercase' },
     'handwritten': { family: "'Dancing Script', cursive", label: 'Handwritten', transform: 'none' },
     'bold': { family: "'Oswald', sans-serif", label: 'Bold Block', transform: 'uppercase' },
-    'minimal': { family: "'Inter', sans-serif", label: 'Minimal', transform: 'none' }
+    'minimal': { family: "'Inter', sans-serif", label: 'Minimal', transform: 'none' },
+    'calligraphy': { family: "'Great Vibes', cursive", label: 'Calligraphy', transform: 'none' },
+    'retro': { family: "'Bebas Neue', sans-serif", label: 'Retro', transform: 'uppercase' },
+    'typewriter': { family: "'Special Elite', cursive", label: 'Typewriter', transform: 'none' },
+    'rounded': { family: "'Quicksand', sans-serif", label: 'Rounded', transform: 'none' },
+    'formal': { family: "'Cinzel', serif", label: 'Formal', transform: 'uppercase' }
   };
 
   // ═══════════════════════════════════════════════════════════
