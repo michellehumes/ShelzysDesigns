@@ -1,132 +1,75 @@
 {%- comment -%}
-  Shelzy's Designs - Shop by Occasion Grid
+  Shelzy's Designs - Shop by Category Grid
 
-  6 occasion cards with images, titles, and descriptions:
-  1. Weddings & Bridesmaids
-  2. Bachelorette Parties
-  3. Kids & Sports
-  4. Corporate Gifts
-  5. Everyday Bottles
-  6. Holiday Bottles
+  3 category cards with images, titles, and descriptions:
+  1. Custom Water Bottles
+  2. Kids Custom Water Bottles
+  3. Holiday Water Bottles
 
   Add to homepage: {% render 'shelzys-occasion-grid' %}
 {%- endcomment -%}
 
-<section class="sz-occasion-grid" id="shop-by-occasion">
-  <div class="sz-occasion-container">
+<section class="sz-category-grid" id="shop-by-category">
+  <div class="sz-category-container">
 
     <header class="sz-section-header">
       <span class="sz-eyebrow">Find Your Perfect Bottle</span>
-      <h2>Shop by Occasion</h2>
+      <h2>Shop by Category</h2>
     </header>
 
-    <div class="sz-occasion-cards">
+    <div class="sz-category-cards">
 
-      {%- comment -%} 1. Weddings & Bridesmaids {%- endcomment -%}
-      <a href="/collections/wedding" class="sz-occasion-card">
-        <div class="sz-occasion-card-image">
-          {%- assign wedding_col = collections['wedding'] -%}
-          {%- if wedding_col.image -%}
-            <img src="{{ wedding_col.image | img_url: '600x800', crop: 'center' }}" alt="Wedding & Bridesmaid bottles" loading="lazy">
+      {%- comment -%} 1. Custom Water Bottles {%- endcomment -%}
+      <a href="/collections/custom-water-bottles" class="sz-category-card sz-card-featured">
+        <div class="sz-category-card-image">
+          {%- assign custom_col = collections['custom-water-bottles'] | default: collections.all -%}
+          {%- if custom_col.image -%}
+            <img src="{{ custom_col.image | img_url: '600x800', crop: 'center' }}" alt="Custom water bottles" loading="lazy">
           {%- else -%}
-            <div class="sz-occasion-placeholder" style="background: linear-gradient(135deg, #F5E6E0 0%, #E8CFC8 100%);"></div>
+            <div class="sz-category-placeholder" style="background: linear-gradient(135deg, #B8C5B0 0%, #8BAA88 100%);"></div>
           {%- endif -%}
-          <div class="sz-occasion-card-overlay"></div>
+          <div class="sz-category-card-overlay"></div>
         </div>
-        <div class="sz-occasion-card-content">
-          <h3>Weddings & Bridesmaids</h3>
-          <p>Beautiful personalized bottles for bridesmaids, bridal parties, and wedding day essentials.</p>
-          <span class="sz-occasion-cta">Shop Wedding →</span>
+        <div class="sz-category-card-content">
+          <h3>Custom Water Bottles</h3>
+          <p>Beautiful personalized bottles with permanent sublimation printing. No vinyl, no peeling — ever.</p>
+          <span class="sz-category-cta">Shop Now →</span>
         </div>
       </a>
 
-      {%- comment -%} 2. Bachelorette Parties {%- endcomment -%}
-      <a href="/collections/bachelorette" class="sz-occasion-card">
-        <div class="sz-occasion-card-image">
-          {%- assign bach_col = collections['bachelorette'] -%}
-          {%- if bach_col.image -%}
-            <img src="{{ bach_col.image | img_url: '600x800', crop: 'center' }}" alt="Bachelorette party bottles" loading="lazy">
-          {%- else -%}
-            <div class="sz-occasion-placeholder" style="background: linear-gradient(135deg, #F5D6D0 0%, #E8B4B8 100%);"></div>
-          {%- endif -%}
-          <div class="sz-occasion-card-overlay"></div>
-        </div>
-        <div class="sz-occasion-card-content">
-          <h3>Bachelorette Parties</h3>
-          <p>Matching bottles for the whole crew. Perfect for beach trips, Nashville, and girls' weekends.</p>
-          <span class="sz-occasion-cta">Shop Bachelorette →</span>
-        </div>
-      </a>
-
-      {%- comment -%} 3. Kids & Sports {%- endcomment -%}
-      <a href="/collections/kids" class="sz-occasion-card">
-        <div class="sz-occasion-card-image">
-          {%- assign kids_col = collections['kids'] | default: collections['sports'] -%}
+      {%- comment -%} 2. Kids Custom Water Bottles {%- endcomment -%}
+      <a href="/collections/kids" class="sz-category-card">
+        <div class="sz-category-card-image">
+          {%- assign kids_col = collections['kids'] -%}
           {%- if kids_col.image -%}
-            <img src="{{ kids_col.image | img_url: '600x800', crop: 'center' }}" alt="Kids and sports bottles" loading="lazy">
+            <img src="{{ kids_col.image | img_url: '600x800', crop: 'center' }}" alt="Kids custom water bottles" loading="lazy">
           {%- else -%}
-            <div class="sz-occasion-placeholder" style="background: linear-gradient(135deg, #B8C5B0 0%, #8BAA88 100%);"></div>
+            <div class="sz-category-placeholder" style="background: linear-gradient(135deg, #7CB9E8 0%, #4A90D9 100%);"></div>
           {%- endif -%}
-          <div class="sz-occasion-card-overlay"></div>
+          <div class="sz-category-card-overlay"></div>
         </div>
-        <div class="sz-occasion-card-content">
-          <h3>Kids & Sports</h3>
-          <p>Durable bottles for dance teams, sports leagues, school, and everyday adventures.</p>
-          <span class="sz-occasion-cta">Shop Kids →</span>
+        <div class="sz-category-card-content">
+          <h3>Kids Custom Water Bottles</h3>
+          <p>Durable bottles for kids, sports teams, dance teams, and everyday adventures.</p>
+          <span class="sz-category-cta">Shop Kids →</span>
         </div>
       </a>
 
-      {%- comment -%} 4. Corporate Gifts {%- endcomment -%}
-      <a href="/pages/bulk-orders" class="sz-occasion-card">
-        <div class="sz-occasion-card-image">
-          {%- assign corp_col = collections['corporate'] | default: collections['bulk'] -%}
-          {%- if corp_col.image -%}
-            <img src="{{ corp_col.image | img_url: '600x800', crop: 'center' }}" alt="Corporate gift bottles" loading="lazy">
-          {%- else -%}
-            <div class="sz-occasion-placeholder" style="background: linear-gradient(135deg, #D4CFC6 0%, #B5A48A 100%);"></div>
-          {%- endif -%}
-          <div class="sz-occasion-card-overlay"></div>
-        </div>
-        <div class="sz-occasion-card-content">
-          <h3>Corporate Gifts</h3>
-          <p>Branded bottles for team retreats, conferences, and employee appreciation. Bulk pricing available.</p>
-          <span class="sz-occasion-cta">Get a Quote →</span>
-        </div>
-      </a>
-
-      {%- comment -%} 5. Everyday Bottles {%- endcomment -%}
-      <a href="/collections/all" class="sz-occasion-card">
-        <div class="sz-occasion-card-image">
-          {%- assign everyday_col = collections['everyday'] | default: collections.all -%}
-          {%- if everyday_col.image -%}
-            <img src="{{ everyday_col.image | img_url: '600x800', crop: 'center' }}" alt="Everyday personalized bottles" loading="lazy">
-          {%- else -%}
-            <div class="sz-occasion-placeholder" style="background: linear-gradient(135deg, #E8DED5 0%, #D4C8BC 100%);"></div>
-          {%- endif -%}
-          <div class="sz-occasion-card-overlay"></div>
-        </div>
-        <div class="sz-occasion-card-content">
-          <h3>Everyday Bottles</h3>
-          <p>Personalized hydration for work, gym, and daily life. A bottle that's uniquely yours.</p>
-          <span class="sz-occasion-cta">Shop All →</span>
-        </div>
-      </a>
-
-      {%- comment -%} 6. Holiday Bottles {%- endcomment -%}
-      <a href="/collections/holiday" class="sz-occasion-card">
-        <div class="sz-occasion-card-image">
+      {%- comment -%} 3. Holiday Water Bottles {%- endcomment -%}
+      <a href="/collections/holiday" class="sz-category-card">
+        <div class="sz-category-card-image">
           {%- assign holiday_col = collections['holiday'] -%}
           {%- if holiday_col.image -%}
-            <img src="{{ holiday_col.image | img_url: '600x800', crop: 'center' }}" alt="Holiday bottles" loading="lazy">
+            <img src="{{ holiday_col.image | img_url: '600x800', crop: 'center' }}" alt="Holiday water bottles" loading="lazy">
           {%- else -%}
-            <div class="sz-occasion-placeholder" style="background: linear-gradient(135deg, #C45B5B 0%, #8B3A3A 100%);"></div>
+            <div class="sz-category-placeholder" style="background: linear-gradient(135deg, #C45B5B 0%, #8B3A3A 100%);"></div>
           {%- endif -%}
-          <div class="sz-occasion-card-overlay"></div>
+          <div class="sz-category-card-overlay"></div>
         </div>
-        <div class="sz-occasion-card-content">
-          <h3>Holiday Bottles</h3>
-          <p>Festive designs for Christmas, New Year's, and seasonal celebrations. Perfect gifts!</p>
-          <span class="sz-occasion-cta">Shop Holiday →</span>
+        <div class="sz-category-card-content">
+          <h3>Holiday Water Bottles</h3>
+          <p>Festive designs for Christmas, holidays, and seasonal celebrations. Perfect gifts!</p>
+          <span class="sz-category-cta">Shop Holiday →</span>
         </div>
       </a>
 
@@ -136,28 +79,28 @@
 </section>
 
 <style>
-  .sz-occasion-grid {
+  .sz-category-grid {
     padding: 100px 20px;
     background: #FFFFFF;
   }
 
   @media (max-width: 768px) {
-    .sz-occasion-grid {
+    .sz-category-grid {
       padding: 60px 16px;
     }
   }
 
-  .sz-occasion-container {
+  .sz-category-container {
     max-width: 1400px;
     margin: 0 auto;
   }
 
-  .sz-occasion-grid .sz-section-header {
+  .sz-category-grid .sz-section-header {
     text-align: center;
     margin-bottom: 60px;
   }
 
-  .sz-occasion-grid .sz-eyebrow {
+  .sz-category-grid .sz-eyebrow {
     display: block;
     font-family: "Montserrat", sans-serif;
     font-size: 11px;
@@ -168,7 +111,7 @@
     margin-bottom: 12px;
   }
 
-  .sz-occasion-grid h2 {
+  .sz-category-grid h2 {
     font-family: "Playfair Display", Georgia, serif;
     font-size: clamp(2rem, 4vw, 3rem);
     font-weight: 500;
@@ -176,29 +119,24 @@
     margin: 0;
   }
 
-  /* ─── Card Grid (3x2 desktop, 2x3 tablet, 1x6 mobile) ─── */
-  .sz-occasion-cards {
+  /* ─── Card Grid (3 cards) ─── */
+  .sz-category-cards {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 24px;
   }
 
   @media (max-width: 1024px) {
-    .sz-occasion-cards {
-      grid-template-columns: repeat(2, 1fr);
+    .sz-category-cards {
+      grid-template-columns: 1fr;
+      max-width: 600px;
+      margin: 0 auto;
       gap: 20px;
     }
   }
 
-  @media (max-width: 600px) {
-    .sz-occasion-cards {
-      grid-template-columns: 1fr;
-      gap: 16px;
-    }
-  }
-
   /* ─── Individual Cards ─── */
-  .sz-occasion-card {
+  .sz-category-card {
     position: relative;
     display: block;
     text-decoration: none;
@@ -208,19 +146,13 @@
   }
 
   @media (max-width: 1024px) {
-    .sz-occasion-card {
-      aspect-ratio: 4/3;
+    .sz-category-card {
+      aspect-ratio: 16/9;
+      min-height: 280px;
     }
   }
 
-  @media (max-width: 600px) {
-    .sz-occasion-card {
-      aspect-ratio: 16/10;
-      min-height: 240px;
-    }
-  }
-
-  .sz-occasion-card-image {
+  .sz-category-card-image {
     position: absolute;
     top: 0;
     left: 0;
@@ -228,20 +160,20 @@
     bottom: 0;
   }
 
-  .sz-occasion-card-image img,
-  .sz-occasion-placeholder {
+  .sz-category-card-image img,
+  .sz-category-placeholder {
     width: 100%;
     height: 100%;
     object-fit: cover;
     transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
-  .sz-occasion-card:hover .sz-occasion-card-image img,
-  .sz-occasion-card:hover .sz-occasion-placeholder {
+  .sz-category-card:hover .sz-category-card-image img,
+  .sz-category-card:hover .sz-category-placeholder {
     transform: scale(1.06);
   }
 
-  .sz-occasion-card-overlay {
+  .sz-category-card-overlay {
     position: absolute;
     top: 0;
     left: 0;
@@ -255,7 +187,7 @@
     transition: background 0.4s ease;
   }
 
-  .sz-occasion-card:hover .sz-occasion-card-overlay {
+  .sz-category-card:hover .sz-category-card-overlay {
     background: linear-gradient(
       180deg,
       rgba(31, 31, 31, 0.1) 0%,
@@ -264,7 +196,7 @@
   }
 
   /* ─── Card Content ─── */
-  .sz-occasion-card-content {
+  .sz-category-card-content {
     position: absolute;
     bottom: 0;
     left: 0;
@@ -275,12 +207,12 @@
   }
 
   @media (max-width: 600px) {
-    .sz-occasion-card-content {
+    .sz-category-card-content {
       padding: 24px;
     }
   }
 
-  .sz-occasion-card-content h3 {
+  .sz-category-card-content h3 {
     font-family: "Playfair Display", Georgia, serif;
     font-size: 26px;
     font-weight: 500;
@@ -289,12 +221,12 @@
   }
 
   @media (max-width: 768px) {
-    .sz-occasion-card-content h3 {
+    .sz-category-card-content h3 {
       font-size: 22px;
     }
   }
 
-  .sz-occasion-card-content p {
+  .sz-category-card-content p {
     font-family: "Inter", sans-serif;
     font-size: 14px;
     font-weight: 400;
@@ -305,13 +237,13 @@
   }
 
   @media (max-width: 600px) {
-    .sz-occasion-card-content p {
+    .sz-category-card-content p {
       font-size: 13px;
       margin-bottom: 12px;
     }
   }
 
-  .sz-occasion-cta {
+  .sz-category-cta {
     display: inline-block;
     font-family: "Inter", sans-serif;
     font-size: 13px;
@@ -322,16 +254,22 @@
     transition: all 0.3s ease;
   }
 
-  .sz-occasion-card:hover .sz-occasion-cta {
+  .sz-category-card:hover .sz-category-cta {
     opacity: 1;
     transform: translateY(0);
   }
 
   /* Mobile: always show CTA */
   @media (max-width: 768px) {
-    .sz-occasion-cta {
+    .sz-category-cta {
       opacity: 1;
       transform: translateY(0);
     }
+  }
+
+  /* Featured card styling */
+  .sz-card-featured .sz-category-card-content h3::before {
+    content: '★ ';
+    color: #D4AF37;
   }
 </style>

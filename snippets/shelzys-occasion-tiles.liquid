@@ -1,11 +1,10 @@
 {%- comment -%}
-  Shelzy's Designs - Shop by Occasion Tiles
+  Shelzy's Designs - Shop by Category Tiles
 
-  4 large clickable tiles for the homepage:
-  1. Weddings & Bridal Parties
-  2. Bachelorette Weekends
-  3. Corporate & Events
-  4. Everyday & Teams
+  3 large clickable tiles for the homepage:
+  1. Custom Water Bottles
+  2. Kids Custom Water Bottles
+  3. Holiday Water Bottles
 
   Add to homepage: {% render 'shelzys-occasion-tiles' %}
 {%- endcomment -%}
@@ -15,80 +14,62 @@
 
     <header class="sz-occasion-header">
       <span class="sz-eyebrow">Find Your Perfect Bottle</span>
-      <h2>Shop by Occasion</h2>
+      <h2>Shop by Category</h2>
     </header>
 
     <div class="sz-occasion-grid">
 
-      {%- comment -%} Tile 1: Weddings & Bridal Parties {%- endcomment -%}
-      <a href="/collections/wedding" class="sz-occasion-tile">
+      {%- comment -%} Tile 1: Custom Water Bottles {%- endcomment -%}
+      <a href="/collections/custom-water-bottles" class="sz-occasion-tile sz-tile-featured">
         <div class="sz-tile-bg">
-          {%- assign wedding_collection = collections['wedding'] | default: collections['bridal'] -%}
-          {%- if wedding_collection.image -%}
-            <img src="{{ wedding_collection.image | img_url: '800x1000', crop: 'center' }}" alt="Wedding bottles" loading="lazy">
-          {%- else -%}
-            <div class="sz-tile-placeholder" style="background: linear-gradient(135deg, #F5E6E0 0%, #E8DED5 100%);"></div>
-          {%- endif -%}
-        </div>
-        <div class="sz-tile-overlay"></div>
-        <div class="sz-tile-content">
-          <h3 class="sz-tile-title">Weddings & Bridal Parties</h3>
-          <p class="sz-tile-subtitle">Bridesmaid proposals, party favors & gifts</p>
-          <span class="sz-tile-cta">Shop Weddings →</span>
-        </div>
-      </a>
-
-      {%- comment -%} Tile 2: Bachelorette Weekends {%- endcomment -%}
-      <a href="/collections/bachelorette" class="sz-occasion-tile">
-        <div class="sz-tile-bg">
-          {%- assign bach_collection = collections['bachelorette'] | default: collections['party'] -%}
-          {%- if bach_collection.image -%}
-            <img src="{{ bach_collection.image | img_url: '800x1000', crop: 'center' }}" alt="Bachelorette bottles" loading="lazy">
-          {%- else -%}
-            <div class="sz-tile-placeholder" style="background: linear-gradient(135deg, #F5D6D0 0%, #E8B4B8 100%);"></div>
-          {%- endif -%}
-        </div>
-        <div class="sz-tile-overlay"></div>
-        <div class="sz-tile-content">
-          <h3 class="sz-tile-title">Bachelorette Weekends</h3>
-          <p class="sz-tile-subtitle">Matching bottles for the whole crew</p>
-          <span class="sz-tile-cta">Shop Bachelorette →</span>
-        </div>
-      </a>
-
-      {%- comment -%} Tile 3: Corporate & Events {%- endcomment -%}
-      <a href="/pages/bulk-orders" class="sz-occasion-tile">
-        <div class="sz-tile-bg">
-          {%- assign corp_collection = collections['corporate'] | default: collections['bulk'] -%}
-          {%- if corp_collection.image -%}
-            <img src="{{ corp_collection.image | img_url: '800x1000', crop: 'center' }}" alt="Corporate bottles" loading="lazy">
-          {%- else -%}
-            <div class="sz-tile-placeholder" style="background: linear-gradient(135deg, #D4CFC6 0%, #B5A48A 100%);"></div>
-          {%- endif -%}
-        </div>
-        <div class="sz-tile-overlay"></div>
-        <div class="sz-tile-content">
-          <h3 class="sz-tile-title">Corporate & Events</h3>
-          <p class="sz-tile-subtitle">Branded bottles for retreats & conferences</p>
-          <span class="sz-tile-cta">Get a Quote →</span>
-        </div>
-      </a>
-
-      {%- comment -%} Tile 4: Everyday & Teams {%- endcomment -%}
-      <a href="/collections/all" class="sz-occasion-tile">
-        <div class="sz-tile-bg">
-          {%- assign team_collection = collections['teams'] | default: collections['sports'] -%}
-          {%- if team_collection.image -%}
-            <img src="{{ team_collection.image | img_url: '800x1000', crop: 'center' }}" alt="Team bottles" loading="lazy">
+          {%- assign custom_collection = collections['custom-water-bottles'] | default: collections.all -%}
+          {%- if custom_collection.image -%}
+            <img src="{{ custom_collection.image | img_url: '800x1000', crop: 'center' }}" alt="Custom water bottles" loading="lazy">
           {%- else -%}
             <div class="sz-tile-placeholder" style="background: linear-gradient(135deg, #B8C5B0 0%, #8BAA88 100%);"></div>
           {%- endif -%}
         </div>
         <div class="sz-tile-overlay"></div>
         <div class="sz-tile-content">
-          <h3 class="sz-tile-title">Everyday & Teams</h3>
-          <p class="sz-tile-subtitle">Sports, dance, gym & daily hydration</p>
-          <span class="sz-tile-cta">Shop All →</span>
+          <h3 class="sz-tile-title">Custom Water Bottles</h3>
+          <p class="sz-tile-subtitle">Personalized bottles with permanent sublimation printing</p>
+          <span class="sz-tile-cta">Shop Now →</span>
+        </div>
+      </a>
+
+      {%- comment -%} Tile 2: Kids Custom Water Bottles {%- endcomment -%}
+      <a href="/collections/kids" class="sz-occasion-tile">
+        <div class="sz-tile-bg">
+          {%- assign kids_collection = collections['kids'] -%}
+          {%- if kids_collection.image -%}
+            <img src="{{ kids_collection.image | img_url: '800x1000', crop: 'center' }}" alt="Kids custom water bottles" loading="lazy">
+          {%- else -%}
+            <div class="sz-tile-placeholder" style="background: linear-gradient(135deg, #7CB9E8 0%, #4A90D9 100%);"></div>
+          {%- endif -%}
+        </div>
+        <div class="sz-tile-overlay"></div>
+        <div class="sz-tile-content">
+          <h3 class="sz-tile-title">Kids Custom Water Bottles</h3>
+          <p class="sz-tile-subtitle">Fun personalized bottles for kids and sports teams</p>
+          <span class="sz-tile-cta">Shop Kids →</span>
+        </div>
+      </a>
+
+      {%- comment -%} Tile 3: Holiday Water Bottles {%- endcomment -%}
+      <a href="/collections/holiday" class="sz-occasion-tile">
+        <div class="sz-tile-bg">
+          {%- assign holiday_collection = collections['holiday'] -%}
+          {%- if holiday_collection.image -%}
+            <img src="{{ holiday_collection.image | img_url: '800x1000', crop: 'center' }}" alt="Holiday water bottles" loading="lazy">
+          {%- else -%}
+            <div class="sz-tile-placeholder" style="background: linear-gradient(135deg, #C45B5B 0%, #8B3A3A 100%);"></div>
+          {%- endif -%}
+        </div>
+        <div class="sz-tile-overlay"></div>
+        <div class="sz-tile-content">
+          <h3 class="sz-tile-title">Holiday Water Bottles</h3>
+          <p class="sz-tile-subtitle">Festive designs for every season and celebration</p>
+          <span class="sz-tile-cta">Shop Holiday →</span>
         </div>
       </a>
 
@@ -140,20 +121,15 @@
 
   .sz-occasion-grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     gap: 20px;
   }
 
   @media (max-width: 1024px) {
     .sz-occasion-grid {
-      grid-template-columns: repeat(2, 1fr);
-    }
-  }
-
-  @media (max-width: 600px) {
-    .sz-occasion-grid {
       grid-template-columns: 1fr;
-      gap: 16px;
+      max-width: 600px;
+      margin: 0 auto;
     }
   }
 
@@ -167,14 +143,8 @@
 
   @media (max-width: 1024px) {
     .sz-occasion-tile {
-      aspect-ratio: 4/3;
-    }
-  }
-
-  @media (max-width: 600px) {
-    .sz-occasion-tile {
       aspect-ratio: 16/9;
-      min-height: 200px;
+      min-height: 280px;
     }
   }
 
@@ -288,5 +258,11 @@
       opacity: 1;
       transform: translateY(0);
     }
+  }
+
+  /* Featured tile (Custom Water Bottles) */
+  .sz-tile-featured .sz-tile-title::before {
+    content: '★ ';
+    color: #D4AF37;
   }
 </style>

@@ -1,0 +1,53 @@
+{%- comment -%}
+  Shelzy's Designs - Collection URL Allowlist Filter
+
+  This snippet provides helpers to filter menu links and ensure only
+  the 3 allowed shopping paths are displayed on the storefront:
+
+  ALLOWED COLLECTIONS:
+  1. /collections/custom-water-bottles (Custom Water Bottles)
+  2. /collections/kids (Kids Custom Water Bottles)
+  3. /collections/holiday (Holiday Water Bottles)
+
+  LEGACY COLLECTIONS (blocked):
+  - /collections/wedding
+  - /collections/bridesmaid
+  - /collections/bridal-party-sets
+  - /collections/bridal-party
+  - /collections/proposal-boxes
+  - /collections/bridesmaid-proposal
+  - /collections/wedding-day
+  - /collections/bachelorette
+  - /collections/bridal-shower
+  - /collections/baby-shower
+  - /collections/corporate-bulk
+  - /collections/best-sellers
+  - /collections/all
+
+  Usage:
+  {% render 'sz-collection-allowlist', link: link, output: 'visible' %}
+  Returns 'true' if link should be shown, 'false' if blocked
+
+  Or use the capture block:
+  {% capture is_allowed %}{% render 'sz-collection-allowlist', url: link.url %}{% endcapture %}
+  {% if is_allowed == 'true' %}...{% endif %}
+{%- endcomment -%}
+
+{%- comment -%} Get the URL to check {%- endcomment -%}
+{%- assign check_url = url | default: link.url | downcase | strip -%}
+
+{%- comment -%} Define legacy/blocked collection paths {%- endcomment -%}
+{%- assign blocked_paths = '/collections/wedding,/collections/bridesmaid,/collections/bridal-party-sets,/collections/bridal-party,/collections/proposal-boxes,/collections/bridesmaid-proposal,/collections/wedding-day,/collections/bachelorette,/collections/bridal-shower,/collections/baby-shower,/collections/corporate-bulk,/collections/best-sellers' | split: ',' -%}
+
+{%- comment -%} Check if URL matches any blocked path {%- endcomment -%}
+{%- assign is_blocked = false -%}
+
+{%- for blocked_path in blocked_paths -%}
+  {%- if check_url contains blocked_path -%}
+    {%- assign is_blocked = true -%}
+    {%- break -%}
+  {%- endif -%}
+{%- endfor -%}
+
+{%- comment -%} Output result {%- endcomment -%}
+{%- if is_blocked -%}false{%- else -%}true{%- endif -%}

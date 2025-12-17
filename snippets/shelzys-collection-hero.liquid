@@ -42,29 +42,17 @@
       {%- else -%}
         {%- comment -%} Fallback descriptions by collection handle {%- endcomment -%}
         {%- case col.handle -%}
-          {%- when 'wedding' or 'bridal' -%}
+          {%- when 'custom-water-bottles' -%}
             <p class="sz-collection-description">
-              Beautiful personalized bottles for bridesmaids, bridal parties, and wedding day essentials. Permanent sublimation printing that lasts.
-            </p>
-          {%- when 'bachelorette' -%}
-            <p class="sz-collection-description">
-              Matching bottles for the whole crew! Perfect for beach trips, Nashville weekends, and girls' getaways.
+              Beautiful personalized bottles with permanent sublimation printing. No vinyl, no peeling — ever.
             </p>
           {%- when 'kids' or 'sports' -%}
             <p class="sz-collection-description">
-              Durable, personalized bottles for dance teams, sports leagues, school, and everyday adventures.
+              Durable, personalized bottles for kids, dance teams, sports leagues, school, and everyday adventures.
             </p>
           {%- when 'holiday' -%}
             <p class="sz-collection-description">
-              Festive personalized bottles for Christmas, New Year's, and seasonal celebrations. Durable, gift-ready, and designed to be used all year.
-            </p>
-          {%- when 'best-sellers' -%}
-            <p class="sz-collection-description">
-              Our most-loved bottles, chosen by hundreds of happy customers. Start here for the favorites!
-            </p>
-          {%- when 'all' -%}
-            <p class="sz-collection-description">
-              Browse all personalized bottles. Filter by occasion, size, or style to find your perfect match.
+              Festive personalized bottles for Christmas, holidays, and seasonal celebrations. Perfect gifts!
             </p>
           {%- else -%}
             <p class="sz-collection-description">
@@ -76,18 +64,15 @@
   </div>
 </section>
 
-{%- comment -%} Quick Category Links (for All Products collection) {%- endcomment -%}
-{%- if col.handle == 'all' -%}
+{%- comment -%} Quick Category Links (for custom-water-bottles or all collections) {%- endcomment -%}
+{%- if col.handle == 'all' or col.handle == 'custom-water-bottles' -%}
 <div class="sz-collection-quicklinks">
   <div class="sz-quicklinks-container">
-    <span class="sz-quicklinks-label">Quick filters:</span>
+    <span class="sz-quicklinks-label">Shop by category:</span>
     <div class="sz-quicklinks-list">
-      <a href="/collections/wedding" class="sz-quicklink">Wedding</a>
-      <a href="/collections/bachelorette" class="sz-quicklink">Bachelorette</a>
-      <a href="/collections/kids" class="sz-quicklink">Kids</a>
-      <a href="/pages/bulk-orders" class="sz-quicklink">Corporate</a>
-      <a href="/collections/holiday" class="sz-quicklink">Holiday</a>
-      <a href="/collections/best-sellers" class="sz-quicklink">Best Sellers</a>
+      <a href="/collections/custom-water-bottles" class="sz-quicklink">Custom Water Bottles</a>
+      <a href="/collections/kids" class="sz-quicklink">Kids Custom Water Bottles</a>
+      <a href="/collections/holiday" class="sz-quicklink">Holiday Water Bottles</a>
     </div>
   </div>
 </div>

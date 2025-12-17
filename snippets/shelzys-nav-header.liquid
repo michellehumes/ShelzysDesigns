@@ -3,8 +3,7 @@
 
   Features:
   - Logo left, cart right
-  - Simplified nav: Shop All, Weddings & Bridesmaids, Kids & Sports, Corporate, Holiday, FAQ
-  - Mega menu dropdowns
+  - Simplified nav: 3 categories only (Custom Water Bottles, Kids, Holiday)
   - Mobile hamburger menu
 
   Add to theme.liquid after announcement bar or replace header section:
@@ -34,91 +33,42 @@
       </a>
     </div>
 
-    {%- comment -%} Main Navigation {%- endcomment -%}
+    {%- comment -%} Main Navigation - 3 Categories Only {%- endcomment -%}
     <nav class="sz-main-nav" id="szMainNav" aria-label="Main navigation">
       <ul class="sz-nav-list">
 
-        {%- comment -%} Best Sellers - Social Proof Path {%- endcomment -%}
+        {%- comment -%} Custom Water Bottles - Primary Category {%- endcomment -%}
         <li class="sz-nav-item">
-          <a href="/collections/best-sellers" class="sz-nav-link sz-nav-featured">
+          <a href="/collections/custom-water-bottles" class="sz-nav-link sz-nav-featured">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style="margin-right: 4px;">
               <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
             </svg>
-            Best Sellers
+            Custom Water Bottles
           </a>
         </li>
 
-        {%- comment -%} Shop by Occasion - Mega Menu {%- endcomment -%}
-        <li class="sz-nav-item sz-has-dropdown">
-          <a href="/collections/all" class="sz-nav-link">
-            Shop by Occasion
-            <svg class="sz-nav-chevron" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <polyline points="6 9 12 15 18 9"/>
-            </svg>
-          </a>
-          <div class="sz-dropdown sz-dropdown-mega">
-            <div class="sz-dropdown-inner">
-              <div class="sz-dropdown-col">
-                <span class="sz-dropdown-heading">Wedding & Bridal</span>
-                <a href="/collections/wedding" class="sz-dropdown-link">All Wedding Bottles</a>
-                <a href="/collections/bridesmaid" class="sz-dropdown-link">Bridesmaid Bottles</a>
-                <a href="/collections/bridal-party" class="sz-dropdown-link">Bridal Party Sets</a>
-                <a href="/collections/bridesmaid-proposal" class="sz-dropdown-link">Bridesmaid Proposal Boxes</a>
-                <a href="/collections/wedding-day" class="sz-dropdown-link">Wedding Day Bottles</a>
-              </div>
-              <div class="sz-dropdown-col">
-                <span class="sz-dropdown-heading">Celebrations</span>
-                <a href="/collections/bachelorette" class="sz-dropdown-link">Bachelorette Party</a>
-                <a href="/collections/bridal-shower" class="sz-dropdown-link">Bridal Shower</a>
-                <a href="/collections/baby-shower" class="sz-dropdown-link">Baby Shower</a>
-                <a href="/collections/birthday" class="sz-dropdown-link">Birthday</a>
-                <a href="/collections/holiday" class="sz-dropdown-link">Holiday & Seasonal</a>
-              </div>
-              <div class="sz-dropdown-col">
-                <span class="sz-dropdown-heading">More</span>
-                <a href="/collections/kids" class="sz-dropdown-link">Kids & Sports</a>
-                <a href="/collections/all" class="sz-dropdown-link">Shop All</a>
-                <a href="/pages/bulk-orders" class="sz-dropdown-link">Corporate & Bulk</a>
-                <a href="/pages/faq" class="sz-dropdown-link">FAQ</a>
-              </div>
-            </div>
-          </div>
-        </li>
-
-        {%- comment -%} Kids & Sports {%- endcomment -%}
-        <li class="sz-nav-item sz-has-dropdown">
+        {%- comment -%} Kids Custom Water Bottles {%- endcomment -%}
+        <li class="sz-nav-item">
           <a href="/collections/kids" class="sz-nav-link">
-            Kids & Sports
-            <svg class="sz-nav-chevron" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <polyline points="6 9 12 15 18 9"/>
-            </svg>
+            Kids Custom Water Bottles
           </a>
-          <div class="sz-dropdown">
-            <div class="sz-dropdown-inner">
-              <div class="sz-dropdown-col">
-                <span class="sz-dropdown-heading">Shop Kids</span>
-                <a href="/collections/kids" class="sz-dropdown-link">All Kids Bottles</a>
-                <a href="/collections/sports" class="sz-dropdown-link">Sports Teams</a>
-                <a href="/collections/dance" class="sz-dropdown-link">Dance & Cheer</a>
-                <a href="/collections/school" class="sz-dropdown-link">Back to School</a>
-              </div>
-            </div>
-          </div>
         </li>
 
-        {%- comment -%} Corporate {%- endcomment -%}
+        {%- comment -%} Holiday Water Bottles {%- endcomment -%}
         <li class="sz-nav-item">
-          <a href="/pages/bulk-orders" class="sz-nav-link">Corporate</a>
-        </li>
-
-        {%- comment -%} Holiday {%- endcomment -%}
-        <li class="sz-nav-item">
-          <a href="/collections/holiday" class="sz-nav-link">Holiday</a>
+          <a href="/collections/holiday" class="sz-nav-link">
+            Holiday Water Bottles
+          </a>
         </li>
 
         {%- comment -%} FAQ {%- endcomment -%}
         <li class="sz-nav-item">
           <a href="/pages/faq" class="sz-nav-link">FAQ</a>
+        </li>
+
+        {%- comment -%} Contact {%- endcomment -%}
+        <li class="sz-nav-item">
+          <a href="/pages/contact" class="sz-nav-link">Contact</a>
         </li>
 
       </ul>
@@ -153,56 +103,26 @@
 <div class="sz-mobile-menu" id="szMobileMenu" aria-hidden="true">
   <div class="sz-mobile-menu-inner">
     <nav class="sz-mobile-nav" aria-label="Mobile navigation">
-      <a href="/collections/best-sellers" class="sz-mobile-link sz-mobile-featured">
+
+      {%- comment -%} Custom Water Bottles {%- endcomment -%}
+      <a href="/collections/custom-water-bottles" class="sz-mobile-link sz-mobile-featured">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="margin-right: 6px;">
           <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
         </svg>
-        Best Sellers
+        Custom Water Bottles
       </a>
 
-      <div class="sz-mobile-accordion">
-        <button class="sz-mobile-link sz-accordion-toggle" aria-expanded="false">
-          Wedding & Bridal
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
-        </button>
-        <div class="sz-accordion-content">
-          <a href="/collections/wedding" class="sz-mobile-sublink">All Wedding Bottles</a>
-          <a href="/collections/bridesmaid" class="sz-mobile-sublink">Bridesmaid Bottles</a>
-          <a href="/collections/bridal-party" class="sz-mobile-sublink">Bridal Party Sets</a>
-          <a href="/collections/bridesmaid-proposal" class="sz-mobile-sublink">Proposal Boxes</a>
-          <a href="/collections/wedding-day" class="sz-mobile-sublink">Wedding Day</a>
-        </div>
-      </div>
+      {%- comment -%} Kids Custom Water Bottles {%- endcomment -%}
+      <a href="/collections/kids" class="sz-mobile-link">
+        Kids Custom Water Bottles
+      </a>
 
-      <div class="sz-mobile-accordion">
-        <button class="sz-mobile-link sz-accordion-toggle" aria-expanded="false">
-          Celebrations
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
-        </button>
-        <div class="sz-accordion-content">
-          <a href="/collections/bachelorette" class="sz-mobile-sublink">Bachelorette Party</a>
-          <a href="/collections/bridal-shower" class="sz-mobile-sublink">Bridal Shower</a>
-          <a href="/collections/baby-shower" class="sz-mobile-sublink">Baby Shower</a>
-          <a href="/collections/birthday" class="sz-mobile-sublink">Birthday</a>
-          <a href="/collections/holiday" class="sz-mobile-sublink">Holiday & Seasonal</a>
-        </div>
-      </div>
+      {%- comment -%} Holiday Water Bottles {%- endcomment -%}
+      <a href="/collections/holiday" class="sz-mobile-link">
+        Holiday Water Bottles
+      </a>
 
-      <a href="/collections/all" class="sz-mobile-link">Shop All</a>
-
-      <div class="sz-mobile-accordion">
-        <button class="sz-mobile-link sz-accordion-toggle" aria-expanded="false">
-          Kids & Sports
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
-        </button>
-        <div class="sz-accordion-content">
-          <a href="/collections/kids" class="sz-mobile-sublink">All Kids Bottles</a>
-          <a href="/collections/sports" class="sz-mobile-sublink">Sports Teams</a>
-          <a href="/collections/dance" class="sz-mobile-sublink">Dance & Cheer</a>
-        </div>
-      </div>
-
-      <a href="/pages/bulk-orders" class="sz-mobile-link">Corporate & Bulk</a>
+      {%- comment -%} Utility Links {%- endcomment -%}
       <a href="/pages/faq" class="sz-mobile-link">FAQ</a>
       <a href="/pages/about" class="sz-mobile-link">About</a>
       <a href="/pages/contact" class="sz-mobile-link">Contact</a>
@@ -314,73 +234,7 @@
     color: #4E5F4A;
   }
 
-  .sz-nav-chevron {
-    transition: transform 0.2s ease;
-  }
-
-  .sz-nav-item:hover .sz-nav-chevron {
-    transform: rotate(180deg);
-  }
-
-  /* ═══════════════════════════════════════════════════════════════════
-     DROPDOWN MENUS
-     ═══════════════════════════════════════════════════════════════════ */
-  .sz-dropdown {
-    position: absolute;
-    top: 100%;
-    left: 50%;
-    transform: translateX(-50%) translateY(10px);
-    background: #FFFFFF;
-    border: 1px solid #E8E4DE;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
-    opacity: 0;
-    visibility: hidden;
-    transition: all 0.25s ease;
-    min-width: 400px;
-    padding: 24px;
-  }
-
-  .sz-nav-item:hover .sz-dropdown {
-    opacity: 1;
-    visibility: visible;
-    transform: translateX(-50%) translateY(0);
-  }
-
-  .sz-dropdown-inner {
-    display: flex;
-    gap: 40px;
-  }
-
-  .sz-dropdown-col {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-  }
-
-  .sz-dropdown-heading {
-    font-family: "Inter", sans-serif;
-    font-size: 11px;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: #7A7A7A;
-    margin-bottom: 8px;
-  }
-
-  .sz-dropdown-link {
-    font-family: "Inter", sans-serif;
-    font-size: 14px;
-    color: #1F1F1F;
-    text-decoration: none;
-    padding: 6px 0;
-    transition: color 0.2s ease;
-  }
-
-  .sz-dropdown-link:hover {
-    color: #4E5F4A;
-  }
-
-  /* Featured Nav Link (Best Sellers) */
+  /* Featured Nav Link (Custom Water Bottles) */
   .sz-nav-featured {
     color: #4E5F4A !important;
     font-weight: 600 !important;
@@ -388,17 +242,6 @@
 
   .sz-nav-featured svg {
     color: #D4AF37;
-  }
-
-  /* Mega Menu Styling */
-  .sz-dropdown-mega {
-    min-width: 600px;
-  }
-
-  .sz-dropdown-mega .sz-dropdown-inner {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 32px;
   }
 
   /* ═══════════════════════════════════════════════════════════════════
@@ -565,38 +408,6 @@
     color: #4E5F4A;
   }
 
-  .sz-accordion-toggle svg {
-    transition: transform 0.2s ease;
-  }
-
-  .sz-accordion-toggle[aria-expanded="true"] svg {
-    transform: rotate(180deg);
-  }
-
-  .sz-accordion-content {
-    display: none;
-    padding-left: 16px;
-  }
-
-  .sz-accordion-content.sz-open {
-    display: flex;
-    flex-direction: column;
-  }
-
-  .sz-mobile-sublink {
-    display: block;
-    padding: 12px 0;
-    font-family: "Inter", sans-serif;
-    font-size: 15px;
-    color: #4A4A4A;
-    text-decoration: none;
-    border-bottom: 1px solid #F5F2ED;
-  }
-
-  .sz-mobile-sublink:hover {
-    color: #4E5F4A;
-  }
-
   /* Mobile Featured Link */
   .sz-mobile-featured {
     color: #4E5F4A !important;
@@ -613,34 +424,12 @@
 (function() {
   var menuToggle = document.getElementById('szMenuToggle');
   var mobileMenu = document.getElementById('szMobileMenu');
-  var accordions = document.querySelectorAll('.sz-accordion-toggle');
-  var focusableSelector = 'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
-  var firstFocusable = null;
-  var lastFocusable = null;
-
-  function updateFocusableElements() {
-    var focusables = mobileMenu.querySelectorAll(focusableSelector);
-    // Filter to only visible elements
-    var visibleFocusables = Array.prototype.filter.call(focusables, function(el) {
-      return el.offsetParent !== null && getComputedStyle(el).visibility !== 'hidden';
-    });
-    firstFocusable = visibleFocusables[0];
-    lastFocusable = visibleFocusables[visibleFocusables.length - 1];
-  }
 
   function openMenu() {
     menuToggle.setAttribute('aria-expanded', 'true');
     mobileMenu.classList.add('sz-open');
     mobileMenu.setAttribute('aria-hidden', 'false');
     document.body.style.overflow = 'hidden';
-
-    // Update focusable elements and set focus
-    updateFocusableElements();
-    if (firstFocusable) {
-      setTimeout(function() {
-        firstFocusable.focus();
-      }, 100);
-    }
   }
 
   function closeMenu() {
@@ -648,8 +437,6 @@
     mobileMenu.classList.remove('sz-open');
     mobileMenu.setAttribute('aria-hidden', 'true');
     document.body.style.overflow = '';
-
-    // Return focus to toggle button
     menuToggle.focus();
   }
 
@@ -663,60 +450,20 @@
     }
   });
 
-  // Accordion toggles
-  accordions.forEach(function(toggle) {
-    toggle.addEventListener('click', function() {
-      var expanded = this.getAttribute('aria-expanded') === 'true';
-      this.setAttribute('aria-expanded', !expanded);
-      this.nextElementSibling.classList.toggle('sz-open');
-
-      // Update focusable elements after accordion state changes
-      setTimeout(updateFocusableElements, 50);
-    });
-  });
-
-  // Keyboard navigation and focus trap
+  // Keyboard navigation
   document.addEventListener('keydown', function(e) {
     if (!mobileMenu.classList.contains('sz-open')) return;
-
-    // Close menu on escape
     if (e.key === 'Escape') {
       e.preventDefault();
       closeMenu();
-      return;
-    }
-
-    // Focus trap with Tab key
-    if (e.key === 'Tab') {
-      updateFocusableElements();
-
-      if (e.shiftKey) {
-        // Shift + Tab: if on first element, go to last
-        if (document.activeElement === firstFocusable || document.activeElement === mobileMenu) {
-          e.preventDefault();
-          if (lastFocusable) lastFocusable.focus();
-        }
-      } else {
-        // Tab: if on last element, go to first
-        if (document.activeElement === lastFocusable) {
-          e.preventDefault();
-          if (firstFocusable) firstFocusable.focus();
-        }
-      }
     }
   });
 
-  // Close menu when clicking outside (on overlay area if visible)
+  // Close menu when clicking outside
   mobileMenu.addEventListener('click', function(e) {
     if (e.target === mobileMenu) {
       closeMenu();
     }
   });
-
-  // Update cart count trigger to open cart drawer instead of navigating
-  var cartIcon = document.querySelector('.sz-cart-icon');
-  if (cartIcon && typeof window.ShelzysCart !== 'undefined') {
-    cartIcon.setAttribute('data-cart-trigger', '');
-  }
 })();
 </script>
