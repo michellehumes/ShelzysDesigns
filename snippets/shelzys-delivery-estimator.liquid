@@ -16,14 +16,15 @@
 
 {%- liquid
   assign p_tags = product.tags | join: ',' | downcase
-  assign is_wedding = false
+  assign show_event_calculator = false
   assign is_bulk = false
 
-  if p_tags contains 'wedding' or p_tags contains 'bridal' or p_tags contains 'bridesmaid' or p_tags contains 'bachelorette'
-    assign is_wedding = true
+  # Show event calculator for holiday items or by request
+  if p_tags contains 'holiday' or p_tags contains 'christmas' or p_tags contains 'event'
+    assign show_event_calculator = true
   endif
 
-  if p_tags contains 'bulk' or p_tags contains 'corporate'
+  if p_tags contains 'bulk'
     assign is_bulk = true
   endif
 -%}
@@ -87,7 +88,7 @@
   </div>
 
   {%- comment -%} Event Date Calculator {%- endcomment -%}
-  {%- if is_wedding -%}
+  {%- if show_event_calculator -%}
   <div class="sz-event-calculator">
     <label class="sz-event-label" for="szEventDate">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -117,7 +118,7 @@
   </div>
 
   {%- comment -%} Quantity Discount Hint {%- endcomment -%}
-  {%- if is_wedding or is_bulk -%}
+  {%- if is_bulk -%}
   <div class="sz-bulk-hint">
     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
       <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>

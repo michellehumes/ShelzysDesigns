@@ -11,7 +11,7 @@
       <img src="{{ section.settings.hero_image | img_url: 'master' }}" alt="{{ section.settings.hero_image.alt | default: 'Luxury personalized water bottles' }}" loading="eager">
     {% else %}
       {%- comment -%} Fallback to collection image or placeholder {%- endcomment -%}
-      {% assign hero_collection = collections['best-sellers'] | default: collections.all %}
+      {% assign hero_collection = collections['custom-water-bottles'] | default: collections.all %}
       {% if hero_collection.image %}
         <img src="{{ hero_collection.image | img_url: 'master' }}" alt="Shelzy's Designs water bottles" loading="eager">
       {% else %}
@@ -24,15 +24,15 @@
 
   <div class="sz-hero-premium-content">
     <div class="sz-hero-premium-text">
-      <h1>Luxury Personalized Water Bottles for Weddings & Events</h1>
+      <h1>Luxury Personalized Water Bottles</h1>
 
       <p class="sz-hero-premium-subtitle">
         Permanent sublimation printing that never peels. Fast turnaround.
       </p>
 
       <div class="sz-hero-premium-ctas">
-        <a href="/collections/wedding" class="sz-btn sz-btn-primary">Shop Bridal Bottles</a>
-        <a href="/collections/best-sellers" class="sz-btn sz-btn-outline">Shop Best Sellers</a>
+        <a href="/collections/custom-water-bottles" class="sz-btn sz-btn-primary">Shop Custom Bottles</a>
+        <a href="/collections/kids" class="sz-btn sz-btn-outline">Shop Kids Bottles</a>
       </div>
     </div>
   </div>

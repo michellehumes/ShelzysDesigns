@@ -59,14 +59,12 @@
             </a>
 
             {%- comment -%} Related Collection Link {%- endcomment -%}
-            {%- if article.tags contains 'wedding' or article.title contains 'Wedding' or article.title contains 'Bride' -%}
-              <a href="/collections/wedding" class="sz-blog-card-collection">Shop Wedding Collection →</a>
-            {%- elsif article.tags contains 'bachelorette' or article.title contains 'Bachelorette' -%}
-              <a href="/collections/bachelorette" class="sz-blog-card-collection">Shop Bachelorette Collection →</a>
-            {%- elsif article.tags contains 'corporate' or article.title contains 'Corporate' -%}
-              <a href="/pages/bulk-orders" class="sz-blog-card-collection">Get Corporate Quote →</a>
+            {%- if article.tags contains 'kids' or article.title contains 'Kids' -%}
+              <a href="/collections/kids" class="sz-blog-card-collection">Shop Kids Collection →</a>
+            {%- elsif article.tags contains 'holiday' or article.title contains 'Holiday' or article.title contains 'Christmas' -%}
+              <a href="/collections/holiday" class="sz-blog-card-collection">Shop Holiday Collection →</a>
             {%- else -%}
-              <a href="/collections/all" class="sz-blog-card-collection">Shop All Bottles →</a>
+              <a href="/collections/custom-water-bottles" class="sz-blog-card-collection">Shop All Bottles →</a>
             {%- endif -%}
           </article>
         {%- endfor -%}
@@ -75,29 +73,29 @@
         <article class="sz-blog-card sz-blog-card-placeholder-card">
           <div class="sz-blog-card-image">
             <div class="sz-blog-card-placeholder" style="background: linear-gradient(135deg, #F5E6E0 0%, #E8DED5 100%);"></div>
-            <span class="sz-blog-card-tag">Wedding Tips</span>
+            <span class="sz-blog-card-tag">Gift Ideas</span>
           </div>
           <div class="sz-blog-card-content">
             <time class="sz-blog-card-date">Coming Soon</time>
-            <h3 class="sz-blog-card-title">10 Ways to Personalize Your Wedding Party Gifts</h3>
-            <p class="sz-blog-card-excerpt">Discover creative ideas to make your bridesmaid and groomsmen gifts truly special...</p>
+            <h3 class="sz-blog-card-title">10 Ways to Personalize Your Perfect Gift</h3>
+            <p class="sz-blog-card-excerpt">Discover creative ideas to make personalized water bottles truly special gifts...</p>
             <span class="sz-blog-card-read">Read More →</span>
           </div>
-          <a href="/collections/wedding" class="sz-blog-card-collection">Shop Wedding Collection →</a>
+          <a href="/collections/custom-water-bottles" class="sz-blog-card-collection">Shop Custom Bottles →</a>
         </article>
 
         <article class="sz-blog-card sz-blog-card-placeholder-card">
           <div class="sz-blog-card-image">
             <div class="sz-blog-card-placeholder" style="background: linear-gradient(135deg, #F5D6D0 0%, #E8B4B8 100%);"></div>
-            <span class="sz-blog-card-tag">Party Planning</span>
+            <span class="sz-blog-card-tag">Kids</span>
           </div>
           <div class="sz-blog-card-content">
             <time class="sz-blog-card-date">Coming Soon</time>
-            <h3 class="sz-blog-card-title">The Ultimate Bachelorette Weekend Packing List</h3>
-            <p class="sz-blog-card-excerpt">Everything you need for the perfect girls' trip, from matching bottles to party essentials...</p>
+            <h3 class="sz-blog-card-title">Fun Personalized Bottles for Kids' Activities</h3>
+            <p class="sz-blog-card-excerpt">Keep kids hydrated in style with custom bottles perfect for sports, dance, and school...</p>
             <span class="sz-blog-card-read">Read More →</span>
           </div>
-          <a href="/collections/bachelorette" class="sz-blog-card-collection">Shop Bachelorette Collection →</a>
+          <a href="/collections/kids" class="sz-blog-card-collection">Shop Kids Collection →</a>
         </article>
       {%- endif -%}
     </div>

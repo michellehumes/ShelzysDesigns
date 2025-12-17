@@ -21,25 +21,15 @@
 <div class="sz-product-benefits">
   <ul class="sz-benefits-list">
     {%- comment -%} Determine "Perfect for" text based on tags/collection {%- endcomment -%}
-    {%- if p_tags contains 'wedding' or p_tags contains 'bridal' or p_tags contains 'bridesmaid' -%}
-      <li>
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
-        <span>Perfect for: Bridesmaids, Bridal Parties, Wedding Day</span>
-      </li>
-    {%- elsif p_tags contains 'bachelorette' -%}
-      <li>
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
-        <span>Perfect for: Bachelorette Trips, Girls' Weekends</span>
-      </li>
-    {%- elsif p_tags contains 'kids' or p_tags contains 'sports' or p_tags contains 'dance' -%}
+    {%- if p_tags contains 'kids' or p_tags contains 'sports' or p_tags contains 'dance' -%}
       <li>
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
         <span>Perfect for: Kids Teams, Dance, Sports, School</span>
       </li>
-    {%- elsif p_tags contains 'corporate' or p_tags contains 'bulk' -%}
+    {%- elsif p_tags contains 'holiday' or p_tags contains 'christmas' or p_tags contains 'seasonal' -%}
       <li>
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
-        <span>Perfect for: Corporate Events, Team Gifts, Retreats</span>
+        <span>Perfect for: Holiday Gifts, Stocking Stuffers, Celebrations</span>
       </li>
     {%- else -%}
       <li>
@@ -91,18 +81,15 @@
 
 {%- liquid
   # Determine related collection based on tags
-  if p_tags contains 'wedding' or p_tags contains 'bridal'
-    assign related_collection = collections['wedding']
-    assign cross_sell_title = 'Complete Your Bridal Look'
-  elsif p_tags contains 'bachelorette'
-    assign related_collection = collections['bachelorette']
-    assign cross_sell_title = 'More for the Crew'
-  elsif p_tags contains 'kids' or p_tags contains 'sports'
+  if p_tags contains 'kids' or p_tags contains 'sports' or p_tags contains 'dance'
     assign related_collection = collections['kids']
     assign cross_sell_title = 'More for Kids & Teams'
+  elsif p_tags contains 'holiday' or p_tags contains 'christmas' or p_tags contains 'seasonal'
+    assign related_collection = collections['holiday']
+    assign cross_sell_title = 'More Holiday Favorites'
   else
-    assign related_collection = collections['best-sellers']
-    assign cross_sell_title = 'Pair It With'
+    assign related_collection = collections['custom-water-bottles']
+    assign cross_sell_title = 'You May Also Like'
   endif
 -%}
 

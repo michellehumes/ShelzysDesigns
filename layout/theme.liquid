@@ -59,7 +59,7 @@ Use sections and snippets for customization.
 </head>
 
 <body class="template-{{ template.name | handle }}{% if template.suffix %} template-{{ template.name }}-{{ template.suffix | handle }}{% endif %}">
-  {%- comment -%} Announcement Bars {%- endcomment -%}
+  {%- comment -%} Announcement Bar (single instance) {%- endcomment -%}
   {% render 'sz-announcement-bar' %}
   {% render 'sz-social-proof-banner' %}
 
@@ -69,10 +69,7 @@ Use sections and snippets for customization.
   {%- comment -%} Centralized Settings {%- endcomment -%}
   {% render 'shelzys-settings' %}
 
-  {%- comment -%} Announcement Bar {%- endcomment -%}
-  {% render 'shelzys-announcement-bar' %}
-
-  {%- comment -%} Free Shipping Progress Bar {%- endcomment -%}
+  {%- comment -%} Free Shipping Progress Bar (single instance) {%- endcomment -%}
   {% render 'shelzys-free-shipping-bar' %}
 
   {%- comment -%} Header Navigation {%- endcomment -%}
@@ -121,8 +118,7 @@ Use sections and snippets for customization.
     }
   </style>
 
-  {%- comment -%} Additional Snippets {%- endcomment -%}
-  {% render 'sz-free-shipping-bar' %}
+  {%- comment -%} Email Popup {%- endcomment -%}
   {% render 'sz-email-popup' %}
 </body>
 </html>
