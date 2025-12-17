@@ -6,15 +6,15 @@
         "height": 90,
         "mobile_height": 75,
         "overlay_opacity": 35,
-        "badge_text": "Wedding Season 2024",
+        "badge_text": "Premium Custom Bottles",
         "badge_icon": "sparkle",
-        "heading": "Personalized Bottles for Life's Special Moments",
+        "heading": "Personalized Water Bottles for Every Moment",
         "subheading": "Handcrafted with permanent sublimation printing. No vinyl, no peeling — just beautiful, lasting designs that celebrate your story.",
         "content_position": "center",
-        "button_label": "Shop Best Sellers",
-        "button_link": "/collections/best-sellers",
-        "button_label_2": "View Collections",
-        "button_link_2": "/collections/all",
+        "button_label": "Shop Custom Water Bottles",
+        "button_link": "/collections/custom-water-bottles",
+        "button_label_2": "View All Collections",
+        "button_link_2": "/collections/custom-water-bottles",
         "show_trust_badges": true,
         "show_scroll_indicator": true
       }
@@ -22,62 +22,52 @@
     "category-showcase": {
       "type": "category-showcase",
       "blocks": {
-        "cat-wedding": {
+        "cat-custom": {
           "type": "category",
           "settings": {
-            "title": "Wedding & Bridal",
-            "description": "For your special day",
-            "link": "/collections/wedding",
-            "icon": "heart",
-            "placeholder_color": "#D4AF37"
-          }
-        },
-        "cat-bachelorette": {
-          "type": "category",
-          "settings": {
-            "title": "Bachelorette",
-            "description": "Celebrate in style",
-            "link": "/collections/bachelorette",
-            "icon": "sparkles",
-            "placeholder_color": "#E8A4C4"
+            "title": "Custom Water Bottles",
+            "description": "Personalized for you",
+            "link": "/collections/custom-water-bottles",
+            "icon": "star",
+            "placeholder_color": "#8BAA88"
           }
         },
         "cat-kids": {
           "type": "category",
           "settings": {
-            "title": "Kids & Sports",
-            "description": "For the little ones",
+            "title": "Kids Custom Water Bottles",
+            "description": "Fun designs for little ones",
             "link": "/collections/kids",
-            "icon": "star",
+            "icon": "heart",
             "placeholder_color": "#7CB9E8"
           }
         },
-        "cat-corporate": {
+        "cat-holiday": {
           "type": "category",
           "settings": {
-            "title": "Corporate & Bulk",
-            "description": "Orders of 10+",
-            "link": "/pages/bulk-orders",
-            "icon": "users",
-            "placeholder_color": "#4E5F4A"
+            "title": "Holiday Water Bottles",
+            "description": "Festive seasonal designs",
+            "link": "/collections/holiday",
+            "icon": "sparkles",
+            "placeholder_color": "#C45B5B"
           }
         }
       },
-      "block_order": ["cat-wedding", "cat-bachelorette", "cat-kids", "cat-corporate"],
+      "block_order": ["cat-custom", "cat-kids", "cat-holiday"],
       "settings": {
         "subheading": "Shop by Category",
         "heading": "Find Your Perfect Bottle",
         "background_color": "#FFFFFF"
       }
     },
-    "featured-collection-bestsellers": {
+    "featured-collection-custom": {
       "type": "featured-collection",
       "settings": {
-        "collection": "best-sellers",
+        "collection": "custom-water-bottles",
         "products_to_show": 8,
         "columns": "4",
         "subheading": "Customer Favorites",
-        "heading": "Best Sellers",
+        "heading": "Custom Water Bottles",
         "description": "The personalized bottles our customers can't stop raving about",
         "header_alignment": "center",
         "show_secondary_image": true,
@@ -87,7 +77,7 @@
         "show_quick_add": true,
         "text_alignment": "left",
         "show_view_all": true,
-        "view_all_text": "View All Best Sellers",
+        "view_all_text": "View All Custom Bottles",
         "button_color": "#2C3E2D",
         "button_text_color": "#FFFFFF",
         "background_color": "#F5F2ED",
@@ -118,63 +108,15 @@
         "padding_bottom": 80
       }
     },
-    "bundle-showcase": {
-      "type": "bundle-showcase",
-      "blocks": {
-        "bundle-1": {
-          "type": "bundle",
-          "settings": {
-            "title": "Bride + 4 Bridesmaids",
-            "includes": "1 Bride bottle + 4 Bridesmaid bottles, all personalized with names",
-            "original_price": "138",
-            "price": "120",
-            "savings": "13%",
-            "link": "/collections/bridal-party"
-          }
-        },
-        "bundle-2": {
-          "type": "bundle",
-          "settings": {
-            "title": "Bride + 6 Bridesmaids",
-            "includes": "1 Bride bottle + 6 Bridesmaid bottles, matching designs",
-            "original_price": "188",
-            "price": "165",
-            "savings": "12%",
-            "featured": true,
-            "link": "/collections/bridal-party"
-          }
-        },
-        "bundle-3": {
-          "type": "bundle",
-          "settings": {
-            "title": "Full Party (Bride + 8)",
-            "includes": "1 Bride bottle + 8 Bridesmaid bottles for the complete party",
-            "original_price": "234",
-            "price": "200",
-            "savings": "15%",
-            "note": "Best value!",
-            "link": "/collections/bridal-party"
-          }
-        }
-      },
-      "block_order": ["bundle-1", "bundle-2", "bundle-3"],
-      "settings": {
-        "subheading": "Save More Together",
-        "heading": "Bridal Party Bundles",
-        "description": "Get coordinating bottles for your entire bridal party and save up to 15%. Each bundle includes personalized bottles that match perfectly.",
-        "show_custom_cta": true,
-        "custom_link": "/pages/contact"
-      }
-    },
-    "featured-collection-wedding": {
+    "featured-collection-kids": {
       "type": "featured-collection",
       "settings": {
-        "collection": "wedding",
+        "collection": "kids",
         "products_to_show": 4,
         "columns": "4",
-        "subheading": "For Your Big Day",
-        "heading": "Wedding Collection",
-        "description": "Beautiful personalized bottles for brides, bridesmaids, and the whole wedding party",
+        "subheading": "For Little Ones",
+        "heading": "Kids Custom Water Bottles",
+        "description": "Durable personalized bottles for kids, sports teams, and everyday adventures",
         "header_alignment": "center",
         "show_secondary_image": true,
         "show_badges": true,
@@ -183,7 +125,7 @@
         "show_quick_add": true,
         "text_alignment": "left",
         "show_view_all": true,
-        "view_all_text": "Shop All Wedding",
+        "view_all_text": "Shop All Kids Bottles",
         "button_color": "#2C3E2D",
         "button_text_color": "#FFFFFF",
         "background_color": "#FFF8F6",
@@ -200,10 +142,10 @@
           "type": "testimonial",
           "settings": {
             "rating": 5,
-            "title": "Perfect for My Wedding!",
-            "quote": "These bottles were a huge hit at our wedding! The quality is amazing and the personalization was exactly what we wanted. All my bridesmaids loved them and they still use them daily!",
+            "title": "Absolutely Love My Bottle!",
+            "quote": "The quality is amazing and the personalization was exactly what I wanted. I still use it daily and it looks brand new!",
             "author_name": "Sarah M.",
-            "author_title": "Bride, June 2024"
+            "author_title": "Verified Customer"
           }
         },
         "testimonial-2": {
@@ -241,75 +183,31 @@
         "padding_bottom": 80
       }
     },
-    "image-gallery": {
-      "type": "image-gallery",
-      "blocks": {
-        "img-1": {
-          "type": "image",
-          "settings": {
-            "caption": "Wedding Party Bottles",
-            "link": "/collections/wedding",
-            "size": "large"
-          }
-        },
-        "img-2": {
-          "type": "image",
-          "settings": {
-            "caption": "Bridesmaid Gifts",
-            "link": "/collections/bridesmaid",
-            "size": "normal"
-          }
-        },
-        "img-3": {
-          "type": "image",
-          "settings": {
-            "caption": "Bachelorette Party",
-            "link": "/collections/bachelorette",
-            "size": "normal"
-          }
-        },
-        "img-4": {
-          "type": "image",
-          "settings": {
-            "caption": "Kids Collection",
-            "link": "/collections/kids",
-            "size": "normal"
-          }
-        },
-        "img-5": {
-          "type": "image",
-          "settings": {
-            "caption": "Corporate Gifts",
-            "link": "/pages/bulk-orders",
-            "size": "normal"
-          }
-        },
-        "img-6": {
-          "type": "image",
-          "settings": {
-            "caption": "Holiday Designs",
-            "link": "/collections/holiday",
-            "size": "normal"
-          }
-        },
-        "img-7": {
-          "type": "image",
-          "settings": {
-            "caption": "Custom Designs",
-            "link": "/collections/all",
-            "size": "normal"
-          }
-        }
-      },
-      "block_order": ["img-1", "img-2", "img-3", "img-4", "img-5", "img-6", "img-7"],
+    "featured-collection-holiday": {
+      "type": "featured-collection",
       "settings": {
-        "subheading": "Follow Our Journey",
-        "heading": "See Our Work in Action",
-        "instagram_handle": "shelzysdesigns",
+        "collection": "holiday",
+        "products_to_show": 4,
+        "columns": "4",
+        "subheading": "Seasonal Favorites",
+        "heading": "Holiday Water Bottles",
+        "description": "Festive designs for every celebration and season",
+        "header_alignment": "center",
+        "show_secondary_image": true,
+        "show_badges": true,
+        "show_vendor": false,
+        "show_rating": true,
+        "show_quick_add": true,
+        "text_alignment": "left",
+        "show_view_all": true,
+        "view_all_text": "Shop All Holiday Bottles",
+        "button_color": "#2C3E2D",
+        "button_text_color": "#FFFFFF",
         "background_color": "#F5F2ED",
-        "show_cta": true,
-        "cta_text": "Follow Us on Instagram",
-        "cta_link": "https://instagram.com/shelzysdesigns"
+        "text_color": "#1F1F1F",
+        "accent_color": "#4E5F4A",
+        "padding_top": 80,
+        "padding_bottom": 80
       }
     },
     "rich-text": {
@@ -344,8 +242,8 @@
         "button": {
           "type": "button",
           "settings": {
-            "label": "Start Shopping",
-            "link": "/collections/all",
+            "label": "Shop Custom Water Bottles",
+            "link": "/collections/custom-water-bottles",
             "style": "primary"
           }
         }
@@ -368,12 +266,11 @@
   "order": [
     "hero-banner",
     "category-showcase",
-    "featured-collection-bestsellers",
-    "bundle-showcase",
+    "featured-collection-custom",
     "image-with-text",
-    "featured-collection-wedding",
+    "featured-collection-kids",
     "testimonials",
-    "image-gallery",
+    "featured-collection-holiday",
     "rich-text"
   ]
 }

@@ -1,6 +1,7 @@
 {%- comment -%}
   Shelzy's Designs - 404 Error Section
   Shopify 2.0 section for custom branded 404 page
+  Updated to show only 3 shopping paths for revenue recovery
 {%- endcomment -%}
 
 <div class="sz-error-page">
@@ -37,21 +38,34 @@
         </form>
       </div>
 
-      {%- comment -%} Helpful Links {%- endcomment -%}
-      <div class="sz-error-links">
-        <p class="sz-error-links-heading">Here are some helpful links:</p>
-        <ul class="sz-error-nav">
-          <li><a href="/">Go to Homepage</a></li>
-          <li><a href="/collections/all">Browse All Products</a></li>
-          <li><a href="/collections/best-sellers">Shop Best Sellers</a></li>
-          <li><a href="/pages/contact">Contact Us</a></li>
-        </ul>
+      {%- comment -%} Primary CTA - Shop Custom Water Bottles {%- endcomment -%}
+      <div class="sz-error-cta-primary">
+        <a href="/collections/custom-water-bottles" class="sz-btn sz-btn-primary sz-btn-large">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" style="margin-right: 8px;">
+            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+          </svg>
+          Shop Custom Water Bottles
+        </a>
       </div>
 
-      {%- comment -%} CTA Buttons {%- endcomment -%}
-      <div class="sz-error-cta">
-        <a href="/" class="sz-btn sz-btn-primary">Back to Home</a>
-        <a href="/collections/all" class="sz-btn sz-btn-secondary">Shop All Products</a>
+      {%- comment -%} Secondary CTAs - Kids & Holiday {%- endcomment -%}
+      <div class="sz-error-cta-secondary">
+        <a href="/collections/kids" class="sz-btn sz-btn-secondary">
+          Shop Kids Bottles
+        </a>
+        <a href="/collections/holiday" class="sz-btn sz-btn-secondary">
+          Shop Holiday Bottles
+        </a>
+      </div>
+
+      {%- comment -%} Helpful Links {%- endcomment -%}
+      <div class="sz-error-links">
+        <p class="sz-error-links-heading">Or try these helpful links:</p>
+        <ul class="sz-error-nav">
+          <li><a href="/">Go to Homepage</a></li>
+          <li><a href="/pages/faq">FAQ</a></li>
+          <li><a href="/pages/contact">Contact Us</a></li>
+        </ul>
       </div>
     </div>
 
@@ -60,7 +74,7 @@
       <div class="sz-error-featured">
         <h2 class="sz-error-featured-title">{{ section.settings.products_heading }}</h2>
         <div class="sz-error-products">
-          {%- assign featured_products = collections['best-sellers'].products | default: collections.all.products -%}
+          {%- assign featured_products = collections['custom-water-bottles'].products | default: collections.all.products -%}
           {%- for product in featured_products limit: section.settings.products_count -%}
             <div class="sz-error-product-card">
               <a href="{{ product.url }}" class="sz-error-product-link">
@@ -166,6 +180,60 @@
     background: var(--sz-primary-dark, #4E5F4A);
   }
 
+  /* CTA Buttons */
+  .sz-error-cta-primary {
+    margin-bottom: var(--sz-space-lg, 24px);
+  }
+
+  .sz-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px 32px;
+    font-family: var(--sz-font-body, 'Inter', sans-serif);
+    font-size: 16px;
+    font-weight: 600;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+    cursor: pointer;
+  }
+
+  .sz-btn-primary {
+    background: var(--sz-primary-dark, #4E5F4A);
+    color: #FFFFFF;
+    border: 2px solid var(--sz-primary-dark, #4E5F4A);
+  }
+
+  .sz-btn-primary:hover {
+    background: #3A473A;
+    border-color: #3A473A;
+  }
+
+  .sz-btn-large {
+    padding: 18px 40px;
+    font-size: 18px;
+  }
+
+  .sz-btn-secondary {
+    background: transparent;
+    color: var(--sz-primary-dark, #4E5F4A);
+    border: 2px solid var(--sz-primary-dark, #4E5F4A);
+  }
+
+  .sz-btn-secondary:hover {
+    background: var(--sz-primary-dark, #4E5F4A);
+    color: #FFFFFF;
+  }
+
+  .sz-error-cta-secondary {
+    display: flex;
+    justify-content: center;
+    gap: var(--sz-space-md, 16px);
+    flex-wrap: wrap;
+    margin-bottom: var(--sz-space-xl, 32px);
+  }
+
   .sz-error-links {
     margin-bottom: var(--sz-space-xl, 32px);
   }
@@ -202,13 +270,6 @@
   .sz-error-nav a:hover {
     color: var(--sz-primary-dark, #4E5F4A);
     text-decoration: underline;
-  }
-
-  .sz-error-cta {
-    display: flex;
-    justify-content: center;
-    gap: var(--sz-space-md, 16px);
-    flex-wrap: wrap;
   }
 
   .sz-error-featured {

@@ -98,21 +98,27 @@
         </form>
       </div>
 
-      {%- comment -%} Helpful Links {%- endcomment -%}
-      <div class="sz-error-links">
-        <p class="sz-error-links-heading">Here are some helpful links:</p>
-        <ul class="sz-error-nav">
-          <li><a href="/">Go to Homepage</a></li>
-          <li><a href="/collections/all">Browse All Products</a></li>
-          <li><a href="/collections/best-sellers">Shop Best Sellers</a></li>
-          <li><a href="/pages/contact">Contact Us</a></li>
-        </ul>
+      {%- comment -%} Primary CTA - Shop Custom Water Bottles {%- endcomment -%}
+      <div class="sz-error-cta-primary" style="margin-bottom: 24px;">
+        <a href="/collections/custom-water-bottles" class="sz-btn sz-btn-primary" style="padding: 18px 40px; font-size: 18px;">
+          Shop Custom Water Bottles
+        </a>
       </div>
 
-      {%- comment -%} CTA Buttons {%- endcomment -%}
-      <div class="sz-error-cta">
-        <a href="/" class="sz-btn sz-btn-primary">Back to Home</a>
-        <a href="/collections/all" class="sz-btn sz-btn-secondary">Shop All Products</a>
+      {%- comment -%} Secondary CTAs - Kids & Holiday {%- endcomment -%}
+      <div class="sz-error-cta" style="margin-bottom: 32px;">
+        <a href="/collections/kids" class="sz-btn sz-btn-secondary">Shop Kids Bottles</a>
+        <a href="/collections/holiday" class="sz-btn sz-btn-secondary">Shop Holiday Bottles</a>
+      </div>
+
+      {%- comment -%} Helpful Links {%- endcomment -%}
+      <div class="sz-error-links">
+        <p class="sz-error-links-heading">Or try these helpful links:</p>
+        <ul class="sz-error-nav">
+          <li><a href="/">Go to Homepage</a></li>
+          <li><a href="/pages/faq">FAQ</a></li>
+          <li><a href="/pages/contact">Contact Us</a></li>
+        </ul>
       </div>
     </div>
 
@@ -120,7 +126,7 @@
     <div class="sz-error-featured">
       <h2 class="sz-error-featured-title">Popular Products You Might Like</h2>
       <div class="sz-error-products">
-        {%- assign featured_products = collections['best-sellers'].products | default: collections.all.products -%}
+        {%- assign featured_products = collections['custom-water-bottles'].products | default: collections.all.products -%}
         {%- for product in featured_products limit: 4 -%}
           <div class="sz-error-product-card">
             <a href="{{ product.url }}" class="sz-error-product-link">

@@ -20,10 +20,10 @@
       <h1 class="sz-hero-title">{{ section.settings.hero_title | default: 'Premium Personalized Water Bottles' }}</h1>
       <p class="sz-hero-subtitle">{{ section.settings.hero_subtitle | default: 'Custom-made bottles for bridesmaids, weddings, kids, and every special occasion. True sublimation printing that never peels or fades.' }}</p>
       <div class="sz-hero-cta">
-        <a href="{{ section.settings.cta_link | default: '/collections/best-sellers' }}" class="sz-btn sz-btn-primary">
-          {{ section.settings.cta_text | default: 'Shop Best Sellers' }}
+        <a href="{{ section.settings.cta_link | default: '/collections/custom-water-bottles' }}" class="sz-btn sz-btn-primary">
+          {{ section.settings.cta_text | default: 'Shop Custom Water Bottles' }}
         </a>
-        <a href="/collections/all" class="sz-btn sz-btn-secondary">Browse All</a>
+        <a href="/collections/kids" class="sz-btn sz-btn-secondary">Shop Kids Bottles</a>
       </div>
       <div class="sz-hero-trust">
         <span>Free Shipping $75+</span>
@@ -68,8 +68,8 @@
     </div>
 
     <div class="sz-product-grid">
-      {%- assign best_sellers = collections['best-sellers'].products | default: collections.all.products -%}
-      {%- for product in best_sellers limit: 4 -%}
+      {%- assign featured_products = collections['custom-water-bottles'].products | default: collections.all.products -%}
+      {%- for product in featured_products limit: 4 -%}
         <div class="sz-product-card">
           <a href="{{ product.url }}" class="sz-product-card-link">
             <div class="sz-product-card-image">
@@ -103,7 +103,7 @@
     </div>
 
     <div class="sz-section-cta">
-      <a href="/collections/best-sellers" class="sz-btn sz-btn-secondary">View All Best Sellers</a>
+      <a href="/collections/custom-water-bottles" class="sz-btn sz-btn-secondary">View All Custom Bottles</a>
     </div>
   </div>
 </section>
