@@ -100,6 +100,12 @@ async function executeGraphQL(query, variables = {}) {
   });
 
   if (!response.ok) {
+    if (response.status === 401) {
+      throw new Error(`HTTP 401 Unauthorized - Invalid or expired API token. Please verify your SHOPIFY_ADMIN_API_ACCESS_TOKEN.`);
+    }
+    if (response.status === 403) {
+      throw new Error(`HTTP 403 Forbidden - Token may lack required scopes. Ensure 'write_content' scope is enabled.`);
+    }
     throw new Error(`HTTP error! status: ${response.status}`);
   }
 
@@ -181,6 +187,20 @@ async function main() {
   console.log(`Store: ${SHOPIFY_STORE_DOMAIN}`);
   console.log(`API Version: ${SHOPIFY_API_VERSION}`);
   console.log(`Target: ${TARGET_PATH}`);
+
+  // Debug: Show token info (masked)
+  const tokenLength = SHOPIFY_ADMIN_API_ACCESS_TOKEN?.length || 0;
+  const tokenPreview = tokenLength > 10
+    ? `${SHOPIFY_ADMIN_API_ACCESS_TOKEN.substring(0, 8)}...${SHOPIFY_ADMIN_API_ACCESS_TOKEN.substring(tokenLength - 4)}`
+    : '(token too short or missing)';
+  console.log(`Token: ${tokenPreview} (${tokenLength} chars)`);
+
+  if (!SHOPIFY_ADMIN_API_ACCESS_TOKEN.startsWith('shpat_')) {
+    console.log('\n⚠️  WARNING: Token does not start with "shpat_"');
+    console.log('   Shopify Admin API tokens should start with "shpat_"');
+    console.log('   Make sure you copied the full token from Shopify Admin.');
+  }
+
   console.log('');
 
   const results = {
