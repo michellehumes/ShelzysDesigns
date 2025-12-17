@@ -153,13 +153,15 @@
   .shelzy-preview-bottle {
     width: 120px;
     height: 200px;
-    background: linear-gradient(180deg, #888 0%, #666 100%);
+    background: linear-gradient(180deg, #FFFFFF 0%, #F5F5F5 100%);
     border-radius: 12px 12px 40px 40px;
     margin: 0 auto 20px;
     display: flex;
     align-items: center;
     justify-content: center;
     position: relative;
+    border: 1px solid #e0e0e0;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
   }
 
   .shelzy-preview-bottle::before {
@@ -170,8 +172,10 @@
     transform: translateX(-50%);
     width: 40px;
     height: 20px;
-    background: #555;
+    background: #E8E8E8;
     border-radius: 4px 4px 0 0;
+    border: 1px solid #d0d0d0;
+    border-bottom: none;
   }
 
   .shelzy-preview-text {
@@ -315,11 +319,11 @@
   <div class="shelzy-personalization-group">
     <label class="shelzy-personalization-label">Text Color</label>
     <div class="shelzy-color-selector">
-      <label class="shelzy-color-option selected" style="background: #ffffff; border: 1px solid #ddd;" data-color="#ffffff">
-        <input type="radio" name="properties[Text Color]" value="White" checked>
+      <label class="shelzy-color-option" style="background: #ffffff; border: 1px solid #ddd;" data-color="#ffffff">
+        <input type="radio" name="properties[Text Color]" value="White">
       </label>
-      <label class="shelzy-color-option" style="background: #000000;" data-color="#000000">
-        <input type="radio" name="properties[Text Color]" value="Black">
+      <label class="shelzy-color-option selected" style="background: #000000;" data-color="#000000">
+        <input type="radio" name="properties[Text Color]" value="Black" checked>
       </label>
       <label class="shelzy-color-option" style="background: #d4af37;" data-color="#d4af37">
         <input type="radio" name="properties[Text Color]" value="Gold">
@@ -340,7 +344,7 @@
   <div class="shelzy-preview">
     <p class="shelzy-preview-label">Preview</p>
     <div class="shelzy-preview-bottle">
-      <span class="shelzy-preview-text font-script" id="previewText" style="color: #ffffff;">
+      <span class="shelzy-preview-text font-script" id="previewText" style="color: #000000;">
         Your Name
       </span>
     </div>

@@ -10,17 +10,17 @@
 
 **Headline:**
 ```
-Premium Personalized Sublimation Water Bottles
+Villa-Inspired. Personalized. Always in Style.
 ```
 
 **Subheadline:**
 ```
-Custom-made bottles for bridesmaids, weddings, holidays, and every day in between.
+Personalized white stainless steel water bottles with permanent sublimation printing. Resort-style hydration that's uniquely yours.
 ```
 
 **CTA Button:**
 ```
-Shop Best Sellers
+Personalize Your Bottle
 ```
 
 ---

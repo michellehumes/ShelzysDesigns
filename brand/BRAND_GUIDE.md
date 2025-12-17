@@ -94,7 +94,7 @@ Captions/Badges:     12-14px  (Montserrat, uppercase, 0.12em letter-spacing)
 For product mockups showing personalization:
 - **Script Style:** Selena Script, Better Grade Script, or similar elegant script
 - **Block Style:** Clean sans-serif, uppercase or mixed case
-- **NOT:** Love Island font or overly trendy fonts
+- **NOT:** Overly trendy or dated fonts
 
 ### Photography Style
 
