@@ -1,7 +1,13 @@
 {% comment %}
   Enhanced Personalization Form with Live Preview
+  20 Font Options & 20 Color Options
   Installation: Replace default variant selector on product pages
 {% endcomment %}
+
+<!-- Google Fonts for extended font options -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Allura&family=Amatic+SC:wght@700&family=Cinzel&family=Cormorant+Garamond:ital,wght@0,500;1,500&family=Dancing+Script:wght@600&family=Great+Vibes&family=Josefin+Sans:wght@300&family=Lato:wght@300;700&family=Libre+Baskerville:ital@0;1&family=Lobster&family=Montserrat:wght@300;600&family=Pacifico&family=Playfair+Display:ital@0;1&family=Poppins:wght@300;600&family=Quicksand:wght@500&family=Raleway:wght@300&family=Sacramento&family=Satisfy&display=swap" rel="stylesheet">
 
 <style>
   .shelzy-personalization {
@@ -61,17 +67,31 @@
 
   .shelzy-font-selector {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 10px;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+    max-height: 320px;
+    overflow-y: auto;
+    padding: 4px;
+  }
+
+  @media (max-width: 768px) {
+    .shelzy-font-selector {
+      grid-template-columns: repeat(2, 1fr);
+      max-height: 400px;
+    }
   }
 
   .shelzy-font-option {
-    padding: 12px;
+    padding: 10px 8px;
     border: 2px solid #e5e5e5;
     border-radius: 8px;
     text-align: center;
     cursor: pointer;
     transition: all 0.2s;
+    min-height: 60px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
   }
 
   .shelzy-font-option:hover {
@@ -88,29 +108,57 @@
   }
 
   .shelzy-font-preview {
-    font-size: 18px;
+    font-size: 16px;
     display: block;
-    margin-bottom: 4px;
+    margin-bottom: 2px;
+    line-height: 1.2;
   }
 
   .shelzy-font-name {
-    font-size: 11px;
+    font-size: 9px;
     color: #666;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
   }
 
-  .font-script { font-family: 'Brush Script MT', cursive; }
-  .font-serif { font-family: Georgia, serif; }
-  .font-modern { font-family: 'Helvetica Neue', sans-serif; font-weight: 300; }
+  /* 20 Font Classes */
+  .font-script { font-family: 'Great Vibes', cursive; }
+  .font-classic { font-family: 'Playfair Display', serif; }
+  .font-modern { font-family: 'Montserrat', sans-serif; font-weight: 300; }
+  .font-elegant { font-family: 'Cormorant Garamond', serif; font-weight: 500; }
+  .font-romantic { font-family: 'Allura', cursive; }
+  .font-playful { font-family: 'Pacifico', cursive; }
+  .font-coastal { font-family: 'Quicksand', sans-serif; font-weight: 500; }
+  .font-vintage { font-family: 'Cinzel', serif; }
+  .font-handwritten { font-family: 'Dancing Script', cursive; font-weight: 600; }
+  .font-minimal { font-family: 'Josefin Sans', sans-serif; font-weight: 300; }
+  .font-bold { font-family: 'Montserrat', sans-serif; font-weight: 600; }
+  .font-thin { font-family: 'Raleway', sans-serif; font-weight: 300; }
+  .font-cursive { font-family: 'Sacramento', cursive; }
+  .font-brush { font-family: 'Alex Brush', cursive; }
+  .font-sweet { font-family: 'Satisfy', cursive; }
+  .font-artsy { font-family: 'Amatic SC', cursive; font-weight: 700; }
+  .font-literary { font-family: 'Libre Baskerville', serif; }
+  .font-italic { font-family: 'Libre Baskerville', serif; font-style: italic; }
+  .font-retro { font-family: 'Lobster', cursive; }
+  .font-clean { font-family: 'Poppins', sans-serif; font-weight: 300; }
 
   .shelzy-color-selector {
-    display: flex;
-    gap: 10px;
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    gap: 8px;
     flex-wrap: wrap;
   }
 
+  @media (max-width: 768px) {
+    .shelzy-color-selector {
+      grid-template-columns: repeat(5, 1fr);
+    }
+  }
+
   .shelzy-color-option {
-    width: 36px;
-    height: 36px;
+    width: 32px;
+    height: 32px;
     border-radius: 50%;
     cursor: pointer;
     border: 3px solid transparent;
@@ -119,7 +167,7 @@
   }
 
   .shelzy-color-option:hover {
-    transform: scale(1.1);
+    transform: scale(1.15);
   }
 
   .shelzy-color-option.selected {
@@ -133,8 +181,13 @@
     left: 50%;
     transform: translate(-50%, -50%);
     color: #fff;
-    font-size: 14px;
-    text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+    font-size: 12px;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+  }
+
+  .shelzy-color-option.light-color.selected::after {
+    color: #333;
+    text-shadow: none;
   }
 
   .shelzy-color-option input {
@@ -183,7 +236,7 @@
     max-width: 80px;
     word-wrap: break-word;
     line-height: 1.2;
-    text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+    text-shadow: 0 1px 2px rgba(0,0,0,0.1);
   }
 
   .shelzy-preview-label {
@@ -293,18 +346,18 @@
     </div>
   {% endif %}
 
-  <!-- Font Selection -->
+  <!-- Font Selection - 20 Options -->
   <div class="shelzy-personalization-group">
-    <label class="shelzy-personalization-label">Font Style</label>
+    <label class="shelzy-personalization-label">Font Style <small>(20 options)</small></label>
     <div class="shelzy-font-selector">
       <label class="shelzy-font-option selected" data-font="script">
         <input type="radio" name="properties[Font]" value="Script" checked>
         <span class="shelzy-font-preview font-script">Abc</span>
         <span class="shelzy-font-name">Script</span>
       </label>
-      <label class="shelzy-font-option" data-font="serif">
-        <input type="radio" name="properties[Font]" value="Serif">
-        <span class="shelzy-font-preview font-serif">Abc</span>
+      <label class="shelzy-font-option" data-font="classic">
+        <input type="radio" name="properties[Font]" value="Classic">
+        <span class="shelzy-font-preview font-classic">Abc</span>
         <span class="shelzy-font-name">Classic</span>
       </label>
       <label class="shelzy-font-option" data-font="modern">
@@ -312,30 +365,159 @@
         <span class="shelzy-font-preview font-modern">Abc</span>
         <span class="shelzy-font-name">Modern</span>
       </label>
+      <label class="shelzy-font-option" data-font="elegant">
+        <input type="radio" name="properties[Font]" value="Elegant">
+        <span class="shelzy-font-preview font-elegant">Abc</span>
+        <span class="shelzy-font-name">Elegant</span>
+      </label>
+      <label class="shelzy-font-option" data-font="romantic">
+        <input type="radio" name="properties[Font]" value="Romantic">
+        <span class="shelzy-font-preview font-romantic">Abc</span>
+        <span class="shelzy-font-name">Romantic</span>
+      </label>
+      <label class="shelzy-font-option" data-font="playful">
+        <input type="radio" name="properties[Font]" value="Playful">
+        <span class="shelzy-font-preview font-playful">Abc</span>
+        <span class="shelzy-font-name">Playful</span>
+      </label>
+      <label class="shelzy-font-option" data-font="coastal">
+        <input type="radio" name="properties[Font]" value="Coastal">
+        <span class="shelzy-font-preview font-coastal">Abc</span>
+        <span class="shelzy-font-name">Coastal</span>
+      </label>
+      <label class="shelzy-font-option" data-font="vintage">
+        <input type="radio" name="properties[Font]" value="Vintage">
+        <span class="shelzy-font-preview font-vintage">Abc</span>
+        <span class="shelzy-font-name">Vintage</span>
+      </label>
+      <label class="shelzy-font-option" data-font="handwritten">
+        <input type="radio" name="properties[Font]" value="Handwritten">
+        <span class="shelzy-font-preview font-handwritten">Abc</span>
+        <span class="shelzy-font-name">Handwritten</span>
+      </label>
+      <label class="shelzy-font-option" data-font="minimal">
+        <input type="radio" name="properties[Font]" value="Minimal">
+        <span class="shelzy-font-preview font-minimal">Abc</span>
+        <span class="shelzy-font-name">Minimal</span>
+      </label>
+      <label class="shelzy-font-option" data-font="bold">
+        <input type="radio" name="properties[Font]" value="Bold">
+        <span class="shelzy-font-preview font-bold">Abc</span>
+        <span class="shelzy-font-name">Bold</span>
+      </label>
+      <label class="shelzy-font-option" data-font="thin">
+        <input type="radio" name="properties[Font]" value="Thin">
+        <span class="shelzy-font-preview font-thin">Abc</span>
+        <span class="shelzy-font-name">Thin</span>
+      </label>
+      <label class="shelzy-font-option" data-font="cursive">
+        <input type="radio" name="properties[Font]" value="Cursive">
+        <span class="shelzy-font-preview font-cursive">Abc</span>
+        <span class="shelzy-font-name">Cursive</span>
+      </label>
+      <label class="shelzy-font-option" data-font="brush">
+        <input type="radio" name="properties[Font]" value="Brush">
+        <span class="shelzy-font-preview font-brush">Abc</span>
+        <span class="shelzy-font-name">Brush</span>
+      </label>
+      <label class="shelzy-font-option" data-font="sweet">
+        <input type="radio" name="properties[Font]" value="Sweet">
+        <span class="shelzy-font-preview font-sweet">Abc</span>
+        <span class="shelzy-font-name">Sweet</span>
+      </label>
+      <label class="shelzy-font-option" data-font="artsy">
+        <input type="radio" name="properties[Font]" value="Artsy">
+        <span class="shelzy-font-preview font-artsy">Abc</span>
+        <span class="shelzy-font-name">Artsy</span>
+      </label>
+      <label class="shelzy-font-option" data-font="literary">
+        <input type="radio" name="properties[Font]" value="Literary">
+        <span class="shelzy-font-preview font-literary">Abc</span>
+        <span class="shelzy-font-name">Literary</span>
+      </label>
+      <label class="shelzy-font-option" data-font="italic">
+        <input type="radio" name="properties[Font]" value="Italic">
+        <span class="shelzy-font-preview font-italic">Abc</span>
+        <span class="shelzy-font-name">Italic</span>
+      </label>
+      <label class="shelzy-font-option" data-font="retro">
+        <input type="radio" name="properties[Font]" value="Retro">
+        <span class="shelzy-font-preview font-retro">Abc</span>
+        <span class="shelzy-font-name">Retro</span>
+      </label>
+      <label class="shelzy-font-option" data-font="clean">
+        <input type="radio" name="properties[Font]" value="Clean">
+        <span class="shelzy-font-preview font-clean">Abc</span>
+        <span class="shelzy-font-name">Clean</span>
+      </label>
     </div>
   </div>
 
-  <!-- Color Selection -->
+  <!-- Color Selection - 20 Options -->
   <div class="shelzy-personalization-group">
-    <label class="shelzy-personalization-label">Text Color</label>
+    <label class="shelzy-personalization-label">Text Color <small>(20 options)</small></label>
     <div class="shelzy-color-selector">
-      <label class="shelzy-color-option" style="background: #ffffff; border: 1px solid #ddd;" data-color="#ffffff">
+      <!-- Row 1 -->
+      <label class="shelzy-color-option light-color" style="background: #ffffff; border: 1px solid #ddd;" data-color="#ffffff" title="White">
         <input type="radio" name="properties[Text Color]" value="White">
       </label>
-      <label class="shelzy-color-option selected" style="background: #000000;" data-color="#000000">
+      <label class="shelzy-color-option selected" style="background: #000000;" data-color="#000000" title="Black">
         <input type="radio" name="properties[Text Color]" value="Black" checked>
       </label>
-      <label class="shelzy-color-option" style="background: #d4af37;" data-color="#d4af37">
+      <label class="shelzy-color-option" style="background: #d4af37;" data-color="#d4af37" title="Gold">
         <input type="radio" name="properties[Text Color]" value="Gold">
       </label>
-      <label class="shelzy-color-option" style="background: #c0c0c0;" data-color="#c0c0c0">
+      <label class="shelzy-color-option" style="background: #c0c0c0;" data-color="#c0c0c0" title="Silver">
         <input type="radio" name="properties[Text Color]" value="Silver">
       </label>
-      <label class="shelzy-color-option" style="background: #ff69b4;" data-color="#ff69b4">
+      <label class="shelzy-color-option" style="background: #b76e79;" data-color="#b76e79" title="Rose Gold">
+        <input type="radio" name="properties[Text Color]" value="Rose Gold">
+      </label>
+      <label class="shelzy-color-option" style="background: #cd7f32;" data-color="#cd7f32" title="Bronze">
+        <input type="radio" name="properties[Text Color]" value="Bronze">
+      </label>
+      <label class="shelzy-color-option" style="background: #b87333;" data-color="#b87333" title="Copper">
+        <input type="radio" name="properties[Text Color]" value="Copper">
+      </label>
+      <label class="shelzy-color-option" style="background: #f5deb3;" data-color="#f5deb3" title="Champagne">
+        <input type="radio" name="properties[Text Color]" value="Champagne">
+      </label>
+      <label class="shelzy-color-option" style="background: #ff69b4;" data-color="#ff69b4" title="Pink">
         <input type="radio" name="properties[Text Color]" value="Pink">
       </label>
-      <label class="shelzy-color-option" style="background: #321004;" data-color="#321004">
+      <label class="shelzy-color-option" style="background: #ff7f50;" data-color="#ff7f50" title="Coral">
+        <input type="radio" name="properties[Text Color]" value="Coral">
+      </label>
+      <!-- Row 2 -->
+      <label class="shelzy-color-option" style="background: #800020;" data-color="#800020" title="Burgundy">
+        <input type="radio" name="properties[Text Color]" value="Burgundy">
+      </label>
+      <label class="shelzy-color-option" style="background: #c9a0dc;" data-color="#c9a0dc" title="Lavender">
+        <input type="radio" name="properties[Text Color]" value="Lavender">
+      </label>
+      <label class="shelzy-color-option" style="background: #e0b0a0;" data-color="#e0b0a0" title="Mauve">
+        <input type="radio" name="properties[Text Color]" value="Mauve">
+      </label>
+      <label class="shelzy-color-option" style="background: #000080;" data-color="#000080" title="Navy">
+        <input type="radio" name="properties[Text Color]" value="Navy">
+      </label>
+      <label class="shelzy-color-option" style="background: #6b9dad;" data-color="#6b9dad" title="Dusty Blue">
+        <input type="radio" name="properties[Text Color]" value="Dusty Blue">
+      </label>
+      <label class="shelzy-color-option" style="background: #008080;" data-color="#008080" title="Teal">
+        <input type="radio" name="properties[Text Color]" value="Teal">
+      </label>
+      <label class="shelzy-color-option" style="background: #8BAA88;" data-color="#8BAA88" title="Sage">
+        <input type="radio" name="properties[Text Color]" value="Sage">
+      </label>
+      <label class="shelzy-color-option" style="background: #228b22;" data-color="#228b22" title="Forest Green">
+        <input type="radio" name="properties[Text Color]" value="Forest Green">
+      </label>
+      <label class="shelzy-color-option" style="background: #5c4033;" data-color="#5c4033" title="Brown">
         <input type="radio" name="properties[Text Color]" value="Brown">
+      </label>
+      <label class="shelzy-color-option" style="background: #36454f;" data-color="#36454f" title="Charcoal">
+        <input type="radio" name="properties[Text Color]" value="Charcoal">
       </label>
     </div>
   </div>
