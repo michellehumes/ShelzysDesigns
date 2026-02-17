@@ -1,0 +1,1404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1080, height=1080">
+<title>Calm &amp; Bloom - Etsy Video</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+  /* ===== RESET & BASE ===== */
+  *, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  html, body {
+    width: 1080px;
+    height: 1080px;
+    overflow: hidden;
+    background: #FAF6F0;
+    font-family: 'Lato', sans-serif;
+  }
+
+  .container {
+    width: 1080px;
+    height: 1080px;
+    position: relative;
+    overflow: hidden;
+    background: #FAF6F0;
+  }
+
+  /* ===== COLOR PALETTE ===== */
+  :root {
+    --cream: #FAF6F0;
+    --cream-dark: #F0EBE3;
+    --sage: #A8B5A2;
+    --sage-light: #C5D1BF;
+    --sage-dark: #8A9B83;
+    --forest: #3D5A3E;
+    --forest-deep: #2C4330;
+    --lavender: #D4C5E2;
+    --lavender-light: #EDE6F5;
+    --dusty-rose: #D4A5A5;
+    --warm-gold: #C9A96E;
+    --text-dark: #2C3E2D;
+    --text-medium: #5A6B5C;
+    --text-light: #8A9B83;
+    --white: #FFFFFF;
+  }
+
+  /* ===== GLOBAL ANIMATION ===== */
+  .container {
+    animation: bgShift 15s ease-in-out infinite;
+  }
+
+  @keyframes bgShift {
+    0%, 20% { background: linear-gradient(135deg, #FAF6F0 0%, #F5F0E8 100%); }
+    25%, 40% { background: linear-gradient(135deg, #FAF6F0 0%, #F0F4EE 100%); }
+    45%, 60% { background: linear-gradient(135deg, #FAF6F0 0%, #F3EFF8 100%); }
+    65%, 80% { background: linear-gradient(135deg, #FAF6F0 0%, #FAFAFA 100%); }
+    85%, 100% { background: linear-gradient(135deg, #FAF6F0 0%, #F5F0E8 100%); }
+  }
+
+  /* ===== SCENES ===== */
+  .scene {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 1080px;
+    height: 1080px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+  }
+
+  /* ============================================ */
+  /* SCENE 1: TITLE REVEAL (0-3s)                */
+  /* ============================================ */
+  .scene-1 {
+    animation: sceneOneVis 15s ease infinite;
+  }
+
+  @keyframes sceneOneVis {
+    0%     { opacity: 0; }
+    1%     { opacity: 1; }
+    18%    { opacity: 1; }
+    21%    { opacity: 0; }
+    100%   { opacity: 0; }
+  }
+
+  /* Botanical watermark background */
+  .scene-1 .watermark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.06;
+  }
+
+  /* Main title */
+  .scene-1 .title {
+    font-family: 'Playfair Display', serif;
+    font-size: 88px;
+    font-weight: 700;
+    color: var(--forest-deep);
+    letter-spacing: 2px;
+    opacity: 0;
+    animation: titleFadeIn 15s ease infinite;
+    text-align: center;
+    z-index: 2;
+  }
+
+  @keyframes titleFadeIn {
+    0%     { opacity: 0; transform: translateY(20px); }
+    3%     { opacity: 0; transform: translateY(20px); }
+    7%     { opacity: 1; transform: translateY(0); }
+    18%    { opacity: 1; transform: translateY(0); }
+    21%    { opacity: 0; }
+    100%   { opacity: 0; }
+  }
+
+  /* Subtitle */
+  .scene-1 .subtitle {
+    font-family: 'Lato', sans-serif;
+    font-size: 30px;
+    font-weight: 300;
+    color: var(--text-medium);
+    letter-spacing: 6px;
+    text-transform: uppercase;
+    margin-top: 20px;
+    opacity: 0;
+    animation: subtitleFadeIn 15s ease infinite;
+    text-align: center;
+    z-index: 2;
+  }
+
+  @keyframes subtitleFadeIn {
+    0%     { opacity: 0; transform: translateY(15px); }
+    5%     { opacity: 0; transform: translateY(15px); }
+    9%     { opacity: 1; transform: translateY(0); }
+    18%    { opacity: 1; transform: translateY(0); }
+    21%    { opacity: 0; }
+    100%   { opacity: 0; }
+  }
+
+  /* Eucalyptus wreath SVG */
+  .scene-1 .wreath-container {
+    position: absolute;
+    width: 600px;
+    height: 600px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+  }
+
+  .scene-1 .wreath-container svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  .wreath-path {
+    stroke-dasharray: 2000;
+    stroke-dashoffset: 2000;
+    animation: wreathDraw 15s ease infinite;
+  }
+
+  @keyframes wreathDraw {
+    0%     { stroke-dashoffset: 2000; }
+    3%     { stroke-dashoffset: 2000; }
+    13%    { stroke-dashoffset: 0; }
+    18%    { stroke-dashoffset: 0; }
+    21%    { stroke-dashoffset: 2000; }
+    100%   { stroke-dashoffset: 2000; }
+  }
+
+  .wreath-leaf {
+    opacity: 0;
+    animation: leafAppear 15s ease infinite;
+  }
+
+  .wreath-leaf:nth-child(1) { animation-delay: 0s; }
+  .wreath-leaf:nth-child(2) { animation-delay: 0.15s; }
+  .wreath-leaf:nth-child(3) { animation-delay: 0.3s; }
+  .wreath-leaf:nth-child(4) { animation-delay: 0.45s; }
+
+  @keyframes leafAppear {
+    0%     { opacity: 0; transform: scale(0.5); }
+    5%     { opacity: 0; transform: scale(0.5); }
+    10%    { opacity: 1; transform: scale(1); }
+    18%    { opacity: 1; transform: scale(1); }
+    21%    { opacity: 0; }
+    100%   { opacity: 0; }
+  }
+
+  /* Decorative line */
+  .scene-1 .decorative-line {
+    width: 120px;
+    height: 2px;
+    background: var(--sage);
+    margin-top: 30px;
+    opacity: 0;
+    animation: lineFadeIn 15s ease infinite;
+    z-index: 2;
+  }
+
+  @keyframes lineFadeIn {
+    0%     { opacity: 0; width: 0; }
+    7%     { opacity: 0; width: 0; }
+    11%    { opacity: 1; width: 120px; }
+    18%    { opacity: 1; width: 120px; }
+    21%    { opacity: 0; }
+    100%   { opacity: 0; }
+  }
+
+  /* Small tagline */
+  .scene-1 .tagline {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 22px;
+    color: var(--sage-dark);
+    margin-top: 20px;
+    opacity: 0;
+    animation: taglineFadeIn 15s ease infinite;
+    z-index: 2;
+  }
+
+  @keyframes taglineFadeIn {
+    0%     { opacity: 0; }
+    9%     { opacity: 0; }
+    13%    { opacity: 1; }
+    18%    { opacity: 1; }
+    21%    { opacity: 0; }
+    100%   { opacity: 0; }
+  }
+
+  /* ============================================ */
+  /* SCENE 2: JOURNAL PAGES (3-6s)               */
+  /* ============================================ */
+  .scene-2 {
+    animation: sceneTwoVis 15s ease infinite;
+  }
+
+  @keyframes sceneTwoVis {
+    0%     { opacity: 0; }
+    20%    { opacity: 0; }
+    23%    { opacity: 1; }
+    38%    { opacity: 1; }
+    41%    { opacity: 0; }
+    100%   { opacity: 0; }
+  }
+
+  .scene-2 .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 42px;
+    font-weight: 600;
+    color: var(--forest-deep);
+    margin-bottom: 10px;
+    opacity: 0;
+    animation: s2TitleIn 15s ease infinite;
+  }
+
+  @keyframes s2TitleIn {
+    0%     { opacity: 0; transform: translateY(-20px); }
+    22%    { opacity: 0; transform: translateY(-20px); }
+    26%    { opacity: 1; transform: translateY(0); }
+    38%    { opacity: 1; }
+    41%    { opacity: 0; }
+    100%   { opacity: 0; }
+  }
+
+  .scene-2 .section-subtitle {
+    font-family: 'Lato', sans-serif;
+    font-size: 20px;
+    color: var(--text-light);
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    margin-bottom: 50px;
+    opacity: 0;
+    animation: s2SubIn 15s ease infinite;
+  }
+
+  @keyframes s2SubIn {
+    0%     { opacity: 0; }
+    24%    { opacity: 0; }
+    28%    { opacity: 1; }
+    38%    { opacity: 1; }
+    41%    { opacity: 0; }
+    100%   { opacity: 0; }
+  }
+
+  /* Page cards container */
+  .pages-container {
+    display: flex;
+    gap: 40px;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Individual page card */
+  .page-card {
+    width: 250px;
+    height: 340px;
+    background: var(--white);
+    border-radius: 12px;
+    box-shadow: 0 15px 40px rgba(60, 90, 62, 0.12);
+    padding: 24px;
+    position: relative;
+    overflow: hidden;
+    opacity: 0;
+    border: 1px solid rgba(168, 181, 162, 0.2);
+  }
+
+  .page-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 6px;
+    background: linear-gradient(90deg, var(--sage), var(--sage-light));
+  }
+
+  .page-card:nth-child(1) {
+    animation: pageSlideIn1 15s ease infinite;
+  }
+  .page-card:nth-child(2) {
+    animation: pageSlideIn2 15s ease infinite;
+  }
+  .page-card:nth-child(3) {
+    animation: pageSlideIn3 15s ease infinite;
+  }
+
+  @keyframes pageSlideIn1 {
+    0%     { opacity: 0; transform: translateX(120px) rotate(3deg); }
+    23%    { opacity: 0; transform: translateX(120px) rotate(3deg); }
+    28%    { opacity: 1; transform: translateX(0) rotate(0deg); }
+    35%    { opacity: 1; transform: translateX(0) rotate(0deg) translateY(0); }
+    37%    { opacity: 1; transform: translateX(0) rotate(0deg) translateY(-8px); }
+    39%    { opacity: 1; transform: translateX(0) rotate(0deg) translateY(0); }
+    41%    { opacity: 0; }
+    100%   { opacity: 0; }
+  }
+
+  @keyframes pageSlideIn2 {
+    0%     { opacity: 0; transform: translateX(120px) rotate(3deg); }
+    25%    { opacity: 0; transform: translateX(120px) rotate(3deg); }
+    30%    { opacity: 1; transform: translateX(0) rotate(0deg); }
+    35%    { opacity: 1; transform: translateX(0) rotate(0deg) translateY(0); }
+    37%    { opacity: 1; transform: translateX(0) rotate(0deg) translateY(-8px); }
+    39%    { opacity: 1; transform: translateX(0) rotate(0deg) translateY(0); }
+    41%    { opacity: 0; }
+    100%   { opacity: 0; }
+  }
+
+  @keyframes pageSlideIn3 {
+    0%     { opacity: 0; transform: translateX(120px) rotate(3deg); }
+    27%    { opacity: 0; transform: translateX(120px) rotate(3deg); }
+    32%    { opacity: 1; transform: translateX(0) rotate(0deg); }
+    35%    { opacity: 1; transform: translateX(0) rotate(0deg) translateY(0); }
+    37%    { opacity: 1; transform: translateX(0) rotate(0deg) translateY(-8px); }
+    39%    { opacity: 1; transform: translateX(0) rotate(0deg) translateY(0); }
+    41%    { opacity: 0; }
+    100%   { opacity: 0; }
+  }
+
+  .page-card .page-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--forest);
+    margin-bottom: 16px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--sage-light);
+  }
+
+  /* Mood tracker mini design */
+  .mood-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 6px;
+    margin-bottom: 16px;
+  }
+
+  .mood-dot {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    opacity: 0.7;
+  }
+
+  .mood-dot.filled-1 { background: #E8D5D5; }
+  .mood-dot.filled-2 { background: #D4C5E2; }
+  .mood-dot.filled-3 { background: #C5D1BF; }
+  .mood-dot.filled-4 { background: #C9A96E; opacity: 0.4; }
+  .mood-dot.empty { border: 2px solid var(--sage-light); background: transparent; }
+
+  .mood-label {
+    font-size: 10px;
+    color: var(--text-light);
+    text-align: center;
+    margin-top: 4px;
+  }
+
+  /* Gratitude lines */
+  .gratitude-lines {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .gratitude-line {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .gratitude-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    color: var(--sage);
+    font-weight: 600;
+    min-width: 28px;
+  }
+
+  .gratitude-rule {
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, var(--sage-light), transparent);
+  }
+
+  /* Anxiety toolkit */
+  .toolkit-items {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .toolkit-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 10px;
+    background: var(--cream);
+    border-radius: 8px;
+  }
+
+  .toolkit-icon {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .toolkit-icon.breathe { background: #C5D1BF; }
+  .toolkit-icon.ground { background: #D4C5E2; }
+  .toolkit-icon.reflect { background: #E8D5D5; }
+  .toolkit-icon.plan { background: #D9D0B8; }
+
+  .toolkit-icon svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  .toolkit-text {
+    font-size: 12px;
+    color: var(--text-medium);
+    line-height: 1.3;
+  }
+
+  /* Sage border frame for scene 2 */
+  .scene-2 .sage-frame {
+    position: absolute;
+    top: 30px;
+    left: 30px;
+    right: 30px;
+    bottom: 30px;
+    border: 2px solid var(--sage-light);
+    border-radius: 20px;
+    pointer-events: none;
+    opacity: 0;
+    animation: frameIn 15s ease infinite;
+  }
+
+  @keyframes frameIn {
+    0%     { opacity: 0; }
+    22%    { opacity: 0; }
+    26%    { opacity: 0.4; }
+    38%    { opacity: 0.4; }
+    41%    { opacity: 0; }
+    100%   { opacity: 0; }
+  }
+
+  /* ============================================ */
+  /* SCENE 3: AFFIRMATION CARDS (6-9s)           */
+  /* ============================================ */
+  .scene-3 {
+    animation: sceneThreeVis 15s ease infinite;
+  }
+
+  @keyframes sceneThreeVis {
+    0%     { opacity: 0; }
+    40%    { opacity: 0; }
+    43%    { opacity: 1; }
+    58%    { opacity: 1; }
+    61%    { opacity: 0; }
+    100%   { opacity: 0; }
+  }
+
+  /* Lavender glow background */
+  .scene-3 .lavender-glow {
+    position: absolute;
+    width: 700px;
+    height: 700px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(212, 197, 226, 0.3) 0%, transparent 70%);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .scene-3 .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 42px;
+    font-weight: 600;
+    color: var(--forest-deep);
+    margin-bottom: 60px;
+    opacity: 0;
+    animation: s3TitleIn 15s ease infinite;
+    z-index: 2;
+  }
+
+  @keyframes s3TitleIn {
+    0%     { opacity: 0; transform: translateY(-20px); }
+    42%    { opacity: 0; transform: translateY(-20px); }
+    46%    { opacity: 1; transform: translateY(0); }
+    58%    { opacity: 1; }
+    61%    { opacity: 0; }
+    100%   { opacity: 0; }
+  }
+
+  /* Card fan container */
+  .cards-fan {
+    position: relative;
+    width: 700px;
+    height: 500px;
+    z-index: 2;
+  }
+
+  .affirmation-card {
+    position: absolute;
+    width: 200px;
+    height: 280px;
+    background: var(--white);
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(60, 90, 62, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    text-align: center;
+    top: 50%;
+    left: 50%;
+    transform-origin: bottom center;
+    opacity: 0;
+    border: 1px solid rgba(168, 181, 162, 0.15);
+  }
+
+  .affirmation-card::before {
+    content: '';
+    position: absolute;
+    top: 16px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 40px;
+    height: 2px;
+    border-radius: 1px;
+  }
+
+  .affirmation-card:nth-child(1)::before { background: var(--sage); }
+  .affirmation-card:nth-child(2)::before { background: var(--lavender); }
+  .affirmation-card:nth-child(3)::before { background: var(--dusty-rose); }
+  .affirmation-card:nth-child(4)::before { background: var(--warm-gold); }
+  .affirmation-card:nth-child(5)::before { background: var(--sage-dark); }
+
+  .affirmation-card .card-text {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--forest-deep);
+    line-height: 1.4;
+  }
+
+  .affirmation-card .card-accent {
+    width: 30px;
+    height: 30px;
+    margin-top: 16px;
+    opacity: 0.5;
+  }
+
+  /* Fan positions and animations */
+  .affirmation-card:nth-child(1) {
+    animation: cardFan1 15s ease infinite;
+  }
+  .affirmation-card:nth-child(2) {
+    animation: cardFan2 15s ease infinite;
+  }
+  .affirmation-card:nth-child(3) {
+    animation: cardFan3 15s ease infinite;
+  }
+  .affirmation-card:nth-child(4) {
+    animation: cardFan4 15s ease infinite;
+  }
+  .affirmation-card:nth-child(5) {
+    animation: cardFan5 15s ease infinite;
+  }
+
+  @keyframes cardFan1 {
+    0%     { opacity: 0; transform: translate(-50%, -50%) rotate(0deg) scale(0.8); }
+    43%    { opacity: 0; transform: translate(-50%, -50%) rotate(0deg) scale(0.8); }
+    48%    { opacity: 1; transform: translate(-340px, -180px) rotate(-20deg) scale(1); }
+    58%    { opacity: 1; transform: translate(-340px, -180px) rotate(-20deg) scale(1); }
+    61%    { opacity: 0; }
+    100%   { opacity: 0; }
+  }
+
+  @keyframes cardFan2 {
+    0%     { opacity: 0; transform: translate(-50%, -50%) rotate(0deg) scale(0.8); }
+    44%    { opacity: 0; transform: translate(-50%, -50%) rotate(0deg) scale(0.8); }
+    49%    { opacity: 1; transform: translate(-210px, -200px) rotate(-10deg) scale(1); }
+    58%    { opacity: 1; transform: translate(-210px, -200px) rotate(-10deg) scale(1); }
+    61%    { opacity: 0; }
+    100%   { opacity: 0; }
+  }
+
+  @keyframes cardFan3 {
+    0%     { opacity: 0; transform: translate(-50%, -50%) rotate(0deg) scale(0.8); }
+    45%    { opacity: 0; transform: translate(-50%, -50%) rotate(0deg) scale(0.8); }
+    50%    { opacity: 1; transform: translate(-100px, -210px) rotate(0deg) scale(1.05); }
+    58%    { opacity: 1; transform: translate(-100px, -210px) rotate(0deg) scale(1.05); }
+    61%    { opacity: 0; }
+    100%   { opacity: 0; }
+  }
+
+  @keyframes cardFan4 {
+    0%     { opacity: 0; transform: translate(-50%, -50%) rotate(0deg) scale(0.8); }
+    46%    { opacity: 0; transform: translate(-50%, -50%) rotate(0deg) scale(0.8); }
+    51%    { opacity: 1; transform: translate(10px, -200px) rotate(10deg) scale(1); }
+    58%    { opacity: 1; transform: translate(10px, -200px) rotate(10deg) scale(1); }
+    61%    { opacity: 0; }
+    100%   { opacity: 0; }
+  }
+
+  @keyframes cardFan5 {
+    0%     { opacity: 0; transform: translate(-50%, -50%) rotate(0deg) scale(0.8); }
+    47%    { opacity: 0; transform: translate(-50%, -50%) rotate(0deg) scale(0.8); }
+    52%    { opacity: 1; transform: translate(140px, -180px) rotate(20deg) scale(1); }
+    58%    { opacity: 1; transform: translate(140px, -180px) rotate(20deg) scale(1); }
+    61%    { opacity: 0; }
+    100%   { opacity: 0; }
+  }
+
+  /* ============================================ */
+  /* SCENE 4: WALL ART GALLERY (9-12s)           */
+  /* ============================================ */
+  .scene-4 {
+    animation: sceneFourVis 15s ease infinite;
+    background: var(--white);
+  }
+
+  @keyframes sceneFourVis {
+    0%     { opacity: 0; }
+    60%    { opacity: 0; }
+    63%    { opacity: 1; }
+    78%    { opacity: 1; }
+    81%    { opacity: 0; }
+    100%   { opacity: 0; }
+  }
+
+  .scene-4 .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 42px;
+    font-weight: 600;
+    color: var(--forest-deep);
+    margin-bottom: 60px;
+    opacity: 0;
+    animation: s4TitleIn 15s ease infinite;
+  }
+
+  @keyframes s4TitleIn {
+    0%     { opacity: 0; transform: translateY(-20px); }
+    62%    { opacity: 0; transform: translateY(-20px); }
+    66%    { opacity: 1; transform: translateY(0); }
+    78%    { opacity: 1; }
+    81%    { opacity: 0; }
+    100%   { opacity: 0; }
+  }
+
+  /* Gallery wall layout */
+  .gallery-wall {
+    display: grid;
+    grid-template-columns: 240px 300px 240px;
+    grid-template-rows: 200px 200px;
+    gap: 24px;
+    align-items: center;
+    justify-items: center;
+  }
+
+  .art-frame {
+    background: var(--white);
+    border: 3px solid var(--cream-dark);
+    box-shadow: 0 8px 30px rgba(0,0,0,0.08), inset 0 0 0 8px var(--white), inset 0 0 0 10px var(--cream-dark);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .art-frame .art-content {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    text-align: center;
+  }
+
+  .art-frame .art-quote {
+    font-family: 'Playfair Display', serif;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--forest-deep);
+    line-height: 1.4;
+  }
+
+  .art-frame .art-decor {
+    margin-top: 8px;
+  }
+
+  /* Frame positions and sizes */
+  .art-frame:nth-child(1) {
+    width: 200px;
+    height: 160px;
+    grid-column: 1;
+    grid-row: 1;
+    animation: frameSlide1 15s cubic-bezier(0.34, 1.56, 0.64, 1) infinite;
+  }
+
+  .art-frame:nth-child(2) {
+    width: 260px;
+    height: 340px;
+    grid-column: 2;
+    grid-row: 1 / 3;
+    animation: frameSlide2 15s cubic-bezier(0.34, 1.56, 0.64, 1) infinite;
+  }
+
+  .art-frame:nth-child(3) {
+    width: 200px;
+    height: 160px;
+    grid-column: 3;
+    grid-row: 1;
+    animation: frameSlide3 15s cubic-bezier(0.34, 1.56, 0.64, 1) infinite;
+  }
+
+  .art-frame:nth-child(4) {
+    width: 180px;
+    height: 140px;
+    grid-column: 1;
+    grid-row: 2;
+    animation: frameSlide4 15s cubic-bezier(0.34, 1.56, 0.64, 1) infinite;
+  }
+
+  .art-frame:nth-child(5) {
+    width: 180px;
+    height: 140px;
+    grid-column: 3;
+    grid-row: 2;
+    animation: frameSlide5 15s cubic-bezier(0.34, 1.56, 0.64, 1) infinite;
+  }
+
+  .art-frame:nth-child(2) .art-quote {
+    font-size: 22px;
+  }
+
+  @keyframes frameSlide1 {
+    0%     { opacity: 0; transform: translateY(-60px); }
+    63%    { opacity: 0; transform: translateY(-60px); }
+    69%    { opacity: 1; transform: translateY(0); }
+    78%    { opacity: 1; }
+    81%    { opacity: 0; }
+    100%   { opacity: 0; }
+  }
+
+  @keyframes frameSlide2 {
+    0%     { opacity: 0; transform: translateY(60px); }
+    64%    { opacity: 0; transform: translateY(60px); }
+    70%    { opacity: 1; transform: translateY(0); }
+    78%    { opacity: 1; }
+    81%    { opacity: 0; }
+    100%   { opacity: 0; }
+  }
+
+  @keyframes frameSlide3 {
+    0%     { opacity: 0; transform: translateX(60px); }
+    65%    { opacity: 0; transform: translateX(60px); }
+    71%    { opacity: 1; transform: translateX(0); }
+    78%    { opacity: 1; }
+    81%    { opacity: 0; }
+    100%   { opacity: 0; }
+  }
+
+  @keyframes frameSlide4 {
+    0%     { opacity: 0; transform: translateX(-60px); }
+    66%    { opacity: 0; transform: translateX(-60px); }
+    72%    { opacity: 1; transform: translateX(0); }
+    78%    { opacity: 1; }
+    81%    { opacity: 0; }
+    100%   { opacity: 0; }
+  }
+
+  @keyframes frameSlide5 {
+    0%     { opacity: 0; transform: translateY(60px); }
+    67%    { opacity: 0; transform: translateY(60px); }
+    73%    { opacity: 1; transform: translateY(0); }
+    78%    { opacity: 1; }
+    81%    { opacity: 0; }
+    100%   { opacity: 0; }
+  }
+
+  /* ============================================ */
+  /* SCENE 5: CTA & VALUE PROPS (12-15s)         */
+  /* ============================================ */
+  .scene-5 {
+    animation: sceneFiveVis 15s ease infinite;
+  }
+
+  @keyframes sceneFiveVis {
+    0%     { opacity: 0; }
+    80%    { opacity: 0; }
+    83%    { opacity: 1; }
+    98%    { opacity: 1; }
+    100%   { opacity: 0; }
+  }
+
+  .scene-5 .logo-text {
+    font-family: 'Playfair Display', serif;
+    font-size: 64px;
+    font-weight: 700;
+    color: var(--forest-deep);
+    opacity: 0;
+    animation: logoIn 15s ease infinite;
+    margin-bottom: 10px;
+  }
+
+  @keyframes logoIn {
+    0%     { opacity: 0; transform: scale(0.9); }
+    82%    { opacity: 0; transform: scale(0.9); }
+    86%    { opacity: 1; transform: scale(1); }
+    98%    { opacity: 1; }
+    100%   { opacity: 0; }
+  }
+
+  .scene-5 .logo-sub {
+    font-family: 'Lato', sans-serif;
+    font-size: 18px;
+    color: var(--text-light);
+    letter-spacing: 6px;
+    text-transform: uppercase;
+    margin-bottom: 50px;
+    opacity: 0;
+    animation: logoSubIn 15s ease infinite;
+  }
+
+  @keyframes logoSubIn {
+    0%     { opacity: 0; }
+    84%    { opacity: 0; }
+    88%    { opacity: 1; }
+    98%    { opacity: 1; }
+    100%   { opacity: 0; }
+  }
+
+  /* Value badges */
+  .badges-row {
+    display: flex;
+    gap: 30px;
+    margin-bottom: 50px;
+  }
+
+  .badge {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    border: 2px solid var(--sage-light);
+    background: rgba(255, 255, 255, 0.7);
+    opacity: 0;
+  }
+
+  .badge .badge-number {
+    font-family: 'Playfair Display', serif;
+    font-size: 42px;
+    font-weight: 700;
+    color: var(--forest);
+    line-height: 1;
+  }
+
+  .badge .badge-label {
+    font-family: 'Lato', sans-serif;
+    font-size: 14px;
+    color: var(--text-medium);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-top: 6px;
+    text-align: center;
+    line-height: 1.3;
+  }
+
+  .badge:nth-child(1) {
+    animation: badgeIn1 15s ease infinite;
+    border-color: var(--sage);
+  }
+  .badge:nth-child(2) {
+    animation: badgeIn2 15s ease infinite;
+    border-color: var(--lavender);
+  }
+  .badge:nth-child(3) {
+    animation: badgeIn3 15s ease infinite;
+    border-color: var(--dusty-rose);
+  }
+
+  @keyframes badgeIn1 {
+    0%     { opacity: 0; transform: scale(0.5); }
+    84%    { opacity: 0; transform: scale(0.5); }
+    88%    { opacity: 1; transform: scale(1); }
+    98%    { opacity: 1; }
+    100%   { opacity: 0; }
+  }
+
+  @keyframes badgeIn2 {
+    0%     { opacity: 0; transform: scale(0.5); }
+    86%    { opacity: 0; transform: scale(0.5); }
+    90%    { opacity: 1; transform: scale(1); }
+    98%    { opacity: 1; }
+    100%   { opacity: 0; }
+  }
+
+  @keyframes badgeIn3 {
+    0%     { opacity: 0; transform: scale(0.5); }
+    88%    { opacity: 0; transform: scale(0.5); }
+    92%    { opacity: 1; transform: scale(1); }
+    98%    { opacity: 1; }
+    100%   { opacity: 0; }
+  }
+
+  /* Bottom CTA text */
+  .scene-5 .cta-text {
+    font-family: 'Lato', sans-serif;
+    font-size: 22px;
+    color: var(--text-medium);
+    letter-spacing: 3px;
+    opacity: 0;
+    animation: ctaIn 15s ease infinite;
+  }
+
+  @keyframes ctaIn {
+    0%     { opacity: 0; transform: translateY(10px); }
+    90%    { opacity: 0; transform: translateY(10px); }
+    94%    { opacity: 1; transform: translateY(0); }
+    98%    { opacity: 1; }
+    100%   { opacity: 0; }
+  }
+
+  .cta-text span {
+    color: var(--sage-dark);
+    font-weight: 700;
+  }
+
+  /* Scene 5 botanical accents */
+  .scene-5 .botanical-left,
+  .scene-5 .botanical-right {
+    position: absolute;
+    opacity: 0;
+    animation: botanicalAccent 15s ease infinite;
+  }
+
+  .scene-5 .botanical-left {
+    left: 40px;
+    bottom: 80px;
+  }
+
+  .scene-5 .botanical-right {
+    right: 40px;
+    top: 80px;
+    transform: scaleX(-1);
+  }
+
+  @keyframes botanicalAccent {
+    0%     { opacity: 0; }
+    86%    { opacity: 0; }
+    90%    { opacity: 0.15; }
+    98%    { opacity: 0.15; }
+    100%   { opacity: 0; }
+  }
+
+  /* ===== FLOATING PARTICLES (ambient) ===== */
+  .particle {
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--sage-light);
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .particle:nth-child(1) { top: 15%; left: 10%; animation: float 8s ease-in-out infinite; animation-delay: 0s; }
+  .particle:nth-child(2) { top: 70%; left: 85%; animation: float 10s ease-in-out infinite; animation-delay: 1s; }
+  .particle:nth-child(3) { top: 40%; left: 90%; animation: float 7s ease-in-out infinite; animation-delay: 2s; width: 4px; height: 4px; }
+  .particle:nth-child(4) { top: 80%; left: 20%; animation: float 9s ease-in-out infinite; animation-delay: 3s; width: 5px; height: 5px; }
+  .particle:nth-child(5) { top: 25%; left: 75%; animation: float 11s ease-in-out infinite; animation-delay: 0.5s; width: 3px; height: 3px; }
+
+  @keyframes float {
+    0%, 100% { opacity: 0; transform: translateY(0); }
+    25% { opacity: 0.3; }
+    50% { opacity: 0.5; transform: translateY(-30px); }
+    75% { opacity: 0.3; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <!-- Ambient floating particles -->
+  <div class="particle"></div>
+  <div class="particle"></div>
+  <div class="particle"></div>
+  <div class="particle"></div>
+  <div class="particle"></div>
+
+  <!-- ========== SCENE 1: TITLE REVEAL (0-3s) ========== -->
+  <div class="scene scene-1">
+
+    <!-- Botanical watermark -->
+    <svg class="watermark" viewBox="0 0 1080 1080" xmlns="http://www.w3.org/2000/svg">
+      <!-- Large leaf pattern -->
+      <g fill="none" stroke="#A8B5A2" stroke-width="1.5">
+        <path d="M100,200 Q200,100 300,200 Q200,300 100,200Z" />
+        <path d="M800,150 Q900,50 1000,150 Q900,250 800,150Z" />
+        <path d="M150,700 Q250,600 350,700 Q250,800 150,700Z" />
+        <path d="M750,800 Q850,700 950,800 Q850,900 750,800Z" />
+        <path d="M500,50 Q550,0 600,50 Q550,100 500,50Z" />
+        <path d="M50,500 Q100,450 150,500 Q100,550 50,500Z" />
+        <path d="M900,500 Q950,450 1000,500 Q950,550 900,500Z" />
+      </g>
+    </svg>
+
+    <!-- Eucalyptus wreath -->
+    <div class="wreath-container">
+      <svg viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg">
+        <!-- Main wreath circle path -->
+        <circle class="wreath-path" cx="300" cy="300" r="240" fill="none" stroke="#A8B5A2" stroke-width="1.5" />
+
+        <!-- Eucalyptus branches around the wreath -->
+        <g fill="#A8B5A2" opacity="0.6">
+          <!-- Top -->
+          <ellipse class="wreath-leaf" cx="300" cy="58" rx="12" ry="20" transform="rotate(0, 300, 58)" />
+          <ellipse class="wreath-leaf" cx="280" cy="62" rx="10" ry="16" transform="rotate(-15, 280, 62)" />
+          <ellipse class="wreath-leaf" cx="320" cy="62" rx="10" ry="16" transform="rotate(15, 320, 62)" />
+
+          <!-- Right -->
+          <ellipse class="wreath-leaf" cx="542" cy="300" rx="12" ry="20" transform="rotate(90, 542, 300)" />
+          <ellipse class="wreath-leaf" cx="538" cy="280" rx="10" ry="16" transform="rotate(75, 538, 280)" />
+          <ellipse class="wreath-leaf" cx="538" cy="320" rx="10" ry="16" transform="rotate(105, 538, 320)" />
+
+          <!-- Bottom -->
+          <ellipse class="wreath-leaf" cx="300" cy="542" rx="12" ry="20" transform="rotate(180, 300, 542)" />
+          <ellipse class="wreath-leaf" cx="320" cy="538" rx="10" ry="16" transform="rotate(195, 320, 538)" />
+          <ellipse class="wreath-leaf" cx="280" cy="538" rx="10" ry="16" transform="rotate(165, 280, 538)" />
+
+          <!-- Left -->
+          <ellipse class="wreath-leaf" cx="58" cy="300" rx="12" ry="20" transform="rotate(270, 58, 300)" />
+          <ellipse class="wreath-leaf" cx="62" cy="320" rx="10" ry="16" transform="rotate(285, 62, 320)" />
+          <ellipse class="wreath-leaf" cx="62" cy="280" rx="10" ry="16" transform="rotate(255, 62, 280)" />
+
+          <!-- Diagonal accents -->
+          <ellipse class="wreath-leaf" cx="130" cy="130" rx="10" ry="18" transform="rotate(-45, 130, 130)" />
+          <ellipse class="wreath-leaf" cx="470" cy="130" rx="10" ry="18" transform="rotate(45, 470, 130)" />
+          <ellipse class="wreath-leaf" cx="130" cy="470" rx="10" ry="18" transform="rotate(-135, 130, 470)" />
+          <ellipse class="wreath-leaf" cx="470" cy="470" rx="10" ry="18" transform="rotate(135, 470, 470)" />
+        </g>
+
+        <!-- Small accent dots -->
+        <g fill="#C9A96E" opacity="0.4">
+          <circle cx="200" cy="80" r="3" />
+          <circle cx="400" cy="80" r="3" />
+          <circle cx="520" cy="200" r="3" />
+          <circle cx="520" cy="400" r="3" />
+          <circle cx="400" cy="520" r="3" />
+          <circle cx="200" cy="520" r="3" />
+          <circle cx="80" cy="400" r="3" />
+          <circle cx="80" cy="200" r="3" />
+        </g>
+      </svg>
+    </div>
+
+    <div class="title">Calm &amp; Bloom</div>
+    <div class="decorative-line"></div>
+    <div class="subtitle">Self-Care &amp; Anxiety Relief Journal</div>
+    <div class="tagline">Nurture your mind, one page at a time</div>
+  </div>
+
+  <!-- ========== SCENE 2: JOURNAL PAGES (3-6s) ========== -->
+  <div class="scene scene-2">
+    <div class="sage-frame"></div>
+    <div class="section-title">Inside Your Journal</div>
+    <div class="section-subtitle">60+ beautifully designed pages</div>
+
+    <div class="pages-container">
+      <!-- Page 1: Mood Tracker -->
+      <div class="page-card">
+        <div class="page-title">Monthly Mood Tracker</div>
+        <div class="mood-grid">
+          <div class="mood-dot filled-3"></div>
+          <div class="mood-dot filled-1"></div>
+          <div class="mood-dot filled-3"></div>
+          <div class="mood-dot filled-2"></div>
+          <div class="mood-dot filled-3"></div>
+          <div class="mood-dot filled-4"></div>
+          <div class="mood-dot filled-3"></div>
+          <div class="mood-dot filled-2"></div>
+          <div class="mood-dot filled-3"></div>
+          <div class="mood-dot filled-1"></div>
+          <div class="mood-dot filled-3"></div>
+          <div class="mood-dot filled-3"></div>
+          <div class="mood-dot filled-2"></div>
+          <div class="mood-dot filled-3"></div>
+          <div class="mood-dot empty"></div>
+          <div class="mood-dot empty"></div>
+          <div class="mood-dot empty"></div>
+          <div class="mood-dot empty"></div>
+          <div class="mood-dot empty"></div>
+          <div class="mood-dot empty"></div>
+          <div class="mood-dot empty"></div>
+        </div>
+        <div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;">
+          <div style="display: flex; align-items: center; gap: 4px;">
+            <div class="mood-dot filled-3" style="width: 10px; height: 10px;"></div>
+            <span class="mood-label">Great</span>
+          </div>
+          <div style="display: flex; align-items: center; gap: 4px;">
+            <div class="mood-dot filled-2" style="width: 10px; height: 10px;"></div>
+            <span class="mood-label">Good</span>
+          </div>
+          <div style="display: flex; align-items: center; gap: 4px;">
+            <div class="mood-dot filled-4" style="width: 10px; height: 10px;"></div>
+            <span class="mood-label">Okay</span>
+          </div>
+          <div style="display: flex; align-items: center; gap: 4px;">
+            <div class="mood-dot filled-1" style="width: 10px; height: 10px;"></div>
+            <span class="mood-label">Low</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Page 2: Gratitude Log -->
+      <div class="page-card">
+        <div class="page-title">Daily Gratitude</div>
+        <div class="gratitude-lines">
+          <div class="gratitude-line">
+            <span class="gratitude-num">1</span>
+            <div class="gratitude-rule"></div>
+          </div>
+          <div class="gratitude-line">
+            <span class="gratitude-num">2</span>
+            <div class="gratitude-rule"></div>
+          </div>
+          <div class="gratitude-line">
+            <span class="gratitude-num">3</span>
+            <div class="gratitude-rule"></div>
+          </div>
+          <div class="gratitude-line">
+            <span class="gratitude-num">4</span>
+            <div class="gratitude-rule"></div>
+          </div>
+          <div class="gratitude-line">
+            <span class="gratitude-num">5</span>
+            <div class="gratitude-rule"></div>
+          </div>
+        </div>
+        <div style="margin-top: 20px; text-align: center;">
+          <svg width="40" height="40" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
+            <path d="M20 8 C20 8, 12 2, 8 8 C4 14, 12 22, 20 30 C28 22, 36 14, 32 8 C28 2, 20 8, 20 8Z" fill="none" stroke="#D4A5A5" stroke-width="1.5"/>
+          </svg>
+        </div>
+      </div>
+
+      <!-- Page 3: Anxiety Toolkit -->
+      <div class="page-card">
+        <div class="page-title">Anxiety Toolkit</div>
+        <div class="toolkit-items">
+          <div class="toolkit-item">
+            <div class="toolkit-icon breathe">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#3D5A3E" stroke-width="2"><circle cx="12" cy="12" r="8"/><path d="M12 8v8M8 12h8"/></svg>
+            </div>
+            <span class="toolkit-text">Breathing exercises</span>
+          </div>
+          <div class="toolkit-item">
+            <div class="toolkit-icon ground">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#3D5A3E" stroke-width="2"><path d="M12 4v16M4 12l8-8 8 8"/></svg>
+            </div>
+            <span class="toolkit-text">5-4-3-2-1 grounding</span>
+          </div>
+          <div class="toolkit-item">
+            <div class="toolkit-icon reflect">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#3D5A3E" stroke-width="2"><circle cx="12" cy="12" r="8"/><path d="M12 8v4l3 3"/></svg>
+            </div>
+            <span class="toolkit-text">Thought reframing</span>
+          </div>
+          <div class="toolkit-item">
+            <div class="toolkit-icon plan">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#3D5A3E" stroke-width="2"><rect x="6" y="4" width="12" height="16" rx="2"/><path d="M10 8h4M10 12h4M10 16h2"/></svg>
+            </div>
+            <span class="toolkit-text">Self-care action plan</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== SCENE 3: AFFIRMATION CARDS (6-9s) ========== -->
+  <div class="scene scene-3">
+    <div class="lavender-glow"></div>
+    <div class="section-title">30 Affirmation Cards</div>
+
+    <div class="cards-fan">
+      <div class="affirmation-card">
+        <div class="card-text">I choose peace over worry</div>
+        <svg class="card-accent" viewBox="0 0 30 30" xmlns="http://www.w3.org/2000/svg">
+          <path d="M15 5 Q20 0 25 5 Q30 10 25 15 Q20 20 15 25 Q10 20 5 15 Q0 10 5 5 Q10 0 15 5Z" fill="none" stroke="#A8B5A2" stroke-width="1"/>
+        </svg>
+      </div>
+      <div class="affirmation-card">
+        <div class="card-text">I am enough, just as I am</div>
+        <svg class="card-accent" viewBox="0 0 30 30" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="15" cy="15" r="12" fill="none" stroke="#D4C5E2" stroke-width="1"/>
+          <circle cx="15" cy="15" r="6" fill="none" stroke="#D4C5E2" stroke-width="1"/>
+        </svg>
+      </div>
+      <div class="affirmation-card">
+        <div class="card-text">Bloom at your own pace</div>
+        <svg class="card-accent" viewBox="0 0 30 30" xmlns="http://www.w3.org/2000/svg">
+          <path d="M15 2 L15 28" stroke="#D4A5A5" stroke-width="1"/>
+          <ellipse cx="15" cy="8" rx="6" ry="4" fill="none" stroke="#D4A5A5" stroke-width="1" transform="rotate(-30, 15, 8)"/>
+          <ellipse cx="15" cy="8" rx="6" ry="4" fill="none" stroke="#D4A5A5" stroke-width="1" transform="rotate(30, 15, 8)"/>
+        </svg>
+      </div>
+      <div class="affirmation-card">
+        <div class="card-text">My calm is my superpower</div>
+        <svg class="card-accent" viewBox="0 0 30 30" xmlns="http://www.w3.org/2000/svg">
+          <path d="M5 15 Q10 5 15 15 Q20 25 25 15" fill="none" stroke="#C9A96E" stroke-width="1"/>
+        </svg>
+      </div>
+      <div class="affirmation-card">
+        <div class="card-text">I breathe in peace, I breathe out fear</div>
+        <svg class="card-accent" viewBox="0 0 30 30" xmlns="http://www.w3.org/2000/svg">
+          <ellipse cx="15" cy="15" rx="12" ry="8" fill="none" stroke="#8A9B83" stroke-width="1"/>
+        </svg>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== SCENE 4: WALL ART GALLERY (9-12s) ========== -->
+  <div class="scene scene-4">
+    <div class="section-title">5 Wall Art Prints</div>
+
+    <div class="gallery-wall">
+      <!-- Frame 1 -->
+      <div class="art-frame">
+        <div class="art-content" style="background: linear-gradient(135deg, #F0F4EE, #E8EDE5);">
+          <div class="art-quote">Be still &amp; know</div>
+          <svg class="art-decor" width="40" height="20" viewBox="0 0 40 20" xmlns="http://www.w3.org/2000/svg">
+            <path d="M0 10 Q10 0 20 10 Q30 20 40 10" fill="none" stroke="#A8B5A2" stroke-width="1.5"/>
+          </svg>
+        </div>
+      </div>
+
+      <!-- Frame 2 (center, larger) -->
+      <div class="art-frame">
+        <div class="art-content" style="background: linear-gradient(135deg, #FAF6F0, #F0EBE3);">
+          <svg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg" style="margin-bottom: 16px;">
+            <path d="M30 5 Q40 15 40 30 Q40 45 30 55 Q20 45 20 30 Q20 15 30 5Z" fill="none" stroke="#A8B5A2" stroke-width="1.5"/>
+            <path d="M30 15 Q35 22 35 30 Q35 38 30 45 Q25 38 25 30 Q25 22 30 15Z" fill="none" stroke="#C5D1BF" stroke-width="1"/>
+          </svg>
+          <div class="art-quote">Grow through what you go through</div>
+          <svg class="art-decor" width="30" height="2" viewBox="0 0 30 2" xmlns="http://www.w3.org/2000/svg" style="margin-top: 12px;">
+            <line x1="0" y1="1" x2="30" y2="1" stroke="#C9A96E" stroke-width="1.5"/>
+          </svg>
+        </div>
+      </div>
+
+      <!-- Frame 3 -->
+      <div class="art-frame">
+        <div class="art-content" style="background: linear-gradient(135deg, #F3EFF8, #EDE6F5);">
+          <div class="art-quote">Inhale calm, exhale chaos</div>
+          <svg class="art-decor" width="40" height="20" viewBox="0 0 40 20" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="10" cy="10" r="4" fill="none" stroke="#D4C5E2" stroke-width="1"/>
+            <circle cx="20" cy="10" r="4" fill="none" stroke="#D4C5E2" stroke-width="1"/>
+            <circle cx="30" cy="10" r="4" fill="none" stroke="#D4C5E2" stroke-width="1"/>
+          </svg>
+        </div>
+      </div>
+
+      <!-- Frame 4 -->
+      <div class="art-frame">
+        <div class="art-content" style="background: linear-gradient(135deg, #FAF0F0, #F5EAEA);">
+          <div class="art-quote">You are worthy of rest</div>
+          <svg class="art-decor" width="30" height="20" viewBox="0 0 30 20" xmlns="http://www.w3.org/2000/svg">
+            <path d="M15 2 C15 2, 8 -2, 5 4 C2 10, 8 16, 15 20 C22 16, 28 10, 25 4 C22 -2, 15 2, 15 2Z" fill="none" stroke="#D4A5A5" stroke-width="1"/>
+          </svg>
+        </div>
+      </div>
+
+      <!-- Frame 5 -->
+      <div class="art-frame">
+        <div class="art-content" style="background: linear-gradient(135deg, #F5F0E0, #F0EBDA);">
+          <div class="art-quote">Bloom where you are planted</div>
+          <svg class="art-decor" width="30" height="20" viewBox="0 0 30 20" xmlns="http://www.w3.org/2000/svg">
+            <path d="M15 18 L15 8" stroke="#C9A96E" stroke-width="1"/>
+            <ellipse cx="15" cy="6" rx="6" ry="4" fill="none" stroke="#C9A96E" stroke-width="1"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== SCENE 5: CTA & VALUE PROPS (12-15s) ========== -->
+  <div class="scene scene-5">
+
+    <!-- Botanical accent left -->
+    <svg class="botanical-left" width="200" height="300" viewBox="0 0 200 300" xmlns="http://www.w3.org/2000/svg">
+      <g fill="none" stroke="#A8B5A2" stroke-width="1.5">
+        <path d="M100 300 Q100 200 80 150 Q60 100 100 50" />
+        <ellipse cx="70" cy="120" rx="25" ry="12" transform="rotate(-30, 70, 120)" />
+        <ellipse cx="60" cy="170" rx="22" ry="10" transform="rotate(-40, 60, 170)" />
+        <ellipse cx="75" cy="220" rx="20" ry="10" transform="rotate(-25, 75, 220)" />
+        <ellipse cx="120" cy="100" rx="22" ry="10" transform="rotate(20, 120, 100)" />
+        <ellipse cx="115" cy="150" rx="20" ry="10" transform="rotate(30, 115, 150)" />
+        <ellipse cx="110" cy="200" rx="18" ry="9" transform="rotate(25, 110, 200)" />
+      </g>
+    </svg>
+
+    <!-- Botanical accent right -->
+    <svg class="botanical-right" width="200" height="300" viewBox="0 0 200 300" xmlns="http://www.w3.org/2000/svg">
+      <g fill="none" stroke="#A8B5A2" stroke-width="1.5">
+        <path d="M100 300 Q100 200 80 150 Q60 100 100 50" />
+        <ellipse cx="70" cy="120" rx="25" ry="12" transform="rotate(-30, 70, 120)" />
+        <ellipse cx="60" cy="170" rx="22" ry="10" transform="rotate(-40, 60, 170)" />
+        <ellipse cx="75" cy="220" rx="20" ry="10" transform="rotate(-25, 75, 220)" />
+        <ellipse cx="120" cy="100" rx="22" ry="10" transform="rotate(20, 120, 100)" />
+        <ellipse cx="115" cy="150" rx="20" ry="10" transform="rotate(30, 115, 150)" />
+        <ellipse cx="110" cy="200" rx="18" ry="9" transform="rotate(25, 110, 200)" />
+      </g>
+    </svg>
+
+    <div class="logo-text">Calm &amp; Bloom</div>
+    <div class="logo-sub">Self-Care Journal Bundle</div>
+
+    <div class="badges-row">
+      <div class="badge">
+        <span class="badge-number">60+</span>
+        <span class="badge-label">Journal<br>Pages</span>
+      </div>
+      <div class="badge">
+        <span class="badge-number">30</span>
+        <span class="badge-label">Affirmation<br>Cards</span>
+      </div>
+      <div class="badge">
+        <span class="badge-number">5</span>
+        <span class="badge-label">Wall Art<br>Prints</span>
+      </div>
+    </div>
+
+    <div class="cta-text"><span>Instant Download</span> &bull; Print at Home</div>
+  </div>
+
+</div>
+
+</body>
+</html>
