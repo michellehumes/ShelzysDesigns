@@ -106,7 +106,7 @@ Secondary:
 ## ✍️ Website Copy
 
 ### Copy Documents
-- **[Copy Bank](/copy/COPY_BANK.md)** - All website copy organized by page and section
+- **[Copy Bank](/brand/COPY_BANK.md)** - All website copy organized by page and section
 
 ### Copy Highlights
 
@@ -166,7 +166,7 @@ Ready-to-use prompts for:
 ## 🏗️ Site Structure
 
 ### Structure Documents
-- **[Site Structure & Navigation](/structure/SITE_STRUCTURE.md)** - Complete site architecture, page layouts, and UX specs
+- **[Site Structure & Navigation](/docs/SITE_STRUCTURE.md)** - Complete site architecture, page layouts, and UX specs
 
 ### Main Navigation
 ```
@@ -268,8 +268,8 @@ Shop Dropdown:
 ### For Immediate Use
 
 **1. Building Homepage:**
-→ Use `/copy/COPY_BANK.md` sections for homepage hero, why sublimation, how it works, etc.
-→ Reference `/structure/SITE_STRUCTURE.md` for layout specifications
+→ Use `/brand/COPY_BANK.md` sections for homepage hero, why sublimation, how it works, etc.
+→ Reference `/docs/SITE_STRUCTURE.md` for layout specifications
 
 **2. Creating Product Pages:**
 → Copy descriptions from `/products/SHOPIFY_PRODUCT_DESCRIPTIONS.md`
@@ -284,7 +284,7 @@ Shop Dropdown:
 → Use `/brand/colors.md` for exact hex codes and usage
 
 **5. Setting Up Site Navigation:**
-→ Follow structure in `/structure/SITE_STRUCTURE.md`
+→ Follow structure in `/docs/SITE_STRUCTURE.md`
 → Create collections and pages as outlined
 
 ---
@@ -294,25 +294,45 @@ Shop Dropdown:
 ```
 /ShelzysDesigns/
 │
-├── README.md (this file)
+├── README.md                   ← This file
+├── .gitignore
+├── .theme-check.yml            ← Shopify theme validation config
+├── robots.txt.liquid           ← SEO robots config
 │
-├── /brand/
+├── /assets/                    ← Product & marketing images + CSS
+├── /brand/                     ← Brand identity, colors, copy bank
 │   ├── BRAND_GUIDE.md
-│   └── colors.md
+│   ├── COPY_BANK.md
+│   ├── colors.md
+│   └── shelzys-brand.css
 │
-├── /products/
-│   ├── PRODUCT_CATALOG.md
-│   └── SHOPIFY_PRODUCT_DESCRIPTIONS.md
+├── /config/                    ← Shopify theme settings
+├── /layout/                    ← Shopify theme layout (theme.liquid)
+├── /locales/                   ← i18n translations
+├── /sections/                  ← Shopify Liquid sections
+├── /snippets/                  ← Reusable Liquid snippets
+├── /templates/                 ← Shopify page templates
+│   ├── /emails/                ← Email templates (cart recovery, reviews)
+│   └── /pages/                 ← Static page HTML (about, FAQ, etc.)
 │
-├── /copy/
-│   └── COPY_BANK.md
+├── /products/                  ← Product catalog, descriptions, data
+├── /imagery/                   ← Photography shot lists & AI prompts
+├── /examples/                  ← React/Next.js integration examples
 │
-├── /imagery/
-│   ├── SHOT_LIST.md
-│   └── AI_IMAGE_PROMPTS.md
+├── /docs/                      ← All documentation
+│   ├── /audits/                ← Site audit reports & recommendations
+│   ├── /deployment/            ← Deployment & setup guides
+│   ├── /planning/              ← Developer briefs, checklists, next steps
+│   └── /shopify/               ← Shopify-specific implementation guides
 │
-└── /structure/
-    └── SITE_STRUCTURE.md
+├── /scripts/                   ← Automation & deployment scripts
+│   └── /deploy/                ← Shopify API deployment scripts
+│
+├── /IMPLEMENTATION/            ← Ready-to-deploy assets & checklists
+├── /amazon-affiliate/          ← Amazon affiliate program resources
+├── /amazon-automation/         ← Amazon ads automation (Python)
+│
+└── /.github/                   ← CI/CD workflows
 ```
 
 ---
@@ -361,7 +381,7 @@ Once launched, monitor:
 
 **For questions about this documentation:**
 - Review the specific markdown file for your question
-- All copy is in `/copy/COPY_BANK.md`
+- All copy is in `/brand/COPY_BANK.md`
 - All product info is in `/products/`
 - All imagery guidance is in `/imagery/`
 
@@ -403,5 +423,5 @@ Good luck with Shelzy's Designs! 🍾
 
 ---
 
-**Last Updated:** November 2025
-**Version:** 1.0
+**Last Updated:** February 2026
+**Version:** 1.1
