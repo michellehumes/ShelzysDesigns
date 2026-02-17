@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calm &amp; Bloom — Wall Art Prints</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@300;400;500;600&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* ── CSS Variables ──────────────────────────────────────── */
+    :root {
+      --soft-sage: #B8CEB3;
+      --sage-light: #D4E4D0;
+      --sage-ultra-light: #EBF2E9;
+      --dusty-lavender: #C4B1CB;
+      --lavender-light: #DDD2E1;
+      --warm-cream: #FAF6F0;
+      --soft-blush: #E8D5D0;
+      --blush-light: #F3E8E4;
+      --deep-forest: #3D5A47;
+      --forest-medium: #5A7D64;
+      --charcoal: #2B2B2B;
+      --charcoal-light: #555555;
+      --white: #FFFFFF;
+
+      --font-heading: 'Playfair Display', 'Georgia', serif;
+      --font-body: 'Inter', 'Helvetica Neue', sans-serif;
+      --font-accent: 'Montserrat', 'Arial', sans-serif;
+    }
+
+    /* ── Reset ──────────────────────────────────────────────── */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    body {
+      font-family: var(--font-body);
+      color: var(--charcoal);
+      background: var(--warm-cream);
+    }
+
+    /* ── Print Page ─────────────────────────────────────────── */
+    .print-page {
+      background: var(--white);
+      margin: 0 auto 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+      page-break-after: always;
+      page-break-inside: avoid;
+    }
+
+    .print-page:last-child {
+      page-break-after: auto;
+    }
+
+    /* Size variants */
+    .size-8x10 {
+      width: 8in;
+      height: 10in;
+    }
+
+    .size-11x14 {
+      width: 11in;
+      height: 14in;
+    }
+
+    .size-16x20 {
+      width: 16in;
+      height: 20in;
+    }
+
+    /* ── Art Container ──────────────────────────────────────── */
+    .art-container {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      padding: 10%;
+    }
+
+    /* ── Typography ─────────────────────────────────────────── */
+    .art-quote {
+      font-family: var(--font-heading);
+      color: var(--deep-forest);
+      text-align: center;
+      line-height: 1.35;
+      position: relative;
+      z-index: 2;
+    }
+
+    .size-8x10 .art-quote {
+      font-size: 1.6rem;
+    }
+
+    .size-11x14 .art-quote {
+      font-size: 2.2rem;
+    }
+
+    .size-16x20 .art-quote {
+      font-size: 3.2rem;
+    }
+
+    .art-quote-large {
+      font-weight: 600;
+    }
+
+    .art-quote-script {
+      font-style: italic;
+      font-weight: 400;
+    }
+
+    .art-quote-bold {
+      font-weight: 700;
+      letter-spacing: 0.02em;
+    }
+
+    /* ── SVG Botanical Elements ─────────────────────────────── */
+    .art-svg-wrap {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .art-svg-wrap svg {
+      width: 100%;
+      height: 100%;
+    }
+
+    /* ── Screen Preview ─────────────────────────────────────── */
+    @media screen {
+      body {
+        padding: 30px 0;
+      }
+      .print-page {
+        box-shadow: 0 4px 30px rgba(0,0,0,0.1);
+        border: 1px solid #e8e0d8;
+      }
+      .size-11x14,
+      .size-16x20 {
+        transform-origin: top center;
+      }
+    }
+
+    /* ── Print Styles ──────────────────────────────────────── */
+    @media print {
+      body {
+        background: white;
+        margin: 0;
+        padding: 0;
+      }
+      .print-page {
+        margin: 0;
+        box-shadow: none;
+        border: none;
+      }
+      * {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+      }
+    }
+
+    /* Size label (screen only) */
+    .size-label {
+      position: absolute;
+      top: 12px;
+      right: 16px;
+      font-family: var(--font-accent);
+      font-size: 0.6rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--charcoal-light);
+      background: var(--sage-ultra-light);
+      padding: 4px 12px;
+      border-radius: 20px;
+      z-index: 10;
+    }
+
+    @media print {
+      .size-label { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ================================================================
+       DESIGN 1: "Bloom at your own pace"
+       Circular botanical wreath surrounding centered text
+       ================================================================ -->
+
+  <!-- Design 1 — 8x10 -->
+  <div class="print-page size-8x10">
+    <span class="size-label">8 &times; 10 in</span>
+    <div class="art-container">
+      <div class="art-svg-wrap">
+        <svg viewBox="0 0 480 600" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- Circular wreath -->
+          <g transform="translate(240, 300)">
+            <!-- Wreath circle guide (invisible) -->
+            <!-- Top eucalyptus leaves -->
+            <ellipse cx="0" cy="-155" rx="14" ry="22" transform="rotate(0 0 -155)" fill="none" stroke="#B8CEB3" stroke-width="1.3"/>
+            <ellipse cx="-30" cy="-150" rx="12" ry="20" transform="rotate(-20 -30 -150)" fill="none" stroke="#B8CEB3" stroke-width="1.2"/>
+            <ellipse cx="30" cy="-150" rx="12" ry="20" transform="rotate(20 30 -150)" fill="none" stroke="#B8CEB3" stroke-width="1.2"/>
+
+            <!-- Top-right leaves -->
+            <ellipse cx="75" cy="-135" rx="11" ry="19" transform="rotate(40 75 -135)" fill="none" stroke="#B8CEB3" stroke-width="1.2"/>
+            <ellipse cx="110" cy="-110" rx="12" ry="18" transform="rotate(55 110 -110)" fill="none" stroke="#B8CEB3" stroke-width="1.2"/>
+            <ellipse cx="135" cy="-75" rx="11" ry="17" transform="rotate(70 135 -75)" fill="none" stroke="#B8CEB3" stroke-width="1.1"/>
+
+            <!-- Right leaves -->
+            <ellipse cx="150" cy="-30" rx="10" ry="18" transform="rotate(82 150 -30)" fill="none" stroke="#B8CEB3" stroke-width="1.1"/>
+            <ellipse cx="152" cy="20" rx="11" ry="17" transform="rotate(95 152 20)" fill="none" stroke="#B8CEB3" stroke-width="1.1"/>
+            <ellipse cx="140" cy="65" rx="10" ry="18" transform="rotate(108 140 65)" fill="none" stroke="#B8CEB3" stroke-width="1.2"/>
+
+            <!-- Bottom-right leaves -->
+            <ellipse cx="115" cy="105" rx="11" ry="17" transform="rotate(125 115 105)" fill="none" stroke="#B8CEB3" stroke-width="1.2"/>
+            <ellipse cx="80" cy="132" rx="12" ry="18" transform="rotate(140 80 132)" fill="none" stroke="#B8CEB3" stroke-width="1.1"/>
+
+            <!-- Bottom leaves -->
+            <ellipse cx="38" cy="150" rx="11" ry="19" transform="rotate(160 38 150)" fill="none" stroke="#B8CEB3" stroke-width="1.2"/>
+            <ellipse cx="0" cy="155" rx="13" ry="20" transform="rotate(180 0 155)" fill="none" stroke="#B8CEB3" stroke-width="1.3"/>
+            <ellipse cx="-38" cy="150" rx="11" ry="19" transform="rotate(200 -38 150)" fill="none" stroke="#B8CEB3" stroke-width="1.2"/>
+
+            <!-- Bottom-left leaves -->
+            <ellipse cx="-80" cy="132" rx="12" ry="18" transform="rotate(220 -80 132)" fill="none" stroke="#B8CEB3" stroke-width="1.1"/>
+            <ellipse cx="-115" cy="105" rx="11" ry="17" transform="rotate(235 -115 105)" fill="none" stroke="#B8CEB3" stroke-width="1.2"/>
+
+            <!-- Left leaves -->
+            <ellipse cx="-140" cy="65" rx="10" ry="18" transform="rotate(252 -140 65)" fill="none" stroke="#B8CEB3" stroke-width="1.2"/>
+            <ellipse cx="-152" cy="20" rx="11" ry="17" transform="rotate(265 -152 20)" fill="none" stroke="#B8CEB3" stroke-width="1.1"/>
+            <ellipse cx="-150" cy="-30" rx="10" ry="18" transform="rotate(278 -150 -30)" fill="none" stroke="#B8CEB3" stroke-width="1.1"/>
+
+            <!-- Top-left leaves -->
+            <ellipse cx="-135" cy="-75" rx="11" ry="17" transform="rotate(290 -135 -75)" fill="none" stroke="#B8CEB3" stroke-width="1.1"/>
+            <ellipse cx="-110" cy="-110" rx="12" ry="18" transform="rotate(305 -110 -110)" fill="none" stroke="#B8CEB3" stroke-width="1.2"/>
+            <ellipse cx="-75" cy="-135" rx="11" ry="19" transform="rotate(320 -75 -135)" fill="none" stroke="#B8CEB3" stroke-width="1.2"/>
+
+            <!-- Connecting vine (subtle circle) -->
+            <circle cx="0" cy="0" r="148" fill="none" stroke="#B8CEB3" stroke-width="0.5" opacity="0.3" stroke-dasharray="4 6"/>
+
+            <!-- Small accent buds along the wreath -->
+            <circle cx="55" cy="-145" r="3" fill="#B8CEB3" opacity="0.25"/>
+            <circle cx="145" cy="-50" r="2.5" fill="#B8CEB3" opacity="0.2"/>
+            <circle cx="130" cy="85" r="3" fill="#B8CEB3" opacity="0.25"/>
+            <circle cx="-55" cy="-145" r="3" fill="#B8CEB3" opacity="0.25"/>
+            <circle cx="-145" cy="-50" r="2.5" fill="#B8CEB3" opacity="0.2"/>
+            <circle cx="-130" cy="85" r="3" fill="#B8CEB3" opacity="0.25"/>
+            <circle cx="0" cy="158" r="3" fill="#B8CEB3" opacity="0.2"/>
+
+            <!-- Small leaf veins -->
+            <line x1="0" y1="-175" x2="0" y2="-140" stroke="#B8CEB3" stroke-width="0.6" opacity="0.3"/>
+            <line x1="152" y1="0" x2="140" y2="0" stroke="#B8CEB3" stroke-width="0.6" opacity="0.3"/>
+            <line x1="-152" y1="0" x2="-140" y2="0" stroke="#B8CEB3" stroke-width="0.6" opacity="0.3"/>
+            <line x1="0" y1="175" x2="0" y2="140" stroke="#B8CEB3" stroke-width="0.6" opacity="0.3"/>
+          </g>
+        </svg>
+      </div>
+      <div class="art-quote art-quote-large">
+        Bloom<br>at your<br>own pace
+      </div>
+    </div>
+  </div>
+
+  <!-- Design 1 — 11x14 -->
+  <div class="print-page size-11x14">
+    <span class="size-label">11 &times; 14 in</span>
+    <div class="art-container">
+      <div class="art-svg-wrap">
+        <svg viewBox="0 0 660 840" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <g transform="translate(330, 420)">
+            <ellipse cx="0" cy="-210" rx="18" ry="30" transform="rotate(0 0 -210)" fill="none" stroke="#B8CEB3" stroke-width="1.5"/>
+            <ellipse cx="-42" cy="-204" rx="16" ry="27" transform="rotate(-20 -42 -204)" fill="none" stroke="#B8CEB3" stroke-width="1.4"/>
+            <ellipse cx="42" cy="-204" rx="16" ry="27" transform="rotate(20 42 -204)" fill="none" stroke="#B8CEB3" stroke-width="1.4"/>
+            <ellipse cx="100" cy="-182" rx="15" ry="26" transform="rotate(40 100 -182)" fill="none" stroke="#B8CEB3" stroke-width="1.3"/>
+            <ellipse cx="150" cy="-148" rx="16" ry="25" transform="rotate(55 150 -148)" fill="none" stroke="#B8CEB3" stroke-width="1.3"/>
+            <ellipse cx="184" cy="-100" rx="15" ry="24" transform="rotate(70 184 -100)" fill="none" stroke="#B8CEB3" stroke-width="1.3"/>
+            <ellipse cx="204" cy="-42" rx="14" ry="25" transform="rotate(82 204 -42)" fill="none" stroke="#B8CEB3" stroke-width="1.3"/>
+            <ellipse cx="208" cy="28" rx="15" ry="24" transform="rotate(95 208 28)" fill="none" stroke="#B8CEB3" stroke-width="1.3"/>
+            <ellipse cx="190" cy="90" rx="14" ry="25" transform="rotate(108 190 90)" fill="none" stroke="#B8CEB3" stroke-width="1.3"/>
+            <ellipse cx="156" cy="142" rx="15" ry="24" transform="rotate(125 156 142)" fill="none" stroke="#B8CEB3" stroke-width="1.3"/>
+            <ellipse cx="110" cy="180" rx="16" ry="25" transform="rotate(140 110 180)" fill="none" stroke="#B8CEB3" stroke-width="1.3"/>
+            <ellipse cx="52" cy="204" rx="15" ry="26" transform="rotate(160 52 204)" fill="none" stroke="#B8CEB3" stroke-width="1.4"/>
+            <ellipse cx="0" cy="210" rx="17" ry="28" transform="rotate(180 0 210)" fill="none" stroke="#B8CEB3" stroke-width="1.5"/>
+            <ellipse cx="-52" cy="204" rx="15" ry="26" transform="rotate(200 -52 204)" fill="none" stroke="#B8CEB3" stroke-width="1.4"/>
+            <ellipse cx="-110" cy="180" rx="16" ry="25" transform="rotate(220 -110 180)" fill="none" stroke="#B8CEB3" stroke-width="1.3"/>
+            <ellipse cx="-156" cy="142" rx="15" ry="24" transform="rotate(235 -156 142)" fill="none" stroke="#B8CEB3" stroke-width="1.3"/>
+            <ellipse cx="-190" cy="90" rx="14" ry="25" transform="rotate(252 -190 90)" fill="none" stroke="#B8CEB3" stroke-width="1.3"/>
+            <ellipse cx="-208" cy="28" rx="15" ry="24" transform="rotate(265 -208 28)" fill="none" stroke="#B8CEB3" stroke-width="1.3"/>
+            <ellipse cx="-204" cy="-42" rx="14" ry="25" transform="rotate(278 -204 -42)" fill="none" stroke="#B8CEB3" stroke-width="1.3"/>
+            <ellipse cx="-184" cy="-100" rx="15" ry="24" transform="rotate(290 -184 -100)" fill="none" stroke="#B8CEB3" stroke-width="1.3"/>
+            <ellipse cx="-150" cy="-148" rx="16" ry="25" transform="rotate(305 -150 -148)" fill="none" stroke="#B8CEB3" stroke-width="1.3"/>
+            <ellipse cx="-100" cy="-182" rx="15" ry="26" transform="rotate(320 -100 -182)" fill="none" stroke="#B8CEB3" stroke-width="1.3"/>
+            <circle cx="0" cy="0" r="200" fill="none" stroke="#B8CEB3" stroke-width="0.5" opacity="0.25" stroke-dasharray="5 8"/>
+            <circle cx="72" cy="-196" r="4" fill="#B8CEB3" opacity="0.25"/>
+            <circle cx="198" cy="-68" r="3.5" fill="#B8CEB3" opacity="0.2"/>
+            <circle cx="176" cy="118" r="4" fill="#B8CEB3" opacity="0.25"/>
+            <circle cx="-72" cy="-196" r="4" fill="#B8CEB3" opacity="0.25"/>
+            <circle cx="-198" cy="-68" r="3.5" fill="#B8CEB3" opacity="0.2"/>
+            <circle cx="-176" cy="118" r="4" fill="#B8CEB3" opacity="0.25"/>
+            <circle cx="0" cy="215" r="3.5" fill="#B8CEB3" opacity="0.2"/>
+          </g>
+        </svg>
+      </div>
+      <div class="art-quote art-quote-large">
+        Bloom<br>at your<br>own pace
+      </div>
+    </div>
+  </div>
+
+  <!-- Design 1 — 16x20 -->
+  <div class="print-page size-16x20">
+    <span class="size-label">16 &times; 20 in</span>
+    <div class="art-container">
+      <div class="art-svg-wrap">
+        <svg viewBox="0 0 960 1200" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <g transform="translate(480, 600)">
+            <ellipse cx="0" cy="-310" rx="24" ry="40" transform="rotate(0 0 -310)" fill="none" stroke="#B8CEB3" stroke-width="1.8"/>
+            <ellipse cx="-60" cy="-302" rx="22" ry="36" transform="rotate(-20 -60 -302)" fill="none" stroke="#B8CEB3" stroke-width="1.6"/>
+            <ellipse cx="60" cy="-302" rx="22" ry="36" transform="rotate(20 60 -302)" fill="none" stroke="#B8CEB3" stroke-width="1.6"/>
+            <ellipse cx="148" cy="-270" rx="20" ry="34" transform="rotate(40 148 -270)" fill="none" stroke="#B8CEB3" stroke-width="1.5"/>
+            <ellipse cx="222" cy="-220" rx="21" ry="33" transform="rotate(55 222 -220)" fill="none" stroke="#B8CEB3" stroke-width="1.5"/>
+            <ellipse cx="272" cy="-150" rx="20" ry="32" transform="rotate(70 272 -150)" fill="none" stroke="#B8CEB3" stroke-width="1.5"/>
+            <ellipse cx="302" cy="-62" rx="19" ry="33" transform="rotate(82 302 -62)" fill="none" stroke="#B8CEB3" stroke-width="1.5"/>
+            <ellipse cx="308" cy="40" rx="20" ry="32" transform="rotate(95 308 40)" fill="none" stroke="#B8CEB3" stroke-width="1.5"/>
+            <ellipse cx="282" cy="132" rx="19" ry="34" transform="rotate(108 282 132)" fill="none" stroke="#B8CEB3" stroke-width="1.5"/>
+            <ellipse cx="232" cy="210" rx="20" ry="33" transform="rotate(125 232 210)" fill="none" stroke="#B8CEB3" stroke-width="1.5"/>
+            <ellipse cx="164" cy="268" rx="22" ry="34" transform="rotate(140 164 268)" fill="none" stroke="#B8CEB3" stroke-width="1.5"/>
+            <ellipse cx="78" cy="302" rx="21" ry="36" transform="rotate(160 78 302)" fill="none" stroke="#B8CEB3" stroke-width="1.6"/>
+            <ellipse cx="0" cy="310" rx="23" ry="38" transform="rotate(180 0 310)" fill="none" stroke="#B8CEB3" stroke-width="1.8"/>
+            <ellipse cx="-78" cy="302" rx="21" ry="36" transform="rotate(200 -78 302)" fill="none" stroke="#B8CEB3" stroke-width="1.6"/>
+            <ellipse cx="-164" cy="268" rx="22" ry="34" transform="rotate(220 -164 268)" fill="none" stroke="#B8CEB3" stroke-width="1.5"/>
+            <ellipse cx="-232" cy="210" rx="20" ry="33" transform="rotate(235 -232 210)" fill="none" stroke="#B8CEB3" stroke-width="1.5"/>
+            <ellipse cx="-282" cy="132" rx="19" ry="34" transform="rotate(252 -282 132)" fill="none" stroke="#B8CEB3" stroke-width="1.5"/>
+            <ellipse cx="-308" cy="40" rx="20" ry="32" transform="rotate(265 -308 40)" fill="none" stroke="#B8CEB3" stroke-width="1.5"/>
+            <ellipse cx="-302" cy="-62" rx="19" ry="33" transform="rotate(278 -302 -62)" fill="none" stroke="#B8CEB3" stroke-width="1.5"/>
+            <ellipse cx="-272" cy="-150" rx="20" ry="32" transform="rotate(290 -272 -150)" fill="none" stroke="#B8CEB3" stroke-width="1.5"/>
+            <ellipse cx="-222" cy="-220" rx="21" ry="33" transform="rotate(305 -222 -220)" fill="none" stroke="#B8CEB3" stroke-width="1.5"/>
+            <ellipse cx="-148" cy="-270" rx="20" ry="34" transform="rotate(320 -148 -270)" fill="none" stroke="#B8CEB3" stroke-width="1.5"/>
+            <circle cx="0" cy="0" r="295" fill="none" stroke="#B8CEB3" stroke-width="0.6" opacity="0.2" stroke-dasharray="6 10"/>
+            <circle cx="108" cy="-290" r="5" fill="#B8CEB3" opacity="0.2"/>
+            <circle cx="292" cy="-100" r="4.5" fill="#B8CEB3" opacity="0.18"/>
+            <circle cx="260" cy="174" r="5" fill="#B8CEB3" opacity="0.2"/>
+            <circle cx="-108" cy="-290" r="5" fill="#B8CEB3" opacity="0.2"/>
+            <circle cx="-292" cy="-100" r="4.5" fill="#B8CEB3" opacity="0.18"/>
+            <circle cx="-260" cy="174" r="5" fill="#B8CEB3" opacity="0.2"/>
+            <circle cx="0" cy="318" r="4.5" fill="#B8CEB3" opacity="0.18"/>
+          </g>
+        </svg>
+      </div>
+      <div class="art-quote art-quote-large">
+        Bloom<br>at your<br>own pace
+      </div>
+    </div>
+  </div>
+
+  <!-- ================================================================
+       DESIGN 2: "Breathe in calm, breathe out worry"
+       Flowing wave-like SVG element with small leaves
+       ================================================================ -->
+
+  <!-- Design 2 — 8x10 -->
+  <div class="print-page size-8x10">
+    <span class="size-label">8 &times; 10 in</span>
+    <div class="art-container">
+      <div class="art-svg-wrap">
+        <svg viewBox="0 0 480 600" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- Upper flowing wave -->
+          <path d="M40 180 Q120 140 180 170 Q240 200 300 160 Q360 120 440 170" stroke="#B8CEB3" stroke-width="1.5" fill="none" opacity="0.5"/>
+          <path d="M40 190 Q120 150 180 180 Q240 210 300 170 Q360 130 440 180" stroke="#B8CEB3" stroke-width="0.8" fill="none" opacity="0.3"/>
+
+          <!-- Small leaves along upper wave -->
+          <ellipse cx="100" cy="160" rx="8" ry="14" transform="rotate(-30 100 160)" fill="none" stroke="#B8CEB3" stroke-width="1" opacity="0.5"/>
+          <ellipse cx="200" cy="178" rx="7" ry="12" transform="rotate(15 200 178)" fill="none" stroke="#B8CEB3" stroke-width="1" opacity="0.45"/>
+          <ellipse cx="340" cy="148" rx="8" ry="13" transform="rotate(-20 340 148)" fill="none" stroke="#B8CEB3" stroke-width="1" opacity="0.5"/>
+
+          <!-- Lower flowing wave -->
+          <path d="M40 420 Q120 460 180 430 Q240 400 300 440 Q360 480 440 430" stroke="#B8CEB3" stroke-width="1.5" fill="none" opacity="0.5"/>
+          <path d="M40 410 Q120 450 180 420 Q240 390 300 430 Q360 470 440 420" stroke="#B8CEB3" stroke-width="0.8" fill="none" opacity="0.3"/>
+
+          <!-- Small leaves along lower wave -->
+          <ellipse cx="140" cy="445" rx="7" ry="12" transform="rotate(25 140 445)" fill="none" stroke="#B8CEB3" stroke-width="1" opacity="0.45"/>
+          <ellipse cx="260" cy="410" rx="8" ry="13" transform="rotate(-15 260 410)" fill="none" stroke="#B8CEB3" stroke-width="1" opacity="0.5"/>
+          <ellipse cx="400" cy="448" rx="7" ry="11" transform="rotate(20 400 448)" fill="none" stroke="#B8CEB3" stroke-width="1" opacity="0.45"/>
+
+          <!-- Scattered small dots -->
+          <circle cx="70" cy="300" r="2" fill="#B8CEB3" opacity="0.15"/>
+          <circle cx="410" cy="300" r="2" fill="#B8CEB3" opacity="0.15"/>
+          <circle cx="240" cy="140" r="1.5" fill="#B8CEB3" opacity="0.12"/>
+          <circle cx="240" cy="460" r="1.5" fill="#B8CEB3" opacity="0.12"/>
+        </svg>
+      </div>
+      <div class="art-quote art-quote-script" style="font-size: 1.4rem;">
+        Breathe in calm,<br>breathe out worry
+      </div>
+    </div>
+  </div>
+
+  <!-- Design 2 — 11x14 -->
+  <div class="print-page size-11x14">
+    <span class="size-label">11 &times; 14 in</span>
+    <div class="art-container">
+      <div class="art-svg-wrap">
+        <svg viewBox="0 0 660 840" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M50 240 Q165 185 250 230 Q330 275 415 215 Q500 155 610 230" stroke="#B8CEB3" stroke-width="1.8" fill="none" opacity="0.5"/>
+          <path d="M50 254 Q165 199 250 244 Q330 289 415 229 Q500 169 610 244" stroke="#B8CEB3" stroke-width="1" fill="none" opacity="0.3"/>
+          <ellipse cx="135" cy="214" rx="10" ry="18" transform="rotate(-30 135 214)" fill="none" stroke="#B8CEB3" stroke-width="1.2" opacity="0.5"/>
+          <ellipse cx="280" cy="244" rx="9" ry="16" transform="rotate(15 280 244)" fill="none" stroke="#B8CEB3" stroke-width="1.2" opacity="0.45"/>
+          <ellipse cx="470" cy="198" rx="10" ry="17" transform="rotate(-20 470 198)" fill="none" stroke="#B8CEB3" stroke-width="1.2" opacity="0.5"/>
+          <path d="M50 600 Q165 655 250 610 Q330 565 415 625 Q500 685 610 610" stroke="#B8CEB3" stroke-width="1.8" fill="none" opacity="0.5"/>
+          <path d="M50 586 Q165 641 250 596 Q330 551 415 611 Q500 671 610 596" stroke="#B8CEB3" stroke-width="1" fill="none" opacity="0.3"/>
+          <ellipse cx="190" cy="635" rx="9" ry="16" transform="rotate(25 190 635)" fill="none" stroke="#B8CEB3" stroke-width="1.2" opacity="0.45"/>
+          <ellipse cx="360" cy="580" rx="10" ry="17" transform="rotate(-15 360 580)" fill="none" stroke="#B8CEB3" stroke-width="1.2" opacity="0.5"/>
+          <ellipse cx="550" cy="638" rx="9" ry="15" transform="rotate(20 550 638)" fill="none" stroke="#B8CEB3" stroke-width="1.2" opacity="0.45"/>
+          <circle cx="90" cy="420" r="2.5" fill="#B8CEB3" opacity="0.15"/>
+          <circle cx="570" cy="420" r="2.5" fill="#B8CEB3" opacity="0.15"/>
+          <circle cx="330" cy="180" r="2" fill="#B8CEB3" opacity="0.12"/>
+          <circle cx="330" cy="660" r="2" fill="#B8CEB3" opacity="0.12"/>
+        </svg>
+      </div>
+      <div class="art-quote art-quote-script" style="font-size: 2rem;">
+        Breathe in calm,<br>breathe out worry
+      </div>
+    </div>
+  </div>
+
+  <!-- Design 2 — 16x20 -->
+  <div class="print-page size-16x20">
+    <span class="size-label">16 &times; 20 in</span>
+    <div class="art-container">
+      <div class="art-svg-wrap">
+        <svg viewBox="0 0 960 1200" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M60 340 Q240 260 360 330 Q480 400 600 300 Q720 200 900 330" stroke="#B8CEB3" stroke-width="2.2" fill="none" opacity="0.5"/>
+          <path d="M60 358 Q240 278 360 348 Q480 418 600 318 Q720 218 900 348" stroke="#B8CEB3" stroke-width="1.2" fill="none" opacity="0.3"/>
+          <ellipse cx="190" cy="300" rx="14" ry="24" transform="rotate(-30 190 300)" fill="none" stroke="#B8CEB3" stroke-width="1.5" opacity="0.5"/>
+          <ellipse cx="400" cy="350" rx="12" ry="22" transform="rotate(15 400 350)" fill="none" stroke="#B8CEB3" stroke-width="1.5" opacity="0.45"/>
+          <ellipse cx="680" cy="272" rx="14" ry="23" transform="rotate(-20 680 272)" fill="none" stroke="#B8CEB3" stroke-width="1.5" opacity="0.5"/>
+          <path d="M60 860 Q240 940 360 870 Q480 800 600 900 Q720 1000 900 870" stroke="#B8CEB3" stroke-width="2.2" fill="none" opacity="0.5"/>
+          <path d="M60 842 Q240 922 360 852 Q480 782 600 882 Q720 982 900 852" stroke="#B8CEB3" stroke-width="1.2" fill="none" opacity="0.3"/>
+          <ellipse cx="280" cy="918" rx="12" ry="22" transform="rotate(25 280 918)" fill="none" stroke="#B8CEB3" stroke-width="1.5" opacity="0.45"/>
+          <ellipse cx="520" cy="832" rx="14" ry="23" transform="rotate(-15 520 832)" fill="none" stroke="#B8CEB3" stroke-width="1.5" opacity="0.5"/>
+          <ellipse cx="800" cy="922" rx="12" ry="20" transform="rotate(20 800 922)" fill="none" stroke="#B8CEB3" stroke-width="1.5" opacity="0.45"/>
+          <circle cx="120" cy="600" r="3.5" fill="#B8CEB3" opacity="0.15"/>
+          <circle cx="840" cy="600" r="3.5" fill="#B8CEB3" opacity="0.15"/>
+          <circle cx="480" cy="240" r="2.5" fill="#B8CEB3" opacity="0.12"/>
+          <circle cx="480" cy="960" r="2.5" fill="#B8CEB3" opacity="0.12"/>
+        </svg>
+      </div>
+      <div class="art-quote art-quote-script" style="font-size: 2.8rem;">
+        Breathe in calm,<br>breathe out worry
+      </div>
+    </div>
+  </div>
+
+  <!-- ================================================================
+       DESIGN 3: "You are enough, exactly as you are"
+       Large single eucalyptus branch SVG
+       ================================================================ -->
+
+  <!-- Design 3 — 8x10 -->
+  <div class="print-page size-8x10">
+    <span class="size-label">8 &times; 10 in</span>
+    <div class="art-container">
+      <div class="art-svg-wrap">
+        <svg viewBox="0 0 480 600" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- Large eucalyptus branch sweeping from bottom-left -->
+          <g opacity="0.55">
+            <!-- Main stem -->
+            <path d="M60 580 C100 500 140 420 180 350 C220 280 260 220 310 160 C340 120 370 90 390 70" stroke="#B8CEB3" stroke-width="2" fill="none"/>
+
+            <!-- Leaves on the left side -->
+            <ellipse cx="90" cy="530" rx="18" ry="30" transform="rotate(-50 90 530)" fill="none" stroke="#B8CEB3" stroke-width="1.2"/>
+            <ellipse cx="120" cy="460" rx="16" ry="28" transform="rotate(-45 120 460)" fill="none" stroke="#B8CEB3" stroke-width="1.2"/>
+            <ellipse cx="155" cy="390" rx="17" ry="27" transform="rotate(-40 155 390)" fill="none" stroke="#B8CEB3" stroke-width="1.1"/>
+            <ellipse cx="195" cy="320" rx="16" ry="26" transform="rotate(-35 195 320)" fill="none" stroke="#B8CEB3" stroke-width="1.1"/>
+            <ellipse cx="240" cy="255" rx="15" ry="25" transform="rotate(-30 240 255)" fill="none" stroke="#B8CEB3" stroke-width="1.1"/>
+            <ellipse cx="285" cy="195" rx="14" ry="23" transform="rotate(-25 285 195)" fill="none" stroke="#B8CEB3" stroke-width="1"/>
+            <ellipse cx="330" cy="140" rx="13" ry="21" transform="rotate(-20 330 140)" fill="none" stroke="#B8CEB3" stroke-width="1"/>
+            <ellipse cx="370" cy="90" rx="11" ry="18" transform="rotate(-15 370 90)" fill="none" stroke="#B8CEB3" stroke-width="1"/>
+
+            <!-- Leaves on the right side -->
+            <ellipse cx="110" cy="540" rx="16" ry="28" transform="rotate(30 110 540)" fill="none" stroke="#B8CEB3" stroke-width="1.1"/>
+            <ellipse cx="148" cy="470" rx="15" ry="26" transform="rotate(35 148 470)" fill="none" stroke="#B8CEB3" stroke-width="1.1"/>
+            <ellipse cx="188" cy="400" rx="16" ry="25" transform="rotate(40 188 400)" fill="none" stroke="#B8CEB3" stroke-width="1.1"/>
+            <ellipse cx="228" cy="335" rx="15" ry="24" transform="rotate(42 228 335)" fill="none" stroke="#B8CEB3" stroke-width="1"/>
+            <ellipse cx="270" cy="270" rx="14" ry="22" transform="rotate(45 270 270)" fill="none" stroke="#B8CEB3" stroke-width="1"/>
+            <ellipse cx="318" cy="205" rx="13" ry="20" transform="rotate(48 318 205)" fill="none" stroke="#B8CEB3" stroke-width="1"/>
+            <ellipse cx="358" cy="148" rx="12" ry="18" transform="rotate(50 358 148)" fill="none" stroke="#B8CEB3" stroke-width="1"/>
+            <ellipse cx="395" cy="82" rx="10" ry="16" transform="rotate(52 395 82)" fill="none" stroke="#B8CEB3" stroke-width="0.9"/>
+
+            <!-- Small bud at tip -->
+            <ellipse cx="395" cy="65" rx="6" ry="10" transform="rotate(-10 395 65)" fill="none" stroke="#B8CEB3" stroke-width="0.8"/>
+          </g>
+        </svg>
+      </div>
+      <div class="art-quote art-quote-script" style="font-size: 1.35rem;">
+        You are enough,<br>exactly as you are
+      </div>
+    </div>
+  </div>
+
+  <!-- Design 3 — 11x14 -->
+  <div class="print-page size-11x14">
+    <span class="size-label">11 &times; 14 in</span>
+    <div class="art-container">
+      <div class="art-svg-wrap">
+        <svg viewBox="0 0 660 840" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <g opacity="0.55">
+            <path d="M80 810 C130 700 190 590 250 490 C310 390 370 300 430 220 C470 165 510 120 545 90" stroke="#B8CEB3" stroke-width="2.5" fill="none"/>
+            <ellipse cx="115" cy="740" rx="22" ry="38" transform="rotate(-50 115 740)" fill="none" stroke="#B8CEB3" stroke-width="1.5"/>
+            <ellipse cx="158" cy="645" rx="20" ry="35" transform="rotate(-45 158 645)" fill="none" stroke="#B8CEB3" stroke-width="1.4"/>
+            <ellipse cx="210" cy="548" rx="21" ry="34" transform="rotate(-40 210 548)" fill="none" stroke="#B8CEB3" stroke-width="1.4"/>
+            <ellipse cx="268" cy="452" rx="20" ry="33" transform="rotate(-35 268 452)" fill="none" stroke="#B8CEB3" stroke-width="1.3"/>
+            <ellipse cx="332" cy="358" rx="19" ry="32" transform="rotate(-30 332 358)" fill="none" stroke="#B8CEB3" stroke-width="1.3"/>
+            <ellipse cx="392" cy="272" rx="18" ry="30" transform="rotate(-25 392 272)" fill="none" stroke="#B8CEB3" stroke-width="1.2"/>
+            <ellipse cx="452" cy="195" rx="17" ry="27" transform="rotate(-20 452 195)" fill="none" stroke="#B8CEB3" stroke-width="1.2"/>
+            <ellipse cx="510" cy="125" rx="14" ry="23" transform="rotate(-15 510 125)" fill="none" stroke="#B8CEB3" stroke-width="1.1"/>
+            <ellipse cx="148" cy="754" rx="20" ry="35" transform="rotate(30 148 754)" fill="none" stroke="#B8CEB3" stroke-width="1.4"/>
+            <ellipse cx="200" cy="660" rx="19" ry="33" transform="rotate(35 200 660)" fill="none" stroke="#B8CEB3" stroke-width="1.3"/>
+            <ellipse cx="258" cy="562" rx="20" ry="32" transform="rotate(40 258 562)" fill="none" stroke="#B8CEB3" stroke-width="1.3"/>
+            <ellipse cx="318" cy="468" rx="19" ry="31" transform="rotate(42 318 468)" fill="none" stroke="#B8CEB3" stroke-width="1.3"/>
+            <ellipse cx="375" cy="378" rx="18" ry="28" transform="rotate(45 375 378)" fill="none" stroke="#B8CEB3" stroke-width="1.2"/>
+            <ellipse cx="435" cy="290" rx="17" ry="26" transform="rotate(48 435 290)" fill="none" stroke="#B8CEB3" stroke-width="1.2"/>
+            <ellipse cx="492" cy="208" rx="16" ry="23" transform="rotate(50 492 208)" fill="none" stroke="#B8CEB3" stroke-width="1.1"/>
+            <ellipse cx="545" cy="112" rx="13" ry="20" transform="rotate(52 545 112)" fill="none" stroke="#B8CEB3" stroke-width="1"/>
+            <ellipse cx="550" cy="82" rx="8" ry="13" transform="rotate(-10 550 82)" fill="none" stroke="#B8CEB3" stroke-width="0.9"/>
+          </g>
+        </svg>
+      </div>
+      <div class="art-quote art-quote-script" style="font-size: 1.9rem;">
+        You are enough,<br>exactly as you are
+      </div>
+    </div>
+  </div>
+
+  <!-- Design 3 — 16x20 -->
+  <div class="print-page size-16x20">
+    <span class="size-label">16 &times; 20 in</span>
+    <div class="art-container">
+      <div class="art-svg-wrap">
+        <svg viewBox="0 0 960 1200" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <g opacity="0.55">
+            <path d="M110 1160 C180 1000 270 840 360 700 C450 560 530 430 620 315 C680 235 740 170 790 125" stroke="#B8CEB3" stroke-width="3" fill="none"/>
+            <ellipse cx="160" cy="1060" rx="30" ry="52" transform="rotate(-50 160 1060)" fill="none" stroke="#B8CEB3" stroke-width="1.8"/>
+            <ellipse cx="220" cy="920" rx="28" ry="48" transform="rotate(-45 220 920)" fill="none" stroke="#B8CEB3" stroke-width="1.7"/>
+            <ellipse cx="295" cy="780" rx="28" ry="46" transform="rotate(-40 295 780)" fill="none" stroke="#B8CEB3" stroke-width="1.6"/>
+            <ellipse cx="378" cy="642" rx="27" ry="44" transform="rotate(-35 378 642)" fill="none" stroke="#B8CEB3" stroke-width="1.5"/>
+            <ellipse cx="470" cy="510" rx="26" ry="42" transform="rotate(-30 470 510)" fill="none" stroke="#B8CEB3" stroke-width="1.5"/>
+            <ellipse cx="558" cy="388" rx="24" ry="40" transform="rotate(-25 558 388)" fill="none" stroke="#B8CEB3" stroke-width="1.4"/>
+            <ellipse cx="648" cy="278" rx="22" ry="36" transform="rotate(-20 648 278)" fill="none" stroke="#B8CEB3" stroke-width="1.3"/>
+            <ellipse cx="730" cy="178" rx="19" ry="30" transform="rotate(-15 730 178)" fill="none" stroke="#B8CEB3" stroke-width="1.2"/>
+            <ellipse cx="208" cy="1080" rx="27" ry="48" transform="rotate(30 208 1080)" fill="none" stroke="#B8CEB3" stroke-width="1.7"/>
+            <ellipse cx="280" cy="940" rx="26" ry="45" transform="rotate(35 280 940)" fill="none" stroke="#B8CEB3" stroke-width="1.6"/>
+            <ellipse cx="362" cy="800" rx="27" ry="43" transform="rotate(40 362 800)" fill="none" stroke="#B8CEB3" stroke-width="1.5"/>
+            <ellipse cx="448" cy="665" rx="26" ry="42" transform="rotate(42 448 665)" fill="none" stroke="#B8CEB3" stroke-width="1.5"/>
+            <ellipse cx="534" cy="538" rx="24" ry="38" transform="rotate(45 534 538)" fill="none" stroke="#B8CEB3" stroke-width="1.4"/>
+            <ellipse cx="622" cy="414" rx="22" ry="35" transform="rotate(48 622 414)" fill="none" stroke="#B8CEB3" stroke-width="1.3"/>
+            <ellipse cx="706" cy="298" rx="20" ry="31" transform="rotate(50 706 298)" fill="none" stroke="#B8CEB3" stroke-width="1.2"/>
+            <ellipse cx="782" cy="160" rx="17" ry="27" transform="rotate(52 782 160)" fill="none" stroke="#B8CEB3" stroke-width="1.1"/>
+            <ellipse cx="795" cy="118" rx="11" ry="18" transform="rotate(-10 795 118)" fill="none" stroke="#B8CEB3" stroke-width="1"/>
+          </g>
+        </svg>
+      </div>
+      <div class="art-quote art-quote-script" style="font-size: 2.8rem;">
+        You are enough,<br>exactly as you are
+      </div>
+    </div>
+  </div>
+
+  <!-- ================================================================
+       DESIGN 4: "Progress, not perfection"
+       Bold typography with abstract botanical line art
+       ================================================================ -->
+
+  <!-- Design 4 — 8x10 -->
+  <div class="print-page size-8x10">
+    <span class="size-label">8 &times; 10 in</span>
+    <div class="art-container">
+      <div class="art-svg-wrap">
+        <svg viewBox="0 0 480 600" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- Abstract minimalist stems and circles -->
+          <g opacity="0.4">
+            <!-- Left cluster -->
+            <line x1="80" y1="520" x2="100" y2="140" stroke="#B8CEB3" stroke-width="1.2"/>
+            <circle cx="100" cy="130" r="14" fill="none" stroke="#B8CEB3" stroke-width="1.2"/>
+            <circle cx="100" cy="130" r="5" fill="#B8CEB3" opacity="0.15"/>
+            <line x1="68" y1="480" x2="50" y2="280" stroke="#B8CEB3" stroke-width="1"/>
+            <circle cx="50" cy="270" r="10" fill="none" stroke="#B8CEB3" stroke-width="1"/>
+            <line x1="92" y1="500" x2="125" y2="210" stroke="#B8CEB3" stroke-width="0.8"/>
+            <circle cx="125" cy="200" r="8" fill="none" stroke="#B8CEB3" stroke-width="0.8"/>
+
+            <!-- Right cluster -->
+            <line x1="400" y1="520" x2="380" y2="140" stroke="#B8CEB3" stroke-width="1.2"/>
+            <circle cx="380" cy="130" r="14" fill="none" stroke="#B8CEB3" stroke-width="1.2"/>
+            <circle cx="380" cy="130" r="5" fill="#B8CEB3" opacity="0.15"/>
+            <line x1="412" y1="480" x2="430" y2="280" stroke="#B8CEB3" stroke-width="1"/>
+            <circle cx="430" cy="270" r="10" fill="none" stroke="#B8CEB3" stroke-width="1"/>
+            <line x1="388" y1="500" x2="355" y2="210" stroke="#B8CEB3" stroke-width="0.8"/>
+            <circle cx="355" cy="200" r="8" fill="none" stroke="#B8CEB3" stroke-width="0.8"/>
+
+            <!-- Bottom accents -->
+            <line x1="170" y1="540" x2="190" y2="460" stroke="#B8CEB3" stroke-width="0.6"/>
+            <circle cx="190" cy="455" r="5" fill="none" stroke="#B8CEB3" stroke-width="0.6"/>
+            <line x1="310" y1="540" x2="290" y2="460" stroke="#B8CEB3" stroke-width="0.6"/>
+            <circle cx="290" cy="455" r="5" fill="none" stroke="#B8CEB3" stroke-width="0.6"/>
+
+            <!-- Tiny dots -->
+            <circle cx="60" cy="200" r="2" fill="#B8CEB3" opacity="0.2"/>
+            <circle cx="420" cy="200" r="2" fill="#B8CEB3" opacity="0.2"/>
+            <circle cx="140" cy="120" r="1.5" fill="#B8CEB3" opacity="0.15"/>
+            <circle cx="340" cy="120" r="1.5" fill="#B8CEB3" opacity="0.15"/>
+          </g>
+        </svg>
+      </div>
+      <div class="art-quote art-quote-bold" style="font-size: 1.8rem; letter-spacing: 0.05em;">
+        Progress,<br><span style="font-weight: 400; font-style: italic; font-size: 0.75em;">not</span><br>perfection
+      </div>
+    </div>
+  </div>
+
+  <!-- Design 4 — 11x14 -->
+  <div class="print-page size-11x14">
+    <span class="size-label">11 &times; 14 in</span>
+    <div class="art-container">
+      <div class="art-svg-wrap">
+        <svg viewBox="0 0 660 840" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <g opacity="0.4">
+            <line x1="105" y1="730" x2="132" y2="190" stroke="#B8CEB3" stroke-width="1.5"/>
+            <circle cx="132" cy="178" r="18" fill="none" stroke="#B8CEB3" stroke-width="1.5"/>
+            <circle cx="132" cy="178" r="6.5" fill="#B8CEB3" opacity="0.15"/>
+            <line x1="88" y1="675" x2="65" y2="388" stroke="#B8CEB3" stroke-width="1.2"/>
+            <circle cx="65" cy="375" r="13" fill="none" stroke="#B8CEB3" stroke-width="1.2"/>
+            <line x1="120" y1="700" x2="168" y2="290" stroke="#B8CEB3" stroke-width="1"/>
+            <circle cx="168" cy="278" r="10" fill="none" stroke="#B8CEB3" stroke-width="1"/>
+            <line x1="555" y1="730" x2="528" y2="190" stroke="#B8CEB3" stroke-width="1.5"/>
+            <circle cx="528" cy="178" r="18" fill="none" stroke="#B8CEB3" stroke-width="1.5"/>
+            <circle cx="528" cy="178" r="6.5" fill="#B8CEB3" opacity="0.15"/>
+            <line x1="572" y1="675" x2="595" y2="388" stroke="#B8CEB3" stroke-width="1.2"/>
+            <circle cx="595" cy="375" r="13" fill="none" stroke="#B8CEB3" stroke-width="1.2"/>
+            <line x1="540" y1="700" x2="492" y2="290" stroke="#B8CEB3" stroke-width="1"/>
+            <circle cx="492" cy="278" r="10" fill="none" stroke="#B8CEB3" stroke-width="1"/>
+            <line x1="232" y1="755" x2="260" y2="645" stroke="#B8CEB3" stroke-width="0.8"/>
+            <circle cx="260" cy="638" r="6.5" fill="none" stroke="#B8CEB3" stroke-width="0.8"/>
+            <line x1="428" y1="755" x2="400" y2="645" stroke="#B8CEB3" stroke-width="0.8"/>
+            <circle cx="400" cy="638" r="6.5" fill="none" stroke="#B8CEB3" stroke-width="0.8"/>
+            <circle cx="78" cy="275" r="2.5" fill="#B8CEB3" opacity="0.2"/>
+            <circle cx="582" cy="275" r="2.5" fill="#B8CEB3" opacity="0.2"/>
+            <circle cx="188" cy="162" r="2" fill="#B8CEB3" opacity="0.15"/>
+            <circle cx="472" cy="162" r="2" fill="#B8CEB3" opacity="0.15"/>
+          </g>
+        </svg>
+      </div>
+      <div class="art-quote art-quote-bold" style="font-size: 2.5rem; letter-spacing: 0.05em;">
+        Progress,<br><span style="font-weight: 400; font-style: italic; font-size: 0.75em;">not</span><br>perfection
+      </div>
+    </div>
+  </div>
+
+  <!-- Design 4 — 16x20 -->
+  <div class="print-page size-16x20">
+    <span class="size-label">16 &times; 20 in</span>
+    <div class="art-container">
+      <div class="art-svg-wrap">
+        <svg viewBox="0 0 960 1200" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <g opacity="0.4">
+            <line x1="150" y1="1040" x2="190" y2="270" stroke="#B8CEB3" stroke-width="2"/>
+            <circle cx="190" cy="252" r="25" fill="none" stroke="#B8CEB3" stroke-width="2"/>
+            <circle cx="190" cy="252" r="9" fill="#B8CEB3" opacity="0.15"/>
+            <line x1="125" y1="960" x2="90" y2="555" stroke="#B8CEB3" stroke-width="1.5"/>
+            <circle cx="90" cy="538" r="18" fill="none" stroke="#B8CEB3" stroke-width="1.5"/>
+            <line x1="170" y1="1000" x2="240" y2="415" stroke="#B8CEB3" stroke-width="1.2"/>
+            <circle cx="240" cy="398" r="14" fill="none" stroke="#B8CEB3" stroke-width="1.2"/>
+            <line x1="810" y1="1040" x2="770" y2="270" stroke="#B8CEB3" stroke-width="2"/>
+            <circle cx="770" cy="252" r="25" fill="none" stroke="#B8CEB3" stroke-width="2"/>
+            <circle cx="770" cy="252" r="9" fill="#B8CEB3" opacity="0.15"/>
+            <line x1="835" y1="960" x2="870" y2="555" stroke="#B8CEB3" stroke-width="1.5"/>
+            <circle cx="870" cy="538" r="18" fill="none" stroke="#B8CEB3" stroke-width="1.5"/>
+            <line x1="790" y1="1000" x2="720" y2="415" stroke="#B8CEB3" stroke-width="1.2"/>
+            <circle cx="720" cy="398" r="14" fill="none" stroke="#B8CEB3" stroke-width="1.2"/>
+            <line x1="335" y1="1080" x2="375" y2="920" stroke="#B8CEB3" stroke-width="1"/>
+            <circle cx="375" cy="910" r="9" fill="none" stroke="#B8CEB3" stroke-width="1"/>
+            <line x1="625" y1="1080" x2="585" y2="920" stroke="#B8CEB3" stroke-width="1"/>
+            <circle cx="585" cy="910" r="9" fill="none" stroke="#B8CEB3" stroke-width="1"/>
+            <circle cx="110" cy="390" r="3.5" fill="#B8CEB3" opacity="0.2"/>
+            <circle cx="850" cy="390" r="3.5" fill="#B8CEB3" opacity="0.2"/>
+            <circle cx="268" cy="232" r="2.5" fill="#B8CEB3" opacity="0.15"/>
+            <circle cx="692" cy="232" r="2.5" fill="#B8CEB3" opacity="0.15"/>
+          </g>
+        </svg>
+      </div>
+      <div class="art-quote art-quote-bold" style="font-size: 3.6rem; letter-spacing: 0.05em;">
+        Progress,<br><span style="font-weight: 400; font-style: italic; font-size: 0.75em;">not</span><br>perfection
+      </div>
+    </div>
+  </div>
+
+  <!-- ================================================================
+       DESIGN 5: "Be gentle with yourself today"
+       Loose arch of hand-drawn-style leaves framing the text
+       ================================================================ -->
+
+  <!-- Design 5 — 8x10 -->
+  <div class="print-page size-8x10">
+    <span class="size-label">8 &times; 10 in</span>
+    <div class="art-container">
+      <div class="art-svg-wrap">
+        <svg viewBox="0 0 480 600" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- Loose arch of leaves from bottom-left, over top, to bottom-right -->
+          <g opacity="0.5">
+            <!-- Left ascending leaves -->
+            <path d="M80 520 C78 510 72 500 65 505 C58 510 62 520 68 522 C74 524 80 520 80 520Z" stroke="#B8CEB3" stroke-width="0.9" fill="none"/>
+            <path d="M72 480 C68 468 58 458 50 465 C42 472 48 484 55 487 C62 490 72 480 72 480Z" stroke="#B8CEB3" stroke-width="0.9" fill="none"/>
+            <path d="M62 435 C56 422 44 415 38 422 C32 429 40 442 48 444 C56 446 62 435 62 435Z" stroke="#B8CEB3" stroke-width="0.9" fill="none"/>
+            <path d="M55 388 C48 375 36 370 30 378 C24 386 34 398 42 400 C50 402 55 388 55 388Z" stroke="#B8CEB3" stroke-width="1" fill="none"/>
+            <path d="M52 340 C44 328 32 324 28 332 C24 340 34 352 42 353 C50 354 52 340 52 340Z" stroke="#B8CEB3" stroke-width="1" fill="none"/>
+            <path d="M54 290 C48 276 38 270 32 278 C26 286 36 298 44 300 C52 302 54 290 54 290Z" stroke="#B8CEB3" stroke-width="1" fill="none"/>
+
+            <!-- Top arch leaves -->
+            <path d="M65 245 C60 230 52 222 46 230 C40 238 50 250 58 252 C66 254 65 245 65 245Z" stroke="#B8CEB3" stroke-width="1" fill="none"/>
+            <path d="M85 200 C82 185 76 176 70 183 C64 190 72 204 80 206 C88 208 85 200 85 200Z" stroke="#B8CEB3" stroke-width="1" fill="none"/>
+            <path d="M115 162 C114 146 110 136 104 142 C98 148 104 164 112 166 C120 168 115 162 115 162Z" stroke="#B8CEB3" stroke-width="1" fill="none"/>
+            <path d="M155 135 C156 118 154 108 148 113 C142 118 146 134 154 137 C162 140 155 135 155 135Z" stroke="#B8CEB3" stroke-width="1" fill="none"/>
+            <path d="M200 120 C204 104 204 94 198 98 C192 102 192 118 200 122 C208 126 200 120 200 120Z" stroke="#B8CEB3" stroke-width="1" fill="none"/>
+            <path d="M240 115 C246 100 248 90 242 93 C236 96 234 112 240 116 C246 120 240 115 240 115Z" stroke="#B8CEB3" stroke-width="1" fill="none"/>
+            <path d="M280 120 C288 106 292 96 286 98 C280 100 276 116 282 120 C288 124 280 120 280 120Z" stroke="#B8CEB3" stroke-width="1" fill="none"/>
+            <path d="M325 135 C334 120 340 110 334 112 C328 114 322 130 328 135 C334 140 325 135 325 135Z" stroke="#B8CEB3" stroke-width="1" fill="none"/>
+            <path d="M365 162 C376 148 382 138 376 140 C370 142 364 158 368 164 C372 170 365 162 365 162Z" stroke="#B8CEB3" stroke-width="1" fill="none"/>
+            <path d="M395 200 C406 186 414 178 408 180 C402 182 396 198 400 204 C404 210 395 200 395 200Z" stroke="#B8CEB3" stroke-width="1" fill="none"/>
+
+            <!-- Right descending leaves -->
+            <path d="M415 245 C422 230 430 222 436 230 C442 238 432 250 424 252 C416 254 415 245 415 245Z" stroke="#B8CEB3" stroke-width="1" fill="none"/>
+            <path d="M426 290 C432 276 442 270 448 278 C454 286 444 298 436 300 C428 302 426 290 426 290Z" stroke="#B8CEB3" stroke-width="1" fill="none"/>
+            <path d="M428 340 C436 328 448 324 452 332 C456 340 446 352 438 353 C430 354 428 340 428 340Z" stroke="#B8CEB3" stroke-width="1" fill="none"/>
+            <path d="M425 388 C432 375 444 370 450 378 C456 386 446 398 438 400 C430 402 425 388 425 388Z" stroke="#B8CEB3" stroke-width="1" fill="none"/>
+            <path d="M418 435 C424 422 436 415 442 422 C448 429 440 442 432 444 C424 446 418 435 418 435Z" stroke="#B8CEB3" stroke-width="0.9" fill="none"/>
+            <path d="M408 480 C412 468 422 458 430 465 C438 472 432 484 425 487 C418 490 408 480 408 480Z" stroke="#B8CEB3" stroke-width="0.9" fill="none"/>
+            <path d="M400 520 C402 510 408 500 415 505 C422 510 418 520 412 522 C406 524 400 520 400 520Z" stroke="#B8CEB3" stroke-width="0.9" fill="none"/>
+
+            <!-- Connecting vine (subtle) -->
+            <path d="M80 520 Q60 400 55 290 Q52 200 85 150 Q130 105 200 95 Q240 90 280 95 Q350 105 395 150 Q428 200 425 290 Q420 400 400 520" stroke="#B8CEB3" stroke-width="0.5" fill="none" opacity="0.3"/>
+          </g>
+        </svg>
+      </div>
+      <div class="art-quote" style="font-size: 1.45rem; font-weight: 500;">
+        Be gentle<br>with yourself<br>today
+      </div>
+    </div>
+  </div>
+
+  <!-- Design 5 — 11x14 -->
+  <div class="print-page size-11x14">
+    <span class="size-label">11 &times; 14 in</span>
+    <div class="art-container">
+      <div class="art-svg-wrap">
+        <svg viewBox="0 0 660 840" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <g opacity="0.5">
+            <!-- Left ascending -->
+            <path d="M105 730 C102 716 94 706 86 712 C78 718 84 732 92 735 C100 738 105 730 105 730Z" stroke="#B8CEB3" stroke-width="1.1" fill="none"/>
+            <path d="M92 675 C86 660 74 652 66 660 C58 668 66 682 74 685 C82 688 92 675 92 675Z" stroke="#B8CEB3" stroke-width="1.1" fill="none"/>
+            <path d="M80 610 C72 594 58 588 52 596 C46 604 56 618 64 621 C72 624 80 610 80 610Z" stroke="#B8CEB3" stroke-width="1.1" fill="none"/>
+            <path d="M72 545 C62 530 48 524 42 532 C36 540 48 554 56 556 C64 558 72 545 72 545Z" stroke="#B8CEB3" stroke-width="1.2" fill="none"/>
+            <path d="M68 475 C58 460 44 455 40 464 C36 473 48 485 56 487 C64 489 68 475 68 475Z" stroke="#B8CEB3" stroke-width="1.2" fill="none"/>
+            <path d="M70 405 C62 388 50 382 44 390 C38 398 50 412 58 414 C66 416 70 405 70 405Z" stroke="#B8CEB3" stroke-width="1.2" fill="none"/>
+            <path d="M80 340 C74 322 64 314 58 322 C52 330 60 346 68 348 C76 350 80 340 80 340Z" stroke="#B8CEB3" stroke-width="1.2" fill="none"/>
+            <path d="M100 280 C96 262 88 252 82 258 C76 264 82 282 90 285 C98 288 100 280 100 280Z" stroke="#B8CEB3" stroke-width="1.2" fill="none"/>
+
+            <!-- Top arch -->
+            <path d="M130 225 C128 206 122 196 116 202 C110 208 116 226 124 229 C132 232 130 225 130 225Z" stroke="#B8CEB3" stroke-width="1.2" fill="none"/>
+            <path d="M172 180 C174 160 172 150 166 154 C160 158 158 176 166 180 C174 184 172 180 172 180Z" stroke="#B8CEB3" stroke-width="1.2" fill="none"/>
+            <path d="M225 150 C230 132 232 122 226 124 C220 126 218 144 224 148 C230 152 225 150 225 150Z" stroke="#B8CEB3" stroke-width="1.2" fill="none"/>
+            <path d="M280 132 C288 114 292 104 286 106 C280 108 276 126 282 130 C288 134 280 132 280 132Z" stroke="#B8CEB3" stroke-width="1.2" fill="none"/>
+            <path d="M330 125 C340 108 344 98 338 100 C332 102 328 120 334 125 C340 130 330 125 330 125Z" stroke="#B8CEB3" stroke-width="1.2" fill="none"/>
+            <path d="M380 132 C390 116 396 106 390 108 C384 110 380 128 384 132 C388 136 380 132 380 132Z" stroke="#B8CEB3" stroke-width="1.2" fill="none"/>
+            <path d="M435 150 C444 134 450 124 444 126 C438 128 434 146 438 150 C442 154 435 150 435 150Z" stroke="#B8CEB3" stroke-width="1.2" fill="none"/>
+            <path d="M488 180 C498 164 504 154 498 156 C492 158 488 176 492 180 C496 184 488 180 488 180Z" stroke="#B8CEB3" stroke-width="1.2" fill="none"/>
+            <path d="M530 225 C540 208 548 198 542 202 C536 206 532 224 536 228 C540 232 530 225 530 225Z" stroke="#B8CEB3" stroke-width="1.2" fill="none"/>
+
+            <!-- Right descending -->
+            <path d="M560 280 C568 262 578 252 584 258 C590 264 582 282 574 285 C566 288 560 280 560 280Z" stroke="#B8CEB3" stroke-width="1.2" fill="none"/>
+            <path d="M580 340 C588 322 598 314 604 322 C610 330 600 346 592 348 C584 350 580 340 580 340Z" stroke="#B8CEB3" stroke-width="1.2" fill="none"/>
+            <path d="M590 405 C598 388 610 382 616 390 C622 398 612 412 604 414 C596 416 590 405 590 405Z" stroke="#B8CEB3" stroke-width="1.2" fill="none"/>
+            <path d="M592 475 C602 460 616 455 620 464 C624 473 612 485 604 487 C596 489 592 475 592 475Z" stroke="#B8CEB3" stroke-width="1.2" fill="none"/>
+            <path d="M588 545 C598 530 612 524 618 532 C624 540 612 554 604 556 C596 558 588 545 588 545Z" stroke="#B8CEB3" stroke-width="1.2" fill="none"/>
+            <path d="M580 610 C588 594 602 588 608 596 C614 604 604 618 596 621 C588 624 580 610 580 610Z" stroke="#B8CEB3" stroke-width="1.1" fill="none"/>
+            <path d="M568 675 C574 660 586 652 594 660 C602 668 594 682 586 685 C578 688 568 675 568 675Z" stroke="#B8CEB3" stroke-width="1.1" fill="none"/>
+            <path d="M555 730 C558 716 566 706 574 712 C582 718 576 732 568 735 C560 738 555 730 555 730Z" stroke="#B8CEB3" stroke-width="1.1" fill="none"/>
+
+            <!-- Subtle connecting vine -->
+            <path d="M105 730 Q75 560 70 405 Q65 280 100 210 Q150 140 260 120 Q330 112 400 120 Q510 140 560 210 Q595 280 590 405 Q585 560 555 730" stroke="#B8CEB3" stroke-width="0.6" fill="none" opacity="0.25"/>
+          </g>
+        </svg>
+      </div>
+      <div class="art-quote" style="font-size: 2rem; font-weight: 500;">
+        Be gentle<br>with yourself<br>today
+      </div>
+    </div>
+  </div>
+
+  <!-- Design 5 — 16x20 -->
+  <div class="print-page size-16x20">
+    <span class="size-label">16 &times; 20 in</span>
+    <div class="art-container">
+      <div class="art-svg-wrap">
+        <svg viewBox="0 0 960 1200" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <g opacity="0.5">
+            <!-- Left ascending -->
+            <path d="M148 1050 C144 1030 132 1016 122 1024 C112 1032 120 1050 130 1054 C140 1058 148 1050 148 1050Z" stroke="#B8CEB3" stroke-width="1.4" fill="none"/>
+            <path d="M128 970 C120 948 104 938 94 948 C84 958 96 976 106 980 C116 984 128 970 128 970Z" stroke="#B8CEB3" stroke-width="1.4" fill="none"/>
+            <path d="M112 880 C100 858 82 850 74 860 C66 870 80 890 92 894 C104 898 112 880 112 880Z" stroke="#B8CEB3" stroke-width="1.4" fill="none"/>
+            <path d="M100 788 C86 766 68 758 60 768 C52 778 68 798 80 802 C92 806 100 788 100 788Z" stroke="#B8CEB3" stroke-width="1.5" fill="none"/>
+            <path d="M94 690 C80 668 62 662 56 672 C50 682 66 700 78 704 C90 708 94 690 94 690Z" stroke="#B8CEB3" stroke-width="1.5" fill="none"/>
+            <path d="M96 590 C84 568 68 560 62 570 C56 580 72 600 84 604 C96 608 96 590 96 590Z" stroke="#B8CEB3" stroke-width="1.5" fill="none"/>
+            <path d="M108 495 C98 472 86 462 80 470 C74 478 84 498 94 502 C104 506 108 495 108 495Z" stroke="#B8CEB3" stroke-width="1.5" fill="none"/>
+            <path d="M135 408 C128 384 118 374 112 382 C106 390 114 410 124 414 C134 418 135 408 135 408Z" stroke="#B8CEB3" stroke-width="1.5" fill="none"/>
+
+            <!-- Top arch -->
+            <path d="M175 330 C172 306 164 294 158 302 C152 310 158 332 168 336 C178 340 175 330 175 330Z" stroke="#B8CEB3" stroke-width="1.5" fill="none"/>
+            <path d="M235 265 C238 240 236 228 230 234 C224 240 222 262 230 266 C238 270 235 265 235 265Z" stroke="#B8CEB3" stroke-width="1.5" fill="none"/>
+            <path d="M310 218 C318 194 322 182 316 186 C310 190 306 212 312 218 C318 224 310 218 310 218Z" stroke="#B8CEB3" stroke-width="1.5" fill="none"/>
+            <path d="M390 192 C400 170 406 158 400 162 C394 166 390 186 396 192 C402 198 390 192 390 192Z" stroke="#B8CEB3" stroke-width="1.5" fill="none"/>
+            <path d="M480 182 C492 160 498 148 492 152 C486 156 480 178 486 184 C492 190 480 182 480 182Z" stroke="#B8CEB3" stroke-width="1.5" fill="none"/>
+            <path d="M570 192 C582 172 590 160 584 164 C578 168 574 188 578 194 C582 200 570 192 570 192Z" stroke="#B8CEB3" stroke-width="1.5" fill="none"/>
+            <path d="M650 218 C662 196 670 184 664 188 C658 192 654 214 658 220 C662 226 650 218 650 218Z" stroke="#B8CEB3" stroke-width="1.5" fill="none"/>
+            <path d="M725 265 C736 244 742 232 736 236 C730 240 726 260 730 266 C734 272 725 265 725 265Z" stroke="#B8CEB3" stroke-width="1.5" fill="none"/>
+            <path d="M785 330 C796 310 804 298 798 302 C792 306 788 328 792 334 C796 340 785 330 785 330Z" stroke="#B8CEB3" stroke-width="1.5" fill="none"/>
+
+            <!-- Right descending -->
+            <path d="M825 408 C832 384 842 374 848 382 C854 390 844 410 836 414 C828 418 825 408 825 408Z" stroke="#B8CEB3" stroke-width="1.5" fill="none"/>
+            <path d="M852 495 C862 472 874 462 880 470 C886 478 876 498 866 502 C856 506 852 495 852 495Z" stroke="#B8CEB3" stroke-width="1.5" fill="none"/>
+            <path d="M864 590 C876 568 892 560 898 570 C904 580 888 600 876 604 C864 608 864 590 864 590Z" stroke="#B8CEB3" stroke-width="1.5" fill="none"/>
+            <path d="M866 690 C880 668 898 662 904 672 C910 682 894 700 882 704 C870 708 866 690 866 690Z" stroke="#B8CEB3" stroke-width="1.5" fill="none"/>
+            <path d="M860 788 C874 766 892 758 900 768 C908 778 892 798 880 802 C868 806 860 788 860 788Z" stroke="#B8CEB3" stroke-width="1.5" fill="none"/>
+            <path d="M848 880 C860 858 878 850 886 860 C894 870 880 890 868 894 C856 898 848 880 848 880Z" stroke="#B8CEB3" stroke-width="1.4" fill="none"/>
+            <path d="M832 970 C840 948 856 938 866 948 C876 958 864 976 854 980 C844 984 832 970 832 970Z" stroke="#B8CEB3" stroke-width="1.4" fill="none"/>
+            <path d="M812 1050 C816 1030 828 1016 838 1024 C848 1032 840 1050 830 1054 C820 1058 812 1050 812 1050Z" stroke="#B8CEB3" stroke-width="1.4" fill="none"/>
+
+            <!-- Subtle connecting vine -->
+            <path d="M148 1050 Q100 800 96 590 Q92 405 135 310 Q200 200 380 175 Q480 165 580 175 Q760 200 825 310 Q868 405 864 590 Q860 800 812 1050" stroke="#B8CEB3" stroke-width="0.8" fill="none" opacity="0.2"/>
+          </g>
+        </svg>
+      </div>
+      <div class="art-quote" style="font-size: 3rem; font-weight: 500;">
+        Be gentle<br>with yourself<br>today
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

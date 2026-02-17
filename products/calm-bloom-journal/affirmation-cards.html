@@ -1,0 +1,1192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calm &amp; Bloom — Affirmation Cards</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    /* ── Affirmation Card Print Styles ─────────────────────── */
+    @page {
+      size: 8.5in 11in;
+      margin: 0;
+    }
+
+    .page {
+      width: 8.5in;
+      height: 11in;
+      padding: 0.5in;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+      page-break-after: always;
+      background: var(--white);
+    }
+
+    .page:last-child {
+      page-break-after: auto;
+    }
+
+    /* Card Grid: 2x2 */
+    .card-grid {
+      display: grid;
+      grid-template-columns: 3.5in 3.5in;
+      grid-template-rows: 5in 5in;
+      gap: 0.25in;
+      width: 7.25in;
+      height: 10.25in;
+      position: relative;
+    }
+
+    /* Grid for last page with only 2 cards */
+    .card-grid--half {
+      grid-template-rows: 5in;
+    }
+
+    /* Cut marks */
+    .card-grid::before,
+    .card-grid::after {
+      content: '';
+      position: absolute;
+      pointer-events: none;
+    }
+
+    .cut-marks {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+
+    .cut-mark {
+      position: absolute;
+      background: #ccc;
+    }
+
+    /* Horizontal cut marks */
+    .cut-mark-h {
+      width: 0.15in;
+      height: 0.5px;
+    }
+
+    /* Vertical cut marks */
+    .cut-mark-v {
+      width: 0.5px;
+      height: 0.15in;
+    }
+
+    /* ── Individual Card ───────────────────────────────────── */
+    .affirmation-card {
+      width: 3.5in;
+      height: 5in;
+      border-radius: 12px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 0.4in 0.35in;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Card Style Variants */
+    .card-style-a {
+      background: var(--white);
+      border: 2px solid var(--soft-sage);
+    }
+
+    .card-style-b {
+      background: var(--sage-ultra-light);
+      border: 2px solid var(--soft-sage);
+    }
+
+    .card-style-c {
+      background: var(--lavender-ultra-light);
+      border: 2px solid var(--dusty-lavender);
+    }
+
+    .card-style-d {
+      background: var(--blush-light);
+      border: 2px solid var(--soft-blush);
+    }
+
+    /* Card Content */
+    .card-botanical-top {
+      margin-bottom: 0.25in;
+      flex-shrink: 0;
+    }
+
+    .card-botanical-top svg {
+      display: block;
+    }
+
+    .card-text {
+      font-family: var(--font-heading);
+      font-size: 1.05rem;
+      font-weight: 500;
+      font-style: italic;
+      line-height: 1.55;
+      color: var(--deep-forest);
+      flex-grow: 1;
+      display: flex;
+      align-items: center;
+      padding: 0 0.1in;
+    }
+
+    .card-leaf-bottom {
+      margin-top: 0.25in;
+      flex-shrink: 0;
+      opacity: 0.5;
+    }
+
+    .card-leaf-bottom svg {
+      display: block;
+    }
+
+    /* ── Card Backs Page ───────────────────────────────────── */
+    .card-back {
+      width: 3.5in;
+      height: 5in;
+      border-radius: 12px;
+      border: 2px solid var(--soft-sage);
+      overflow: hidden;
+      position: relative;
+      background: var(--sage-ultra-light);
+    }
+
+    .card-back-pattern {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .card-back-pattern svg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    .card-back-brand {
+      position: relative;
+      z-index: 1;
+      font-family: var(--font-heading);
+      font-size: 0.9rem;
+      font-style: italic;
+      color: var(--deep-forest);
+      opacity: 0.5;
+      text-align: center;
+    }
+
+    /* ── Screen preview helper ─────────────────────────────── */
+    @media screen {
+      body {
+        padding: 20px 0;
+      }
+      .page {
+        box-shadow: 0 2px 20px rgba(0,0,0,0.08);
+        margin: 0 auto 30px;
+      }
+    }
+
+    @media print {
+      body { background: white; margin: 0; padding: 0; }
+      .page { margin: 0; box-shadow: none; }
+      * {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ============================================================
+       PAGE 1 — Cards 1-4
+       ============================================================ -->
+  <div class="page">
+    <div class="card-grid">
+      <!-- Cut Marks -->
+      <div class="cut-marks">
+        <!-- Top-left of card 1 -->
+        <span class="cut-mark cut-mark-h" style="top: 0; left: -0.18in;"></span>
+        <span class="cut-mark cut-mark-v" style="top: -0.18in; left: 0;"></span>
+        <!-- Top-right of card 1 / Top-left of card 2 -->
+        <span class="cut-mark cut-mark-v" style="top: -0.18in; left: 3.5in;"></span>
+        <!-- Top-right of card 2 -->
+        <span class="cut-mark cut-mark-h" style="top: 0; right: -0.18in;"></span>
+        <span class="cut-mark cut-mark-v" style="top: -0.18in; right: 0;"></span>
+        <!-- Mid-left -->
+        <span class="cut-mark cut-mark-h" style="top: 5in; left: -0.18in;"></span>
+        <!-- Mid-center -->
+        <span class="cut-mark cut-mark-v" style="top: 4.85in; left: 3.5in;"></span>
+        <span class="cut-mark cut-mark-v" style="top: 5.15in; left: 3.5in;"></span>
+        <!-- Mid-right -->
+        <span class="cut-mark cut-mark-h" style="top: 5in; right: -0.18in;"></span>
+        <!-- Bottom-left -->
+        <span class="cut-mark cut-mark-h" style="bottom: 0; left: -0.18in;"></span>
+        <span class="cut-mark cut-mark-v" style="bottom: -0.18in; left: 0;"></span>
+        <!-- Bottom-center -->
+        <span class="cut-mark cut-mark-v" style="bottom: -0.18in; left: 3.5in;"></span>
+        <!-- Bottom-right -->
+        <span class="cut-mark cut-mark-h" style="bottom: 0; right: -0.18in;"></span>
+        <span class="cut-mark cut-mark-v" style="bottom: -0.18in; right: 0;"></span>
+      </div>
+
+      <!-- Card 1 -->
+      <div class="affirmation-card card-style-a">
+        <div class="card-botanical-top">
+          <svg width="80" height="50" viewBox="0 0 80 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M40 48 C40 48 40 25 40 10" stroke="#B8CEB3" stroke-width="1.2" fill="none"/>
+            <ellipse cx="32" cy="18" rx="8" ry="12" transform="rotate(-25 32 18)" fill="none" stroke="#B8CEB3" stroke-width="1"/>
+            <ellipse cx="48" cy="18" rx="8" ry="12" transform="rotate(25 48 18)" fill="none" stroke="#B8CEB3" stroke-width="1"/>
+            <ellipse cx="28" cy="30" rx="7" ry="10" transform="rotate(-35 28 30)" fill="none" stroke="#B8CEB3" stroke-width="1"/>
+            <ellipse cx="52" cy="30" rx="7" ry="10" transform="rotate(35 52 30)" fill="none" stroke="#B8CEB3" stroke-width="1"/>
+            <ellipse cx="40" cy="8" rx="5" ry="8" fill="none" stroke="#B8CEB3" stroke-width="1"/>
+          </svg>
+        </div>
+        <div class="card-text">I am safe in this moment.</div>
+        <div class="card-leaf-bottom">
+          <svg width="30" height="18" viewBox="0 0 30 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M5 14 Q15 0 25 14" stroke="#B8CEB3" stroke-width="1" fill="none"/>
+            <path d="M15 4 L15 18" stroke="#B8CEB3" stroke-width="0.8"/>
+          </svg>
+        </div>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="affirmation-card card-style-b">
+        <div class="card-botanical-top">
+          <svg width="70" height="50" viewBox="0 0 70 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M35 48 C35 35 35 20 35 5" stroke="#B8CEB3" stroke-width="1.2" fill="none"/>
+            <path d="M35 38 C25 32 18 25 15 18" stroke="#B8CEB3" stroke-width="1" fill="none"/>
+            <ellipse cx="13" cy="16" rx="6" ry="9" transform="rotate(-20 13 16)" fill="none" stroke="#B8CEB3" stroke-width="0.8"/>
+            <path d="M35 28 C45 22 52 15 55 8" stroke="#B8CEB3" stroke-width="1" fill="none"/>
+            <ellipse cx="57" cy="6" rx="6" ry="9" transform="rotate(20 57 6)" fill="none" stroke="#B8CEB3" stroke-width="0.8"/>
+            <path d="M35 18 C28 14 22 10 18 5" stroke="#B8CEB3" stroke-width="1" fill="none"/>
+            <ellipse cx="16" cy="4" rx="5" ry="7" transform="rotate(-15 16 4)" fill="none" stroke="#B8CEB3" stroke-width="0.8"/>
+          </svg>
+        </div>
+        <div class="card-text">My feelings are valid and worthy of attention.</div>
+        <div class="card-leaf-bottom">
+          <svg width="24" height="20" viewBox="0 0 24 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 2 C6 6 4 12 6 18" stroke="#B8CEB3" stroke-width="0.8" fill="none"/>
+            <path d="M12 2 C18 6 20 12 18 18" stroke="#B8CEB3" stroke-width="0.8" fill="none"/>
+            <path d="M12 2 L12 20" stroke="#B8CEB3" stroke-width="0.8"/>
+          </svg>
+        </div>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="affirmation-card card-style-c">
+        <div class="card-botanical-top">
+          <svg width="90" height="45" viewBox="0 0 90 45" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M10 35 Q25 20 45 22 Q65 24 80 10" stroke="#C4B1CB" stroke-width="1.2" fill="none"/>
+            <circle cx="20" cy="28" r="4" fill="none" stroke="#C4B1CB" stroke-width="0.8"/>
+            <circle cx="20" cy="28" r="1.5" fill="#C4B1CB" opacity="0.3"/>
+            <circle cx="45" cy="20" r="5" fill="none" stroke="#C4B1CB" stroke-width="0.8"/>
+            <circle cx="45" cy="20" r="2" fill="#C4B1CB" opacity="0.3"/>
+            <circle cx="70" cy="14" r="4" fill="none" stroke="#C4B1CB" stroke-width="0.8"/>
+            <circle cx="70" cy="14" r="1.5" fill="#C4B1CB" opacity="0.3"/>
+            <path d="M15 32 L12 38" stroke="#C4B1CB" stroke-width="0.6"/>
+            <path d="M42 24 L38 30" stroke="#C4B1CB" stroke-width="0.6"/>
+            <path d="M75 12 L78 6" stroke="#C4B1CB" stroke-width="0.6"/>
+          </svg>
+        </div>
+        <div class="card-text">I choose peace over perfection.</div>
+        <div class="card-leaf-bottom">
+          <svg width="35" height="15" viewBox="0 0 35 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M2 8 Q10 2 17.5 8 Q25 14 33 8" stroke="#C4B1CB" stroke-width="0.8" fill="none"/>
+          </svg>
+        </div>
+      </div>
+
+      <!-- Card 4 -->
+      <div class="affirmation-card card-style-d">
+        <div class="card-botanical-top">
+          <svg width="75" height="50" viewBox="0 0 75 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M37.5 48 L37.5 15" stroke="#E8D5D0" stroke-width="1.2"/>
+            <path d="M37.5 15 C30 12 25 6 28 2" stroke="#E8D5D0" stroke-width="1" fill="none"/>
+            <path d="M37.5 15 C45 12 50 6 47 2" stroke="#E8D5D0" stroke-width="1" fill="none"/>
+            <path d="M37.5 25 C28 22 20 18 18 12" stroke="#E8D5D0" stroke-width="1" fill="none"/>
+            <path d="M37.5 25 C47 22 55 18 57 12" stroke="#E8D5D0" stroke-width="1" fill="none"/>
+            <path d="M37.5 35 C30 33 22 28 20 22" stroke="#E8D5D0" stroke-width="1" fill="none"/>
+            <path d="M37.5 35 C45 33 53 28 55 22" stroke="#E8D5D0" stroke-width="1" fill="none"/>
+            <circle cx="37.5" cy="12" r="3" fill="none" stroke="#E8D5D0" stroke-width="0.8"/>
+          </svg>
+        </div>
+        <div class="card-text">I am doing the best I can, and that is enough.</div>
+        <div class="card-leaf-bottom">
+          <svg width="28" height="16" viewBox="0 0 28 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M4 12 Q14 0 24 12" stroke="#E8D5D0" stroke-width="1" fill="none"/>
+            <path d="M14 3 L14 16" stroke="#E8D5D0" stroke-width="0.8"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       PAGE 2 — Cards 5-8
+       ============================================================ -->
+  <div class="page">
+    <div class="card-grid">
+      <div class="cut-marks">
+        <span class="cut-mark cut-mark-h" style="top: 0; left: -0.18in;"></span>
+        <span class="cut-mark cut-mark-v" style="top: -0.18in; left: 0;"></span>
+        <span class="cut-mark cut-mark-v" style="top: -0.18in; left: 3.5in;"></span>
+        <span class="cut-mark cut-mark-h" style="top: 0; right: -0.18in;"></span>
+        <span class="cut-mark cut-mark-v" style="top: -0.18in; right: 0;"></span>
+        <span class="cut-mark cut-mark-h" style="top: 5in; left: -0.18in;"></span>
+        <span class="cut-mark cut-mark-v" style="top: 4.85in; left: 3.5in;"></span>
+        <span class="cut-mark cut-mark-v" style="top: 5.15in; left: 3.5in;"></span>
+        <span class="cut-mark cut-mark-h" style="top: 5in; right: -0.18in;"></span>
+        <span class="cut-mark cut-mark-h" style="bottom: 0; left: -0.18in;"></span>
+        <span class="cut-mark cut-mark-v" style="bottom: -0.18in; left: 0;"></span>
+        <span class="cut-mark cut-mark-v" style="bottom: -0.18in; left: 3.5in;"></span>
+        <span class="cut-mark cut-mark-h" style="bottom: 0; right: -0.18in;"></span>
+        <span class="cut-mark cut-mark-v" style="bottom: -0.18in; right: 0;"></span>
+      </div>
+
+      <!-- Card 5 -->
+      <div class="affirmation-card card-style-a">
+        <div class="card-botanical-top">
+          <svg width="80" height="50" viewBox="0 0 80 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M40 48 C40 35 40 20 40 5" stroke="#B8CEB3" stroke-width="1.2"/>
+            <path d="M40 40 Q30 35 22 28" stroke="#B8CEB3" stroke-width="0.8" fill="none"/>
+            <ellipse cx="20" cy="26" rx="7" ry="10" transform="rotate(-30 20 26)" fill="none" stroke="#B8CEB3" stroke-width="0.8"/>
+            <path d="M40 30 Q50 25 58 18" stroke="#B8CEB3" stroke-width="0.8" fill="none"/>
+            <ellipse cx="60" cy="16" rx="7" ry="10" transform="rotate(30 60 16)" fill="none" stroke="#B8CEB3" stroke-width="0.8"/>
+            <path d="M40 20 Q32 16 26 10" stroke="#B8CEB3" stroke-width="0.8" fill="none"/>
+            <ellipse cx="24" cy="8" rx="5" ry="8" transform="rotate(-25 24 8)" fill="none" stroke="#B8CEB3" stroke-width="0.8"/>
+            <ellipse cx="40" cy="3" rx="4" ry="6" fill="none" stroke="#B8CEB3" stroke-width="0.8"/>
+          </svg>
+        </div>
+        <div class="card-text">I release what I cannot control.</div>
+        <div class="card-leaf-bottom">
+          <svg width="30" height="18" viewBox="0 0 30 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M5 14 Q15 0 25 14" stroke="#B8CEB3" stroke-width="1" fill="none"/>
+            <path d="M15 4 L15 18" stroke="#B8CEB3" stroke-width="0.8"/>
+          </svg>
+        </div>
+      </div>
+
+      <!-- Card 6 -->
+      <div class="affirmation-card card-style-b">
+        <div class="card-botanical-top">
+          <svg width="70" height="50" viewBox="0 0 70 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M35 48 L35 8" stroke="#B8CEB3" stroke-width="1.2"/>
+            <ellipse cx="25" cy="20" rx="8" ry="12" transform="rotate(-20 25 20)" fill="none" stroke="#B8CEB3" stroke-width="0.9"/>
+            <ellipse cx="45" cy="20" rx="8" ry="12" transform="rotate(20 45 20)" fill="none" stroke="#B8CEB3" stroke-width="0.9"/>
+            <ellipse cx="22" cy="35" rx="6" ry="9" transform="rotate(-35 22 35)" fill="none" stroke="#B8CEB3" stroke-width="0.9"/>
+            <ellipse cx="48" cy="35" rx="6" ry="9" transform="rotate(35 48 35)" fill="none" stroke="#B8CEB3" stroke-width="0.9"/>
+            <circle cx="35" cy="5" r="3" fill="none" stroke="#B8CEB3" stroke-width="0.8"/>
+          </svg>
+        </div>
+        <div class="card-text">I am worthy of rest and recovery.</div>
+        <div class="card-leaf-bottom">
+          <svg width="24" height="20" viewBox="0 0 24 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 2 C6 6 4 12 6 18" stroke="#B8CEB3" stroke-width="0.8" fill="none"/>
+            <path d="M12 2 C18 6 20 12 18 18" stroke="#B8CEB3" stroke-width="0.8" fill="none"/>
+            <path d="M12 2 L12 20" stroke="#B8CEB3" stroke-width="0.8"/>
+          </svg>
+        </div>
+      </div>
+
+      <!-- Card 7 -->
+      <div class="affirmation-card card-style-c">
+        <div class="card-botanical-top">
+          <svg width="85" height="45" viewBox="0 0 85 45" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M5 40 Q20 25 42.5 22 Q65 19 80 5" stroke="#C4B1CB" stroke-width="1.2" fill="none"/>
+            <path d="M18 32 C14 28 12 22 16 18" stroke="#C4B1CB" stroke-width="0.8" fill="none"/>
+            <path d="M18 32 C22 28 24 22 20 18" stroke="#C4B1CB" stroke-width="0.8" fill="none"/>
+            <path d="M42 22 C38 18 36 12 40 8" stroke="#C4B1CB" stroke-width="0.8" fill="none"/>
+            <path d="M42 22 C46 18 48 12 44 8" stroke="#C4B1CB" stroke-width="0.8" fill="none"/>
+            <path d="M65 12 C61 8 59 3 63 0" stroke="#C4B1CB" stroke-width="0.8" fill="none"/>
+            <path d="M65 12 C69 8 71 3 67 0" stroke="#C4B1CB" stroke-width="0.8" fill="none"/>
+          </svg>
+        </div>
+        <div class="card-text">My anxiety does not define me.</div>
+        <div class="card-leaf-bottom">
+          <svg width="35" height="15" viewBox="0 0 35 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M2 8 Q10 2 17.5 8 Q25 14 33 8" stroke="#C4B1CB" stroke-width="0.8" fill="none"/>
+          </svg>
+        </div>
+      </div>
+
+      <!-- Card 8 -->
+      <div class="affirmation-card card-style-d">
+        <div class="card-botanical-top">
+          <svg width="75" height="50" viewBox="0 0 75 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M37.5 48 Q37.5 30 37.5 10" stroke="#E8D5D0" stroke-width="1.2"/>
+            <path d="M37.5 40 Q25 35 18 28" stroke="#E8D5D0" stroke-width="0.8" fill="none"/>
+            <path d="M16 26 C14 20 16 15 20 13" stroke="#E8D5D0" stroke-width="0.8" fill="none"/>
+            <path d="M37.5 30 Q50 25 58 18" stroke="#E8D5D0" stroke-width="0.8" fill="none"/>
+            <path d="M60 16 C62 10 60 5 56 3" stroke="#E8D5D0" stroke-width="0.8" fill="none"/>
+            <path d="M37.5 20 Q28 16 22 10" stroke="#E8D5D0" stroke-width="0.8" fill="none"/>
+            <circle cx="37.5" cy="8" r="4" fill="none" stroke="#E8D5D0" stroke-width="0.8"/>
+            <circle cx="37.5" cy="8" r="1.5" fill="#E8D5D0" opacity="0.3"/>
+          </svg>
+        </div>
+        <div class="card-text">I trust the timing of my life.</div>
+        <div class="card-leaf-bottom">
+          <svg width="28" height="16" viewBox="0 0 28 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M4 12 Q14 0 24 12" stroke="#E8D5D0" stroke-width="1" fill="none"/>
+            <path d="M14 3 L14 16" stroke="#E8D5D0" stroke-width="0.8"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       PAGE 3 — Cards 9-12
+       ============================================================ -->
+  <div class="page">
+    <div class="card-grid">
+      <div class="cut-marks">
+        <span class="cut-mark cut-mark-h" style="top: 0; left: -0.18in;"></span>
+        <span class="cut-mark cut-mark-v" style="top: -0.18in; left: 0;"></span>
+        <span class="cut-mark cut-mark-v" style="top: -0.18in; left: 3.5in;"></span>
+        <span class="cut-mark cut-mark-h" style="top: 0; right: -0.18in;"></span>
+        <span class="cut-mark cut-mark-v" style="top: -0.18in; right: 0;"></span>
+        <span class="cut-mark cut-mark-h" style="top: 5in; left: -0.18in;"></span>
+        <span class="cut-mark cut-mark-v" style="top: 4.85in; left: 3.5in;"></span>
+        <span class="cut-mark cut-mark-v" style="top: 5.15in; left: 3.5in;"></span>
+        <span class="cut-mark cut-mark-h" style="top: 5in; right: -0.18in;"></span>
+        <span class="cut-mark cut-mark-h" style="bottom: 0; left: -0.18in;"></span>
+        <span class="cut-mark cut-mark-v" style="bottom: -0.18in; left: 0;"></span>
+        <span class="cut-mark cut-mark-v" style="bottom: -0.18in; left: 3.5in;"></span>
+        <span class="cut-mark cut-mark-h" style="bottom: 0; right: -0.18in;"></span>
+        <span class="cut-mark cut-mark-v" style="bottom: -0.18in; right: 0;"></span>
+      </div>
+
+      <!-- Card 9 -->
+      <div class="affirmation-card card-style-a">
+        <div class="card-botanical-top">
+          <svg width="80" height="48" viewBox="0 0 80 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M40 46 C40 30 40 15 40 5" stroke="#B8CEB3" stroke-width="1.2"/>
+            <ellipse cx="30" cy="14" rx="9" ry="13" transform="rotate(-20 30 14)" fill="none" stroke="#B8CEB3" stroke-width="0.9"/>
+            <ellipse cx="50" cy="14" rx="9" ry="13" transform="rotate(20 50 14)" fill="none" stroke="#B8CEB3" stroke-width="0.9"/>
+            <ellipse cx="26" cy="32" rx="7" ry="10" transform="rotate(-30 26 32)" fill="none" stroke="#B8CEB3" stroke-width="0.9"/>
+            <ellipse cx="54" cy="32" rx="7" ry="10" transform="rotate(30 54 32)" fill="none" stroke="#B8CEB3" stroke-width="0.9"/>
+          </svg>
+        </div>
+        <div class="card-text">I give myself permission to slow down.</div>
+        <div class="card-leaf-bottom">
+          <svg width="30" height="18" viewBox="0 0 30 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M5 14 Q15 0 25 14" stroke="#B8CEB3" stroke-width="1" fill="none"/>
+            <path d="M15 4 L15 18" stroke="#B8CEB3" stroke-width="0.8"/>
+          </svg>
+        </div>
+      </div>
+
+      <!-- Card 10 -->
+      <div class="affirmation-card card-style-b">
+        <div class="card-botanical-top">
+          <svg width="70" height="50" viewBox="0 0 70 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M35 48 L35 5" stroke="#B8CEB3" stroke-width="1.2"/>
+            <path d="M35 42 C22 36 15 28 18 20" stroke="#B8CEB3" stroke-width="0.9" fill="none"/>
+            <path d="M35 32 C48 26 55 18 52 10" stroke="#B8CEB3" stroke-width="0.9" fill="none"/>
+            <path d="M35 22 C25 18 20 12 22 6" stroke="#B8CEB3" stroke-width="0.9" fill="none"/>
+            <path d="M35 12 C42 10 48 6 46 2" stroke="#B8CEB3" stroke-width="0.9" fill="none"/>
+          </svg>
+        </div>
+        <div class="card-text">I am stronger than my worries.</div>
+        <div class="card-leaf-bottom">
+          <svg width="24" height="20" viewBox="0 0 24 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 2 C6 6 4 12 6 18" stroke="#B8CEB3" stroke-width="0.8" fill="none"/>
+            <path d="M12 2 C18 6 20 12 18 18" stroke="#B8CEB3" stroke-width="0.8" fill="none"/>
+            <path d="M12 2 L12 20" stroke="#B8CEB3" stroke-width="0.8"/>
+          </svg>
+        </div>
+      </div>
+
+      <!-- Card 11 -->
+      <div class="affirmation-card card-style-c">
+        <div class="card-botanical-top">
+          <svg width="90" height="45" viewBox="0 0 90 45" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M10 38 Q30 15 45 20 Q60 25 80 8" stroke="#C4B1CB" stroke-width="1.2" fill="none"/>
+            <circle cx="25" cy="24" r="5" fill="none" stroke="#C4B1CB" stroke-width="0.8"/>
+            <circle cx="25" cy="24" r="2" fill="#C4B1CB" opacity="0.2"/>
+            <circle cx="45" cy="18" r="6" fill="none" stroke="#C4B1CB" stroke-width="0.8"/>
+            <circle cx="45" cy="18" r="2.5" fill="#C4B1CB" opacity="0.2"/>
+            <circle cx="65" cy="13" r="4.5" fill="none" stroke="#C4B1CB" stroke-width="0.8"/>
+            <circle cx="65" cy="13" r="1.8" fill="#C4B1CB" opacity="0.2"/>
+            <path d="M22 28 L18 35" stroke="#C4B1CB" stroke-width="0.6"/>
+            <path d="M43 22 L40 30" stroke="#C4B1CB" stroke-width="0.6"/>
+            <path d="M68 11 L72 5" stroke="#C4B1CB" stroke-width="0.6"/>
+          </svg>
+        </div>
+        <div class="card-text">Every breath I take calms my mind.</div>
+        <div class="card-leaf-bottom">
+          <svg width="35" height="15" viewBox="0 0 35 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M2 8 Q10 2 17.5 8 Q25 14 33 8" stroke="#C4B1CB" stroke-width="0.8" fill="none"/>
+          </svg>
+        </div>
+      </div>
+
+      <!-- Card 12 -->
+      <div class="affirmation-card card-style-d">
+        <div class="card-botanical-top">
+          <svg width="75" height="50" viewBox="0 0 75 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M37.5 48 L37.5 12" stroke="#E8D5D0" stroke-width="1.2"/>
+            <path d="M37.5 12 C32 8 28 3 30 0" stroke="#E8D5D0" stroke-width="0.8" fill="none"/>
+            <path d="M37.5 12 C43 8 47 3 45 0" stroke="#E8D5D0" stroke-width="0.8" fill="none"/>
+            <path d="M37.5 22 C30 18 24 12 26 7" stroke="#E8D5D0" stroke-width="0.8" fill="none"/>
+            <path d="M37.5 22 C45 18 51 12 49 7" stroke="#E8D5D0" stroke-width="0.8" fill="none"/>
+            <path d="M37.5 32 C28 28 20 22 22 16" stroke="#E8D5D0" stroke-width="0.8" fill="none"/>
+            <path d="M37.5 32 C47 28 55 22 53 16" stroke="#E8D5D0" stroke-width="0.8" fill="none"/>
+            <path d="M37.5 42 C32 40 26 36 28 32" stroke="#E8D5D0" stroke-width="0.8" fill="none"/>
+            <path d="M37.5 42 C43 40 49 36 47 32" stroke="#E8D5D0" stroke-width="0.8" fill="none"/>
+          </svg>
+        </div>
+        <div class="card-text">I deserve kindness — especially from myself.</div>
+        <div class="card-leaf-bottom">
+          <svg width="28" height="16" viewBox="0 0 28 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M4 12 Q14 0 24 12" stroke="#E8D5D0" stroke-width="1" fill="none"/>
+            <path d="M14 3 L14 16" stroke="#E8D5D0" stroke-width="0.8"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       PAGE 4 — Cards 13-16
+       ============================================================ -->
+  <div class="page">
+    <div class="card-grid">
+      <div class="cut-marks">
+        <span class="cut-mark cut-mark-h" style="top: 0; left: -0.18in;"></span>
+        <span class="cut-mark cut-mark-v" style="top: -0.18in; left: 0;"></span>
+        <span class="cut-mark cut-mark-v" style="top: -0.18in; left: 3.5in;"></span>
+        <span class="cut-mark cut-mark-h" style="top: 0; right: -0.18in;"></span>
+        <span class="cut-mark cut-mark-v" style="top: -0.18in; right: 0;"></span>
+        <span class="cut-mark cut-mark-h" style="top: 5in; left: -0.18in;"></span>
+        <span class="cut-mark cut-mark-v" style="top: 4.85in; left: 3.5in;"></span>
+        <span class="cut-mark cut-mark-v" style="top: 5.15in; left: 3.5in;"></span>
+        <span class="cut-mark cut-mark-h" style="top: 5in; right: -0.18in;"></span>
+        <span class="cut-mark cut-mark-h" style="bottom: 0; left: -0.18in;"></span>
+        <span class="cut-mark cut-mark-v" style="bottom: -0.18in; left: 0;"></span>
+        <span class="cut-mark cut-mark-v" style="bottom: -0.18in; left: 3.5in;"></span>
+        <span class="cut-mark cut-mark-h" style="bottom: 0; right: -0.18in;"></span>
+        <span class="cut-mark cut-mark-v" style="bottom: -0.18in; right: 0;"></span>
+      </div>
+
+      <!-- Card 13 -->
+      <div class="affirmation-card card-style-a">
+        <div class="card-botanical-top">
+          <svg width="80" height="50" viewBox="0 0 80 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M40 48 L40 8" stroke="#B8CEB3" stroke-width="1.2"/>
+            <ellipse cx="30" cy="16" rx="8" ry="12" transform="rotate(-22 30 16)" fill="none" stroke="#B8CEB3" stroke-width="0.9"/>
+            <ellipse cx="50" cy="16" rx="8" ry="12" transform="rotate(22 50 16)" fill="none" stroke="#B8CEB3" stroke-width="0.9"/>
+            <ellipse cx="25" cy="32" rx="7" ry="10" transform="rotate(-35 25 32)" fill="none" stroke="#B8CEB3" stroke-width="0.9"/>
+            <ellipse cx="55" cy="32" rx="7" ry="10" transform="rotate(35 55 32)" fill="none" stroke="#B8CEB3" stroke-width="0.9"/>
+            <ellipse cx="40" cy="5" rx="4" ry="6" fill="none" stroke="#B8CEB3" stroke-width="0.8"/>
+          </svg>
+        </div>
+        <div class="card-text">I am learning, growing, and healing.</div>
+        <div class="card-leaf-bottom">
+          <svg width="30" height="18" viewBox="0 0 30 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M5 14 Q15 0 25 14" stroke="#B8CEB3" stroke-width="1" fill="none"/>
+            <path d="M15 4 L15 18" stroke="#B8CEB3" stroke-width="0.8"/>
+          </svg>
+        </div>
+      </div>
+
+      <!-- Card 14 -->
+      <div class="affirmation-card card-style-b">
+        <div class="card-botanical-top">
+          <svg width="70" height="50" viewBox="0 0 70 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M35 48 L35 5" stroke="#B8CEB3" stroke-width="1.2"/>
+            <path d="M35 38 C22 32 16 24 20 16" stroke="#B8CEB3" stroke-width="0.9" fill="none"/>
+            <path d="M35 28 C48 22 54 14 50 6" stroke="#B8CEB3" stroke-width="0.9" fill="none"/>
+            <path d="M35 18 C26 14 22 8 25 3" stroke="#B8CEB3" stroke-width="0.9" fill="none"/>
+            <circle cx="35" cy="3" r="2.5" fill="none" stroke="#B8CEB3" stroke-width="0.8"/>
+          </svg>
+        </div>
+        <div class="card-text">This feeling is temporary. I will get through this.</div>
+        <div class="card-leaf-bottom">
+          <svg width="24" height="20" viewBox="0 0 24 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 2 C6 6 4 12 6 18" stroke="#B8CEB3" stroke-width="0.8" fill="none"/>
+            <path d="M12 2 C18 6 20 12 18 18" stroke="#B8CEB3" stroke-width="0.8" fill="none"/>
+            <path d="M12 2 L12 20" stroke="#B8CEB3" stroke-width="0.8"/>
+          </svg>
+        </div>
+      </div>
+
+      <!-- Card 15 -->
+      <div class="affirmation-card card-style-c">
+        <div class="card-botanical-top">
+          <svg width="85" height="45" viewBox="0 0 85 45" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M8 40 Q25 22 42.5 20 Q60 18 78 5" stroke="#C4B1CB" stroke-width="1.2" fill="none"/>
+            <circle cx="22" cy="28" r="5" fill="none" stroke="#C4B1CB" stroke-width="0.8"/>
+            <path d="M19 25 L22 28 L25 25" stroke="#C4B1CB" stroke-width="0.5"/>
+            <circle cx="42" cy="18" r="6" fill="none" stroke="#C4B1CB" stroke-width="0.8"/>
+            <path d="M39 15 L42 18 L45 15" stroke="#C4B1CB" stroke-width="0.5"/>
+            <circle cx="62" cy="12" r="5" fill="none" stroke="#C4B1CB" stroke-width="0.8"/>
+            <path d="M59 9 L62 12 L65 9" stroke="#C4B1CB" stroke-width="0.5"/>
+          </svg>
+        </div>
+        <div class="card-text">I choose to focus on what I can change.</div>
+        <div class="card-leaf-bottom">
+          <svg width="35" height="15" viewBox="0 0 35 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M2 8 Q10 2 17.5 8 Q25 14 33 8" stroke="#C4B1CB" stroke-width="0.8" fill="none"/>
+          </svg>
+        </div>
+      </div>
+
+      <!-- Card 16 -->
+      <div class="affirmation-card card-style-d">
+        <div class="card-botanical-top">
+          <svg width="75" height="50" viewBox="0 0 75 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M37.5 48 L37.5 10" stroke="#E8D5D0" stroke-width="1.2"/>
+            <path d="M37.5 38 C28 34 20 28 22 20" stroke="#E8D5D0" stroke-width="0.8" fill="none"/>
+            <path d="M37.5 38 C47 34 55 28 53 20" stroke="#E8D5D0" stroke-width="0.8" fill="none"/>
+            <path d="M37.5 25 C30 22 24 16 27 10" stroke="#E8D5D0" stroke-width="0.8" fill="none"/>
+            <path d="M37.5 25 C45 22 51 16 48 10" stroke="#E8D5D0" stroke-width="0.8" fill="none"/>
+            <circle cx="37.5" cy="7" r="3.5" fill="none" stroke="#E8D5D0" stroke-width="0.8"/>
+            <circle cx="37.5" cy="7" r="1.2" fill="#E8D5D0" opacity="0.3"/>
+          </svg>
+        </div>
+        <div class="card-text">My worth is not measured by my productivity.</div>
+        <div class="card-leaf-bottom">
+          <svg width="28" height="16" viewBox="0 0 28 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M4 12 Q14 0 24 12" stroke="#E8D5D0" stroke-width="1" fill="none"/>
+            <path d="M14 3 L14 16" stroke="#E8D5D0" stroke-width="0.8"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       PAGE 5 — Cards 17-20
+       ============================================================ -->
+  <div class="page">
+    <div class="card-grid">
+      <div class="cut-marks">
+        <span class="cut-mark cut-mark-h" style="top: 0; left: -0.18in;"></span>
+        <span class="cut-mark cut-mark-v" style="top: -0.18in; left: 0;"></span>
+        <span class="cut-mark cut-mark-v" style="top: -0.18in; left: 3.5in;"></span>
+        <span class="cut-mark cut-mark-h" style="top: 0; right: -0.18in;"></span>
+        <span class="cut-mark cut-mark-v" style="top: -0.18in; right: 0;"></span>
+        <span class="cut-mark cut-mark-h" style="top: 5in; left: -0.18in;"></span>
+        <span class="cut-mark cut-mark-v" style="top: 4.85in; left: 3.5in;"></span>
+        <span class="cut-mark cut-mark-v" style="top: 5.15in; left: 3.5in;"></span>
+        <span class="cut-mark cut-mark-h" style="top: 5in; right: -0.18in;"></span>
+        <span class="cut-mark cut-mark-h" style="bottom: 0; left: -0.18in;"></span>
+        <span class="cut-mark cut-mark-v" style="bottom: -0.18in; left: 0;"></span>
+        <span class="cut-mark cut-mark-v" style="bottom: -0.18in; left: 3.5in;"></span>
+        <span class="cut-mark cut-mark-h" style="bottom: 0; right: -0.18in;"></span>
+        <span class="cut-mark cut-mark-v" style="bottom: -0.18in; right: 0;"></span>
+      </div>
+
+      <!-- Card 17 -->
+      <div class="affirmation-card card-style-a">
+        <div class="card-botanical-top">
+          <svg width="80" height="50" viewBox="0 0 80 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M40 48 C40 30 40 15 40 5" stroke="#B8CEB3" stroke-width="1.2"/>
+            <ellipse cx="30" cy="20" rx="8" ry="11" transform="rotate(-25 30 20)" fill="none" stroke="#B8CEB3" stroke-width="0.9"/>
+            <ellipse cx="50" cy="20" rx="8" ry="11" transform="rotate(25 50 20)" fill="none" stroke="#B8CEB3" stroke-width="0.9"/>
+            <ellipse cx="27" cy="36" rx="6" ry="9" transform="rotate(-32 27 36)" fill="none" stroke="#B8CEB3" stroke-width="0.9"/>
+            <ellipse cx="53" cy="36" rx="6" ry="9" transform="rotate(32 53 36)" fill="none" stroke="#B8CEB3" stroke-width="0.9"/>
+            <ellipse cx="40" cy="3" rx="3.5" ry="5" fill="none" stroke="#B8CEB3" stroke-width="0.8"/>
+          </svg>
+        </div>
+        <div class="card-text">I am allowed to take up space.</div>
+        <div class="card-leaf-bottom">
+          <svg width="30" height="18" viewBox="0 0 30 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M5 14 Q15 0 25 14" stroke="#B8CEB3" stroke-width="1" fill="none"/>
+            <path d="M15 4 L15 18" stroke="#B8CEB3" stroke-width="0.8"/>
+          </svg>
+        </div>
+      </div>
+
+      <!-- Card 18 -->
+      <div class="affirmation-card card-style-b">
+        <div class="card-botanical-top">
+          <svg width="70" height="50" viewBox="0 0 70 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M35 48 L35 8" stroke="#B8CEB3" stroke-width="1.2"/>
+            <ellipse cx="24" cy="18" rx="7" ry="11" transform="rotate(-18 24 18)" fill="none" stroke="#B8CEB3" stroke-width="0.9"/>
+            <ellipse cx="46" cy="18" rx="7" ry="11" transform="rotate(18 46 18)" fill="none" stroke="#B8CEB3" stroke-width="0.9"/>
+            <ellipse cx="22" cy="34" rx="6" ry="9" transform="rotate(-28 22 34)" fill="none" stroke="#B8CEB3" stroke-width="0.9"/>
+            <ellipse cx="48" cy="34" rx="6" ry="9" transform="rotate(28 48 34)" fill="none" stroke="#B8CEB3" stroke-width="0.9"/>
+            <circle cx="35" cy="5" r="3" fill="none" stroke="#B8CEB3" stroke-width="0.8"/>
+          </svg>
+        </div>
+        <div class="card-text">I honor my needs without guilt.</div>
+        <div class="card-leaf-bottom">
+          <svg width="24" height="20" viewBox="0 0 24 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 2 C6 6 4 12 6 18" stroke="#B8CEB3" stroke-width="0.8" fill="none"/>
+            <path d="M12 2 C18 6 20 12 18 18" stroke="#B8CEB3" stroke-width="0.8" fill="none"/>
+            <path d="M12 2 L12 20" stroke="#B8CEB3" stroke-width="0.8"/>
+          </svg>
+        </div>
+      </div>
+
+      <!-- Card 19 -->
+      <div class="affirmation-card card-style-c">
+        <div class="card-botanical-top">
+          <svg width="85" height="45" viewBox="0 0 85 45" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M10 38 Q28 18 42.5 20 Q57 22 78 6" stroke="#C4B1CB" stroke-width="1.2" fill="none"/>
+            <path d="M22 30 C18 26 17 20 20 16" stroke="#C4B1CB" stroke-width="0.8" fill="none"/>
+            <path d="M22 30 C26 26 27 20 24 16" stroke="#C4B1CB" stroke-width="0.8" fill="none"/>
+            <path d="M42 18 C38 14 37 8 40 4" stroke="#C4B1CB" stroke-width="0.8" fill="none"/>
+            <path d="M42 18 C46 14 47 8 44 4" stroke="#C4B1CB" stroke-width="0.8" fill="none"/>
+            <path d="M62 12 C58 8 57 3 60 0" stroke="#C4B1CB" stroke-width="0.8" fill="none"/>
+            <path d="M62 12 C66 8 67 3 64 0" stroke="#C4B1CB" stroke-width="0.8" fill="none"/>
+          </svg>
+        </div>
+        <div class="card-text">I am resilient and capable of hard things.</div>
+        <div class="card-leaf-bottom">
+          <svg width="35" height="15" viewBox="0 0 35 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M2 8 Q10 2 17.5 8 Q25 14 33 8" stroke="#C4B1CB" stroke-width="0.8" fill="none"/>
+          </svg>
+        </div>
+      </div>
+
+      <!-- Card 20 -->
+      <div class="affirmation-card card-style-d">
+        <div class="card-botanical-top">
+          <svg width="75" height="50" viewBox="0 0 75 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M37.5 48 L37.5 10" stroke="#E8D5D0" stroke-width="1.2"/>
+            <path d="M37.5 10 C30 6 26 2 28 0" stroke="#E8D5D0" stroke-width="0.8" fill="none"/>
+            <path d="M37.5 10 C45 6 49 2 47 0" stroke="#E8D5D0" stroke-width="0.8" fill="none"/>
+            <path d="M37.5 20 C28 16 22 10 25 5" stroke="#E8D5D0" stroke-width="0.8" fill="none"/>
+            <path d="M37.5 20 C47 16 53 10 50 5" stroke="#E8D5D0" stroke-width="0.8" fill="none"/>
+            <path d="M37.5 30 C30 28 24 22 27 17" stroke="#E8D5D0" stroke-width="0.8" fill="none"/>
+            <path d="M37.5 30 C45 28 51 22 48 17" stroke="#E8D5D0" stroke-width="0.8" fill="none"/>
+            <path d="M37.5 40 C32 38 27 34 29 30" stroke="#E8D5D0" stroke-width="0.8" fill="none"/>
+            <path d="M37.5 40 C43 38 48 34 46 30" stroke="#E8D5D0" stroke-width="0.8" fill="none"/>
+          </svg>
+        </div>
+        <div class="card-text">Peace begins with a single deep breath.</div>
+        <div class="card-leaf-bottom">
+          <svg width="28" height="16" viewBox="0 0 28 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M4 12 Q14 0 24 12" stroke="#E8D5D0" stroke-width="1" fill="none"/>
+            <path d="M14 3 L14 16" stroke="#E8D5D0" stroke-width="0.8"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       PAGE 6 — Cards 21-24
+       ============================================================ -->
+  <div class="page">
+    <div class="card-grid">
+      <div class="cut-marks">
+        <span class="cut-mark cut-mark-h" style="top: 0; left: -0.18in;"></span>
+        <span class="cut-mark cut-mark-v" style="top: -0.18in; left: 0;"></span>
+        <span class="cut-mark cut-mark-v" style="top: -0.18in; left: 3.5in;"></span>
+        <span class="cut-mark cut-mark-h" style="top: 0; right: -0.18in;"></span>
+        <span class="cut-mark cut-mark-v" style="top: -0.18in; right: 0;"></span>
+        <span class="cut-mark cut-mark-h" style="top: 5in; left: -0.18in;"></span>
+        <span class="cut-mark cut-mark-v" style="top: 4.85in; left: 3.5in;"></span>
+        <span class="cut-mark cut-mark-v" style="top: 5.15in; left: 3.5in;"></span>
+        <span class="cut-mark cut-mark-h" style="top: 5in; right: -0.18in;"></span>
+        <span class="cut-mark cut-mark-h" style="bottom: 0; left: -0.18in;"></span>
+        <span class="cut-mark cut-mark-v" style="bottom: -0.18in; left: 0;"></span>
+        <span class="cut-mark cut-mark-v" style="bottom: -0.18in; left: 3.5in;"></span>
+        <span class="cut-mark cut-mark-h" style="bottom: 0; right: -0.18in;"></span>
+        <span class="cut-mark cut-mark-v" style="bottom: -0.18in; right: 0;"></span>
+      </div>
+
+      <!-- Card 21 -->
+      <div class="affirmation-card card-style-a">
+        <div class="card-botanical-top">
+          <svg width="80" height="50" viewBox="0 0 80 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M40 48 L40 5" stroke="#B8CEB3" stroke-width="1.2"/>
+            <path d="M40 42 C30 36 22 30 24 22" stroke="#B8CEB3" stroke-width="0.9" fill="none"/>
+            <path d="M40 42 C50 36 58 30 56 22" stroke="#B8CEB3" stroke-width="0.9" fill="none"/>
+            <path d="M40 28 C32 24 26 18 28 12" stroke="#B8CEB3" stroke-width="0.9" fill="none"/>
+            <path d="M40 28 C48 24 54 18 52 12" stroke="#B8CEB3" stroke-width="0.9" fill="none"/>
+            <path d="M40 15 C36 12 33 8 35 4" stroke="#B8CEB3" stroke-width="0.9" fill="none"/>
+            <path d="M40 15 C44 12 47 8 45 4" stroke="#B8CEB3" stroke-width="0.9" fill="none"/>
+          </svg>
+        </div>
+        <div class="card-text">I let go of the need to be perfect.</div>
+        <div class="card-leaf-bottom">
+          <svg width="30" height="18" viewBox="0 0 30 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M5 14 Q15 0 25 14" stroke="#B8CEB3" stroke-width="1" fill="none"/>
+            <path d="M15 4 L15 18" stroke="#B8CEB3" stroke-width="0.8"/>
+          </svg>
+        </div>
+      </div>
+
+      <!-- Card 22 -->
+      <div class="affirmation-card card-style-b">
+        <div class="card-botanical-top">
+          <svg width="70" height="50" viewBox="0 0 70 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M35 48 L35 5" stroke="#B8CEB3" stroke-width="1.2"/>
+            <ellipse cx="25" cy="15" rx="8" ry="12" transform="rotate(-22 25 15)" fill="none" stroke="#B8CEB3" stroke-width="0.9"/>
+            <ellipse cx="45" cy="15" rx="8" ry="12" transform="rotate(22 45 15)" fill="none" stroke="#B8CEB3" stroke-width="0.9"/>
+            <ellipse cx="23" cy="33" rx="6" ry="9" transform="rotate(-30 23 33)" fill="none" stroke="#B8CEB3" stroke-width="0.9"/>
+            <ellipse cx="47" cy="33" rx="6" ry="9" transform="rotate(30 47 33)" fill="none" stroke="#B8CEB3" stroke-width="0.9"/>
+            <ellipse cx="35" cy="3" rx="4" ry="6" fill="none" stroke="#B8CEB3" stroke-width="0.8"/>
+          </svg>
+        </div>
+        <div class="card-text">I am grateful for this moment of stillness.</div>
+        <div class="card-leaf-bottom">
+          <svg width="24" height="20" viewBox="0 0 24 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 2 C6 6 4 12 6 18" stroke="#B8CEB3" stroke-width="0.8" fill="none"/>
+            <path d="M12 2 C18 6 20 12 18 18" stroke="#B8CEB3" stroke-width="0.8" fill="none"/>
+            <path d="M12 2 L12 20" stroke="#B8CEB3" stroke-width="0.8"/>
+          </svg>
+        </div>
+      </div>
+
+      <!-- Card 23 -->
+      <div class="affirmation-card card-style-c">
+        <div class="card-botanical-top">
+          <svg width="90" height="45" viewBox="0 0 90 45" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M8 38 Q30 16 45 18 Q60 20 82 4" stroke="#C4B1CB" stroke-width="1.2" fill="none"/>
+            <circle cx="24" cy="25" r="5.5" fill="none" stroke="#C4B1CB" stroke-width="0.8"/>
+            <circle cx="24" cy="25" r="2" fill="#C4B1CB" opacity="0.2"/>
+            <circle cx="45" cy="16" r="6.5" fill="none" stroke="#C4B1CB" stroke-width="0.8"/>
+            <circle cx="45" cy="16" r="2.5" fill="#C4B1CB" opacity="0.2"/>
+            <circle cx="66" cy="10" r="5" fill="none" stroke="#C4B1CB" stroke-width="0.8"/>
+            <circle cx="66" cy="10" r="1.8" fill="#C4B1CB" opacity="0.2"/>
+          </svg>
+        </div>
+        <div class="card-text">I trust myself to handle whatever comes.</div>
+        <div class="card-leaf-bottom">
+          <svg width="35" height="15" viewBox="0 0 35 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M2 8 Q10 2 17.5 8 Q25 14 33 8" stroke="#C4B1CB" stroke-width="0.8" fill="none"/>
+          </svg>
+        </div>
+      </div>
+
+      <!-- Card 24 -->
+      <div class="affirmation-card card-style-d">
+        <div class="card-botanical-top">
+          <svg width="75" height="50" viewBox="0 0 75 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M37.5 48 L37.5 12" stroke="#E8D5D0" stroke-width="1.2"/>
+            <path d="M37.5 42 C28 38 20 32 23 24" stroke="#E8D5D0" stroke-width="0.8" fill="none"/>
+            <path d="M37.5 42 C47 38 55 32 52 24" stroke="#E8D5D0" stroke-width="0.8" fill="none"/>
+            <path d="M37.5 30 C30 26 24 20 27 14" stroke="#E8D5D0" stroke-width="0.8" fill="none"/>
+            <path d="M37.5 30 C45 26 51 20 48 14" stroke="#E8D5D0" stroke-width="0.8" fill="none"/>
+            <circle cx="37.5" cy="9" r="4" fill="none" stroke="#E8D5D0" stroke-width="0.8"/>
+            <circle cx="37.5" cy="9" r="1.5" fill="#E8D5D0" opacity="0.3"/>
+          </svg>
+        </div>
+        <div class="card-text">I choose to be gentle with myself today.</div>
+        <div class="card-leaf-bottom">
+          <svg width="28" height="16" viewBox="0 0 28 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M4 12 Q14 0 24 12" stroke="#E8D5D0" stroke-width="1" fill="none"/>
+            <path d="M14 3 L14 16" stroke="#E8D5D0" stroke-width="0.8"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       PAGE 7 — Cards 25-28
+       ============================================================ -->
+  <div class="page">
+    <div class="card-grid">
+      <div class="cut-marks">
+        <span class="cut-mark cut-mark-h" style="top: 0; left: -0.18in;"></span>
+        <span class="cut-mark cut-mark-v" style="top: -0.18in; left: 0;"></span>
+        <span class="cut-mark cut-mark-v" style="top: -0.18in; left: 3.5in;"></span>
+        <span class="cut-mark cut-mark-h" style="top: 0; right: -0.18in;"></span>
+        <span class="cut-mark cut-mark-v" style="top: -0.18in; right: 0;"></span>
+        <span class="cut-mark cut-mark-h" style="top: 5in; left: -0.18in;"></span>
+        <span class="cut-mark cut-mark-v" style="top: 4.85in; left: 3.5in;"></span>
+        <span class="cut-mark cut-mark-v" style="top: 5.15in; left: 3.5in;"></span>
+        <span class="cut-mark cut-mark-h" style="top: 5in; right: -0.18in;"></span>
+        <span class="cut-mark cut-mark-h" style="bottom: 0; left: -0.18in;"></span>
+        <span class="cut-mark cut-mark-v" style="bottom: -0.18in; left: 0;"></span>
+        <span class="cut-mark cut-mark-v" style="bottom: -0.18in; left: 3.5in;"></span>
+        <span class="cut-mark cut-mark-h" style="bottom: 0; right: -0.18in;"></span>
+        <span class="cut-mark cut-mark-v" style="bottom: -0.18in; right: 0;"></span>
+      </div>
+
+      <!-- Card 25 -->
+      <div class="affirmation-card card-style-a">
+        <div class="card-botanical-top">
+          <svg width="80" height="50" viewBox="0 0 80 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M40 48 L40 8" stroke="#B8CEB3" stroke-width="1.2"/>
+            <ellipse cx="30" cy="18" rx="8" ry="12" transform="rotate(-22 30 18)" fill="none" stroke="#B8CEB3" stroke-width="0.9"/>
+            <ellipse cx="50" cy="18" rx="8" ry="12" transform="rotate(22 50 18)" fill="none" stroke="#B8CEB3" stroke-width="0.9"/>
+            <ellipse cx="28" cy="34" rx="6" ry="9" transform="rotate(-32 28 34)" fill="none" stroke="#B8CEB3" stroke-width="0.9"/>
+            <ellipse cx="52" cy="34" rx="6" ry="9" transform="rotate(32 52 34)" fill="none" stroke="#B8CEB3" stroke-width="0.9"/>
+            <ellipse cx="40" cy="5" rx="4" ry="6" fill="none" stroke="#B8CEB3" stroke-width="0.8"/>
+          </svg>
+        </div>
+        <div class="card-text">My mind is calm, my body is at ease.</div>
+        <div class="card-leaf-bottom">
+          <svg width="30" height="18" viewBox="0 0 30 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M5 14 Q15 0 25 14" stroke="#B8CEB3" stroke-width="1" fill="none"/>
+            <path d="M15 4 L15 18" stroke="#B8CEB3" stroke-width="0.8"/>
+          </svg>
+        </div>
+      </div>
+
+      <!-- Card 26 -->
+      <div class="affirmation-card card-style-b">
+        <div class="card-botanical-top">
+          <svg width="70" height="50" viewBox="0 0 70 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M35 48 L35 5" stroke="#B8CEB3" stroke-width="1.2"/>
+            <path d="M35 40 C25 34 18 26 21 18" stroke="#B8CEB3" stroke-width="0.9" fill="none"/>
+            <path d="M35 30 C45 24 52 16 49 8" stroke="#B8CEB3" stroke-width="0.9" fill="none"/>
+            <path d="M35 20 C28 16 24 10 26 5" stroke="#B8CEB3" stroke-width="0.9" fill="none"/>
+            <circle cx="35" cy="3" r="2.5" fill="none" stroke="#B8CEB3" stroke-width="0.8"/>
+          </svg>
+        </div>
+        <div class="card-text">I am more than my anxious thoughts.</div>
+        <div class="card-leaf-bottom">
+          <svg width="24" height="20" viewBox="0 0 24 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 2 C6 6 4 12 6 18" stroke="#B8CEB3" stroke-width="0.8" fill="none"/>
+            <path d="M12 2 C18 6 20 12 18 18" stroke="#B8CEB3" stroke-width="0.8" fill="none"/>
+            <path d="M12 2 L12 20" stroke="#B8CEB3" stroke-width="0.8"/>
+          </svg>
+        </div>
+      </div>
+
+      <!-- Card 27 -->
+      <div class="affirmation-card card-style-c">
+        <div class="card-botanical-top">
+          <svg width="85" height="45" viewBox="0 0 85 45" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M10 40 Q28 20 42.5 22 Q57 24 78 6" stroke="#C4B1CB" stroke-width="1.2" fill="none"/>
+            <circle cx="20" cy="32" r="4.5" fill="none" stroke="#C4B1CB" stroke-width="0.8"/>
+            <circle cx="20" cy="32" r="1.8" fill="#C4B1CB" opacity="0.2"/>
+            <circle cx="42" cy="20" r="5.5" fill="none" stroke="#C4B1CB" stroke-width="0.8"/>
+            <circle cx="42" cy="20" r="2.2" fill="#C4B1CB" opacity="0.2"/>
+            <circle cx="64" cy="12" r="4" fill="none" stroke="#C4B1CB" stroke-width="0.8"/>
+            <circle cx="64" cy="12" r="1.5" fill="#C4B1CB" opacity="0.2"/>
+            <path d="M17 35 L14 42" stroke="#C4B1CB" stroke-width="0.5"/>
+            <path d="M40 24 L36 32" stroke="#C4B1CB" stroke-width="0.5"/>
+            <path d="M67 10 L70 4" stroke="#C4B1CB" stroke-width="0.5"/>
+          </svg>
+        </div>
+        <div class="card-text">I welcome joy and release fear.</div>
+        <div class="card-leaf-bottom">
+          <svg width="35" height="15" viewBox="0 0 35 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M2 8 Q10 2 17.5 8 Q25 14 33 8" stroke="#C4B1CB" stroke-width="0.8" fill="none"/>
+          </svg>
+        </div>
+      </div>
+
+      <!-- Card 28 -->
+      <div class="affirmation-card card-style-d">
+        <div class="card-botanical-top">
+          <svg width="75" height="50" viewBox="0 0 75 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M37.5 48 L37.5 10" stroke="#E8D5D0" stroke-width="1.2"/>
+            <path d="M37.5 10 C32 6 28 2 30 0" stroke="#E8D5D0" stroke-width="0.8" fill="none"/>
+            <path d="M37.5 10 C43 6 47 2 45 0" stroke="#E8D5D0" stroke-width="0.8" fill="none"/>
+            <path d="M37.5 20 C30 16 24 10 27 5" stroke="#E8D5D0" stroke-width="0.8" fill="none"/>
+            <path d="M37.5 20 C45 16 51 10 48 5" stroke="#E8D5D0" stroke-width="0.8" fill="none"/>
+            <path d="M37.5 30 C28 26 22 20 25 14" stroke="#E8D5D0" stroke-width="0.8" fill="none"/>
+            <path d="M37.5 30 C47 26 53 20 50 14" stroke="#E8D5D0" stroke-width="0.8" fill="none"/>
+            <path d="M37.5 40 C32 38 26 34 28 30" stroke="#E8D5D0" stroke-width="0.8" fill="none"/>
+            <path d="M37.5 40 C43 38 49 34 47 30" stroke="#E8D5D0" stroke-width="0.8" fill="none"/>
+          </svg>
+        </div>
+        <div class="card-text">I am exactly where I need to be.</div>
+        <div class="card-leaf-bottom">
+          <svg width="28" height="16" viewBox="0 0 28 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M4 12 Q14 0 24 12" stroke="#E8D5D0" stroke-width="1" fill="none"/>
+            <path d="M14 3 L14 16" stroke="#E8D5D0" stroke-width="0.8"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       PAGE 8 — Cards 29-30 (2 cards only)
+       ============================================================ -->
+  <div class="page">
+    <div class="card-grid card-grid--half">
+      <div class="cut-marks">
+        <span class="cut-mark cut-mark-h" style="top: 0; left: -0.18in;"></span>
+        <span class="cut-mark cut-mark-v" style="top: -0.18in; left: 0;"></span>
+        <span class="cut-mark cut-mark-v" style="top: -0.18in; left: 3.5in;"></span>
+        <span class="cut-mark cut-mark-h" style="top: 0; right: -0.18in;"></span>
+        <span class="cut-mark cut-mark-v" style="top: -0.18in; right: 0;"></span>
+        <span class="cut-mark cut-mark-h" style="bottom: 0; left: -0.18in;"></span>
+        <span class="cut-mark cut-mark-v" style="bottom: -0.18in; left: 0;"></span>
+        <span class="cut-mark cut-mark-v" style="bottom: -0.18in; left: 3.5in;"></span>
+        <span class="cut-mark cut-mark-h" style="bottom: 0; right: -0.18in;"></span>
+        <span class="cut-mark cut-mark-v" style="bottom: -0.18in; right: 0;"></span>
+      </div>
+
+      <!-- Card 29 -->
+      <div class="affirmation-card card-style-a">
+        <div class="card-botanical-top">
+          <svg width="80" height="50" viewBox="0 0 80 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M40 48 L40 8" stroke="#B8CEB3" stroke-width="1.2"/>
+            <ellipse cx="30" cy="16" rx="8" ry="12" transform="rotate(-22 30 16)" fill="none" stroke="#B8CEB3" stroke-width="0.9"/>
+            <ellipse cx="50" cy="16" rx="8" ry="12" transform="rotate(22 50 16)" fill="none" stroke="#B8CEB3" stroke-width="0.9"/>
+            <ellipse cx="26" cy="34" rx="7" ry="10" transform="rotate(-30 26 34)" fill="none" stroke="#B8CEB3" stroke-width="0.9"/>
+            <ellipse cx="54" cy="34" rx="7" ry="10" transform="rotate(30 54 34)" fill="none" stroke="#B8CEB3" stroke-width="0.9"/>
+            <ellipse cx="40" cy="5" rx="4" ry="6" fill="none" stroke="#B8CEB3" stroke-width="0.8"/>
+          </svg>
+        </div>
+        <div class="card-text">I nurture myself with love and patience.</div>
+        <div class="card-leaf-bottom">
+          <svg width="30" height="18" viewBox="0 0 30 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M5 14 Q15 0 25 14" stroke="#B8CEB3" stroke-width="1" fill="none"/>
+            <path d="M15 4 L15 18" stroke="#B8CEB3" stroke-width="0.8"/>
+          </svg>
+        </div>
+      </div>
+
+      <!-- Card 30 -->
+      <div class="affirmation-card card-style-b">
+        <div class="card-botanical-top">
+          <svg width="70" height="50" viewBox="0 0 70 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M35 48 L35 5" stroke="#B8CEB3" stroke-width="1.2"/>
+            <ellipse cx="25" cy="18" rx="8" ry="12" transform="rotate(-20 25 18)" fill="none" stroke="#B8CEB3" stroke-width="0.9"/>
+            <ellipse cx="45" cy="18" rx="8" ry="12" transform="rotate(20 45 18)" fill="none" stroke="#B8CEB3" stroke-width="0.9"/>
+            <ellipse cx="22" cy="35" rx="6" ry="9" transform="rotate(-32 22 35)" fill="none" stroke="#B8CEB3" stroke-width="0.9"/>
+            <ellipse cx="48" cy="35" rx="6" ry="9" transform="rotate(32 48 35)" fill="none" stroke="#B8CEB3" stroke-width="0.9"/>
+            <circle cx="35" cy="3" r="3" fill="none" stroke="#B8CEB3" stroke-width="0.8"/>
+            <circle cx="35" cy="3" r="1" fill="#B8CEB3" opacity="0.3"/>
+          </svg>
+        </div>
+        <div class="card-text">I bloom at my own pace.</div>
+        <div class="card-leaf-bottom">
+          <svg width="24" height="20" viewBox="0 0 24 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 2 C6 6 4 12 6 18" stroke="#B8CEB3" stroke-width="0.8" fill="none"/>
+            <path d="M12 2 C18 6 20 12 18 18" stroke="#B8CEB3" stroke-width="0.8" fill="none"/>
+            <path d="M12 2 L12 20" stroke="#B8CEB3" stroke-width="0.8"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       PAGE 9 — Card Backs (for duplex printing)
+       ============================================================ -->
+  <div class="page">
+    <div class="card-grid">
+      <div class="cut-marks">
+        <span class="cut-mark cut-mark-h" style="top: 0; left: -0.18in;"></span>
+        <span class="cut-mark cut-mark-v" style="top: -0.18in; left: 0;"></span>
+        <span class="cut-mark cut-mark-v" style="top: -0.18in; left: 3.5in;"></span>
+        <span class="cut-mark cut-mark-h" style="top: 0; right: -0.18in;"></span>
+        <span class="cut-mark cut-mark-v" style="top: -0.18in; right: 0;"></span>
+        <span class="cut-mark cut-mark-h" style="top: 5in; left: -0.18in;"></span>
+        <span class="cut-mark cut-mark-v" style="top: 4.85in; left: 3.5in;"></span>
+        <span class="cut-mark cut-mark-v" style="top: 5.15in; left: 3.5in;"></span>
+        <span class="cut-mark cut-mark-h" style="top: 5in; right: -0.18in;"></span>
+        <span class="cut-mark cut-mark-h" style="bottom: 0; left: -0.18in;"></span>
+        <span class="cut-mark cut-mark-v" style="bottom: -0.18in; left: 0;"></span>
+        <span class="cut-mark cut-mark-v" style="bottom: -0.18in; left: 3.5in;"></span>
+        <span class="cut-mark cut-mark-h" style="bottom: 0; right: -0.18in;"></span>
+        <span class="cut-mark cut-mark-v" style="bottom: -0.18in; right: 0;"></span>
+      </div>
+
+      <!-- Card Back 1 -->
+      <div class="card-back">
+        <div class="card-back-pattern">
+          <svg width="100%" height="100%" viewBox="0 0 252 360" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <pattern id="botanicalPattern1" x="0" y="0" width="63" height="72" patternUnits="userSpaceOnUse">
+                <!-- Small eucalyptus leaf -->
+                <ellipse cx="16" cy="18" rx="5" ry="8" transform="rotate(-20 16 18)" fill="none" stroke="#B8CEB3" stroke-width="0.6" opacity="0.4"/>
+                <path d="M16 22 L16 32" stroke="#B8CEB3" stroke-width="0.5" opacity="0.3"/>
+                <!-- Small circle accent -->
+                <circle cx="42" cy="12" r="2.5" fill="none" stroke="#C4B1CB" stroke-width="0.5" opacity="0.3"/>
+                <!-- Tiny leaf -->
+                <ellipse cx="48" cy="42" rx="4" ry="6" transform="rotate(15 48 42)" fill="none" stroke="#B8CEB3" stroke-width="0.5" opacity="0.35"/>
+                <path d="M48 46 L48 54" stroke="#B8CEB3" stroke-width="0.4" opacity="0.25"/>
+                <!-- Dot -->
+                <circle cx="28" cy="52" r="1.5" fill="#C4B1CB" opacity="0.15"/>
+                <!-- Small sprig -->
+                <path d="M8 56 L12 48" stroke="#B8CEB3" stroke-width="0.4" opacity="0.3"/>
+                <ellipse cx="13" cy="46" rx="3" ry="5" transform="rotate(25 13 46)" fill="none" stroke="#B8CEB3" stroke-width="0.4" opacity="0.3"/>
+              </pattern>
+            </defs>
+            <rect width="252" height="360" fill="url(#botanicalPattern1)"/>
+          </svg>
+          <span class="card-back-brand">Calm &amp; Bloom</span>
+        </div>
+      </div>
+
+      <!-- Card Back 2 -->
+      <div class="card-back">
+        <div class="card-back-pattern">
+          <svg width="100%" height="100%" viewBox="0 0 252 360" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <pattern id="botanicalPattern2" x="10" y="10" width="63" height="72" patternUnits="userSpaceOnUse">
+                <ellipse cx="16" cy="18" rx="5" ry="8" transform="rotate(-20 16 18)" fill="none" stroke="#B8CEB3" stroke-width="0.6" opacity="0.4"/>
+                <path d="M16 22 L16 32" stroke="#B8CEB3" stroke-width="0.5" opacity="0.3"/>
+                <circle cx="42" cy="12" r="2.5" fill="none" stroke="#C4B1CB" stroke-width="0.5" opacity="0.3"/>
+                <ellipse cx="48" cy="42" rx="4" ry="6" transform="rotate(15 48 42)" fill="none" stroke="#B8CEB3" stroke-width="0.5" opacity="0.35"/>
+                <path d="M48 46 L48 54" stroke="#B8CEB3" stroke-width="0.4" opacity="0.25"/>
+                <circle cx="28" cy="52" r="1.5" fill="#C4B1CB" opacity="0.15"/>
+                <path d="M8 56 L12 48" stroke="#B8CEB3" stroke-width="0.4" opacity="0.3"/>
+                <ellipse cx="13" cy="46" rx="3" ry="5" transform="rotate(25 13 46)" fill="none" stroke="#B8CEB3" stroke-width="0.4" opacity="0.3"/>
+              </pattern>
+            </defs>
+            <rect width="252" height="360" fill="url(#botanicalPattern2)"/>
+          </svg>
+          <span class="card-back-brand">Calm &amp; Bloom</span>
+        </div>
+      </div>
+
+      <!-- Card Back 3 -->
+      <div class="card-back">
+        <div class="card-back-pattern">
+          <svg width="100%" height="100%" viewBox="0 0 252 360" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <pattern id="botanicalPattern3" x="5" y="5" width="63" height="72" patternUnits="userSpaceOnUse">
+                <ellipse cx="16" cy="18" rx="5" ry="8" transform="rotate(-20 16 18)" fill="none" stroke="#B8CEB3" stroke-width="0.6" opacity="0.4"/>
+                <path d="M16 22 L16 32" stroke="#B8CEB3" stroke-width="0.5" opacity="0.3"/>
+                <circle cx="42" cy="12" r="2.5" fill="none" stroke="#C4B1CB" stroke-width="0.5" opacity="0.3"/>
+                <ellipse cx="48" cy="42" rx="4" ry="6" transform="rotate(15 48 42)" fill="none" stroke="#B8CEB3" stroke-width="0.5" opacity="0.35"/>
+                <path d="M48 46 L48 54" stroke="#B8CEB3" stroke-width="0.4" opacity="0.25"/>
+                <circle cx="28" cy="52" r="1.5" fill="#C4B1CB" opacity="0.15"/>
+                <path d="M8 56 L12 48" stroke="#B8CEB3" stroke-width="0.4" opacity="0.3"/>
+                <ellipse cx="13" cy="46" rx="3" ry="5" transform="rotate(25 13 46)" fill="none" stroke="#B8CEB3" stroke-width="0.4" opacity="0.3"/>
+              </pattern>
+            </defs>
+            <rect width="252" height="360" fill="url(#botanicalPattern3)"/>
+          </svg>
+          <span class="card-back-brand">Calm &amp; Bloom</span>
+        </div>
+      </div>
+
+      <!-- Card Back 4 -->
+      <div class="card-back">
+        <div class="card-back-pattern">
+          <svg width="100%" height="100%" viewBox="0 0 252 360" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <pattern id="botanicalPattern4" x="15" y="15" width="63" height="72" patternUnits="userSpaceOnUse">
+                <ellipse cx="16" cy="18" rx="5" ry="8" transform="rotate(-20 16 18)" fill="none" stroke="#B8CEB3" stroke-width="0.6" opacity="0.4"/>
+                <path d="M16 22 L16 32" stroke="#B8CEB3" stroke-width="0.5" opacity="0.3"/>
+                <circle cx="42" cy="12" r="2.5" fill="none" stroke="#C4B1CB" stroke-width="0.5" opacity="0.3"/>
+                <ellipse cx="48" cy="42" rx="4" ry="6" transform="rotate(15 48 42)" fill="none" stroke="#B8CEB3" stroke-width="0.5" opacity="0.35"/>
+                <path d="M48 46 L48 54" stroke="#B8CEB3" stroke-width="0.4" opacity="0.25"/>
+                <circle cx="28" cy="52" r="1.5" fill="#C4B1CB" opacity="0.15"/>
+                <path d="M8 56 L12 48" stroke="#B8CEB3" stroke-width="0.4" opacity="0.3"/>
+                <ellipse cx="13" cy="46" rx="3" ry="5" transform="rotate(25 13 46)" fill="none" stroke="#B8CEB3" stroke-width="0.4" opacity="0.3"/>
+              </pattern>
+            </defs>
+            <rect width="252" height="360" fill="url(#botanicalPattern4)"/>
+          </svg>
+          <span class="card-back-brand">Calm &amp; Bloom</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>
