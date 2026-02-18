@@ -2,35 +2,42 @@
 """
 Generate 10 Etsy listing images for Villa Vibes Bachelorette Bundle.
 All images: 2000x2000 px, sRGB, JPG quality 95.
-Brand colors from Shelzy's Designs brand guide, adapted for tropical party vibe.
+Uses VILLA VIBES color palette and typography per brand specs.
 """
 
 from PIL import Image, ImageDraw, ImageFont
-import os, math
+import os
 
 OUT = "/home/user/ShelzysDesigns/ETSY/VILLA/Etsy_Listing_Assets"
 W, H = 2000, 2000
 
-# === BRAND COLORS ===
-SAGE        = (139, 170, 136)    # #8BAA88
-DARK_SAGE   = (78, 95, 74)      # #4E5F4A
-WARM_WHITE  = (250, 249, 246)   # #FAF9F6
-CHARCOAL    = (43, 43, 43)      # #2B2B2B
-WHITE       = (255, 255, 255)
-GOLD        = (209, 199, 161)   # #D1C7A1
-SOFT_BORDER = (199, 211, 197)   # #C7D3C5
-LIGHT_BG    = (245, 243, 238)   # slightly warm
+# === VILLA VIBES COLOR PALETTE ===
+WHITE      = (254, 254, 254)     # #fefefe
+HOT_PINK   = (251, 88, 135)     # #fb5887
+ORANGE     = (254, 140, 67)     # #fe8c43
+BLUE       = (60, 164, 215)     # #3ca4d7
+TEAL       = (138, 219, 222)    # #8adbde
+DARK_TEXT   = (45, 45, 50)      # near-black for body text
+LIGHT_BG    = (254, 252, 250)   # warm white bg
+CARD_BG     = (255, 255, 255)
+GOLD_TEXT   = (209, 180, 100)   # gold for subtitles
+SOFT_GRAY   = (235, 235, 238)   # light divider/border
 
-# Tropical accent (stays complementary to sage palette)
-TROPICAL_SAGE  = (162, 198, 158)  # lighter sage for tropical feel
-PALE_GOLD      = (235, 228, 206)  # soft gold wash
+# === FONTS (Villa Vibes Typography) ===
+# Title: Berthold Block → Anton (closest free block font), size 42 (scaled for 2000px)
+# Subtitle: Montserrat, size 36, gold
+# Heading: Montserrat Bold, size 32
+# Subheading: Montserrat SemiBold
+# Section header: Montserrat Bold, size 20
+# Body: Montserrat Regular, size 16
 
-# === FONTS ===
-SERIF_BOLD  = "/usr/share/fonts/truetype/liberation/LiberationSerif-Bold.ttf"
-SERIF_REG   = "/usr/share/fonts/truetype/liberation/LiberationSerif-Regular.ttf"
-SANS_BOLD   = "/usr/share/fonts/truetype/liberation/LiberationSans-Bold.ttf"
-SANS_REG    = "/usr/share/fonts/truetype/liberation/LiberationSans-Regular.ttf"
+TITLE_FONT      = "/usr/share/fonts/truetype/bebasneue/Anton-Regular.ttf"
+MONTSERRAT_BOLD = "/usr/share/fonts/truetype/montserrat/Montserrat-Bold.ttf"
+MONTSERRAT_SEMI = "/usr/share/fonts/truetype/montserrat/Montserrat-SemiBold.ttf"
+MONTSERRAT_REG  = "/usr/share/fonts/truetype/montserrat/Montserrat-Regular.ttf"
+MONTSERRAT_MED  = "/usr/share/fonts/truetype/montserrat/Montserrat-Medium.ttf"
 
+# Scale factor: design specs are for ~web/print, images are 2000px. Multiply by ~2.5
 def font(path, size):
     return ImageFont.truetype(path, size)
 
@@ -41,15 +48,6 @@ def center_text(draw, text, y, fnt, fill, w=W):
     draw.text((x, y), text, font=fnt, fill=fill)
     return bbox[3] - bbox[1]
 
-def left_text(draw, text, x, y, fnt, fill):
-    draw.text((x, y), text, font=fnt, fill=fill)
-    bbox = draw.textbbox((0, 0), text, font=fnt)
-    return bbox[3] - bbox[1]
-
-def draw_rounded_rect(draw, xy, radius, fill, outline=None, width=1):
-    x0, y0, x1, y1 = xy
-    draw.rounded_rectangle(xy, radius=radius, fill=fill, outline=outline, width=width)
-
 def draw_pill_badge(draw, text, cx, cy, fnt, bg, fg, hpad=40, vpad=16):
     bbox = draw.textbbox((0, 0), text, font=fnt)
     tw, th = bbox[2] - bbox[0], bbox[3] - bbox[1]
@@ -59,24 +57,6 @@ def draw_pill_badge(draw, text, cx, cy, fnt, bg, fg, hpad=40, vpad=16):
     y1 = cy + th // 2 + vpad
     draw.rounded_rectangle((x0, y0, x1, y1), radius=(y1 - y0) // 2, fill=bg)
     draw.text((cx - tw // 2, cy - th // 2), text, font=fnt, fill=fg)
-    return x1 - x0
-
-def draw_mockup_rect(draw, x, y, w, h, label, label_font, border_color=SOFT_BORDER, bg=WHITE, text_color=CHARCOAL):
-    """Draw a simplified template mockup rectangle."""
-    draw.rounded_rectangle((x, y, x + w, y + h), radius=12, fill=bg, outline=border_color, width=3)
-    # Add lines to simulate content
-    line_y = y + 50
-    for i in range(4):
-        lw = w - 80 if i == 0 else w - 120 - (i * 30)
-        if lw < 60:
-            lw = 60
-        draw.rounded_rectangle((x + 40, line_y, x + 40 + lw, line_y + 12), radius=6, fill=SOFT_BORDER)
-        line_y += 28
-    # Label at bottom
-    if label:
-        bbox = draw.textbbox((0, 0), label, font=label_font)
-        tw = bbox[2] - bbox[0]
-        draw.text((x + (w - tw) // 2, y + h - 50), label, font=label_font, fill=text_color)
 
 def draw_step_circle(draw, num, cx, cy, r, bg, fg, fnt):
     draw.ellipse((cx - r, cy - r, cx + r, cy + r), fill=bg)
@@ -85,56 +65,59 @@ def draw_step_circle(draw, num, cx, cy, r, bg, fg, fnt):
     tw, th = bbox[2] - bbox[0], bbox[3] - bbox[1]
     draw.text((cx - tw // 2, cy - th // 2 - 4), txt, font=fnt, fill=fg)
 
-def decorative_border(draw, thickness=6, color=SAGE, margin=60):
-    draw.rounded_rectangle((margin, margin, W - margin, H - margin), radius=30, fill=None, outline=color, width=thickness)
-
 def top_brand_bar(draw, text="SHELZY'S DESIGNS"):
-    fnt = font(SANS_BOLD, 28)
-    draw.rectangle((0, 0, W, 70), fill=DARK_SAGE)
-    center_text(draw, text, 20, fnt, GOLD)
+    fnt = font(MONTSERRAT_BOLD, 28)
+    draw.rectangle((0, 0, W, 70), fill=HOT_PINK)
+    center_text(draw, text, 18, fnt, WHITE)
 
 def bottom_brand_bar(draw, text="shelzysdesigns.etsy.com"):
-    fnt = font(SANS_REG, 26)
-    draw.rectangle((0, H - 70, W, H), fill=DARK_SAGE)
-    center_text(draw, text, H - 52, fnt, GOLD)
+    fnt = font(MONTSERRAT_REG, 26)
+    draw.rectangle((0, H - 70, W, H), fill=HOT_PINK)
+    center_text(draw, text, H - 52, fnt, WHITE)
+
+def draw_divider(draw, y, color=ORANGE, margin=600):
+    draw.line((margin, y, W - margin, y), fill=color, width=4)
+
 
 # =============================================
 # IMAGE 01 - HERO
 # =============================================
 def make_image01():
-    img = Image.new("RGB", (W, H), WARM_WHITE)
+    img = Image.new("RGB", (W, H), LIGHT_BG)
     draw = ImageDraw.Draw(img)
 
-    # Background accent: soft sage strip at top
-    draw.rectangle((0, 0, W, 520), fill=DARK_SAGE)
+    # Top colored header block
+    draw.rectangle((0, 0, W, 540), fill=BLUE)
 
-    # Top branding
-    fnt_brand = font(SANS_BOLD, 30)
-    center_text(draw, "SHELZY'S DESIGNS", 30, fnt_brand, GOLD)
+    # Brand name
+    fnt_brand = font(MONTSERRAT_BOLD, 30)
+    center_text(draw, "SHELZY'S DESIGNS", 28, fnt_brand, WHITE)
 
-    # Main headline
-    fnt_h1 = font(SERIF_BOLD, 110)
-    center_text(draw, "Villa Vibes", 120, fnt_h1, WHITE)
+    # Title (Berthold Block style)
+    fnt_title = font(TITLE_FONT, 120)
+    center_text(draw, "VILLA VIBES", 100, fnt_title, WHITE)
 
-    # Sub headline
-    fnt_h2 = font(SERIF_BOLD, 64)
-    center_text(draw, "Bachelorette Bundle", 260, fnt_h2, PALE_GOLD)
+    # Subtitle
+    fnt_sub = font(MONTSERRAT_BOLD, 68)
+    center_text(draw, "Bachelorette Bundle", 250, fnt_sub, GOLD_TEXT)
 
     # Template count
-    fnt_count = font(SANS_BOLD, 48)
-    center_text(draw, "23 Editable + Printable Templates", 380, fnt_count, TROPICAL_SAGE)
+    fnt_count = font(MONTSERRAT_SEMI, 48)
+    center_text(draw, "23 Editable + Printable Templates", 370, fnt_count, TEAL)
 
-    # Divider line
-    draw.line((600, 470, 1400, 470), fill=GOLD, width=3)
+    # Divider
+    draw.line((600, 470, 1400, 470), fill=ORANGE, width=4)
 
     # Mockup grid (6 template previews)
-    mock_font = font(SANS_REG, 22)
+    mock_font = font(MONTSERRAT_REG, 22)
     labels = ["Welcome Sign", "Itinerary", "Drink If...", "Who Knows\nthe Bride", "Packing List", "Photo Props"]
     cols, rows = 3, 2
     card_w, card_h = 420, 340
     gap_x, gap_y = 60, 50
     start_x = (W - (cols * card_w + (cols - 1) * gap_x)) // 2
-    start_y = 570
+    start_y = 580
+
+    accent_colors = [HOT_PINK, ORANGE, BLUE, TEAL, HOT_PINK, ORANGE]
 
     for idx, label in enumerate(labels):
         col = idx % cols
@@ -143,17 +126,20 @@ def make_image01():
         cy = start_y + row * (card_h + gap_y)
 
         # Card shadow
-        draw.rounded_rectangle((cx + 6, cy + 6, cx + card_w + 6, cy + card_h + 6), radius=16, fill=(220, 220, 215))
+        draw.rounded_rectangle((cx + 6, cy + 6, cx + card_w + 6, cy + card_h + 6), radius=16, fill=SOFT_GRAY)
         # Card
-        draw.rounded_rectangle((cx, cy, cx + card_w, cy + card_h), radius=16, fill=WHITE, outline=SOFT_BORDER, width=2)
+        draw.rounded_rectangle((cx, cy, cx + card_w, cy + card_h), radius=16, fill=CARD_BG, outline=TEAL, width=2)
+
+        # Accent bar at top of card
+        draw.rounded_rectangle((cx, cy, cx + card_w, cy + 8), radius=0, fill=accent_colors[idx])
 
         # Simulated content lines
-        line_y = cy + 35
+        line_y = cy + 40
         for i in range(5):
             lw = card_w - 70 if i == 0 else card_w - 100 - (i * 25)
             if lw < 40:
                 lw = 40
-            color = SAGE if i == 0 else SOFT_BORDER
+            color = accent_colors[idx] if i == 0 else SOFT_GRAY
             draw.rounded_rectangle((cx + 35, line_y, cx + 35 + lw, line_y + 14), radius=7, fill=color)
             line_y += 30
 
@@ -161,15 +147,15 @@ def make_image01():
         for li, line in enumerate(label.split("\n")):
             bbox = draw.textbbox((0, 0), line, font=mock_font)
             tw = bbox[2] - bbox[0]
-            draw.text((cx + (card_w - tw) // 2, cy + card_h - 65 + li * 26), line, font=mock_font, fill=CHARCOAL)
+            draw.text((cx + (card_w - tw) // 2, cy + card_h - 65 + li * 26), line, font=mock_font, fill=DARK_TEXT)
 
-    # Badge row at bottom
+    # Badge row
     badge_y = 1420
-    badge_font = font(SANS_BOLD, 34)
-    badges = ["Instant Download", "Edit in Canva", "Print or Share"]
+    badge_font = font(MONTSERRAT_BOLD, 32)
+    badges = [("Instant Download", HOT_PINK), ("Edit in Canva", ORANGE), ("Print or Share", BLUE)]
     total_badge_w = 0
     badge_widths = []
-    for b in badges:
+    for b, _ in badges:
         bbox = draw.textbbox((0, 0), b, font=badge_font)
         bw = bbox[2] - bbox[0] + 80
         badge_widths.append(bw)
@@ -177,9 +163,9 @@ def make_image01():
     gap = 40
     total_badge_w += gap * (len(badges) - 1)
     bx = (W - total_badge_w) // 2
-    for i, b in enumerate(badges):
+    for i, (b, color) in enumerate(badges):
         bw = badge_widths[i]
-        draw.rounded_rectangle((bx, badge_y, bx + bw, badge_y + 72), radius=36, fill=SAGE)
+        draw.rounded_rectangle((bx, badge_y, bx + bw, badge_y + 72), radius=36, fill=color)
         bbox = draw.textbbox((0, 0), b, font=badge_font)
         tw = bbox[2] - bbox[0]
         th = bbox[3] - bbox[1]
@@ -187,51 +173,46 @@ def make_image01():
         bx += bw + gap
 
     # Bottom tagline
-    fnt_tag = font(SANS_REG, 32)
-    center_text(draw, "Games  |  Signs  |  Planning  |  Extras", 1560, fnt_tag, CHARCOAL)
+    fnt_tag = font(MONTSERRAT_MED, 32)
+    center_text(draw, "Games  |  Signs  |  Planning  |  Extras", 1560, fnt_tag, DARK_TEXT)
+
+    # Decorative border around mockups
+    draw.rounded_rectangle((40, 545, W - 40, 1380), radius=24, fill=None, outline=TEAL, width=3)
 
     # Bottom brand bar
-    draw.rectangle((0, H - 80, W, H), fill=DARK_SAGE)
-    fnt_url = font(SANS_REG, 28)
-    center_text(draw, "shelzysdesigns.etsy.com", H - 58, fnt_url, GOLD)
-
-    # Decorative border
-    draw.rounded_rectangle((40, 530, W - 40, 1640), radius=24, fill=None, outline=SOFT_BORDER, width=3)
+    bottom_brand_bar(draw)
 
     img.save(os.path.join(OUT, "VillaVibes_Image01_Hero.jpg"), "JPEG", quality=95, subsampling=0)
-    print("  [1/10] Hero image done")
+    print("  [1/10] Hero done")
+
 
 # =============================================
 # IMAGE 02 - WHAT'S INCLUDED
 # =============================================
 def make_image02():
-    img = Image.new("RGB", (W, H), WARM_WHITE)
+    img = Image.new("RGB", (W, H), LIGHT_BG)
     draw = ImageDraw.Draw(img)
-
     top_brand_bar(draw)
 
-    # Title
-    fnt_title = font(SERIF_BOLD, 80)
-    center_text(draw, "What's Included", 120, fnt_title, DARK_SAGE)
+    fnt_title = font(TITLE_FONT, 90)
+    center_text(draw, "WHAT'S INCLUDED", 110, fnt_title, DARK_TEXT)
 
-    fnt_sub = font(SANS_BOLD, 42)
-    center_text(draw, "23 Templates in One Bundle", 220, fnt_sub, SAGE)
+    fnt_sub = font(MONTSERRAT_BOLD, 42)
+    center_text(draw, "23 Templates in One Bundle", 220, fnt_sub, BLUE)
 
-    # Divider
-    draw.line((700, 290, 1300, 290), fill=GOLD, width=3)
+    draw_divider(draw, 285)
 
-    # 4 category cards in 2x2 grid
     categories = [
-        ("8", "Party Games", ["Drink If...", "Who Knows the Bride", "Scavenger Hunt",
-                               "Would She Rather", "Groom Trivia", "Never Have I Ever",
-                               "Bridal Bingo", "Over or Under"]),
-        ("7", "Signs & Decor", ["Welcome Sign", "Bar Menu Sign", "Photo Prop Frame",
-                                 "Directional Sign", "Door Hanger", "Table Numbers",
-                                 "Hashtag Sign"]),
-        ("4", "Planning", ["Weekend Itinerary", "Invitation", "Packing List",
-                            "House Rules"]),
-        ("4", "Bonus Extras", ["Name Tags", "Paddle Signs", "Story Templates",
-                                "Cocktail Recipe Cards"]),
+        ("8", "Party Games", HOT_PINK,
+         ["Drink If...", "Who Knows the Bride", "Scavenger Hunt", "Would She Rather",
+          "Groom Trivia", "Never Have I Ever", "Bridal Bingo", "Over or Under"]),
+        ("7", "Signs & Decor", ORANGE,
+         ["Welcome Sign", "Bar Menu Sign", "Photo Prop Frame", "Directional Sign",
+          "Door Hanger", "Table Numbers", "Hashtag Sign"]),
+        ("4", "Planning", BLUE,
+         ["Weekend Itinerary", "Invitation", "Packing List", "House Rules"]),
+        ("4", "Bonus Extras", TEAL,
+         ["Name Tags", "Paddle Signs", "Story Templates", "Cocktail Recipe Cards"]),
     ]
 
     card_w, card_h = 820, 560
@@ -239,214 +220,207 @@ def make_image02():
     start_x = (W - 2 * card_w - gap) // 2
     start_y = 340
 
-    for idx, (count, title, items) in enumerate(categories):
+    for idx, (count, title, accent, items) in enumerate(categories):
         col = idx % 2
         row = idx // 2
         cx = start_x + col * (card_w + gap)
         cy = start_y + row * (card_h + gap)
 
-        # Card bg
-        draw.rounded_rectangle((cx, cy, cx + card_w, cy + card_h), radius=20, fill=WHITE, outline=SOFT_BORDER, width=3)
+        draw.rounded_rectangle((cx, cy, cx + card_w, cy + card_h), radius=20, fill=CARD_BG, outline=SOFT_GRAY, width=2)
+        # Accent bar at top
+        draw.rounded_rectangle((cx, cy, cx + card_w, cy + 6), radius=0, fill=accent)
 
         # Count circle
         circle_r = 48
         circle_cx = cx + 80
-        circle_cy = cy + 72
-        draw.ellipse((circle_cx - circle_r, circle_cy - circle_r, circle_cx + circle_r, circle_cy + circle_r), fill=SAGE)
-        fnt_num = font(SANS_BOLD, 52)
+        circle_cy = cy + 75
+        draw.ellipse((circle_cx - circle_r, circle_cy - circle_r, circle_cx + circle_r, circle_cy + circle_r), fill=accent)
+        fnt_num = font(MONTSERRAT_BOLD, 52)
         bbox = draw.textbbox((0, 0), count, font=fnt_num)
         tw = bbox[2] - bbox[0]
         th = bbox[3] - bbox[1]
         draw.text((circle_cx - tw // 2, circle_cy - th // 2 - 4), count, font=fnt_num, fill=WHITE)
 
-        # Category title
-        fnt_cat = font(SERIF_BOLD, 46)
-        draw.text((cx + 150, cy + 45), title, font=fnt_cat, fill=DARK_SAGE)
+        fnt_cat = font(MONTSERRAT_BOLD, 44)
+        draw.text((cx + 150, cy + 48), title, font=fnt_cat, fill=DARK_TEXT)
 
-        # Items list
-        fnt_item = font(SANS_REG, 28)
+        fnt_item = font(MONTSERRAT_REG, 28)
         iy = cy + 140
         for item in items:
-            draw.text((cx + 60, iy), f"\u2713  {item}", font=fnt_item, fill=CHARCOAL)
+            # Colored bullet
+            draw.ellipse((cx + 60, iy + 6, cx + 74, iy + 20), fill=accent)
+            draw.text((cx + 90, iy), item, font=fnt_item, fill=DARK_TEXT)
             iy += 44
 
-    # Bottom
     bottom_brand_bar(draw)
-
     img.save(os.path.join(OUT, "VillaVibes_Image02_WhatsIncluded.jpg"), "JPEG", quality=95, subsampling=0)
     print("  [2/10] What's Included done")
+
 
 # =============================================
 # IMAGE 03 - EDITABLE IN CANVA
 # =============================================
 def make_image03():
-    img = Image.new("RGB", (W, H), WARM_WHITE)
+    img = Image.new("RGB", (W, H), LIGHT_BG)
     draw = ImageDraw.Draw(img)
-
     top_brand_bar(draw)
 
-    fnt_title = font(SERIF_BOLD, 80)
-    center_text(draw, "Fully Editable in Canva", 120, fnt_title, DARK_SAGE)
+    fnt_title = font(TITLE_FONT, 90)
+    center_text(draw, "FULLY EDITABLE IN CANVA", 110, fnt_title, DARK_TEXT)
 
-    fnt_sub = font(SANS_REG, 38)
-    center_text(draw, "Free Canva Account Works!", 225, fnt_sub, SAGE)
+    fnt_sub = font(MONTSERRAT_BOLD, 38)
+    center_text(draw, "Free Canva Account Works!", 220, fnt_sub, BLUE)
 
-    draw.line((650, 290, 1350, 290), fill=GOLD, width=3)
+    draw_divider(draw, 280)
 
     # Before / After panels
     panel_w = 780
-    panel_h = 550
+    panel_h = 500
     left_x = 120
     right_x = W - 120 - panel_w
-    panel_y = 340
+    panel_y = 330
 
-    # BEFORE panel
-    draw.rounded_rectangle((left_x, panel_y, left_x + panel_w, panel_y + panel_h), radius=20, fill=WHITE, outline=SOFT_BORDER, width=3)
-    fnt_label = font(SANS_BOLD, 36)
-    center_text(draw, "BEFORE", panel_y + 20, fnt_label, CHARCOAL, w=left_x * 2 + panel_w)
+    # BEFORE
+    draw.rounded_rectangle((left_x, panel_y, left_x + panel_w, panel_y + panel_h), radius=20, fill=CARD_BG, outline=SOFT_GRAY, width=3)
+    fnt_label = font(MONTSERRAT_BOLD, 36)
+    lbl_bbox = draw.textbbox((0, 0), "BEFORE", font=fnt_label)
+    lbl_w = lbl_bbox[2] - lbl_bbox[0]
+    draw.text((left_x + (panel_w - lbl_w) // 2, panel_y + 20), "BEFORE", font=fnt_label, fill=DARK_TEXT)
 
-    # Simulated template - generic content lines
-    for i in range(8):
+    for i in range(7):
         lw = panel_w - 120 if i == 0 else panel_w - 160 - (i * 40)
-        if lw < 80:
-            lw = 80
-        ly = panel_y + 90 + i * 48
-        c = SAGE if i == 0 else SOFT_BORDER
+        if lw < 80: lw = 80
+        ly = panel_y + 85 + i * 48
+        c = SOFT_GRAY
         draw.rounded_rectangle((left_x + 60, ly, left_x + 60 + lw, ly + 20), radius=10, fill=c)
 
-    # Arrow between panels
+    # Arrow
     arrow_cx = W // 2
     arrow_cy = panel_y + panel_h // 2
-    draw.polygon([(arrow_cx - 30, arrow_cy - 25), (arrow_cx + 30, arrow_cy),
-                  (arrow_cx - 30, arrow_cy + 25)], fill=SAGE)
+    draw.polygon([(arrow_cx - 30, arrow_cy - 30), (arrow_cx + 35, arrow_cy),
+                  (arrow_cx - 30, arrow_cy + 30)], fill=ORANGE)
 
-    # AFTER panel
-    draw.rounded_rectangle((right_x, panel_y, right_x + panel_w, panel_y + panel_h), radius=20, fill=WHITE, outline=SAGE, width=4)
-    center_text(draw, "AFTER", panel_y + 20, fnt_label, SAGE, w=right_x * 2 + panel_w - W)
+    # AFTER
+    draw.rounded_rectangle((right_x, panel_y, right_x + panel_w, panel_y + panel_h), radius=20, fill=CARD_BG, outline=HOT_PINK, width=4)
+    lbl_bbox = draw.textbbox((0, 0), "AFTER", font=fnt_label)
+    lbl_w = lbl_bbox[2] - lbl_bbox[0]
+    draw.text((right_x + (panel_w - lbl_w) // 2, panel_y + 20), "AFTER", font=fnt_label, fill=HOT_PINK)
 
-    # Simulated edited template - with colored elements
-    for i in range(8):
+    after_colors = [HOT_PINK, TEAL, ORANGE, BLUE, HOT_PINK, TEAL, ORANGE]
+    for i in range(7):
         lw = panel_w - 120 if i == 0 else panel_w - 160 - (i * 40)
-        if lw < 80:
-            lw = 80
-        ly = panel_y + 90 + i * 48
-        c = DARK_SAGE if i == 0 else TROPICAL_SAGE if i % 2 == 0 else PALE_GOLD
-        draw.rounded_rectangle((right_x + 60, ly, right_x + 60 + lw, ly + 20), radius=10, fill=c)
+        if lw < 80: lw = 80
+        ly = panel_y + 85 + i * 48
+        draw.rounded_rectangle((right_x + 60, ly, right_x + 60 + lw, ly + 20), radius=10, fill=after_colors[i])
 
     # What you can edit section
-    edit_y = 960
-    fnt_edit_title = font(SERIF_BOLD, 52)
-    center_text(draw, "What You Can Edit", edit_y, fnt_edit_title, DARK_SAGE)
+    edit_y = 910
+    fnt_edit_title = font(TITLE_FONT, 60)
+    center_text(draw, "WHAT YOU CAN EDIT", edit_y, fnt_edit_title, DARK_TEXT)
 
     editable_items = [
-        ("Text & Wording", "Change any text to match your party"),
-        ("Colors & Fonts", "Update to your wedding or party colors"),
-        ("Photos & Images", "Add your own photos and graphics"),
-        ("Layout Elements", "Move, resize, or rearrange anything"),
+        ("Text & Wording", "Change any text to match your party", HOT_PINK),
+        ("Colors & Fonts", "Update to your wedding or party colors", ORANGE),
+        ("Photos & Images", "Add your own photos and graphics", BLUE),
+        ("Layout Elements", "Move, resize, or rearrange anything", TEAL),
     ]
 
-    fnt_item_title = font(SANS_BOLD, 34)
-    fnt_item_desc = font(SANS_REG, 30)
-    iy = edit_y + 80
+    fnt_item_title = font(MONTSERRAT_BOLD, 34)
+    fnt_item_desc = font(MONTSERRAT_REG, 30)
+    iy = edit_y + 90
 
-    for title, desc in editable_items:
-        # Checkmark circle
-        draw.ellipse((280, iy, 330, iy + 50), fill=SAGE)
-        fnt_check = font(SANS_BOLD, 30)
-        draw.text((293, iy + 6), "\u2713", font=fnt_check, fill=WHITE)
-
-        draw.text((360, iy), title, font=fnt_item_title, fill=DARK_SAGE)
-        draw.text((360, iy + 44), desc, font=fnt_item_desc, fill=CHARCOAL)
+    for title, desc, color in editable_items:
+        draw.ellipse((280, iy, 330, iy + 50), fill=color)
+        # Checkmark
+        fnt_check = font(MONTSERRAT_BOLD, 28)
+        draw.text((295, iy + 8), "~", font=fnt_check, fill=WHITE)
+        draw.text((360, iy), title, font=fnt_item_title, fill=DARK_TEXT)
+        draw.text((360, iy + 44), desc, font=fnt_item_desc, fill=(100, 100, 105))
         iy += 120
 
-    # Canva badge
-    badge_y = 1580
-    fnt_badge = font(SANS_BOLD, 36)
-    draw_pill_badge(draw, "Works with Free Canva", W // 2, badge_y, fnt_badge, SAGE, WHITE)
+    badge_y = 1560
+    fnt_badge = font(MONTSERRAT_BOLD, 36)
+    draw_pill_badge(draw, "Works with Free Canva", W // 2, badge_y, fnt_badge, BLUE, WHITE)
 
     bottom_brand_bar(draw)
-
     img.save(os.path.join(OUT, "VillaVibes_Image03_EditableCanva.jpg"), "JPEG", quality=95, subsampling=0)
     print("  [3/10] Editable in Canva done")
+
 
 # =============================================
 # IMAGE 04 - HOW IT WORKS
 # =============================================
 def make_image04():
-    img = Image.new("RGB", (W, H), WARM_WHITE)
+    img = Image.new("RGB", (W, H), LIGHT_BG)
     draw = ImageDraw.Draw(img)
-
     top_brand_bar(draw)
 
-    fnt_title = font(SERIF_BOLD, 80)
-    center_text(draw, "How It Works", 120, fnt_title, DARK_SAGE)
+    fnt_title = font(TITLE_FONT, 90)
+    center_text(draw, "HOW IT WORKS", 110, fnt_title, DARK_TEXT)
 
-    fnt_sub = font(SANS_REG, 38)
-    center_text(draw, "5 Simple Steps to Your Perfect Party", 225, fnt_sub, SAGE)
+    fnt_sub = font(MONTSERRAT_BOLD, 38)
+    center_text(draw, "5 Simple Steps to Your Perfect Party", 220, fnt_sub, BLUE)
 
-    draw.line((650, 290, 1350, 290), fill=GOLD, width=3)
+    draw_divider(draw, 280)
 
     steps = [
-        ("Purchase on Etsy", "Add to cart and check out instantly"),
-        ("Download Access PDF", "Get your download link via Etsy email"),
-        ("Open in Canva", "Click the link to open all templates"),
-        ("Edit Your Templates", "Customize text, colors, and photos"),
-        ("Download & Print", "Save as PDF/PNG and print or share"),
+        ("Purchase on Etsy", "Add to cart and check out instantly", HOT_PINK),
+        ("Download Access PDF", "Get your download link via Etsy email", ORANGE),
+        ("Open in Canva", "Click the link to open all templates", BLUE),
+        ("Edit Your Templates", "Customize text, colors, and photos", TEAL),
+        ("Download & Print", "Save as PDF/PNG and print or share", HOT_PINK),
     ]
 
-    fnt_step_num = font(SANS_BOLD, 52)
-    fnt_step_title = font(SERIF_BOLD, 46)
-    fnt_step_desc = font(SANS_REG, 32)
+    fnt_step_num = font(MONTSERRAT_BOLD, 52)
+    fnt_step_title = font(MONTSERRAT_BOLD, 44)
+    fnt_step_desc = font(MONTSERRAT_REG, 32)
 
-    start_y = 360
+    start_y = 350
     step_h = 220
     circle_r = 50
 
-    for i, (title, desc) in enumerate(steps):
+    for i, (title, desc, color) in enumerate(steps):
         cy = start_y + i * step_h
 
         # Connecting line
         if i < len(steps) - 1:
-            draw.line((200, cy + circle_r + 10, 200, cy + step_h - 10), fill=SOFT_BORDER, width=4)
+            draw.line((200, cy + circle_r + 10, 200, cy + step_h - 10), fill=SOFT_GRAY, width=4)
 
-        # Step circle
-        draw_step_circle(draw, i + 1, 200, cy, circle_r, SAGE, WHITE, fnt_step_num)
+        draw_step_circle(draw, i + 1, 200, cy, circle_r, color, WHITE, fnt_step_num)
 
-        # Step content card
         card_x = 310
         card_w = W - card_x - 120
-        draw.rounded_rectangle((card_x, cy - 45, card_x + card_w, cy + 95), radius=16, fill=WHITE, outline=SOFT_BORDER, width=2)
-        draw.text((card_x + 35, cy - 35), title, font=fnt_step_title, fill=DARK_SAGE)
-        draw.text((card_x + 35, cy + 25), desc, font=fnt_step_desc, fill=CHARCOAL)
+        draw.rounded_rectangle((card_x, cy - 45, card_x + card_w, cy + 95), radius=16, fill=CARD_BG, outline=SOFT_GRAY, width=2)
+        # Left accent bar
+        draw.rounded_rectangle((card_x, cy - 45, card_x + 6, cy + 95), radius=0, fill=color)
+        draw.text((card_x + 30, cy - 35), title, font=fnt_step_title, fill=DARK_TEXT)
+        draw.text((card_x + 30, cy + 25), desc, font=fnt_step_desc, fill=(100, 100, 105))
 
-    # Call to action
-    cta_y = 1520
-    fnt_cta = font(SANS_BOLD, 38)
-    draw_pill_badge(draw, "Start Customizing in Minutes!", W // 2, cta_y, fnt_cta, DARK_SAGE, WHITE, hpad=60, vpad=24)
+    cta_y = 1510
+    fnt_cta = font(MONTSERRAT_BOLD, 38)
+    draw_pill_badge(draw, "Start Customizing in Minutes!", W // 2, cta_y, fnt_cta, ORANGE, WHITE, hpad=60, vpad=24)
 
     bottom_brand_bar(draw)
-
     img.save(os.path.join(OUT, "VillaVibes_Image04_HowItWorks.jpg"), "JPEG", quality=95, subsampling=0)
     print("  [4/10] How It Works done")
+
 
 # =============================================
 # IMAGE 05 - GAMES PREVIEW
 # =============================================
 def make_image05():
-    img = Image.new("RGB", (W, H), WARM_WHITE)
+    img = Image.new("RGB", (W, H), LIGHT_BG)
     draw = ImageDraw.Draw(img)
-
     top_brand_bar(draw)
 
-    fnt_title = font(SERIF_BOLD, 80)
-    center_text(draw, "Party Games", 120, fnt_title, DARK_SAGE)
+    fnt_title = font(TITLE_FONT, 90)
+    center_text(draw, "PARTY GAMES", 110, fnt_title, DARK_TEXT)
 
-    fnt_sub = font(SANS_BOLD, 42)
-    center_text(draw, "8 Fun, Ready-to-Play Games", 225, fnt_sub, SAGE)
+    fnt_sub = font(MONTSERRAT_BOLD, 42)
+    center_text(draw, "8 Fun, Ready-to-Play Games", 220, fnt_sub, HOT_PINK)
 
-    draw.line((650, 290, 1350, 290), fill=GOLD, width=3)
+    draw_divider(draw, 285)
 
-    # Game card grid (4x2)
     games = [
         "Drink If...", "Who Knows\nthe Bride", "Scavenger\nHunt", "Would She\nRather",
         "Groom\nTrivia", "Never Have\nI Ever", "Bridal\nBingo", "Over or\nUnder"
@@ -454,93 +428,93 @@ def make_image05():
 
     card_w, card_h = 380, 340
     gap = 50
-    cols, rows = 4, 2
+    cols = 4
     start_x = (W - cols * card_w - (cols - 1) * gap) // 2
-    start_y = 350
+    start_y = 340
 
-    fnt_game = font(SERIF_BOLD, 34)
-    fnt_game_num = font(SANS_BOLD, 28)
+    fnt_game = font(MONTSERRAT_BOLD, 32)
+    fnt_game_num = font(MONTSERRAT_BOLD, 26)
+    accent_cycle = [HOT_PINK, ORANGE, BLUE, TEAL]
 
     for idx, game in enumerate(games):
         col = idx % cols
         row = idx // cols
         cx = start_x + col * (card_w + gap)
         cy = start_y + row * (card_h + gap)
+        accent = accent_cycle[idx % 4]
 
         # Shadow
-        draw.rounded_rectangle((cx + 5, cy + 5, cx + card_w + 5, cy + card_h + 5), radius=16, fill=(230, 230, 225))
+        draw.rounded_rectangle((cx + 5, cy + 5, cx + card_w + 5, cy + card_h + 5), radius=16, fill=SOFT_GRAY)
         # Card
-        draw.rounded_rectangle((cx, cy, cx + card_w, cy + card_h), radius=16, fill=WHITE, outline=SOFT_BORDER, width=2)
+        draw.rounded_rectangle((cx, cy, cx + card_w, cy + card_h), radius=16, fill=CARD_BG, outline=SOFT_GRAY, width=2)
+        # Top accent bar
+        draw.rounded_rectangle((cx, cy, cx + card_w, cy + 8), radius=0, fill=accent)
 
-        # Number badge at top-left
-        draw.ellipse((cx + 15, cy + 15, cx + 55, cy + 55), fill=SAGE)
+        # Number badge
+        draw.ellipse((cx + 15, cy + 18, cx + 55, cy + 58), fill=accent)
         num_text = str(idx + 1)
         bbox = draw.textbbox((0, 0), num_text, font=fnt_game_num)
         ntw = bbox[2] - bbox[0]
-        draw.text((cx + 35 - ntw // 2, cy + 22), num_text, font=fnt_game_num, fill=WHITE)
+        draw.text((cx + 35 - ntw // 2, cy + 24), num_text, font=fnt_game_num, fill=WHITE)
 
-        # Content simulation lines
+        # Content lines
         for li in range(4):
             lw = card_w - 60 if li == 0 else card_w - 80 - li * 20
-            if lw < 40:
-                lw = 40
+            if lw < 40: lw = 40
             ly = cy + 80 + li * 30
-            draw.rounded_rectangle((cx + 30, ly, cx + 30 + lw, ly + 12), radius=6, fill=SOFT_BORDER)
+            draw.rounded_rectangle((cx + 30, ly, cx + 30 + lw, ly + 12), radius=6, fill=SOFT_GRAY)
 
         # Game name
         lines = game.split("\n")
         for li, line in enumerate(lines):
             bbox = draw.textbbox((0, 0), line, font=fnt_game)
             tw = bbox[2] - bbox[0]
-            draw.text((cx + (card_w - tw) // 2, cy + card_h - 80 + li * 38), line, font=fnt_game, fill=DARK_SAGE)
+            draw.text((cx + (card_w - tw) // 2, cy + card_h - 80 + li * 38), line, font=fnt_game, fill=DARK_TEXT)
 
-    # Callout
-    callout_y = 1150
-    fnt_callout = font(SANS_REG, 34)
-    center_text(draw, "Fun, easy-to-run, bachelorette-ready game set", callout_y, fnt_callout, CHARCOAL)
+    callout_y = 1130
+    fnt_callout = font(MONTSERRAT_MED, 34)
+    center_text(draw, "Fun, easy-to-run, bachelorette-ready game set", callout_y, fnt_callout, DARK_TEXT)
 
-    # Feature badges
-    badge_y = 1280
-    badge_font = font(SANS_BOLD, 30)
-    badges = ["Editable Text", "Print at Home", "Instant Fun"]
+    badge_y = 1260
+    badge_font_b = font(MONTSERRAT_BOLD, 30)
+    badges = [("Editable Text", HOT_PINK), ("Print at Home", ORANGE), ("Instant Fun", BLUE)]
     total_w = 0
     bws = []
-    for b in badges:
-        bbox = draw.textbbox((0, 0), b, font=badge_font)
+    for b, _ in badges:
+        bbox = draw.textbbox((0, 0), b, font=badge_font_b)
         bw = bbox[2] - bbox[0] + 60
         bws.append(bw)
         total_w += bw
     total_w += 30 * (len(badges) - 1)
     bx = (W - total_w) // 2
-    for i, b in enumerate(badges):
+    for i, (b, color) in enumerate(badges):
         bw = bws[i]
-        draw.rounded_rectangle((bx, badge_y, bx + bw, badge_y + 60), radius=30, fill=SAGE)
-        bbox = draw.textbbox((0, 0), b, font=badge_font)
+        draw.rounded_rectangle((bx, badge_y, bx + bw, badge_y + 60), radius=30, fill=color)
+        bbox = draw.textbbox((0, 0), b, font=badge_font_b)
         tw = bbox[2] - bbox[0]
-        draw.text((bx + (bw - tw) // 2, badge_y + 12), b, font=badge_font, fill=WHITE)
+        draw.text((bx + (bw - tw) // 2, badge_y + 12), b, font=badge_font_b, fill=WHITE)
         bx += bw + 30
 
     bottom_brand_bar(draw)
-
     img.save(os.path.join(OUT, "VillaVibes_Image05_GamesPreview.jpg"), "JPEG", quality=95, subsampling=0)
     print("  [5/10] Games Preview done")
+
 
 # =============================================
 # IMAGE 06 - SIGNS & DECOR
 # =============================================
 def make_image06():
-    img = Image.new("RGB", (W, H), WARM_WHITE)
+    img = Image.new("RGB", (W, H), LIGHT_BG)
     draw = ImageDraw.Draw(img)
-
     top_brand_bar(draw)
 
-    fnt_title = font(SERIF_BOLD, 80)
-    center_text(draw, "Signs & Decor", 120, fnt_title, DARK_SAGE)
+    fnt_title = font(TITLE_FONT, 90)
+    center_text(draw, "SIGNS & DECOR", 110, fnt_title, DARK_TEXT)
 
-    fnt_sub = font(SANS_BOLD, 42)
-    center_text(draw, "7 Print-Ready Party Signs", 225, fnt_sub, SAGE)
+    fnt_sub = font(MONTSERRAT_BOLD, 42)
+    center_text(draw, "7 Print-Ready Party Signs", 220, fnt_sub, ORANGE)
 
-    draw.line((650, 290, 1350, 290), fill=GOLD, width=3)
+    draw_divider(draw, 285)
 
     signs = [
         ("Welcome Sign", "Greet your guests\nin style"),
@@ -552,23 +526,21 @@ def make_image06():
         ("Hashtag Sign", "Custom hashtag\nfor photos"),
     ]
 
-    # Layout: top row 4, bottom row 3 centered
-    card_w, card_h = 380, 400
+    card_w, card_h = 380, 380
     gap = 40
-    fnt_sign = font(SERIF_BOLD, 32)
-    fnt_desc = font(SANS_REG, 24)
+    fnt_sign = font(MONTSERRAT_BOLD, 30)
+    fnt_desc = font(MONTSERRAT_REG, 23)
+    accent_cycle = [ORANGE, HOT_PINK, BLUE, TEAL]
 
     # Row 1: 4 cards
-    row1_count = 4
-    row1_x = (W - row1_count * card_w - (row1_count - 1) * gap) // 2
-    row1_y = 350
-
+    row1_x = (W - 4 * card_w - 3 * gap) // 2
+    row1_y = 340
     # Row 2: 3 cards centered
-    row2_count = 3
-    row2_x = (W - row2_count * card_w - (row2_count - 1) * gap) // 2
-    row2_y = 350 + card_h + gap
+    row2_x = (W - 3 * card_w - 2 * gap) // 2
+    row2_y = 340 + card_h + gap
 
     for idx, (name, desc) in enumerate(signs):
+        accent = accent_cycle[idx % 4]
         if idx < 4:
             cx = row1_x + idx * (card_w + gap)
             cy = row1_y
@@ -576,282 +548,248 @@ def make_image06():
             cx = row2_x + (idx - 4) * (card_w + gap)
             cy = row2_y
 
-        # Shadow
-        draw.rounded_rectangle((cx + 4, cy + 4, cx + card_w + 4, cy + card_h + 4), radius=16, fill=(230, 230, 225))
-        # Card
-        draw.rounded_rectangle((cx, cy, cx + card_w, cy + card_h), radius=16, fill=WHITE, outline=SOFT_BORDER, width=2)
+        draw.rounded_rectangle((cx + 4, cy + 4, cx + card_w + 4, cy + card_h + 4), radius=16, fill=SOFT_GRAY)
+        draw.rounded_rectangle((cx, cy, cx + card_w, cy + card_h), radius=16, fill=CARD_BG, outline=SOFT_GRAY, width=2)
+        draw.rounded_rectangle((cx, cy, cx + card_w, cy + 8), radius=0, fill=accent)
 
-        # Icon area (simulated sign shape)
+        # Icon area
         icon_cx = cx + card_w // 2
         icon_cy = cy + 100
-        draw.rounded_rectangle((icon_cx - 80, icon_cy - 60, icon_cx + 80, icon_cy + 60), radius=8, fill=PALE_GOLD, outline=SAGE, width=2)
-        # Mini lines inside
+        draw.rounded_rectangle((icon_cx - 80, icon_cy - 55, icon_cx + 80, icon_cy + 55), radius=10, fill=WHITE, outline=accent, width=3)
         for li in range(3):
             lw = 100 - li * 20
-            draw.rounded_rectangle((icon_cx - lw // 2, icon_cy - 30 + li * 28, icon_cx + lw // 2, icon_cy - 20 + li * 28), radius=4, fill=SAGE)
+            draw.rounded_rectangle((icon_cx - lw // 2, icon_cy - 28 + li * 26, icon_cx + lw // 2, icon_cy - 20 + li * 26), radius=4, fill=accent)
 
-        # Name
         bbox = draw.textbbox((0, 0), name, font=fnt_sign)
         tw = bbox[2] - bbox[0]
-        draw.text((cx + (card_w - tw) // 2, cy + 190), name, font=fnt_sign, fill=DARK_SAGE)
+        draw.text((cx + (card_w - tw) // 2, cy + 190), name, font=fnt_sign, fill=DARK_TEXT)
 
-        # Description
         for li, line in enumerate(desc.split("\n")):
             bbox = draw.textbbox((0, 0), line, font=fnt_desc)
             tw = bbox[2] - bbox[0]
-            draw.text((cx + (card_w - tw) // 2, cy + 240 + li * 32), line, font=fnt_desc, fill=CHARCOAL)
+            draw.text((cx + (card_w - tw) // 2, cy + 240 + li * 30), line, font=fnt_desc, fill=(100, 100, 105))
 
-    # Callout
-    callout_y = 1310
-    fnt_callout = font(SANS_REG, 36)
-    center_text(draw, "Print-ready party signage for every corner of the venue", callout_y, fnt_callout, CHARCOAL)
+    callout_y = 1260
+    fnt_callout = font(MONTSERRAT_MED, 34)
+    center_text(draw, "Print-ready party signage for every corner of the venue", callout_y, fnt_callout, DARK_TEXT)
 
-    # Badge
-    badge_y = 1420
-    fnt_badge = font(SANS_BOLD, 34)
-    draw_pill_badge(draw, "Customize Colors & Text", W // 2, badge_y, fnt_badge, SAGE, WHITE)
+    badge_y = 1380
+    fnt_badge = font(MONTSERRAT_BOLD, 34)
+    draw_pill_badge(draw, "Customize Colors & Text", W // 2, badge_y, fnt_badge, ORANGE, WHITE)
 
     bottom_brand_bar(draw)
-
     img.save(os.path.join(OUT, "VillaVibes_Image06_SignsAndDecor.jpg"), "JPEG", quality=95, subsampling=0)
     print("  [6/10] Signs & Decor done")
+
 
 # =============================================
 # IMAGE 07 - PLANNING TEMPLATES
 # =============================================
 def make_image07():
-    img = Image.new("RGB", (W, H), WARM_WHITE)
+    img = Image.new("RGB", (W, H), LIGHT_BG)
     draw = ImageDraw.Draw(img)
-
     top_brand_bar(draw)
 
-    fnt_title = font(SERIF_BOLD, 80)
-    center_text(draw, "Planning Templates", 120, fnt_title, DARK_SAGE)
+    fnt_title = font(TITLE_FONT, 90)
+    center_text(draw, "PLANNING TEMPLATES", 110, fnt_title, DARK_TEXT)
 
-    fnt_sub = font(SANS_BOLD, 42)
-    center_text(draw, "Plan the Weekend in Minutes", 225, fnt_sub, SAGE)
+    fnt_sub = font(MONTSERRAT_BOLD, 42)
+    center_text(draw, "Plan the Weekend in Minutes", 220, fnt_sub, BLUE)
 
-    draw.line((650, 290, 1350, 290), fill=GOLD, width=3)
+    draw_divider(draw, 285)
 
     templates = [
-        ("Weekend Itinerary", "Full schedule layout\nwith times & activities", "Day-by-day\nplanner"),
-        ("Invitation", "Send to your girls\nwith all the details", "Editable\ntext + photo"),
-        ("Packing List", "Everything they need\nto bring, checked off", "Printable\nchecklist"),
-        ("House Rules", "Set the vibe with\nfun villa rules", "Customizable\nrules list"),
+        ("Weekend Itinerary", "Full schedule layout\nwith times & activities", BLUE),
+        ("Invitation", "Send to your girls\nwith all the details", HOT_PINK),
+        ("Packing List", "Everything they need\nto bring, checked off", ORANGE),
+        ("House Rules", "Set the vibe with\nfun villa rules", TEAL),
     ]
 
     card_w = 400
-    card_h = 700
+    card_h = 650
     gap = 50
     start_x = (W - 4 * card_w - 3 * gap) // 2
-    start_y = 350
+    start_y = 340
 
-    fnt_name = font(SERIF_BOLD, 38)
-    fnt_desc = font(SANS_REG, 26)
-    fnt_tag = font(SANS_BOLD, 22)
+    fnt_name = font(MONTSERRAT_BOLD, 36)
+    fnt_desc = font(MONTSERRAT_REG, 26)
 
-    for idx, (name, desc, tag) in enumerate(templates):
+    for idx, (name, desc, accent) in enumerate(templates):
         cx = start_x + idx * (card_w + gap)
         cy = start_y
 
-        # Shadow
-        draw.rounded_rectangle((cx + 5, cy + 5, cx + card_w + 5, cy + card_h + 5), radius=20, fill=(230, 230, 225))
-        # Card
-        draw.rounded_rectangle((cx, cy, cx + card_w, cy + card_h), radius=20, fill=WHITE, outline=SOFT_BORDER, width=3)
+        draw.rounded_rectangle((cx + 5, cy + 5, cx + card_w + 5, cy + card_h + 5), radius=20, fill=SOFT_GRAY)
+        draw.rounded_rectangle((cx, cy, cx + card_w, cy + card_h), radius=20, fill=CARD_BG, outline=SOFT_GRAY, width=2)
+        draw.rounded_rectangle((cx, cy, cx + card_w, cy + 8), radius=0, fill=accent)
 
-        # Template preview area
-        preview_margin = 30
-        preview_y = cy + preview_margin
-        preview_h = 350
-        draw.rounded_rectangle((cx + preview_margin, preview_y, cx + card_w - preview_margin, preview_y + preview_h),
-                               radius=12, fill=PALE_GOLD, outline=SAGE, width=2)
+        # Preview area
+        pm = 30
+        ph = 340
+        draw.rounded_rectangle((cx + pm, cy + pm + 10, cx + card_w - pm, cy + pm + 10 + ph), radius=12, fill=LIGHT_BG, outline=accent, width=2)
 
-        # Simulated content
         for li in range(8):
             lw = card_w - 100 if li == 0 else card_w - 120 - li * 15
-            if lw < 60:
-                lw = 60
-            ly = preview_y + 30 + li * 36
-            c = DARK_SAGE if li == 0 else SAGE if li % 3 == 0 else SOFT_BORDER
+            if lw < 60: lw = 60
+            ly = cy + pm + 40 + li * 36
+            c = accent if li == 0 else SOFT_GRAY
             draw.rounded_rectangle((cx + 50, ly, cx + 50 + lw, ly + 14), radius=7, fill=c)
 
-        # Name
         bbox = draw.textbbox((0, 0), name, font=fnt_name)
         tw = bbox[2] - bbox[0]
-        draw.text((cx + (card_w - tw) // 2, cy + 420), name, font=fnt_name, fill=DARK_SAGE)
+        draw.text((cx + (card_w - tw) // 2, cy + 420), name, font=fnt_name, fill=DARK_TEXT)
 
-        # Description
         for li, line in enumerate(desc.split("\n")):
             bbox = draw.textbbox((0, 0), line, font=fnt_desc)
             tw = bbox[2] - bbox[0]
-            draw.text((cx + (card_w - tw) // 2, cy + 480 + li * 34), line, font=fnt_desc, fill=CHARCOAL)
+            draw.text((cx + (card_w - tw) // 2, cy + 475 + li * 34), line, font=fnt_desc, fill=(100, 100, 105))
 
-        # Tag at bottom
-        tag_y = cy + card_h - 90
-        for li, line in enumerate(tag.split("\n")):
-            bbox = draw.textbbox((0, 0), line, font=fnt_tag)
-            tw = bbox[2] - bbox[0]
-            draw.text((cx + (card_w - tw) // 2, tag_y + li * 28), line, font=fnt_tag, fill=SAGE)
+    callout_y = 1100
+    fnt_callout = font(MONTSERRAT_MED, 34)
+    center_text(draw, "Organize every detail for a stress-free celebration", callout_y, fnt_callout, DARK_TEXT)
 
-    # Callout
-    callout_y = 1150
-    fnt_callout = font(SANS_REG, 36)
-    center_text(draw, "Organize every detail for a stress-free celebration", callout_y, fnt_callout, CHARCOAL)
-
-    # Badge
-    badge_y = 1280
-    fnt_badge = font(SANS_BOLD, 34)
-    draw_pill_badge(draw, "Edit & Print in Minutes", W // 2, badge_y, fnt_badge, SAGE, WHITE)
+    badge_y = 1220
+    fnt_badge = font(MONTSERRAT_BOLD, 34)
+    draw_pill_badge(draw, "Edit & Print in Minutes", W // 2, badge_y, fnt_badge, BLUE, WHITE)
 
     bottom_brand_bar(draw)
-
     img.save(os.path.join(OUT, "VillaVibes_Image07_PlanningTemplates.jpg"), "JPEG", quality=95, subsampling=0)
     print("  [7/10] Planning Templates done")
+
 
 # =============================================
 # IMAGE 08 - EXTRAS & BONUS
 # =============================================
 def make_image08():
-    img = Image.new("RGB", (W, H), WARM_WHITE)
+    img = Image.new("RGB", (W, H), LIGHT_BG)
     draw = ImageDraw.Draw(img)
-
     top_brand_bar(draw)
 
-    fnt_title = font(SERIF_BOLD, 80)
-    center_text(draw, "Bonus Extras", 120, fnt_title, DARK_SAGE)
+    fnt_title = font(TITLE_FONT, 90)
+    center_text(draw, "BONUS EXTRAS", 110, fnt_title, DARK_TEXT)
 
-    fnt_sub = font(SANS_BOLD, 42)
-    center_text(draw, "4 Matching Extras Included", 225, fnt_sub, SAGE)
+    fnt_sub = font(MONTSERRAT_BOLD, 42)
+    center_text(draw, "4 Matching Extras Included", 220, fnt_sub, TEAL)
 
-    draw.line((650, 290, 1350, 290), fill=GOLD, width=3)
+    draw_divider(draw, 285)
 
     extras = [
-        ("Name Tags", "Personalized name tags\nfor each guest", "Perfect for\ngroup photos"),
-        ("Paddle Signs", "Yes/No, Team Bride\nphoto prop paddles", "Great for\ngames & pics"),
-        ("Story Templates", "Instagram story\ntemplates to share", "Match your\nparty theme"),
-        ("Cocktail Cards", "Signature drink\nrecipe cards", "Print for\nthe bar area"),
+        ("Name Tags", "Personalized name tags\nfor each guest", TEAL),
+        ("Paddle Signs", "Yes/No, Team Bride\nphoto prop paddles", HOT_PINK),
+        ("Story Templates", "Instagram story\ntemplates to share", ORANGE),
+        ("Cocktail Cards", "Signature drink\nrecipe cards", BLUE),
     ]
 
     card_w = 400
-    card_h = 680
+    card_h = 650
     gap = 50
     start_x = (W - 4 * card_w - 3 * gap) // 2
-    start_y = 360
+    start_y = 340
 
-    fnt_name = font(SERIF_BOLD, 38)
-    fnt_desc = font(SANS_REG, 28)
-    fnt_note = font(SANS_BOLD, 24)
+    fnt_name = font(MONTSERRAT_BOLD, 36)
+    fnt_desc = font(MONTSERRAT_REG, 26)
+    fnt_bonus = font(MONTSERRAT_BOLD, 20)
 
-    for idx, (name, desc, note) in enumerate(extras):
+    for idx, (name, desc, accent) in enumerate(extras):
         cx = start_x + idx * (card_w + gap)
         cy = start_y
 
-        # Shadow
-        draw.rounded_rectangle((cx + 5, cy + 5, cx + card_w + 5, cy + card_h + 5), radius=20, fill=(230, 230, 225))
-        # Card
-        draw.rounded_rectangle((cx, cy, cx + card_w, cy + card_h), radius=20, fill=WHITE, outline=SOFT_BORDER, width=3)
+        draw.rounded_rectangle((cx + 5, cy + 5, cx + card_w + 5, cy + card_h + 5), radius=20, fill=SOFT_GRAY)
+        draw.rounded_rectangle((cx, cy, cx + card_w, cy + card_h), radius=20, fill=CARD_BG, outline=SOFT_GRAY, width=2)
+        draw.rounded_rectangle((cx, cy, cx + card_w, cy + 8), radius=0, fill=accent)
 
-        # "BONUS" mini badge
-        bonus_fnt = font(SANS_BOLD, 20)
-        bbox = draw.textbbox((0, 0), "BONUS", font=bonus_fnt)
+        # BONUS badge
+        bbox = draw.textbbox((0, 0), "BONUS", font=fnt_bonus)
         bw = bbox[2] - bbox[0] + 24
         bh = bbox[3] - bbox[1] + 12
-        draw.rounded_rectangle((cx + card_w - bw - 15, cy + 12, cx + card_w - 15, cy + 12 + bh), radius=bh // 2, fill=GOLD)
-        draw.text((cx + card_w - bw - 15 + 12, cy + 15), "BONUS", font=bonus_fnt, fill=WHITE)
+        draw.rounded_rectangle((cx + card_w - bw - 15, cy + 16, cx + card_w - 15, cy + 16 + bh), radius=bh // 2, fill=accent)
+        draw.text((cx + card_w - bw - 3, cy + 19), "BONUS", font=fnt_bonus, fill=WHITE)
 
-        # Preview area
-        preview_y = cy + 50
-        preview_h = 300
-        draw.rounded_rectangle((cx + 30, preview_y, cx + card_w - 30, preview_y + preview_h),
-                               radius=12, fill=PALE_GOLD, outline=SAGE, width=2)
+        # Preview
+        pm = 30
+        ph = 300
+        draw.rounded_rectangle((cx + pm, cy + 50, cx + card_w - pm, cy + 50 + ph), radius=12, fill=LIGHT_BG, outline=accent, width=2)
 
-        # Content lines
         for li in range(6):
             lw = card_w - 100 if li == 0 else card_w - 130 - li * 20
-            if lw < 40:
-                lw = 40
-            ly = preview_y + 30 + li * 40
-            c = DARK_SAGE if li == 0 else SOFT_BORDER
+            if lw < 40: lw = 40
+            ly = cy + 80 + li * 40
+            c = accent if li == 0 else SOFT_GRAY
             draw.rounded_rectangle((cx + 50, ly, cx + 50 + lw, ly + 16), radius=8, fill=c)
 
-        # Name
         bbox = draw.textbbox((0, 0), name, font=fnt_name)
         tw = bbox[2] - bbox[0]
-        draw.text((cx + (card_w - tw) // 2, cy + 400), name, font=fnt_name, fill=DARK_SAGE)
+        draw.text((cx + (card_w - tw) // 2, cy + 400), name, font=fnt_name, fill=DARK_TEXT)
 
-        # Desc
         for li, line in enumerate(desc.split("\n")):
             bbox = draw.textbbox((0, 0), line, font=fnt_desc)
             tw = bbox[2] - bbox[0]
-            draw.text((cx + (card_w - tw) // 2, cy + 460 + li * 36), line, font=fnt_desc, fill=CHARCOAL)
+            draw.text((cx + (card_w - tw) // 2, cy + 455 + li * 34), line, font=fnt_desc, fill=(100, 100, 105))
 
-        # Note
-        for li, line in enumerate(note.split("\n")):
-            bbox = draw.textbbox((0, 0), line, font=fnt_note)
-            tw = bbox[2] - bbox[0]
-            draw.text((cx + (card_w - tw) // 2, cy + 570 + li * 30), line, font=fnt_note, fill=SAGE)
+    callout_y = 1100
+    fnt_callout = font(MONTSERRAT_MED, 34)
+    center_text(draw, "Bonus matching extras to complete your party look", callout_y, fnt_callout, DARK_TEXT)
 
-    # Callout
-    callout_y = 1130
-    fnt_callout = font(SANS_REG, 36)
-    center_text(draw, "Bonus matching extras to complete your party look", callout_y, fnt_callout, CHARCOAL)
-
-    # Badge
-    badge_y = 1250
-    fnt_badge = font(SANS_BOLD, 34)
-    draw_pill_badge(draw, "All Included in Your Bundle", W // 2, badge_y, fnt_badge, SAGE, WHITE)
+    badge_y = 1220
+    fnt_badge = font(MONTSERRAT_BOLD, 34)
+    draw_pill_badge(draw, "All Included in Your Bundle", W // 2, badge_y, fnt_badge, TEAL, WHITE)
 
     bottom_brand_bar(draw)
-
     img.save(os.path.join(OUT, "VillaVibes_Image08_ExtrasAndBonus.jpg"), "JPEG", quality=95, subsampling=0)
     print("  [8/10] Extras & Bonus done")
+
 
 # =============================================
 # IMAGE 09 - PRINT + DIGITAL USE
 # =============================================
 def make_image09():
-    img = Image.new("RGB", (W, H), WARM_WHITE)
+    img = Image.new("RGB", (W, H), LIGHT_BG)
     draw = ImageDraw.Draw(img)
-
     top_brand_bar(draw)
 
-    fnt_title = font(SERIF_BOLD, 80)
-    center_text(draw, "Print & Digital Use", 120, fnt_title, DARK_SAGE)
+    fnt_title = font(TITLE_FONT, 90)
+    center_text(draw, "PRINT & DIGITAL USE", 110, fnt_title, DARK_TEXT)
 
-    fnt_sub = font(SANS_BOLD, 42)
-    center_text(draw, "Flexible for Every Party Setup", 225, fnt_sub, SAGE)
+    fnt_sub = font(MONTSERRAT_BOLD, 42)
+    center_text(draw, "Flexible for Every Party Setup", 220, fnt_sub, BLUE)
 
-    draw.line((650, 290, 1350, 290), fill=GOLD, width=3)
+    draw_divider(draw, 285)
 
-    # Two columns: Print / Digital
+    # Two columns
     col_w = 780
-    col_h = 700
+    col_h = 650
     left_x = 120
     right_x = W - 120 - col_w
-    col_y = 360
+    col_y = 330
 
     # PRINT column
-    draw.rounded_rectangle((left_x, col_y, left_x + col_w, col_y + col_h), radius=24, fill=WHITE, outline=SAGE, width=3)
-    fnt_col_title = font(SERIF_BOLD, 52)
-    center_text(draw, "Print at Home", col_y + 30, fnt_col_title, DARK_SAGE, w=left_x * 2 + col_w)
+    draw.rounded_rectangle((left_x, col_y, left_x + col_w, col_y + col_h), radius=24, fill=CARD_BG, outline=BLUE, width=3)
+    draw.rounded_rectangle((left_x, col_y, left_x + col_w, col_y + 8), radius=0, fill=BLUE)
+    fnt_col_title = font(TITLE_FONT, 50)
+    lbl_bbox = draw.textbbox((0, 0), "PRINT AT HOME", font=fnt_col_title)
+    lbl_w = lbl_bbox[2] - lbl_bbox[0]
+    draw.text((left_x + (col_w - lbl_w) // 2, col_y + 30), "PRINT AT HOME", font=fnt_col_title, fill=BLUE)
 
     print_items = [
         "US Letter (8.5 x 11 in) compatible",
         "Standard home printer friendly",
-        "Also great at print shops (FedEx, Staples)",
+        "Also great at print shops",
         "High-quality PDF downloads",
         "Cardstock recommended for signs",
-        "Trim guides included where needed",
+        "Trim guides included",
     ]
-    fnt_item = font(SANS_REG, 30)
-    iy = col_y + 120
+    fnt_item = font(MONTSERRAT_REG, 28)
+    iy = col_y + 110
     for item in print_items:
-        draw.text((left_x + 50, iy), f"\u2713  {item}", font=fnt_item, fill=CHARCOAL)
-        iy += 55
+        draw.ellipse((left_x + 40, iy + 6, left_x + 54, iy + 20), fill=BLUE)
+        draw.text((left_x + 70, iy), item, font=fnt_item, fill=DARK_TEXT)
+        iy += 52
 
     # DIGITAL column
-    draw.rounded_rectangle((right_x, col_y, right_x + col_w, col_y + col_h), radius=24, fill=WHITE, outline=SAGE, width=3)
-    center_text(draw, "Share Digitally", col_y + 30, fnt_col_title, DARK_SAGE, w=W - (W - right_x - col_w) * 2)
+    draw.rounded_rectangle((right_x, col_y, right_x + col_w, col_y + col_h), radius=24, fill=CARD_BG, outline=HOT_PINK, width=3)
+    draw.rounded_rectangle((right_x, col_y, right_x + col_w, col_y + 8), radius=0, fill=HOT_PINK)
+    lbl_bbox = draw.textbbox((0, 0), "SHARE DIGITALLY", font=fnt_col_title)
+    lbl_w = lbl_bbox[2] - lbl_bbox[0]
+    draw.text((right_x + (col_w - lbl_w) // 2, col_y + 30), "SHARE DIGITALLY", font=fnt_col_title, fill=HOT_PINK)
 
     digital_items = [
         "Download as JPG or PNG from Canva",
@@ -861,15 +799,16 @@ def make_image09():
         "Use as phone wallpapers",
         "Perfect for remote bachelorettes",
     ]
-    iy = col_y + 120
+    iy = col_y + 110
     for item in digital_items:
-        draw.text((right_x + 50, iy), f"\u2713  {item}", font=fnt_item, fill=CHARCOAL)
-        iy += 55
+        draw.ellipse((right_x + 40, iy + 6, right_x + 54, iy + 20), fill=HOT_PINK)
+        draw.text((right_x + 70, iy), item, font=fnt_item, fill=DARK_TEXT)
+        iy += 52
 
-    # Specs section
-    specs_y = 1140
-    fnt_specs_title = font(SERIF_BOLD, 46)
-    center_text(draw, "File Specifications", specs_y, fnt_specs_title, DARK_SAGE)
+    # Specs
+    specs_y = 1080
+    fnt_specs = font(TITLE_FONT, 50)
+    center_text(draw, "FILE SPECIFICATIONS", specs_y, fnt_specs, DARK_TEXT)
 
     specs = [
         "Format: Canva-editable PDF templates",
@@ -877,45 +816,43 @@ def make_image09():
         "Resolution: High-quality 300 DPI output",
         "Color: Full color, sRGB optimized",
     ]
-    fnt_spec = font(SANS_REG, 32)
-    sy = specs_y + 70
+    fnt_spec = font(MONTSERRAT_REG, 30)
+    sy = specs_y + 65
     for spec in specs:
-        center_text(draw, spec, sy, fnt_spec, CHARCOAL)
-        sy += 52
+        center_text(draw, spec, sy, fnt_spec, DARK_TEXT)
+        sy += 48
 
-    # Badge
-    badge_y = 1520
-    fnt_badge = font(SANS_BOLD, 34)
-    draw_pill_badge(draw, "Print or Share - Your Choice!", W // 2, badge_y, fnt_badge, SAGE, WHITE)
+    badge_y = 1420
+    fnt_badge = font(MONTSERRAT_BOLD, 34)
+    draw_pill_badge(draw, "Print or Share — Your Choice!", W // 2, badge_y, fnt_badge, ORANGE, WHITE)
 
     bottom_brand_bar(draw)
-
     img.save(os.path.join(OUT, "VillaVibes_Image09_PrintAndDigitalUse.jpg"), "JPEG", quality=95, subsampling=0)
     print("  [9/10] Print & Digital Use done")
+
 
 # =============================================
 # IMAGE 10 - FAQ + IMPORTANT NOTES
 # =============================================
 def make_image10():
-    img = Image.new("RGB", (W, H), WARM_WHITE)
+    img = Image.new("RGB", (W, H), LIGHT_BG)
     draw = ImageDraw.Draw(img)
-
     top_brand_bar(draw)
 
-    fnt_title = font(SERIF_BOLD, 76)
-    center_text(draw, "FAQ & Important Notes", 120, fnt_title, DARK_SAGE)
+    fnt_title = font(TITLE_FONT, 80)
+    center_text(draw, "FAQ & IMPORTANT NOTES", 100, fnt_title, DARK_TEXT)
 
-    draw.line((650, 220, 1350, 220), fill=GOLD, width=3)
+    draw_divider(draw, 195)
 
     faqs = [
         ("Is this a physical product?",
-         "No. This is a digital download only. No physical item\nwill be shipped. You'll receive instant access to download\nyour files after purchase."),
+         "No. This is a digital download only. No physical item will be shipped.\nYou'll receive instant access to download your files after purchase."),
         ("How do I access my templates?",
-         "After purchase, download the Access PDF from your\nEtsy purchases. It contains your unique Canva link\nto open and edit all 23 templates."),
+         "After purchase, download the Access PDF from your Etsy purchases.\nIt contains your unique Canva link to open and edit all 23 templates."),
         ("Do I need a paid Canva account?",
          "No! A free Canva account is all you need.\nSign up at canva.com if you don't have one."),
         ("Can I edit the text and colors?",
-         "Yes! Every template is fully customizable.\nChange text, fonts, colors, photos, and layout\nelements to match your party theme."),
+         "Yes! Every template is fully customizable. Change text, fonts,\ncolors, photos, and layout elements to match your party theme."),
         ("What size do the templates print?",
          "All templates are designed for US Letter size\n(8.5 x 11 inches) for easy home or shop printing."),
         ("Is this for personal use only?",
@@ -924,41 +861,45 @@ def make_image10():
          "Message us through Etsy! We're happy to help\nand typically respond within 24 hours."),
     ]
 
-    fnt_q = font(SANS_BOLD, 34)
-    fnt_a = font(SANS_REG, 28)
+    fnt_q = font(MONTSERRAT_BOLD, 32)
+    fnt_a = font(MONTSERRAT_REG, 26)
+    accent_cycle = [HOT_PINK, ORANGE, BLUE, TEAL]
 
-    y = 270
-    for q, a in faqs:
-        # Q label
-        draw.rounded_rectangle((120, y, W - 120, y + 2), radius=1, fill=SOFT_BORDER)
+    y = 240
+    for qi, (q, a) in enumerate(faqs):
+        accent = accent_cycle[qi % 4]
+        # Thin divider line
+        draw.line((120, y, W - 120, y), fill=SOFT_GRAY, width=2)
         y += 16
 
-        draw.text((140, y), f"Q:  {q}", font=fnt_q, fill=DARK_SAGE)
-        y += 52
+        # Colored Q indicator
+        draw.ellipse((130, y + 2, 154, y + 26), fill=accent)
+        fnt_qlabel = font(MONTSERRAT_BOLD, 16)
+        draw.text((136, y + 4), "Q", font=fnt_qlabel, fill=WHITE)
 
-        for li, line in enumerate(a.split("\n")):
-            draw.text((180, y), line, font=fnt_a, fill=CHARCOAL)
-            y += 38
-        y += 20
+        draw.text((170, y - 2), q, font=fnt_q, fill=DARK_TEXT)
+        y += 42
 
-    # Important note box at bottom
-    note_y = y + 10
-    draw.rounded_rectangle((120, note_y, W - 120, note_y + 120), radius=16, fill=PALE_GOLD, outline=GOLD, width=2)
-    fnt_note = font(SANS_BOLD, 30)
-    center_text(draw, "DIGITAL PRODUCT  |  INSTANT DOWNLOAD  |  NO PHYSICAL ITEM", note_y + 20, fnt_note, DARK_SAGE)
-    fnt_note2 = font(SANS_REG, 28)
-    center_text(draw, "Personal use only. Not for resale or redistribution.", note_y + 65, fnt_note2, CHARCOAL)
+        for line in a.split("\n"):
+            draw.text((170, y), line, font=fnt_a, fill=(100, 100, 105))
+            y += 34
+        y += 16
+
+    # Important note box
+    note_y = y + 8
+    draw.rounded_rectangle((120, note_y, W - 120, note_y + 110), radius=16, fill=WHITE, outline=HOT_PINK, width=3)
+    fnt_note = font(MONTSERRAT_BOLD, 28)
+    center_text(draw, "DIGITAL PRODUCT  |  INSTANT DOWNLOAD  |  NO PHYSICAL ITEM", note_y + 20, fnt_note, HOT_PINK)
+    fnt_note2 = font(MONTSERRAT_REG, 26)
+    center_text(draw, "Personal use only. Not for resale or redistribution.", note_y + 62, fnt_note2, DARK_TEXT)
 
     bottom_brand_bar(draw)
-
     img.save(os.path.join(OUT, "VillaVibes_Image10_FAQ_ImportantNotes.jpg"), "JPEG", quality=95, subsampling=0)
     print("  [10/10] FAQ & Important Notes done")
 
-# =============================================
-# RUN ALL
-# =============================================
+
 if __name__ == "__main__":
-    print("Generating Villa Vibes Etsy listing images...")
+    print("Generating Villa Vibes listing images (tropical palette)...")
     make_image01()
     make_image02()
     make_image03()
@@ -969,4 +910,4 @@ if __name__ == "__main__":
     make_image08()
     make_image09()
     make_image10()
-    print("\nAll 10 images generated successfully!")
+    print("\nAll 10 images regenerated with Villa Vibes palette!")
