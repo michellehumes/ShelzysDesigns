@@ -14,7 +14,7 @@
 - **Permanent personalization** – No vinyl, no peeling, no cracking
 - **Premium quality** – Bottles that look and feel expensive
 - **Thoughtful gifting** – Beautiful packaging and bundles
-- **Clean aesthetic** – High-converting, editorial-style presentation
+- **Bold aesthetic** – High contrast, bold color blocking, nothing safe or boring
 
 ### Target Customers
 1. **Brides & Bridal Parties** – Bridesmaid proposals, wedding day gifts
@@ -24,11 +24,14 @@
 5. **Corporate & Events** – Team gifts, branded bottles
 
 ### Brand Voice
-- Clean, confident, elevated
+- Bold, confident, elevated
 - Warm but not overly casual
-- Editorial and aspirational
+- High contrast and aspirational
 - Focus on quality and permanence
 - Avoid: cutesy, cheesy, or discount-feeling language
+
+### Design Philosophy
+> "High contrast. Bold color blocking. Nothing should feel safe or boring."
 
 ---
 
@@ -38,56 +41,64 @@
 
 #### Primary Colors
 ```
-Sage Green:      #8BAA88  (Primary CTA buttons, brand accent, highlights)
-Dark Sage:       #4E5F4A  (Headlines, headings, footer background, hover states)
-Warm White:      #FAF9F6  (Alternating section backgrounds, modals)
-Charcoal:        #2B2B2B  (Body text, navigation, pricing)
-White:           #FFFFFF  (Primary backgrounds, product cards, button text)
-```
-
-#### Accent & Border Colors
-```
-Champagne Gold:  #D1C7A1  (Sale badges, product labels, premium accents)
-Soft Border:     #C7D3C5  (Product card hover borders, modal borders)
-Light Border:    #E0E3DF  (Section dividers, form inputs, header border)
+Off-White:       #fefefe  (Primary backgrounds, product cards, section backgrounds)
+Hot Pink:        #fb5887  (Primary accent, CTA buttons, brand accent, highlights)
+Orange:          #fe8c43  (Secondary accent, sale badges, product labels, warm highlights)
+Steel Blue:      #3ca4d7  (Cool accent, links, informational elements)
+Light Teal/Sky:  #8adbde  (Highlight, hover accents, decorative elements)
+Near-Black:      #1a1a1a  (Body text, navigation, pricing)
+Darker Pink:     #e0416e  (Hover states, active states, pressed buttons)
 ```
 
 #### Usage Guidelines
-- **White or Warm White** for main backgrounds
-- **Dark Sage (`#4E5F4A`)** for all headings (Playfair Display font)
-- **Charcoal (`#2B2B2B`)** for all body text
-- **Sage Green (`#8BAA88`)** for primary CTAs and accent elements
-- **Champagne Gold (`#D1C7A1`)** for badges and premium highlights
-- **Dark Sage (`#4E5F4A`)** for footer background
+- **Off-White (`#fefefe`)** for main backgrounds
+- **Near-Black (`#1a1a1a`)** for all body text and headings text color
+- **Hot Pink (`#fb5887`)** for primary CTAs and accent elements
+- **Orange (`#fe8c43`)** for badges, secondary accents, and warm highlights
+- **Steel Blue (`#3ca4d7`)** for cool accent elements and links
+- **Light Teal/Sky (`#8adbde`)** for highlight and decorative accents
+- **Darker Pink (`#e0416e`)** for hover/active states
 
 ### Typography
 
 #### Typeface Stack
 ```
-Headings:     Playfair Display (500-700 weight) - Elegant serif
-Body Text:    Inter (400-600 weight) - Clean sans-serif
-Accents:      Montserrat (500-700 weight) - Uppercase subheadings, badges
+Titles:       Berthold Block (Bold) - Self-hosted, not on Google Fonts
+Headings:     Montserrat (Bold) - Strong sans-serif
+Body Text:    Inter (400 weight, 16px) - Clean sans-serif
+Accents:      Montserrat (uppercase, Bold) - Uppercase subheadings, badges
 Buttons:      Inter (600 weight)
 ```
 
-#### Google Fonts Import
+#### Font Loading
 ```css
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@500;600;700&family=Playfair+Display:wght@500;600;700&display=swap');
+/* Berthold Block must be self-hosted — it is NOT available on Google Fonts */
+@font-face {
+  font-family: 'Berthold Block';
+  src: url('/fonts/berthold-block.woff2') format('woff2');
+  font-weight: 700;
+  font-display: swap;
+}
+
+/* Google Fonts for Montserrat and Inter */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@500;600;700&display=swap');
 ```
 
 #### Size Scale (Web)
 ```
-H1 (Hero):           48-64px  (Playfair Display, 600 weight)
-H2 (Section):        36-42px  (Playfair Display, 600 weight)
-H3 (Subsection):     24-28px  (Playfair Display, 500 weight)
-Body (Primary):      16-18px  (Inter, 400 weight)
+Title (Hero):        42px     (Berthold Block, Bold)
+H1 (Hero):           48-64px  (Montserrat, Bold)
+H2 (Section):        36-42px  (Montserrat, Bold)
+H3 (Subsection):     24-28px  (Montserrat, Bold)
+Body (Primary):      16px     (Inter, 400 weight)
 Body (Secondary):    14-16px  (Inter, 400 weight)
-Captions/Badges:     12-14px  (Montserrat, uppercase, 0.12em letter-spacing)
+Captions/Badges:     12-14px  (Montserrat, uppercase, bold, 0.12em letter-spacing)
 ```
 
 #### Typography Details
-- **Headings:** Letter-spacing 0.02em for refined elegance
-- **Subheadings/Badges:** Uppercase, 0.12em letter-spacing, Montserrat
+- **Titles:** Berthold Block, 42px, Bold — self-hosted font file required
+- **Headings:** Montserrat Bold, high-contrast and commanding
+- **Subheadings/Badges:** Uppercase, 0.12em letter-spacing, Montserrat Bold
 - **Buttons:** Inter 600 weight, 0.06em letter-spacing, no text-transform
 
 #### On-Bottle Typography (Mockups Only)
@@ -99,17 +110,17 @@ For product mockups showing personalization:
 ### Photography Style
 
 #### Overall Aesthetic
-- Clean, bright, editorial
-- Slightly coastal/preppy vibe
-- Modern minimalist with warmth
+- Bold, bright, high-contrast
+- Eye-catching color blocking
+- Modern and energetic with warmth
 - Consistent lighting (soft, natural)
 - Cohesive color palette across all images
 
 #### Background Colors
-- Clean white
-- Brushed beige (#F7F4EF)
+- Off-white (#fefefe)
+- Bold color block sections (Hot Pink, Orange, Steel Blue, Light Teal)
 - Natural textures (marble, wood, linen)
-- Avoid: busy patterns, bright neons, cluttered scenes
+- Avoid: muted earth tones, safe/boring palettes, cluttered scenes
 
 #### Props & Styling
 - **Bridal:** Satin ribbons, white florals, elegant stationery
@@ -145,11 +156,11 @@ For product mockups showing personalization:
 
 If Shelzy's Designs were a person, she would be:
 - Thoughtful and detail-oriented
-- Confident but not flashy
+- Confident and bold
 - Warm and approachable
 - Quality-obsessed
 - Organized and reliable
-- Slightly preppy/coastal aesthetic
+- High-contrast, vibrant aesthetic
 
 ---
 
@@ -175,13 +186,13 @@ If Shelzy's Designs were a person, she would be:
 - "Permanent, scratch-proof finish"
 - "Made with care, one bottle at a time"
 - "Your personalization becomes part of the bottle"
-- Clean product photography with beige backgrounds
+- Bold product photography with off-white or color-blocked backgrounds
 
 ### ❌ Off-Brand
 - "Cute water bottles!!!"
 - "Cheapest personalized tumblers"
 - "OMG SALE!!!"
-- Neon colors, busy patterns
+- Muted/sage green palettes, busy patterns
 - Stock photos with watermarks
 
 ---
@@ -208,5 +219,5 @@ All brand assets should follow this structure:
 
 ---
 
-**Last Updated:** November 2025
-**Version:** 1.0
+**Last Updated:** February 2026
+**Version:** 2.0

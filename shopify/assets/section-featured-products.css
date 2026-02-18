@@ -16,12 +16,12 @@
 
 /* Accessibility enhancements */
 .featured-product-card:focus-within {
-  outline: 2px solid #321004;
+  outline: 2px solid #fb5887;
   outline-offset: 4px;
 }
 
 .featured-product-btn:focus {
-  outline: 2px solid #4a1a08;
+  outline: 2px solid #e0416e;
   outline-offset: 2px;
 }
 

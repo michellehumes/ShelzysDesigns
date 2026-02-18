@@ -5,7 +5,7 @@
 /* Accessibility enhancements */
 .sz-copy-btn:focus,
 .sz-action-btn:focus {
-  outline: 2px solid var(--sz-primary-dark, #4E5F4A);
+  outline: 2px solid var(--sz-primary-dark, #fb5887);
   outline-offset: 2px;
 }
 
@@ -17,7 +17,7 @@
 
 .sz-copy-btn:focus-visible,
 .sz-action-btn:focus-visible {
-  outline: 2px solid var(--sz-primary-dark, #4E5F4A);
+  outline: 2px solid var(--sz-primary-dark, #fb5887);
   outline-offset: 2px;
 }
 

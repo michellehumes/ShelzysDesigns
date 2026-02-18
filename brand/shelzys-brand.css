@@ -1,23 +1,44 @@
 /* ================================
    Shelzy's Designs — Brand Styles
+   "High contrast. Bold color blocking. Nothing should feel safe or boring."
    ================================ */
 
-/* 1. Font imports (fallback if not added in theme.liquid) */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@500;600;700&family=Playfair+Display:wght@500;600;700&display=swap');
+/* 1. Font imports
+   NOTE: Berthold Block must be self-hosted (not on Google Fonts).
+   Load it via @font-face in theme.liquid or a separate font CSS file.
+   Montserrat + Inter loaded from Google Fonts below. */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@400;500;600;700;800&display=swap');
 
 /* 2. CSS Variables for global use */
 :root {
-  /* Colors */
-  --sz-primary: #8BAA88;        /* Sage Green */
-  --sz-primary-dark: #4E5F4A;   /* Dark Sage / Evergreen */
-  --sz-neutral-light: #FAF9F6;  /* Warm White */
-  --sz-neutral-dark: #2B2B2B;   /* Charcoal */
-  --sz-accent-gold: #D1C7A1;    /* Champagne Gold */
-  --sz-border-soft: #C7D3C5;
-  --sz-border-light: #E0E3DF;
+  /* Brand Colors */
+  --sz-white: #fefefe;            /* Off-White */
+  --sz-hot-pink: #fb5887;         /* Hot Pink — primary accent */
+  --sz-orange: #fe8c43;           /* Orange — secondary accent */
+  --sz-steel-blue: #3ca4d7;       /* Steel Blue — cool accent */
+  --sz-teal: #8adbde;             /* Light Teal/Sky — highlight */
+
+  /* Semantic aliases */
+  --sz-primary: #fb5887;          /* Hot Pink */
+  --sz-primary-dark: #e0416e;     /* Darker Pink (hover) */
+  --sz-secondary: #3ca4d7;        /* Steel Blue */
+  --sz-accent: #fe8c43;           /* Orange */
+  --sz-highlight: #8adbde;        /* Light Teal */
+  --sz-neutral-light: #fefefe;    /* Off-White */
+  --sz-neutral-dark: #1a1a1a;     /* Near-black text */
+  --sz-accent-gold: #fe8c43;      /* Orange (legacy alias) */
+
+  /* Text */
+  --sz-text: #1a1a1a;
+  --sz-text-muted: #555555;
+
+  /* Borders */
+  --sz-border-soft: #e0e0e0;
+  --sz-border-light: #eeeeee;
 
   /* Fonts */
-  --sz-font-heading: "Playfair Display", "Times New Roman", serif;
+  --sz-font-title: "Berthold Block", "Impact", "Arial Black", sans-serif;
+  --sz-font-heading: "Montserrat", "Arial", sans-serif;
   --sz-font-body: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   --sz-font-accent: "Montserrat", "Inter", sans-serif;
 }
@@ -30,16 +51,34 @@ html {
   background-color: #ffffff;
 }
 
-/* Headings */
-h1, h2, h3, h4, h5, h6,
+/* Display title — Berthold Block 42 Bold */
+h1,
+.page-title,
+.hero__title,
+.slideshow__title {
+  font-family: var(--sz-font-title);
+  font-size: 42px;
+  font-weight: 700;
+  color: var(--sz-neutral-dark);
+  letter-spacing: 0.02em;
+}
+
+/* Headings — Montserrat Bold */
+h2, h3, h4, h5, h6,
 .heading,
 .section-header__title,
 .product-single__title,
-.page-title {
+.product__title {
   font-family: var(--sz-font-heading);
-  color: var(--sz-primary-dark);
-  letter-spacing: 0.02em;
+  font-weight: 700;
+  color: var(--sz-neutral-dark);
+  letter-spacing: -0.01em;
 }
+
+h2 { font-size: 36px; }
+h3 { font-size: 32px; }
+h4 { font-size: 24px; }
+h5 { font-size: 20px; }
 
 /* Subheadings / Eyebrow text */
 .subtitle,
@@ -48,12 +87,13 @@ h1, h2, h3, h4, h5, h6,
 .badge,
 .badge--pill {
   font-family: var(--sz-font-accent);
+  font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.12em;
   font-size: 0.78rem;
 }
 
-/* Body text */
+/* Body text — Inter 16 Regular */
 p,
 li,
 input,
@@ -66,17 +106,18 @@ a,
 .product-card__price,
 .site-nav__link {
   font-family: var(--sz-font-body);
+  font-size: 16px;
 }
 
 /* 4. Links */
 a {
-  color: var(--sz-primary-dark);
+  color: var(--sz-steel-blue);
   text-decoration: none;
 }
 
 a:hover,
 a:focus {
-  color: var(--sz-primary);
+  color: var(--sz-hot-pink);
   text-decoration: underline;
 }
 
@@ -85,15 +126,15 @@ a:focus {
 .button,
 .shopify-payment-button__button,
 .product-form__cart-submit {
-  background-color: var(--sz-primary);
+  background-color: var(--sz-hot-pink);
   color: #ffffff;
   border-radius: 999px;
-  border: 1px solid var(--sz-primary);
+  border: 2px solid var(--sz-hot-pink);
   padding: 0.9rem 1.8rem;
-  font-family: var(--sz-font-body);
-  font-weight: 600;
+  font-family: var(--sz-font-heading);
+  font-weight: 700;
   text-transform: none;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.02em;
 }
 
 .btn:hover,
@@ -111,17 +152,17 @@ a:focus {
 .btn--tertiary,
 .button--tertiary {
   background-color: #ffffff;
-  color: var(--sz-primary-dark);
+  color: var(--sz-hot-pink);
   border-radius: 999px;
-  border: 1px solid var(--sz-primary);
+  border: 2px solid var(--sz-hot-pink);
 }
 
 .btn--secondary:hover,
 .button--secondary:hover,
 .btn--tertiary:hover,
 .button--tertiary:hover {
-  background-color: var(--sz-neutral-light);
-  color: var(--sz-primary-dark);
+  background-color: var(--sz-hot-pink);
+  color: #ffffff;
 }
 
 /* 6. Section Backgrounds & Layout */
@@ -132,13 +173,11 @@ a:focus {
   padding-bottom: 40px;
 }
 
-/* Warm white alt background */
 .section--alt,
 .shelzys-section-alt {
   background-color: var(--sz-neutral-light);
 }
 
-/* Light dividers */
 .section + .section,
 .index-section + .index-section {
   border-top: 1px solid var(--sz-border-light);
@@ -153,31 +192,32 @@ a:focus {
 
 .site-nav__link,
 .site-header__icon {
-  font-family: var(--sz-font-body);
+  font-family: var(--sz-font-heading);
+  font-weight: 600;
   color: var(--sz-neutral-dark);
 }
 
 .site-nav__link:hover,
 .site-header__icon:hover {
-  color: var(--sz-primary);
+  color: var(--sz-hot-pink);
 }
 
 /* 8. Footer */
 .site-footer,
 .footer,
 .footer-wrapper {
-  background-color: var(--sz-primary-dark);
+  background-color: var(--sz-neutral-dark);
   color: var(--sz-neutral-light);
 }
 
 .site-footer a,
 .footer a {
-  color: var(--sz-neutral-light);
+  color: var(--sz-teal);
 }
 
 .site-footer a:hover,
 .footer a:hover {
-  color: var(--sz-accent-gold);
+  color: var(--sz-hot-pink);
 }
 
 /* 9. Product Cards / Collection Grid */
@@ -197,8 +237,8 @@ a:focus {
 .collection-grid-item:hover,
 .product-item:hover,
 .card:hover {
-  border-color: var(--sz-border-soft);
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.04);
+  border-color: var(--sz-teal);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
   transform: translateY(-2px);
 }
 
@@ -206,8 +246,9 @@ a:focus {
 .grid-product__title,
 .card__heading {
   font-family: var(--sz-font-heading);
+  font-weight: 700;
   font-size: 1rem;
-  color: var(--sz-primary-dark);
+  color: var(--sz-neutral-dark);
 }
 
 .product-card__price,
@@ -221,7 +262,7 @@ a:focus {
 .spr-icon-star,
 .spr-icon-star-half-alt,
 .spr-icon-star-empty {
-  color: var(--sz-primary);
+  color: var(--sz-orange);
 }
 
 /* 10. Badges / Labels */
@@ -230,7 +271,8 @@ a:focus {
 .product-tag,
 .product-label {
   font-family: var(--sz-font-accent);
-  background-color: var(--sz-accent-gold);
+  font-weight: 700;
+  background-color: var(--sz-hot-pink);
   color: #ffffff;
   border-radius: 999px;
   padding: 0.2rem 0.7rem;
@@ -238,22 +280,17 @@ a:focus {
   letter-spacing: 0.12em;
 }
 
-/* 11. Hero Section (if present) */
+/* 11. Hero Section */
 .hero,
 .hero__content,
 .slideshow__text-content {
   color: var(--sz-neutral-dark);
 }
 
-.hero__title,
-.slideshow__title {
-  font-family: var(--sz-font-heading);
-  color: var(--sz-primary-dark);
-}
-
 .hero__subtitle,
 .slideshow__subtitle {
-  font-family: var(--sz-font-body);
+  font-family: var(--sz-font-heading);
+  font-weight: 600;
   color: var(--sz-neutral-dark);
 }
 
@@ -261,8 +298,8 @@ a:focus {
 input,
 textarea,
 select {
-  border-radius: 999px;
-  border: 1px solid var(--sz-border-light);
+  border-radius: 8px;
+  border: 2px solid var(--sz-border-light);
   padding: 0.7rem 1rem;
   font-family: var(--sz-font-body);
 }
@@ -271,20 +308,20 @@ input:focus,
 textarea:focus,
 select:focus {
   outline: none;
-  border-color: var(--sz-primary);
-  box-shadow: 0 0 0 1px rgba(139, 170, 136, 0.25);
+  border-color: var(--sz-steel-blue);
+  box-shadow: 0 0 0 2px rgba(60, 164, 215, 0.25);
 }
 
 /* 13. Popups / Newsletter modal */
 .popup,
 .newsletter-popup,
 .modal {
-  background-color: var(--sz-neutral-light);
-  border-radius: 24px;
-  border: 1px solid var(--sz-border-soft);
+  background-color: #ffffff;
+  border-radius: 18px;
+  border: 2px solid var(--sz-teal);
 }
 
-/* 14. "How It Works" / Icon Steps (optional) */
+/* 14. "How It Works" / Icon Steps */
 .shelzys-steps {
   display: flex;
   gap: 20px;
@@ -295,25 +332,27 @@ select:focus {
   padding: 20px;
   border-radius: 18px;
   background-color: #ffffff;
-  border: 1px solid var(--sz-border-light);
+  border: 2px solid var(--sz-border-light);
 }
 
 .shelzys-step__title {
   font-family: var(--sz-font-heading);
+  font-weight: 700;
   margin-bottom: 8px;
 }
 
 .shelzys-step__text {
   font-family: var(--sz-font-body);
   font-size: 0.9rem;
-  color: var(--sz-neutral-dark);
+  color: var(--sz-text-muted);
 }
 
 /* 15. Blog Styling */
 .article__title,
 .blog__title {
   font-family: var(--sz-font-heading);
-  color: var(--sz-primary-dark);
+  font-weight: 700;
+  color: var(--sz-neutral-dark);
 }
 
 .article__meta,
@@ -327,10 +366,18 @@ select:focus {
   background-color: var(--sz-neutral-light);
 }
 
-.shelzys-text-sage {
-  color: var(--sz-primary-dark);
+.shelzys-text-pink {
+  color: var(--sz-hot-pink);
 }
 
-.shelzys-text-gold {
-  color: var(--sz-accent-gold);
+.shelzys-text-orange {
+  color: var(--sz-orange);
+}
+
+.shelzys-text-blue {
+  color: var(--sz-steel-blue);
+}
+
+.shelzys-text-teal {
+  color: var(--sz-teal);
 }

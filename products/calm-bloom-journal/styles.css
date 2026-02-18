@@ -1,0 +1,597 @@
+/* ============================================================
+   Calm & Bloom — Self-Care & Anxiety Relief Journal
+   Shared Design System
+   ============================================================ */
+
+/* Google Fonts Import */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Montserrat:wght@400;500;600;700&display=swap');
+
+/* ── CSS Variables ────────────────────────────────────────── */
+:root {
+  /* Color Palette */
+  --soft-sage: #B8CEB3;
+  --sage-light: #D4E4D0;
+  --sage-ultra-light: #EBF2E9;
+  --dusty-lavender: #C4B1CB;
+  --lavender-light: #DDD2E1;
+  --lavender-ultra-light: #F0EBF2;
+  --warm-cream: #FAF6F0;
+  --soft-blush: #E8D5D0;
+  --blush-light: #F3E8E4;
+  --deep-forest: #3D5A47;
+  --forest-medium: #5A7D64;
+  --charcoal: #1a1a1a;
+  --charcoal-light: #555555;
+  --white: #FFFFFF;
+  --border-soft: #E5DDD5;
+  --border-sage: #C8D8C4;
+
+  /* Typography */
+  --font-heading: 'Montserrat', Arial, sans-serif;
+  --font-body: 'Inter', 'Helvetica Neue', sans-serif;
+  --font-accent: 'Montserrat', 'Arial', sans-serif;
+
+  /* Page Dimensions (US Letter: 8.5 x 11 inches) */
+  --page-width: 8.5in;
+  --page-height: 11in;
+  --page-margin: 0.75in;
+  --page-inner-width: 7in;
+  --page-inner-height: 9.5in;
+
+  /* Spacing Scale */
+  --space-xs: 0.125in;
+  --space-sm: 0.25in;
+  --space-md: 0.375in;
+  --space-lg: 0.5in;
+  --space-xl: 0.75in;
+  --space-2xl: 1in;
+}
+
+/* ── Reset & Base ─────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 11pt;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+body {
+  font-family: var(--font-body);
+  color: var(--charcoal);
+  background: var(--warm-cream);
+  line-height: 1.6;
+}
+
+/* ── Page Layout ──────────────────────────────────────────── */
+.page {
+  width: var(--page-width);
+  min-height: var(--page-height);
+  padding: var(--page-margin);
+  background: var(--white);
+  margin: 0 auto 20px;
+  position: relative;
+  overflow: hidden;
+  page-break-after: always;
+  box-shadow: 0 2px 20px rgba(0,0,0,0.08);
+}
+
+.page:last-child {
+  page-break-after: auto;
+}
+
+.page-inner {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+/* ── Typography ───────────────────────────────────────────── */
+h1, h2, h3, h4 {
+  font-family: var(--font-heading);
+  color: var(--deep-forest);
+  line-height: 1.3;
+}
+
+h1 {
+  font-size: 2.4rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+h2 {
+  font-size: 1.6rem;
+  font-weight: 500;
+  margin-bottom: var(--space-md);
+}
+
+h3 {
+  font-size: 1.2rem;
+  font-weight: 500;
+  margin-bottom: var(--space-sm);
+}
+
+h4 {
+  font-size: 1rem;
+  font-weight: 500;
+  font-family: var(--font-accent);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-size: 0.75rem;
+  color: var(--forest-medium);
+}
+
+p {
+  margin-bottom: var(--space-sm);
+  font-size: 0.95rem;
+  color: var(--charcoal-light);
+}
+
+.text-center { text-align: center; }
+.text-muted { color: var(--charcoal-light); }
+.text-sage { color: var(--deep-forest); }
+.text-small { font-size: 0.8rem; }
+.text-accent {
+  font-family: var(--font-accent);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 0.7rem;
+  font-weight: 600;
+}
+
+/* ── Decorative Elements ──────────────────────────────────── */
+
+/* Botanical Leaf SVG — Eucalyptus Branch */
+.botanical-leaf {
+  position: absolute;
+  opacity: 0.12;
+}
+
+.botanical-leaf svg {
+  fill: var(--deep-forest);
+}
+
+/* Corner Flourish */
+.corner-flourish {
+  position: absolute;
+  width: 2.5in;
+  height: 2.5in;
+  opacity: 0.08;
+}
+
+.corner-flourish.top-right {
+  top: 0.3in;
+  right: 0.3in;
+}
+
+.corner-flourish.bottom-left {
+  bottom: 0.3in;
+  left: 0.3in;
+  transform: rotate(180deg);
+}
+
+/* Decorative Divider */
+.divider {
+  display: flex;
+  align-items: center;
+  gap: 0.3in;
+  margin: var(--space-md) 0;
+}
+
+.divider::before,
+.divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border-sage);
+}
+
+.divider-icon {
+  color: var(--soft-sage);
+  font-size: 0.9rem;
+}
+
+/* Leaf Divider SVG */
+.leaf-divider {
+  text-align: center;
+  margin: var(--space-md) 0;
+  opacity: 0.3;
+}
+
+/* Page Number */
+.page-number {
+  position: absolute;
+  bottom: 0.4in;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--font-accent);
+  font-size: 0.65rem;
+  color: var(--charcoal-light);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+/* Page Footer */
+.page-footer {
+  position: absolute;
+  bottom: 0.3in;
+  left: var(--page-margin);
+  right: var(--page-margin);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: var(--font-accent);
+  font-size: 0.6rem;
+  color: #BBBBBB;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+/* ── Form Elements ────────────────────────────────────────── */
+
+/* Writing Lines */
+.writing-line {
+  border-bottom: 1px solid var(--border-soft);
+  height: 0.4in;
+  width: 100%;
+}
+
+.writing-line-sage {
+  border-bottom: 1px solid var(--border-sage);
+  height: 0.4in;
+  width: 100%;
+}
+
+.writing-lines {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Checkbox */
+.checkbox-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.15in;
+  margin-bottom: 0.12in;
+  font-size: 0.9rem;
+}
+
+.checkbox {
+  width: 0.18in;
+  height: 0.18in;
+  border: 1.5px solid var(--border-sage);
+  border-radius: 3px;
+  flex-shrink: 0;
+  margin-top: 0.04in;
+}
+
+.checkbox-circle {
+  width: 0.2in;
+  height: 0.2in;
+  border: 1.5px solid var(--soft-sage);
+  border-radius: 50%;
+  flex-shrink: 0;
+  margin-top: 0.03in;
+}
+
+/* Rating Scale */
+.rating-scale {
+  display: flex;
+  gap: 0.12in;
+  align-items: center;
+}
+
+.rating-circle {
+  width: 0.28in;
+  height: 0.28in;
+  border: 1.5px solid var(--border-sage);
+  border-radius: 50%;
+}
+
+.rating-label {
+  font-size: 0.65rem;
+  color: var(--charcoal-light);
+  font-family: var(--font-accent);
+}
+
+/* Text Input Box */
+.input-box {
+  border: 1.5px solid var(--border-soft);
+  border-radius: 8px;
+  padding: var(--space-sm);
+  min-height: 0.5in;
+  background: var(--warm-cream);
+}
+
+.input-box-large {
+  border: 1.5px solid var(--border-soft);
+  border-radius: 8px;
+  padding: var(--space-sm);
+  min-height: 1.5in;
+  background: rgba(250, 246, 240, 0.5);
+}
+
+/* ── Layout Components ────────────────────────────────────── */
+
+/* Two Column Layout */
+.two-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-md);
+}
+
+/* Three Column Layout */
+.three-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: var(--space-sm);
+}
+
+/* Section Box */
+.section-box {
+  border: 1.5px solid var(--border-sage);
+  border-radius: 10px;
+  padding: var(--space-md);
+  margin-bottom: var(--space-md);
+}
+
+.section-box-sage {
+  border: 1.5px solid var(--border-sage);
+  border-radius: 10px;
+  padding: var(--space-md);
+  margin-bottom: var(--space-md);
+  background: var(--sage-ultra-light);
+}
+
+.section-box-lavender {
+  border: 1.5px solid var(--dusty-lavender);
+  border-radius: 10px;
+  padding: var(--space-md);
+  margin-bottom: var(--space-md);
+  background: var(--lavender-ultra-light);
+}
+
+.section-box-blush {
+  border: 1.5px solid var(--soft-blush);
+  border-radius: 10px;
+  padding: var(--space-md);
+  margin-bottom: var(--space-md);
+  background: var(--blush-light);
+}
+
+/* Card */
+.card {
+  background: var(--white);
+  border-radius: 12px;
+  padding: var(--space-md);
+  box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+}
+
+/* Badge */
+.badge {
+  display: inline-block;
+  font-family: var(--font-accent);
+  font-size: 0.6rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  padding: 0.06in 0.18in;
+  border-radius: 20px;
+  background: var(--sage-light);
+  color: var(--deep-forest);
+}
+
+.badge-lavender {
+  background: var(--lavender-light);
+  color: #5A4166;
+}
+
+.badge-blush {
+  background: var(--soft-blush);
+  color: #7A5A50;
+}
+
+/* ── Tracker Grids ────────────────────────────────────────── */
+
+/* Mood Tracker (7-day row) */
+.mood-row {
+  display: grid;
+  grid-template-columns: 0.8in repeat(5, 1fr);
+  gap: 0.08in;
+  align-items: center;
+  margin-bottom: 0.06in;
+}
+
+.mood-row .day-label {
+  font-family: var(--font-accent);
+  font-size: 0.7rem;
+  font-weight: 500;
+  color: var(--deep-forest);
+}
+
+.mood-emoji-cell {
+  width: 0.35in;
+  height: 0.35in;
+  border: 1.5px solid var(--border-sage);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.55rem;
+  margin: 0 auto;
+}
+
+/* Habit Tracker Grid */
+.habit-grid {
+  display: grid;
+  grid-template-columns: 1.5in repeat(7, 1fr);
+  gap: 2px;
+}
+
+.habit-grid .habit-name {
+  font-size: 0.8rem;
+  padding: 0.06in 0.1in;
+  display: flex;
+  align-items: center;
+}
+
+.habit-grid .habit-cell {
+  width: 100%;
+  aspect-ratio: 1;
+  border: 1px solid var(--border-sage);
+  border-radius: 4px;
+  background: var(--warm-cream);
+}
+
+/* ── Cover Page Styles ────────────────────────────────────── */
+.cover-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  height: var(--page-inner-height);
+  background: linear-gradient(180deg, var(--white) 0%, var(--sage-ultra-light) 50%, var(--white) 100%);
+}
+
+.cover-title {
+  font-family: var(--font-heading);
+  font-size: 3.2rem;
+  font-weight: 700;
+  color: var(--deep-forest);
+  line-height: 1.15;
+  margin-bottom: 0.15in;
+}
+
+.cover-subtitle {
+  font-family: var(--font-heading);
+  font-size: 1.3rem;
+  font-weight: 400;
+  font-style: italic;
+  color: var(--forest-medium);
+  margin-bottom: 0.6in;
+}
+
+.cover-tagline {
+  font-family: var(--font-accent);
+  font-size: 0.7rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: var(--charcoal-light);
+  margin-bottom: 0.5in;
+}
+
+.cover-name-line {
+  border-bottom: 2px solid var(--soft-sage);
+  width: 3.5in;
+  margin: 0.2in auto;
+  padding-bottom: 0.05in;
+}
+
+.cover-name-label {
+  font-family: var(--font-accent);
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--charcoal-light);
+  margin-top: 0.08in;
+}
+
+/* ── Botanical SVG Illustrations ──────────────────────────── */
+
+/* Inline SVG patterns used throughout the journal */
+.svg-eucalyptus {
+  display: inline-block;
+}
+
+.svg-leaf-accent {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+/* Watercolor wash background overlay */
+.watercolor-wash {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  opacity: 0.04;
+  pointer-events: none;
+  background: radial-gradient(ellipse at 20% 80%, var(--soft-sage) 0%, transparent 60%),
+              radial-gradient(ellipse at 80% 20%, var(--dusty-lavender) 0%, transparent 60%);
+}
+
+.watercolor-wash-sage {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  opacity: 0.06;
+  pointer-events: none;
+  background: radial-gradient(ellipse at 30% 70%, var(--soft-sage) 0%, transparent 50%);
+}
+
+/* ── Print Styles ─────────────────────────────────────────── */
+@media print {
+  body {
+    background: white;
+    margin: 0;
+    padding: 0;
+  }
+
+  .page {
+    width: var(--page-width);
+    min-height: var(--page-height);
+    margin: 0;
+    padding: var(--page-margin);
+    box-shadow: none;
+    page-break-after: always;
+    page-break-inside: avoid;
+  }
+
+  .page:last-child {
+    page-break-after: auto;
+  }
+
+  /* Ensure backgrounds print */
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+}
+
+@page {
+  size: 8.5in 11in;
+  margin: 0;
+}
+
+/* ── Utility Classes ──────────────────────────────────────── */
+.mt-xs { margin-top: var(--space-xs); }
+.mt-sm { margin-top: var(--space-sm); }
+.mt-md { margin-top: var(--space-md); }
+.mt-lg { margin-top: var(--space-lg); }
+.mt-xl { margin-top: var(--space-xl); }
+
+.mb-xs { margin-bottom: var(--space-xs); }
+.mb-sm { margin-bottom: var(--space-sm); }
+.mb-md { margin-bottom: var(--space-md); }
+.mb-lg { margin-bottom: var(--space-lg); }
+.mb-xl { margin-bottom: var(--space-xl); }
+
+.flex { display: flex; }
+.flex-col { flex-direction: column; }
+.flex-center { align-items: center; justify-content: center; }
+.flex-between { justify-content: space-between; }
+.gap-xs { gap: var(--space-xs); }
+.gap-sm { gap: var(--space-sm); }
+.gap-md { gap: var(--space-md); }
+
+.w-full { width: 100%; }
+.h-full { height: 100%; }

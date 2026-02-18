@@ -2,64 +2,71 @@
 
 ## Primary Palette
 
-### Sage Green (Primary)
+### Off-White (Background)
 ```
-Hex:     #8BAA88
-RGB:     139, 170, 136
+Hex:     #fefefe
+RGB:     254, 254, 254
+Usage:   Primary backgrounds, product cards, section backgrounds
+```
+
+### Hot Pink (Primary Accent)
+```
+Hex:     #fb5887
+RGB:     251, 88, 135
 Usage:   Primary CTA buttons, brand accent, highlights, active states, star ratings
 ```
 
-### Dark Sage / Evergreen (Primary Dark)
+### Orange (Secondary Accent)
 ```
-Hex:     #4E5F4A
-RGB:     78, 95, 74
-Usage:   Headlines, headings, footer background, hover states, link color
-```
-
-### Warm White (Neutral Light)
-```
-Hex:     #FAF9F6
-RGB:     250, 249, 246
-Usage:   Alternating section backgrounds, modals, secondary backgrounds
+Hex:     #fe8c43
+RGB:     254, 140, 67
+Usage:   Sale badges, product labels, warm highlights, secondary CTAs
 ```
 
-### Charcoal (Neutral Dark)
+### Steel Blue (Cool Accent)
 ```
-Hex:     #2B2B2B
-RGB:     43, 43, 43
-Usage:   Body text, navigation text, pricing
+Hex:     #3ca4d7
+RGB:     60, 164, 215
+Usage:   Links, informational elements, cool accent, trust indicators
 ```
 
-### Pure White
+### Light Teal/Sky (Highlight)
 ```
-Hex:     #FFFFFF
-RGB:     255, 255, 255
-Usage:   Primary backgrounds, product cards, button text
+Hex:     #8adbde
+RGB:     138, 219, 222
+Usage:   Hover accents, decorative elements, highlight backgrounds
+```
+
+### Near-Black (Text)
+```
+Hex:     #1a1a1a
+RGB:     26, 26, 26
+Usage:   Body text, navigation text, headings, pricing
+```
+
+### Darker Pink (Hover)
+```
+Hex:     #e0416e
+RGB:     224, 65, 110
+Usage:   Hover states, active states, pressed buttons
 ```
 
 ---
 
-## Accent & Border Colors
+## Functional Colors
 
-### Champagne Gold (Accent)
+### Border Light
 ```
-Hex:     #D1C7A1
-RGB:     209, 199, 161
-Usage:   Sale badges, product labels, footer link hovers, premium accents
-```
-
-### Soft Border
-```
-Hex:     #C7D3C5
-RGB:     199, 211, 197
-Usage:   Product card hover borders, modal borders
-```
-
-### Light Border
-```
-Hex:     #E0E3DF
-RGB:     224, 227, 223
+Hex:     #e0e0e0
+RGB:     224, 224, 224
 Usage:   Section dividers, form input borders, header border
+```
+
+### Border Hover
+```
+Hex:     #fb5887
+RGB:     251, 88, 135
+Usage:   Product card hover borders, focused input borders
 ```
 
 ---
@@ -67,57 +74,57 @@ Usage:   Section dividers, form input borders, header border
 ## Color Combinations
 
 ### Homepage Hero
-- Background: `#FFFFFF` or `#FAF9F6`
-- Headline: `#4E5F4A` (Dark Sage)
-- Subtitle: `#2B2B2B` (Charcoal)
-- Button: `#8BAA88` background, `#FFFFFF` text
-- Button Hover: `#4E5F4A` background
+- Background: `#fefefe` (Off-White)
+- Headline: `#1a1a1a` (Near-Black)
+- Subtitle: `#1a1a1a` (Near-Black)
+- Button: `#fb5887` background (Hot Pink), `#fefefe` text
+- Button Hover: `#e0416e` background (Darker Pink)
 
 ### Product Cards
-- Background: `#FFFFFF`
+- Background: `#fefefe` (Off-White)
 - Border (default): transparent
-- Border (hover): `#C7D3C5`
-- Product Name: `#4E5F4A` (Playfair Display font)
-- Price: `#2B2B2B`
-- Shadow (hover): `0 10px 25px rgba(0, 0, 0, 0.04)`
+- Border (hover): `#fb5887` (Hot Pink)
+- Product Name: `#1a1a1a` (Near-Black, Montserrat Bold)
+- Price: `#1a1a1a`
+- Shadow (hover): `0 10px 25px rgba(0, 0, 0, 0.06)`
 
 ### Badges & Labels
-- Background: `#D1C7A1` (Champagne Gold)
-- Text: `#FFFFFF`
+- Background: `#fe8c43` (Orange)
+- Text: `#fefefe`
 - Border-radius: 999px (pill shape)
 
 ### Navigation / Header
-- Background: `#FFFFFF`
-- Text: `#2B2B2B`
-- Hover: `#8BAA88`
-- Border: `#E0E3DF`
+- Background: `#fefefe` (Off-White)
+- Text: `#1a1a1a` (Near-Black)
+- Hover: `#fb5887` (Hot Pink)
+- Border: `#e0e0e0`
 
 ### Footer
-- Background: `#4E5F4A` (Dark Sage)
-- Text: `#FAF9F6` (Warm White)
-- Link Hover: `#D1C7A1` (Champagne Gold)
+- Background: `#1a1a1a` (Near-Black)
+- Text: `#fefefe` (Off-White)
+- Link Hover: `#fb5887` (Hot Pink)
 
 ### Forms / Inputs
-- Background: `#FFFFFF`
-- Border (default): `#E0E3DF`
-- Border (focus): `#8BAA88`
-- Focus shadow: `0 0 0 1px rgba(139, 170, 136, 0.25)`
+- Background: `#fefefe` (Off-White)
+- Border (default): `#e0e0e0`
+- Border (focus): `#fb5887` (Hot Pink)
+- Focus shadow: `0 0 0 1px rgba(251, 88, 135, 0.25)`
 
 ---
 
 ## Accessibility
 
 ### Text Contrast Ratios
-- `#2B2B2B` on `#FFFFFF` = **12.63:1** AAA
-- `#2B2B2B` on `#FAF9F6` = **11.92:1** AAA
-- `#4E5F4A` on `#FFFFFF` = **7.28:1** AAA
-- `#4E5F4A` on `#FAF9F6` = **6.87:1** AA Large Text / AAA
-- `#FFFFFF` on `#8BAA88` = **3.02:1** AA Large Text (buttons OK)
-- `#FFFFFF` on `#4E5F4A` = **7.28:1** AAA
+- `#1a1a1a` on `#fefefe` = **16.75:1** AAA
+- `#fefefe` on `#fb5887` = **3.46:1** AA Large Text (buttons OK)
+- `#fefefe` on `#e0416e` = **4.22:1** AA (hover buttons)
+- `#fefefe` on `#1a1a1a` = **16.75:1** AAA (footer)
+- `#1a1a1a` on `#8adbde` = **8.86:1** AAA (teal highlights)
+- `#fefefe` on `#3ca4d7` = **3.28:1** AA Large Text
 
 ### Button Recommendations
-- Primary CTA: `#8BAA88` background with `#FFFFFF` text (large text compliant)
-- Hover state: `#4E5F4A` background with `#FFFFFF` text (fully AAA compliant)
+- Primary CTA: `#fb5887` background with `#fefefe` text (large text compliant)
+- Hover state: `#e0416e` background with `#fefefe` text (AA compliant)
 - Ensure 3:1 minimum contrast for UI elements
 
 ---
@@ -125,33 +132,44 @@ Usage:   Section dividers, form input borders, header border
 ## CSS Variables
 
 ```css
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@500;600;700&family=Playfair+Display:wght@500;600;700&display=swap');
+/* Berthold Block must be self-hosted — NOT available on Google Fonts */
+@font-face {
+  font-family: 'Berthold Block';
+  src: url('/fonts/berthold-block.woff2') format('woff2');
+  font-weight: 700;
+  font-display: swap;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@500;600;700&display=swap');
 
 :root {
   /* Primary Colors */
-  --sz-primary: #8BAA88;        /* Sage Green */
-  --sz-primary-dark: #4E5F4A;   /* Dark Sage / Evergreen */
-  --sz-neutral-light: #FAF9F6;  /* Warm White */
-  --sz-neutral-dark: #2B2B2B;   /* Charcoal */
-  --sz-accent-gold: #D1C7A1;    /* Champagne Gold */
+  --sz-hot-pink: #fb5887;        /* Hot Pink (primary accent) */
+  --sz-darker-pink: #e0416e;     /* Darker Pink (hover) */
+  --sz-orange: #fe8c43;          /* Orange (secondary accent) */
+  --sz-steel-blue: #3ca4d7;      /* Steel Blue (cool accent) */
+  --sz-light-teal: #8adbde;      /* Light Teal/Sky (highlight) */
+  --sz-off-white: #fefefe;       /* Off-White (backgrounds) */
+  --sz-near-black: #1a1a1a;      /* Near-Black (text) */
 
   /* Border Colors */
-  --sz-border-soft: #C7D3C5;
-  --sz-border-light: #E0E3DF;
+  --sz-border-light: #e0e0e0;
+  --sz-border-hover: #fb5887;
 
   /* Fonts */
-  --sz-font-heading: "Playfair Display", "Times New Roman", serif;
+  --sz-font-title: "Berthold Block", "Impact", sans-serif;
+  --sz-font-heading: "Montserrat", "Inter", sans-serif;
   --sz-font-body: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   --sz-font-accent: "Montserrat", "Inter", sans-serif;
 
   /* Semantic Aliases */
-  --color-text-primary: var(--sz-neutral-dark);
-  --color-text-heading: var(--sz-primary-dark);
-  --color-bg-primary: #FFFFFF;
-  --color-bg-secondary: var(--sz-neutral-light);
-  --color-accent: var(--sz-primary);
-  --color-cta: var(--sz-primary);
-  --color-cta-hover: var(--sz-primary-dark);
+  --color-text-primary: var(--sz-near-black);
+  --color-text-heading: var(--sz-near-black);
+  --color-bg-primary: var(--sz-off-white);
+  --color-bg-secondary: var(--sz-off-white);
+  --color-accent: var(--sz-hot-pink);
+  --color-cta: var(--sz-hot-pink);
+  --color-cta-hover: var(--sz-darker-pink);
 }
 ```
 
@@ -160,19 +178,20 @@ Usage:   Section dividers, form input borders, header border
 ## Usage Guidelines
 
 ### Do's
-- Use Sage Green (`#8BAA88`) as the primary accent and CTA color
-- Use Dark Sage (`#4E5F4A`) for all headings and the footer
-- Use Champagne Gold (`#D1C7A1`) sparingly for badges and premium highlights
-- Maintain clean white or warm white backgrounds
-- Use Charcoal (`#2B2B2B`) for all body text
+- Use Hot Pink (`#fb5887`) as the primary accent and CTA color
+- Use Near-Black (`#1a1a1a`) for all body text and headings
+- Use Orange (`#fe8c43`) for badges, secondary accents, and warm highlights
+- Use Steel Blue (`#3ca4d7`) and Light Teal (`#8adbde`) for cool accents and highlights
+- Maintain off-white (`#fefefe`) backgrounds with bold color blocking
 - Apply pill-shaped buttons (border-radius: 999px)
+- Embrace high contrast and bold color combinations
 
 ### Don'ts
-- Don't use bright, saturated colors outside this palette
-- Don't use more than 3 colors in one section
-- Don't use Sage Green for large background areas
-- Don't introduce colors outside this palette (no teal, pink, or other accents)
-- Don't mix multiple accent colors in the same component
+- Don't use muted, safe, or boring color combinations
+- Don't use sage green, earth tones, or Playfair Display -- that's the OLD brand
+- Don't make anything feel timid or washed out
+- Don't introduce colors outside this palette
+- Don't use more than 3 brand colors in one component
 
 ---
 
@@ -180,17 +199,19 @@ Usage:   Section dividers, form input borders, header border
 
 | Element | Color | Hex |
 |---------|-------|-----|
-| Primary Button | Sage Green | `#8BAA88` |
-| Button Hover | Dark Sage | `#4E5F4A` |
-| Headings | Dark Sage | `#4E5F4A` |
-| Body Text | Charcoal | `#2B2B2B` |
-| Alt Background | Warm White | `#FAF9F6` |
-| Badges | Champagne Gold | `#D1C7A1` |
-| Footer BG | Dark Sage | `#4E5F4A` |
-| Borders | Light Border | `#E0E3DF` |
-| Hover Borders | Soft Border | `#C7D3C5` |
+| Primary Button | Hot Pink | `#fb5887` |
+| Button Hover | Darker Pink | `#e0416e` |
+| Headings | Near-Black | `#1a1a1a` |
+| Body Text | Near-Black | `#1a1a1a` |
+| Background | Off-White | `#fefefe` |
+| Badges | Orange | `#fe8c43` |
+| Cool Accent | Steel Blue | `#3ca4d7` |
+| Highlight | Light Teal/Sky | `#8adbde` |
+| Footer BG | Near-Black | `#1a1a1a` |
+| Borders | Light Border | `#e0e0e0` |
+| Hover Borders | Hot Pink | `#fb5887` |
 
 ---
 
-**Version:** 2.0
-**Last Updated:** November 2025
+**Version:** 3.0
+**Last Updated:** February 2026
