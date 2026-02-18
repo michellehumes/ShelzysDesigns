@@ -32,7 +32,7 @@
                 class="sz-category-card-image"
               >
             {%- else -%}
-              <div class="sz-category-card-placeholder" style="background: {{ block.settings.placeholder_color | default: '#8BAA88' }};">
+              <div class="sz-category-card-placeholder" style="background: {{ block.settings.placeholder_color | default: '#fb5887' }};">
                 <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
                   <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
                   <circle cx="8.5" cy="8.5" r="1.5"/>
@@ -110,12 +110,12 @@
     font-weight: 600;
     letter-spacing: 0.15em;
     text-transform: uppercase;
-    color: #8BAA88;
+    color: #fb5887;
     margin-bottom: 12px;
   }
 
   .sz-category-heading {
-    font-family: "Playfair Display", Georgia, serif;
+    font-family: "Montserrat", sans-serif;
     font-size: clamp(2rem, 4vw, 2.75rem);
     font-weight: 500;
     color: #1F1F1F;
@@ -243,7 +243,7 @@
   }
 
   .sz-category-card-title {
-    font-family: "Playfair Display", Georgia, serif;
+    font-family: "Montserrat", sans-serif;
     font-size: 1.5rem;
     font-weight: 500;
     margin: 0 0 8px;
@@ -363,7 +363,7 @@
           "type": "color",
           "id": "placeholder_color",
           "label": "Placeholder Color",
-          "default": "#8BAA88"
+          "default": "#fb5887"
         },
         {
           "type": "text",

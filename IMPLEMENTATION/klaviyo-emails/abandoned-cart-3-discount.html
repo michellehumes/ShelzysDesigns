@@ -10,14 +10,14 @@
         img { border: 0; outline: none; }
     </style>
 </head>
-<body style="margin: 0; padding: 0; background-color: #FAF9F6; font-family: 'Inter', Arial, sans-serif;">
+<body style="margin: 0; padding: 0; background-color: #fefefe; font-family: 'Inter', Arial, sans-serif;">
 
     <!-- Preheader -->
     <div style="display: none; max-height: 0; overflow: hidden;">
         Your cart is about to expire! Use code COMEBACK10 for 10% off...
     </div>
 
-    <table width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#FAF9F6">
+    <table width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#fefefe">
         <tr>
             <td align="center" style="padding: 40px 20px;">
 
@@ -25,7 +25,7 @@
 
                     <!-- Urgency Banner -->
                     <tr>
-                        <td style="padding: 15px; background-color: #4E5F4A; text-align: center;">
+                        <td style="padding: 15px; background-color: #fb5887; text-align: center;">
                             <p style="margin: 0; font-size: 14px; font-weight: 600; color: #FFFFFF; letter-spacing: 0.05em;">
                                 ⏰ FINAL REMINDER: Your cart expires soon!
                             </p>
@@ -34,7 +34,7 @@
 
                     <!-- Header -->
                     <tr>
-                        <td align="center" style="padding: 30px 40px; border-bottom: 1px solid #E0E3DF;">
+                        <td align="center" style="padding: 30px 40px; border-bottom: 1px solid #eeeeee;">
                             <img src="{{ organization.logo }}" alt="Shelzy's Designs" width="180" style="display: block;">
                         </td>
                     </tr>
@@ -43,11 +43,11 @@
                     <tr>
                         <td style="padding: 40px;">
 
-                            <h1 style="margin: 0 0 20px; font-family: 'Playfair Display', Georgia, serif; font-size: 28px; color: #4E5F4A; text-align: center;">
+                            <h1 style="margin: 0 0 20px; font-family: 'Montserrat', Georgia, serif; font-size: 28px; color: #1a1a1a; text-align: center;">
                                 We saved your cart... <br>and sweetened the deal! 🍬
                             </h1>
 
-                            <p style="margin: 0 0 30px; font-size: 16px; line-height: 1.6; color: #2B2B2B; text-align: center;">
+                            <p style="margin: 0 0 30px; font-size: 16px; line-height: 1.6; color: #1a1a1a; text-align: center;">
                                 Hey {{ first_name|default:'there' }}, your personalized bottle is still waiting!
                                 To make it easier, here's an exclusive discount just for you:
                             </p>
@@ -55,17 +55,17 @@
                             <!-- Discount Box -->
                             <table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin: 20px 0 30px;">
                                 <tr>
-                                    <td style="background: linear-gradient(135deg, #8BAA88 0%, #4E5F4A 100%); border-radius: 12px; padding: 30px; text-align: center;">
+                                    <td style="background: linear-gradient(135deg, #fb5887 0%, #e0416e 100%); border-radius: 12px; padding: 30px; text-align: center;">
                                         <p style="margin: 0 0 10px; font-size: 16px; color: rgba(255,255,255,0.9); text-transform: uppercase; letter-spacing: 0.1em;">
                                             Limited Time Offer
                                         </p>
-                                        <p style="margin: 0 0 15px; font-family: 'Playfair Display', Georgia, serif; font-size: 42px; font-weight: 600; color: #FFFFFF;">
+                                        <p style="margin: 0 0 15px; font-family: 'Montserrat', Georgia, serif; font-size: 42px; font-weight: 600; color: #FFFFFF;">
                                             10% OFF
                                         </p>
                                         <p style="margin: 0 0 10px; font-size: 14px; color: rgba(255,255,255,0.8);">
                                             Use code at checkout:
                                         </p>
-                                        <p style="margin: 0; font-size: 26px; font-weight: 700; letter-spacing: 0.15em; color: #D1C7A1; background: rgba(255,255,255,0.15); display: inline-block; padding: 12px 25px; border-radius: 8px;">
+                                        <p style="margin: 0; font-size: 26px; font-weight: 700; letter-spacing: 0.15em; color: #fe8c43; background: rgba(255,255,255,0.15); display: inline-block; padding: 12px 25px; border-radius: 8px;">
                                             COMEBACK10
                                         </p>
                                     </td>
@@ -73,24 +73,24 @@
                             </table>
 
                             <!-- Cart Items Preview -->
-                            <p style="margin: 0 0 15px; font-size: 14px; font-weight: 600; color: #4E5F4A; text-transform: uppercase; letter-spacing: 0.05em;">
+                            <p style="margin: 0 0 15px; font-size: 14px; font-weight: 600; color: #1a1a1a; text-transform: uppercase; letter-spacing: 0.05em;">
                                 Your cart includes:
                             </p>
 
-                            <table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom: 25px; border: 1px solid #E0E3DF; border-radius: 12px; overflow: hidden;">
+                            <table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom: 25px; border: 1px solid #eeeeee; border-radius: 12px; overflow: hidden;">
                                 {% for item in event.extra.line_items %}
                                 <tr>
-                                    <td style="padding: 15px; {% if not forloop.last %}border-bottom: 1px solid #E0E3DF;{% endif %}">
+                                    <td style="padding: 15px; {% if not forloop.last %}border-bottom: 1px solid #eeeeee;{% endif %}">
                                         <table width="100%" cellpadding="0" cellspacing="0" border="0">
                                             <tr>
                                                 <td width="60">
                                                     <img src="{{ item.product.image }}" alt="{{ item.product.title }}" width="50" style="border-radius: 6px;">
                                                 </td>
                                                 <td style="padding-left: 12px;">
-                                                    <p style="margin: 0; font-weight: 500; color: #2B2B2B; font-size: 14px;">{{ item.product.title }}</p>
+                                                    <p style="margin: 0; font-weight: 500; color: #1a1a1a; font-size: 14px;">{{ item.product.title }}</p>
                                                 </td>
                                                 <td align="right">
-                                                    <p style="margin: 0; font-weight: 600; color: #4E5F4A;">{{ item.price|floatformat:2|money }}</p>
+                                                    <p style="margin: 0; font-weight: 600; color: #1a1a1a;">{{ item.price|floatformat:2|money }}</p>
                                                 </td>
                                             </tr>
                                         </table>
@@ -106,7 +106,7 @@
                                         <table width="100%" cellpadding="0" cellspacing="0" border="0">
                                             <tr>
                                                 <td style="color: #666; font-size: 14px;">Subtotal</td>
-                                                <td align="right" style="color: #2B2B2B; font-size: 14px;">{{ event.extra.total_price|floatformat:2|money }}</td>
+                                                <td align="right" style="color: #1a1a1a; font-size: 14px;">{{ event.extra.total_price|floatformat:2|money }}</td>
                                             </tr>
                                         </table>
                                     </td>
@@ -115,18 +115,18 @@
                                     <td style="padding: 8px 0;">
                                         <table width="100%" cellpadding="0" cellspacing="0" border="0">
                                             <tr>
-                                                <td style="color: #8BAA88; font-size: 14px; font-weight: 600;">Your Discount (COMEBACK10)</td>
-                                                <td align="right" style="color: #8BAA88; font-size: 14px; font-weight: 600;">-10%</td>
+                                                <td style="color: #fb5887; font-size: 14px; font-weight: 600;">Your Discount (COMEBACK10)</td>
+                                                <td align="right" style="color: #fb5887; font-size: 14px; font-weight: 600;">-10%</td>
                                             </tr>
                                         </table>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td style="padding: 12px 0; border-top: 2px solid #E0E3DF;">
+                                    <td style="padding: 12px 0; border-top: 2px solid #eeeeee;">
                                         <table width="100%" cellpadding="0" cellspacing="0" border="0">
                                             <tr>
-                                                <td style="color: #4E5F4A; font-size: 18px; font-weight: 700;">You Pay</td>
-                                                <td align="right" style="color: #4E5F4A; font-size: 18px; font-weight: 700;">
+                                                <td style="color: #1a1a1a; font-size: 18px; font-weight: 700;">You Pay</td>
+                                                <td align="right" style="color: #1a1a1a; font-size: 18px; font-weight: 700;">
                                                     Save {{ event.extra.total_price|multiply:0.1|floatformat:2|money }}!
                                                 </td>
                                             </tr>
@@ -139,7 +139,7 @@
                             <table width="100%" cellpadding="0" cellspacing="0" border="0">
                                 <tr>
                                     <td align="center" style="padding: 10px 0 30px;">
-                                        <a href="{{ event.extra.checkout_url }}?discount=COMEBACK10" style="background-color: #8BAA88; color: #FFFFFF; padding: 18px 45px; border-radius: 999px; text-decoration: none; display: inline-block; font-weight: 600; font-size: 16px;">
+                                        <a href="{{ event.extra.checkout_url }}?discount=COMEBACK10" style="background-color: #fb5887; color: #FFFFFF; padding: 18px 45px; border-radius: 999px; text-decoration: none; display: inline-block; font-weight: 600; font-size: 16px;">
                                             Claim My 10% Off →
                                         </a>
                                     </td>
@@ -147,10 +147,10 @@
                             </table>
 
                             <!-- Testimonial -->
-                            <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color: #FAF9F6; border-radius: 12px; padding: 20px;">
+                            <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color: #fefefe; border-radius: 12px; padding: 20px;">
                                 <tr>
                                     <td style="padding: 20px; text-align: center;">
-                                        <p style="margin: 0 0 10px; color: #8BAA88; font-size: 20px;">★★★★★</p>
+                                        <p style="margin: 0 0 10px; color: #fb5887; font-size: 20px;">★★★★★</p>
                                         <p style="margin: 0 0 10px; font-style: italic; color: #666; font-size: 14px; line-height: 1.5;">
                                             "The quality is AMAZING! My bridesmaids loved their bottles. We've used them for months and they still look perfect!"
                                         </p>
@@ -164,7 +164,7 @@
 
                     <!-- Footer -->
                     <tr>
-                        <td style="padding: 30px 40px; background-color: #4E5F4A;">
+                        <td style="padding: 30px 40px; background-color: #1a1a1a;">
                             <p style="margin: 0 0 15px; font-size: 13px; color: rgba(255,255,255,0.9); text-align: center;">
                                 Questions? Reply to this email or contact us at hello@shelzysdesigns.com
                             </p>

@@ -1,35 +1,40 @@
 /* ================================
    Shelzy's Designs — Brand Styles
-   Natural, Elegant, Sage & Gold
+   Bold, Vibrant & Expressive
    ================================ */
 
 /* ================================
    1. FONT IMPORTS
    ================================ */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@500;600;700&family=Playfair+Display:wght@500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@400;500;600;700;800&display=swap');
 
 /* ================================
-   2. CSS VARIABLES - SAGE GREEN PALETTE
+   2. CSS VARIABLES - BOLD VIBRANT PALETTE
    ================================ */
 :root {
-  /* Primary Colors - Sage Green Palette */
-  --sz-primary: #8BAA88;          /* Sage Green */
-  --sz-primary-dark: #4E5F4A;     /* Dark Sage / Evergreen */
-  --sz-primary-light: #B8CEB3;    /* Light Sage */
+  /* Primary Colors - Hot Pink & Orange */
+  --sz-primary: #fb5887;          /* Hot Pink */
+  --sz-primary-dark: #e03d6e;     /* Darker Hot Pink */
+  --sz-primary-light: #ff89ab;    /* Light Pink */
 
   /* Neutrals */
   --sz-white: #FFFFFF;
-  --sz-off-white: #FAF9F6;        /* Warm white */
-  --sz-warm-white: #FAF9F6;       /* Warm white */
-  --sz-beige: #F0F5EF;            /* Sage-tinted white */
-  --sz-charcoal: #2B2B2B;         /* Charcoal */
-  --sz-gray: #6B7B68;             /* Sage-tinted gray */
-  --sz-gray-light: #A0B09D;       /* Light sage gray */
+  --sz-off-white: #fefefe;        /* Off-White */
+  --sz-warm-white: #fefefe;       /* Off-White */
+  --sz-beige: #f5f5f5;            /* Neutral light gray */
+  --sz-charcoal: #1a1a1a;         /* Dark text */
+  --sz-gray: #555555;             /* Muted text */
+  --sz-gray-light: #999999;       /* Light gray */
 
   /* Accent Colors */
-  --sz-gold: #D1C7A1;             /* Champagne Gold */
-  --sz-coral: #8BAA88;            /* Sage (no coral) */
-  --sz-sage: #8BAA88;             /* Sage green */
+  --sz-gold: #fe8c43;             /* Orange (secondary accent) */
+  --sz-coral: #fb5887;            /* Hot Pink */
+  --sz-sage: #3ca4d7;             /* Steel Blue (cool accent) */
+
+  /* Brand-specific accents */
+  --sz-orange: #fe8c43;           /* Orange */
+  --sz-steel-blue: #3ca4d7;       /* Steel Blue */
+  --sz-teal: #8adbde;             /* Light Teal/Sky */
 
   /* Semantic */
   --sz-error: #E53935;
@@ -41,8 +46,8 @@
   --sz-accent-gold: var(--sz-gold);
 
   /* Border Colors */
-  --sz-border-light: #E0E3DF;
-  --sz-border-soft: #C7D3C5;
+  --sz-border-light: #e0e0e0;
+  --sz-border-soft: #d0d0d0;
 
   /* Consistent Spacing System */
   --sz-space-xs: 4px;
@@ -72,17 +77,18 @@
   --sz-radius-2xl: 24px;
   --sz-radius-full: 9999px;
 
-  /* Shadows - Sage tinted */
-  --sz-shadow-sm: 0 1px 3px rgba(139, 170, 136, 0.08);
-  --sz-shadow-md: 0 4px 16px rgba(139, 170, 136, 0.1);
-  --sz-shadow-lg: 0 12px 32px rgba(139, 170, 136, 0.12);
+  /* Shadows - Neutral */
+  --sz-shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08);
+  --sz-shadow-md: 0 4px 16px rgba(0, 0, 0, 0.1);
+  --sz-shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.12);
 
   /* Transitions */
   --sz-transition-fast: 0.15s ease;
   --sz-transition-normal: 0.3s ease;
 
   /* Font Stacks */
-  --sz-font-heading: "Playfair Display", "Times New Roman", serif;
+  --sz-font-title: "Berthold Block", "Impact", "Arial Black", sans-serif;
+  --sz-font-heading: "Montserrat", "Arial", sans-serif;
   --sz-font-body: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   --sz-font-accent: "Montserrat", "Inter", sans-serif;
 }
@@ -97,19 +103,27 @@ html {
   background-color: var(--sz-white);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  font-size: 15px;
+  font-size: 16px;
   line-height: 1.6;
 }
 
-/* Headings - Playfair Display (Elegant serif) */
-h1, h2, h3, h4, h5, h6,
-.h1, .h2, .h3, .h4, .h5, .h6,
+/* Headings - Berthold Block for h1, Montserrat for h2-h6 */
+h1, .h1,
 .heading,
 .title,
+.page-title {
+  font-family: var(--sz-font-title) !important;
+  color: var(--sz-charcoal) !important;
+  letter-spacing: -0.01em;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+h2, h3, h4, h5, h6,
+.h2, .h3, .h4, .h5, .h6,
 .section-header__title,
 .product-single__title,
 .product__title,
-.page-title,
 .collection__title,
 .article__title,
 .card__heading,
@@ -117,11 +131,11 @@ h1, h2, h3, h4, h5, h6,
   font-family: var(--sz-font-heading) !important;
   color: var(--sz-charcoal) !important;
   letter-spacing: -0.01em;
-  font-weight: 600;
+  font-weight: 700;
   line-height: 1.2;
 }
 
-h1, .h1 { font-size: clamp(2rem, 5vw, 3rem); }
+h1, .h1 { font-size: clamp(2rem, 5vw, 42px); font-weight: bold; }
 h2, .h2 { font-size: clamp(1.5rem, 4vw, 2.25rem); }
 h3, .h3 { font-size: clamp(1.25rem, 3vw, 1.5rem); }
 
@@ -531,7 +545,7 @@ select:focus,
 .field__input:focus {
   outline: none !important;
   border-color: var(--sz-primary) !important;
-  box-shadow: 0 0 0 3px rgba(139, 170, 136, 0.2) !important;
+  box-shadow: 0 0 0 3px rgba(251, 88, 135, 0.2) !important;
 }
 
 /* Field labels */

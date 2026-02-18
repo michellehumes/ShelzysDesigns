@@ -60,7 +60,7 @@
     right: 0;
     z-index: 999;
     background: #fff;
-    border-top: 1px solid #E0E3DF;
+    border-top: 1px solid #eeeeee;
     box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.1);
     transform: translateY(100%);
     transition: transform 0.3s ease;
@@ -103,7 +103,7 @@
   .sz-sticky-atc__title {
     font-size: 14px;
     font-weight: 600;
-    color: #4E5F4A;
+    color: #1a1a1a;
     margin: 0 0 2px;
     white-space: nowrap;
     overflow: hidden;
@@ -126,13 +126,13 @@
 
   .sz-sticky-atc__price--current {
     font-weight: 600;
-    color: #2B2B2B;
+    color: #1a1a1a;
   }
 
   .sz-sticky-atc__button {
     flex-shrink: 0;
     padding: 14px 24px;
-    background: #8BAA88;
+    background: #fb5887;
     color: #fff;
     border: none;
     border-radius: 999px;
@@ -144,7 +144,7 @@
   }
 
   .sz-sticky-atc__button:hover:not(:disabled) {
-    background: #4E5F4A;
+    background: #e0416e;
   }
 
   .sz-sticky-atc__button:active:not(:disabled) {
@@ -157,7 +157,7 @@
   }
 
   .sz-sticky-atc__shipping {
-    background: #FAF9F6;
+    background: #fefefe;
     padding: 8px 16px;
     text-align: center;
     font-size: 12px;
@@ -244,7 +244,7 @@
 
         if (remaining <= 0) {
           shippingEl.textContent = '✓ You qualify for FREE shipping!';
-          shippingEl.style.color = '#8BAA88';
+          shippingEl.style.color = '#fb5887';
         } else {
           const remainingFormatted = (remaining / 100).toFixed(2);
           shippingEl.textContent = `Add $${remainingFormatted} more for FREE shipping`;

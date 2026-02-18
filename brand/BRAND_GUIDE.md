@@ -38,18 +38,13 @@
 
 #### Primary Colors
 ```
-Sage Green:      #8BAA88  (Primary CTA buttons, brand accent, highlights)
-Dark Sage:       #4E5F4A  (Headlines, headings, footer background, hover states)
-Warm White:      #FAF9F6  (Alternating section backgrounds, modals)
-Charcoal:        #2B2B2B  (Body text, navigation, pricing)
-White:           #FFFFFF  (Primary backgrounds, product cards, button text)
-```
-
-#### Accent & Border Colors
-```
-Champagne Gold:  #D1C7A1  (Sale badges, product labels, premium accents)
-Soft Border:     #C7D3C5  (Product card hover borders, modal borders)
-Light Border:    #E0E3DF  (Section dividers, form inputs, header border)
+Off-White:       #fefefe  (Primary backgrounds, product cards, section backgrounds)
+Hot Pink:        #fb5887  (Primary accent, CTA buttons, brand accent, highlights)
+Orange:          #fe8c43  (Secondary accent, sale badges, product labels, warm highlights)
+Steel Blue:      #3ca4d7  (Cool accent, links, informational elements)
+Light Teal/Sky:  #8adbde  (Highlight, hover accents, decorative elements)
+Near-Black:      #1a1a1a  (Body text, navigation, pricing)
+Darker Pink:     #e0416e  (Hover states, active states, pressed buttons)
 ```
 
 #### Usage Guidelines
