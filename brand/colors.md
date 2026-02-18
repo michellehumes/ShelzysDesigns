@@ -115,16 +115,16 @@ Usage:   Product card hover borders, focused input borders
 ## Accessibility
 
 ### Text Contrast Ratios
-- `#2B2B2B` on `#FFFFFF` = **12.63:1** AAA
-- `#2B2B2B` on `#FAF9F6` = **11.92:1** AAA
-- `#4E5F4A` on `#FFFFFF` = **7.28:1** AAA
-- `#4E5F4A` on `#FAF9F6` = **6.87:1** AA Large Text / AAA
-- `#FFFFFF` on `#8BAA88` = **3.02:1** AA Large Text (buttons OK)
-- `#FFFFFF` on `#4E5F4A` = **7.28:1** AAA
+- `#1a1a1a` on `#fefefe` = **16.75:1** AAA
+- `#fefefe` on `#fb5887` = **3.46:1** AA Large Text (buttons OK)
+- `#fefefe` on `#e0416e` = **4.22:1** AA (hover buttons)
+- `#fefefe` on `#1a1a1a` = **16.75:1** AAA (footer)
+- `#1a1a1a` on `#8adbde` = **8.86:1** AAA (teal highlights)
+- `#fefefe` on `#3ca4d7` = **3.28:1** AA Large Text
 
 ### Button Recommendations
-- Primary CTA: `#8BAA88` background with `#FFFFFF` text (large text compliant)
-- Hover state: `#4E5F4A` background with `#FFFFFF` text (fully AAA compliant)
+- Primary CTA: `#fb5887` background with `#fefefe` text (large text compliant)
+- Hover state: `#e0416e` background with `#fefefe` text (AA compliant)
 - Ensure 3:1 minimum contrast for UI elements
 
 ---
@@ -132,33 +132,44 @@ Usage:   Product card hover borders, focused input borders
 ## CSS Variables
 
 ```css
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@500;600;700&family=Playfair+Display:wght@500;600;700&display=swap');
+/* Berthold Block must be self-hosted — NOT available on Google Fonts */
+@font-face {
+  font-family: 'Berthold Block';
+  src: url('/fonts/berthold-block.woff2') format('woff2');
+  font-weight: 700;
+  font-display: swap;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@500;600;700&display=swap');
 
 :root {
   /* Primary Colors */
-  --sz-primary: #8BAA88;        /* Sage Green */
-  --sz-primary-dark: #4E5F4A;   /* Dark Sage / Evergreen */
-  --sz-neutral-light: #FAF9F6;  /* Warm White */
-  --sz-neutral-dark: #2B2B2B;   /* Charcoal */
-  --sz-accent-gold: #D1C7A1;    /* Champagne Gold */
+  --sz-hot-pink: #fb5887;        /* Hot Pink (primary accent) */
+  --sz-darker-pink: #e0416e;     /* Darker Pink (hover) */
+  --sz-orange: #fe8c43;          /* Orange (secondary accent) */
+  --sz-steel-blue: #3ca4d7;      /* Steel Blue (cool accent) */
+  --sz-light-teal: #8adbde;      /* Light Teal/Sky (highlight) */
+  --sz-off-white: #fefefe;       /* Off-White (backgrounds) */
+  --sz-near-black: #1a1a1a;      /* Near-Black (text) */
 
   /* Border Colors */
-  --sz-border-soft: #C7D3C5;
-  --sz-border-light: #E0E3DF;
+  --sz-border-light: #e0e0e0;
+  --sz-border-hover: #fb5887;
 
   /* Fonts */
-  --sz-font-heading: "Playfair Display", "Times New Roman", serif;
+  --sz-font-title: "Berthold Block", "Impact", sans-serif;
+  --sz-font-heading: "Montserrat", "Inter", sans-serif;
   --sz-font-body: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   --sz-font-accent: "Montserrat", "Inter", sans-serif;
 
   /* Semantic Aliases */
-  --color-text-primary: var(--sz-neutral-dark);
-  --color-text-heading: var(--sz-primary-dark);
-  --color-bg-primary: #FFFFFF;
-  --color-bg-secondary: var(--sz-neutral-light);
-  --color-accent: var(--sz-primary);
-  --color-cta: var(--sz-primary);
-  --color-cta-hover: var(--sz-primary-dark);
+  --color-text-primary: var(--sz-near-black);
+  --color-text-heading: var(--sz-near-black);
+  --color-bg-primary: var(--sz-off-white);
+  --color-bg-secondary: var(--sz-off-white);
+  --color-accent: var(--sz-hot-pink);
+  --color-cta: var(--sz-hot-pink);
+  --color-cta-hover: var(--sz-darker-pink);
 }
 ```
 
@@ -167,19 +178,20 @@ Usage:   Product card hover borders, focused input borders
 ## Usage Guidelines
 
 ### Do's
-- Use Sage Green (`#8BAA88`) as the primary accent and CTA color
-- Use Dark Sage (`#4E5F4A`) for all headings and the footer
-- Use Champagne Gold (`#D1C7A1`) sparingly for badges and premium highlights
-- Maintain clean white or warm white backgrounds
-- Use Charcoal (`#2B2B2B`) for all body text
+- Use Hot Pink (`#fb5887`) as the primary accent and CTA color
+- Use Near-Black (`#1a1a1a`) for all body text and headings
+- Use Orange (`#fe8c43`) for badges, secondary accents, and warm highlights
+- Use Steel Blue (`#3ca4d7`) and Light Teal (`#8adbde`) for cool accents and highlights
+- Maintain off-white (`#fefefe`) backgrounds with bold color blocking
 - Apply pill-shaped buttons (border-radius: 999px)
+- Embrace high contrast and bold color combinations
 
 ### Don'ts
-- Don't use bright, saturated colors outside this palette
-- Don't use more than 3 colors in one section
-- Don't use Sage Green for large background areas
-- Don't introduce colors outside this palette (no teal, pink, or other accents)
-- Don't mix multiple accent colors in the same component
+- Don't use muted, safe, or boring color combinations
+- Don't use sage green, earth tones, or Playfair Display -- that's the OLD brand
+- Don't make anything feel timid or washed out
+- Don't introduce colors outside this palette
+- Don't use more than 3 brand colors in one component
 
 ---
 
@@ -187,17 +199,19 @@ Usage:   Product card hover borders, focused input borders
 
 | Element | Color | Hex |
 |---------|-------|-----|
-| Primary Button | Sage Green | `#8BAA88` |
-| Button Hover | Dark Sage | `#4E5F4A` |
-| Headings | Dark Sage | `#4E5F4A` |
-| Body Text | Charcoal | `#2B2B2B` |
-| Alt Background | Warm White | `#FAF9F6` |
-| Badges | Champagne Gold | `#D1C7A1` |
-| Footer BG | Dark Sage | `#4E5F4A` |
-| Borders | Light Border | `#E0E3DF` |
-| Hover Borders | Soft Border | `#C7D3C5` |
+| Primary Button | Hot Pink | `#fb5887` |
+| Button Hover | Darker Pink | `#e0416e` |
+| Headings | Near-Black | `#1a1a1a` |
+| Body Text | Near-Black | `#1a1a1a` |
+| Background | Off-White | `#fefefe` |
+| Badges | Orange | `#fe8c43` |
+| Cool Accent | Steel Blue | `#3ca4d7` |
+| Highlight | Light Teal/Sky | `#8adbde` |
+| Footer BG | Near-Black | `#1a1a1a` |
+| Borders | Light Border | `#e0e0e0` |
+| Hover Borders | Hot Pink | `#fb5887` |
 
 ---
 
-**Version:** 2.0
-**Last Updated:** November 2025
+**Version:** 3.0
+**Last Updated:** February 2026
