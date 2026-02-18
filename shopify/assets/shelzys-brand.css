@@ -1,35 +1,35 @@
 /* ================================
    Shelzy's Designs — Brand Styles
-   Fresh, Romantic, Love Island Vibes
+   Natural, Elegant, Sage & Gold
    ================================ */
 
 /* ================================
    1. FONT IMPORTS
    ================================ */
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Cormorant+Garamond:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@500;600;700&family=Playfair+Display:wght@500;600;700&display=swap');
 
 /* ================================
-   2. CSS VARIABLES - LOVE ISLAND PALETTE
+   2. CSS VARIABLES - SAGE GREEN PALETTE
    ================================ */
 :root {
-  /* Primary Colors - Coral Pink Palette */
-  --sz-primary: #E8919A;          /* Coral Pink */
-  --sz-primary-dark: #C75B6E;     /* Deep Rose */
-  --sz-primary-light: #F5C6CB;    /* Blush Pink */
+  /* Primary Colors - Sage Green Palette */
+  --sz-primary: #8BAA88;          /* Sage Green */
+  --sz-primary-dark: #4E5F4A;     /* Dark Sage / Evergreen */
+  --sz-primary-light: #B8CEB3;    /* Light Sage */
 
   /* Neutrals */
   --sz-white: #FFFFFF;
-  --sz-off-white: #FFFBF9;        /* Warm cream */
-  --sz-warm-white: #FFF8F6;       /* Peachy white */
-  --sz-beige: #FDF2EF;            /* Soft blush */
-  --sz-charcoal: #2D2926;         /* Warm black */
-  --sz-gray: #8B8584;             /* Warm gray */
-  --sz-gray-light: #B5AFAD;       /* Light warm gray */
+  --sz-off-white: #FAF9F6;        /* Warm white */
+  --sz-warm-white: #FAF9F6;       /* Warm white */
+  --sz-beige: #F0F5EF;            /* Sage-tinted white */
+  --sz-charcoal: #2B2B2B;         /* Charcoal */
+  --sz-gray: #6B7B68;             /* Sage-tinted gray */
+  --sz-gray-light: #A0B09D;       /* Light sage gray */
 
   /* Accent Colors */
-  --sz-gold: #D4A574;             /* Warm gold */
-  --sz-coral: #FF7F6E;            /* Bright coral */
-  --sz-sage: #9CAF88;             /* Sage green accent */
+  --sz-gold: #D1C7A1;             /* Champagne Gold */
+  --sz-coral: #8BAA88;            /* Sage (no coral) */
+  --sz-sage: #8BAA88;             /* Sage green */
 
   /* Semantic */
   --sz-error: #E53935;
@@ -41,8 +41,8 @@
   --sz-accent-gold: var(--sz-gold);
 
   /* Border Colors */
-  --sz-border-light: #F0E6E3;
-  --sz-border-soft: #E8DEDA;
+  --sz-border-light: #E0E3DF;
+  --sz-border-soft: #C7D3C5;
 
   /* Consistent Spacing System */
   --sz-space-xs: 4px;
@@ -72,19 +72,19 @@
   --sz-radius-2xl: 24px;
   --sz-radius-full: 9999px;
 
-  /* Shadows - Warm tinted */
-  --sz-shadow-sm: 0 1px 3px rgba(200, 91, 110, 0.08);
-  --sz-shadow-md: 0 4px 16px rgba(200, 91, 110, 0.1);
-  --sz-shadow-lg: 0 12px 32px rgba(200, 91, 110, 0.12);
+  /* Shadows - Sage tinted */
+  --sz-shadow-sm: 0 1px 3px rgba(139, 170, 136, 0.08);
+  --sz-shadow-md: 0 4px 16px rgba(139, 170, 136, 0.1);
+  --sz-shadow-lg: 0 12px 32px rgba(139, 170, 136, 0.12);
 
   /* Transitions */
   --sz-transition-fast: 0.15s ease;
   --sz-transition-normal: 0.3s ease;
 
   /* Font Stacks */
-  --sz-font-heading: "Cormorant Garamond", Georgia, serif;
-  --sz-font-body: "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  --sz-font-accent: "Poppins", sans-serif;
+  --sz-font-heading: "Playfair Display", "Times New Roman", serif;
+  --sz-font-body: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --sz-font-accent: "Montserrat", "Inter", sans-serif;
 }
 
 /* ================================
@@ -101,7 +101,7 @@ html {
   line-height: 1.6;
 }
 
-/* Headings - Cormorant Garamond (Elegant serif) */
+/* Headings - Playfair Display (Elegant serif) */
 h1, h2, h3, h4, h5, h6,
 .h1, .h2, .h3, .h4, .h5, .h6,
 .heading,
@@ -531,7 +531,7 @@ select:focus,
 .field__input:focus {
   outline: none !important;
   border-color: var(--sz-primary) !important;
-  box-shadow: 0 0 0 3px rgba(232, 145, 154, 0.2) !important;
+  box-shadow: 0 0 0 3px rgba(139, 170, 136, 0.2) !important;
 }
 
 /* Field labels */
